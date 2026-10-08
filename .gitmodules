@@ -1,0 +1,4 @@
+[submodule "unciv"]
+	path = unciv
+	url = https://github.com/terdfergeson-design/Unciv.git
+	branch = vr-bridge
