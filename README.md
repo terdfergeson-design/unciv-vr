@@ -14,15 +14,16 @@ rendering, VR interaction                                       Unciv's real rul
 - Optional: **Python 3** to run the bridge's smoke test
 
 ## Every session
-1. `cd unciv` then `gradlew.bat :bridge:run` (first time: several minutes of downloads)
-2. Open `client\project.godot` in Godot and press F5
+Open `client\project.godot` in Godot and press F5. The client starts the bridge itself
+(first time: several minutes of downloads) and stops it when you quit.
+To run the bridge by hand instead: `cd unciv` then `gradlew.bat :bridge:run`.
 
 Details: [client/README.md](client/README.md), [bridge README](unciv/bridge/README.md),
 [protocol](unciv/bridge/PROTOCOL.md).
 
 ## Roadmap
 0. **Proof of concept**: bridge, tabletop map, select/move units, found cities, end turn (this)
-1. Turn loop polish: combat, worker improvements, unit info on the wrist, bridge auto-launch
+1. Turn loop polish: combat, worker improvements, unit card on the wrist, bridge auto-launch (in progress)
 2. Cities (production, growth, the city diorama) and research (the tech constellation)
 3. Borders, diplomacy, trade, religion
 4. Art pass: models for units and buildings, terrain detail, sound

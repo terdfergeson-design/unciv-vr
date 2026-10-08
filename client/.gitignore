@@ -3,3 +3,4 @@
 override.cfg
 *.png.tmp
 screenshots/
+logs/

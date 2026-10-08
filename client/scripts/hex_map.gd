@@ -5,7 +5,7 @@ extends Node3D
 
 const SQRT3 := 1.7320508
 const HEX_RADIUS := 0.97          # slightly under 1 leaves a hairline gap between tiles
-const UNEXPLORED_COLOR := Color(0.07, 0.07, 0.09)
+const UNEXPLORED_COLOR := Color(0.012, 0.012, 0.018)
 
 var terrain_info: Dictionary = {}   # terrain name -> {type, rgb, impassable}
 var tiles: Dictionary = {}          # Vector2i(x, y) -> tile Dictionary from getState
@@ -24,6 +24,8 @@ var _center_offset := Vector3.ZERO
 var _hover := Vector2i(999999, 999999)
 var _selected := Vector2i(999999, 999999)
 var _reachable: Array[Vector2i] = []
+var _targets: Array[Vector2i] = []
+var _unit_labels: Dictionary = {}   # Vector2i -> Array[Label3D]; shown only for hovered/selected tiles
 
 
 func _ready() -> void:
@@ -151,8 +153,9 @@ func _build_cities() -> void:
 			box.position = blocks[b] + Vector3(0, heights[b] / 2.0, 0)
 			node.add_child(box)
 
-		var label := _make_label("%s (%d)" % [city["name"], int(city["population"])], 48)
-		label.position = Vector3(0, 0.9, 0)
+		var label := _make_label("%s  %d" % [city["name"], int(city["population"])], 72)
+		label.position = Vector3(0, 1.0, 0)
+		label.outline_size = 14
 		label.modulate = outer.lightened(0.3)
 		node.add_child(label)
 
@@ -160,6 +163,7 @@ func _build_cities() -> void:
 func _build_units() -> void:
 	for child in _units_root.get_children():
 		child.queue_free()
+	_unit_labels.clear()
 	for key: Vector2i in tiles:
 		var tile: Dictionary = tiles[key]
 		if not tile.has("units"):
@@ -168,7 +172,13 @@ func _build_units() -> void:
 		for unit: Dictionary in tile["units"]:
 			var civilian: bool = unit.get("civilian", false)
 			var offset := Vector3(0.3, 0, 0.3) if civilian else Vector3(-0.25, 0, -0.2)
-			_units_root.add_child(_make_unit_token(unit, base + offset))
+			var token := _make_unit_token(unit, base + offset)
+			_units_root.add_child(token)
+			var label: Label3D = token.get_node("Label")
+			if not _unit_labels.has(key):
+				_unit_labels[key] = []
+			_unit_labels[key].append(label)
+	_update_label_visibility()
 
 
 func _make_unit_token(unit: Dictionary, at: Vector3) -> Node3D:
@@ -207,8 +217,10 @@ func _make_unit_token(unit: Dictionary, at: Vector3) -> Node3D:
 	var text: String = unit["name"]
 	if health < 100:
 		text += " %d%%" % health
-	var label := _make_label(text, 32)
-	label.position = Vector3(0, 0.75, 0)
+	var label := _make_label(text, 44)
+	label.name = "Label"
+	label.position = Vector3(0, 0.8, 0)
+	label.visible = false
 	token.add_child(label)
 	return token
 
@@ -219,22 +231,39 @@ func set_hover(key: Vector2i) -> void:
 	if key != _hover:
 		_hover = key
 		_build_highlights()
+		_update_label_visibility()
 
 
-func set_selection(selected: Vector2i, reachable: Array[Vector2i]) -> void:
+func set_selection(selected: Vector2i, reachable: Array[Vector2i], targets: Array[Vector2i] = []) -> void:
 	_selected = selected
 	_reachable = reachable
+	_targets = targets
 	_build_highlights()
+	_update_label_visibility()
 
 
 func clear_selection() -> void:
-	set_selection(Vector2i(999999, 999999), [])
+	set_selection(Vector2i(999999, 999999), [], [])
+
+
+func is_target(key: Vector2i) -> bool:
+	return key in _targets
+
+
+func _update_label_visibility() -> void:
+	for key: Vector2i in _unit_labels:
+		var shown := key == _hover or key == _selected or key in _targets
+		for label: Label3D in _unit_labels[key]:
+			label.visible = shown
 
 
 func _build_highlights() -> void:
 	var rings: Array = []  # [key, color]
 	for key in _reachable:
-		rings.append([key, Color(0.3, 0.9, 1.0)])
+		if key not in _targets:
+			rings.append([key, Color(0.3, 0.9, 1.0)])
+	for key in _targets:
+		rings.append([key, Color(1.0, 0.2, 0.15)])
 	if tiles.has(_selected):
 		rings.append([_selected, Color(1.0, 0.85, 0.2)])
 	if tiles.has(_hover):
@@ -286,7 +315,7 @@ func tile_position(key: Vector2i, y: float) -> Vector3:
 
 func tile_height(tile: Dictionary) -> float:
 	if not tile.get("explored", false):
-		return 0.04
+		return 0.02
 	var features: Array = tile.get("features", [])
 	if tile.get("base") == "Mountain" or "Mountain" in features:
 		return 0.6

@@ -3,20 +3,31 @@ extends Node3D
 ## Connects to the bridge, starts (or resumes) a game, and draws it as a tabletop map.
 ## Runs in VR when an OpenXR runtime is active, otherwise in a desktop window.
 ##
-## Command-line options (after "--"):  --new-game  --civ=Rome  --map-size=Small  --ai=3
-##   --load=C:/path/to/save  --port=8765  --smoke-test (scripted run that exits; for testing)
+## If no bridge is running, it starts one itself from ../unciv (log: logs/bridge.log)
+## and shuts it down again on exit.
 ##
-## Desktop: left-click select/move, right-drag orbit, middle-drag or WASD pan, wheel zoom,
+## Command-line options (after "--"):  --new-game  --civ=Rome  --map-size=Small  --ai=3
+##   --load=C:/path/to/save  --port=8765  --no-launch (never start a bridge)
+##   --smoke-test (scripted run that exits; for testing)  --screenshot=file.png
+##
+## Desktop: left-click select / move / attack (red rings), unit card on the right,
+##   right-drag orbit, middle-drag or WASD pan, wheel zoom,
 ##   Space end turn, F found city, N next unit, Esc deselect, R refresh.
-## VR (right controller): point + trigger select/move, A end turn, B found city;
-##   left controller: X next unit, stick rotates (x) and scales (y) the table.
+## VR: right controller points; trigger selects / moves / attacks and presses buttons on the
+##   unit card strapped to your left wrist. A end turn, B found city;
+##   left controller: X next unit, Y refresh, stick rotates (x) and scales (y) the table.
 
 # Loaded by path rather than class_name, so the project runs even before the editor has scanned it
 const BridgeClient := preload("res://scripts/bridge_client.gd")
 const HexMap := preload("res://scripts/hex_map.gd")
+const ActionMenu := preload("res://scripts/action_menu.gd")
+const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
 
 const TABLE_HALF_SIZE := 0.7   # metres: the map is scaled so its half-width fits this
 const VR_TABLE_POSITION := Vector3(0, 0.8, -0.85)
+const WRIST_PANEL_PIXELS := Vector2i(380, 640)
+const WRIST_PANEL_METRES := Vector2(0.17, 0.2863)   # same aspect ratio as the pixels
+const LAUNCH_GRACE_SECONDS := 1.5
 
 var bridge: BridgeClient
 var hex_map: HexMap
@@ -26,6 +37,10 @@ var state: Dictionary = {}
 var selected_unit: Dictionary = {}   # getUnit result, or empty
 var busy := false
 var options := {}
+var action_menu: ActionMenu
+var launcher := BridgeLauncher.new()
+var _launched_bridge := false
+var _initialized := false
 
 var _xr_mode := false
 var _hud_label: Label
@@ -44,6 +59,9 @@ var _focus := Vector3.ZERO
 var _right_hand: XRController3D
 var _left_hand: XRController3D
 var _pointer_dot: MeshInstance3D
+var _wrist_viewport: SubViewport
+var _wrist_quad: MeshInstance3D
+var _wrist_pixel: Variant = null   # where the laser hits the wrist card, in panel pixels
 
 
 func _ready() -> void:
@@ -64,6 +82,7 @@ func _ready() -> void:
 	else:
 		_setup_desktop_camera()
 	_setup_hud()
+	_setup_action_menu()
 
 	bridge = BridgeClient.new()
 	bridge.port = int(options.get("port", 8765))
@@ -71,7 +90,35 @@ func _ready() -> void:
 	bridge.connected.connect(_on_bridge_connected)
 	bridge.disconnected.connect(func() -> void: _set_status("Lost connection to the bridge - retrying..."))
 	bridge.connect_to_bridge()
-	_set_status("Waiting for the bridge on 127.0.0.1:%d\nStart it with:  gradlew :bridge:run" % bridge.port)
+	_set_status("Looking for the bridge on 127.0.0.1:%d..." % bridge.port)
+	if not options.has("no-launch"):
+		get_tree().create_timer(LAUNCH_GRACE_SECONDS).timeout.connect(_maybe_launch_bridge)
+
+
+## Starts our own bridge if none answered within the grace period, then watches it until it connects.
+func _maybe_launch_bridge() -> void:
+	if bridge.is_bridge_connected():
+		return
+	if not launcher.launch(bridge.port):
+		_set_status("Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run" % launcher.error)
+		return
+	_launched_bridge = true
+	_set_status("Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)")
+	while not bridge.is_bridge_connected():
+		await get_tree().create_timer(2.0).timeout
+		if bridge.is_bridge_connected():
+			break
+		if not OS.is_process_running(launcher.pid):
+			_launched_bridge = false
+			_set_status("The bridge stopped before it was ready. From %s:\n%s" % [launcher.log_path, launcher.log_tail()])
+			return
+
+
+func _exit_tree() -> void:
+	# Only stop a bridge we started; one started by hand keeps running for the next session.
+	if _launched_bridge:
+		bridge.send_shutdown()
+		launcher.stop()
 
 
 func _parse_args() -> Dictionary:
@@ -93,6 +140,11 @@ func _parse_args() -> Dictionary:
 # region game flow ------------------------------------------------------------------------
 
 func _on_bridge_connected() -> void:
+	if _initialized:
+		# Reconnected (e.g. the bridge was restarted): just reload what it has.
+		_set_status("Reconnected to the bridge.")
+		await refresh()
+		return
 	var ping := await bridge.request("ping")
 	if not ping.ok:
 		_set_status("Bridge error: %s" % ping.error)
@@ -125,6 +177,7 @@ func _on_bridge_connected() -> void:
 		hex_map.set_ruleset(rules.result)
 	await refresh()
 	_fit_table()
+	_initialized = true
 	_set_status("Your move.")
 	_select_next_unit()
 
@@ -153,7 +206,8 @@ func refresh() -> void:
 func _fit_table() -> void:
 	var s := TABLE_HALF_SIZE / hex_map.map_extent
 	hex_map.scale = Vector3(s, s, s)
-	_add_table_top()
+	if table.get_node_or_null("TableTop") == null:
+		_add_table_top()
 
 
 func click_tile(key: Vector2i) -> void:
@@ -169,6 +223,10 @@ func click_tile(key: Vector2i) -> void:
 			var index := own_units.find_custom(func(u: Dictionary) -> bool: return int(u["id"]) == int(selected_unit["id"]))
 			pick = own_units[(index + 1) % own_units.size()]
 		await _select_unit(int(pick["id"]))
+		return
+
+	if not selected_unit.is_empty() and hex_map.is_target(key):
+		await attack(key)
 		return
 
 	if not selected_unit.is_empty() and key != selected_key:
@@ -194,6 +252,64 @@ func found_city() -> void:
 	await unit_action("FoundCity")
 
 
+func attack(key: Vector2i) -> void:
+	if busy or selected_unit.is_empty():
+		return
+	busy = true
+	var reply := await bridge.request("attack", {"unitId": int(selected_unit["id"]), "x": key.x, "y": key.y})
+	busy = false
+	if not reply.ok:
+		_set_status(reply.error)
+		return
+	var r: Dictionary = reply.result
+	if not r.get("attacked", false):
+		_set_status(r.get("message", "No attack happened."))
+	else:
+		var text := "%s attacked %s: dealt %d damage, took %d." % [selected_unit["name"], r["defender"],
+			int(r["damageToDefender"]), int(r["damageToAttacker"])]
+		if r.get("cityCaptured", false):
+			text += "  City captured!"
+		elif r.get("defenderDefeated", false):
+			text += "  %s destroyed!" % r["defender"]
+		if not r.get("attackerAlive", true):
+			text += "  Your %s was lost." % selected_unit["name"]
+			_deselect()
+		_set_status(text)
+	await refresh()
+	if not selected_unit.is_empty() and float(selected_unit.get("movement", 0)) <= 0.0:
+		_select_next_unit()
+
+
+func build_improvement(improvement: String) -> void:
+	if busy or selected_unit.is_empty():
+		return
+	busy = true
+	var reply := await bridge.request("buildImprovement", {"unitId": int(selected_unit["id"]), "improvement": improvement})
+	busy = false
+	if not reply.ok:
+		_set_status(reply.error)
+		return
+	var r: Dictionary = reply.result
+	if r.get("improvementInProgress") == null:
+		_set_status("Improvement order cancelled.")
+	else:
+		_set_status("%s: building %s (%d turns)." % [selected_unit["name"], r["improvementInProgress"], int(r["turnsLeft"])])
+	await refresh()
+	_select_next_unit()
+
+
+func _on_menu_chosen(kind: String, value: String) -> void:
+	match kind:
+		"action":
+			await unit_action(value)
+		"improvement":
+			await build_improvement(value)
+		"end_turn":
+			await end_turn()
+		"next_unit":
+			_select_next_unit()
+
+
 func unit_action(action: String) -> void:
 	if busy or selected_unit.is_empty():
 		return
@@ -207,6 +323,8 @@ func unit_action(action: String) -> void:
 	if not reply.result.get("unitStillExists", true):
 		_deselect()
 	await refresh()
+	if selected_unit.is_empty() or not selected_unit.get("idle", true) or float(selected_unit.get("movement", 0)) <= 0.0:
+		_select_next_unit()
 
 
 func end_turn() -> void:
@@ -241,7 +359,11 @@ func _select_unit(unit_id: int, focus := true) -> void:
 	var reachable: Array[Vector2i] = []
 	for t: Dictionary in selected_unit.get("reachable", []):
 		reachable.append(Vector2i(int(t["x"]), int(t["y"])))
-	hex_map.set_selection(_selected_key(), reachable)
+	var targets: Array[Vector2i] = []
+	for t: Dictionary in selected_unit.get("targets", []):
+		targets.append(Vector2i(int(t["x"]), int(t["y"])))
+	hex_map.set_selection(_selected_key(), reachable, targets)
+	action_menu.show_unit(selected_unit)
 	if focus and not _xr_mode:
 		_focus = hex_map.to_global(hex_map.tile_local_center(_selected_key())) - table.global_position
 		_update_camera()
@@ -265,7 +387,15 @@ func _select_next_unit() -> void:
 func _deselect() -> void:
 	selected_unit = {}
 	hex_map.clear_selection()
+	action_menu.show_unit({})
 	_update_hud()
+
+
+func _target_at(key: Vector2i) -> Dictionary:
+	for t: Dictionary in selected_unit.get("targets", []):
+		if int(t["x"]) == key.x and int(t["y"]) == key.y:
+			return t
+	return {}
 
 
 func _selected_key() -> Vector2i:
@@ -290,6 +420,19 @@ func _run_smoke_test() -> void:
 		print("SMOKE: settler actions ", selected_unit.get("actions", []).map(func(a: Dictionary) -> String: return a["type"]))
 		await found_city()
 		print("SMOKE: cities after founding ", state.get("cities", []).map(func(c: Dictionary) -> String: return c["name"]))
+	# Combat: attack the first target any military unit can reach
+	for u: Dictionary in state.get("units", []):
+		if u.get("civilian", false):
+			continue
+		await _select_unit(int(u["id"]))
+		var targets: Array = selected_unit.get("targets", [])
+		print("SMOKE: %s has %d target(s)" % [u["name"], targets.size()])
+		if not targets.is_empty():
+			var t: Dictionary = targets[0]
+			print("SMOKE: attack preview: ", t)
+			await click_tile(Vector2i(int(t["x"]), int(t["y"])))
+			print("SMOKE: attack result: ", _status_text)
+			break
 	for u: Dictionary in state.get("units", []):
 		if not u.get("civilian", false):
 			await _select_unit(int(u["id"]))
@@ -299,6 +442,19 @@ func _run_smoke_test() -> void:
 				await click_tile(Vector2i(int(target["x"]), int(target["y"])))
 				print("SMOKE: moved warrior, status: ", _status_text)
 			break
+	# Workers: start the first improvement offered
+	for u: Dictionary in state.get("units", []):
+		if u["name"] != "Worker":
+			continue
+		await _select_unit(int(u["id"]))
+		var offered: Array = selected_unit.get("improvements", [])
+		print("SMOKE: worker can build ", offered.map(func(i: Dictionary) -> String: return "%s(%d)" % [i["name"], int(i["turns"])]))
+		for imp: Dictionary in offered:
+			if imp["name"] != "Cancel improvement order":
+				await build_improvement(imp["name"])
+				print("SMOKE: build result: ", _status_text)
+				break
+		break
 	for i in 3:
 		await end_turn()
 		print("SMOKE: ", _status_text.split("\n")[0])
@@ -327,11 +483,6 @@ func _update_hud() -> void:
 			int(p.get("gold", 0)), int(p.get("goldPerTurn", 0)), int(p.get("science", 0)), int(p.get("happiness", 0))])
 		if p.get("currentTech") != null:
 			lines.append("Researching: %s" % p["currentTech"])
-	if not selected_unit.is_empty():
-		var actions: Array = selected_unit.get("actions", []).filter(func(a: Dictionary) -> bool: return a.get("enabled", false))
-		lines.append("Selected: %s  (%s/%d moves, %d HP)" % [selected_unit["name"],
-			str(snappedf(float(selected_unit["movement"]), 0.1)), int(selected_unit["maxMovement"]), int(selected_unit["health"])])
-		lines.append("  can: " + ", ".join(actions.map(func(a: Dictionary) -> String: return a["title"])))
 	if _hover_text != "":
 		lines.append(_hover_text)
 	lines.append("")
@@ -367,6 +518,52 @@ func _setup_hud() -> void:
 		_hud_label.add_theme_font_size_override("font_size", 16)
 		panel.add_child(_hud_label)
 	_update_hud()
+
+
+## The unit card: top-right of the window on desktop, strapped to the left wrist in VR.
+func _setup_action_menu() -> void:
+	action_menu = ActionMenu.new()
+	action_menu.chosen.connect(_on_menu_chosen)
+	if not _xr_mode:
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		layer.add_child(action_menu)
+		action_menu.layout_changed.connect(_place_desktop_menu)
+		get_viewport().size_changed.connect(_place_desktop_menu)
+		_place_desktop_menu()
+		return
+
+	_wrist_viewport = SubViewport.new()
+	_wrist_viewport.size = WRIST_PANEL_PIXELS
+	_wrist_viewport.transparent_bg = true
+	_wrist_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	add_child(_wrist_viewport)
+	_wrist_viewport.add_child(action_menu)
+	action_menu.position = Vector2.ZERO
+	action_menu.custom_minimum_size = Vector2(WRIST_PANEL_PIXELS.x, 0)
+
+	_wrist_quad = MeshInstance3D.new()
+	var quad := QuadMesh.new()
+	quad.size = WRIST_PANEL_METRES
+	_wrist_quad.mesh = quad
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.albedo_texture = _wrist_viewport.get_texture()
+	_wrist_quad.material_override = material
+	# Above the back of the left hand, tilted up towards your face like a wristwatch held up to read
+	_wrist_quad.position = Vector3(0.0, 0.07, 0.06)
+	_wrist_quad.rotation_degrees = Vector3(-50, 0, 0)
+	_left_hand.add_child(_wrist_quad)
+
+
+## Keeps the desktop unit card snug in the top-right corner as its contents change.
+func _place_desktop_menu() -> void:
+	await get_tree().process_frame   # let removed buttons actually leave first
+	action_menu.reset_size()
+	var window := get_viewport().get_visible_rect().size
+	action_menu.position = Vector2(window.x - action_menu.size.x - 12, 12)
 
 
 # region scene setup ----------------------------------------------------------------------
@@ -562,21 +759,41 @@ func _update_hover(key: Variant) -> void:
 		return
 	hex_map.set_hover(key)
 	var text := hex_map.describe_tile(key)
+	var target := _target_at(key)
+	if not target.is_empty():
+		text = "ATTACK %s (%s, %d/%d HP)" % [target.get("name", "?"), target.get("civ", "?"),
+			int(target.get("health", 0)), int(target.get("maxHealth", 100))]
+		if target.has("expectedDamageToDefender"):
+			text += "\n  expected: deal %d, take %d" % [int(target["expectedDamageToDefender"]), int(target["expectedDamageToAttacker"])]
 	if text != _hover_text:
 		_hover_text = text
 		_update_hud()
 
 
 func _process_xr(delta: float) -> void:
-	if _right_hand == null or hex_map.tiles.is_empty():
+	if _right_hand == null:
 		return
 	var origin := _right_hand.global_position
 	var direction := -_right_hand.global_transform.basis.z
-	var key: Variant = hex_map.pick(origin, direction)
-	_update_hover(key)
-	_pointer_dot.visible = key != null
-	if key != null:
-		_pointer_dot.global_position = hex_map.to_global(hex_map.tile_local_center(key))
+
+	# The wrist card takes priority over the map behind it
+	var panel_hit: Variant = _wrist_ray_hit(origin, direction)
+	if panel_hit != null:
+		_wrist_pixel = panel_hit[1]
+		_pointer_dot.visible = true
+		_pointer_dot.global_position = panel_hit[0]
+		var motion := InputEventMouseMotion.new()
+		motion.position = _wrist_pixel
+		motion.global_position = _wrist_pixel
+		_wrist_viewport.push_input(motion)
+		_update_hover(null)
+	elif not hex_map.tiles.is_empty():
+		_wrist_pixel = null
+		var key: Variant = hex_map.pick(origin, direction)
+		_update_hover(key)
+		_pointer_dot.visible = key != null
+		if key != null:
+			_pointer_dot.global_position = hex_map.to_global(hex_map.tile_local_center(key))
 
 	# Left stick: x rotates the table, y scales it
 	var stick := _left_hand.get_vector2("primary")
@@ -587,10 +804,40 @@ func _process_xr(delta: float) -> void:
 		table.scale = Vector3(s, s, s)
 
 
+## Where a ray hits the wrist card: [global point, panel pixel], or null.
+func _wrist_ray_hit(origin: Vector3, direction: Vector3) -> Variant:
+	if _wrist_quad == null or not _wrist_quad.is_visible_in_tree():
+		return null
+	var t := _wrist_quad.global_transform
+	var plane := Plane(t.basis.z.normalized(), t.origin)
+	var hit: Variant = plane.intersects_ray(origin, direction)
+	if hit == null:
+		return null
+	var local := _wrist_quad.to_local(hit)
+	var u := local.x / WRIST_PANEL_METRES.x + 0.5
+	var v := 0.5 - local.y / WRIST_PANEL_METRES.y
+	if u < 0.0 or u > 1.0 or v < 0.0 or v > 1.0:
+		return null
+	return [hit, Vector2(u * WRIST_PANEL_PIXELS.x, v * WRIST_PANEL_PIXELS.y)]
+
+
+func _click_wrist(pixel: Vector2) -> void:
+	for pressed in [true, false]:
+		var click := InputEventMouseButton.new()
+		click.button_index = MOUSE_BUTTON_LEFT
+		click.pressed = pressed
+		click.position = pixel
+		click.global_position = pixel
+		_wrist_viewport.push_input(click)
+
+
 func _on_xr_button(is_right: bool, button: String) -> void:
 	if is_right:
 		match button:
 			"trigger_click":
+				if _wrist_pixel != null:
+					_click_wrist(_wrist_pixel)
+					return
 				var key: Variant = hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z)
 				if key != null:
 					click_tile(key)

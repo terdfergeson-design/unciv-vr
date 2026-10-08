@@ -32,6 +32,15 @@ func is_bridge_connected() -> bool:
 	return _is_connected
 
 
+## Asks the bridge to exit, without waiting for the reply (used when quitting).
+func send_shutdown() -> void:
+	if not _is_connected:
+		return
+	var line := JSON.stringify({"id": 0, "method": "shutdown", "params": {}}) + "\n"
+	_peer.put_data(line.to_utf8_buffer())
+	_peer.poll()
+
+
 ## Sends a request and waits for its reply. Always returns {ok: bool, result | error}.
 func request(method: String, params: Dictionary = {}) -> Dictionary:
 	if not _is_connected:
