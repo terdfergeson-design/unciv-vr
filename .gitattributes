@@ -1,0 +1,10 @@
+# Keep LF line endings for everything in this repo (Godot and modern editors handle them fine on Windows).
+# This also silences the "LF will be replaced by CRLF" warnings.
+* text=auto eol=lf
+
+# Binary files Godot projects tend to grow
+*.png binary
+*.jpg binary
+*.glb binary
+*.ogg binary
+*.wav binary
