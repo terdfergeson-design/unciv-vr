@@ -25,7 +25,12 @@ var _hover := Vector2i(999999, 999999)
 var _selected := Vector2i(999999, 999999)
 var _reachable: Array[Vector2i] = []
 var _targets: Array[Vector2i] = []
+var _beacon: MeshInstance3D       # a pulsing light column over the selected unit, to find it at a glance
+var _beacon_time := 0.0
 var _unit_labels: Dictionary = {}   # Vector2i -> Array[Label3D]; shown only for hovered/selected tiles
+const NO_TILE := Vector2i(999999, 999999)
+var _aim_key := NO_TILE            # where the selected unit is aimed (click again there to go)
+var _aim_root: Node3D
 
 
 func _ready() -> void:
@@ -44,6 +49,34 @@ func _ready() -> void:
 	_cities_root = Node3D.new()
 	_cities_root.name = "Cities"
 	_content.add_child(_cities_root)
+
+	_beacon = MeshInstance3D.new()
+	_beacon.name = "Beacon"
+	var column := CylinderMesh.new()
+	column.top_radius = 0.06
+	column.bottom_radius = 0.22
+	column.height = 5.0
+	column.radial_segments = 12
+	column.cap_top = false
+	column.cap_bottom = false
+	_beacon.mesh = column
+	var glow := StandardMaterial3D.new()
+	glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	glow.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	glow.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	glow.cull_mode = BaseMaterial3D.CULL_DISABLED
+	glow.albedo_color = Color(1.0, 0.85, 0.3, 0.35)
+	_beacon.material_override = glow
+	_beacon.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_beacon.visible = false
+	_content.add_child(_beacon)
+
+
+func _process(delta: float) -> void:
+	if _beacon.visible:
+		_beacon_time += delta
+		var material := _beacon.material_override as StandardMaterial3D
+		material.albedo_color.a = 0.2 + 0.18 * sin(_beacon_time * 4.0)
 
 
 func set_ruleset(ruleset: Dictionary) -> void:
@@ -239,7 +272,17 @@ func set_selection(selected: Vector2i, reachable: Array[Vector2i], targets: Arra
 	_reachable = reachable
 	_targets = targets
 	_build_highlights()
+	_place_beacon()
 	_update_label_visibility()
+
+
+func _place_beacon() -> void:
+	if tiles.has(_selected):
+		var tile: Dictionary = tiles[_selected]
+		_beacon.position = tile_position(_selected, tile_height(tile) + 2.5)
+		_beacon.visible = true
+	else:
+		_beacon.visible = false
 
 
 func clear_selection() -> void:
@@ -248,6 +291,64 @@ func clear_selection() -> void:
 
 func is_target(key: Vector2i) -> bool:
 	return key in _targets
+
+
+func is_reachable(key: Vector2i) -> bool:
+	return key in _reachable
+
+
+## Marks where the selected unit is aimed: a bright ring on [param key], a dot where each turn of the
+## journey ends (numbered), and [param text] floating above, e.g. "Move here: 2 turns - click again".
+func set_aim(key: Vector2i, stops: Array[Vector2i], text: String, color: Color) -> void:
+	clear_aim()
+	_aim_key = key
+	if not tiles.has(key):
+		return
+	_aim_root = Node3D.new()
+	_aim_root.name = "Aim"
+	_content.add_child(_aim_root)
+
+	var ring := MeshInstance3D.new()
+	ring.mesh = _make_ring_mesh(0.45)
+	var glow := _flat_material(color)
+	glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	ring.material_override = glow
+	ring.position = tile_position(key, tile_height(tiles[key]) + 0.03)
+	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_aim_root.add_child(ring)
+
+	for i in stops.size():
+		var stop := stops[i]
+		if stop == key or not tiles.has(stop):
+			continue
+		var dot := MeshInstance3D.new()
+		var sphere := SphereMesh.new()
+		sphere.radius = 0.12
+		sphere.height = 0.24
+		dot.mesh = sphere
+		dot.material_override = _flat_material(color)
+		dot.position = tile_position(stop, tile_height(tiles[stop]) + 0.15)
+		_aim_root.add_child(dot)
+		var number := _make_label(str(i + 1), 40)
+		number.position = dot.position + Vector3(0, 0.45, 0)
+		_aim_root.add_child(number)
+
+	var label := _make_label(text, 36)
+	label.modulate = color.lightened(0.5)
+	label.no_depth_test = true   # always readable, even behind a unit or a city
+	label.position = tile_position(key, tile_height(tiles[key]) + 1.3)
+	_aim_root.add_child(label)
+
+
+func clear_aim() -> void:
+	_aim_key = NO_TILE
+	if _aim_root != null:
+		_aim_root.queue_free()
+		_aim_root = null
+
+
+func aim_key() -> Vector2i:
+	return _aim_key
 
 
 func _update_label_visibility() -> void:

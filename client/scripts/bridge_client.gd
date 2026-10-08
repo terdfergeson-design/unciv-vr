@@ -32,6 +32,18 @@ func is_bridge_connected() -> bool:
 	return _is_connected
 
 
+## True while the TCP connection is up (polls the socket; usable when the scene tree is shutting down).
+func is_connection_open() -> bool:
+	return _peer.get_status() == StreamPeerTCP.STATUS_CONNECTED
+
+
+## Polls the socket outside _process (e.g. while quitting).
+func poll_now() -> void:
+	_peer.poll()
+	if _peer.get_status() == StreamPeerTCP.STATUS_CONNECTED and _peer.get_available_bytes() > 0:
+		_peer.get_partial_data(_peer.get_available_bytes())   # discard; we only care that it closes
+
+
 ## Asks the bridge to exit, without waiting for the reply (used when quitting).
 func send_shutdown() -> void:
 	if not _is_connected:
