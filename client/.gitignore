@@ -1,1 +1,5 @@
 .godot/
+# local developer overrides (see scripts/main.gd _parse_args)
+override.cfg
+*.png.tmp
+screenshots/

@@ -76,7 +76,14 @@ func _ready() -> void:
 
 func _parse_args() -> Dictionary:
 	var result := {}
-	for arg in OS.get_cmdline_user_args():
+	var args := Array(OS.get_cmdline_user_args())
+	# Developer hook: an override.cfg next to project.godot can add options, e.g.
+	#   [unciv_vr]
+	#   dev_args="--smoke-test"
+	var dev_args: String = ProjectSettings.get_setting("unciv_vr/dev_args", "")
+	if dev_args != "":
+		args.append_array(dev_args.split(" ", false))
+	for arg: String in args:
 		if arg.begins_with("--"):
 			var parts := arg.substr(2).split("=", true, 1)
 			result[parts[0]] = parts[1] if parts.size() > 1 else ""
