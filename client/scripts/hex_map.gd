@@ -228,6 +228,11 @@ func _rebuild_view() -> void:
 	view_rebuilt.emit()
 
 
+## The city view's marks on the table (a getCity result), or {} to clear them.
+func show_city(city: Dictionary) -> void:
+	overlays.show_city(city, _shown)
+
+
 ## Turns map overlays on / off ({"movement": bool, "yields": ..., "worked", "resources", "improvements"}).
 func set_overlay_flags(new_flags: Dictionary) -> void:
 	for key: String in new_flags:

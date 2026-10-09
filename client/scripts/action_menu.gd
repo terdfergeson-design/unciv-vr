@@ -10,7 +10,7 @@ extends PanelContainer
 ##   unit card:     "action" (UnitActionType), "improvement" (name)
 ##   city card:     "produce" (name, build next), "queue" (name, add to end), "buy" (name), "unqueue" (index)
 ##   research card: "research" (tech name)
-##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it
+##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it, "rename_unit" names it
 ##   settings card: "background" (studio/mountains/space), "auto_move" (end/start); footer "settings_card" opens it
 ##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
 ##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "quit"
@@ -29,6 +29,7 @@ const LIST_HEIGHT := 360
 var show_recenter := false   # VR only
 var in_vr := false
 var compact := false         # no unit/turn footer (the floating city card); set before adding to the tree
+var civ_colors: Dictionary = {}   # civ name -> {inner, outer} (from the map), for unit portraits
 var lobby_mode := false      # no game on the table yet: hide the unit/turn footer
 var keep_scroll_once := false   # the next card rebuild keeps the scroll position (e.g. after pressing + or -)
 var _restore_scroll := 0
@@ -107,104 +108,425 @@ func scroll_by(pixels: float) -> void:
 func show_unit(unit: Dictionary) -> void:
 	if not _begin():
 		return
+	_title.remove_theme_color_override("font_color")
 	if unit.is_empty():
 		_title.text = "No unit selected"
 		_info.text = "Point at a unit or city to select it."
 		_end()
 		return
 
-	_title.text = str(unit.get("name", "?"))
+	var name: String = str(unit.get("name", "?"))
+	var given_name := str(unit.get("instanceName", ""))
+	_title.text = given_name if given_name != "" else name
+	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
+	var facts: Array[String] = []
+	if given_name != "":
+		facts.append(name)
+	if unit.has("unitType"):
+		facts.append(str(unit["unitType"]))
+	for flag: Array in [["fortified", "Fortified"], ["sleeping", "Sleeping"], ["automated", "Automated"],
+			["moving", "On its way"], ["embarked", "Embarked"]]:
+		if unit.get(flag[0], false):
+			facts.append(flag[1])
+	_info.text = "   ".join(facts)
 	if compact:
 		_add_close()
-	var lines: Array[String] = []
-	lines.append("Moves %s/%d   Health %d" % [str(snappedf(float(unit.get("movement", 0)), 0.1)),
-		int(unit.get("maxMovement", 0)), int(unit.get("health", 100))])
+
+	# Portrait in its civ's colours, with its strength and moves beside it
+	var colours: Dictionary = civ_colors.get(str(unit.get("civ", "")), {})
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 8)
+	top.add_child(_icon(Icons.badge("unit", name, colours.get("inner", Color(0.2, 0.25, 0.35)), colours.get("outer", Color.WHITE)), 64))
+	var chips := GridContainer.new()
+	chips.columns = 2
+	chips.add_theme_constant_override("h_separation", 4)
+	chips.add_theme_constant_override("v_separation", 4)
+	chips.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if int(unit.get("strength", 0)) > 0:
-		var strength := "Strength %d" % int(unit["strength"])
-		if int(unit.get("rangedStrength", 0)) > 0:
-			strength += "   Ranged %d (range %d)" % [int(unit["rangedStrength"]), int(unit.get("range", 1))]
-		lines.append(strength)
-	if int(unit.get("xpForNextPromotion", 0)) > 0 and int(unit.get("strength", 0)) > 0:
-		lines.append("XP %d/%d%s" % [int(unit.get("xp", 0)), int(unit["xpForNextPromotion"]),
-			("   Promotions: " + ", ".join(unit.get("promotions", []))) if not unit.get("promotions", []).is_empty() else ""])
+		chips.add_child(_value_chip("Strength", str(int(unit["strength"])), Color(1.0, 0.75, 0.55)))
+	if int(unit.get("rangedStrength", 0)) > 0:
+		chips.add_child(_value_chip("RangedStrength", "%d" % int(unit["rangedStrength"]), Color(1.0, 0.6, 0.5)))
+		chips.add_child(_value_chip("Range", str(int(unit.get("range", 1))), Color(0.85, 0.85, 0.9)))
+	chips.add_child(_value_chip("Movement", "%s/%d" % [str(snappedf(float(unit.get("movement", 0)), 0.1)), int(unit.get("maxMovement", 0))],
+		Color(0.7, 0.9, 1.0)))
+	top.add_child(chips)
+	var rename := _make_button("Rename", func() -> void: chosen.emit("rename_unit", ""), Color(0.25, 0.28, 0.38))
+	rename.size_flags_horizontal = Control.SIZE_SHRINK_END
+	rename.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	rename.custom_minimum_size = Vector2(92, 36)
+	rename.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	top.add_child(rename)
+	_list.add_child(top)
+
+	# Health, then experience towards the next promotion
+	var health := int(unit.get("health", 100))
+	var health_colour := Color(0.35, 0.85, 0.35) if health > 66 else (Color(0.95, 0.8, 0.2) if health > 33 else Color(0.95, 0.3, 0.25))
+	_list.add_child(_labelled_bar("Health", float(health) / 100.0, health_colour, "%d/100" % health))
+	var military := int(unit.get("strength", 0)) > 0 or int(unit.get("rangedStrength", 0)) > 0
+	if military and int(unit.get("xpForNextPromotion", 0)) > 0:
+		var needed := int(unit["xpForNextPromotion"])
+		_list.add_child(_labelled_bar("XP", float(unit.get("xp", 0)) / needed, Color(0.95, 0.75, 0.25), "%d/%d" % [int(unit.get("xp", 0)), needed]))
+	if unit.get("canPromote", false):
+		var promote := _make_button("Promote!  Choose a promotion", func() -> void: chosen.emit("promotion_card", ""), Color(0.6, 0.45, 0.08))
+		promote.icon = Icons.action("Promote")
+		promote.add_theme_constant_override("icon_max_width", 26)
+		_list.add_child(promote)
+	var promotions: Array = unit.get("promotions", [])
+	if not promotions.is_empty():
+		var flow := HFlowContainer.new()
+		flow.add_theme_constant_override("h_separation", 8)
+		flow.add_theme_constant_override("v_separation", 2)
+		for p: String in promotions:
+			var found := Icons.promotion(p)
+			var chip := HBoxContainer.new()
+			chip.add_theme_constant_override("separation", 3)
+			chip.add_child(_icon(found[0], 22))
+			var label := Label.new()
+			label.text = p
+			label.add_theme_font_size_override("font_size", 13)
+			label.add_theme_color_override("font_color", Color(0.8, 0.85, 0.95))
+			chip.add_child(label)
+			flow.add_child(chip)
+		_list.add_child(flow)
+
+	# Work in progress, and enemies in reach
 	var work: Dictionary = unit.get("tileWork", {})
 	if work.get("inProgress") != null:
-		lines.append("Building %s: %d turns left" % [work["inProgress"], int(work.get("turnsLeft", 0))])
+		_list.add_child(_icon_row(Icons.badge("improvement", str(work["inProgress"]), Color(0.25, 0.4, 0.25)),
+			"Building %s" % work["inProgress"], "%d turns left" % int(work.get("turnsLeft", 0)), Color(0.18, 0.28, 0.18), Callable(), 30))
 	var targets: Array = unit.get("targets", [])
 	if not targets.is_empty():
-		lines.append("%d target(s) in reach - shown in red" % targets.size())
-	_info.text = "\n".join(lines)
+		var warn := Label.new()
+		warn.text = "%d enemy target%s in reach (red rings): click one to aim" % [targets.size(), "s" if targets.size() > 1 else ""]
+		warn.add_theme_font_size_override("font_size", 15)
+		warn.add_theme_color_override("font_color", Color(1.0, 0.45, 0.4))
+		warn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_list.add_child(warn)
 
-	if unit.get("canPromote", false):
-		_list.add_child(_make_button("Promote!  (choose a promotion)", func() -> void: chosen.emit("promotion_card", ""),
-			Color(0.55, 0.42, 0.08)))
-	for action: Dictionary in unit.get("actions", []):
-		if not action.get("enabled", false) or action["type"] == "Promote":
-			continue   # Unciv's own Promote action opens its promotion screen; we use the card above instead
-		var type: String = action["type"]
-		var title: String = str(action.get("title", type)).replace("{", "").replace("}", "")   # Unciv templates like "{Found city}"
-		if action.get("current", false):
-			title += "  (active)"
-		_list.add_child(_make_button(title, func() -> void: chosen.emit("action", type)))
+	# Actions as icon buttons, two to a row (like Unciv's action bar)
+	var actions := (unit.get("actions", []) as Array).filter(func(a: Dictionary) -> bool:
+		return a.get("enabled", false) and a["type"] != "Promote")   # promotions use the card above instead
+	if not actions.is_empty():
+		_add_header("Actions")
+		var grid := GridContainer.new()
+		grid.columns = 2
+		grid.add_theme_constant_override("h_separation", 4)
+		grid.add_theme_constant_override("v_separation", 4)
+		for action: Dictionary in actions:
+			var type: String = action["type"]
+			var title: String = _plain(str(action.get("title", type)).replace("{", "").replace("}", ""))   # Unciv templates like "{Found city}"
+			var active: bool = action.get("current", false)
+			var colour := Color(0.24, 0.36, 0.55) if active else Color(0.2, 0.22, 0.3)
+			if type == "FoundCity":
+				colour = Color(0.45, 0.35, 0.1)
+			elif type in ["DisbandUnit", "Pillage"]:
+				colour = Color(0.42, 0.18, 0.15)
+			var button := _make_button(title, func() -> void: chosen.emit("action", type), colour)
+			button.icon = Icons.action(type)
+			button.add_theme_constant_override("icon_max_width", 24)
+			button.add_theme_font_size_override("font_size", 15)
+			button.custom_minimum_size = Vector2(0, 40)
+			button.tooltip_text = title
+			grid.add_child(button)
+		_list.add_child(grid)
 
 	var improvements: Array = unit.get("improvements", [])
 	if not improvements.is_empty():
-		_add_header("Build here:")
+		_add_header("Build here")
 		for imp: Dictionary in improvements:
 			var imp_name: String = imp["name"]
 			var turns := int(imp.get("turns", 0))
-			var label := imp_name if turns <= 0 else "%s  (%d turns)" % [imp_name, turns]
-			_list.add_child(_make_button(label, func() -> void: chosen.emit("improvement", imp_name), Color(0.2, 0.35, 0.2)))
+			var cancel := imp_name.begins_with("Cancel")
+			var texture: Texture2D = Icons.action("Stop") if cancel else Icons.badge("improvement", imp_name, Color(0.25, 0.4, 0.25))
+			_list.add_child(_icon_row(texture, imp_name, ("%d turns" % turns) if turns > 0 else "",
+				Color(0.4, 0.2, 0.15) if cancel else Color(0.17, 0.28, 0.17), func() -> void: chosen.emit("improvement", imp_name), 30))
 	_end()
 
 
-## A getCity result: growth, yields, the queue, and everything it can build.
+## A stat symbol (from StatIcons) and a number on a dark tile.
+func _value_chip(icon_name: String, value: String, colour: Color) -> Control:
+	var chip := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.13, 0.15, 0.2)
+	style.set_corner_radius_all(8)
+	style.content_margin_left = 4
+	style.content_margin_right = 6
+	chip.add_theme_stylebox_override("panel", style)
+	chip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
+	chip.add_child(row)
+	row.add_child(_icon(Icons.get_icon("stat", icon_name), 24))
+	var label := Label.new()
+	label.text = value
+	label.add_theme_font_size_override("font_size", 18)
+	label.add_theme_color_override("font_color", colour)
+	row.add_child(label)
+	return chip
+
+
+## "Health [bar]" - a caption in front of a progress bar.
+func _labelled_bar(caption: String, fraction: float, colour: Color, text: String) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var label := Label.new()
+	label.text = caption
+	label.custom_minimum_size = Vector2(62, 0)
+	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_color_override("font_color", colour.lightened(0.2))
+	row.add_child(label)
+	var bar := _progress_bar(fraction, colour, text, 18)
+	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(bar)
+	return row
+
+
+## Drops Unciv's icon characters (private-use code points our font doesn't have).
+static func _plain(text: String) -> String:
+	var out := ""
+	for i in text.length():
+		var code := text.unicode_at(i)
+		if code < 0xE000 or code > 0xF8FF:
+			out += text[i]
+	return out.strip_edges()
+
+
+## A getCity result: the city's numbers, growth and borders, what it's building, and everything it can build
+## (click to build it next; the gold chip buys it). "City view" opens the full city screen.
 func show_city(city: Dictionary, gold: int) -> void:
 	if not _begin():
 		return
-	_title.text = "%s  (%d)" % [city.get("name", "?"), int(city.get("population", 0))]
-	var y: Dictionary = city.get("yields", {})
-	var lines: Array[String] = []
-	lines.append("Food %+d  Prod %d  Gold %+d  Sci %d  Cult %d" % [int(y.get("food", 0)), int(y.get("production", 0)),
-		int(y.get("gold", 0)), int(y.get("science", 0)), int(y.get("culture", 0))])
-	var growth := int(city.get("turnsToGrowth", -1)) if city.get("turnsToGrowth") != null else -1
-	if growth >= 0:
-		lines.append("Grows in %d turns (%d/%d food)" % [growth, int(city.get("foodStored", 0)), int(city.get("foodToGrow", 0))])
-	elif city.get("turnsToStarvation") != null:
-		lines.append("STARVING - shrinks in %d turns" % int(city["turnsToStarvation"]))
-	else:
-		lines.append("Not growing")
-	lines.append("Health %d/%d   Your gold: %d" % [int(city.get("health", 0)), int(city.get("maxHealth", 0)), gold])
-	_info.text = "\n".join(lines)
+	var pop := int(city.get("population", 0))
+	_title.text = "%s%s" % ["* " if city.get("isCapital", false) else "", city.get("name", "?")]
+	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
+	var facts: Array[String] = ["Population %d" % pop]
+	if city.has("defense"):
+		facts.append("Defence %d" % int(city["defense"]))
+	facts.append("Health %d/%d" % [int(city.get("health", 0)), int(city.get("maxHealth", 0))])
+	if int(city.get("freePopulation", 0)) > 0:
+		facts.append("%d idle citizen%s" % [int(city["freePopulation"]), "s" if int(city["freePopulation"]) > 1 else ""])
+	if city.get("isPuppet", false):
+		facts.append("Puppet")
+	_info.text = "   ".join(facts)
+
+	# The city's yields, in Unciv's colours and symbols
+	var stats: Dictionary = city.get("stats", city.get("yields", {}))
+	var grid := GridContainer.new()
+	grid.columns = 4
+	grid.add_theme_constant_override("h_separation", 4)
+	grid.add_theme_constant_override("v_separation", 4)
+	for stat: String in ["food", "production", "gold", "science", "culture", "faith", "happiness"]:
+		if not stats.has(stat) or (stat == "faith" and not city.get("religionEnabled", true)):
+			continue
+		var value := roundi(float(stats[stat]))
+		grid.add_child(_stat_chip(stat, ("%+d" % value) if stat in ["food", "gold", "happiness"] else str(value)))
+	_list.add_child(grid)
+
+	# Growth and borders as bars
+	var food_to_grow := maxi(1, int(city.get("foodToGrow", 1)))
+	var growth_text := ""
+	var growth_colour: Color = STAT_COLORS["food"]
+	match str(city.get("growthStatus", "growing" if city.get("turnsToGrowth") != null else "stopped")):
+		"starving":
+			growth_text = "Starving! %d turns" % int(city.get("turnsToStarvation", 0))
+			growth_colour = Color(1.0, 0.35, 0.3)
+		"growing":
+			growth_text = "Grows in %d turns" % int(city.get("turnsToGrowth", 0))
+		"foodToProduction":
+			growth_text = "Food -> production"
+		_:
+			growth_text = "Not growing"
+	_list.add_child(_bar_row("food", float(city.get("foodStored", 0)) / food_to_grow, growth_colour,
+		"%d/%d" % [int(city.get("foodStored", 0)), food_to_grow], growth_text))
+	var expansion: Dictionary = city.get("expansion", {})
+	if not expansion.is_empty():
+		var needed := maxi(1, int(expansion.get("cultureToNextTile", 1)))
+		var turns := int(expansion.get("turns", -1))
+		_list.add_child(_bar_row("culture", float(expansion.get("cultureStored", 0)) / needed, STAT_COLORS["culture"],
+			"%d/%d" % [int(expansion.get("cultureStored", 0)), needed], ("Border in %d turns" % turns) if turns > 0 else "Borders stopped"))
 
 	if compact:
 		_add_close()
+	var city_name: String = city.get("name", "")
+	var view := _make_button("City view  -  tiles, citizens, queue, buying", func() -> void: chosen.emit("city_view", city_name),
+		Color(0.5, 0.38, 0.12))
+	view.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_list.add_child(view)
+
+	# What it's building: the current item with its progress, then the rest of the queue
 	var queue: Array = city.get("queue", [])
-	_add_header("Producing:" if not queue.is_empty() else "Producing nothing - pick something below")
+	_add_header("Producing" if not queue.is_empty() else "Producing nothing - pick something below")
 	for entry: Dictionary in queue:
 		var index := int(entry["index"])
+		var name: String = entry["name"]
 		var turns := int(entry.get("turns", -1))
-		var text := "%d. %s" % [index + 1, entry["name"]] + ("  (%d turns)" % turns if turns >= 0 else "")
-		_list.add_child(_make_row(text, Color(0.3, 0.27, 0.15), [
-			["X", func() -> void: chosen.emit("unqueue", str(index)), Color(0.4, 0.15, 0.15)]]))
+		var row := _icon_row(Icons.construction(name), name, ("%d turns" % turns) if turns >= 0 else "",
+			Color(0.32, 0.26, 0.1) if index == 0 else Color(0.22, 0.2, 0.12), Callable(), 42 if index == 0 else 30)
+		if index == 0 and entry.has("cost"):
+			var column: VBoxContainer = row.get_child(0).get_child(1)
+			var cost := maxi(1, int(entry["cost"]))
+			column.add_child(_progress_bar(float(entry.get("progress", 0)) / cost, STAT_COLORS["production"],
+				"%d/%d" % [int(entry.get("progress", 0)), cost], 16))
+			row.custom_minimum_size.y = 58
+		var remove := _make_button("X", func() -> void: chosen.emit("unqueue", str(index)), Color(0.45, 0.15, 0.13))
+		remove.custom_minimum_size = Vector2(36, 34)
+		remove.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		remove.size_flags_horizontal = Control.SIZE_SHRINK_END
+		remove.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.get_child(0).add_child(remove)
+		_list.add_child(row)
 
 	var options: Array = city.get("options", []).filter(func(o: Dictionary) -> bool: return o.get("buildable", false))
-	for kind_and_header: Array in [["unit", "Units"], ["building", "Buildings"], ["wonder", "Wonders"], ["perpetual", "Other"]]:
-		var of_kind := options.filter(func(o: Dictionary) -> bool: return o["kind"] == kind_and_header[0])
+	for group: Array in [["unit", "Units"], ["building", "Buildings"], ["wonder", "Wonders"], ["perpetual", "Other"]]:
+		var of_kind := options.filter(func(o: Dictionary) -> bool: return o["kind"] == group[0])
 		if of_kind.is_empty():
 			continue
-		_add_header(kind_and_header[1])
+		_add_header(group[1])
 		for option: Dictionary in of_kind:
 			var option_name: String = option["name"]
 			var turns := int(option.get("turns", -1))
-			var text := option_name + ("  %dt" % turns if turns >= 0 else "")
-			var extras: Array = [["+Q", func() -> void: chosen.emit("queue", option_name), Color(0.22, 0.25, 0.32)]]
+			var row := _icon_row(Icons.construction(option_name), option_name, ("%d turns" % turns) if turns >= 0 else "",
+				Color(0.15, 0.17, 0.23), func() -> void: chosen.emit("produce", option_name), 30)
 			if option.get("canBuy", false):
-				extras.append(["%dg" % int(option["goldCost"]), func() -> void: chosen.emit("buy", option_name), Color(0.5, 0.42, 0.1)])
-			_list.add_child(_make_row(text, Color(0.2, 0.22, 0.28), extras, func() -> void: chosen.emit("produce", option_name)))
+				var buy := _make_button("%d" % int(option["goldCost"]), func() -> void: chosen.emit("buy", option_name), Color(0.5, 0.4, 0.08))
+				buy.icon = Icons.get_icon("stat", "Gold")
+				buy.add_theme_constant_override("icon_max_width", 20)
+				buy.custom_minimum_size = Vector2(74, 34)
+				buy.size_flags_horizontal = Control.SIZE_SHRINK_END
+				buy.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				buy.tooltip_text = "Buy now for %d gold (you have %d)" % [int(option["goldCost"]), gold]
+				row.get_child(0).add_child(buy)
+			_list.add_child(row)
 	if not compact:
 		_add_close()
 	_end()
+
+
+const STAT_COLORS := {
+	"food": Color(0.45, 0.85, 0.35), "production": Color(0.95, 0.55, 0.25), "gold": Color(0.98, 0.8, 0.25),
+	"science": Color(0.4, 0.72, 1.0), "culture": Color(0.8, 0.5, 0.98), "happiness": Color(0.5, 0.9, 0.35),
+	"faith": Color(0.75, 0.88, 1.0),
+}
+
+
+## A stat symbol and its number on a dark tile.
+func _stat_chip(stat: String, value: String) -> Control:
+	var chip := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.13, 0.15, 0.2)
+	style.set_corner_radius_all(8)
+	style.content_margin_left = 4
+	style.content_margin_right = 6
+	style.content_margin_top = 2
+	style.content_margin_bottom = 2
+	chip.add_theme_stylebox_override("panel", style)
+	chip.custom_minimum_size = Vector2(84, 0)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 4)
+	chip.add_child(row)
+	row.add_child(_icon(Icons.get_icon("stat", stat.capitalize()), 26))
+	var label := Label.new()
+	label.text = value
+	label.add_theme_font_size_override("font_size", 18)
+	label.add_theme_color_override("font_color", STAT_COLORS[stat].lightened(0.25))
+	row.add_child(label)
+	return chip
+
+
+## A stat symbol, a progress bar and a caption, e.g. food towards the next citizen.
+func _bar_row(stat: String, fraction: float, colour: Color, bar_text: String, caption: String) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	row.add_child(_icon(Icons.get_icon("stat", stat.capitalize()), 24))
+	var bar := _progress_bar(fraction, colour, bar_text, 18)
+	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(bar)
+	var label := Label.new()
+	label.text = caption
+	label.custom_minimum_size = Vector2(150, 0)
+	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_color_override("font_color", colour.lightened(0.2))
+	row.add_child(label)
+	return row
+
+
+func _progress_bar(fraction: float, colour: Color, text: String, height: float) -> Control:
+	var back := Panel.new()
+	back.custom_minimum_size = Vector2(60, height)
+	back.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.16, 0.16, 0.2)
+	style.set_corner_radius_all(5)
+	back.add_theme_stylebox_override("panel", style)
+	var fill := Panel.new()
+	var fill_style := StyleBoxFlat.new()
+	fill_style.bg_color = colour.darkened(0.2)
+	fill_style.set_corner_radius_all(5)
+	fill.add_theme_stylebox_override("panel", fill_style)
+	fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill.anchor_bottom = 1.0
+	fill.anchor_right = clampf(fraction, 0.0, 1.0)
+	back.add_child(fill)
+	var label := Label.new()
+	label.text = text
+	label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", int(height * 0.72))
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 4)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	back.add_child(label)
+	return back
+
+
+func _icon(texture: Texture2D, side: float) -> Control:
+	var rect := TextureRect.new()
+	rect.texture = texture
+	rect.custom_minimum_size = Vector2(side, side)
+	rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rect.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	return rect
+
+
+## A full-width row: icon, name (with room under it for a bar), text on the right; clickable when
+## [param on_press] is valid. Extra buttons go into row.get_child(0) (the HBoxContainer).
+func _icon_row(texture: Texture2D, text: String, right: String, colour: Color, on_press: Callable, icon_side: float) -> Button:
+	var button := _make_button("", on_press if on_press.is_valid() else func() -> void: pass, colour)
+	button.custom_minimum_size = Vector2(0, maxf(40, icon_side + 8))
+	var inner := HBoxContainer.new()
+	inner.add_theme_constant_override("separation", 8)
+	inner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	inner.offset_left = 6
+	inner.offset_right = -6
+	inner.offset_top = 3
+	inner.offset_bottom = -3
+	inner.mouse_filter = Control.MOUSE_FILTER_PASS
+	button.add_child(inner)
+	inner.add_child(_icon(texture, icon_side))
+	var column := VBoxContainer.new()
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 2)
+	inner.add_child(column)
+	var label := Label.new()
+	label.text = text
+	label.clip_text = true
+	label.add_theme_font_size_override("font_size", 17)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(label)
+	if right != "":
+		var turns := Label.new()
+		turns.text = right
+		turns.add_theme_font_size_override("font_size", 14)
+		turns.add_theme_color_override("font_color", Color(0.72, 0.76, 0.84))
+		turns.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		turns.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		inner.add_child(turns)
+	return button
 
 
 ## A getUnit result's promotionChoices, one button each with its description underneath.
@@ -496,6 +818,7 @@ func _begin() -> bool:
 		return false
 	for child in _list.get_children():
 		child.queue_free()
+	_title.remove_theme_color_override("font_color")
 	_restore_scroll = _scroll.scroll_vertical if keep_scroll_once else 0
 	keep_scroll_once = false
 	_scroll.scroll_vertical = 0

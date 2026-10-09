@@ -22,6 +22,8 @@ var _arrows: MeshInstance3D         # unit movement arrows
 var _yield_layer: Node3D
 var _quad: QuadMesh
 var _materials: Dictionary = {}     # texture -> material
+var city: Dictionary = {}           # the city view's getCity result (empty outside the city view)
+var _city_layer: Node3D             # city view: worked / locked / buy symbols, yields, shading
 
 
 func setup(map: Node3D) -> void:
@@ -35,6 +37,8 @@ func setup(map: Node3D) -> void:
 	add_child(_yield_layer)
 	_models = Node3D.new()
 	add_child(_models)
+	_city_layer = Node3D.new()
+	add_child(_city_layer)
 	_arrows = MeshInstance3D.new()
 	var arrow_material := StandardMaterial3D.new()
 	arrow_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -50,18 +54,19 @@ func rebuild(shown: Dictionary) -> void:
 		return
 	_clear(_decals)
 	_clear(_models)
+	_build_city(shown)
 	_build_symbols(shown)
 	if flags["improvements"]:
 		_build_improvement_models(shown)
 	_build_arrows(shown)
-	if not flags["yields"]:
+	if not flags["yields"] or not city.is_empty():
 		_clear(_yield_layer)
 
 
 ## Yields per tile from the bridge's getYields: [{x, y, food?, production?, ...}].
 func show_yields(tiles: Array, shown: Dictionary) -> void:
 	_clear(_yield_layer)
-	if not flags["yields"]:
+	if not flags["yields"] or not city.is_empty():
 		return
 	var groups := {}   # stat -> Array[Transform3D]
 	for entry: Dictionary in tiles:
@@ -88,6 +93,125 @@ func show_yields(tiles: Array, shown: Dictionary) -> void:
 			groups[symbols[i]].append(Transform3D(Basis().scaled(Vector3(0.4, 1, 0.4)), at))
 	for stat: String in groups:
 		_add_decals(_yield_layer, Icons.get_icon("stat", stat.capitalize()), groups[stat])
+
+
+# region city view ----------------------------------------------------------------------------
+
+## The city view's marks on the table (Unciv's city screen): each tile's yields, a worked / locked / not worked
+## symbol on the tiles the city can work, prices on tiles it can buy, a purple outline on the next tile its
+## borders will take, and shading over everything it can't work. An empty [param data] clears them.
+func show_city(data: Dictionary, shown: Dictionary) -> void:
+	city = data
+	_clear(_yield_layer)
+	_build_city(shown)
+
+
+func _build_city(shown: Dictionary) -> void:
+	_clear(_city_layer)
+	if city.is_empty():
+		return
+	var symbols := {}   # texture -> transforms
+	var yields := {}    # stat -> transforms
+	var shade: Array = []
+	var outline: Array = []
+	for t: Dictionary in city.get("tiles", []):
+		var key := Vector2i(int(t["x"]), int(t["y"]))
+		if not shown.has(key) or not _map.tiles.has(key):
+			continue
+		var tile: Dictionary = _map.tiles[key]
+		var top: float = _map.tile_height(tile) + 0.05
+		var centre: Vector3 = _map.tile_position(key, top)
+		var state := str(t.get("state", ""))
+		# Yields across the middle of the tile (up to three of each, like Unciv)
+		var stat_list: Array[String] = []
+		for stat: String in ["food", "production", "gold", "science", "culture", "faith"]:
+			for i in mini(roundi(float(t.get("yields", {}).get(stat, 0.0))), 3):
+				stat_list.append(stat)
+		var count := stat_list.size()
+		var per_row := count if count <= 4 else ceili(count / 2.0)
+		for i in count:
+			var row := i / per_row
+			var in_row := mini(per_row, count - row * per_row)
+			var at := centre + Vector3((i % per_row - (in_row - 1) / 2.0) * 0.34, 0, -0.3 + row * 0.34)
+			if not yields.has(stat_list[i]):
+				yields[stat_list[i]] = []
+			yields[stat_list[i]].append(Transform3D(Basis().scaled(Vector3(0.36, 1, 0.36)), at))
+		# The citizen symbol (Unciv's TileIcons) at the bottom of the tile
+		var icon := ""
+		match state:
+			"worked": icon = "Worked"
+			"locked": icon = "Locked"
+			"notWorked": icon = "NotWorked"
+			"center": icon = "CityCenter"
+			"blockaded": icon = "Blockaded"
+			"buyable": icon = "Buy"
+		if icon != "":
+			var texture := Icons.get_icon("tile", icon)
+			if texture != null:
+				if not symbols.has(texture):
+					symbols[texture] = []
+				symbols[texture].append(Transform3D(Basis().scaled(Vector3(0.5, 1, 0.5)), centre + Vector3(0, 0.01, 0.45)))
+		if state == "buyable" and t.has("buyCost"):
+			var price := Label3D.new()
+			price.text = "%d" % int(t["buyCost"])
+			price.font_size = 64
+			price.pixel_size = 0.0045
+			price.outline_size = 14
+			price.modulate = Color(1.0, 0.85, 0.3) if t.get("canAfford", false) else Color(1.0, 0.4, 0.35)
+			price.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			price.position = centre + Vector3(0, 0.32, 0.45)
+			_city_layer.add_child(price)
+		if state in ["foreign", "outOfRange", "otherCity", "buyable"]:
+			shade.append(centre + Vector3(0, -0.03, 0))
+		if t.get("nextToOwn", false):
+			outline.append(centre)
+	for stat: String in yields:
+		_add_decals(_city_layer, Icons.get_icon("stat", stat.capitalize()), yields[stat])
+	for texture: Texture2D in symbols:
+		_add_decals(_city_layer, texture, symbols[texture])
+	if not shade.is_empty():
+		_add_hexes(shade, 0.97, Color(0.0, 0.0, 0.05, 0.55))
+	if not outline.is_empty():
+		_add_outline(outline, Color(0.8, 0.12, 0.88))
+
+
+## Translucent flat hexagons (shading over the tiles the city can't work), corners like the map's tiles.
+func _add_hexes(centres: Array, radius: float, colour: Color) -> void:
+	var vertices := PackedVector3Array()
+	for c: Vector3 in centres:
+		for i in 6:
+			var a := deg_to_rad(60.0 * i)
+			var b := deg_to_rad(60.0 * (i + 1))
+			vertices.append_array([c, c + Vector3(cos(b), 0, sin(b)) * radius, c + Vector3(cos(a), 0, sin(a)) * radius])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var node := MeshInstance3D.new()
+	node.mesh = mesh
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.albedo_color = colour
+	node.material_override = material
+	node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_city_layer.add_child(node)
+
+
+## A coloured hexagon outline around each of [param centres] (Unciv's purple "next tile" outline).
+func _add_outline(centres: Array, colour: Color) -> void:
+	var segments: Array = []
+	for c: Vector3 in centres:
+		for i in 6:
+			var a := deg_to_rad(60.0 * i)
+			var b := deg_to_rad(60.0 * (i + 1))
+			segments.append([c + Vector3(cos(a), 0, sin(a)) * 0.88, c + Vector3(cos(b), 0, sin(b)) * 0.88, colour])
+	var node := MeshInstance3D.new()
+	node.mesh = _ribbons(segments, 0.1, 0.02, false)
+	node.material_override = _arrows.material_override
+	_city_layer.add_child(node)
 
 
 # region symbols ----------------------------------------------------------------------------

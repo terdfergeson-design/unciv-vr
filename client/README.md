@@ -18,8 +18,8 @@ Open this folder in Godot (Import → select `project.godot`) and press **F5** (
 The client opens on the **main menu** (floating over the table): Continue (the autosave), Quick start
 (the same setup as last time), New game (pick your civ, map and rules in three tabs) or Load game.
 A bridge you started by hand that's already running a game is resumed straight away.
-Saves and the autosave (written every turn) live in `~/.unciv-vr/SaveFiles`; Settings has Save game and
-Main menu.
+Saves and the autosave (written every turn) live in `~/.unciv-vr/SaveFiles`; Settings has Save game (you
+type the name; it starts as "<civ> - turn <n>") and Main menu.
 
 ## Controls
 Everything can be done with the **right controller alone** (or the mouse on desktop): point at things and
@@ -30,7 +30,10 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Select a unit | left-click it | point + right trigger: its card pops up above it (actions, improvements, Promote) |
 | Move / attack | click a tile to aim (path, turns or expected damage show up), click it again to go | same, with point + right trigger |
 | Open a city | click it (with a unit selected it also aims the unit there; click again to march in) | point + right trigger: its card floats above the city |
-| Table buttons: Idle unit (left side); End turn, Research, Recenter, Settings (right side) | click | point + right trigger |
+| Empire overview (Unciv's stats and info screen) | E opens / closes it | always up, off to your right - turn your head to read it |
+| City view | "City view" on the city's card; Esc or "Exit city" leaves | same; B or "Exit city" leaves |
+| Rename a city / unit, name a save | "Rename" in the city view's header, on the unit card or in the overview's Units tab; type on the keyboard (or the on-screen one), Enter / Esc | the on-screen keyboard pops up on your left wrist (or floats in front of you if the left controller isn't tracked): point + right trigger on the keys, OK; B or Cancel closes it |
+| Table buttons: Idle unit (left side); End turn, Recenter, Settings (right side); in the city view only a red Exit city | click | point + right trigger |
 | Scroll a card | mouse wheel | point at it + right stick |
 | Table height | – | either stick up / down (the right one only when not pointing at a card) |
 | Rotate / scale table | right-drag orbit, wheel zoom, WASD / middle-drag pan | hold either grip + that stick: left / right rotates, up / down scales |
@@ -63,6 +66,32 @@ Research button along the bottom. Units carry their Unciv unit symbol in their c
 nation's emblem, and the diplomacy cards, info board and new-game nation list use the nation emblems too.
 All of these come from the Unciv repo's images (`../unciv/android/Images.*`); anything missing falls back to text.
 
+The **empire overview** has all nine tabs of Unciv's Empire Overview, with Unciv's icons:
+- **Cities**: every city's yields, population, production, WLTK / demands, garrison, defence, religion and city-wide
+  resources; click a column header to sort (again to reverse), a city to open its city view, a garrison to select it.
+- **Stats**: happiness, gold, science, culture and faith by source, great person points, score (and Unciv's gold-to-science
+  slider when the ruleset has one).
+- **Trades**: pending and current deals. **Units**: unit supply, and every unit (click to select it; the city to look
+  there; the star to promote; the upgrade button - twice - to upgrade it anywhere).
+- **Politics**: each civ's leader, era, policies, wonders and relations, or the diagram of who's at war / friends / allied.
+- **Resources**: luxury and strategic resources by source, with unimproved and WLTK counts. **Religion**: religions,
+  beliefs and founding numbers. **Wonders**: every wonder and natural wonder you know of, and where.
+- **Notifications**: this turn's and earlier turns' messages; click one to go where it points.
+
+The **city view** (from a city's card) does everything Unciv's city screen does. The table zooms onto the city
+and shows each tile's yields with Unciv's worked / locked / not-worked symbols, gold prices on tiles the city
+can buy, a purple outline on the next tile its borders will take, and shading over tiles it can't work.
+Click a tile to work it or stop working it; click a priced tile twice to buy it; click another of your cities
+to switch to it. The world boards make way for two city boards:
+- **City** (left): the city's yields (click a stat symbol to focus on it), growth, borders, defence, resources and
+  demands; citizen management (reset, avoid growth, every Unciv focus); specialists (+ / -, automatic or manual);
+  great people; religion; its buildings; the clicked tile (lock, unlock, work, buy); raze / annex.
+- **Production** (right): the queue (progress, move up / down, remove), everything it can build (or, with the
+  toggle, can't build yet and why), and the picked item's Unciv description with Build now, Add to queue,
+  Buy (gold or faith, where allowed) and Sell for buildings. Buying, selling and razing ask for a second click.
+
+The city card keeps quick production picks (click to build next, with a gold price to buy).
+
 Rings: cyan = reachable this turn, red = attackable, yellow = selected, white = under the pointer.
 The glowing beam marks the selected unit.
 
@@ -72,9 +101,10 @@ Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-siz
 `--load=<path to an Unciv save>`, `--port=<port>`, `--no-launch` (never start a bridge),
 `--smoke-test` (scripted run that prints results and quits),
 `--screenshot=<file.png>` (saves one frame after loading, then quits),
-`--show=unit|aim|city|research|promotion|settings|setup|setup-world|setup-rules|saves` (opens that card before the screenshot),
+`--show=unit|aim|city|cityview|cityview-tile|overview-<tab>|overview-diagram|keyboard|research|promotion|settings|setup|setup-world|setup-rules|saves` (opens that card before the screenshot),
+`--keyboard=wrist|float` (VR: where the on-screen keyboard goes, instead of deciding by whether the left controller is tracked),
 `--lobby` (show the main menu even if the bridge is running a game), `--fake-xr` (VR layout without a
-headset; `--fake-pitch=-12` tilts the fake head), `--background=studio|mountains|space` (not saved),
+headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=studio|mountains|space` (not saved),
 `--overlays=all` or e.g. `--overlays=movement,yields` (turns those map overlays on for this run, not saved).
 
 Settings are saved in Godot's user folder (`user://settings.cfg`).
@@ -92,6 +122,9 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/map_overlays.gd`: Unciv's five map overlays drawn on the table (movement arrows, yields, worked tiles,
   resource / improvement symbols, improvement models and roads)
 - `scripts/big_screen.gd`: the big screen: tech tree, policies, diplomacy and trading
+- `scripts/city_boards.gd`: the city view's two boards (the city, and its production)
+- `scripts/overview_board.gd`: the empire overview (Unciv's Empire Overview tabs)
+- `scripts/keyboard.gd`: the on-screen keyboard for names (cities, units, saves)
 - `scripts/icons.gd`: loads Unciv's icons (policies, techs, stats, resources, units, nations...) from the Unciv repo
   and makes the round coloured badges
 - `scripts/info_panel.gd`: the info board: civ numbers and the pointed-at tile, colour-coded like Unciv

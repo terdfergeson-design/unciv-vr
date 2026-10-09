@@ -25,6 +25,29 @@ const FOLDERS := {
 	"nation": "Images.NationIcons/NationIcons",
 	"unit": "Images.ConstructionIcons/UnitIcons",
 	"building": "Images.ConstructionIcons/BuildingIcons",
+	"action": "Images.ConstructionIcons/UnitActionIcons",
+	"promotion": "Images.UnitPromotionIcons/UnitPromotionIcons",
+	"religion": "Images.ReligionIcons/ReligionIcons",
+}
+## Unciv image paths ("StatIcons/Gold", "UnitIcons/Warrior"...) -> our kinds
+const PATH_KINDS := {
+	"StatIcons": "stat", "UnitIcons": "unit", "BuildingIcons": "building", "TechIcons": "tech", "ResourceIcons": "resource",
+	"ImprovementIcons": "improvement", "OtherIcons": "other", "ReligionIcons": "religion", "NationIcons": "nation",
+	"PolicyIcons": "policy", "PolicyBranchIcons": "branch", "UnitPromotionIcons": "promotion", "UnitActionIcons": "action",
+	"CityStateIcons": "citystate", "TileIcons": "tile", "UnitTypeIcons": "unittype",
+}
+## Unciv's unit action types -> their icon in UnitActionIcons (from Unciv's UnitActionType)
+const ACTION_ICONS := {
+	"StopEscortFormation": "StopEscort", "EscortFormation": "Escort", "SwapUnits": "Swap", "Automate": "Automate",
+	"ConnectRoad": "RoadConnection", "StopAutomation": "Stop", "StopMovement": "StopMove", "Sleep": "Sleep",
+	"SleepUntilHealed": "Sleep", "Fortify": "Fortify", "FortifyUntilHealed": "FortifyUntilHealed", "Guard": "Guard",
+	"Explore": "Explore", "StopExploration": "Stop", "Promote": "Promote", "Upgrade": "Upgrade", "Transform": "Transform",
+	"Pillage": "Pillage", "Paradrop": "Paradrop", "AirSweep": "AirSweep", "SetUp": "SetUp", "FoundCity": "FoundCity",
+	"ConstructImprovement": "ConstructImprovement", "CreateImprovement": "ConstructImprovement", "Repair": "Repair",
+	"HurryResearch": "HurryResearch", "HurryPolicy": "HurryPolicy", "HurryWonder": "HurryConstruction",
+	"HurryBuilding": "HurryConstruction", "ConductTradeMission": "ConductTradeMission", "FoundReligion": "FoundReligion",
+	"RemoveHeresy": "RemoveHeresy", "EnhanceReligion": "EnhanceReligion", "DisbandUnit": "DisbandUnit",
+	"GiftUnit": "Present", "Skip": "Skip", "AddInCapital": "AddInCapital", "TriggerUnique": "Star",
 }
 const BADGE_SIZE := 96
 
@@ -63,10 +86,49 @@ static func get_icon(kind: String, name: String) -> Texture2D:
 	return _textures[key]
 
 
-## A units/buildings icon: whichever folder has it.
+## A units/buildings icon: whichever folder has it. Unit icons are white silhouettes; building pictures
+## (which can be dark) sit on a light disc, the way Unciv's city screen shows them.
 static func construction(name: String) -> Texture2D:
 	var texture := get_icon("unit", name)
-	return texture if texture != null else get_icon("building", name)
+	if texture != null:
+		return texture
+	return badge("building", name, Color(0.86, 0.84, 0.78), Color.WHITE, 0.78)
+
+
+## An icon by Unciv's image path ("StatIcons/Gold"); a bare name is tried as a nation, unit, building and resource.
+static func from_path(path: String) -> Texture2D:
+	var slash := path.find("/")
+	if slash > 0:
+		var kind: String = PATH_KINDS.get(path.substr(0, slash), "")
+		return get_icon(kind, path.substr(slash + 1)) if kind != "" else null
+	for kind: String in ["nation", "unit", "building", "resource", "tech"]:
+		var texture := get_icon(kind, path)
+		if texture != null:
+			return texture
+	return null
+
+
+## A unit action's icon (Unciv's UnitActionIcons), by UnitActionType name.
+static func action(type: String) -> Texture2D:
+	return get_icon("action", str(ACTION_ICONS.get(type, type)))
+
+
+## A promotion's icon: "Drill II" uses Drill's (Unciv shows the level as stars). Returns [texture, level].
+static func promotion(name: String) -> Array:
+	var level := 0
+	var base := name
+	for suffix: Array in [[" III", 3], [" II", 2], [" I", 1]]:
+		if name.ends_with(suffix[0]):
+			base = name.substr(0, name.length() - str(suffix[0]).length())
+			level = suffix[1]
+			break
+	var texture := get_icon("promotion", name)
+	if texture != null:
+		return [texture, 0]
+	texture = get_icon("promotion", base)
+	if texture == null:
+		texture = get_icon("unit", base.trim_suffix(" ability"))
+	return [texture, level]
 
 
 ## The icon tinted [param front] on a round [param back] disc (with a thin darker rim). Null if there's no icon.
