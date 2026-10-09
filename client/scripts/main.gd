@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Node3D
 ## Unciv VR - phase 0 client.
 ## Connects to the bridge, starts (or resumes) a game, and draws it as a tabletop map.
@@ -26,8 +30,18 @@ const ActionMenu := preload("res://scripts/action_menu.gd")
 const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
+const Minimap := preload("res://scripts/minimap.gd")
+const InfoPanel := preload("res://scripts/info_panel.gd")
+const BigScreen := preload("res://scripts/big_screen.gd")
+const BIG_SCREEN_METRES := Vector2(2.0, 0.875)
+const INFO_PANEL_PIXELS := Vector2i(420, 640)
+const INFO_PANEL_METRES := Vector2(0.44, 0.67)
 
 const TABLE_HALF_SIZE := 0.7   # metres: the map is scaled so its half-width fits this
+# Maps bigger than this (in map units, about a Tiny map) are shown through a window that slides
+# over the map, so hexes stay big enough to point at. Grip + stick up / down zooms the window.
+const VIEW_RADIUS_DEFAULT := 14.0
+const VIEW_RADIUS_MIN := 5.0   # zoomed all the way in; all the way out shows the whole map
 const VR_TABLE_POSITION := Vector3(0, 0.8, -0.85)
 const WRIST_PANEL_PIXELS := Vector2i(404, 720)
 const WRIST_PANEL_METRES := Vector2(0.17, 0.303)   # same aspect ratio as the pixels
@@ -65,12 +79,28 @@ var action_menu: ActionMenu
 var launcher := BridgeLauncher.new()
 var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
-var settings := {"background": "studio", "auto_move": "end"}
+var settings := {"background": "mountains", "auto_move": "end",
+	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
+	"minimap_pose": [], "info_pose": [], "wide_pose": [],
+	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
+	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true}}
+var _pointed_overlay := ""        # overlay button the laser is on
+var _yields_pending := false      # a getYields request is out
+var _yields_again := false        # the view changed while it was out
 var _table_buttons: Array[Dictionary] = []   # {id, node, material, color}
 var _hovered_button := ""
 var _pedestal: MeshInstance3D
 var _launched_bridge := false
 var _initialized := false
+var _state_revision := -1          # getState revision we last merged; -1 = ask for everything
+var _tile_cache: Dictionary = {}   # Vector2i -> tile, kept up to date from getState deltas
+var _last_tiles_received := 0
+var _in_lobby := false            # the main menu is up (no game on the table)
+var _lobby_info: Dictionary = {}
+var _setup: Dictionary = {}       # new-game choices being edited (getSetup fields)
+var _setup_options: Dictionary = {}   # listOptions
+var _setup_tab := "you"
+var _saves: Array = []
 
 var _xr_mode := false
 var _hud_label: Label
@@ -88,6 +118,29 @@ var _focus := Vector3.ZERO
 # VR rig
 var _right_hand: XRController3D
 var _left_hand: XRController3D
+var minimap: Minimap
+var info_panel: InfoPanel
+var big_screen: BigScreen
+var _big_holder: Node                # the WorldPanel (VR) or CanvasLayer (desktop) showing big_screen
+var _info_holder: Node              # the WorldPanel (VR) or CanvasLayer (desktop) showing info_panel
+var _info_key: Variant = null       # tile shown in the info panel
+var _info_wait := 0.0               # seconds the pointer has rested on _info_key
+var _info_requested := false        # getTile already asked for _info_key
+var _pointed_minimap: Variant = null   # world point (wx, wy) the laser is on in the overview, or null
+var _grab_last := {}
+var _right_trigger_used_for_zoom := false
+
+# Dragging the overview or the info board to a new spot (VR: right trigger; desktop: left mouse)
+const MINIMAP_HOME := [0.0, 0.25, -0.95, 0.0]
+const INFO_HOME := [0.56, 0.36, -0.82, -16.0]
+const WIDE_HOME := [0.0, 1.0, -1.05, 0.0]   # the big screen, above the other two
+const BOARD_TILT := {"minimap": -20.0, "info": -18.0, "wide": 8.0}
+var _drag_id := ""               # "minimap" or "info" while one is held
+var _drag_distance := 0.0        # along the pointer ray, from where it was grabbed
+var _drag_offset := Vector3.ZERO # grab point -> board origin, in global space
+var _drag_start := Vector3.ZERO
+var _drag_moved := false
+var _view_tween: Tween   # hand -> its last global position while its grip drags the map
 var _pointer_dot: MeshInstance3D
 var _wrist_panel: WorldPanel
 var _popup_panel: WorldPanel       # VR: a card floating above the map - a city's card or a promotion choice
@@ -132,6 +185,30 @@ func _ready() -> void:
 	backgrounds.apply(settings["background"])
 	_setup_table_buttons()
 	_setup_pedestal()
+	_add_table_top()
+	minimap = Minimap.new()
+	minimap.name = "Minimap"
+	table.add_child(minimap)
+	minimap.setup(hex_map)
+	# Stands at the far edge of the table, leaning back a little so it faces you
+	minimap.visible = false
+	var defaults := {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true}
+	if not settings["overlays"] is Dictionary:
+		settings["overlays"] = defaults
+	for id: String in defaults:
+		if not settings["overlays"].has(id):
+			settings["overlays"][id] = defaults[id]
+	if options.has("overlays"):   # dev aid for screenshots (--overlays=all or e.g. movement,yields); not saved
+		var wanted: Array = defaults.keys() if options["overlays"] == "all" else str(options["overlays"]).split(",")
+		settings["overlays"] = {}
+		for id: String in defaults:
+			settings["overlays"][id] = id in wanted
+	minimap.set_overlay_states(settings["overlays"])
+	hex_map.set_overlay_flags(settings["overlays"])
+	hex_map.view_rebuilt.connect(_on_view_rebuilt)
+	_setup_info_panel()
+	_setup_big_screen()
+	_apply_board_poses()
 
 	bridge = BridgeClient.new()
 	bridge.port = int(options.get("port", 8765))
@@ -199,8 +276,11 @@ func _on_bridge_connected() -> void:
 	if _initialized:
 		# Reconnected (e.g. the bridge was restarted): just reload what it has.
 		_set_status("Reconnected to the bridge.")
-		await _send_bridge_settings()
-		await refresh()
+		if _in_lobby:
+			await open_lobby()
+		else:
+			await _send_bridge_settings()
+			await refresh()
 		return
 	var ping := await bridge.request("ping")
 	if not ping.ok:
@@ -208,40 +288,29 @@ func _on_bridge_connected() -> void:
 		return
 	_set_status("Connected to Unciv %s" % ping.result.uncivVersion)
 
+	# Dev shortcuts skip the main menu; so does a game the bridge is already running (one started by hand)
 	if options.has("load"):
 		var loaded := await bridge.request("loadGame", {"path": options["load"]})
 		if not loaded.ok:
 			_set_status("Couldn't load the save: %s" % loaded.error)
 			return
-	elif options.has("new-game") or options.has("smoke-test") or not ping.result.gameRunning:
-		_set_status("Starting a new game...")
+		await _enter_game()
+	elif options.has("new-game") or options.has("smoke-test"):
 		var params := {
 			"mapSize": options.get("map-size", "Tiny"),
 			"aiPlayers": int(options.get("ai", 3)),
 			"cityStates": 4,
+			"civ": options.get("civ", "Random"),
 		}
-		if options.has("civ"):
-			params["civ"] = options["civ"]
+		params["remember"] = false   # dev shortcut: don't change Quick start or the autosave
 		if options.has("smoke-test"):
 			params["seed"] = 42
-		var started := await bridge.request("newGame", params)
-		if not started.ok:
-			_set_status("Couldn't start a game: %s" % started.error)
+		if not await _start_new_game(params):
 			return
-
-	await _send_bridge_settings()
-	var rules := await bridge.request("getRuleset")
-	if rules.ok:
-		hex_map.set_ruleset(rules.result)
-	await refresh()
-	_fit_table()
-	_initialized = true
-	_set_status("Your move.")
-	if _xr_mode:
-		# Give tracking a moment to settle, then put the table in front of wherever the player is
-		get_tree().create_timer(0.5).timeout.connect(recenter_table)
-	await _select_next_unit()
-	await _prompt_research_if_needed()
+	elif ping.result.gameRunning and not options.has("lobby"):
+		await _enter_game()
+	else:
+		await open_lobby()
 
 	if options.has("smoke-test"):
 		await _run_smoke_test()
@@ -270,6 +339,31 @@ func _on_bridge_connected() -> void:
 				if selected_unit.get("canPromote", false):
 					open_promotions()
 					break
+		"setup", "setup-world", "setup-rules":
+			_setup_tab = {"setup": "you", "setup-world": "world", "setup-rules": "rules"}[options["show"]]
+			_show_lobby_card("setup")
+		"saves":
+			_show_lobby_card("saves")
+		"tech", "policies", "diplomacy":
+			await show_big_screen(options["show"])
+			if options["show"] == "tech":
+				var open_techs: Array = big_screen._techs.get("techs", []).filter(func(t: Dictionary) -> bool: return t.get("researchable", false))
+				if not open_techs.is_empty():
+					await _on_big_screen_chosen("tech_select", open_techs[0]["name"])
+			if options["show"] == "policies" and not big_screen._policies.get("branches", []).is_empty():
+				await _on_big_screen_chosen("policy_select", big_screen._policies["branches"][0]["name"])
+		"trade":
+			await show_big_screen("diplomacy")
+			var majors: Array = big_screen._diplomacy.get("civs", []).filter(func(c: Dictionary) -> bool: return not c.get("isCityState", false))
+			if not majors.is_empty():
+				await _on_big_screen_chosen("trade_open", majors[0]["name"])
+				var their: Array = big_screen._trade_options.get("theirs", [])
+				var ours: Array = big_screen._trade_options.get("ours", [])
+				if their.size() > 1:
+					big_screen._move_trade_item(their[1], big_screen.trade_theirs, true)
+				if not ours.is_empty():
+					big_screen._move_trade_item(ours[0], big_screen.trade_ours, true)
+				await get_tree().create_timer(0.5).timeout
 	if options.has("screenshot"):
 		await get_tree().create_timer(1.0).timeout   # let the table recenter and cards lay out
 		get_viewport().get_texture().get_image().save_png(options["screenshot"])
@@ -277,27 +371,647 @@ func _on_bridge_connected() -> void:
 		get_tree().quit()
 
 
+## Puts whatever game the bridge is running on the table and starts play.
+func _enter_game() -> void:
+	_in_lobby = false
+	action_menu.lobby_mode = false
+	if popup_menu != null:
+		popup_menu.lobby_mode = false
+	_deselect()
+	_state_revision = -1   # a different game: fetch every tile
+	_tile_cache.clear()
+	hex_map.visible = true
+	_set_table_buttons_visible(true)
+	_set_info_visible(true)
+	_set_big_visible(_xr_mode)   # VR: always up; desktop: opened with T / P / G
+	await _send_bridge_settings()
+	var rules := await bridge.request("getRuleset")
+	if rules.ok:
+		hex_map.set_ruleset(rules.result)
+	await refresh()
+	_setup_view()
+	_fit_table()
+	_initialized = true
+	_set_status("Your move.")
+	if _xr_mode:
+		# Give tracking a moment to settle, then put the table in front of wherever the player is
+		get_tree().create_timer(0.5).timeout.connect(recenter_table)
+	await _select_next_unit()
+	await _prompt_research_if_needed()
+
+
+## newGame with [param params]; on success the game goes on the table. Returns whether it worked.
+func _start_new_game(params: Dictionary) -> bool:
+	_set_status("Starting a new game... (bigger maps take a little longer)")
+	_show_lobby_status("Starting a new game...")
+	var started := await bridge.request("newGame", params)
+	if not started.ok:
+		_set_status("Couldn't start a game: %s" % started.error)
+		if _in_lobby:
+			_show_lobby_card("lobby")
+		return false
+	await _enter_game()
+	return true
+
+
+# region main menu (lobby) -----------------------------------------------------------------
+
+## The main menu: Resume / Continue / Quick start / New game / Load, floating over an empty table.
+func open_lobby() -> void:
+	_in_lobby = true
+	action_menu.lobby_mode = true
+	if popup_menu != null:
+		popup_menu.lobby_mode = true
+	_deselect()
+	hex_map.visible = false
+	minimap.visible = false
+	_set_table_buttons_visible(false)
+	_set_info_visible(false)
+	_set_big_visible(false)
+	_info_key = null
+	var ping := await bridge.request("ping")
+	var saves_reply := await bridge.request("listSaves")
+	var setup_reply := await bridge.request("getSetup")
+	_saves = saves_reply.result.get("saves", []) if saves_reply.ok else []
+	if setup_reply.ok:
+		_setup = setup_reply.result.get("setup", {})
+	if _setup_options.is_empty():
+		var options_reply := await bridge.request("listOptions", {"ruleset": _setup.get("ruleset", "")} if _setup.has("ruleset") else {})
+		if options_reply.ok:
+			_setup_options = options_reply.result
+	var autosave := ""
+	var autosave_text := ""
+	for save: Dictionary in _saves:
+		if save.get("autosave", false):
+			autosave = save["name"]
+			autosave_text = "saved " + ActionMenu.local_time_text(float(save.get("modified", 0)))
+			break
+	var running: bool = ping.ok and ping.result.get("gameRunning", false) and _initialized and not state.is_empty()
+	_lobby_info = {
+		"running": running,
+		"running_text": "%s, turn %d" % [state.get("playerCiv", "?"), int(state.get("turn", 0))] if running else "",
+		"autosave": autosave,
+		"autosave_text": autosave_text,
+		"quick_text": _describe_setup(_setup),
+		"has_saves": not _saves.is_empty(),
+	}
+	_set_status("Main menu")
+	if _xr_mode:
+		action_menu.show_lobby({"busy": true, "quick_text": "Main menu: point at the card over the table."})
+	_show_lobby_card("lobby")
+
+
+func _describe_setup(setup: Dictionary) -> String:
+	if setup.is_empty():
+		return ""
+	return "%s on a %s %s map, %s, %d AI, %d city-states" % [
+		"A random civilization" if setup.get("civ", "Random") == "Random" else str(setup["civ"]),
+		setup.get("mapSize", "?"), setup.get("mapType", ""), setup.get("difficulty", "?"),
+		int(setup.get("aiPlayers", 0)), int(setup.get("cityStates", 0))]
+
+
+## Shows one of the main-menu cards: "lobby", "setup" or "saves" (over the table in VR, the side card on desktop).
+func _show_lobby_card(kind: String) -> void:
+	var menu: ActionMenu = popup_menu if _xr_mode else action_menu
+	match kind:
+		"lobby":
+			menu.show_lobby(_lobby_info)
+		"setup":
+			menu.show_setup(_setup, _setup_options, _setup_tab)
+		"saves":
+			menu.show_saves(_saves)
+	if _xr_mode:
+		_popup_kind = "lobby"
+		_update_popup_panel()
+
+
+## A one-line card while something slow happens (starting or loading a game).
+func _show_lobby_status(text: String) -> void:
+	if not _in_lobby:
+		return
+	var menu: ActionMenu = popup_menu if _xr_mode else action_menu
+	menu.show_lobby({"quick_text": text, "busy": true})
+
+
+func _on_lobby_choice(kind: String, value: String) -> void:
+	match kind:
+		"lobby":
+			_show_lobby_card("lobby")
+		"lobby_resume":
+			await _enter_game()
+		"lobby_continue", "load_save":
+			_show_lobby_status("Loading %s..." % value)
+			var loaded := await bridge.request("loadGame", {"name": value})
+			if not loaded.ok:
+				_set_status("Couldn't load %s: %s" % [value, loaded.error])
+				_show_lobby_card("lobby")
+				return
+			await _enter_game()
+		"lobby_quick":
+			await _start_new_game(_setup)
+		"lobby_new":
+			_setup_tab = "you"
+			_show_lobby_card("setup")
+		"lobby_load":
+			_show_lobby_card("saves")
+		"setup_tab":
+			_setup_tab = value
+			_show_lobby_card("setup")
+		"setup_set":
+			_keep_card_scroll()
+			var parts := value.split("|", true, 1)
+			_setup[parts[0]] = parts[1]
+			_show_lobby_card("setup")
+		"setup_toggle":
+			_keep_card_scroll()
+			if value.begins_with("victory|"):
+				var victory := value.substr(8)
+				var picked: Array = _setup.get("victoryTypes", []).duplicate()
+				if picked.is_empty():
+					picked = _setup_options.get("victoryTypes", []).duplicate()   # empty means all
+				if victory in picked:
+					picked.erase(victory)
+				else:
+					picked.append(victory)
+				_setup["victoryTypes"] = picked
+			else:
+				_setup[value] = not _setup.get(value, false)
+			_show_lobby_card("setup")
+		"setup_step":
+			_keep_card_scroll()
+			var parts := value.split("|")
+			var limits := {"aiPlayers": Vector2i(1, maxi(1, _setup_options.get("nations", []).size() - 1)),
+				"cityStates": Vector2i(0, int(_setup_options.get("cityStatesAvailable", 0)))}
+			var bounds: Vector2i = limits.get(parts[0], Vector2i(0, 99))
+			_setup[parts[0]] = clampi(int(_setup.get(parts[0], 0)) + int(parts[1]), bounds.x, bounds.y)
+			_show_lobby_card("setup")
+		"setup_start":
+			await _start_new_game(_setup)
+		"quit":
+			get_tree().quit()
+
+
+## The next rebuild of the main-menu card keeps its scroll position (changing an option shouldn't jump to the top).
+func _keep_card_scroll() -> void:
+	(popup_menu if _xr_mode else action_menu).keep_scroll_once = true
+
+
+## Desktop: T / P / G open the big screen on that tab, or close it if it's already showing that tab.
+func _toggle_big_screen(tab: String) -> void:
+	if _big_screen_shown() and big_screen.tab == tab and not _xr_mode:
+		_set_big_visible(false)
+	else:
+		await show_big_screen(tab)
+
+
+func _set_table_buttons_visible(shown: bool) -> void:
+	for button: Dictionary in _table_buttons:
+		(button["node"] as Node3D).visible = shown
+
+
 func refresh() -> void:
-	var reply := await bridge.request("getState")
+	# Ask only for what changed since the last update (the bridge sends every tile when it can't tell)
+	var params := {}
+	if _state_revision >= 0:
+		params["since"] = _state_revision
+	var reply := await bridge.request("getState", params)
 	if not reply.ok:
 		_set_status("getState failed: %s" % reply.error)
 		return
-	state = reply.result
+	var new_state: Dictionary = reply.result
+	if new_state.get("full", true):
+		_tile_cache.clear()
+	_last_tiles_received = new_state.get("tiles", []).size()
+	for tile: Dictionary in new_state.get("tiles", []):
+		_tile_cache[Vector2i(int(tile["x"]), int(tile["y"]))] = tile
+	new_state["tiles"] = _tile_cache.values()
+	_state_revision = int(new_state.get("revision", -1))
+	state = new_state
 	hex_map.build(state)
+	_update_minimap()
+	_refresh_big_screen()   # not awaited: the screen catches up a moment later
+	if info_panel != null:
+		info_panel.show_civ(state, hex_map.civ_colors)
+		if _info_key != null:   # the tile may have changed (a unit moved in, a road got built...)
+			var key: Variant = _info_key
+			_info_key = null
+			_show_tile_info(key)
 	if not selected_unit.is_empty():
 		await _select_unit(int(selected_unit["id"]), false)
 	_update_hud()
 
 
+## Big maps start with a window centred on your capital (or first unit); Tiny ones show whole.
+## Either way trigger + stick zooms between the two.
+func _setup_view() -> void:
+	if hex_map.full_extent <= 20.0:   # Tiny maps fit whole
+		hex_map.set_view(hex_map.full_center, hex_map.full_extent)
+		_update_minimap()
+		return
+	var home := Vector2i(999999, 999999)
+	if not state.get("cities", []).is_empty():
+		home = Vector2i(int(state["cities"][0]["x"]), int(state["cities"][0]["y"]))
+	elif not state.get("units", []).is_empty():
+		home = Vector2i(int(state["units"][0]["x"]), int(state["units"][0]["y"]))
+	hex_map.set_view(hex_map._world_of(home) if hex_map.tiles.has(home) else hex_map.full_center, VIEW_RADIUS_DEFAULT)
+	_update_minimap()
+
+
+## The colourful board with your civ's numbers and the pointed-at tile: next to the overview in VR,
+## bottom-left on the desktop.
+func _setup_info_panel() -> void:
+	info_panel = InfoPanel.new()
+	if _xr_mode:
+		var panel := WorldPanel.new()
+		panel.name = "InfoPanel"
+		panel.setup(info_panel, INFO_PANEL_PIXELS, INFO_PANEL_METRES)
+		table.add_child(panel)   # placed by _apply_board_poses: at the far edge, right of the overview
+		# Hang the board from its bottom edge so it doesn't float in mid-air when it's short
+		info_panel.resized.connect(func() -> void:
+			info_panel.position = Vector2(0, INFO_PANEL_PIXELS.y - info_panel.size.y))
+		_info_holder = panel
+	else:
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		layer.add_child(info_panel)
+		var place := func() -> void:
+			info_panel.reset_size()
+			info_panel.position = Vector2(12, get_viewport().get_visible_rect().size.y - info_panel.size.y - 12)
+		info_panel.resized.connect(place)
+		get_viewport().size_changed.connect(place)
+		_info_holder = layer
+	_set_info_visible(false)
+
+
+# region movable boards ----------------------------------------------------------------------
+
+## Puts the overview and the info board where you last left them (or their default spots).
+func _apply_board_poses() -> void:
+	for id: String in ["minimap", "info", "wide"]:
+		var node := _board_node(id)
+		if node == null:
+			continue
+		var pose: Array = settings.get(id + "_pose", [])
+		if pose.size() != 4:
+			pose = {"minimap": MINIMAP_HOME, "info": INFO_HOME, "wide": WIDE_HOME}[id]
+		node.position = Vector3(float(pose[0]), float(pose[1]), float(pose[2]))
+		node.rotation_degrees = Vector3(BOARD_TILT[id], float(pose[3]), 0)
+
+
+func _board_node(id: String) -> Node3D:
+	match id:
+		"minimap":
+			return minimap
+		"wide":
+			return _big_holder as Node3D if _big_holder is Node3D else null
+	return _info_holder as Node3D if _info_holder is Node3D else null
+
+
+## The board a pointer ray is on: [id, global hit point], or [] if none. The nearer one wins.
+func _board_at(origin: Vector3, direction: Vector3) -> Array:
+	var best: Array = []
+	var best_distance := INF
+	var hits := {}
+	if minimap != null:
+		hits["minimap"] = minimap.ray_hit_point(origin, direction)
+	if _info_holder is WorldPanel and (_info_holder as Node3D).is_visible_in_tree():
+		var hit: Variant = (_info_holder as WorldPanel).ray_hit(origin, direction)
+		hits["info"] = hit[0] if hit != null else null
+	if _big_holder is WorldPanel and (_big_holder as Node3D).is_visible_in_tree():
+		# The big screen is full of buttons, so only its handle strip along the top grabs it
+		var hit: Variant = (_big_holder as WorldPanel).ray_hit(origin, direction)
+		hits["wide"] = hit[0] if hit != null and big_screen.grab_bar_contains(hit[1]) else null
+	for id: String in hits:
+		if hits[id] != null and origin.distance_to(hits[id]) < best_distance:
+			best_distance = origin.distance_to(hits[id])
+			best = [id, hits[id]]
+	return best
+
+
+func _begin_board_drag(origin: Vector3, direction: Vector3) -> bool:
+	var hit := _board_at(origin, direction)
+	if hit.is_empty():
+		return false
+	_drag_id = hit[0]
+	_drag_start = hit[1]
+	_drag_distance = origin.distance_to(hit[1])
+	_drag_offset = _board_node(_drag_id).global_position - _drag_start
+	_drag_moved = false
+	return true
+
+
+## Moves the held board along with the pointer; it keeps facing you (yaw only) as it goes.
+func _update_board_drag(origin: Vector3, direction: Vector3) -> void:
+	if _drag_id == "":
+		return
+	var point := origin + direction.normalized() * _drag_distance
+	if not _drag_moved and point.distance_to(_drag_start) < 0.02:
+		return   # still just a click
+	_drag_moved = true
+	var node := _board_node(_drag_id)
+	node.global_position = point + _drag_offset
+	var viewer := _xr_camera.global_position if _xr_mode else _camera.global_position
+	var to_viewer := table.to_local(viewer) - node.position
+	node.rotation_degrees = Vector3(BOARD_TILT[_drag_id], rad_to_deg(atan2(to_viewer.x, to_viewer.z)), 0)
+
+
+## Lets go of the board. Returns true if it was moved (a drag), false if it was just a click.
+func _end_board_drag() -> bool:
+	if _drag_id == "":
+		return false
+	var moved := _drag_moved
+	if moved:
+		var node := _board_node(_drag_id)
+		settings[_drag_id + "_pose"] = [node.position.x, node.position.y, node.position.z, node.rotation_degrees.y]
+		_save_settings()
+	_drag_id = ""
+	_drag_moved = false
+	return moved
+
+
+func reset_board_poses() -> void:
+	settings["minimap_pose"] = []
+	settings["info_pose"] = []
+	settings["wide_pose"] = []
+	_save_settings()
+	_apply_board_poses()
+	_set_status("The overview, info board and big screen are back in their usual spots.")
+
+
+## The big wide screen with the tech tree, policies and diplomacy: above the overview in VR; on the desktop
+## a window in the middle that T / P / G open and Esc closes.
+func _setup_big_screen() -> void:
+	big_screen = BigScreen.new()
+	big_screen.chosen.connect(_on_big_screen_chosen)
+	if _xr_mode:
+		var panel := WorldPanel.new()
+		panel.name = "BigScreen"
+		panel.setup(big_screen, Vector2i(BigScreen.SIZE), BIG_SCREEN_METRES)
+		table.add_child(panel)   # placed by _apply_board_poses
+		_big_holder = panel
+	else:
+		var layer := CanvasLayer.new()
+		layer.layer = 2
+		add_child(layer)
+		layer.add_child(big_screen)
+		var place := func() -> void:
+			var window := get_viewport().get_visible_rect().size
+			var fit := minf(1.0, (window.x - 40.0) / BigScreen.SIZE.x)
+			big_screen.scale = Vector2(fit, fit)
+			big_screen.position = Vector2((window.x - BigScreen.SIZE.x * fit) / 2.0, 70)
+		get_viewport().size_changed.connect(place)
+		place.call()
+		_big_holder = layer
+	_set_big_visible(false)
+
+
+func _set_big_visible(shown: bool) -> void:
+	if _big_holder is CanvasLayer:
+		(_big_holder as CanvasLayer).visible = shown
+	elif _big_holder != null:
+		(_big_holder as Node3D).visible = shown
+
+
+func _big_screen_shown() -> bool:
+	if _big_holder is CanvasLayer:
+		return (_big_holder as CanvasLayer).visible
+	return _big_holder != null and (_big_holder as Node3D).visible
+
+
+## Switches the big screen to a tab (tech / policies / diplomacy), shows it, and loads that tab's data.
+func show_big_screen(tab: String) -> void:
+	if _in_lobby or big_screen == null:
+		return
+	_set_big_visible(true)
+	big_screen.show_tab(tab)
+	await _refresh_big_screen()
+
+
+## Reloads the data on the big screen's current tab (after anything that may have changed it).
+func _refresh_big_screen() -> void:
+	if big_screen == null or _in_lobby or not _big_screen_shown():
+		return
+	match big_screen.tab:
+		"tech":
+			var reply := await bridge.request("getTechs")
+			if reply.ok:
+				big_screen.set_techs(reply.result)
+		"policies":
+			var reply := await bridge.request("getPolicies")
+			if reply.ok:
+				big_screen.set_policies(reply.result)
+		"diplomacy":
+			var reply := await bridge.request("getDiplomacy")
+			if reply.ok:
+				big_screen.set_diplomacy(reply.result)
+
+
+func _on_big_screen_chosen(kind: String, value: String) -> void:
+	match kind:
+		"big_tab":
+			big_screen.war_armed = ""
+			big_screen.trade_civ = ""
+			await show_big_screen(value)
+		"tech_select":
+			big_screen.selected_tech = value
+			big_screen._tech_description = ""
+			big_screen.set_techs(big_screen._techs)
+			var described := await bridge.request("describeTech", {"tech": value})
+			if described.ok:
+				big_screen.set_tech_detail(value, str(described.result.get("description", "")))
+		"research":
+			var reply := await bridge.request("setResearch", {"tech": value})
+			if not reply.ok:
+				_set_status(reply.error)
+				return
+			_set_status("Researching %s." % reply.result.get("current", value))
+			big_screen.set_techs(reply.result)
+			await refresh()
+		"policy_select":
+			big_screen.selected_policy = value
+			big_screen.set_policies(big_screen._policies)
+		"adopt_policy":
+			var reply := await bridge.request("adoptPolicy", {"policy": value})
+			if not reply.ok:
+				_set_status(reply.error)
+				return
+			_set_status("Adopted %s." % value)
+			big_screen.set_policies(reply.result)
+			await refresh()
+		"war_arm":
+			big_screen.war_armed = value   # the button now asks for a second click to confirm
+			big_screen.set_diplomacy(big_screen._diplomacy)
+		"declare_war":
+			big_screen.war_armed = ""
+			var reply := await bridge.request("declareWar", {"civ": value})
+			if not reply.ok:
+				_set_status(reply.error)
+				return
+			_set_status("You declared war on %s!" % value)
+			big_screen.set_diplomacy(reply.result)
+			await refresh()
+		"trade_open":
+			var reply := await bridge.request("getTradeOptions", {"civ": value})
+			if not reply.ok:
+				_set_status(reply.error)
+				return
+			big_screen.open_trade(reply.result)
+		"trade_changed":
+			if big_screen.trade_ours.is_empty() and big_screen.trade_theirs.is_empty():
+				big_screen.set_trade_verdict({})
+				return
+			var reply := await bridge.request("evaluateTrade", _trade_params())
+			big_screen.set_trade_verdict(reply.result if reply.ok else {"message": reply.error})
+		"trade_propose":
+			var reply := await bridge.request("proposeTrade", _trade_params())
+			if not reply.ok:
+				big_screen.set_trade_verdict({"message": reply.error})
+				return
+			_set_status(reply.result.get("message", ""))
+			if reply.result.get("accepted", false):
+				big_screen._diplomacy = reply.result.get("diplomacy", big_screen._diplomacy)
+				big_screen.close_trade()
+				await refresh()
+			else:
+				big_screen.set_trade_verdict({"message": reply.result.get("message", ""), "accepted": false})
+		"offer_peace":
+			var reply := await bridge.request("offerPeace", {"civ": value})
+			if not reply.ok:
+				_set_status(reply.error)
+				return
+			_set_status(reply.result.get("message", ""))
+			big_screen.set_diplomacy(reply.result.get("diplomacy", {}))
+			await refresh()
+
+
+func _trade_params() -> Dictionary:
+	return {"civ": big_screen.trade_civ, "ours": big_screen.trade_items(big_screen.trade_ours),
+		"theirs": big_screen.trade_items(big_screen.trade_theirs)}
+
+
+func _set_info_visible(shown: bool) -> void:
+	if _info_holder is CanvasLayer:
+		(_info_holder as CanvasLayer).visible = shown
+	elif _info_holder != null:
+		(_info_holder as Node3D).visible = shown
+
+
+## Shows a tile in the info panel straight away from what we already know, then asks the bridge for
+## its yields once the pointer rests on it for a moment (see _process_info_panel).
+func _show_tile_info(key: Variant) -> void:
+	if info_panel == null or key == null or key == _info_key:
+		return
+	_info_key = key
+	_info_wait = 0.0
+	_info_requested = false
+	info_panel.show_tile(hex_map.tiles.get(key, {}), _target_at(key))
+
+
+func _process_info_panel(delta: float) -> void:
+	if _info_key == null or _info_requested or _in_lobby:
+		return
+	_info_wait += delta
+	if _info_wait < 0.15:
+		return
+	_info_requested = true
+	var key: Vector2i = _info_key
+	var reply := await bridge.request("getTile", {"x": key.x, "y": key.y})
+	if reply.ok and _info_key == key:
+		info_panel.show_tile(reply.result, _target_at(key))
+
+
+# region map overlays ------------------------------------------------------------------------
+
+## Turns one of Unciv's map overlays on or off (the round buttons beside the overview).
+func toggle_overlay(id: String) -> void:
+	var overlays: Dictionary = settings["overlays"]
+	if not overlays.has(id):
+		return
+	overlays[id] = not overlays[id]
+	_save_settings()
+	minimap.set_overlay_states(overlays)
+	hex_map.set_overlay_flags(overlays)
+	var names := {"movement": "Unit movements", "yields": "Tile yields", "worked": "Worked tiles",
+		"resources": "Resources and improvements", "improvements": "Improvement pictures"}
+	_set_status("%s: %s" % [names[id], "on" if overlays[id] else "off"])
+	if id == "yields" and overlays[id]:
+		_refresh_yields()
+
+
+func _on_view_rebuilt() -> void:
+	if settings["overlays"].get("yields", false):
+		_refresh_yields()
+
+
+## Asks the bridge for the yields of the tiles on the table (only one request at a time).
+func _refresh_yields() -> void:
+	if bridge == null or not bridge.is_bridge_connected() or _in_lobby:
+		return
+	if _yields_pending:
+		_yields_again = true
+		return
+	_yields_pending = true
+	var reply := await bridge.request("getYields", {"tiles": hex_map.shown_explored_tiles()})
+	_yields_pending = false
+	if reply.ok and settings["overlays"].get("yields", false):
+		hex_map.show_yields(reply.result.get("tiles", []))
+	if _yields_again:
+		_yields_again = false
+		_refresh_yields()
+
+
+func _update_minimap() -> void:
+	if minimap == null:
+		return
+	# Always up during a game: it holds the overlay buttons (on small maps it's just an overview)
+	minimap.visible = not _in_lobby and not hex_map.tiles.is_empty()
+	if minimap.visible:
+		minimap.redraw(state.get("units", []), state.get("cities", []))
+
+
+## Slides the map window so [param key] is comfortably inside it (only when it's near the rim or off it).
+func _bring_into_view(key: Vector2i) -> void:
+	if not hex_map.is_windowed() or not hex_map.tiles.has(key):
+		return
+	var target := hex_map._world_of(key)
+	if target.distance_to(hex_map.view_center) < hex_map.view_radius * 0.55:
+		return
+	_glide_view_to(target)
+
+
+## Smoothly slides the map window so [param target] (world coords) is under the table centre.
+func _glide_view_to(target: Vector2) -> void:
+	if _view_tween != null and _view_tween.is_valid():
+		_view_tween.kill()
+	_view_tween = create_tween()
+	_view_tween.tween_method(func(c: Vector2) -> void: hex_map.set_view(c, hex_map.view_radius),
+		hex_map.view_center, target, 0.35).set_trans(Tween.TRANS_SINE)
+
+
+## Zooms the map on the table: factor < 1 shows fewer, bigger hexes; > 1 more of the map, up to all of it.
+func _zoom_view(factor: float) -> void:
+	if hex_map.tiles.is_empty():
+		return
+	var current := hex_map.full_extent if hex_map.shows_whole_map() else hex_map.view_radius
+	var radius := clampf(current * factor, VIEW_RADIUS_MIN, hex_map.full_extent)
+	hex_map.set_view(hex_map.view_center, radius)
+	_fit_table()
+
+
+## Converts a movement in global space to map units on the table (x = east, y = north).
+func _global_to_map_delta(delta: Vector3) -> Vector2:
+	var local := hex_map.global_transform.basis.inverse() * delta
+	return Vector2(local.x, -local.z)
+
+
 func _fit_table() -> void:
 	var s := TABLE_HALF_SIZE / hex_map.map_extent
 	hex_map.scale = Vector3(s, s, s)
-	if table.get_node_or_null("TableTop") == null:
-		_add_table_top()
+	pass
 
 
 func click_tile(key: Vector2i) -> void:
-	if busy or state.is_empty():
+	if busy or state.is_empty() or _in_lobby:
 		return
 	var own_units := _own_units_at(key)
 	var selected_key := _selected_key()
@@ -373,6 +1087,8 @@ func move_selected_to(key: Vector2i) -> void:
 
 
 func found_city() -> void:
+	if _in_lobby:
+		return
 	await unit_action("FoundCity")
 
 
@@ -423,6 +1139,9 @@ func build_improvement(improvement: String) -> void:
 
 
 func _on_menu_chosen(kind: String, value: String) -> void:
+	if kind.begins_with("lobby") or kind.begins_with("setup_") or kind in ["load_save", "quit"]:
+		await _on_lobby_choice(kind, value)
+		return
 	match kind:
 		"action":
 			await unit_action(value)
@@ -445,6 +1164,9 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 		"produce", "queue", "buy", "unqueue":
 			await city_command(kind, value)
 		"close":
+			if _in_lobby:
+				_show_lobby_card("lobby")   # e.g. closing Settings opened from the main menu
+				return
 			_close_popup()
 			selected_city = {}
 			action_menu.show_unit(selected_unit)
@@ -452,6 +1174,12 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 			open_promotions()
 		"settings_card":
 			open_settings()
+		"save_game":
+			await save_game()
+		"main_menu":
+			await open_lobby()
+		"reset_boards":
+			reset_board_poses()
 		"background", "auto_move":
 			await change_setting(kind, value)
 		"promote":
@@ -532,6 +1260,11 @@ func city_command(kind: String, value: String) -> void:
 
 
 func open_research() -> void:
+	if _in_lobby:
+		return
+	if big_screen != null:
+		await show_big_screen("tech")   # the tech tree on the big screen
+		return
 	var reply := await bridge.request("getTechs")
 	if not reply.ok:
 		_set_status(reply.error)
@@ -620,8 +1353,20 @@ func _prompt_research_if_needed() -> void:
 		await open_research()
 
 
+## Puts the Policies tab up when you have the culture for a new policy (unless research needs picking first).
+func _prompt_policy_if_ready() -> void:
+	var p: Dictionary = state.get("player", {})
+	if p.get("canResearch", false) and p.get("currentTech") == null:
+		return
+	if p.has("cultureForNextPolicy") and int(p.get("culturePoints", 0)) >= int(p["cultureForNextPolicy"]):
+		_set_status("You can adopt a new policy - see the Policies tab on the big screen.")
+		await show_big_screen("policies")
+
+
 ## Steps through all your units in a stable order (dir = 1 next, -1 previous).
 func cycle_unit(dir: int) -> void:
+	if _in_lobby:
+		return
 	var units: Array = state.get("units", []).duplicate()
 	if units.is_empty():
 		return
@@ -663,6 +1408,8 @@ func _place_vr_hud() -> void:
 
 
 func unit_action(action: String) -> void:
+	if _in_lobby:
+		return
 	if busy or selected_unit.is_empty():
 		return
 	busy = true
@@ -680,6 +1427,8 @@ func unit_action(action: String) -> void:
 
 
 func end_turn() -> void:
+	if _in_lobby:
+		return
 	if busy:
 		return
 	busy = true
@@ -702,6 +1451,7 @@ func end_turn() -> void:
 	await refresh()
 	await _select_next_unit()
 	await _prompt_research_if_needed()
+	await _prompt_policy_if_ready()
 
 
 func _select_unit(unit_id: int, focus := true) -> void:
@@ -733,13 +1483,17 @@ func _select_unit(unit_id: int, focus := true) -> void:
 		match _popup_kind:
 			"unit": _open_unit_popup()
 			"promotion": popup_menu.show_promotions(selected_unit)
-	if focus and not _xr_mode:
+	if focus:
+		_bring_into_view(_selected_key())
+	if focus and not _xr_mode and not hex_map.is_windowed():
 		_focus = hex_map.to_global(hex_map.tile_local_center(_selected_key())) - table.global_position
 		_update_camera()
 	_update_hud()
 
 
 func _select_next_unit() -> void:
+	if _in_lobby:
+		return
 	var units: Array = state.get("units", [])
 	var candidates := units.filter(func(u: Dictionary) -> bool:
 		return u.get("idle", false) and float(u.get("movement", 0)) > 0.0)
@@ -782,7 +1536,62 @@ func _own_units_at(key: Vector2i) -> Array:
 
 
 func _run_smoke_test() -> void:
+	if hex_map.is_windowed():
+		var start := hex_map.view_center
+		print("SMOKE: windowed map: extent %.1f, window r=%.1f, drawn %d of %d tiles" % [hex_map.full_extent, hex_map.view_radius, hex_map._shown.size(), hex_map.tiles.size()])
+		for i in 20:
+			hex_map.pan_view(Vector2(0.5, 0.25))
+		print("SMOKE: panned %s -> %s, drawn %d" % [start, hex_map.view_center, hex_map._shown.size()])
+		_zoom_view(2.0)
+		print("SMOKE: zoomed out to r=%.1f, drawn %d, table scale %.4f" % [hex_map.view_radius, hex_map._shown.size(), hex_map.scale.x])
+		_zoom_view(0.5)
+		var t0 := Time.get_ticks_usec()
+		hex_map.set_view(hex_map.view_center + Vector2(5, 0), hex_map.view_radius)
+		print("SMOKE: one rebuild took %.1f ms" % ((Time.get_ticks_usec() - t0) / 1000.0))
+		t0 = Time.get_ticks_usec()
+		for i in 60:
+			hex_map.tile_at_global(hex_map.global_position)
+		print("SMOKE: 60 picks took %.1f ms" % ((Time.get_ticks_usec() - t0) / 1000.0))
+		hex_map.set_view(start, hex_map.view_radius)
+		# Point at the overview's centre from a metre in front of it: should land near the map's centre
+		var face := minimap.global_transform
+		var spot: Variant = minimap.ray_hit(face.origin + face.basis.z * 1.0, -face.basis.z)
+		print("SMOKE: overview centre -> world %s (map centre %s)" % [spot, hex_map.full_center])
+		var grabbed_overview := _begin_board_drag(face.origin + face.basis.z * 1.0, -face.basis.z)
+		print("SMOKE: overview grab=%s, released without moving counts as a click: %s" % [grabbed_overview, not _end_board_drag()])
+	# Zoom: all the way in, then all the way out (the whole map), then back to the start
+	var start_radius := hex_map.view_radius
+	_zoom_view(0.01)
+	print("SMOKE: zoomed in: r=%.1f, whole=%s, drawn %d" % [hex_map.view_radius, hex_map.shows_whole_map(), hex_map._shown.size()])
+	var t_zoom := Time.get_ticks_usec()
+	_zoom_view(100.0)
+	print("SMOKE: zoomed out: whole=%s, drawn %d of %d in %.0f ms" % [hex_map.shows_whole_map(), hex_map._shown.size(), hex_map.tiles.size(), (Time.get_ticks_usec() - t_zoom) / 1000.0])
+	hex_map.set_view(hex_map.view_center, start_radius)
+	_fit_table()
+	# Boards: grab the info board from a metre in front of it, drag it 20 cm sideways, let go
+	if _info_holder is WorldPanel:
+		var saved_settings := settings.duplicate(true)
+		var board_node := _info_holder as Node3D
+		var front := board_node.global_position - board_node.global_transform.basis.y * 0.27 + board_node.global_transform.basis.z * 1.0   # the board hangs from the bottom of its panel
+		var grabbed := _begin_board_drag(front, -board_node.global_transform.basis.z)
+		var before := board_node.position
+		_update_board_drag(front + table.global_transform.basis.x * 0.2, -board_node.global_transform.basis.z)
+		var moved := _end_board_drag()
+		print("SMOKE: board drag: grabbed=%s moved=%s from %s to %s, saved pose %s" % [grabbed, moved, before, board_node.position, settings["info_pose"]])
+		settings = saved_settings
+		_save_settings()
+		_apply_board_poses()
+	# Info panel: point at the first unit's tile and wait for the bridge's details
+	if not state.get("units", []).is_empty():
+		var info_key := Vector2i(int(state["units"][0]["x"]), int(state["units"][0]["y"]))
+		_update_hover(info_key)
+		await get_tree().create_timer(0.6).timeout
+		print("SMOKE: info panel: %s | %s" % [info_panel._tile_title.text, info_panel._civ_header.text])
 	print("SMOKE: state turn=%s tiles=%d units=%d" % [state.get("turn"), state.get("tiles", []).size(), state.get("units", []).size()])
+	var t_refresh := Time.get_ticks_usec()
+	await refresh()
+	print("SMOKE: delta refresh took %.0f ms (fps %d)" % [(Time.get_ticks_usec() - t_refresh) / 1000.0, Engine.get_frames_per_second()])
+	print("SMOKE: delta refresh: %d tiles resent, %d in cache, full=%s" % [_last_tiles_received, _tile_cache.size(), state.get("full")])
 	var settler: Variant = null
 	for u: Dictionary in state.get("units", []):
 		if u["name"] == "Settler":
@@ -898,6 +1707,60 @@ func _run_smoke_test() -> void:
 		print("SMOKE: ", _status_text.split("\n")[0], "  explorer at ",
 			"(%d,%d)" % [int(where[0]["x"]), int(where[0]["y"])] if not where.is_empty() else "-")
 	print("SMOKE: hover text for capital: ", hex_map.describe_tile(Vector2i(int(state["cities"][0]["x"]), int(state["cities"][0]["y"]))) if not state.get("cities", []).is_empty() else "")
+	# Map overlays: turn each one on, count what got drawn, then put them back as they were
+	var saved_overlays: Dictionary = settings["overlays"].duplicate()
+	for id: String in saved_overlays:
+		if not settings["overlays"][id]:
+			toggle_overlay(id)
+	await get_tree().create_timer(0.5).timeout
+	var layers := hex_map.overlays
+	print("SMOKE: overlays all on: %d symbol groups, %d models, %d yield groups, arrows %s, buttons %s" % [
+		layers._decals.get_child_count(), layers._models.get_child_count(), layers._yield_layer.get_child_count(),
+		layers._arrows.mesh != null, minimap._button_states])
+	for id: String in saved_overlays:
+		if settings["overlays"][id] != saved_overlays[id]:
+			toggle_overlay(id)
+	print("SMOKE: overlays restored: ", settings["overlays"])
+	# Big screen: each tab, research from the tree, a policy, and (on test games only) diplomacy
+	await show_big_screen("tech")
+	var researchable: Array = big_screen._techs.get("techs", []).filter(func(t: Dictionary) -> bool: return t.get("researchable", false))
+	if not researchable.is_empty():
+		await _on_big_screen_chosen("research", researchable[-1]["name"])
+	print("SMOKE: big screen tech: %d techs, current %s, shown=%s" % [big_screen._techs.get("techs", []).size(), big_screen._techs.get("current"), _big_screen_shown()])
+	await _on_big_screen_chosen("big_tab", "policies")
+	var branches: Array = big_screen._policies.get("branches", [])
+	print("SMOKE: big screen policies: %d branches, culture %s/%s" % [branches.size(), big_screen._policies.get("culture"), big_screen._policies.get("cultureNeeded")])
+	if not branches.is_empty():
+		await _on_big_screen_chosen("policy_select", branches[0]["name"])
+		if branches[0].get("pickable", false):
+			await _on_big_screen_chosen("adopt_policy", branches[0]["name"])
+			print("SMOKE: adopted %s: %s" % [branches[0]["name"], _status_text])
+	await _on_big_screen_chosen("big_tab", "diplomacy")
+	var met: Array = big_screen._diplomacy.get("civs", [])
+	print("SMOKE: big screen diplomacy: met %s" % [met.map(func(c: Dictionary) -> String: return "%s(%s)" % [c["name"], c.get("status")])])
+	var majors := met.filter(func(c: Dictionary) -> bool: return not c.get("isCityState", false) and c.get("alive", true))
+	if not majors.is_empty():
+		await _on_big_screen_chosen("trade_open", majors[0]["name"])
+		var opts: Dictionary = big_screen._trade_options
+		print("SMOKE: trade with %s: we could offer %d things, they %d" % [big_screen.trade_civ, opts.get("ours", []).size(), opts.get("theirs", []).size()])
+		var their_gold: Array = opts.get("theirs", []).filter(func(o: Dictionary) -> bool: return o["type"] == "Gold" and int(o["amount"]) > 0)
+		if not their_gold.is_empty():
+			big_screen._move_trade_item(their_gold[0], big_screen.trade_theirs, true)   # ask for some of their gold
+			await get_tree().create_timer(0.5).timeout
+			print("SMOKE: asking for %s gold for nothing -> %s" % [big_screen.trade_theirs[0]["amount"], big_screen._trade_verdict])
+		big_screen.close_trade()
+	await _on_big_screen_chosen("big_tab", "tech")
+	# Main menu round trip: open it, set up a new game, start it, then go back and resume
+	await _on_menu_chosen("main_menu", "")
+	print("SMOKE: lobby open=%s, info=%s" % [_in_lobby, _lobby_info])
+	await _on_menu_chosen("lobby_new", "")
+	await _on_menu_chosen("setup_set", "mapSize|Small")
+	await _on_menu_chosen("setup_step", "aiPlayers|1")
+	await _on_menu_chosen("setup_toggle", "victory|Science")
+	print("SMOKE: setup now ", _setup)
+	print("SMOKE: %d nations, %d saves listed" % [_setup_options.get("nations", []).size(), _saves.size()])
+	await _on_menu_chosen("lobby_resume", "")
+	print("SMOKE: resumed: lobby=%s, tiles=%d, table buttons shown=%s" % [_in_lobby, hex_map.tiles.size(), (_table_buttons[0]["node"] as Node3D).visible])
 	print("SMOKE: done")
 	if not options.has("screenshot"):
 		get_tree().quit()
@@ -913,6 +1776,13 @@ func _set_status(text: String) -> void:
 
 func _update_hud() -> void:
 	var lines: Array[String] = []
+	if info_panel != null and not _in_lobby:
+		# The info panel shows your civ's numbers and the pointed-at tile; the HUD keeps attacks and messages
+		if _hover_text.begins_with("ATTACK"):
+			lines.append(_hover_text)
+		lines.append(_status_text)
+		_set_hud_text("\n".join(lines))
+		return
 	if not state.is_empty():
 		var p: Dictionary = state.get("player", {})
 		var year := int(state.get("year", 0))
@@ -926,7 +1796,10 @@ func _update_hud() -> void:
 		lines.append(_hover_text)
 	lines.append("")
 	lines.append(_status_text)
-	var text := "\n".join(lines)
+	_set_hud_text("\n".join(lines))
+
+
+func _set_hud_text(text: String) -> void:
 	if _hud_label:
 		_hud_label.text = text
 	if _hud_label_3d:
@@ -963,6 +1836,7 @@ func _setup_hud() -> void:
 func _setup_action_menu() -> void:
 	action_menu = ActionMenu.new()
 	action_menu.show_recenter = _xr_mode
+	action_menu.in_vr = _xr_mode
 	action_menu.chosen.connect(_on_menu_chosen)
 	if not _xr_mode:
 		var layer := CanvasLayer.new()
@@ -984,6 +1858,7 @@ func _setup_action_menu() -> void:
 	# The city card gets its own bigger panel, which floats above whichever city is open
 	popup_menu = ActionMenu.new()
 	popup_menu.compact = true
+	popup_menu.in_vr = true
 	popup_menu.custom_minimum_size = Vector2(POPUP_PANEL_PIXELS.x, 0)
 	popup_menu.chosen.connect(_on_menu_chosen)
 	_popup_panel = WorldPanel.new()
@@ -1004,7 +1879,7 @@ func _update_popup_panel() -> void:
 	var base: Vector3
 	var lift := 0.06   # gap between the anchor and the bottom of the card
 	match _popup_kind:
-		"settings", "research":
+		"settings", "research", "lobby":
 			base = table.to_global(Vector3(0, 0, 0))   # over the middle of the table
 			lift = 0.12
 		"unit", "promotion":
@@ -1019,12 +1894,14 @@ func _update_popup_panel() -> void:
 			base = hex_map.to_global(hex_map.tile_local_center(_popup_key))
 	# The card fills only the top of the panel (it's sized to its contents); put the card's bottom edge
 	# 'lift' above the anchor.
-	var card_height := popup_menu.size.y / POPUP_PANEL_PIXELS.y * POPUP_PANEL_METRES.y
-	_popup_panel.global_position = base + up * (lift + card_height - POPUP_PANEL_METRES.y / 2.0)
+	var size_factor := 1.5 if _in_lobby else 1.0   # the main menu is the only thing to look at: make it bigger
+	var card_height := popup_menu.size.y / POPUP_PANEL_PIXELS.y * POPUP_PANEL_METRES.y * size_factor
+	_popup_panel.global_position = base + up * (lift + card_height - POPUP_PANEL_METRES.y * size_factor / 2.0)
 	if head.distance_to(_popup_panel.global_position) > 0.05:
 		# Face the eyes squarely (tilting back as needed) so the text isn't skewed when you look down at it.
 		# use_model_front = true: the quad's front (+Z) is what turns towards the head.
 		_popup_panel.look_at(head, Vector3.UP, true)
+	_popup_panel.scale = Vector3.ONE * size_factor
 
 
 ## Keeps the desktop unit card snug in the top-right corner as its contents change.
@@ -1068,6 +1945,13 @@ func change_setting(key: String, value: String) -> void:
 		"auto_move":
 			await _send_bridge_settings()
 	open_settings()   # refresh the card so the new choice is highlighted
+
+
+## Saves the running game in the bridge's save folder as "<civ> - turn <n>".
+func save_game() -> void:
+	var save_name := "%s - turn %d" % [state.get("playerCiv", "Game"), int(state.get("turn", 0))]
+	var reply := await bridge.request("saveGame", {"name": save_name})
+	_set_status("Saved as \"%s\"." % save_name if reply.ok else "Couldn't save: %s" % reply.error)
 
 
 func open_settings() -> void:
@@ -1155,10 +2039,7 @@ func press_table_button(id: String) -> void:
 		"next_idle":
 			await _select_next_unit()
 		"research":
-			if _popup_kind == "research":
-				_close_popup()
-			else:
-				await open_research()
+			await open_research()
 		"end_turn":
 			await end_turn()
 		"recenter":
@@ -1261,6 +2142,7 @@ func _setup_xr_rig() -> void:
 		_right_hand.rotation_degrees = Vector3(-40, 0, 0)
 	_left_hand.button_pressed.connect(func(button: String) -> void: _on_xr_button(false, button))
 	_right_hand.button_pressed.connect(func(button: String) -> void: _on_xr_button(true, button))
+	_right_hand.button_released.connect(func(button: String) -> void: _on_xr_button_released(true, button))
 
 	# laser on the right hand
 	var laser := MeshInstance3D.new()
@@ -1323,6 +2205,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseMotion:
 		var motion := event as InputEventMouseMotion
+		if _drag_id != "" and _camera != null:
+			_update_board_drag(_camera.project_ray_origin(motion.position), _camera.project_ray_normal(motion.position))
+			return
 		if motion.button_mask & MOUSE_BUTTON_MASK_RIGHT:
 			_yaw -= motion.relative.x * 0.005
 			_pitch += motion.relative.y * 0.005
@@ -1330,12 +2215,29 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif motion.button_mask & MOUSE_BUTTON_MASK_MIDDLE:
 			_pan(Vector2(-motion.relative.x, -motion.relative.y) * 0.0015 * _distance)
 		_update_hover(_pick_mouse(motion.position))
+		if _camera != null and minimap != null:
+			minimap.show_hover(minimap.ray_hit(_camera.project_ray_origin(motion.position), _camera.project_ray_normal(motion.position)))
+			minimap.hover_button(minimap.overlay_button_at(_camera.project_ray_origin(motion.position), _camera.project_ray_normal(motion.position)))
 		if _camera != null:
 			_highlight_table_button(_table_button_at(_camera.project_ray_origin(motion.position), _camera.project_ray_normal(motion.position)))
+	elif event is InputEventMouseButton and not event.pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+		var released := event as InputEventMouseButton
+		var was_overview := _drag_id == "minimap"
+		if not _end_board_drag() and was_overview and _camera != null:
+			var spot: Variant = minimap.ray_hit(_camera.project_ray_origin(released.position), _camera.project_ray_normal(released.position))
+			if spot != null:
+				_glide_view_to(spot)
 	elif event is InputEventMouseButton and event.pressed:
 		var button := event as InputEventMouseButton
 		match button.button_index:
 			MOUSE_BUTTON_LEFT:
+				if _camera != null and minimap != null:
+					var overlay := minimap.overlay_button_at(_camera.project_ray_origin(button.position), _camera.project_ray_normal(button.position))
+					if overlay != "":
+						toggle_overlay(overlay)
+						return
+				if _camera != null and _begin_board_drag(_camera.project_ray_origin(button.position), _camera.project_ray_normal(button.position)):
+					return   # a click (jump there) or a drag (move the board) - decided on release
 				var pressed := _table_button_at(_camera.project_ray_origin(button.position), _camera.project_ray_normal(button.position)) if _camera != null else ""
 				if pressed != "":
 					press_table_button(pressed)
@@ -1344,11 +2246,17 @@ func _unhandled_input(event: InputEvent) -> void:
 				if key != null:
 					click_tile(key)
 			MOUSE_BUTTON_WHEEL_UP:
-				_distance *= 0.9
-				_update_camera()
+				if button.ctrl_pressed:
+					_zoom_view(0.9)   # Ctrl + wheel zooms the map itself
+				else:
+					_distance *= 0.9
+					_update_camera()
 			MOUSE_BUTTON_WHEEL_DOWN:
-				_distance *= 1.1
-				_update_camera()
+				if button.ctrl_pressed:
+					_zoom_view(1.1)
+				else:
+					_distance *= 1.1
+					_update_camera()
 	elif event is InputEventKey and event.pressed and not event.echo:
 		match (event as InputEventKey).keycode:
 			KEY_SPACE, KEY_ENTER:
@@ -1360,17 +2268,31 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_TAB:
 				cycle_unit(-1 if (event as InputEventKey).shift_pressed else 1)
 			KEY_T:
-				open_research()
+				_toggle_big_screen("tech")
+			KEY_P:
+				_toggle_big_screen("policies")
+			KEY_G:
+				_toggle_big_screen("diplomacy")
 			KEY_O:
 				open_settings()
 			KEY_ESCAPE:
-				_deselect()
+				if not _xr_mode and _big_screen_shown():
+					_set_big_visible(false)
+				else:
+					_deselect()
 			KEY_R:
 				refresh()
+			KEY_EQUAL, KEY_KP_ADD, KEY_PAGEUP:
+				_zoom_view(0.8)   # show fewer, bigger hexes
+			KEY_MINUS, KEY_KP_SUBTRACT, KEY_PAGEDOWN:
+				_zoom_view(1.25)
 
 
 func _process(delta: float) -> void:
 	_update_pedestal()
+	_process_info_panel(delta)
+	if minimap != null and minimap.visible:
+		minimap.update_window()
 	if _xr_mode:
 		_process_xr(delta)
 		return
@@ -1380,7 +2302,14 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_A): pan.x -= 1
 	if Input.is_key_pressed(KEY_D): pan.x += 1
 	if pan != Vector2.ZERO:
-		_pan(pan * delta * 0.8 * _distance)
+		if hex_map.is_windowed():
+			# Slide the map under the table instead of moving the camera
+			var right := Vector3(cos(_yaw), 0, -sin(_yaw))
+			var forward := Vector3(-sin(_yaw), 0, -cos(_yaw))
+			var move := (right * pan.x - forward * pan.y) * delta * 0.5
+			hex_map.pan_view(_global_to_map_delta(move))
+		else:
+			_pan(pan * delta * 0.8 * _distance)
 
 
 func _pan(amount: Vector2) -> void:
@@ -1404,6 +2333,7 @@ func _update_hover(key: Variant) -> void:
 			_update_hud()
 		return
 	hex_map.set_hover(key)
+	_show_tile_info(key)
 	var text := hex_map.describe_tile(key)
 	var target := _target_at(key)
 	if not target.is_empty():
@@ -1425,7 +2355,10 @@ func _process_xr(delta: float) -> void:
 
 	# Cards take priority over the map behind them; the city card is checked first
 	_pointed_panel = null
-	for panel: WorldPanel in [_popup_panel, _wrist_panel]:
+	var panels: Array[WorldPanel] = [_popup_panel, _wrist_panel]
+	if _big_holder is WorldPanel:
+		panels.append(_big_holder as WorldPanel)
+	for panel: WorldPanel in panels:
 		var hit: Variant = panel.ray_hit(origin, direction)
 		if hit != null:
 			_pointed_panel = panel
@@ -1435,9 +2368,26 @@ func _process_xr(delta: float) -> void:
 			panel.hover(_pointed_pixel)
 			_update_hover(null)
 			break
-	var button := _table_button_at(origin, direction) if _pointed_panel == null else ""
+	_pointed_minimap = minimap.ray_hit(origin, direction) if _pointed_panel == null and minimap != null else null
+	if minimap != null:
+		minimap.show_hover(_pointed_minimap)
+	_pointed_overlay = minimap.overlay_button_at(origin, direction) if _pointed_panel == null and _pointed_minimap == null and minimap != null else ""
+	if minimap != null:
+		minimap.hover_button(_pointed_overlay)
+	var board := _board_at(origin, direction) if _pointed_panel == null and _pointed_minimap == null and _pointed_overlay == "" else []
+	var button := _table_button_at(origin, direction) if _pointed_panel == null and _pointed_minimap == null and _pointed_overlay == "" and board.is_empty() else ""
 	_highlight_table_button(button)
-	if button != "":
+	if _pointed_minimap != null:
+		_pointer_dot.visible = false
+		_update_hover(null)
+	elif _pointed_overlay != "":
+		_pointer_dot.visible = true
+		_pointer_dot.global_position = minimap.button_global_position(_pointed_overlay)
+		_update_hover(null)
+	elif not board.is_empty():   # on the info board (or the overview's frame): grab it with the trigger to move it
+		_pointer_dot.visible = true
+		_pointer_dot.global_position = board[1]
+	elif button != "":
 		_pointer_dot.visible = true
 		_pointer_dot.global_position = _table_button_position(button)
 		_update_hover(null)
@@ -1448,18 +2398,50 @@ func _process_xr(delta: float) -> void:
 		if key != null:
 			_pointer_dot.global_position = hex_map.to_global(hex_map.tile_local_center(key))
 
-	# Right stick: scrolls the card you're pointing at; otherwise raises / lowers the table
+	# Trigger held + that hand's stick up / down zooms the map. The right trigger's click waits for the
+	# release, so a zoom doesn't also click whatever you're pointing at.
 	var right_stick := _right_hand.get_vector2("primary")
+	var left_stick := _left_hand.get_vector2("primary")
+	var right_trigger := _right_hand.get_float("trigger") > 0.6
+	var left_trigger := _left_hand.get_float("trigger") > 0.6
+	if _drag_id != "":
+		# Holding a board: the right stick pushes it away / pulls it closer
+		if absf(right_stick.y) > 0.25:
+			_drag_distance = clampf(_drag_distance + right_stick.y * delta * 0.8, 0.25, 3.0)
+			_drag_moved = true
+		_update_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z)
+	elif right_trigger and absf(right_stick.y) > 0.25:
+		_zoom_view(1.0 - right_stick.y * delta * 1.2)   # up = zoom in
+		_right_trigger_used_for_zoom = true
+	if left_trigger and absf(left_stick.y) > 0.25:
+		_zoom_view(1.0 - left_stick.y * delta * 1.2)
+
+	# Right stick: scrolls the card you're pointing at; otherwise raises / lowers the table
 	_right_grip_down = _right_hand.get_float("grip") > 0.6
-	if _pointed_panel != null and not _right_grip_down:
-		if absf(right_stick.y) > 0.3:
+	if right_trigger or _drag_id != "":
+		pass
+	elif _pointed_panel != null and not _right_grip_down:
+		if _pointed_panel == _big_holder:
+			if right_stick.length() > 0.3:   # the big screen scrolls both ways (the tech tree is wide)
+				big_screen.scroll_by(Vector2(right_stick.x, -right_stick.y) * delta * 900.0)
+		elif absf(right_stick.y) > 0.3:
 			var menu: ActionMenu = popup_menu if _pointed_panel == _popup_panel else action_menu
 			menu.scroll_by(-right_stick.y * delta * 600.0)
 	else:
 		_stick_moves_table(right_stick, _right_grip_down, delta)
 
 	# Left stick works like the right one: height, or with the grip held, rotate (x) / scale (y)
-	_stick_moves_table(_left_hand.get_vector2("primary"), _left_hand.get_float("grip") > 0.6, delta)
+	if not left_trigger:
+		_stick_moves_table(left_stick, _left_hand.get_float("grip") > 0.6, delta)
+
+	# Big maps: hold a grip and move that hand to drag the map across the table
+	for hand: XRController3D in [_left_hand, _right_hand]:
+		if hand.get_float("grip") > 0.6 and hex_map.is_windowed():
+			if _grab_last.has(hand):
+				hex_map.pan_view(-_global_to_map_delta(hand.global_position - _grab_last[hand]))
+			_grab_last[hand] = hand.global_position
+		else:
+			_grab_last.erase(hand)
 
 
 ## Shared stick handling for both hands. Grip held: x rotates and y scales the table.
@@ -1478,19 +2460,40 @@ func _stick_moves_table(stick: Vector2, grip_held: bool, delta: float) -> void:
 		_place_vr_hud()
 
 
+## Right trigger released: click what's pointed at, unless the trigger was held to zoom.
+func _on_xr_button_released(is_right: bool, button: String) -> void:
+	if not is_right or button != "trigger_click":
+		return
+	if _end_board_drag():
+		return   # that was a drag, not a click
+	if _right_trigger_used_for_zoom:
+		_right_trigger_used_for_zoom = false
+		return
+	if _pointed_panel != null:
+		_pointed_panel.click(_pointed_pixel)
+		return
+	if _pointed_minimap != null:
+		_glide_view_to(_pointed_minimap)
+		return
+	if _pointed_overlay != "":
+		toggle_overlay(_pointed_overlay)
+		return
+	if not _board_at(_right_hand.global_position, -_right_hand.global_transform.basis.z).is_empty():
+		return   # a click on the info board does nothing (grab and drag moves it)
+	if _hovered_button != "":
+		press_table_button(_hovered_button)
+		return
+	var key: Variant = hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z)
+	if key != null:
+		click_tile(key)
+
+
 func _on_xr_button(is_right: bool, button: String) -> void:
 	if is_right:
 		match button:
 			"trigger_click":
-				if _pointed_panel != null:
-					_pointed_panel.click(_pointed_pixel)
-					return
-				if _hovered_button != "":
-					press_table_button(_hovered_button)
-					return
-				var key: Variant = hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z)
-				if key != null:
-					click_tile(key)
+				_right_trigger_used_for_zoom = false   # the click itself happens on release
+				_begin_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z)
 			"ax_button":
 				end_turn()
 			"by_button":

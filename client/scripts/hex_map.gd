@@ -1,15 +1,46 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends Node3D
 ## Draws the Unciv map as a tabletop of hex prisms, plus units, cities, borders and highlights.
 ## Works in "map units": a hex has circumradius 1, like Unciv's world coordinates.
 ## Scale this node to fit the table (see main.gd).
 
 const SQRT3 := 1.7320508
+signal view_rebuilt   # the drawn tiles changed (the yields overlay re-asks the bridge then)
+const Icons := preload("res://scripts/icons.gd")
+const OVERLAYS := preload("res://scripts/map_overlays.gd")
 const HEX_RADIUS := 0.97          # slightly under 1 leaves a hairline gap between tiles
-const UNEXPLORED_COLOR := Color(0.012, 0.012, 0.018)
+const UNEXPLORED_COLOR := Color(0.16, 0.18, 0.22)   # the ground under the fog
+
+# Fog of war: unexplored tiles are hidden under slowly drifting low-poly clouds
+const FOG_SHADER := """
+shader_type spatial;
+render_mode diffuse_lambert, specular_disabled;
+
+void vertex() {
+	// Each puff bobs gently, out of step with its neighbours
+	vec3 origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	float phase = fract(sin(dot(origin.xz, vec2(12.9898, 78.233))) * 43758.5453) * 6.2831;
+	VERTEX.y += sin(TIME * 0.7 + phase) * 0.05;
+	VERTEX.xz *= 1.0 + sin(TIME * 0.45 + phase * 1.7) * 0.04;
+}
+
+void fragment() {
+	// Brighter towards the edges, like sunlit cloud tops
+	float rim = 1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0);
+	ALBEDO = mix(COLOR.rgb, vec3(0.92, 0.94, 1.0), rim * 0.45);
+	ROUGHNESS = 1.0;
+}
+"""
 
 var terrain_info: Dictionary = {}   # terrain name -> {type, rgb, impassable}
 var tiles: Dictionary = {}          # Vector2i(x, y) -> tile Dictionary from getState
 var civ_colors: Dictionary = {}     # civ name -> {outer: Color, inner: Color}
+var civ_info: Dictionary = {}       # civ name -> its getState civs entry (nation, city-state type...)
+var resource_info: Dictionary = {}  # resource name -> {type: Bonus / Luxury / Strategic}
+var overlays: Node3D                # map_overlays.gd: Unciv's five map overlays
 var map_extent := 10.0              # half-size of the map, in map units
 
 var _content: Node3D                # everything, offset so the map is centred on this node
@@ -17,9 +48,22 @@ var _terrain: MultiMeshInstance3D
 var _trees: MultiMeshInstance3D
 var _borders: MultiMeshInstance3D
 var _highlights: MultiMeshInstance3D
+var _clouds: MultiMeshInstance3D
 var _units_root: Node3D
 var _cities_root: Node3D
 var _center_offset := Vector3.ZERO
+
+# Window onto the map: only tiles within view_radius (map units) of view_center are drawn, so the
+# table keeps a comfortable hex size and the map slides underneath it. view_radius 0, or at least
+# full_extent, shows the whole map (zoomed all the way out).
+var view_center := Vector2.ZERO     # world coords (wx, wy) under the table centre
+var view_radius := 0.0
+var _built_radius := -1.0           # view_radius when the visuals were last rebuilt
+var full_extent := 10.0             # half-size of the whole map, in map units
+var full_center := Vector2.ZERO
+var _shown: Dictionary = {}         # Vector2i -> true for tiles currently drawn
+var _built_center := Vector2.ZERO   # view_center when the visuals were last rebuilt
+const EDGE_FADE := 2.0              # map units at the window's rim drawn darker
 
 var _hover := Vector2i(999999, 999999)
 var _selected := Vector2i(999999, 999999)
@@ -42,6 +86,16 @@ func _ready() -> void:
 	_trees = _make_multimesh_node("Trees", _make_cone_mesh(), _vertex_color_material(0.8))
 	_borders = _make_multimesh_node("Borders", _make_ring_mesh(0.80), _vertex_color_material(0.6, true))
 	_highlights = _make_multimesh_node("Highlights", _make_ring_mesh(0.62), _vertex_color_material(0.4, true))
+	var puff := SphereMesh.new()
+	puff.radius = 0.5
+	puff.height = 0.55
+	puff.radial_segments = 9
+	puff.rings = 4
+	var fog := ShaderMaterial.new()
+	fog.shader = Shader.new()
+	fog.shader.code = FOG_SHADER
+	_clouds = _make_multimesh_node("Fog", puff, fog)
+	_clouds.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 	_units_root = Node3D.new()
 	_units_root.name = "Units"
@@ -71,6 +125,11 @@ func _ready() -> void:
 	_beacon.visible = false
 	_content.add_child(_beacon)
 
+	overlays = OVERLAYS.new()
+	overlays.name = "Overlays"
+	_content.add_child(overlays)
+	overlays.setup(self)
+
 
 func _process(delta: float) -> void:
 	if _beacon.visible:
@@ -81,13 +140,16 @@ func _process(delta: float) -> void:
 
 func set_ruleset(ruleset: Dictionary) -> void:
 	terrain_info = ruleset.get("terrains", {})
+	resource_info = ruleset.get("resources", {})
 
 
 # region building -------------------------------------------------------------------------
 
 func build(state: Dictionary) -> void:
 	civ_colors.clear()
+	civ_info.clear()
 	for civ: Dictionary in state.get("civs", []):
+		civ_info[civ["name"]] = civ
 		civ_colors[civ["name"]] = {
 			"outer": Color.html(civ["outerColor"]),
 			"inner": Color.html(civ["innerColor"]),
@@ -103,30 +165,119 @@ func build(state: Dictionary) -> void:
 		min_corner = min_corner.min(w)
 		max_corner = max_corner.max(w)
 
-	var center := (min_corner + max_corner) / 2.0
-	_center_offset = Vector3(-center.x, 0, center.y)
-	_content.position = _center_offset
-	map_extent = max((max_corner - min_corner).x, (max_corner - min_corner).y) / 2.0 + 1.0
+	full_center = (min_corner + max_corner) / 2.0
+	full_extent = max((max_corner - min_corner).x, (max_corner - min_corner).y) / 2.0 + 1.0
+	_rebuild_view()
 
+
+## Shows the whole map (radius 0) or a round window [param radius] map units across around [param center].
+func set_view(center: Vector2, radius: float) -> void:
+	view_radius = radius
+	# Keep the window over the map: the closer it is to showing everything, the less it can slide
+	var margin := maxf(0.0, full_extent - radius) if radius > 0.0 else 0.0
+	view_center = center.clamp(full_center - Vector2.ONE * margin, full_center + Vector2.ONE * margin)
+	map_extent = full_extent if shows_whole_map() else view_radius + 1.0
+	# Rebuilding the visuals is the slow part, so zooming only rebuilds every few percent and sliding
+	# every hex or so; in between, what's drawn just moves (main.gd rescales the table smoothly).
+	var resized := absf(view_radius - _built_radius) > maxf(0.4, _built_radius * 0.06)
+	if resized or view_center.distance_to(_built_center) > 1.2 or tiles.is_empty():
+		_rebuild_view()
+	else:
+		_place_content()
+
+
+func pan_view(delta_world: Vector2) -> void:
+	if not shows_whole_map():
+		set_view(view_center + delta_world, view_radius)
+
+
+## True when only part of the map is on the table (it can slide).
+func is_windowed() -> bool:
+	return not shows_whole_map()
+
+
+func shows_whole_map() -> bool:
+	return view_radius <= 0.0 or view_radius >= full_extent
+
+
+func _place_content() -> void:
+	var c := full_center if shows_whole_map() else view_center
+	_center_offset = Vector3(-c.x, 0, c.y)
+	_content.position = _center_offset
+
+
+func _rebuild_view() -> void:
+	_built_center = view_center
+	_built_radius = view_radius
+	_place_content()
+	map_extent = full_extent if shows_whole_map() else view_radius + 1.0
+	_shown.clear()
+	var whole := shows_whole_map()
+	for key: Vector2i in tiles:
+		if whole or _world_of(key).distance_to(view_center) <= view_radius:
+			_shown[key] = true
 	_build_terrain()
 	_build_borders()
 	_build_cities()
 	_build_units()
 	_build_highlights()
+	if _aim_root != null:
+		_aim_root.visible = _shown.has(_aim_key)
+	_place_beacon()
+	overlays.rebuild(_shown)
+	view_rebuilt.emit()
+
+
+## Turns map overlays on / off ({"movement": bool, "yields": ..., "worked", "resources", "improvements"}).
+func set_overlay_flags(new_flags: Dictionary) -> void:
+	for key: String in new_flags:
+		if overlays.flags.has(key):
+			overlays.flags[key] = bool(new_flags[key])
+	overlays.rebuild(_shown)
+
+
+## The getYields result for the yields overlay.
+func show_yields(yield_tiles: Array) -> void:
+	overlays.show_yields(yield_tiles, _shown)
+
+
+## The explored tiles currently drawn, as [[x, y], ...] (what to ask getYields for).
+func shown_explored_tiles() -> Array:
+	var out := []
+	for key: Vector2i in _shown:
+		if tiles[key].get("explored", false):
+			out.append([key.x, key.y])
+	return out
+
+
+func _world_of(key: Vector2i) -> Vector2:
+	var tile: Dictionary = tiles.get(key, {})
+	return Vector2(tile.get("wx", 0.0), tile.get("wy", 0.0))
+
+
+## How far into the darker rim of the window a tile is: 0 inside, up to 1 at the very edge.
+func _rim(key: Vector2i) -> float:
+	if shows_whole_map():
+		return 0.0
+	return clampf((_world_of(key).distance_to(view_center) - (view_radius - EDGE_FADE)) / EDGE_FADE, 0.0, 1.0)
+
+
+func is_shown(key: Vector2i) -> bool:
+	return _shown.has(key)
 
 
 func _build_terrain() -> void:
 	var mm := _terrain.multimesh
-	mm.instance_count = tiles.size()
+	mm.instance_count = _shown.size()
 	var tree_transforms: Array[Transform3D] = []
 	var tree_colors: Array[Color] = []
 	var i := 0
-	for key: Vector2i in tiles:
+	for key: Vector2i in _shown:
 		var tile: Dictionary = tiles[key]
 		var height := tile_height(tile)
 		var tile_basis := Basis().scaled(Vector3(1, height, 1))
 		mm.set_instance_transform(i, Transform3D(tile_basis, tile_position(key, 0.0)))
-		mm.set_instance_color(i, tile_color(tile))
+		mm.set_instance_color(i, tile_color(tile).darkened(0.55 * _rim(key)))
 		i += 1
 
 		if tile.get("explored", false):
@@ -145,11 +296,38 @@ func _build_terrain() -> void:
 	for t in tree_transforms.size():
 		tmm.set_instance_transform(t, tree_transforms[t])
 		tmm.set_instance_color(t, tree_colors[t])
+	_build_fog()
+
+
+## A few cloud puffs over every unexplored tile, spilling a little over its edges so the fog's border is soft.
+func _build_fog() -> void:
+	var unexplored: Array[Vector2i] = []
+	for key: Vector2i in _shown:
+		if not tiles[key].get("explored", false):
+			unexplored.append(key)
+	var per_tile := 4 if unexplored.size() < 1500 else 2   # fewer puffs when the whole of a big map is on the table
+	var cmm := _clouds.multimesh
+	cmm.instance_count = unexplored.size() * per_tile
+	var rng := RandomNumberGenerator.new()
+	var i := 0
+	for key in unexplored:
+		rng.seed = hash(key)   # the same tile always gets the same clouds
+		var base := tile_position(key, 0.0)
+		for p in per_tile:
+			var angle := rng.randf() * TAU
+			var offset := Vector3(cos(angle), 0, sin(angle)) * rng.randf_range(0.1, 0.65)
+			var size := rng.randf_range(1.2, 1.7) if per_tile > 2 else rng.randf_range(1.6, 2.1)
+			var height := rng.randf_range(0.2, 0.45)
+			var puff_basis := Basis().rotated(Vector3.UP, rng.randf() * TAU).scaled(Vector3(size * rng.randf_range(1.0, 1.3), size * 0.8, size))
+			cmm.set_instance_transform(i, Transform3D(puff_basis, base + offset + Vector3(0, height, 0)))
+			var shade := rng.randf_range(0.5, 0.64)
+			cmm.set_instance_color(i, Color(shade, shade + 0.02, shade + 0.06))
+			i += 1
 
 
 func _build_borders() -> void:
 	var owned: Array[Vector2i] = []
-	for key: Vector2i in tiles:
+	for key: Vector2i in _shown:
 		if tiles[key].has("owner"):
 			owned.append(key)
 	var mm := _borders.multimesh
@@ -164,7 +342,7 @@ func _build_borders() -> void:
 func _build_cities() -> void:
 	for child in _cities_root.get_children():
 		child.queue_free()
-	for key: Vector2i in tiles:
+	for key: Vector2i in _shown:
 		var tile: Dictionary = tiles[key]
 		if not tile.has("city"):
 			continue
@@ -191,13 +369,17 @@ func _build_cities() -> void:
 		label.outline_size = 14
 		label.modulate = outer.lightened(0.3)
 		node.add_child(label)
+		# The civ's emblem above the name, like Unciv's city banners
+		var emblem := Icons.civ_badge(civ_info.get(city["civ"], {"name": city["civ"]}))
+		if emblem != null:
+			node.add_child(_billboard(emblem, 0.5, Vector3(0, 1.55, 0)))
 
 
 func _build_units() -> void:
 	for child in _units_root.get_children():
 		child.queue_free()
 	_unit_labels.clear()
-	for key: Vector2i in tiles:
+	for key: Vector2i in _shown:
 		var tile: Dictionary = tiles[key]
 		if not tile.has("units"):
 			continue
@@ -230,6 +412,25 @@ func _make_unit_token(unit: Dictionary, at: Vector3) -> Node3D:
 	disc.position.y = 0.04
 	token.add_child(disc)
 
+	# Unciv-style flag: the unit's icon in the civ's colours on a round badge, always facing you
+	var flag := Icons.badge("unit", str(unit["name"]), inner, outer)
+	if flag != null:
+		token.add_child(_billboard(flag, 0.62, Vector3(0, 0.42, 0)))
+		var health_left := int(unit.get("health", 100))
+		if health_left < 100:   # a little health bar under the flag
+			var bar := MeshInstance3D.new()
+			var bar_mesh := BoxMesh.new()
+			bar_mesh.size = Vector3(0.5 * health_left / 100.0, 0.05, 0.05)
+			bar.mesh = bar_mesh
+			bar.material_override = _flat_material(Color(0.3, 0.9, 0.3) if health_left > 50 else Color(0.95, 0.3, 0.2))
+			bar.position = Vector3(0, 0.08, 0.3)
+			token.add_child(bar)
+		var name_label := _make_label(str(unit["name"]) + (" %d%%" % health_left if health_left < 100 else ""), 44)
+		name_label.name = "Label"
+		name_label.position = Vector3(0, 0.95, 0)
+		name_label.visible = false
+		token.add_child(name_label)
+		return token
 	var figure := MeshInstance3D.new()
 	if unit.get("civilian", false):
 		var sphere := SphereMesh.new()
@@ -277,7 +478,7 @@ func set_selection(selected: Vector2i, reachable: Array[Vector2i], targets: Arra
 
 
 func _place_beacon() -> void:
-	if tiles.has(_selected):
+	if _shown.has(_selected):
 		var tile: Dictionary = tiles[_selected]
 		_beacon.position = tile_position(_selected, tile_height(tile) + 2.5)
 		_beacon.visible = true
@@ -369,6 +570,7 @@ func _build_highlights() -> void:
 		rings.append([_selected, Color(1.0, 0.85, 0.2)])
 	if tiles.has(_hover):
 		rings.append([_hover, Color(1, 1, 1)])
+	rings = rings.filter(func(r: Array) -> bool: return _shown.has(r[0]))
 	var mm := _highlights.multimesh
 	mm.instance_count = rings.size()
 	for i in rings.size():
@@ -391,7 +593,7 @@ func tile_at_global(point: Vector3) -> Variant:
 	var p := Vector2(local.x, -local.z)
 	var best: Variant = null
 	var best_distance := 1.0  # must be within one hex radius
-	for key: Vector2i in tiles:
+	for key: Vector2i in _shown:
 		var tile: Dictionary = tiles[key]
 		var d := p.distance_to(Vector2(tile["wx"], tile["wy"]))
 		if d < best_distance:
@@ -565,6 +767,19 @@ func _make_cone_mesh() -> CylinderMesh:
 	cone.height = 0.45
 	cone.radial_segments = 8
 	return cone
+
+
+## A picture that always faces you, [param diameter] map units across.
+func _billboard(texture: Texture2D, diameter: float, at: Vector3) -> Sprite3D:
+	var sprite := Sprite3D.new()
+	sprite.texture = texture
+	sprite.pixel_size = diameter / float(texture.get_width())
+	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	sprite.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	sprite.shaded = false
+	sprite.position = at
+	return sprite
 
 
 func _make_label(text: String, font_size: int) -> Label3D:

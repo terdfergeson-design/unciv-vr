@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends RefCounted
 ## Starts the Unciv bridge when nobody else has, using the Unciv repo next to this project
 ## (../unciv). Output goes to logs/bridge.log inside the client folder.

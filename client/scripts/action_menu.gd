@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 extends PanelContainer
 ## The card: shows the selected unit, a city's production, or the research list.
 ## Used as-is on the desktop HUD, and rendered into a SubViewport on the left wrist in VR.
@@ -9,15 +13,25 @@ extends PanelContainer
 ##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it
 ##   settings card: "background" (studio/mountains/space), "auto_move" (end/start); footer "settings_card" opens it
 ##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
+##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "quit"
+##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
+##                  "setup_step" ("key|+1"), "setup_start", "lobby" (back to the lobby card)
+##   saves card:    "load_save" (name), "lobby"
+##   settings card also: "save_game", "main_menu", "reset_boards"
 signal chosen(kind: String, value: String)
 ## Emitted after the card's contents change, so whoever places it can re-fit it.
 signal layout_changed
 
 const WIDTH := 380
+const Icons := preload("res://scripts/icons.gd")
 const LIST_HEIGHT := 360
 
 var show_recenter := false   # VR only
+var in_vr := false
 var compact := false         # no unit/turn footer (the floating city card); set before adding to the tree
+var lobby_mode := false      # no game on the table yet: hide the unit/turn footer
+var keep_scroll_once := false   # the next card rebuild keeps the scroll position (e.g. after pressing + or -)
+var _restore_scroll := 0
 
 var _title: Label
 var _info: Label
@@ -128,7 +142,7 @@ func show_unit(unit: Dictionary) -> void:
 		if not action.get("enabled", false) or action["type"] == "Promote":
 			continue   # Unciv's own Promote action opens its promotion screen; we use the card above instead
 		var type: String = action["type"]
-		var title: String = action.get("title", type)
+		var title: String = str(action.get("title", type)).replace("{", "").replace("}", "")   # Unciv templates like "{Found city}"
 		if action.get("current", false):
 			title += "  (active)"
 		_list.add_child(_make_button(title, func() -> void: chosen.emit("action", type)))
@@ -234,6 +248,13 @@ func show_settings(settings: Dictionary) -> void:
 		var selected: bool = settings.get("background", "") == value
 		_list.add_child(_make_button(("> " if selected else "") + option[1],
 			func() -> void: chosen.emit("background", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
+	if not lobby_mode:
+		_add_header("Game")
+		_list.add_child(_make_button("Save game", func() -> void: chosen.emit("save_game", ""), Color(0.2, 0.32, 0.25)))
+		_list.add_child(_make_button("Main menu (the game keeps running)", func() -> void: chosen.emit("main_menu", ""), Color(0.25, 0.25, 0.3)))
+	if in_vr:   # VR only: the boards at the far edge of the table can be dragged around
+		_add_header("Overview and info board")
+		_list.add_child(_make_button("Put them back where they started", func() -> void: chosen.emit("reset_boards", ""), Color(0.25, 0.25, 0.3)))
 	_add_header("Automated and exploring units move")
 	for option: Array in [["end", "When I end my turn"], ["start", "At the start of my turn"]]:
 		var value: String = option[0]
@@ -293,6 +314,181 @@ func show_research(techs: Dictionary) -> void:
 	_end()
 
 
+# region lobby -----------------------------------------------------------------------------
+
+## The main menu shown when no game is on the table. info: {running (bool), running_text, autosave (name or ""),
+## autosave_text, quick_text, has_saves}
+func show_lobby(info: Dictionary) -> void:
+	if not _begin():
+		return
+	_title.text = "Unciv VR"
+	if info.get("busy", false):
+		_info.text = str(info.get("quick_text", ""))
+		_end()
+		return
+	_info.text = "Pick up where you left off, or start a new game."
+	if info.get("running", false):
+		_list.add_child(_make_button("Resume  -  " + str(info.get("running_text", "")), func() -> void: chosen.emit("lobby_resume", ""),
+			Color(0.2, 0.42, 0.25)))
+	elif str(info.get("autosave", "")) != "":
+		var save_name: String = info["autosave"]
+		_list.add_child(_make_button("Continue  -  " + str(info.get("autosave_text", "")), func() -> void: chosen.emit("lobby_continue", save_name),
+			Color(0.2, 0.42, 0.25)))
+	_list.add_child(_make_button("Quick start", func() -> void: chosen.emit("lobby_quick", ""), Color(0.55, 0.35, 0.1)))
+	_add_note(str(info.get("quick_text", "")))
+	_list.add_child(_make_button("New game...", func() -> void: chosen.emit("lobby_new", ""), Color(0.2, 0.3, 0.5)))
+	if info.get("has_saves", false):
+		_list.add_child(_make_button("Load game...", func() -> void: chosen.emit("lobby_load", ""), Color(0.22, 0.25, 0.32)))
+	_list.add_child(_make_button("Settings", func() -> void: chosen.emit("settings_card", ""), Color(0.25, 0.25, 0.3)))
+	_list.add_child(_make_button("Quit", func() -> void: chosen.emit("quit", ""), Color(0.35, 0.18, 0.18)))
+	_end()
+
+
+## The new-game setup, in three tabs. setup: the getSetup fields being edited; options: the listOptions result.
+func show_setup(setup: Dictionary, options: Dictionary, tab: String) -> void:
+	if not _begin():
+		return
+	_title.text = "New game"
+	var tabs := HBoxContainer.new()
+	tabs.add_theme_constant_override("separation", 4)
+	for t: Array in [["you", "You"], ["world", "World"], ["rules", "Rules"]]:
+		var id: String = t[0]
+		var button := _make_button(t[1], func() -> void: chosen.emit("setup_tab", id),
+			Color(0.2, 0.4, 0.6) if id == tab else Color(0.2, 0.22, 0.28))
+		button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		tabs.add_child(button)
+	_list.add_child(tabs)
+
+	var civ: String = str(setup.get("civ", "Random"))
+	_info.text = "%s  -  %s %s map, %s, %d AI, %d city-states" % [civ, setup.get("mapSize", "?"), setup.get("mapType", ""),
+		setup.get("difficulty", "?"), int(setup.get("aiPlayers", 0)), int(setup.get("cityStates", 0))]
+
+	match tab:
+		"you":
+			var nations: Array = options.get("nations", [])
+			var picked: Dictionary = {}
+			for n: Dictionary in nations:
+				if n["name"] == civ:
+					picked = n
+			if not picked.is_empty():
+				_add_header("%s, led by %s" % [picked["name"], picked.get("leader", "?")])
+				_add_note("%s: %s" % [picked.get("uniqueName", ""), picked.get("uniqueText", "")])
+			else:
+				_add_note("Random: you'll find out who you are when the game starts.")
+			_add_header("Your civilization")
+			_list.add_child(_make_button(("> " if civ == "Random" else "") + "Random", func() -> void: chosen.emit("setup_set", "civ|Random"),
+				Color(0.2, 0.4, 0.6) if civ == "Random" else Color(0.2, 0.22, 0.28)))
+			for n: Dictionary in nations:
+				var nation_name: String = n["name"]
+				var color := Color.html(str(n.get("innerColor", "333333ff"))).darkened(0.35)
+				if nation_name == civ:
+					color = Color(0.2, 0.4, 0.6)
+				var nation_button := _make_button(("> " if nation_name == civ else "") + "%s  (%s)" % [nation_name, n.get("leader", "")],
+					func() -> void: chosen.emit("setup_set", "civ|" + nation_name), color)
+				nation_button.icon = Icons.civ_badge(n)   # Unciv's nation symbol, in its colours
+				nation_button.add_theme_constant_override("icon_max_width", 30)
+				_list.add_child(nation_button)
+		"world":
+			_add_choices("Map size", "mapSize", options.get("mapSizes", []), setup)
+			_add_choices("Map type", "mapType", options.get("mapTypes", []), setup)
+			_add_choices("Shape", "mapShape", options.get("mapShapes", []), setup)
+			_add_choices("Resources", "mapResources", options.get("mapResources", []), setup)
+			_add_header("Options")
+			_add_toggle("No ancient ruins", "noRuins", setup)
+			_add_toggle("No natural wonders", "noNaturalWonders", setup)
+			_add_note("Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge.")
+		"rules":
+			_add_choices("Difficulty", "difficulty", options.get("difficulties", []), setup)
+			_add_choices("Game speed", "speed", options.get("speeds", []), setup)
+			_add_choices("Starting era", "startingEra", options.get("eras", []), setup)
+			_add_stepper("AI players", "aiPlayers", setup)
+			_add_stepper("City-states", "cityStates", setup)
+			_add_header("Victory types (none picked = all)")
+			var victories: Array = setup.get("victoryTypes", [])
+			for v: String in options.get("victoryTypes", []):
+				var on := victories.is_empty() or v in victories
+				_list.add_child(_make_button(("[x] " if on else "[  ] ") + v, func() -> void: chosen.emit("setup_toggle", "victory|" + v),
+					Color(0.2, 0.36, 0.3) if on else Color(0.2, 0.22, 0.28)))
+			_add_header("Options")
+			_add_toggle("No barbarians", "noBarbarians", setup)
+			_add_toggle("Raging barbarians", "ragingBarbarians", setup)
+			_add_toggle("One-city challenge", "oneCityChallenge", setup)
+			_add_toggle("No city razing", "noCityRazing", setup)
+			_add_toggle("Nuclear weapons", "nuclearWeapons", setup)
+			_add_toggle("Espionage", "espionage", setup)
+
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 6)
+	actions.add_child(_make_button("< Back", func() -> void: chosen.emit("lobby", ""), Color(0.25, 0.25, 0.3)))
+	var start := _make_button("Start game", func() -> void: chosen.emit("setup_start", ""), Color(0.55, 0.35, 0.1))
+	start.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	actions.add_child(start)
+	_list.add_child(HSeparator.new())
+	_list.add_child(actions)
+	_end()
+
+
+## listSaves: one button per save, newest first.
+func show_saves(saves: Array) -> void:
+	if not _begin():
+		return
+	_title.text = "Load game"
+	_info.text = "Saves in your Unciv VR folder, newest first."
+	_list.add_child(_make_button("< Back", func() -> void: chosen.emit("lobby", ""), Color(0.25, 0.25, 0.3)))
+	for save: Dictionary in saves:
+		var save_name: String = save["name"]
+		var when := local_time_text(float(save.get("modified", 0)))
+		_list.add_child(_make_button("%s   (%s)" % [save_name, when], func() -> void: chosen.emit("load_save", save_name),
+			Color(0.2, 0.36, 0.3) if save.get("autosave", false) else Color(0.2, 0.22, 0.28)))
+	_end()
+
+
+## "2026-10-08 15:13" in this PC's time zone, from milliseconds since 1970 (UTC).
+static func local_time_text(ms: float) -> String:
+	var seconds := int(ms / 1000.0) + int(Time.get_time_zone_from_system().get("bias", 0)) * 60
+	return Time.get_datetime_string_from_unix_time(seconds, true).left(16)
+
+
+## A row of small buttons, one per value, with the current one highlighted.
+func _add_choices(title: String, key: String, values: Array, setup: Dictionary) -> void:
+	_add_header(title)
+	var flow := HFlowContainer.new()
+	flow.add_theme_constant_override("h_separation", 4)
+	flow.add_theme_constant_override("v_separation", 4)
+	for value: String in values:
+		var selected: bool = str(setup.get(key, "")) == value
+		var button := _make_button(value, func() -> void: chosen.emit("setup_set", "%s|%s" % [key, value]),
+			Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28))
+		button.size_flags_horizontal = Control.SIZE_FILL
+		button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		button.clip_text = false
+		flow.add_child(button)
+	_list.add_child(flow)
+
+
+func _add_toggle(title: String, key: String, setup: Dictionary) -> void:
+	var on: bool = setup.get(key, false)
+	_list.add_child(_make_button(("[x] " if on else "[  ] ") + title, func() -> void: chosen.emit("setup_toggle", key),
+		Color(0.2, 0.36, 0.3) if on else Color(0.2, 0.22, 0.28)))
+
+
+func _add_stepper(title: String, key: String, setup: Dictionary) -> void:
+	_list.add_child(_make_row("%s: %d" % [title, int(setup.get(key, 0))], Color(0.2, 0.22, 0.28), [
+		["-", func() -> void: chosen.emit("setup_step", key + "|-1"), Color(0.3, 0.25, 0.25)],
+		["+", func() -> void: chosen.emit("setup_step", key + "|1"), Color(0.25, 0.3, 0.25)]]))
+
+
+func _add_note(text: String) -> void:
+	if text == "":
+		return
+	var note := Label.new()
+	note.text = text
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.add_theme_font_size_override("font_size", 14)
+	note.add_theme_color_override("font_color", Color(0.75, 0.78, 0.85))
+	_list.add_child(note)
+
+
 # region helpers --------------------------------------------------------------------------
 
 func _begin() -> bool:
@@ -300,9 +496,11 @@ func _begin() -> bool:
 		return false
 	for child in _list.get_children():
 		child.queue_free()
+	_restore_scroll = _scroll.scroll_vertical if keep_scroll_once else 0
+	keep_scroll_once = false
 	_scroll.scroll_vertical = 0
 	_recenter_row.visible = show_recenter
-	_footer.visible = not compact
+	_footer.visible = not compact and not lobby_mode
 	return true
 
 
@@ -312,6 +510,9 @@ func _end() -> void:
 	var wanted := _list.get_combined_minimum_size().y
 	_scroll.custom_minimum_size = Vector2(0, minf(wanted, LIST_HEIGHT + (60 if compact else 0)))
 	reset_size()
+	if _restore_scroll > 0:
+		await get_tree().process_frame   # the scroll range only updates once the new contents are laid out
+		_scroll.scroll_vertical = _restore_scroll
 	layout_changed.emit()
 
 

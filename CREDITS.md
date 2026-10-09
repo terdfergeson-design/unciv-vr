@@ -1,0 +1,43 @@
+# Credits
+
+Unciv VR is a VR frontend for [Unciv](https://github.com/yairm210/Unciv), the open-source Civilization V remake by
+Yair Morgenstern and the Unciv contributors. Unciv VR's own code (the Godot client in `client/`) is licensed
+under the Mozilla Public License 2.0 (see [LICENSE](LICENSE)), the same licence as Unciv. The game rules, AI and turn processing are Unciv's own, run by the
+bridge in our Unciv fork (`unciv/bridge`). That code is under the Mozilla Public License 2.0, like the rest of Unciv.
+
+## Unciv's icons
+
+The client shows Unciv's own icons so Unciv players feel at home. They aren't copied into this repository: the
+client loads them at runtime from the Unciv checkout next to it (`unciv/android/Images.*`). The icons used are:
+- policies and policy branches
+- technologies
+- stats
+- resources and improvements
+- unit types and units
+- buildings
+- nations and city-state types
+- tile icons, including the map-overlay toggles
+
+These images are by many authors, mostly from [the Noun Project](https://thenounproject.com). They are licensed
+under CC BY 3.0, CC BY 4.0, CC BY-SA 3.0/4.0, CC0 or public domain. The full list of authors and licences is in
+Unciv's [docs/Credits.md](https://github.com/yairm210/Unciv/blob/master/docs/Credits.md), which is also in
+`unciv/docs/Credits.md` here.
+
+**Changes we make:** the client resizes the icons, and many are tinted and set on coloured round badges at runtime.
+Examples are unit flags in civ colours, nation emblems, and resource and improvement markers. The original files
+are not changed.
+
+## Planned: Unciv's sound effects
+
+Unciv's sound effects (`unciv/android/assets/sounds`) will be loaded the same way. They come mostly from
+[freesound.org](https://freesound.org) and [soundbible.com](https://soundbible.com) under CC0, CC BY 3.0 or
+CC BY 4.0. Authors and licences are listed in the "Sound credits" section of Unciv's Credits.md.
+
+## If you share screenshots or builds
+
+- **Screenshots and videos** show Unciv's icons. Credit them as "Icons from Unciv (see Unciv's docs/Credits.md),
+  licensed CC BY / CC BY-SA / CC0 by their authors".
+- **Builds that bundle the images or sounds** must include Unciv's Credits.md, or an equivalent list of authors,
+  titles, licences and licence links. They must also keep the note above that the icons are modified. Any
+  CC BY-SA files that get adapted must stay under CC BY-SA. Today we don't use any of them: the CC BY-SA files are
+  the HexaRealm tileset, a few flags and the banner.
