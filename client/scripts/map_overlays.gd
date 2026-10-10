@@ -13,7 +13,7 @@ extends Node3D
 
 const Icons := preload("res://scripts/icons.gd")
 
-var flags := {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true}
+var flags := {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true}
 
 var _map: Node3D                    # the HexMap
 var _decals: Node3D                 # flat symbols lying on the tiles (one MultiMesh per picture)

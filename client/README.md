@@ -51,6 +51,11 @@ Like Unciv's next-turn button, **End turn** first takes you to whatever still ne
 what: a message to answer, a free great person to pick, a city with nothing to build, research, a policy, spies to
 place, a pantheon or religion to found, a World Congress vote, or a unit still waiting for orders. With "Confirm next turn" on, it takes a second press.
 
+After End turn, the moves and battles of the other players that you could see play back on the table, in
+order, with the view gliding to fights outside it; **End turn** (now labelled **Skip**, or A / Space) skips the
+rest. Settings > "Other players' turns" plays them normally, fast, or not at all. Your own moves and attacks
+are animated too.
+
 Unciv's popups (first contact, declarations of friendship, demands, trade requests, a city you've conquered,
 wonders, golden ages, great people, victory and defeat...) come up as a card in the middle of the window, or
 floating over the table (above the place they're about, if any) in VR, with Unciv's choices. They wait while
@@ -135,11 +140,16 @@ Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-siz
 headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=studio|mountains|space` (not saved), `--tileset=LowPoly|classic` (or any tileset folder; not saved),
 `--overlays=all` or e.g. `--overlays=movement,yields` (turns those map overlays on for this run, not saved).
 
-For testing (needs a bridge started by hand with `--debug`, so use `--no-launch`): `--scenario=<name>` sets up
+For testing, start from the test save `--load=res://tests/saves/everything.json` (three cities, a full army, a
+war party next to one of our cities, every civ met; see [tests/saves/README.md](tests/saves/README.md)) rather
+than a new game. Scenarios (need a bridge started by hand with `--debug`, so use `--no-launch`): `--scenario=<name>` sets up
 a situation from `scripts/dev_scenarios.gd` and plays through it the way a player would, printing `SCENARIO:`
 lines (blockers, alerts, alerts_show, conquest, religion, great_person, victory, diplomacy, unit_actions, bombard,
 espionage, **tiles** (reveals the map and saves pictures of the tileset zoomed out, at the usual size, on the
-natural wonders and in the city view to `--shots=<folder>`, with how much it draws), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
+natural wonders and in the city view to `--shots=<folder>`, with how much it draws), **battles** (war with a
+neighbour, enemy troops next to the capital, one of ours shoots, then End turn plays back the AI's attacks; steps
+`staged_fight` and `unit_icons` follow it), **playback** (from the test save: End turn, and the AI's attacks play
+back), **make_test_save** (with `--then=save_test_game`: rebuilds the test save), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
 double clicks, popups arriving while something else is open, save and load mid-decision - each printed as OK or
 PROBLEM). `--then=step,step:arg` runs more of its steps afterwards (e.g. `--then=save_load,conquest_answer:puppet`).
 
@@ -157,9 +167,11 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/tileset.gd`: loads a tileset (`tilesets/<name>/`, or `~/.unciv-vr/Tilesets/<name>/`) and picks the
   pieces for each tile the way Unciv picks tile images; see [tilesets/README.md](tilesets/README.md)
 - `scripts/tileset_shaders.gd`: the animated materials (steam, geyser, smoke, lava, sparkle, shimmer, water)
+- `scripts/unit_motion.gd`: units moving and fighting on the table (lunges, projectiles, hits, deaths), used for
+  your own moves and attacks and to play back what the other players did that you could see
 - `tilesets/LowPoly/`: the built-in low-poly tileset (`tileset.json` and its `.glb` pieces)
-- `tools/make_lowpoly_tileset.gd` (with `lowpoly_pieces.gd`, `lowpoly_wonders.gd`): makes the low-poly
-  pieces; `tools/preview_tileset.gd` renders a tileset to pictures
+- `tools/make_lowpoly_tileset.gd` (with `lowpoly_pieces.gd`, `lowpoly_wonders.gd`, `lowpoly_units.gd`): makes
+  the low-poly pieces and unit models; `tools/preview_tileset.gd` renders a tileset to pictures
 - `scripts/minimap.gd`: the overview at the far edge of the table, with the map-overlay buttons
 - `scripts/map_overlays.gd`: Unciv's five map overlays drawn on the table (movement arrows, yields, worked tiles,
   resource / improvement symbols, improvement models and roads)

@@ -12,6 +12,8 @@ var world: Node3D
 var out_dir := "/tmp/preview"
 var cells: Array = CELLS
 var wonders_only := false
+var battle_mode := false   # "battle": a few fights played with unit_motion.gd, as frames
+var units_only := false   # "units": every unit model, in civ colours
 var anim_wonder := ""   # "anim <wonder>": a run of frames of one wonder, to check its animation
 
 const CELLS := [
@@ -95,6 +97,10 @@ func _init() -> void:
 		out_dir = args[1]
 	if args.size() > 3 and args[2] == "anim":
 		anim_wonder = args[3]
+	if args.size() > 2 and args[2] == "battle":
+		battle_mode = true
+	if args.size() > 2 and args[2] == "units":
+		units_only = true
 	if args.size() > 2 and args[2] == "wonders":
 		wonders_only = true
 		cells = []
@@ -131,7 +137,7 @@ func _setup_scene() -> void:
 	env.environment = e
 	vp.add_child(env)
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-40, 140, 0)
+	sun.rotation_degrees = Vector3(-40, 140, 0) if not OS.get_cmdline_user_args().has("frontlight") else Vector3(-45, -35, 0)
 	sun.light_color = Color(1.0, 0.96, 0.88)
 	sun.light_energy = 1.3
 	sun.shadow_enabled = true
@@ -143,6 +149,12 @@ func _setup_scene() -> void:
 
 func _run() -> void:
 	var cam := Camera3D.new()
+	if units_only:
+		await _render_units(cam)
+		return
+	if battle_mode:
+		await _render_battles(cam)
+		return
 	if anim_wonder != "":
 		vp.add_child(cam)
 		vp.size = Vector2i(360, 400)
@@ -375,3 +387,150 @@ func _unit(at: Vector3, color: Color) -> void:
 	flag.material_override = fm
 	flag.position = at + Vector3(0, 0.42, 0)
 	world.add_child(flag)
+
+
+const CIV_COLOURS := [[Color(0.75, 0.12, 0.12), Color(0.98, 0.85, 0.3)], [Color(0.15, 0.3, 0.75), Color(0.95, 0.95, 0.95)],
+	[Color(0.1, 0.5, 0.25), Color(0.95, 0.8, 0.2)], [Color(0.45, 0.2, 0.55), Color(0.85, 0.85, 0.9)]]
+
+
+## Every model in pieces/Units, each on a little tile in one of four civs' colours.
+func _render_units(cam: Camera3D) -> void:
+	vp.add_child(cam)
+	vp.size = Vector2i(300, 300)
+	cam.fov = 30
+	var folder: String = str(ts.folder).path_join("pieces/Units")
+	var names: Array = []
+	for f in DirAccess.get_files_at(folder):
+		if f.ends_with(".glb"):
+			names.append(f.get_basename())
+	names.sort()
+	var ground := {"base": "Grassland", "explored": true, "visible": true}
+	var sea := {"base": "Coast", "explored": true, "visible": true}
+	for i in names.size():
+		_clear()
+		var unit: String = names[i]
+		var model: Dictionary = Tileset._load_model(folder.path_join(unit + ".glb"))
+		var naval := unit in ["Trireme", "Galleass", "Caravel", "Privateer", "Frigate", "Ironclad", "Destroyer", "Battleship",
+			"Missile Cruiser", "Submarine", "Nuclear Submarine", "Carrier", "Work Boats", "Great Admiral", "Embarked",
+			"Melee Water", "Ranged Water", "Civilian Water", "Aircraft Carrier"]
+		var tile := build_tile(sea if naval else ground, Vector3.ZERO, i % 3, 0)
+		world.add_child(tile)
+		var mi := MeshInstance3D.new()
+		mi.mesh = model["mesh"]
+		mi.position = Vector3(0, 0.06 if naval else 0.15, 0)
+		mi.rotation.y = -0.5
+		mi.scale = Vector3.ONE * 2.2
+		var colours: Array = CIV_COLOURS[i % CIV_COLOURS.size()]
+		for sidx in mi.mesh.get_surface_count():
+			var mat: Material = mi.mesh.surface_get_material(sidx)
+			if mat != null and mat.resource_name in ["CivOuter", "CivInner"]:
+				var tinted := (mat as BaseMaterial3D).duplicate() as BaseMaterial3D
+				tinted.albedo_color = colours[0] if mat.resource_name == "CivOuter" else colours[1]
+				mi.set_surface_override_material(sidx, tinted)
+		world.add_child(mi)
+		cam.look_at_from_position(Vector3(0, 1.45, 2.0), Vector3(0, 0.55, 0))
+		await _frames(3)
+		vp.get_texture().get_image().save_png(out_dir.path_join("cell_%02d.png" % i))
+	cells = []
+	for n: String in names:
+		cells.append([n, {}])
+	_write_names()
+	print("done")
+	quit()
+
+
+const Motion := preload("res://scripts/unit_motion.gd")
+var _recording := false
+
+
+func _unit_node(unit: String, colours: Array, at: Vector3, naval := false) -> Node3D:
+	var holder := Node3D.new()
+	holder.position = at
+	holder.set_meta("naval", naval)
+	var model: Dictionary = Tileset._load_model(str(ts.folder).path_join("pieces/Units/%s.glb" % unit))
+	var mi := MeshInstance3D.new()
+	mi.mesh = model["mesh"]
+	for sidx in mi.mesh.get_surface_count():
+		var mat: Material = mi.mesh.surface_get_material(sidx)
+		if mat != null and mat.resource_name in ["CivOuter", "CivInner"]:
+			var tinted := (mat as BaseMaterial3D).duplicate() as BaseMaterial3D
+			tinted.albedo_color = colours[0] if mat.resource_name == "CivOuter" else colours[1]
+			mi.set_surface_override_material(sidx, tinted)
+	mi.scale = Vector3.ONE * float(ts.config.get("unitScale", 1.0))
+	holder.add_child(mi)
+	return holder
+
+
+func _record(folder: String) -> void:
+	DirAccess.make_dir_recursive_absolute(folder)
+	var frame := 0
+	var started := Time.get_ticks_msec()
+	while _recording:
+		await _frames(1)
+		if Time.get_ticks_msec() - started >= frame * 80:
+			vp.get_texture().get_image().save_png(folder.path_join("f_%03d.png" % frame))
+			frame += 1
+
+
+func _render_battles(cam: Camera3D) -> void:
+	vp.add_child(cam)
+	vp.size = Vector2i(560, 380)
+	cam.fov = 34
+	var red: Array = CIV_COLOURS[0]
+	var blue: Array = CIV_COLOURS[1]
+	var fights := ["melee", "arrows", "cannon", "tank", "ships", "bomber", "move"]
+	for fight: String in fights:
+		_clear()
+		var motion: Node3D = Motion.new()
+		world.add_child(motion)
+		var a_tile := Vector3(0, 0, 0)
+		var d_tile := Vector3(1.5, 0, -0.866)
+		var land := {"base": "Plains", "explored": true, "visible": true}
+		var grass := {"base": "Grassland", "explored": true, "visible": true}
+		var sea := {"base": "Coast", "explored": true, "visible": true}
+		var naval := fight == "ships"
+		if fight in ["arrows", "cannon", "bomber"]:
+			d_tile = Vector3(3.0, 0, -1.732)
+			motion.add_child(build_tile(grass, Vector3(1.5, 0, -0.866), 1, 2))
+		var tiles: Array = [a_tile, d_tile]
+		if fight == "move":
+			tiles = [Vector3(0, 0, 0), Vector3(1.5, 0, -0.866), Vector3(3.0, 0, 0), Vector3(4.5, 0, -0.866)]
+		for i in tiles.size():
+			motion.add_child(build_tile(sea if naval else (land if i % 2 == 0 else grass), tiles[i], i, i))
+		var y := 0.06 if naval else 0.15
+		var pairs := {"melee": ["Swordsman", "Spearman"], "arrows": ["Archer", "Warrior"], "cannon": ["Cannon", "Pikeman"],
+			"tank": ["Tank", "Rifleman"], "ships": ["Frigate", "Galleass"], "bomber": ["Bomber", "Infantry"], "move": ["Horseman", ""]}
+		var attacker := _unit_node(pairs[fight][0], red, a_tile + Vector3(0, y, 0), naval)
+		motion.add_child(attacker)
+		var defender: Node3D = null
+		if pairs[fight][1] != "":
+			defender = _unit_node(pairs[fight][1], blue, d_tile + Vector3(0, y, 0), naval)
+			motion.add_child(defender)
+		var centre: Vector3 = (tiles[0] + tiles[-1]) / 2.0
+		var span := (tiles[0] as Vector3).distance_to(tiles[-1])
+		var dist := 2.4 + span * 0.78
+		cam.look_at_from_position(centre + Vector3(0, dist * 0.6, dist * 0.8), centre + Vector3(0, 0.25, 0))
+		await _frames(3)
+		_recording = true
+		_record(out_dir.path_join(fight))
+		await create_timer(0.3).timeout
+		match fight:
+			"melee":
+				await motion.melee(attacker, defender, 34, 18)
+			"arrows":
+				await motion.ranged(attacker, defender.position, defender, "arrow", 21)
+			"cannon":
+				await motion.ranged(attacker, defender.position, defender, "cannon", 100, true)
+			"tank":
+				await motion.melee(attacker, defender, 100, 7, true)
+			"ships":
+				await motion.ranged(attacker, defender.position, defender, "shipCannonVolley", 100, true)
+			"bomber":
+				await motion.ranged(attacker, defender.position, defender, "bombing", 45)
+			"move":
+				await motion.move(attacker, [tiles[1] + Vector3(0, y, 0), tiles[2] + Vector3(0, y, 0), tiles[3] + Vector3(0, y, 0)])
+		await create_timer(0.6).timeout
+		_recording = false
+		await _frames(2)
+	print("done")
+	quit()

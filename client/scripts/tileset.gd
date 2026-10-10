@@ -41,6 +41,7 @@ var fallback: RefCounted = null          # another tileset.gd, or null
 var _files: Dictionary = {}              # piece name -> file path (only names without a variant number)
 var _variants: Dictionary = {}           # piece name -> [path, path2, ...]
 var _far_files: Dictionary = {}          # piece name -> path of its "-Far" stand-in
+var _unit_files: Dictionary = {}         # unit model name -> path (pieces/Units/)
 var _loaded: Dictionary = {}             # path -> {mesh: ArrayMesh} or {scene: PackedScene}
 
 
@@ -103,6 +104,14 @@ func _setup(folder_name: String, path: String, json: Dictionary) -> void:
 		if ext not in MODEL_EXTENSIONS:
 			continue
 		found[file.get_basename()] = pieces_dir.path_join(file)
+	var units_dir := pieces_dir.path_join("Units")
+	for file in _list_files(units_dir):
+		var unit_ext := file.get_extension().to_lower()
+		if unit_ext == "import":
+			file = file.get_basename()
+			unit_ext = file.get_extension().to_lower()
+		if unit_ext in MODEL_EXTENSIONS:
+			_unit_files[file.get_basename()] = units_dir.path_join(file)
 	for piece: String in found.keys():
 		if piece.ends_with("-Far"):
 			_far_files[piece.trim_suffix("-Far")] = found[piece]
@@ -141,6 +150,40 @@ func get_piece(piece: String, variant := 0, far := false) -> Dictionary:
 	if not _loaded.has(path):
 		_loaded[path] = _load_model(path)
 	return _loaded[path]
+
+
+## The model for a unit (from pieces/Units), like Unciv's unit images: "<unit>-<style>-<era>", "<unit>-<era>",
+## "<unit>-<style>", "<unit>"; then the unit it replaces (a civ's unique unit), then its unit type ("Sword",
+## "Mounted"...), then the fallback tileset. [param info] is the ruleset's entry for the unit (unitType, replaces).
+## [param embarked]: the "Embarked" boat if the set has one. {} when nothing fits (the map draws a token).
+func unit_model(unit: String, info: Dictionary, embarked := false, era := "", style := "") -> Dictionary:
+	var candidates: Array[String] = []
+	if embarked:
+		candidates.append("Embarked")
+	for name_: String in [unit, str(info.get("replaces", ""))]:
+		if name_ == "":
+			continue
+		if style != "" and era != "":
+			candidates.append("%s-%s-%s" % [name_, style, era])
+		if era != "":
+			candidates.append("%s-%s" % [name_, era])
+		if style != "":
+			candidates.append("%s-%s" % [name_, style])
+		candidates.append(name_)
+	if str(info.get("unitType", "")) != "":
+		candidates.append(str(info["unitType"]))
+	for candidate in candidates:
+		if _unit_files.has(candidate):
+			var path: String = _unit_files[candidate]
+			if not _loaded.has(path):
+				_loaded[path] = _load_model(path)
+			return _loaded[path]
+	return fallback.unit_model(unit, info, embarked, era, style) if fallback != null else {}
+
+
+## How much bigger than modelled units are drawn ("unitScale" in tileset.json).
+func unit_scale() -> float:
+	return float(config.get("unitScale", 1.0))
 
 
 func variant_count(piece: String) -> int:
@@ -327,6 +370,19 @@ func surface_height(tile: Dictionary, terrain_type := "Land") -> float:
 	if heights.has(base):
 		return float(heights[base])
 	return float(heights.get(terrain_type, 0.15 if terrain_type != "Water" else 0.05))
+
+
+## How high the rim of [param tile]'s pieces is, where territory borders lie: "edgeHeights" in tileset.json, by
+## natural wonder, base terrain, then "Land" / "Water" (Low poly: land tiles all meet at 0.15).
+func edge_height(tile: Dictionary, terrain_type := "Land") -> float:
+	var edges: Dictionary = config.get("edgeHeights", {})
+	var wonder := str(tile.get("wonder", ""))
+	if wonder != "" and edges.has(wonder):
+		return float(edges[wonder])
+	var base := str(tile.get("base", ""))
+	if edges.has(base):
+		return float(edges[base])
+	return float(edges.get(terrain_type, 0.15 if terrain_type != "Water" else 0.05))
 
 
 ## Random 60-degree turns for each tile's terrain pieces, so repeated tiles don't look stamped.

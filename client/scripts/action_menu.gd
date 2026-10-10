@@ -12,7 +12,7 @@ extends PanelContainer
 ##   research card: "research" (tech name)
 ##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it, "rename_unit" names it
 ##   settings card: "background" (studio/mountains/space), "tileset" (a tileset folder or "classic"),
-##     "auto_move" (end/start); footer "settings_card" opens it
+##     "playback" (normal/fast/off), "auto_move" (end/start); footer "settings_card" opens it
 ##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
 ##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "quit"
 ##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
@@ -651,6 +651,12 @@ func show_settings(settings: Dictionary) -> void:
 	if in_vr:   # VR only: the boards at the far edge of the table can be dragged around
 		_add_header("Overview and info board")
 		_list.add_child(_make_button("Put them back where they started", func() -> void: chosen.emit("reset_boards", ""), Color(0.25, 0.25, 0.3)))
+	_add_header("Other players' turns")
+	for option: Array in [["normal", "Show the moves and battles I can see"], ["fast", "Show them, fast"], ["off", "Don't show them"]]:
+		var value: String = option[0]
+		var selected: bool = settings.get("playback", "normal") == value
+		_list.add_child(_make_button(("> " if selected else "") + option[1],
+			func() -> void: chosen.emit("playback", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
 	_add_header("Automated and exploring units move")
 	for option: Array in [["end", "When I end my turn"], ["start", "At the start of my turn"]]:
 		var value: String = option[0]

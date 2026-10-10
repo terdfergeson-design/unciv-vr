@@ -30,7 +30,7 @@ const ActionMenu := preload("res://scripts/action_menu.gd")
 const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 16   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 17   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -100,7 +100,9 @@ var settings := {"background": "mountains", "auto_move": "end", "tileset": "LowP
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [],
 	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
-	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true}}
+	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true},
+	# Other players' turns: "normal" (play back the moves and battles you could see), "fast" or "off"
+	"playback": "normal"}
 var _pointed_overlay := ""        # overlay button the laser is on
 # City view: the table zooms onto one city and two boards replace the world boards (Unciv's city screen)
 var city_info_board: CityBoard
@@ -196,6 +198,9 @@ var _pointed_pixel := Vector2.ZERO
 var _right_grip_down := false
 var _table_height_set := false   # after the first recenter, recentering keeps the height you chose
 var _xr_camera: XRCamera3D
+var _playback_active := false   # other players' moves and battles are being played back (End turn skips them)
+var _skip_playback := false
+const PLAYBACK_SPEEDS := {"normal": 1.0, "fast": 2.5}
 
 
 func _ready() -> void:
@@ -237,7 +242,7 @@ func _ready() -> void:
 	minimap.setup(hex_map)
 	# Stands at the far edge of the table, leaning back a little so it faces you
 	minimap.visible = false
-	var defaults := {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true}
+	var defaults := {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true}
 	if not settings["overlays"] is Dictionary:
 		settings["overlays"] = defaults
 	for id: String in defaults:
@@ -366,8 +371,11 @@ func _on_bridge_connected() -> void:
 	_set_status("Connected to Unciv %s" % ping.result.uncivVersion)
 
 	# Dev shortcuts skip the main menu; so does a game the bridge is already running (one started by hand)
-	if options.has("load"):
-		var loaded := await bridge.request("loadGame", {"path": options["load"]})
+	if options.has("load"):   # a test save; res:// paths work (tests/saves/...), and it never replaces your autosave
+		var load_path := str(options["load"])
+		if load_path.begins_with("res://"):
+			load_path = ProjectSettings.globalize_path(load_path)
+		var loaded := await bridge.request("loadGame", {"path": load_path, "remember": false})
 		if not loaded.ok:
 			_set_status("Couldn't load the save: %s" % loaded.error)
 			return
@@ -498,6 +506,7 @@ func _enter_game() -> void:
 	if popup_menu != null:
 		popup_menu.lobby_mode = false
 	_deselect()
+	hex_map.forget_unit_positions()   # unit ids in another game are other units
 	_state_revision = -1   # a different game: fetch every tile
 	_tile_cache.clear()
 	hex_map.visible = true
@@ -1230,8 +1239,8 @@ func toggle_overlay(id: String) -> void:
 	minimap.set_overlay_states(overlays)
 	hex_map.set_overlay_flags(overlays)
 	var names := {"movement": "Unit movements", "yields": "Tile yields", "worked": "Worked tiles",
-		"resources": "Resources and improvements", "improvements": "Improvement pictures"}
-	_set_status("%s: %s" % [names[id], "on" if overlays[id] else "off"])
+		"resources": "Resources and improvements", "improvements": "Improvement pictures", "unit_icons": "Unit icons"}
+	_set_status("%s: %s" % [names.get(id, id), "on" if overlays[id] else "off"])
 	if id == "yields" and overlays[id]:
 		_refresh_yields()
 
@@ -1405,11 +1414,14 @@ func attack(key: Vector2i) -> void:
 		return
 	busy = true
 	var reply := await bridge.request("attack", {"unitId": int(selected_unit["id"]), "x": key.x, "y": key.y})
-	busy = false
 	if not reply.ok:
+		busy = false
 		_set_status(reply.error)
 		return
 	var r: Dictionary = reply.result
+	if r.get("attacked", false):
+		await hex_map.animate_attack(int(selected_unit["id"]), str(selected_unit["name"]), key, r)
+	busy = false
 	if not r.get("attacked", false):
 		_set_status(r.get("message", "No attack happened."))
 	else:
@@ -1493,7 +1505,7 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 			await open_lobby()
 		"reset_boards":
 			reset_board_poses()
-		"background", "auto_move", "setting_toggle", "tileset":
+		"background", "auto_move", "setting_toggle", "tileset", "playback":
 			await change_setting(kind, value)
 		"action_arm":
 			_arm_unit_action(value)
@@ -2571,6 +2583,10 @@ func _pick_tile(key: Vector2i) -> void:
 		"bombard":
 			busy = true
 			var reply := await bridge.request("cityAttack", {"name": pick["city"], "tileX": key.x, "tileY": key.y})
+			if reply.ok:
+				for c: Dictionary in state.get("cities", []):
+					if c["name"] == pick["city"]:
+						await hex_map.animate_bombard(Vector2i(int(c["x"]), int(c["y"])), key, reply.result)
 			busy = false
 			if not reply.ok:
 				_set_status(reply.error)
@@ -2583,6 +2599,9 @@ func _pick_tile(key: Vector2i) -> void:
 
 
 func end_turn() -> void:
+	if _playback_active:   # End turn (button, A, Space) during playback skips the rest of it
+		_skip_playback = true
+		return
 	if _in_lobby or busy:
 		return
 	# Like Unciv's next-turn button: first whatever still needs deciding (research, production, a message...)
@@ -2617,6 +2636,14 @@ func end_turn() -> void:
 	for i in mini(notes.size(), 5):
 		lines.append("- " + str(notes[i]["text"]))
 	_set_status("\n".join(lines))
+	var events: Array = result.get("events", [])
+	var playback := str(settings.get("playback", "normal"))
+	if playback != "off" and not events.is_empty():
+		await _play_turn_events(events, float(PLAYBACK_SPEEDS.get(playback, 1.0)))
+	elif not events.is_empty():
+		for e: Dictionary in events:   # not shown: the units just appear where they ended up
+			if e.get("type") == "move":
+				hex_map.note_unit_at(int(e.get("unit", -1)), Vector2i(int(e["to"][0]), int(e["to"][1])))
 	await refresh()
 	if result.get("gameOver", false) or result.get("defeated", false):
 		await show_big_screen("victory")
@@ -2624,6 +2651,45 @@ func end_turn() -> void:
 	await _select_next_unit()
 	await _prompt_research_if_needed()
 	await _prompt_policy_if_ready()
+
+
+## Plays back what the other players did that you could see (bridge endTurn "events"), in order; End turn
+## (or A / Space) skips the rest. The view glides to fights happening outside the table's window.
+func _play_turn_events(events: Array, speed: float) -> void:
+	_playback_active = true
+	_skip_playback = false
+	busy = true
+	hex_map.motion.speed = speed
+	_set_turn_button_text("Skip")
+	for i in events.size():
+		var e: Dictionary = events[i]
+		if _skip_playback or _in_lobby:
+			for rest: Dictionary in events.slice(i):   # where the rest of the moves ended, so they don't glide afterwards
+				if rest.get("type") == "move":
+					hex_map.note_unit_at(int(rest.get("unit", -1)), Vector2i(int(rest["to"][0]), int(rest["to"][1])))
+			break
+		if e.get("type") == "attack" and hex_map.is_windowed():
+			var to := Vector2i(int(e["to"][0]), int(e["to"][1]))
+			if not hex_map.is_shown(to) and hex_map.tiles.has(to):
+				_glide_view_to(hex_map._world_of(to))
+				await get_tree().create_timer(0.45).timeout
+		if options.has("scenario"):   # tests: what's being played back
+			print("PLAYBACK: %s %s %s -> %s%s" % [e.get("type"), e.get("name", ""), e.get("from"), e.get("to"),
+				"" if e.get("type") != "attack" else " vs %s, damage %s, died %s" % [e.get("defenderName", "-"), e.get("damage", 0), e.get("defenderDied", false)]])
+		await hex_map.play_event(e)
+	_playback_active = false
+	_skip_playback = false
+	busy = false
+	hex_map.motion.speed = 1.0
+	_update_turn_button()
+
+
+func _set_turn_button_text(text: String) -> void:
+	for button: Dictionary in _table_buttons:
+		if button["id"] == "end_turn":
+			var label: Label3D = button["label"]
+			label.text = text
+			label.font_size = 44
 
 
 # region turn blockers, Unciv's popups and pickers ---------------------------------------------

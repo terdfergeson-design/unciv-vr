@@ -29,7 +29,7 @@ var far := false
 
 ## Surfaces the game animates (see scripts/tileset_shaders.gd); everything else is drawn as it is.
 const UNSHADED := ["Glow", "Lava", "Sparkle", "Shimmer"]
-const ORDER := ["Ground", "Water", "Glow", "Lava", "Sparkle", "Shimmer", "Steam", "Geyser", "Smoke"]
+const ORDER := ["Ground", "Water", "Glow", "Lava", "Sparkle", "Shimmer", "Steam", "Geyser", "Smoke", "CivOuter", "CivInner"]
 
 
 # region building blocks --------------------------------------------------------------------
@@ -77,6 +77,8 @@ static func material_for(surface_name: String) -> StandardMaterial3D:
 			m.roughness = 0.92
 		"Steam", "Geyser", "Smoke":
 			m.roughness = 1.0
+		"CivOuter", "CivInner":   # tinted with the owner's colours by the game (albedo x vertex colour)
+			m.roughness = 0.8
 		_:
 			m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED   # exported as KHR_materials_unlit
 	return m

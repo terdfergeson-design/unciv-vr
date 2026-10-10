@@ -18,9 +18,10 @@ const OVERLAY_BUTTONS := [
 	["worked", "MapOverlayToggleWorkedTiles", "Worked tiles"],
 	["resources", "MapOverlayToggleResources", "Resources and improvements"],
 	["improvements", "MapOverlayToggleImprovements", "Improvement pictures"],
+	["unit_icons", "Warrior", "Unit icons over the unit models", "unit"],   # ours: Unciv has no unit models
 ]
 const BUTTON_SIZE := 0.062
-const BUTTON_GAP := 0.082
+const BUTTON_GAP := 0.071
 const BUTTON_ON := Color(0.2, 0.42, 0.75)
 const BUTTON_OFF := Color(0.13, 0.13, 0.15, 0.85)
 
@@ -88,14 +89,15 @@ func setup(map: Node3D) -> void:
 	_title.position = Vector3(0, SIZE / 2.0 + 0.03, 0)
 	add_child(_title)
 
-	# Unciv's five overlay toggles, in a column down the right-hand side
+	# Unciv's five overlay toggles (and our unit icons), in a column down the right-hand side
 	for i in OVERLAY_BUTTONS.size():
 		var id: String = OVERLAY_BUTTONS[i][0]
 		var at := _button_center(i)
 		var back := _flat_quad(Icons.disc(Color.WHITE), BUTTON_SIZE)
 		back.position = Vector3(at.x, at.y, 0.0)
 		add_child(back)
-		var icon := _flat_quad(Icons.get_icon("tile", OVERLAY_BUTTONS[i][1]), BUTTON_SIZE * 0.72)
+		var icon_kind: String = OVERLAY_BUTTONS[i][3] if OVERLAY_BUTTONS[i].size() > 3 else "tile"
+		var icon := _flat_quad(Icons.get_icon(icon_kind, OVERLAY_BUTTONS[i][1]), BUTTON_SIZE * 0.72)
 		icon.position = Vector3(at.x, at.y, 0.002)
 		add_child(icon)
 		_buttons[id] = {"back": back, "icon": icon}

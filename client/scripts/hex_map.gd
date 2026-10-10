@@ -13,6 +13,7 @@ signal view_rebuilt   # the drawn tiles changed (the yields overlay re-asks the 
 const Icons := preload("res://scripts/icons.gd")
 const OVERLAYS := preload("res://scripts/map_overlays.gd")
 const Tileset := preload("res://scripts/tileset.gd")
+const Motion := preload("res://scripts/unit_motion.gd")
 const DEFAULT_TILESET := "LowPoly"
 ## With more tiles than this on the table, pieces' simpler "-Far" versions are drawn (they're tiny then)
 const FAR_TILES := 900
@@ -45,6 +46,10 @@ var tiles: Dictionary = {}          # Vector2i(x, y) -> tile Dictionary from get
 var civ_colors: Dictionary = {}     # civ name -> {outer: Color, inner: Color}
 var civ_info: Dictionary = {}       # civ name -> its getState civs entry (nation, city-state type...)
 var resource_info: Dictionary = {}  # resource name -> {type: Bonus / Luxury / Strategic}
+var unit_info: Dictionary = {}      # unit name -> its ruleset entry (unitType, rangedStrength, replaces, attackSound, domain)
+var motion: Node3D                  # unit_motion.gd: unit moves and battles on the table
+## Units glide to where they've moved since the last refresh (off: they just appear there)
+var animate_moves := true
 var overlays: Node3D                # map_overlays.gd: Unciv's five map overlays
 var tileset: RefCounted = null      # tileset.gd; null draws every tile as a plain coloured hex
 var tileset_name := ""
@@ -56,7 +61,8 @@ var _trees: MultiMeshInstance3D
 var _pieces_root: Node3D            # one MultiMeshInstance3D per tileset piece in use
 var _piece_nodes: Dictionary = {}   # piece Mesh -> its MultiMeshInstance3D
 var _piece_scenes: Node3D           # pieces that are whole Godot scenes, one instance per tile
-var _borders: MultiMeshInstance3D
+var _borders: MeshInstance3D           # territory edges, rebuilt with the view
+const BORDER_INNER := 0.92             # the border strip runs from the hex's edge in to this fraction of it
 var _highlights: MultiMeshInstance3D
 var _clouds: MultiMeshInstance3D
 var _units_root: Node3D
@@ -82,6 +88,10 @@ var _targets: Array[Vector2i] = []
 var _beacon: MeshInstance3D       # a pulsing light column over the selected unit, to find it at a glance
 var _beacon_time := 0.0
 var _unit_labels: Dictionary = {}   # Vector2i -> Array[Label3D]; shown only for hovered/selected tiles
+var _tokens: Dictionary = {}        # unit id -> its token on the table
+var _last_key: Dictionary = {}      # unit id -> the tile it was drawn on last time (to see who moved)
+var _facing: Dictionary = {}        # unit id -> which way it faces (radians about Y), kept between redraws
+var _civ_materials: Dictionary = {} # "material id|colour" -> a copy of a CivOuter / CivInner material in that colour
 const NO_TILE := Vector2i(999999, 999999)
 var _aim_key := NO_TILE            # where the selected unit is aimed (click again there to go)
 var _aim_root: Node3D
@@ -102,7 +112,11 @@ func _ready() -> void:
 	_content.add_child(_piece_scenes)
 	if tileset == null and tileset_name == "":
 		set_tileset(DEFAULT_TILESET)
-	_borders = _make_multimesh_node("Borders", _make_ring_mesh(0.80), _vertex_color_material(0.6, true))
+	_borders = MeshInstance3D.new()
+	_borders.name = "Borders"
+	_borders.material_override = _vertex_color_material(0.6, true)
+	_borders.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_content.add_child(_borders)
 	_highlights = _make_multimesh_node("Highlights", _make_ring_mesh(0.62), _vertex_color_material(0.4, true))
 	var puff := SphereMesh.new()
 	puff.radius = 0.5
@@ -143,6 +157,10 @@ func _ready() -> void:
 	_beacon.visible = false
 	_content.add_child(_beacon)
 
+	motion = Motion.new()
+	motion.name = "Motion"
+	_content.add_child(motion)
+
 	overlays = OVERLAYS.new()
 	overlays.name = "Overlays"
 	_content.add_child(overlays)
@@ -172,6 +190,7 @@ func set_tileset(folder_name: String) -> void:
 func set_ruleset(ruleset: Dictionary) -> void:
 	terrain_info = ruleset.get("terrains", {})
 	resource_info = ruleset.get("resources", {})
+	unit_info = ruleset.get("units", {})
 
 
 # region building -------------------------------------------------------------------------
@@ -267,11 +286,14 @@ func show_city(city: Dictionary) -> void:
 ## Turns map overlays on / off ({"movement": bool, "yields": ..., "worked", "resources", "improvements"}).
 func set_overlay_flags(new_flags: Dictionary) -> void:
 	var pictures_before: bool = overlays.flags.get("improvements", true)
+	var icons_before: bool = overlays.flags.get("unit_icons", true)
 	for key: String in new_flags:
 		if overlays.flags.has(key):
 			overlays.flags[key] = bool(new_flags[key])
 	if overlays.flags.get("improvements", true) != pictures_before and tileset != null and not tiles.is_empty():
 		_build_terrain()   # the tileset's improvement models follow Unciv's "improvement pictures" toggle
+	if overlays.flags.get("unit_icons", true) != icons_before and not tiles.is_empty():
+		_build_units()
 	overlays.rebuild(_shown)
 
 
@@ -350,7 +372,7 @@ func _add_pieces(key: Vector2i, tile: Dictionary, far: bool, buckets: Dictionary
 		return false
 	var h := absi(hash(key))
 	var variant := h % 7
-	var turns := (h / 7) % 6 if tileset.random_rotation() else 0
+	var turns := int(h / 7.0) % 6 if tileset.random_rotation() else 0
 	var tint := Color.WHITE
 	var unseen := 0.0 if tile.get("visible", false) else 1.0
 	if unseen > 0.0:
@@ -446,18 +468,66 @@ func _build_fog() -> void:
 			i += 1
 
 
+## Territory borders like Unciv's: a thin strip in the owner's colour along each edge where the territory ends
+## (the next tile belongs to someone else or no one), lying on the ground at the tile's rim.
 func _build_borders() -> void:
-	var owned: Array[Vector2i] = []
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var strips := 0
 	for key: Vector2i in _shown:
-		if tiles[key].has("owner"):
-			owned.append(key)
-	var mm := _borders.multimesh
-	mm.instance_count = owned.size()
-	for i in owned.size():
-		var key := owned[i]
 		var tile: Dictionary = tiles[key]
-		mm.set_instance_transform(i, Transform3D(Basis(), tile_position(key, tile_height(tile) + 0.005)))
-		mm.set_instance_color(i, civ_color(tile["owner"], "outer"))
+		if not tile.has("owner"):
+			continue
+		var territory := str(tile["owner"])
+		var center := tile_position(key, edge_height(tile) + 0.012)
+		var color := civ_color(territory, "outer").darkened(0.55 * _rim(key))
+		for neighbour: Vector2i in NEIGHBOURS:
+			var other: Dictionary = tiles.get(key + neighbour, {})
+			if str(other.get("owner", "")) == territory:
+				continue   # same territory: no line between them
+			var edge := _edge_towards(key, key + neighbour)
+			if edge < 0:
+				continue
+			var a := _hex_corner(edge, HEX_RADIUS)
+			var b := _hex_corner(edge + 1, HEX_RADIUS)
+			for v: Vector3 in [a, b, b * BORDER_INNER, a, b * BORDER_INNER, a * BORDER_INNER]:
+				st.set_normal(Vector3.UP)
+				st.set_color(color)
+				st.add_vertex(center + v)
+			strips += 1
+	_borders.mesh = st.commit() if strips > 0 else null
+
+
+## Unciv's six neighbours of a tile, as offsets of its (x, y).
+const NEIGHBOURS: Array[Vector2i] = [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 1), Vector2i(-1, -1)]
+
+
+## Which of [param key]'s six edges (0-5, edge i runs from corner i to i+1) faces the tile [param other]
+## (a neighbour); -1 if that can't be told yet. Unciv's coordinates map linearly to positions on the table,
+## so each neighbour offset always means the same edge: worked out once from any pair of tiles.
+func _edge_towards(key: Vector2i, other: Vector2i) -> int:
+	var offset := other - key
+	if _edge_for_offset.has(offset):
+		return _edge_for_offset[offset]
+	for k: Vector2i in tiles:
+		if tiles.has(k + offset):
+			var d := tile_position(k + offset, 0) - tile_position(k, 0)
+			var edge := posmod(roundi((rad_to_deg(atan2(d.z, d.x)) - 30.0) / 60.0), 6)
+			_edge_for_offset[offset] = edge
+			return edge
+	return -1
+
+var _edge_for_offset: Dictionary = {}   # neighbour offset -> edge index
+
+
+## How high a tile's rim is (where borders lie): the tileset's "edgeHeights", or the plain hex's top.
+func edge_height(tile: Dictionary) -> float:
+	if not tile.get("explored", false):
+		return 0.02
+	if tileset != null and tileset.covers(tile):
+		var type := "Water" if terrain_info.get(tile.get("base", ""), {}).get("type") == "Water" else "Land"
+		return tileset.edge_height(tile, type)
+	return tile_height(tile)
 
 
 func _build_cities() -> void:
@@ -497,87 +567,353 @@ func _build_cities() -> void:
 
 
 func _build_units() -> void:
+	for id: int in _tokens:
+		var old: Node3D = _tokens[id]
+		if is_instance_valid(old):
+			_facing[id] = old.rotation.y
 	for child in _units_root.get_children():
 		child.queue_free()
 	_unit_labels.clear()
+	_tokens.clear()
+	var moved: Array = []   # [token, from key, to key]
+	var seen := {}
 	for key: Vector2i in _shown:
 		var tile: Dictionary = tiles[key]
 		if not tile.has("units"):
 			continue
 		var base := tile_position(key, tile_height(tile))
 		for unit: Dictionary in tile["units"]:
-			var civilian: bool = unit.get("civilian", false)
-			var offset := Vector3(0.3, 0, 0.3) if civilian else Vector3(-0.25, 0, -0.2)
-			var token := _make_unit_token(unit, base + offset)
+			var token := _make_unit_token(unit, base + _unit_offset(unit))
 			_units_root.add_child(token)
+			var id := int(unit.get("id", -1))
+			_tokens[id] = token
+			seen[id] = true
+			if _last_key.has(id) and _last_key[id] != key and animate_moves and _shown.has(_last_key[id]) \
+					and _world_of(_last_key[id]).distance_to(_world_of(key)) < 12.0:
+				moved.append([token, _last_key[id], key, unit])
+			_last_key[id] = key
 			var label: Label3D = token.get_node("Label")
 			if not _unit_labels.has(key):
 				_unit_labels[key] = []
 			_unit_labels[key].append(label)
 	_update_label_visibility()
+	for m: Array in moved:   # glide the units that moved since the last refresh
+		var token: Node3D = m[0]
+		var target := token.position
+		token.position = tile_position(m[1], tile_height(tiles.get(m[1], {}))) + _unit_offset(m[3])
+		var path := path_points(m[1], m[2], m[3])
+		motion.move(token, path.slice(1) if path.size() > 1 else [target])
 
 
+## Where a unit stands on its tile: military units back left, civilians front right (both can share a tile).
+func _unit_offset(unit: Dictionary) -> Vector3:
+	return Vector3(0.3, 0, 0.3) if unit.get("civilian", false) else Vector3(-0.25, 0, -0.2)
+
+
+## The table positions a unit passes through going from [param from] to [param to] in a straight hex line
+## (Unciv only says where a unit started and ended), ending exactly on [param to].
+func path_points(from: Vector2i, to: Vector2i, unit: Dictionary = {}) -> Array:
+	var a := _world_of(from)
+	var b := _world_of(to)
+	var steps := maxi(1, roundi(a.distance_to(b) / SQRT3))
+	var points: Array = []
+	var last := from
+	for i in range(0, steps + 1):
+		var p := a.lerp(b, float(i) / steps)
+		var key := _nearest_tile(p, last)
+		if i == steps:
+			key = to
+		if i > 0 and key == last:
+			continue
+		last = key
+		points.append(tile_position(key, tile_height(tiles.get(key, {}))) + _unit_offset(unit))
+	return points
+
+
+func _nearest_tile(p: Vector2, near: Vector2i) -> Vector2i:
+	var best := near
+	var best_d := INF
+	for dx in range(-3, 4):
+		for dy in range(-3, 4):
+			var k := near + Vector2i(dx, dy)
+			if tiles.has(k):
+				var d := _world_of(k).distance_to(p)
+				if d < best_d:
+					best_d = d
+					best = k
+	return best
+
+
+## Plays one of the bridge's turn events (endTurn "events": moves and attacks the player could see) on the
+## table, and changes the map's own copy of the units to match, so redraws during playback stay right.
+func play_event(e: Dictionary) -> void:
+	var from := _coord(e.get("from"))
+	var to := _coord(e.get("to"))
+	var seen := _shown.has(from) or _shown.has(to)
+	match str(e.get("type", "")):
+		"move":
+			var id := int(e.get("unit", -1))
+			var unit := _take_unit(id, from)
+			if unit.is_empty():
+				unit = {"id": id, "name": str(e.get("name", "")), "civ": str(e.get("civ", "")), "health": 100}
+			_put_unit(unit, to)
+			_last_key[id] = to
+			var token := token_for(id)
+			if token == null and seen:
+				token = _make_unit_token(unit, tile_position(from, tile_height(tiles.get(from, {}))) + _unit_offset(unit))
+				_units_root.add_child(token)
+				_tokens[id] = token
+			if token != null and seen:
+				var path := path_points(from, to, unit)
+				await motion.move(token, path.slice(1) if path.size() > 1 else path)
+		"attack":
+			var target_pos := tile_position(to, tile_height(tiles.get(to, {})))
+			var attacker: Node3D = null
+			if e.has("attacker"):
+				attacker = token_for(int(e["attacker"]))
+				if attacker == null and seen:
+					var unit := {"id": int(e["attacker"]), "name": str(e.get("name", "")), "civ": str(e.get("civ", "")), "health": 100}
+					attacker = _make_unit_token(unit, tile_position(from, tile_height(tiles.get(from, {}))) + _unit_offset(unit))
+					_units_root.add_child(attacker)
+					_tokens[int(e["attacker"])] = attacker
+			var defender: Node3D = token_for(int(e["defender"])) if e.has("defender") else null
+			if defender != null:
+				target_pos = defender.position
+			var damage := int(e.get("damage", 0))
+			var died: bool = e.get("defenderDied", false)
+			if seen:
+				var info: Dictionary = unit_info.get(str(e.get("name", "")), {})
+				var ranged: bool = e.get("ranged", false) or float(info.get("rangedStrength", 0)) > 0.0
+				if ranged or attacker == null:
+					await motion.ranged(attacker, target_pos, defender, str(e.get("sound", "")), damage, died,
+						tile_position(from, tile_height(tiles.get(from, {}))))
+				else:
+					await motion.melee(attacker, defender, damage, int(e.get("damageTaken", 0)), died, e.get("attackerDied", false))
+			# the map's copy of the units: health, and the fallen
+			if e.has("defender"):
+				var def_id := int(e["defender"])
+				if died:
+					_take_unit(def_id, to)
+					_tokens.erase(def_id)
+				else:
+					_change_health(def_id, to, -damage)
+			if e.has("attacker"):
+				_change_health(int(e["attacker"]), from, -int(e.get("damageTaken", 0)))
+
+
+## Your own attack, after the bridge has done it ([param r] is the attack result): the unit fires or charges,
+## then (if it won and advanced) steps onto the tile.
+func animate_attack(unit_id: int, unit_name: String, target: Vector2i, r: Dictionary) -> void:
+	var token := token_for(unit_id)
+	if token == null or not _shown.has(target):
+		return
+	var info: Dictionary = unit_info.get(unit_name, {})
+	var defender := _first_token_on(target, unit_id)
+	var target_pos := defender.position if defender != null else tile_position(target, tile_height(tiles.get(target, {})))
+	var start_key: Vector2i = _last_key.get(unit_id, target)
+	var died: bool = r.get("defenderDefeated", false)
+	if float(info.get("rangedStrength", 0)) > 0.0:
+		await motion.ranged(token, target_pos, defender, str(info.get("attackSound", "")), int(r.get("damageToDefender", 0)), died)
+	else:
+		# melee units first walk up next to the target if they weren't already
+		var path := path_points(start_key, target, {})
+		if path.size() > 2:
+			var unit := {"civilian": false}
+			await motion.move(token, path_points(start_key, target, unit).slice(1, -1))
+		await motion.melee(token, defender, int(r.get("damageToDefender", 0)), int(r.get("damageToAttacker", 0)), died,
+			not r.get("attackerAlive", true))
+	if r.has("x") and r.has("y"):
+		var now := Vector2i(int(r["x"]), int(r["y"]))
+		if now == target and is_instance_valid(token) and r.get("attackerAlive", true):
+			await motion.move(token, [tile_position(target, tile_height(tiles.get(target, {}))) + Vector3(-0.25, 0, -0.2)])
+		_last_key[unit_id] = now
+
+
+## A city's bombardment of [param target].
+func animate_bombard(city_key: Vector2i, target: Vector2i, r: Dictionary) -> void:
+	if not (_shown.has(city_key) or _shown.has(target)):
+		return
+	var defender := _first_token_on(target, -1)
+	var target_pos := defender.position if defender != null else tile_position(target, tile_height(tiles.get(target, {})))
+	await motion.ranged(null, target_pos, defender, "cannon", int(r.get("damageToDefender", 0)), r.get("defenderDefeated", false),
+		tile_position(city_key, tile_height(tiles.get(city_key, {}))))
+
+
+func _first_token_on(key: Vector2i, except_id: int) -> Node3D:
+	var units: Array = tiles.get(key, {}).get("units", [])
+	var best: Node3D = null
+	for unit: Dictionary in units:
+		var id := int(unit.get("id", -1))
+		if id == except_id:
+			continue
+		var token := token_for(id)
+		if token != null and (best == null or not unit.get("civilian", false)):
+			best = token
+	return best
+
+
+static func _coord(value: Variant) -> Vector2i:
+	if value is Array and (value as Array).size() >= 2:
+		return Vector2i(int(value[0]), int(value[1]))
+	return NO_TILE
+
+
+func _take_unit(id: int, near: Vector2i) -> Dictionary:
+	for key: Vector2i in ([near] if tiles.has(near) else []) + tiles.keys():
+		var units: Array = tiles[key].get("units", [])
+		for i in units.size():
+			if int(units[i].get("id", -1)) == id:
+				var unit: Dictionary = units[i]
+				units.remove_at(i)
+				return unit
+	return {}
+
+
+func _put_unit(unit: Dictionary, key: Vector2i) -> void:
+	if not tiles.has(key):
+		return
+	if not tiles[key].has("units"):
+		tiles[key]["units"] = []
+	tiles[key]["units"].append(unit)
+
+
+func _change_health(id: int, key: Vector2i, delta: int) -> void:
+	for unit: Dictionary in tiles.get(key, {}).get("units", []):
+		if int(unit.get("id", -1)) == id:
+			unit["health"] = clampi(int(unit.get("health", 100)) + delta, 0, 100)
+
+
+## Forgets where units were (a new or loaded game: its unit ids mean different units).
+func forget_unit_positions() -> void:
+	_last_key.clear()
+	_facing.clear()
+
+
+## Tells the map a unit is now on [param key] (after a played-back move), so the next refresh doesn't move it again.
+func note_unit_at(id: int, key: Vector2i) -> void:
+	_last_key[id] = key
+
+
+func token_for(id: int) -> Node3D:
+	var token: Node3D = _tokens.get(id)
+	return token if is_instance_valid(token) else null
+
+
+## A unit on the table: its model from the tileset in its civ's colours (or, without one, a disc with its flag),
+## a health bar when hurt, optionally its Unciv icon above it, and its name for when the tile is pointed at.
 func _make_unit_token(unit: Dictionary, at: Vector3) -> Node3D:
 	var outer := civ_color(unit["civ"], "outer")
 	var inner := civ_color(unit["civ"], "inner")
 	var token := Node3D.new()
 	token.position = at
-
-	var disc := MeshInstance3D.new()
-	var disc_mesh := CylinderMesh.new()
-	disc_mesh.top_radius = 0.3
-	disc_mesh.bottom_radius = 0.32
-	disc_mesh.height = 0.08
-	disc.mesh = disc_mesh
-	disc.material_override = _flat_material(inner)
-	disc.position.y = 0.04
-	token.add_child(disc)
-
-	# Unciv-style flag: the unit's icon in the civ's colours on a round badge, always facing you
-	var flag := Icons.badge("unit", str(unit["name"]), inner, outer)
-	if flag != null:
-		token.add_child(_billboard(flag, 0.62, Vector3(0, 0.42, 0)))
-		var health_left := int(unit.get("health", 100))
-		if health_left < 100:   # a little health bar under the flag
-			var bar := MeshInstance3D.new()
-			var bar_mesh := BoxMesh.new()
-			bar_mesh.size = Vector3(0.5 * health_left / 100.0, 0.05, 0.05)
-			bar.mesh = bar_mesh
-			bar.material_override = _flat_material(Color(0.3, 0.9, 0.3) if health_left > 50 else Color(0.95, 0.3, 0.2))
-			bar.position = Vector3(0, 0.08, 0.3)
-			token.add_child(bar)
-		var name_label := _make_label(str(unit["name"]) + (" %d%%" % health_left if health_left < 100 else ""), 44)
-		name_label.name = "Label"
-		name_label.position = Vector3(0, 0.95, 0)
-		name_label.visible = false
-		token.add_child(name_label)
-		return token
-	var figure := MeshInstance3D.new()
-	if unit.get("civilian", false):
-		var sphere := SphereMesh.new()
-		sphere.radius = 0.15
-		sphere.height = 0.3
-		figure.mesh = sphere
-		figure.position.y = 0.23
+	var id := int(unit.get("id", -1))
+	token.rotation.y = _facing.get(id, 0.0)
+	var info: Dictionary = unit_info.get(str(unit["name"]), {})
+	var domain := str(info.get("domain", "Land"))
+	token.set_meta("unit_id", id)
+	token.set_meta("naval", domain == "Water" or unit.get("embarked", false))
+	var model: Dictionary = tileset.unit_model(str(unit["name"]), info, unit.get("embarked", false)) if tileset != null else {}
+	var health_left := int(unit.get("health", 100))
+	var flag_height := 0.42
+	if model.has("mesh") or model.has("scene"):
+		var base := MeshInstance3D.new()   # a thin disc in the civ's colours under the model
+		var base_mesh := CylinderMesh.new()
+		base_mesh.top_radius = 0.24
+		base_mesh.bottom_radius = 0.25
+		base_mesh.height = 0.016
+		base_mesh.radial_segments = 16
+		base.mesh = base_mesh
+		base.material_override = _flat_material(outer)
+		base.position.y = 0.008
+		token.add_child(base)
+		var figure: Node3D
+		if model.has("mesh"):
+			var mi := MeshInstance3D.new()
+			mi.mesh = model["mesh"]
+			_tint_civ_surfaces(mi, outer, inner)
+			figure = mi
+		else:
+			figure = (model["scene"] as PackedScene).instantiate()
+		figure.name = "Model"
+		figure.scale = Vector3.ONE * tileset.unit_scale()
+		figure.position.y = 0.016
+		token.add_child(figure)
+		flag_height = 0.95 if domain == "Air" else 0.62
+		if overlays.flags.get("unit_icons", true):
+			var icon := Icons.badge("unit", str(unit["name"]), inner, outer)
+			if icon != null:
+				token.add_child(_billboard(icon, 0.34, Vector3(0, flag_height, 0)))
 	else:
-		var capsule := CapsuleMesh.new()
-		capsule.radius = 0.12
-		capsule.height = 0.5
-		figure.mesh = capsule
-		figure.position.y = 0.33
-	figure.material_override = _flat_material(outer)
-	token.add_child(figure)
-
-	var health := int(unit.get("health", 100))
-	var text: String = unit["name"]
-	if health < 100:
-		text += " %d%%" % health
-	var label := _make_label(text, 44)
-	label.name = "Label"
-	label.position = Vector3(0, 0.8, 0)
-	label.visible = false
-	token.add_child(label)
+		var disc := MeshInstance3D.new()
+		var disc_mesh := CylinderMesh.new()
+		disc_mesh.top_radius = 0.3
+		disc_mesh.bottom_radius = 0.32
+		disc_mesh.height = 0.08
+		disc.mesh = disc_mesh
+		disc.material_override = _flat_material(inner)
+		disc.position.y = 0.04
+		token.add_child(disc)
+		var flag := Icons.badge("unit", str(unit["name"]), inner, outer)
+		if flag != null:
+			token.add_child(_billboard(flag, 0.62, Vector3(0, 0.42, 0)))
+		else:
+			var figure := MeshInstance3D.new()
+			var capsule := CapsuleMesh.new()
+			capsule.radius = 0.12
+			capsule.height = 0.5
+			figure.mesh = capsule
+			figure.position.y = 0.33
+			figure.material_override = _flat_material(outer)
+			token.add_child(figure)
+	if health_left < 100:   # the health bar, always shown when hurt (green / yellow / red, like the unit card)
+		token.add_child(_health_bar(health_left, flag_height - 0.22))
+	var text := str(unit["name"]) + (" %d%%" % health_left if health_left < 100 else "")
+	var name_label := _make_label(text, 44)
+	name_label.name = "Label"
+	name_label.position = Vector3(0, flag_height + 0.5, 0)
+	name_label.visible = false
+	token.add_child(name_label)
 	return token
+
+
+func _health_bar(health: int, height: float) -> Node3D:
+	var bar := Sprite3D.new()   # a billboard, so it reads the same from every side
+	var image := Image.create(50, 6, false, Image.FORMAT_RGBA8)
+	image.fill(Color(0.1, 0.1, 0.1, 0.85))
+	var fill := Color(0.3, 0.85, 0.3) if health > 66 else (Color(0.95, 0.8, 0.2) if health > 33 else Color(0.95, 0.3, 0.2))
+	image.fill_rect(Rect2i(1, 1, maxi(1, int(48 * health / 100.0)), 4), fill)
+	bar.texture = ImageTexture.create_from_image(image)
+	bar.pixel_size = 0.4 / 50.0
+	bar.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	bar.shaded = false
+	bar.no_depth_test = true
+	bar.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	bar.position = Vector3(0, height, 0)
+	bar.name = "HealthBar"
+	return bar
+
+
+## Gives the model's CivOuter / CivInner surfaces the owner's colours (one material per colour, shared).
+func _tint_civ_surfaces(mi: MeshInstance3D, outer: Color, inner: Color) -> void:
+	var mesh := mi.mesh
+	for i in mesh.get_surface_count():
+		var material := mesh.surface_get_material(i)
+		if not material is BaseMaterial3D:
+			continue
+		var which := material.resource_name.to_lower()
+		var color: Color
+		if which.ends_with("civouter"):
+			color = outer
+		elif which.ends_with("civinner"):
+			color = inner
+		else:
+			continue
+		var key := "%d|%s" % [material.get_instance_id(), color.to_html()]
+		if not _civ_materials.has(key):
+			var tinted := (material as BaseMaterial3D).duplicate() as BaseMaterial3D
+			tinted.albedo_color = color
+			_civ_materials[key] = tinted
+		mi.set_surface_override_material(i, _civ_materials[key])
 
 
 # region highlights -------------------------------------------------------------------------

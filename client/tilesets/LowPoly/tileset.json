@@ -6,6 +6,8 @@
 	"author": "Unciv VR",
 	"fallbackTileSet": null,
 	"randomRotation": true,
+	// Unit models (pieces/Units) are drawn this much bigger than modelled
+	"unitScale": 1.6,
 
 	// How high units and cities stand (map units; a hex has circumradius 1)
 	"heights": {
@@ -14,6 +16,12 @@
 		"Hill": 0.36, "Mountain": 0.7, "Ice": 0.1, "Atoll": 0.09,
 		"NaturalWonder": 0.5, "Great Barrier Reef": 0.06, "Lake Victoria": 0.07, "Barringer Crater": 0.15,
 		"Fountain of Youth": 0.2, "El Dorado": 0.15, "Old Faithful": 0.25
+	},
+
+	// How high each tile's rim is, where territory borders are drawn
+	"edgeHeights": {
+		"Land": 0.15, "Ocean": 0.03, "Coast": 0.06, "Lakes": 0.07,
+		"Krakatoa": 0.03, "Great Barrier Reef": 0.06
 	},
 
 	"ruleVariants": {

@@ -63,6 +63,9 @@ func run(name: String) -> void:
 		"cityview_pick": await cityview_production(true)
 		"screens": await screens()
 		"tiles": await tiles()
+		"battles": await battles()
+		"make_test_save": await make_test_save()
+		"playback": await playback()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -705,10 +708,8 @@ func shot(board: Control, name: String) -> void:
 
 
 ## Every big screen tab and page, the overview tabs and the city boards, for a look at the layout.
-## TODO (user's note, 2026-10-09): before using this (or `sequences`) again, design a test save that already has
-## everything these need - several cities, two or more units stacked on a city, workers, military units and a
-## great person, every civ and city-state met, a few turns of history for the victory charts, faith for a
-## pantheon, gold for buying - and start from it with --load=<save> instead of a new game and several End turns.
+## The test save tests/saves/everything.json has what this needs (see tests/saves/README.md); this still starts
+## from a new game itself, which can be dropped once it's switched over to --load.
 ## That makes the runs much faster.
 func screens() -> void:
 	var capital := await start_civ()
@@ -880,3 +881,276 @@ func switch_tileset(folder: String) -> void:
 		instances += node.multimesh.instance_count
 	say("tileset now %s (saved %s): %d piece instances, %d plain hexes" % [map.tileset_name, main.settings["tileset"],
 		instances, map._terrain.multimesh.instance_count])
+
+
+## Battles: war with a neighbour, enemy troops placed next to the capital, one of ours shoots first, then End turn
+## lets the AI attack and its moves and fights play back. Saves pictures during both to --shots.
+func battles() -> void:
+	var capital := await start_civ()
+	var others: Array = main.state.get("civs", []).filter(func(c: Dictionary) -> bool:
+		return not c.get("isCityState", false) and not c.get("isBarbarian", false) and c["name"] != main.state.get("playerCiv"))
+	var enemy: String = others[0]["name"]
+	await debug({"command": "war", "other": enemy})
+	var kinds := ["Swordsman", "Horseman", "Archer", "Catapult"]
+	var spots := [Vector2i(2, 0), Vector2i(2, 1), Vector2i(3, 1), Vector2i(3, 2)]
+	for i in spots.size():
+		var spot: Vector2i = spots[i]
+		await debug({"command": "spawnUnit", "civ": enemy, "unit": kinds[i], "x": capital.x + spot.x, "y": capital.y + spot.y})
+	var spawned: Dictionary = await debug({"command": "spawnUnit", "unit": "Archer", "x": capital.x, "y": capital.y + 1})
+	var ours := str(spawned.get("result", ""))
+	await main.refresh()
+	for alert: Dictionary in main.state.get("alerts", []):
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+	main._set_big_visible(false)
+	main.hex_map.set_view(main.hex_map._world_of(capital), 6.0)
+	main._fit_table()
+	await settle(0.8)
+	say("our archer %s; enemy units near %s" % [ours, capital])
+	var recorder := func(prefix: String, seconds: float) -> void:
+		var folder := str(main.options.get("shots", "user://shots"))
+		DirAccess.make_dir_recursive_absolute(folder)
+		var started := Time.get_ticks_msec()
+		var n := 0
+		while Time.get_ticks_msec() - started < seconds * 1000.0:
+			await main.get_tree().create_timer(0.12).timeout
+			await RenderingServer.frame_post_draw
+			main.get_viewport().get_texture().get_image().save_png(folder.path_join("%s_%03d.png" % [prefix, n]))
+			n += 1
+	# our archer shoots the nearest enemy
+	if ours.is_valid_int():
+		await main._select_unit(int(ours))
+		var targets: Array = main.selected_unit.get("targets", [])
+		say("archer targets: %s" % [targets])
+		if not targets.is_empty():
+			var t: Dictionary = targets[0]
+			recorder.call("own", 3.0)
+			await main.attack(Vector2i(int(t["x"]), int(t["y"])))
+			say("own attack: %s" % main._status_text)
+			await settle(2.0)
+	# the AI's turn
+	recorder.call("ai", 16.0)
+	await main.end_turn()
+	say("after end turn: status '%s', turn %d" % [main._status_text.replace("\n", " | "), int(main.state.get("turn", 0))])
+	await settle(1.0)
+
+
+## --then=staged_fight: plays made-up events with the units on the table (an enemy charging our nearest unit, a
+## ranged unit shooting it, one shooting our capital), through the same playback as the AI's turn.
+func staged_fight() -> void:
+	var map: Node3D = main.hex_map
+	var mine: Array = []
+	var theirs: Array = []
+	for key: Vector2i in map.tiles:
+		for u: Dictionary in map.tiles[key].get("units", []):
+			(mine if u["civ"] == main.state.get("playerCiv") else theirs).append([key, u])
+	var cities: Array = main.state.get("cities", [])
+	if mine.is_empty() or theirs.is_empty() or cities.is_empty():
+		say("staged fight: nothing to stage")
+		return
+	var capital := Vector2i(int(cities[0]["x"]), int(cities[0]["y"]))
+	map.set_view(map._world_of(capital), 5.0)
+	main._fit_table()
+	await settle(0.6)
+	var target: Array = mine[0]
+	var events := []
+	for t: Array in theirs:
+		var u: Dictionary = t[1]
+		var info: Dictionary = map.unit_info.get(str(u["name"]), {})
+		var ranged := float(info.get("rangedStrength", 0)) > 0.0
+		events.append({"type": "attack", "attacker": int(u["id"]), "name": u["name"], "civ": u["civ"], "sound": str(info.get("attackSound", "")),
+			"ranged": ranged, "from": [t[0].x, t[0].y], "to": [capital.x, capital.y] if ranged else [target[0].x, target[0].y],
+			"defender": -1 if ranged else int(target[1]["id"]), "damage": 15, "damageTaken": 6, "defenderDied": false})
+	var folder := str(main.options.get("shots", "user://shots"))
+	# a close-up camera over the capital, so the units fill the picture
+	var close := Camera3D.new()
+	main.add_child(close)
+	var centre: Vector3 = map.global_transform * map.tile_local_center(capital)
+	var hex: float = map.global_transform.basis.get_scale().x
+	close.fov = 40
+	close.look_at_from_position(centre + Vector3(0.5, 4.2, 5.2) * hex, centre + Vector3(0, 0.3, 0) * hex)
+	main._close_popup()
+	main._set_info_visible(false)
+	if main._xr_camera != null:
+		main._xr_camera.current = false
+	close.current = true
+	var recorder := func() -> void:
+		var n := 0
+		while main._playback_active or n == 0:
+			await main.get_tree().create_timer(0.1).timeout
+			await RenderingServer.frame_post_draw
+			main.get_viewport().get_texture().get_image().save_png(folder.path_join("staged_%03d.png" % n))
+			n += 1
+	main._playback_active = true
+	recorder.call()
+	main._playback_active = false
+	await main._play_turn_events(events, 1.0)
+	close.current = false
+	close.queue_free()
+	if main._xr_camera != null:
+		main._xr_camera.current = true
+	say("staged fight: %d events played" % events.size())
+
+
+## --then=unit_icons: turns the unit icons overlay off and on again, like clicking its button, and counts the icons.
+func unit_icons() -> void:
+	for i in 2:
+		main.toggle_overlay("unit_icons")
+		await settle(0.3)
+		var icons := 0
+		for token: Node3D in main.hex_map._tokens.values():
+			for child in token.get_children():
+				if child is Sprite3D and child.name != "HealthBar":
+					icons += 1
+		say("unit icons %s: %d icons over %d units" % ["on" if main.settings["overlays"]["unit_icons"] else "off", icons, main.hex_map._tokens.size()])
+
+
+## Builds the test save (--scenario=make_test_save --then=save_test_game): a game with everything the other
+## scenarios and screenshots need, so test runs start from --load=res://tests/saves/everything.json instead of
+## a new game plus debug commands and End turns. See tests/saves/README.md.
+func make_test_save() -> void:
+	var capital := await start_civ()
+	var player := str(main.state.get("playerCiv"))
+	for c: Dictionary in main.state.get("civs", []):
+		if c["name"] != player and not c.get("isBarbarian", false):
+			await debug({"command": "meet", "other": c["name"]})
+	await debug({"command": "reveal"})
+	for stat: Array in [["Gold", 1500], ["Faith", 400], ["Culture", 300]]:
+		await debug({"command": "addStat", "stat": stat[0], "amount": stat[1]})
+	for tech: String in ["Pottery", "Animal Husbandry", "Archery", "Mining", "Sailing", "Bronze Working", "Writing",
+			"The Wheel", "Masonry", "Horseback Riding", "Mathematics", "Calendar", "Trapping"]:
+		await debug({"command": "addTech", "tech": tech})
+	# two more cities, a few tiles from the capital
+	var founded := 1
+	for offset: Vector2i in [Vector2i(4, 0), Vector2i(0, 4), Vector2i(-4, 0), Vector2i(0, -4), Vector2i(4, 4), Vector2i(-4, -4), Vector2i(5, 1), Vector2i(1, 5)]:
+		if founded >= 3:
+			break
+		if not main.hex_map.tiles.has(capital + offset):
+			continue
+		var spawned: Dictionary = await debug({"command": "spawnUnit", "unit": "Settler", "x": capital.x + offset.x, "y": capital.y + offset.y})
+		if spawned.is_empty():
+			continue
+		var reply: Dictionary = await main.bridge.request("unitAction", {"unitId": int(str(spawned["result"])), "action": "FoundCity"})
+		if reply.ok:
+			founded += 1
+		else:
+			await main.bridge.request("unitAction", {"unitId": int(str(spawned["result"])), "action": "DisbandUnit", "confirm": true})
+	await main.refresh()
+	say("cities: %s" % [main.state.get("cities", []).map(func(c: Dictionary) -> String: return str(c["name"]))])
+	# a few turns, so there's history for the victory charts and the cities have grown a little
+	for turn in 4:
+		await _end_turn_quietly()
+	await main.refresh()
+	var cities: Array = main.state.get("cities", [])
+	var second := Vector2i(int(cities[-1]["x"]), int(cities[-1]["y"])) if cities.size() > 1 else capital
+	# our army, and two units stacked in the capital
+	for unit: String in ["Warrior", "Worker", "Archer", "Swordsman", "Spearman", "Horseman", "Catapult", "Chariot Archer",
+			"Scout", "Work Boats", "Trireme", "Great General", "Settler", "Great Prophet"]:
+		var at := capital if unit in ["Warrior", "Worker", "Great General"] else second
+		if unit in ["Trireme", "Work Boats"]:   # ships need a city by the water
+			for c: Dictionary in cities:
+				var key := Vector2i(int(c["x"]), int(c["y"]))
+				if (await main.bridge.request("debug", {"command": "spawnUnit", "unit": unit, "x": key.x, "y": key.y})).ok:
+					break
+			continue
+		await debug({"command": "spawnUnit", "unit": unit, "x": at.x, "y": at.y})
+	await debug({"command": "freeGreatPerson"})
+	# war with the nearest major civ, its troops next to our second city
+	var majors: Array = main.state.get("civs", []).filter(func(c: Dictionary) -> bool:
+		return not c.get("isCityState", false) and not c.get("isBarbarian", false) and c["name"] != player)
+	if not majors.is_empty():
+		var enemy: String = majors[0]["name"]
+		await debug({"command": "war", "other": enemy})
+		var spot := second
+		for offset: Vector2i in [Vector2i(2, 1), Vector2i(-2, -1), Vector2i(1, 2), Vector2i(-1, -2), Vector2i(2, 0)]:
+			if main.hex_map.tiles.has(second + offset):
+				spot = second + offset
+				break
+		for unit: String in ["Swordsman", "Horseman", "Archer", "Catapult", "Spearman"]:
+			await debug({"command": "spawnUnit", "civ": enemy, "unit": unit, "x": spot.x, "y": spot.y})
+	await main.refresh()
+	for alert: Dictionary in main.state.get("alerts", []):
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+	await main.refresh()
+	var units: Array = main.state.get("units", [])
+	var foreign := 0
+	for key: Vector2i in main.hex_map.tiles:
+		for u: Dictionary in main.hex_map.tiles[key].get("units", []):
+			if u["civ"] != player:
+				foreign += 1
+	say("turn %d: %d cities, %d units (%s), %d foreign units in sight" % [int(main.state.get("turn", 0)), main.state.get("cities", []).size(),
+		units.size(), ", ".join(units.map(func(u: Dictionary) -> String: return str(u["name"]))), foreign])
+
+
+## Ends the turn through the bridge, settling whatever blocks it the simplest way (first tech, first policy...).
+func _end_turn_quietly() -> void:
+	for attempt in 8:
+		var reply: Dictionary = await main.bridge.request("endTurn")
+		if reply.ok:
+			return
+		await main.refresh()
+		for alert: Dictionary in main.state.get("alerts", []):
+			await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+		for blocker: Dictionary in main.state.get("blockers", []):
+			match str(blocker.get("type", "")):
+				"PickTech":
+					for tech: String in ["Iron Working", "Construction", "Philosophy", "Optics", "Currency", "Engineering", "Drama and Poetry"]:
+						if (await main.bridge.request("setResearch", {"tech": tech})).ok:
+							break
+				"PickPolicy", "AdoptPolicy":
+					for policy: String in ["Tradition", "Liberty", "Honor", "Aristocracy", "Collective Rule", "Discipline"]:
+						if (await main.bridge.request("adoptPolicy", {"policy": policy})).ok:
+							break
+				"FoundPantheon":
+					var choices: Dictionary = await main.bridge.request("getReligionChoices")
+					if choices.ok:
+						var beliefs: Array = choices.result.get("beliefs", []).filter(func(b: Dictionary) -> bool: return b.get("available", false))
+						if not beliefs.is_empty():
+							await main.bridge.request("chooseReligion", {"beliefs": [beliefs[0]["name"]]})
+				_:
+					await main.bridge.request("dismissBlocker", {"type": blocker.get("type", "")})
+	say("couldn't end the turn: %s" % [main.state.get("blockers", [])])
+
+
+## --then=save_test_game: saves the game the bridge is running as tests/saves/everything.json.
+func save_test_game() -> void:
+	var path := ProjectSettings.globalize_path("res://tests/saves/everything.json")
+	var reply: Dictionary = await main.bridge.request("saveGame", {"path": path})
+	say("test save: %s" % (reply.result.get("path", "") if reply.ok else reply.error))
+
+
+## From the test save: settles what blocks the turn, then End turn the way a player would, so the AI's moves and
+## attacks (its war party is next to one of our cities) play back on the table. Prints PLAYBACK lines.
+func playback() -> void:
+	for alert: Dictionary in main.state.get("alerts", []):
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+	await _clear_blockers()
+	main._set_big_visible(false)
+	await main.end_turn()
+	say("after End turn: turn %d, status '%s'" % [int(main.state.get("turn", 0)), main._status_text.replace("\n", " | ")])
+
+
+func _clear_blockers() -> void:
+	for attempt in 6:
+		await main.refresh()
+		var blockers: Array = main.state.get("blockers", [])
+		if blockers.is_empty():
+			return
+		for blocker: Dictionary in blockers:
+			match str(blocker.get("type", "")):
+				"FreeGreatPerson", "PickGreatPerson", "GreatPerson":
+					var choices: Dictionary = await main.bridge.request("getGreatPersonChoices")
+					if choices.ok and not choices.result.get("choices", []).is_empty():
+						await main.bridge.request("chooseGreatPerson", {"unit": choices.result["choices"][0]["name"]})
+				"PickTech":
+					for tech: String in ["Iron Working", "Construction", "Philosophy", "Optics", "Currency"]:
+						if (await main.bridge.request("setResearch", {"tech": tech})).ok:
+							break
+				"FoundPantheon":
+					var religion: Dictionary = await main.bridge.request("getReligionChoices")
+					if religion.ok:
+						var beliefs: Array = religion.result.get("beliefs", []).filter(func(b: Dictionary) -> bool: return b.get("available", false))
+						if not beliefs.is_empty():
+							await main.bridge.request("chooseReligion", {"beliefs": [beliefs[0]["name"]]})
+				_:
+					await main.bridge.request("dismissBlocker", {"type": blocker.get("type", "")})
+	say("blockers left: %s" % [main.state.get("blockers", [])])

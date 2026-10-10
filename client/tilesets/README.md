@@ -62,6 +62,28 @@ model can't do (particles, lights, scripts). Scenes are placed once per tile, so
   the **vertex colour's alpha** = how far up the plume the puff starts (0 at the bottom, just under 1 at
   the top). `tools/lowpoly_wonders.gd` (`_steam`) shows how.
 
+## Units
+
+Unit models go in `pieces/Units/`, named after the unit (`Swordsman.glb`). As in Unciv, the game looks for
+`<unit>-<style>-<era>`, `<unit>-<era>`, `<unit>-<style>`, then `<unit>`; then the unit it replaces (so a civ's
+unique unit, like the Legion, shows as a Swordsman until it has a model of its own); then its unit type
+(`Sword`, `Mounted`, `Melee Water`...); then the fallback tileset; and in the end a round token with the unit's
+icon. `Embarked` is the boat land units ride in at sea. (Era and nation styles aren't passed yet; the names are
+reserved.)
+
+- **Size:** origin on the ground at the middle of the unit's spot, about 0.25 map units across; `unitScale`
+  in tileset.json draws them bigger (Low poly: 1.6). Land troops in Low poly are squads of three (two riders).
+- **Facing:** the model faces **+Z**. The game turns it towards where it moves and what it fights.
+- **Civ colours:** surfaces with materials named `CivOuter` / `CivInner` (or ending with those names) take
+  the owner's outer / inner colour, multiplied by their vertex colours (Unciv's `-1` / `-2` tinted layers).
+- **Aircraft** are modelled in the air (Low poly: 0.3 above the ground).
+- **Battle and movement:** every model gets the game's generic motion - lunging, firing a projectile picked by
+  the unit's `attackSound`, shaking when hit, toppling or sinking when it dies, hopping from tile to tile. A
+  `.glb` or scene with an AnimationPlayer can add clips named `attack`, `hit`, `die` and `move`, which play
+  at those moments.
+- A small version of the unit's Unciv icon floats above it (the "unit icons" button beside the overview
+  turns those off); the health bar shows whenever it's hurt.
+
 ## How a tile picks its pieces
 
 Each tile is drawn as a stack of pieces, looked up by name the way Unciv looks up tile images:
@@ -116,7 +138,9 @@ Unciv-style json; `//` comments are allowed. Everything but `name` is optional.
 | `name` | Shown in Settings |
 | `fallbackTileSet` | Folder name of another tileset to take missing pieces from, or `null` |
 | `randomRotation` | Turn terrain pieces randomly in 60° steps (default `true`) |
+| `unitScale` | How much bigger than modelled unit models are drawn (default 1) |
 | `tileScale`, `tileScales` | Scale every piece, or particular ones (Unciv's settings of the same names) |
+| `edgeHeights` | How high each tile's rim is, where territory borders lie: by natural wonder, base terrain, then `Land` / `Water` |
 | `heights` | Where units and cities stand on a tile, in map units: by natural wonder name (then `NaturalWonder`), feature (the last one listed wins), base terrain, then `Land` / `Water` |
 | `ruleVariants` | Which pieces to stack, in order, for a particular combination (see above) |
 
@@ -128,6 +152,8 @@ Unciv-style json; `//` comments are allowed. Everything but `name` is optional.
 godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder>
 godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> wonders
 godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> anim "Old Faithful"
+godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> units
+godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> battle
 ```
 
 The Low poly set is rebuilt with:
@@ -138,5 +164,5 @@ godot --headless --path client -s tools/make_lowpoly_tileset.gd
 
 ## Licence
 
-The Low poly pieces and the scripts that make them are part of Unciv VR, under the Mozilla Public
+The Low poly pieces and units, and the scripts that make them are part of Unciv VR, under the Mozilla Public
 License 2.0, like the rest of the project.

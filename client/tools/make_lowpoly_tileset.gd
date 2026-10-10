@@ -7,13 +7,16 @@ extends SceneTree
 ## Run from the client folder:  godot --headless --path . -s tools/make_lowpoly_tileset.gd
 ## (the same format anyone can export from Blender for their own tileset).
 
-const Pieces := preload("res://tools/lowpoly_wonders.gd")   # every piece, wonders included
+const Pieces := preload("res://tools/lowpoly_wonders.gd")   # every tile piece, wonders included
+const Units := preload("res://tools/lowpoly_units.gd")       # the units (pieces/Units/)
 
 
 func _init() -> void:
 	var out_dir := ProjectSettings.globalize_path("res://tilesets/LowPoly/pieces")
 	DirAccess.make_dir_recursive_absolute(out_dir)
 	var pieces: Dictionary = Pieces.new().build_all()
+	pieces.merge(Units.new().build_all())
+	DirAccess.make_dir_recursive_absolute(out_dir.path_join("Units"))
 	var triangles := 0
 	for piece: String in pieces:
 		var mesh: ArrayMesh = pieces[piece]
