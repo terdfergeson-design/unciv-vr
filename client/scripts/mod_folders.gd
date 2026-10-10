@@ -24,6 +24,7 @@ static func search_dirs(kind: String) -> Array:
 
 
 ## Every folder of [param kind] with a [param json_name] in it: folder name -> its "name" (the title).
+## A built-in folder wins over one of yours with the same name, as in [method find] - yours is never loaded.
 static func available(kind: String, json_name: String) -> Dictionary:
 	var out := {}
 	for dir_path: String in search_dirs(kind):
@@ -31,6 +32,9 @@ static func available(kind: String, json_name: String) -> Dictionary:
 		if dir == null:
 			continue
 		for sub in dir.get_directories():
+			if out.keys().any(func(k: String) -> bool: return k.to_lower() == sub.to_lower()):
+				push_warning("%s is hidden by the built-in %s of the same name; rename the folder to use it" % [dir_path.path_join(sub), sub])
+				continue
 			var json: Variant = read_json(dir_path.path_join(sub).path_join(json_name))
 			if json != null:
 				out[sub] = str(json.get("name", sub))

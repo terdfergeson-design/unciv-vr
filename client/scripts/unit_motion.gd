@@ -27,6 +27,14 @@ func _wait(seconds: float) -> void:
 	await get_tree().create_timer(seconds / maxf(speed, 0.01)).timeout
 
 
+## A unit's token can be freed while it's being animated: anything that redraws the map (a refresh, the view
+## sliding to a fight during playback) replaces every token. So every step after a wait checks this first, and
+## the helpers below take a Variant: passing a freed node to a typed parameter is itself an error that stops the
+## script - and once froze the game in the middle of a turn.
+static func _alive(node: Variant) -> bool:
+	return node != null and is_instance_valid(node)
+
+
 func _tween() -> Tween:
 	var t := create_tween()
 	t.set_speed_scale(speed)
@@ -35,10 +43,12 @@ func _tween() -> Tween:
 
 ## [param attacker] walks / charges most of the way to [param target] and back; the defender is hit halfway.
 ## [param sound] is the unit's Unciv attackSound ("nonmetalhit", "metalhit"...), heard as it lands.
-func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: int, defender_dies := false,
+func melee(attacker_node: Variant, defender_node: Variant, damage_dealt: int, damage_taken: int, defender_dies := false,
 		attacker_dies := false, sound := "") -> void:
-	if attacker == null:
+	if not _alive(attacker_node):
 		return
+	var attacker := attacker_node as Node3D
+	var defender: Node3D = defender_node as Node3D if _alive(defender_node) else null
 	var start := attacker.position
 	var goal := defender.position if defender != null else start
 	face(attacker, goal)
@@ -48,18 +58,22 @@ func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: 
 	var t := _tween()
 	t.tween_property(attacker, "position", start.lerp(goal, 0.62) + Vector3(0, 0.05, 0), 0.32).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await t.finished
-	hear(sound, defender.global_position if defender != null else attacker.global_position)
-	if defender != null:
+	if not _alive(attacker):
+		return
+	hear(sound, defender.global_position if _alive(defender) else attacker.global_position)
+	if _alive(defender):
 		hit(defender, damage_dealt)
 	if damage_taken > 0:
 		_number(attacker.position + Vector3(0, 0.45, 0), damage_taken, Color(1.0, 0.75, 0.3))
 	await _wait(0.18)
+	if not _alive(attacker):
+		return
 	t = _tween()
 	t.tween_property(attacker, "position", start, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	await t.finished
-	if defender_dies and defender != null:
+	if defender_dies and _alive(defender):
 		await die(defender)
-	if attacker_dies:
+	if attacker_dies and _alive(attacker):
 		await die(attacker)
 
 
@@ -67,8 +81,10 @@ func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: 
 ## be null). [param sound] is the unit's Unciv attackSound, which picks the projectile and is what you hear.
 ## With no attacker (a city bombarding), the shot starts from [param origin] and [param heard] is played
 ## instead (Unciv's "bombard", while the shot still looks like a cannon's).
-func ranged(attacker: Node3D, target: Vector3, defender: Node3D, sound: String, damage_dealt: int, defender_dies := false,
-		origin := Vector3.INF, heard := "") -> void:
+func ranged(attacker_node: Variant, target: Vector3, defender_node: Variant, sound: String, damage_dealt: int,
+		defender_dies := false, origin := Vector3.INF, heard := "") -> void:
+	var attacker: Node3D = attacker_node as Node3D if _alive(attacker_node) else null
+	var defender: Node3D = defender_node as Node3D if _alive(defender_node) else null
 	if attacker == null and origin == Vector3.INF:
 		return
 	var kind: String = PROJECTILES.get(sound, "arrow")
@@ -95,10 +111,10 @@ func ranged(attacker: Node3D, target: Vector3, defender: Node3D, sound: String, 
 		_:
 			await _projectile(kind, from, to, true)
 	_burst(to, kind)
-	if defender != null:
+	if _alive(defender):
 		hit(defender, damage_dealt)
 	await _wait(0.35)
-	if defender_dies and defender != null:
+	if defender_dies and _alive(defender):
 		await die(defender)
 
 
@@ -110,56 +126,65 @@ func hear(sound: String, where: Vector3, volume := 1.0) -> void:
 
 
 ## The defender's side of a hit: a shake, a red flash and the damage floating up.
-func hit(unit: Node3D, damage: int) -> void:
-	if unit == null:
+func hit(unit: Variant, damage: int) -> void:
+	if not _alive(unit):
 		return
-	_play_clip(unit, "hit")
-	_flash(unit, Color(1.0, 0.2, 0.15))
-	var home := unit.position
+	var node := unit as Node3D
+	_play_clip(node, "hit")
+	_flash(node, Color(1.0, 0.2, 0.15))
+	var home := node.position
 	var t := _tween()
 	for i in 4:
-		t.tween_property(unit, "position", home + _jitter(0.035) * Vector3(1, 0, 1), 0.04)
-	t.tween_property(unit, "position", home, 0.05)
+		t.tween_property(node, "position", home + _jitter(0.035) * Vector3(1, 0, 1), 0.04)
+	t.tween_property(node, "position", home, 0.05)
 	if damage > 0:
 		_number(home + Vector3(0, 0.45, 0), damage, Color(1.0, 0.35, 0.3))
 
 
 ## Topples over and sinks into the table (ships just sink), then the node is freed.
-func die(unit: Node3D) -> void:
-	if unit == null:
+func die(unit: Variant) -> void:
+	if not _alive(unit):
 		return
-	_play_clip(unit, "die")
-	var naval: bool = unit.get_meta("naval", false)
+	var node := unit as Node3D
+	_play_clip(node, "die")
+	var naval: bool = node.get_meta("naval", false)
 	var t := _tween().set_parallel(true)
 	if naval:
-		t.tween_property(unit, "rotation:z", 0.5, 1.0)
-		t.tween_property(unit, "position:y", unit.position.y - 0.25, 1.2).set_ease(Tween.EASE_IN)
+		t.tween_property(node, "rotation:z", 0.5, 1.0)
+		t.tween_property(node, "position:y", node.position.y - 0.25, 1.2).set_ease(Tween.EASE_IN)
 	else:
-		t.tween_property(unit, "rotation:x", PI / 2.2, 0.45).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-		t.chain().tween_property(unit, "scale", Vector3.ONE * 0.01, 0.6).set_delay(0.3)
+		t.tween_property(node, "rotation:x", PI / 2.2, 0.45).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+		t.chain().tween_property(node, "scale", Vector3.ONE * 0.01, 0.6).set_delay(0.3)
 	await t.finished
-	unit.queue_free()
+	if _alive(node):
+		node.queue_free()
 
 
 ## Slides along [param points] (local positions), turning to face each step: a unit's move across the map.
-func move(unit: Node3D, points: Array) -> void:
-	if unit == null:
+func move(unit: Variant, points: Array) -> void:
+	if not _alive(unit):
 		return
-	_play_clip(unit, "move")
+	var node := unit as Node3D
+	_play_clip(node, "move")
 	for p: Vector3 in points:
-		face(unit, p)
+		if not _alive(node):
+			return   # the map was redrawn under it: the new token is already where it ended up
+		face(node, p)
 		var t := _tween()
-		var mid := unit.position.lerp(p, 0.5) + Vector3(0, 0.06, 0)
-		t.tween_property(unit, "position", mid, 0.13)
-		t.tween_property(unit, "position", p, 0.13)
+		var mid := node.position.lerp(p, 0.5) + Vector3(0, 0.06, 0)
+		t.tween_property(node, "position", mid, 0.13)
+		t.tween_property(node, "position", p, 0.13)
 		await t.finished
 
 
 ## Turns [param unit] (whose model faces +Z) towards [param point].
-static func face(unit: Node3D, point: Vector3) -> void:
-	var d := point - unit.position
+static func face(unit: Variant, point: Vector3) -> void:
+	if not _alive(unit):
+		return
+	var node := unit as Node3D
+	var d := point - node.position
 	if Vector2(d.x, d.z).length() > 0.001:
-		unit.rotation.y = atan2(d.x, d.z)
+		node.rotation.y = atan2(d.x, d.z)
 
 
 func _flight_time(kind: String) -> float:
@@ -292,13 +317,16 @@ func _number(at: Vector3, damage: int, color: Color) -> void:
 
 
 ## Briefly tints every mesh in [param unit] with [param color].
-func _flash(unit: Node3D, color: Color) -> void:
+func _flash(unit: Variant, color: Color) -> void:
+	if not _alive(unit):
+		return
+	var node := unit as Node3D
 	var overlay := StandardMaterial3D.new()
 	overlay.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	overlay.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	overlay.albedo_color = Color(color.r, color.g, color.b, 0.7)
 	var meshes: Array[MeshInstance3D] = []
-	_collect_meshes(unit, meshes)
+	_collect_meshes(node, meshes)
 	for mi in meshes:
 		mi.material_overlay = overlay
 	var t := _tween()
@@ -317,8 +345,10 @@ static func _collect_meshes(node: Node, out: Array[MeshInstance3D]) -> void:
 
 
 ## Plays [param clip] if the unit's model came with an AnimationPlayer that has it.
-static func _play_clip(unit: Node3D, clip: String) -> void:
-	var players := unit.find_children("*", "AnimationPlayer", true, false)
+static func _play_clip(unit: Variant, clip: String) -> void:
+	if not _alive(unit):
+		return
+	var players := (unit as Node3D).find_children("*", "AnimationPlayer", true, false)
 	for p: AnimationPlayer in players:
 		if p.has_animation(clip):
 			p.play(clip)

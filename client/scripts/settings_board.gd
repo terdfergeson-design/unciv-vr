@@ -418,6 +418,9 @@ func _add_folders(out: Array, dir_path: String, json_name: String, built_in: boo
 	if dir == null:
 		return
 	for sub in dir.get_directories():
+		# A folder of yours with a built-in one's name is never used (the built-in one loads), so it isn't listed
+		if out.any(func(option: Array) -> bool: return str(option[0]).to_lower() == sub.to_lower()):
+			continue
 		var json: Variant = ModFolders.read_json(dir_path.path_join(sub).path_join(json_name))
 		if json == null:
 			continue
@@ -426,7 +429,8 @@ func _add_folders(out: Array, dir_path: String, json_name: String, built_in: boo
 			if models == null or models.get_files().is_empty():
 				continue
 		var author := str(json.get("author", ""))
-		var by := ("by " + author if author != "" else "") + ("" if built_in else ("  (your own: %s)" % sub))
+		# Say where yours come from, so a folder some other tool is working in doesn't look like part of the game
+		var by := ("by " + author if author != "" else "") + ("" if built_in else ("  -  from %s" % dir_path.path_join(sub)))
 		out.append([sub, str(json.get("name", sub)), str(json.get("description", "")), by.strip_edges()])
 
 

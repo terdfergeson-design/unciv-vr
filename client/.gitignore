@@ -4,3 +4,19 @@ override.cfg
 *.png.tmp
 screenshots/
 logs/
+
+# Python caches (tools/convert_gmod_map.py)
+__pycache__/
+*.pyc
+
+# Source Engine / Garry's Mod maps and their pieces: other people's work, converted for your own use only
+# (tools/convert_gmod_map.py puts its backgrounds in ~/.unciv-vr/Backgrounds, outside this repository)
+*.bsp
+*.gma
+*.vtf
+*.vmt
+*.zip
+
+# Backgrounds converted from other games' maps, should a copy land here by mistake
+backgrounds/PeachsCastle/
+backgrounds/Skatepark/

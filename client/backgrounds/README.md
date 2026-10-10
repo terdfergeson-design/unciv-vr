@@ -74,6 +74,14 @@ from 0 to 255 (as in Unciv's nation colours), or `"#rrggbb"`.
 background menu lists yours too, and the `surroundings` test scenario (see the client README) takes a picture of
 every background.
 
+## Converting Garry's Mod and Source Engine maps
+
+`tools/convert_gmod_map.py` turns a Valve Source Engine map (`.bsp`), a Garry's Mod addon (`.gma`) or a `.zip`
+of them into a background: the map's geometry and textures as `scenery.glb`, its sun and sky as
+`background.json`. It puts the result in `~/.unciv-vr/Backgrounds/`, for you only - those maps belong to their
+makers (and often to Valve or other studios), so they stay out of this repository. See
+[GMOD_MAP_CONVERSION.md](GMOD_MAP_CONVERSION.md) for how to use it and where to stand the table.
+
 ## Licence
 
 The built-in backgrounds and the scripts that make them are part of Unciv VR, under the Mozilla Public License

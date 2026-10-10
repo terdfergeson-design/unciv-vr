@@ -966,6 +966,22 @@ func unit_death() -> void:
 	await main.refresh()
 	say("and another refresh: turn %d, %d units, status '%s'" % [int(main.state.get("turn", 0)),
 		(main.state.get("units", []) as Array).size(), main._status_text.replace("\n", " | ")])
+	# The map redrawn while a unit is still moving or fighting (a refresh, or the view sliding to a fight during
+	# playback): every token is replaced, and the animation must let go of the old one (user, 2026-10-10: the game
+	# froze after End turn, in unit_motion's move)
+	var ids: Array = (main.state.get("units", []) as Array).map(func(u: Dictionary) -> int: return int(u["id"]))
+	if ids.size() >= 2:
+		var walker: Node3D = main.hex_map.token_for(ids[0])
+		var other: Node3D = main.hex_map.token_for(ids[1])
+		if walker != null and other != null:
+			var here := walker.position
+			main.hex_map.motion.move(walker, [here + Vector3(0.5, 0, 0), here + Vector3(1.0, 0, 0), here + Vector3(1.5, 0, 0)])
+			main.hex_map.motion.melee(other, walker, 10, 5, false, false, "metalhit")
+			await main.get_tree().create_timer(0.15).timeout
+			main.hex_map.build(main.state)   # every token replaced, mid-animation
+			await main.get_tree().create_timer(2.0).timeout
+			say("redrawn mid-move and mid-fight: old tokens freed %s, the animations carried on without them" % [
+				not is_instance_valid(walker) and not is_instance_valid(other)])
 
 
 ## From the test save: the panels (panels.gd). The Units panel lists every unit and clicking a row selects it;

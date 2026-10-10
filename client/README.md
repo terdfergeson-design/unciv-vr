@@ -235,6 +235,9 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
   (every terrain, feature, wonder, resource, improvement and unit drawn with the game's map code, with a report
   of what each used and what's missing; see [tilesets/README.md](tilesets/README.md)); `tools/preview_tileset.gd`
   renders review sheets
+- `tools/convert_gmod_map.py` (with `convert_gmod_map.gd` to run it from Godot): converts Garry's Mod and Source
+  Engine maps (`.bsp`, `.gma`, `.zip`) into backgrounds of your own, in `~/.unciv-vr/Backgrounds`; see
+  [backgrounds/GMOD_MAP_CONVERSION.md](backgrounds/GMOD_MAP_CONVERSION.md)
 - `scripts/minimap.gd`: the overview at the far edge of the table, with the map-overlay buttons
 - `scripts/map_overlays.gd`: Unciv's five map overlays drawn on the table (movement arrows, yields, worked tiles,
   resource / improvement symbols, improvement models and roads)
