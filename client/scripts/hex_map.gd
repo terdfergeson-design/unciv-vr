@@ -691,6 +691,7 @@ func play_event(e: Dictionary) -> void:
 				_tokens[id] = token
 			if token != null and seen:
 				var path := path_points(from, to, unit)
+				motion.hear("whoosh", to_global(tile_position(to, tile_height(tiles.get(to, {})))), 0.7)
 				await motion.move(token, path.slice(1) if path.size() > 1 else path)
 		"attack":
 			var target_pos := tile_position(to, tile_height(tiles.get(to, {})))
@@ -714,7 +715,8 @@ func play_event(e: Dictionary) -> void:
 					await motion.ranged(attacker, target_pos, defender, str(e.get("sound", "")), damage, died,
 						tile_position(from, tile_height(tiles.get(from, {}))))
 				else:
-					await motion.melee(attacker, defender, damage, int(e.get("damageTaken", 0)), died, e.get("attackerDied", false))
+					await motion.melee(attacker, defender, damage, int(e.get("damageTaken", 0)), died,
+						e.get("attackerDied", false), str(e.get("sound", "")))
 			# the map's copy of the units: health, and the fallen
 			if e.has("defender"):
 				var def_id := int(e["defender"])
@@ -752,7 +754,7 @@ func animate_attack(unit_id: int, unit_name: String, target: Vector2i, r: Dictio
 			var unit := {"civilian": false}
 			await motion.move(token, path_points(start_key, target, unit).slice(1, -1))
 		await motion.melee(token, defender, int(r.get("damageToDefender", 0)), int(r.get("damageToAttacker", 0)), died,
-			not r.get("attackerAlive", true))
+			not r.get("attackerAlive", true), str(info.get("attackSound", "")))
 	# The fallen are freed by their death animation, so forget their tokens before anything looks them up
 	if died:
 		_tokens.erase(def_id)
@@ -773,7 +775,7 @@ func animate_bombard(city_key: Vector2i, target: Vector2i, r: Dictionary) -> voi
 	var defender := token_for(def_id)
 	var target_pos := defender.position if defender != null else tile_position(target, tile_height(tiles.get(target, {})))
 	await motion.ranged(null, target_pos, defender, "cannon", int(r.get("damageToDefender", 0)), r.get("defenderDefeated", false),
-		tile_position(city_key, tile_height(tiles.get(city_key, {}))))
+		tile_position(city_key, tile_height(tiles.get(city_key, {}))), "bombard")
 	if r.get("defenderDefeated", false):
 		_tokens.erase(def_id)
 

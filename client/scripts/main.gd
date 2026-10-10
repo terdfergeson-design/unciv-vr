@@ -32,8 +32,9 @@ const ActionMenu := preload("res://scripts/action_menu.gd")
 const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const TableModel := preload("res://scripts/table_model.gd")
+const Sounds := preload("res://scripts/sounds.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 19   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 20   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -109,6 +110,8 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	"automatedWorkersReplaceImprovements": true, "stopAutomatedWorkersRemoveVegetation": false,
 	"automatedUnitsCanUpgrade": false, "automatedUnitsChoosePromotions": false, "citiesAutoBombardAtEndOfTurn": false,
 	"autoAssignSpecialistsInNewCities": true, "notificationsLogMaxTurns": 5, "turnsBetweenAutosaves": 1,
+	# How loud Unciv's sounds are, 0 to 100 (Settings > Sound)
+	"soundVolume": 70, "ambienceVolume": 50,
 	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
@@ -155,6 +158,7 @@ var _yields_again := false        # the view changed while it was out
 var _table_buttons: Array[Dictionary] = []   # {id, node, material, color}
 var _hovered_button := ""
 var table_model: TableModel   # the table's top, column and feet (tables/<Name>)
+var sounds: Sounds            # Unciv's sound effects, read from its folder (scripts/sounds.gd)
 var _launched_bridge := false
 var _initialized := false
 var _state_revision := -1          # getState revision we last merged; -1 = ask for everything
@@ -226,6 +230,10 @@ var _xr_camera: XRCamera3D
 var _playback_active := false   # other players' moves and battles are being played back (End turn skips them)
 var _skip_playback := false
 const PLAYBACK_SPEEDS := {"normal": 1.0, "fast": 2.5}
+## Buttons play Unciv's click, except where the thing they do has a sound of its own below (a unit action
+## plays the action's, buying plays coin or choir, research paper, and so on - as Unciv does it).
+const CLICKS_ITSELF := ["action", "improvement", "produce", "queue", "buy", "research", "promote",
+	"great_person", "vote", "adopt_policy", "religion_confirm", "setting_number", "sell_building", "buy_tile"]
 
 
 func _ready() -> void:
@@ -233,6 +241,10 @@ func _ready() -> void:
 	_load_settings()
 	if options.has("background"):   # dev aid for screenshots; not saved
 		settings["background"] = options["background"]
+	sounds = Sounds.new()
+	sounds.name = "Sounds"
+	sounds.set_volumes(float(settings.get("soundVolume", 70)) / 100.0, float(settings.get("ambienceVolume", 50)) / 100.0)
+	add_child(sounds)
 	backgrounds = Backgrounds.new()
 	backgrounds.name = "Backgrounds"
 	add_child(backgrounds)
@@ -249,6 +261,7 @@ func _ready() -> void:
 		settings["unitset"] = options["unitset"]
 	hex_map.set_unitset(str(settings["unitset"]))
 	table.add_child(hex_map)
+	hex_map.motion.sounds = sounds   # battles and moves are heard from where they happen on the table
 
 	_xr_mode = _try_start_xr()
 	if _xr_mode:
@@ -1021,6 +1034,8 @@ func _refresh_big_screen() -> void:
 
 
 func _on_big_screen_chosen(kind: String, value: String) -> void:
+	if kind not in CLICKS_ITSELF:
+		sounds.play(Sounds.CLICK)
 	match kind:
 		"big_tab":
 			big_screen.war_armed = ""
@@ -1073,6 +1088,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			if not reply.ok:
 				_set_status(reply.error)
 				return
+			sounds.play(Sounds.CHOIR)
 			_set_status("%s: %s" % [reply.result.get("displayName", "Your religion"), ", ".join(big_screen.religion_picks)])
 			big_screen._religion = {}
 			big_screen.set_religion(reply.result)
@@ -1107,6 +1123,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			if not reply.ok:
 				_set_status(reply.error)
 				return
+			sounds.play(Sounds.PAPER)
 			_set_status("Researching %s." % reply.result.get("current", value))
 			big_screen.set_techs(reply.result)
 			await refresh()
@@ -1120,6 +1137,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			if not reply.ok:
 				_set_status(reply.error)
 				return
+			sounds.play(Sounds.POLICY)
 			_set_status("Adopted %s." % value)
 			big_screen.set_policies(reply.result)
 			await refresh()
@@ -1506,6 +1524,7 @@ func move_selected_to(key: Vector2i) -> void:
 	if not reply.ok:
 		_set_status(reply.error)
 		return
+	sounds.play_at(Sounds.WHOOSH, _tile_sound_position(key))
 	if reply.result.get("queued", false):
 		_set_status("%s is on its way - it keeps going next turn." % selected_unit["name"])
 	await refresh()
@@ -1569,6 +1588,8 @@ func build_improvement(improvement: String) -> void:
 
 
 func _on_menu_chosen(kind: String, value: String) -> void:
+	if kind not in CLICKS_ITSELF:
+		sounds.play(Sounds.CLICK)
 	if kind.begins_with("lobby") or kind.begins_with("setup_") or kind in ["load_save", "quit"]:
 		await _on_lobby_choice(kind, value)
 		return
@@ -1637,7 +1658,8 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 func _smoke_city_view(city_name: String) -> void:
 	await enter_city_view(city_name)
 	var data := city_view_data
-	print("SMOKE: city view %s: shown=%s, minimap hidden=%s, %d tiles (%s), focus %s, free %d, stats %s" % [city_name, _city_view,
+	print("SMOKE: city view %s: shown=%s, ambience %s, minimap hidden=%s, %d tiles (%s), focus %s, free %d, stats %s" % [city_name, _city_view,
+		data.get("ambience", "-"),
 		not minimap.visible, data.get("tiles", []).size(),
 		", ".join(data.get("tiles", []).map(func(t: Dictionary) -> String: return str(t["state"])).reduce(
 			func(acc: Array, v: String) -> Array: return acc if v in acc else acc + [v], [])),
@@ -1899,6 +1921,8 @@ func _refresh_overview() -> void:
 
 
 func _on_overview_chosen(kind: String, value: String) -> void:
+	if kind not in CLICKS_ITSELF:
+		sounds.play(Sounds.CLICK)
 	match kind:
 		"ov_spy_select":
 			overview_board.selected_spy = "" if overview_board.selected_spy == value else value
@@ -2055,6 +2079,8 @@ func enter_city_view(city_name: String) -> void:
 	if not _xr_mode:
 		action_menu.visible = false
 	_show_city_view(reply.result, true)
+	# Unciv plays the era's city ambience while you're in a city; in VR it comes from the table
+	sounds.ambience(str(reply.result.get("ambience", "")), table.global_position)
 	_set_status("City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map." % city_name)
 
 
@@ -2062,6 +2088,8 @@ func enter_city_view(city_name: String) -> void:
 func _show_city_view(data: Dictionary, recentre := false) -> void:
 	var previous_name: String = city_view_data.get("name", "")
 	city_view_data = data
+	if _city_view and data.has("ambience"):
+		sounds.ambience(str(data["ambience"]), table.global_position)
 	var key := Vector2i(int(data["x"]), int(data["y"]))
 	if recentre or previous_name != data.get("name", ""):
 		var radius := float(int(data.get("viewRange", 3)) + 1) * 1.75 + 0.6
@@ -2082,6 +2110,7 @@ func exit_city_view() -> void:
 	_city_view = false
 	_city_place = {}
 	city_view_data = {}
+	sounds.ambience("")   # the city's noise fades as you step back out to the map
 	hex_map.show_city({})
 	hex_map.clear_aim()
 	hex_map.clear_selection()
@@ -2214,6 +2243,8 @@ func _refresh_city_view() -> void:
 func _on_city_board_chosen(kind: String, value: String) -> void:
 	if not _city_view:
 		return
+	if kind not in CLICKS_ITSELF:
+		sounds.play(Sounds.CLICK)
 	var parts := value.split("|")
 	match kind:
 		"city_exit":
@@ -2242,6 +2273,7 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 			var xy := parts[0].split(",")
 			var action := parts[1]
 			if await _city_request("cityTile", {"tileX": int(xy[0]), "tileY": int(xy[1]), "action": action}) and action == "buy":
+				sounds.play(Sounds.COIN)
 				await _refresh_city_view()
 		"city_arm":
 			if value.begins_with("buy:") or value.begins_with("sell:"):
@@ -2264,10 +2296,12 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 			if _needs_place_tile(value, "setProduction", {"construction": value, "mode": "now"}, -1):
 				return
 			await _city_request("setProduction", {"construction": value, "mode": "now"}, "%s will build %s next." % [city_view_data.get("name", ""), value])
+			sounds.play(_construction_sound(value))
 		"city_queue":
 			if _needs_place_tile(value, "setProduction", {"construction": value, "mode": "queue"}, -1):
 				return
 			await _city_request("setProduction", {"construction": value, "mode": "queue"}, "%s added to the queue." % value)
+			sounds.play(_construction_sound(value))
 		"city_move":
 			var index := int(parts[0])
 			if parts[1] == "remove":
@@ -2280,10 +2314,12 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 				return
 			if await _city_request("buyConstruction", {"construction": parts[0], "stat": parts[1], "queueIndex": int(parts[2])},
 					"Bought %s." % parts[0]):
+				sounds.play(Sounds.CHOIR if parts[1] == "Faith" else Sounds.COIN)
 				city_prod_board.select_construction("", -1, "")
 				await _refresh_city_view()
 		"city_sell":
 			if await _city_request("sellBuilding", {"building": value}, "Sold the %s." % value):
+				sounds.play(Sounds.COIN)
 				city_prod_board.select_construction("", -1, "")
 				await _refresh_city_view()
 		"city_show_unavailable":
@@ -2360,12 +2396,17 @@ func city_command(kind: String, value: String) -> void:
 		_set_status(reply.error)
 		return
 	selected_city = reply.result
+	var city_sound := _construction_sound(value)
 	match kind:
 		"produce": _set_status("%s will build %s next." % [selected_city["name"], value])
 		"queue": _set_status("%s added to %s's queue." % [value, selected_city["name"]])
-		"buy": _set_status("Bought %s in %s." % [value, selected_city["name"]])
+		"buy":
+			_set_status("Bought %s in %s." % [value, selected_city["name"]])
+			city_sound = Sounds.COIN   # bought with gold, so Unciv's coin whatever it was
+		"unqueue": city_sound = Sounds.CLICK
 	var city := selected_city
 	var key := Vector2i(int(city["x"]), int(city["y"]))
+	sounds.play_at(city_sound, _tile_sound_position(key))
 	await refresh()
 	var fresh := await bridge.request("getCity", {"name": city["name"]})
 	selected_city = fresh.result if fresh.ok else city
@@ -2435,6 +2476,7 @@ func promote(promotion: String) -> void:
 	if not reply.ok:
 		_set_status(reply.error)
 		return
+	sounds.play_at(Sounds.PROMOTE, _tile_sound_position(_selected_key()))
 	_set_status("%s is now %s." % [selected_unit["name"], promotion])
 	selected_unit = _with_move_action(reply.result)
 	if selected_unit.get("canPromote", false):
@@ -2451,6 +2493,7 @@ func set_research(tech: String) -> void:
 	if not reply.ok:
 		_set_status(reply.error)
 		return
+	sounds.play(Sounds.PAPER)
 	_set_status("Researching %s." % reply.result.get("current", tech))
 	await refresh()
 	if _xr_mode:
@@ -2575,6 +2618,8 @@ func _finish_unit_action(reply: Dictionary, action: Dictionary) -> void:
 		_set_status(reply.error)
 		await refresh()
 		return
+	# Unciv gives every action its own sound (fortify, promote, chimes...); the bridge passes the name on
+	sounds.play_at(str(action.get("sound", Sounds.CLICK)), _tile_sound_position(_selected_key()))
 	if not reply.result.get("done", true):
 		_set_status(str(reply.result.get("confirm", "Are you sure?")))
 		return
@@ -2778,6 +2823,7 @@ func end_turn() -> void:
 		await refresh()
 		return
 	var result: Dictionary = reply.result
+	sounds.play(Sounds.TURN)
 	var lines: Array[String] = ["Turn %d" % int(result["turn"])]
 	if result.get("gameOver", false):
 		lines.append("GAME OVER - %s wins (%s victory)" % [result.get("winner", "?"), result.get("victoryType", "?")])
@@ -2911,6 +2957,7 @@ func _maybe_show_alert() -> void:
 	if str(alert["key"]) == _alert_shown_key and _alert_card_visible():
 		return
 	_alert_shown_key = str(alert["key"])
+	sounds.play(Sounds.NOTIFICATION)
 	if alert.has("x"):
 		_look_at_tile(Vector2i(int(alert["x"]), int(alert["y"])))
 	_show_center_card(func(menu: ActionMenu) -> void: menu.show_alert(alert, alerts.size() - 1), "alert",
@@ -3022,6 +3069,7 @@ func choose_great_person(unit_name: String) -> void:
 		_set_status(reply.error)
 		return
 	_close_alert_card()
+	sounds.play(Sounds.CHOIR)
 	_set_status("A %s has been born!" % unit_name)
 	await refresh()
 	for u: Dictionary in state.get("units", []):
@@ -3048,6 +3096,7 @@ func cast_vote(civ_name: String) -> void:
 		_set_status(reply.error)
 		return
 	_close_alert_card()
+	sounds.play(Sounds.CHIMES)
 	_set_status("You voted for %s." % civ_name if civ_name != "" else "You abstained.")
 	await refresh()
 
@@ -3166,6 +3215,28 @@ func _selected_key() -> Vector2i:
 	return Vector2i(int(selected_unit["x"]), int(selected_unit["y"]))
 
 
+## Where a sound that happens on [param key] comes from (in VR, that spot on the table).
+func _tile_sound_position(key: Vector2i) -> Vector3:
+	if key == HexMap.NO_TILE or not hex_map.tiles.has(key):
+		return table.global_position
+	return hex_map.to_global(hex_map.tile_local_center(key))
+
+
+## Unciv's sound for building [param construction]: a building hammers, a unit gets the promote fanfare,
+## and the perpetual ones (turning production into gold, science...) sound like what they make.
+func _construction_sound(construction: String) -> String:
+	match construction:
+		"Gold": return Sounds.COIN
+		"Science": return Sounds.PAPER
+		"Culture": return Sounds.POLICY
+		"Faith": return Sounds.CHOIR
+	var city: Dictionary = city_view_data if _city_view else selected_city
+	for option: Dictionary in city.get("options", []):
+		if str(option.get("name", "")) == construction:
+			return Sounds.PROMOTE if str(option.get("kind", "")) == "unit" else Sounds.CONSTRUCTION
+	return Sounds.CONSTRUCTION
+
+
 func _own_units_at(key: Vector2i) -> Array:
 	return state.get("units", []).filter(func(u: Dictionary) -> bool:
 		return int(u["x"]) == key.x and int(u["y"]) == key.y)
@@ -3234,7 +3305,8 @@ func _run_smoke_test() -> void:
 			settler = u
 	if settler != null:
 		await _select_unit(int(settler["id"]))
-		print("SMOKE: settler actions ", selected_unit.get("actions", []).map(func(a: Dictionary) -> String: return a["type"]))
+		print("SMOKE: settler actions ", selected_unit.get("actions", []).map(func(a: Dictionary) -> String:
+			return "%s(%s)" % [a["type"], a.get("sound", "-")]))
 		await found_city()
 		print("SMOKE: cities after founding ", state.get("cities", []).map(func(c: Dictionary) -> String: return c["name"]))
 	# Combat: attack the first target any military unit can reach
@@ -3350,7 +3422,8 @@ func _run_smoke_test() -> void:
 		if not options.is_empty() and not selected_unit.is_empty():
 			await city_command("buy", options[0]["name"])
 			print("SMOKE: bought %s with %s selected -> city card '%s', status '%s'" % [options[0]["name"], selected_unit.get("name", "-"), selected_city.get("name", "-"), _status_text])
-		await _smoke_city_view(str(selected_city.get("name", "")))
+		# The capital by name: clicking its tile selects the garrison, so selected_city may well be empty
+		await _smoke_city_view(str(capital.get("name", "")))
 	if not state.get("units", []).is_empty():
 		await _smoke_rename_unit(int(state["units"][0]["id"]))
 	# Research: pick the cheapest available tech
@@ -3471,6 +3544,27 @@ func _run_smoke_test() -> void:
 	print("SMOKE: %d nations, %d saves listed" % [_setup_options.get("nations", []).size(), _saves.size()])
 	await _on_menu_chosen("lobby_resume", "")
 	print("SMOKE: resumed: lobby=%s, tiles=%d, table buttons shown=%s" % [_in_lobby, hex_map.tiles.size(), (_table_buttons[0]["node"] as Node3D).visible])
+	# Sounds: Unciv's, read from its folder. Every name the client and the ruleset can ask for must be there.
+	var wanted: Array = [Sounds.CLICK, Sounds.WHOOSH, Sounds.COIN, Sounds.PAPER, Sounds.POLICY, Sounds.CHOIR,
+		Sounds.CHIMES, Sounds.CONSTRUCTION, Sounds.PROMOTE, Sounds.BOMBARD, Sounds.SWAP, Sounds.SLIDER,
+		Sounds.NOTIFICATION, Sounds.TURN]
+	for unit: Dictionary in hex_map.unit_info.values():   # every unit's attackSound, from the ruleset
+		var attack := str(unit.get("attackSound", ""))
+		if attack != "" and attack not in wanted:
+			wanted.append(attack)
+	for action: Dictionary in selected_unit.get("actions", []):   # and the sound the bridge gives each action
+		var action_sound := str(action.get("sound", ""))
+		if action_sound != "" and action_sound not in wanted:
+			wanted.append(action_sound)
+	var missing: Array = wanted.filter(func(name: String) -> bool: return sounds.stream(name) == null)
+	print("SMOKE: sounds: %d of %d names found (%d files in all), missing %s" % [wanted.size() - missing.size(),
+		wanted.size(), (Sounds.available() as Array).size(), missing if not missing.is_empty() else "none"])
+	sounds.play(Sounds.CLICK)
+	sounds.play_at(Sounds.WHOOSH, table.global_position)
+	sounds.ambience("cityAncient", table.global_position)
+	await get_tree().create_timer(0.2).timeout
+	sounds.ambience("")
+	print("SMOKE: played a click, a whoosh on the table and the ancient city ambience")
 	# The watchdog that lets go when an order is cut short, so the game doesn't ignore every click after it
 	busy = true
 	_busy_since = Time.get_ticks_msec() - BUSY_WATCHDOG_MS - 1
@@ -3658,6 +3752,8 @@ func _send_bridge_settings() -> void:
 
 ## Unciv options with a number (sent with setSettings too)
 const INT_SETTINGS := ["notificationsLogMaxTurns", "turnsBetweenAutosaves"]
+## Ours: how loud, 0 to 100 (nothing to do with the bridge)
+const VOLUME_SETTINGS := ["soundVolume", "ambienceVolume"]
 ## Unciv options the game engine itself reads (sent with setSettings)
 const BRIDGE_SETTINGS := ["checkForDueUnits", "autoUnitCycle", "alternateUnitCycleOrder", "autoAssignCityProduction",
 	"autoBuildingRoads", "automatedWorkersReplaceImprovements", "stopAutomatedWorkersRemoveVegetation",
@@ -3671,6 +3767,13 @@ func change_setting(key: String, value: String) -> void:
 		if value in BRIDGE_SETTINGS:
 			await _send_bridge_settings()
 			await refresh()   # e.g. "Check for idle units" changes what End turn waits for
+		_refresh_settings()
+		return
+	if key in VOLUME_SETTINGS:
+		settings[key] = int(value)
+		_save_settings()
+		sounds.set_volumes(float(settings.get("soundVolume", 70)) / 100.0, float(settings.get("ambienceVolume", 50)) / 100.0)
+		sounds.play(Sounds.SLIDER)   # so you hear what you picked, like Unciv's volume sliders
 		_refresh_settings()
 		return
 	if key in INT_SETTINGS:
@@ -3771,6 +3874,8 @@ func _refresh_settings() -> void:
 
 
 func _on_settings_chosen(kind: String, value: String) -> void:
+	if kind != "setting" or not value.begins_with("soundVolume|") and not value.begins_with("ambienceVolume|"):
+		sounds.play(Sounds.CLICK)   # the volumes play the slider sound instead, once they are set
 	match kind:
 		"setting":
 			var bits := value.split("|", true, 1)
@@ -3865,6 +3970,7 @@ func _table_button_position(id: String) -> Vector3:
 
 
 func press_table_button(id: String) -> void:
+	sounds.play(Sounds.CLICK)
 	match id:
 		"prev_unit":
 			await cycle_unit(-1)

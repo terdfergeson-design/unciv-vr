@@ -12,6 +12,8 @@ extends Node3D
 
 ## How fast everything plays (1 = normal; the playback setting changes it).
 var speed := 1.0
+## Unciv's sounds (scripts/sounds.gd), set by the client: battles are heard from where they happen.
+var sounds: Node = null
 
 ## What flies, by Unciv's attack sound for the unit (Units.json "attackSound").
 const PROJECTILES := {
@@ -32,7 +34,9 @@ func _tween() -> Tween:
 
 
 ## [param attacker] walks / charges most of the way to [param target] and back; the defender is hit halfway.
-func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: int, defender_dies := false, attacker_dies := false) -> void:
+## [param sound] is the unit's Unciv attackSound ("nonmetalhit", "metalhit"...), heard as it lands.
+func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: int, defender_dies := false,
+		attacker_dies := false, sound := "") -> void:
 	if attacker == null:
 		return
 	var start := attacker.position
@@ -44,6 +48,7 @@ func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: 
 	var t := _tween()
 	t.tween_property(attacker, "position", start.lerp(goal, 0.62) + Vector3(0, 0.05, 0), 0.32).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await t.finished
+	hear(sound, defender.global_position if defender != null else attacker.global_position)
 	if defender != null:
 		hit(defender, damage_dealt)
 	if damage_taken > 0:
@@ -59,10 +64,11 @@ func melee(attacker: Node3D, defender: Node3D, damage_dealt: int, damage_taken: 
 
 
 ## [param attacker] fires at [param target] (a point in this node's space; [param defender] is what's there, may
-## be null). [param sound] is the unit's Unciv attackSound, which picks the projectile. With no attacker (a city
-## bombarding), the shot starts from [param origin].
+## be null). [param sound] is the unit's Unciv attackSound, which picks the projectile and is what you hear.
+## With no attacker (a city bombarding), the shot starts from [param origin] and [param heard] is played
+## instead (Unciv's "bombard", while the shot still looks like a cannon's).
 func ranged(attacker: Node3D, target: Vector3, defender: Node3D, sound: String, damage_dealt: int, defender_dies := false,
-		origin := Vector3.INF) -> void:
+		origin := Vector3.INF, heard := "") -> void:
 	if attacker == null and origin == Vector3.INF:
 		return
 	var kind: String = PROJECTILES.get(sound, "arrow")
@@ -78,6 +84,7 @@ func ranged(attacker: Node3D, target: Vector3, defender: Node3D, sound: String, 
 		t.tween_property(attacker, "position", start, 0.18)
 		from = attacker.position + Vector3(0, 0.18, 0)
 	var to := target + Vector3(0, 0.12, 0)
+	hear(heard if heard != "" else sound, to_global(from))
 	match kind:
 		"volley", "bullets", "tracers", "bombs":
 			var shots := 5 if kind == "tracers" else 3
@@ -93,6 +100,13 @@ func ranged(attacker: Node3D, target: Vector3, defender: Node3D, sound: String, 
 	await _wait(0.35)
 	if defender_dies and defender != null:
 		await die(defender)
+
+
+## Plays one of Unciv's sounds from a spot on the table, when the client has given us its sound player.
+## Public so the map can use it for what it plays itself (a city's guns, a unit setting off).
+func hear(sound: String, where: Vector3, volume := 1.0) -> void:
+	if sounds != null and sound != "":
+		sounds.play_at(sound, where, volume)
 
 
 ## The defender's side of a hit: a shake, a red flash and the damage floating up.

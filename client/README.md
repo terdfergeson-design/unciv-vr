@@ -30,7 +30,8 @@ The Settings button on the table (O on the desktop) opens the settings board, la
 **Look** (background, table, tiles and units as drop-down lists with what each one is, plus Unciv's visual hints - the
 map overlays), **Gameplay** (Unciv's turn and unit-cycling options, how long the notification log is kept, how
 other players' turns are shown), **Automation** (Unciv's automation options, and when automated units move),
-**Controls** (desktop and VR), **Game and saves** (save, main menu, how often to autosave) and **About**
+**Sound** (how loud the effects and the city ambience are), **Controls** (desktop and VR), **Game and saves**
+(save, main menu, how often to autosave) and **About**
 (versions, this game's rules, and the folders for your own tilesets, backgrounds and tables). In VR it floats
 over the far half of the table and can be moved by its top strip like the other boards; Close, the Settings
 button or (desktop) Esc puts it away.
@@ -67,6 +68,23 @@ After End turn, the moves and battles of the other players that you could see pl
 order, with the view gliding to fights outside it; **End turn** (now labelled **Skip**, or A / Space) skips the
 rest. Settings > "Other players' turns" plays them normally, fast, or not at all. Your own moves and attacks
 are animated too.
+
+### Sound
+The game plays **Unciv's own sound effects**, and plays them where Unciv does: a click on buttons, a whoosh
+when a unit moves, each unit's own attack sound from the ruleset (`attackSound` in Units.json), `bombard` for
+a city's guns, Unciv's sound for every unit action (fortify, promote, chimes...), coin when you buy, paper for
+research, policy when you adopt one, choir for religion and great people, and the era's city ambience looping
+while you're in a city. A message waiting for an answer and the start of your turn use Unciv's two
+notification sounds.
+
+In VR a sound that happens on the table comes **from that spot on the table** - an attack across the map
+sounds from over there - while buttons are flat. Settings > Sound sets how loud the effects and the ambience
+are (0 turns them off).
+
+Like the icons, the sounds aren't copied into this repository: they're read when the game runs from the Unciv
+checkout next to it (`unciv/android/assets/sounds`). To replace one, drop a file with the same name
+(`click.mp3`, `whoosh.mp3`, `cityAncient.ogg`...) into `~/.unciv-vr/Sounds` (Windows:
+`C:\Users\<you>\.unciv-vr\Sounds`) - `.mp3`, `.ogg` and `.wav` all work, and yours wins.
 
 Unciv's popups (first contact, declarations of friendship, demands, trade requests, a city you've conquered,
 wonders, golden ages, great people, victory and defeat...) come up as a card in the middle of the window, or

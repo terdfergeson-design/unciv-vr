@@ -18,6 +18,7 @@ signal chosen(kind: String, value: String)
 const Icons := preload("res://scripts/icons.gd")
 const Tileset := preload("res://scripts/tileset.gd")
 const ModFolders := preload("res://scripts/mod_folders.gd")
+const Sounds := preload("res://scripts/sounds.gd")
 
 const SIZE := Vector2(1280, 820)
 const GRAB_HEIGHT := 30.0
@@ -37,6 +38,7 @@ const PAGES := [
 	["look", "Look", "other", "Terrains"],
 	["gameplay", "Gameplay", "other", "Options"],
 	["automation", "Automation", "other", "Timer"],
+	["sound", "Sound", "other", "Speaker"],
 	["controls", "Controls", "other", "Keyboard"],
 	["game", "Game and saves", "other", "Score"],
 	["about", "About", "other", "Question"],
@@ -221,6 +223,7 @@ func _rebuild(keep_scroll := false) -> void:
 		"look": _look_page()
 		"gameplay": _gameplay_page()
 		"automation": _automation_page()
+		"sound": _sound_page()
 		"controls": _controls_page()
 		"game": _game_page()
 		"about": _about_page()
@@ -268,6 +271,24 @@ func _automation_page() -> void:
 	_choice("auto_move", "Automated and exploring units move", "When units on automation, exploring or on multi-turn moves take their steps.", _simple_options(AUTO_MOVE))
 	for option: Array in AUTOMATION:
 		_setting_toggle(option)
+
+
+## Unciv's own sound effects, read from its folder when the game runs (see scripts/sounds.gd).
+func _sound_page() -> void:
+	_header("Sound", "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them.")
+	_choice("soundVolume", "Sound effects", "Buttons, moves, battles and the rest. In VR they come from where they happen on the table.", _volume_options())
+	_choice("ambienceVolume", "City ambience", "The city noise that loops while you are in a city - Unciv has one for every era.", _volume_options())
+	var found: int = (Sounds.available() as Array).size()
+	_header("", "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's." % found if found > 0
+		else "No sounds found. They live in Unciv's android/assets/sounds, next to this folder.")
+
+
+## 0 to 100 in tens, for the volume drop-downs.
+func _volume_options() -> Array:
+	var options: Array = []
+	for percent in range(0, 101, 10):
+		options.append([str(percent), "Off" if percent == 0 else "%d%%" % percent, "", ""])
+	return options
 
 
 func _controls_page() -> void:

@@ -48,16 +48,23 @@ Unciv's [docs/Credits.md](https://github.com/yairm210/Unciv/blob/master/docs/Cre
 Examples are unit flags in civ colours, nation emblems, and resource and improvement markers. The original files
 are not changed.
 
-## Planned: Unciv's sound effects
+## Unciv's sound effects
 
-Unciv's sound effects (`unciv/android/assets/sounds`) will be loaded the same way. They come mostly from
+The client plays Unciv's own sound effects (`unciv/android/assets/sounds`), loaded the same way as the icons:
+read when the game runs, never copied into this repository. They come mostly from
 [freesound.org](https://freesound.org) and [soundbible.com](https://soundbible.com) under CC0, CC BY 3.0 or
 CC BY 4.0. Authors and licences are listed in the "Sound credits" section of Unciv's Credits.md.
 
+**Changes we make:** none to the files. The client chooses which sound to play where Unciv would, sets how
+loud it is, and in VR plays it from the spot on the table it belongs to.
+
+Unciv's music ("Thatched Villagers" by Kevin MacLeod, CC BY 4.0) is not part of Unciv's repository - Unciv
+downloads it separately - and the client doesn't play music.
+
 ## If you share screenshots or builds
 
-- **Screenshots and videos** show Unciv's icons. Credit them as "Icons from Unciv (see Unciv's docs/Credits.md),
-  licensed CC BY / CC BY-SA / CC0 by their authors".
+- **Screenshots and videos** show Unciv's icons, and videos have its sounds. Credit them as "Icons and sounds
+  from Unciv (see Unciv's docs/Credits.md), licensed CC BY / CC BY-SA / CC0 by their authors".
 - **Builds that bundle the images or sounds** must include Unciv's Credits.md, or an equivalent list of authors,
   titles, licences and licence links. They must also keep the note above that the icons are modified. Any
   CC BY-SA files that get adapted must stay under CC BY-SA. Today we don't use any of them: the CC BY-SA files are

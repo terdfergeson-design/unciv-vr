@@ -1053,11 +1053,18 @@ func settings_board() -> void:
 	main.open_settings()
 	await settle(0.4)
 	var board: Control = main.settings_board
-	for page: String in ["look", "gameplay", "automation", "controls", "game", "about"]:
+	for page: String in ["look", "gameplay", "automation", "sound", "controls", "game", "about"]:
 		board.show_page(page)
 		await settle(0.3)
 		main.get_viewport().get_texture().get_image().save_png(folder.path_join("settings_%s.png" % page))
 		say("page %s: %d rows" % [page, board._body.get_child_count()])
+	board.show_page("sound")
+	await settle(0.3)
+	say("sound page: effects %s%%, ambience %s%%, %d sounds found" % [main.settings.get("soundVolume"),
+		main.settings.get("ambienceVolume"), (load("res://scripts/sounds.gd").available() as Array).size()])
+	say("turn the effects down: %s" % board.press("70%"))
+	await settle(0.3)
+	say("pick 30%%: %s -> saved %s" % [board.press("30%"), main.settings.get("soundVolume")])
 	board.show_page("look")
 	await settle(0.2)
 	say("open the background list: %s" % board.press("Mountains and clouds"))
