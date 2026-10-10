@@ -30,7 +30,8 @@ The Settings button on the table (O on the desktop) opens the settings board, la
 **Look** (background, table, tiles and units as drop-down lists with what each one is, plus Unciv's visual hints - the
 map overlays), **Gameplay** (Unciv's turn and unit-cycling options, how long the notification log is kept, how
 other players' turns are shown), **Automation** (Unciv's automation options, and when automated units move),
-**Sound** (how loud the effects and the city ambience are), **Controls** (desktop and VR), **Game and saves**
+**Sound** (how loud the effects and the city ambience are), **Panels** (which panels are up, built-in and your own;
+see below), **Controls** (desktop and VR), **Game and saves**
 (save, main menu, how often to autosave) and **About**
 (versions, this game's rules, and the folders for your own tilesets, backgrounds and tables). In VR it floats
 over the far half of the table and can be moved by its top strip like the other boards; Close, the Settings
@@ -68,6 +69,15 @@ After End turn, the moves and battles of the other players that you could see pl
 order, with the view gliding to fights outside it; **End turn** (now labelled **Skip**, or A / Space) skips the
 rest. Settings > "Other players' turns" plays them normally, fast, or not at all. Your own moves and attacks
 are animated too.
+
+### Panels
+**Panels** are boards with a list on them, built from what the game knows - and anyone can make one with a
+`panel.json`, no code. The built-in **Units** panel lists every unit you have (the ones waiting for orders first,
+with what each is doing, its moves and health); click one to select it. The shorter **Cities** panel lists your
+cities with what each is building; click one to open its card. A **Wonders** panel (off to start with)
+shows Unciv's wonders overview. In VR they stand beside the table and move like the other boards (hold the
+trigger on the strip along the top); on the desktop they sit down the left side. Settings > Panels turns each one
+on or off. How to make your own is in [panels/README.md](panels/README.md); they go in `~/.unciv-vr/Panels`.
 
 ### Sound
 The game plays **Unciv's own sound effects**, and plays them where Unciv does: a click on buttons, a whoosh
@@ -179,7 +189,9 @@ espionage, **tiles** (reveals the map and saves pictures of the tileset zoomed o
 natural wonders and in the city view to `--shots=<folder>`, with how much it draws), **battles** (war with a
 neighbour, enemy troops next to the capital, one of ours shoots, then End turn plays back the AI's attacks; steps
 `staged_fight` and `unit_icons` follow it), **playback** (from the test save: End turn, and the AI's attacks play
-back), **unit_death** (a war, an enemy hurt to one hit point, one shot: the unit dies and the map is rebuilt - its token is freed by the death animation, and looking it up afterwards used to stop the client dead), **stacking** (from the test save: moving onto a tile one of your own units is on - the hold, the click that follows, "Move here" on the card, and a tile with no room left - with a picture of each aim), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,
+back), **unit_death** (a war, an enemy hurt to one hit point, one shot: the unit dies and the map is rebuilt - its token is freed by the death animation, and looking it up afterwards used to stop the client dead), **panels** (from the test save: the Units panel's rows, a click on one selecting that unit, the Wonders panel
+asking the bridge for its rows, Settings > Panels, and the panels stepping aside in the city view, with pictures),
+**stacking** (from the test save: moving onto a tile one of your own units is on - the hold, the click that follows, "Move here" on the card, and a tile with no room left - with a picture of each aim), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,
 toggles, and the number settings checked against the bridge), **surroundings** (from the test save: picks every background and table in Settings, saves a picture of
 each to `--shots=<folder>`, and moves the table up, down and bigger to check its column and feet follow), **make_test_save** (with `--then=save_test_game`: rebuilds the test save), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
 double clicks, popups arriving while something else is open, save and load mid-decision - each printed as OK or
@@ -198,7 +210,14 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/table_model.gd`: the table (top, stretchy column and feet), read from a table folder (`tables/<name>/` or
   `~/.unciv-vr/Tables/<name>/`); see [tables/README.md](tables/README.md)
 - `scripts/settings_board.gd`: the settings board (pages of settings with drop-down lists, after Unciv's Options)
-- `scripts/mod_folders.gd`: finding and loading those folders and their models (shared by backgrounds and tables)
+- `scripts/mod_folders.gd`: finding and loading those folders and their models (shared by backgrounds, tables,
+  panels and sounds)
+- `scripts/panels.gd`: panels (`panels/<name>/panel.json`, or `~/.unciv-vr/Panels/<name>/`): reading them, their
+  rows from the game state or a read-only bridge request, filters, sorting, groups and `{field}` templates;
+  `scripts/panel_board.gd` draws one as a board; see [panels/README.md](panels/README.md)
+- `scripts/sounds.gd`: Unciv's sound effects, read from its folder (or `~/.unciv-vr/Sounds`), flat or from a
+  spot on the table, and the city ambience
+- `panels/Units/`, `panels/Cities/`, `panels/Wonders/`: the built-in panels (a `panel.json` each)
 - `scripts/hex_map.gd`: the terrain (from the tileset, or plain coloured hexes), borders, cities, units,
   highlights and picking; on big maps only a round window of it is drawn and slides under the table
 - `scripts/tileset.gd`: loads a tileset (`tilesets/<name>/`, or `~/.unciv-vr/Tilesets/<name>/`) and picks the
@@ -207,7 +226,8 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/unit_motion.gd`: units moving and fighting on the table (lunges, projectiles, hits, deaths), used for
   your own moves and attacks and to play back what the other players did that you could see
 - `tilesets/LowPoly/`: the built-in low-poly tileset (`tileset.json` and its `.glb` pieces)
-- `backgrounds/Studio/`, `Mountains/`, `Space/` and `tables/Plain/`, `OrnateOak/`: the built-in backgrounds and tables
+- `backgrounds/Studio/`, `Mountains/`, `Space/`, `MountainKing/`, `WebbDeepField/` and `tables/Plain/`, `OrnateOak/`:
+  the built-in backgrounds and tables
   (a json file and `.glb` models each), made by `tools/make_surroundings.gd` (with `lowpoly_backgrounds.gd` and
   `tables.gd`)
 - `tools/make_lowpoly_tileset.gd` (with `lowpoly_pieces.gd`, `lowpoly_wonders.gd`, `lowpoly_units.gd`): makes

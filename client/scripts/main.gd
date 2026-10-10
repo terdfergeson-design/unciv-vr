@@ -33,8 +33,10 @@ const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const TableModel := preload("res://scripts/table_model.gd")
 const Sounds := preload("res://scripts/sounds.gd")
+const Panels := preload("res://scripts/panels.gd")
+const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 20   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 21   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -112,6 +114,9 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	"autoAssignSpecialistsInNewCities": true, "notificationsLogMaxTurns": 5, "turnsBetweenAutosaves": 1,
 	# How loud Unciv's sounds are, 0 to 100 (Settings > Sound)
 	"soundVolume": 70, "ambienceVolume": 50,
+	# Panels (panels/ and ~/.unciv-vr/Panels): folder -> shown (missing: the panel's own "shown"), and where
+	# each has been dragged to in VR, relative to the table: folder -> [x, y, z, yaw degrees]
+	"panels": {}, "panel_poses": {},
 	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
@@ -307,6 +312,7 @@ func _ready() -> void:
 	_setup_city_boards()
 	_setup_overview_board()
 	_setup_settings_board()
+	_setup_panels()
 	_setup_keyboard()
 	_apply_board_poses()
 
@@ -614,6 +620,7 @@ func open_lobby() -> void:
 	_set_info_visible(false)
 	_set_big_visible(false)
 	_set_overview_visible(false)
+	_update_panels_visible()
 	_info_key = null
 	var ping := await bridge.request("ping")
 	var saves_reply := await bridge.request("listSaves")
@@ -776,6 +783,7 @@ func refresh() -> void:
 	_state_revision = int(new_state.get("revision", -1))
 	state = new_state
 	hex_map.build(state)
+	_refresh_panels()
 	action_menu.civ_colors = hex_map.civ_colors
 	var civ_info := {}
 	for civ: Dictionary in state.get("civs", []):
@@ -858,9 +866,14 @@ func _apply_board_poses() -> void:
 				"city_info": CITY_INFO_HOME, "city_prod": CITY_PROD_HOME, "overview": OVERVIEW_HOME, "settings": SETTINGS_HOME}[id]
 		node.position = Vector3(float(pose[0]), float(pose[1]), float(pose[2]))
 		node.rotation_degrees = Vector3(BOARD_TILT[id], float(pose[3]), 0)
+	for folder: String in _panel_holders:
+		_apply_panel_pose(folder)
 
 
 func _board_node(id: String) -> Node3D:
+	if id.begins_with("panel:"):
+		var holder: Variant = _panel_holders.get(id.trim_prefix("panel:"))
+		return holder as Node3D if holder is Node3D else null
 	match id:
 		"minimap":
 			return minimap
@@ -896,6 +909,11 @@ func _board_at(origin: Vector3, direction: Vector3) -> Array:
 		if pair[1] is WorldPanel and (pair[1] as Node3D).is_visible_in_tree():
 			var hit: Variant = (pair[1] as WorldPanel).ray_hit(origin, direction)
 			hits[pair[0]] = hit[0] if hit != null and pair[2].grab_bar_contains(hit[1]) else null
+	for folder: String in _panel_holders:   # panels: grabbed by their top strip, like the settings board
+		var holder: Variant = _panel_holders[folder]
+		if holder is WorldPanel and (holder as Node3D).is_visible_in_tree():
+			var hit: Variant = (holder as WorldPanel).ray_hit(origin, direction)
+			hits["panel:" + folder] = hit[0] if hit != null and _panel_boards[folder].grab_bar_contains(hit[1]) else null
 	for id: String in hits:
 		if hits[id] != null and origin.distance_to(hits[id]) < best_distance:
 			best_distance = origin.distance_to(hits[id])
@@ -927,7 +945,7 @@ func _update_board_drag(origin: Vector3, direction: Vector3) -> void:
 	node.global_position = point + _drag_offset
 	var viewer := _xr_camera.global_position if _xr_mode else _camera.global_position
 	var to_viewer := table.to_local(viewer) - node.position
-	node.rotation_degrees = Vector3(BOARD_TILT[_drag_id], rad_to_deg(atan2(to_viewer.x, to_viewer.z)), 0)
+	node.rotation_degrees = Vector3(_board_tilt(_drag_id), rad_to_deg(atan2(to_viewer.x, to_viewer.z)), 0)
 
 
 ## Lets go of the board. Returns true if it was moved (a drag), false if it was just a click.
@@ -937,7 +955,11 @@ func _end_board_drag() -> bool:
 	var moved := _drag_moved
 	if moved:
 		var node := _board_node(_drag_id)
-		settings[_drag_id + "_pose"] = [node.position.x, node.position.y, node.position.z, node.rotation_degrees.y]
+		var pose := [node.position.x, node.position.y, node.position.z, node.rotation_degrees.y]
+		if _drag_id.begins_with("panel:"):
+			settings["panel_poses"][_drag_id.trim_prefix("panel:")] = pose
+		else:
+			settings[_drag_id + "_pose"] = pose
 		_save_settings()
 	_drag_id = ""
 	_drag_moved = false
@@ -952,9 +974,10 @@ func reset_board_poses() -> void:
 	settings["city_prod_pose"] = []
 	settings["overview_pose"] = []
 	settings["settings_pose"] = []
+	settings["panel_poses"] = {}
 	_save_settings()
 	_apply_board_poses()
-	_set_status("The overview, info board and big screen are back in their usual spots.")
+	_set_status("The overview, info board, big screen and panels are back in their usual spots.")
 
 
 ## The big wide screen with the tech tree, policies and diplomacy: above the overview in VR; on the desktop
@@ -2074,6 +2097,7 @@ func enter_city_view(city_name: String) -> void:
 	_set_info_visible(false)
 	_set_big_visible(false)
 	_set_overview_visible(false)
+	_update_panels_visible()
 	_set_table_buttons_visible(true)   # just the red Exit city button
 	_set_city_boards_visible(true)
 	if not _xr_mode:
@@ -2121,6 +2145,7 @@ func exit_city_view() -> void:
 		action_menu.visible = true
 	_set_big_visible(_big_was_shown or _xr_mode)
 	_set_overview_visible(_overview_was_shown or _xr_mode)
+	_update_panels_visible()
 	if _saved_view.size() == 2:
 		hex_map.set_view(_saved_view[0], _saved_view[1])
 		_fit_table()
@@ -3126,6 +3151,7 @@ func _select_unit(unit_id: int, focus := true) -> void:
 	hex_map.set_selection(_selected_key(), reachable, targets)
 	if focus:
 		selected_city = {}
+	_show_panels()
 	# A refresh (focus = false) mustn't close an open city card - on the desktop that card is this same panel
 	if focus or _xr_mode or selected_city.is_empty():
 		action_menu.show_unit(selected_unit)
@@ -3195,6 +3221,7 @@ func _deselect() -> void:
 	_forced_aim = HexMap.NO_TILE
 	selected_unit = {}
 	selected_city = {}
+	_show_panels()
 	if _popup_kind not in DECISION_CARDS:   # a popup waiting for an answer isn't about the selection
 		_close_popup()
 	hex_map.clear_selection()
@@ -3285,6 +3312,22 @@ func _run_smoke_test() -> void:
 		_update_board_drag(front + table.global_transform.basis.x * 0.2, -board_node.global_transform.basis.z)
 		var moved := _end_board_drag()
 		print("SMOKE: board drag: grabbed=%s moved=%s from %s to %s, saved pose %s" % [grabbed, moved, before, board_node.position, settings["info_pose"]])
+		settings = saved_settings
+		_save_settings()
+		_apply_board_poses()
+	# A panel: grabbed by its top strip the same way, and its new spot saved under panel_poses
+	if _panel_holders.get("Units") is WorldPanel and _panel_up("Units"):
+		var saved_settings := settings.duplicate(true)
+		var holder := _panel_holders["Units"] as Node3D
+		var metres: Array = _panel_specs["Units"]["size"]
+		var strip := holder.global_position + holder.global_transform.basis.y * (float(metres[1]) / 2.0 - 0.012)
+		var front := strip + holder.global_transform.basis.z * 1.0
+		var grabbed := _begin_board_drag(front, -holder.global_transform.basis.z)
+		var before := holder.position
+		_update_board_drag(front + table.global_transform.basis.x * 0.2, -holder.global_transform.basis.z)
+		var moved := _end_board_drag()
+		print("SMOKE: panel drag: grabbed=%s moved=%s from %s to %s, saved %s" % [grabbed, moved, before, holder.position,
+			(settings["panel_poses"] as Dictionary).get("Units", "-")])
 		settings = saved_settings
 		_save_settings()
 		_apply_board_poses()
@@ -3565,6 +3608,36 @@ func _run_smoke_test() -> void:
 	await get_tree().create_timer(0.2).timeout
 	sounds.ambience("")
 	print("SMOKE: played a click, a whoosh on the table and the ancient city ambience")
+	# Panels: the template language, the read-only guard, then the built-in Units panel and a click on it
+	var checks := {
+		"fallback": Panels.fill("{a|b|'none'}", {"b": 2.0}) == "2",
+		"literal": Panels.fill("{a|'none'}", {}) == "none",
+		"when set": Panels.fill("{c?' on'}{d?' off'}{e?' -1'}", {"c": true, "d": false, "e": -1}) == " on",
+		"counts": Panels.fill("{a#'turn'}/{b#'turn'}/{c#'turn'}", {"a": 1, "b": 38.0, "c": -1}) == "1 turn/38 turns/",
+		"deeper": Panels.fill("{p.size}/{q.x}", {"p": [1, 2, 3], "q": {"x": 4}}) == "3/4",
+		"no writes": Panels.check({"source": {"request": "endTurn"}}) != "",
+		"safe clicks": Panels.check({"source": "units", "click": {"do": "disband"}}) != "",
+	}
+	var failed: Array = checks.keys().filter(func(k: String) -> bool: return not checks[k])
+	print("SMOKE: panel templates and checks: %s" % ("all %d pass" % checks.size() if failed.is_empty() else "FAILED %s" % [failed]))
+	if _panel_boards.has("Units"):
+		var units_board: PanelBoard = _panel_boards["Units"]
+		var listed: Array = units_board._rows
+		print("SMOKE: Units panel: up %s, %d rows for %d units, title '%s'" % [_panel_up("Units"), listed.size(),
+			(state.get("units", []) as Array).size(), units_board._title.text])
+		if listed.size() > 2:
+			await _on_panel_clicked(Panels.click_for(_panel_specs["Units"], listed[2]))
+			print("SMOKE: clicked the third row (%s): selected %s, same unit %s" % [listed[2].get("name"),
+				selected_unit.get("name", "-"), int(selected_unit.get("id", -1)) == int(listed[2].get("id", -2))])
+	if _panel_boards.has("Cities"):
+		var cities_board: PanelBoard = _panel_boards["Cities"]
+		var city_rows: Array = cities_board._rows
+		print("SMOKE: Cities panel: up %s, %d rows for %d cities, first '%s' (%s)" % [_panel_up("Cities"), city_rows.size(),
+			(state.get("cities", []) as Array).size(), city_rows[0].get("name") if not city_rows.is_empty() else "-",
+			Panels.fill(str(_panel_specs["Cities"]["row"]["detail"]), city_rows[0]) if not city_rows.is_empty() else "-"])
+		if not city_rows.is_empty():
+			await _on_panel_clicked(Panels.click_for(_panel_specs["Cities"], city_rows[0]))
+			print("SMOKE: clicked the first city: card for %s" % selected_city.get("name", "-"))
 	# The watchdog that lets go when an order is cut short, so the game doesn't ignore every click after it
 	busy = true
 	_busy_since = Time.get_ticks_msec() - BUSY_WATCHDOG_MS - 1
@@ -3870,7 +3943,7 @@ func _refresh_settings() -> void:
 	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
 	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
 		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game,
-		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles")})
+		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list()})
 
 
 func _on_settings_chosen(kind: String, value: String) -> void:
@@ -3883,6 +3956,14 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 				await change_setting(bits[0], bits[1])
 		"setting_toggle":
 			await change_setting("setting_toggle", value)
+		"panel_toggle":
+			set_panel_shown(value, not _panel_wanted(value))
+			_refresh_settings()
+		"reset_panels":
+			settings["panel_poses"] = {}
+			_save_settings()
+			_apply_board_poses()
+			_set_status("The panels are back where they started.")
 		"overlay":
 			toggle_overlay(value)
 			_refresh_settings()
@@ -3896,6 +3977,200 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 			await open_lobby()
 		"close":
 			close_settings()
+
+
+# region panels: boards anyone can add (panels.gd, panels/README.md) --------------------------
+
+var _panel_specs: Dictionary = {}     # folder -> its panel.json (see Panels.load_spec)
+var _panel_boards: Dictionary = {}    # folder -> PanelBoard
+var _panel_holders: Dictionary = {}   # folder -> its WorldPanel (VR) or the board itself (desktop)
+var _panel_layer: CanvasLayer         # desktop: where the panels are docked, down the left side
+var _panel_replies: Dictionary = {}   # folder -> its request's last result (panels that ask the bridge)
+var _panel_reply_turn: Dictionary = {}   # folder -> the turn that result is from
+var _panel_asking: Dictionary = {}    # folder -> true while its request is out
+
+
+func _setup_panels() -> void:
+	_panel_specs = Panels.available()
+	if not _xr_mode:
+		_panel_layer = CanvasLayer.new()
+		_panel_layer.layer = 3   # under the cards, the big screen and the settings window
+		add_child(_panel_layer)
+		get_viewport().size_changed.connect(_place_desktop_panels)
+		info_panel.resized.connect(_place_desktop_panels)
+	for folder: String in _panel_specs:
+		var spec: Dictionary = _panel_specs[folder]
+		var board := PanelBoard.new(spec)
+		board.name = "Panel_" + folder
+		board.clicked.connect(_on_panel_clicked)
+		_panel_boards[folder] = board
+		if _xr_mode:
+			var holder := WorldPanel.new()
+			holder.name = "PanelHolder_" + folder
+			var metres: Array = spec["size"]
+			holder.setup(board, Vector2i(board.size_pixels), Vector2(float(metres[0]), float(metres[1])))
+			table.add_child(holder)   # placed by _apply_board_poses
+			_panel_holders[folder] = holder
+		else:
+			_panel_layer.add_child(board)
+			_panel_holders[folder] = board
+	_update_panels_visible()
+
+
+## Where a panel stands in VR: where you last dragged it, or the "home" its panel.json gives.
+func _apply_panel_pose(folder: String) -> void:
+	var holder: Variant = _panel_holders.get(folder)
+	if not holder is Node3D:
+		return
+	var pose: Array = (settings.get("panel_poses", {}) as Dictionary).get(folder, [])
+	if pose.size() != 4:
+		pose = _panel_specs[folder]["home"]
+	(holder as Node3D).position = Vector3(float(pose[0]), float(pose[1]), float(pose[2]))
+	(holder as Node3D).rotation_degrees = Vector3(float(_panel_specs[folder]["tilt"]), float(pose[3]), 0)
+
+
+func _board_tilt(id: String) -> float:
+	if id.begins_with("panel:"):
+		return float(_panel_specs.get(id.trim_prefix("panel:"), {}).get("tilt", 0.0))
+	return BOARD_TILT[id]
+
+
+## Desktop: the panels that are up, side by side down the left edge, between the status line and the info board.
+func _place_desktop_panels() -> void:
+	if _panel_layer == null:
+		return
+	var window := get_viewport().get_visible_rect().size
+	var bottom := window.y - 12.0
+	if _info_holder is CanvasLayer and (_info_holder as CanvasLayer).visible:
+		bottom = info_panel.position.y - 10.0
+	var x := 12.0
+	for panel: Dictionary in _panel_list():   # built-in ones first, then yours
+		var folder := str(panel["folder"])
+		var board: PanelBoard = _panel_boards[folder]
+		if not board.visible:
+			continue
+		board.fit_height(clampf(bottom - 44.0, 200.0, board.size_pixels.y))
+		board.position = Vector2(x, 44.0)
+		x += board.size_pixels.x + 10.0
+
+
+## Whether the player wants [param folder] shown (Settings > Panels), else what its panel.json says.
+func _panel_wanted(folder: String) -> bool:
+	var choices: Dictionary = settings.get("panels", {})
+	return bool(choices.get(folder, _panel_specs.get(folder, {}).get("shown", false)))
+
+
+func set_panel_shown(folder: String, shown: bool) -> void:
+	if not _panel_specs.has(folder):
+		return
+	settings["panels"][folder] = shown
+	_save_settings()
+	_update_panels_visible()
+	if shown:
+		_panel_reply_turn.erase(folder)   # ask again: it may have been off for a while
+		_refresh_panels()
+
+
+## Panels are up in a game, not over the main menu or in the city view (like the empire overview).
+func _update_panels_visible() -> void:
+	var in_game := not _in_lobby and not state.is_empty() and not _city_view
+	for folder: String in _panel_holders:
+		var holder: Variant = _panel_holders[folder]
+		var shown := in_game and _panel_wanted(folder)
+		if holder is Node3D:
+			(holder as Node3D).visible = shown
+		elif holder is Control:
+			(holder as Control).visible = shown
+	_place_desktop_panels()
+
+
+func _panel_up(folder: String) -> bool:
+	var holder: Variant = _panel_holders.get(folder)
+	if holder is Node3D:
+		return (holder as Node3D).visible
+	return holder is Control and (holder as Control).visible
+
+
+## After every refresh: panels reading getState redraw, panels that ask the bridge ask again when it's time.
+func _refresh_panels() -> void:
+	_update_panels_visible()
+	var turn := int(state.get("turn", -1))
+	for folder: String in _panel_boards:
+		if not _panel_up(folder):
+			continue
+		var ask := Panels.request_for(_panel_specs[folder])
+		if not ask.is_empty() and (ask["refresh"] == "always" or int(_panel_reply_turn.get(folder, -999)) != turn):
+			_ask_panel(folder, ask, turn)
+		else:
+			_show_panel(folder)
+
+
+func _ask_panel(folder: String, ask: Dictionary, turn: int) -> void:
+	if _panel_asking.get(folder, false):
+		return
+	_panel_asking[folder] = true
+	var reply := await bridge.request(str(ask["method"]), ask["params"])
+	_panel_asking[folder] = false
+	_panel_reply_turn[folder] = turn   # failed or not, don't ask again until it's time
+	if reply.ok:
+		_panel_replies[folder] = reply.result
+	else:
+		push_warning("Panel %s: %s failed: %s" % [folder, ask["method"], reply.error])
+	_show_panel(folder)
+
+
+## Redraws the panels that are up with what's known (no new requests): the highlighted row follows the selection.
+func _show_panels() -> void:
+	for folder: String in _panel_boards:
+		if _panel_up(folder):
+			_show_panel(folder)
+
+
+func _show_panel(folder: String) -> void:
+	var board: PanelBoard = _panel_boards[folder]
+	board.civ_colors = hex_map.civ_colors
+	var selection := {}
+	if not selected_unit.is_empty():
+		selection["unit"] = selected_unit.get("id")
+	if not selected_city.is_empty():
+		selection["city"] = selected_city.get("name")
+	board.show_rows(Panels.rows(_panel_specs[folder], state, _panel_replies.get(folder)), selection)
+
+
+## A row was clicked: one of Panels.CLICKS, filled in from the row.
+func _on_panel_clicked(action: Dictionary) -> void:
+	sounds.play(Sounds.CLICK)
+	if busy or _in_lobby or _city_view:
+		return
+	match str(action.get("do", "")):
+		"select_unit":
+			var id := str(action.get("id", ""))
+			if id.is_valid_int():
+				await _select_unit(int(id))
+		"look_at":
+			var x := str(action.get("x", ""))
+			var y := str(action.get("y", ""))
+			if x.is_valid_int() and y.is_valid_int():
+				_look_at_tile(Vector2i(int(x), int(y)))
+		"open_city", "city_view":
+			for city: Dictionary in state.get("cities", []):
+				if str(city["name"]) == str(action.get("name", "")):
+					if action["do"] == "city_view":
+						await enter_city_view(str(city["name"]))
+					else:
+						await open_city(Vector2i(int(city["x"]), int(city["y"])))
+
+
+## For Settings > Panels: every panel there is, built-in ones first.
+func _panel_list() -> Array:
+	var out: Array = []
+	for folder: String in _panel_specs:
+		var spec: Dictionary = _panel_specs[folder]
+		out.append({"folder": folder, "name": spec.get("name", folder), "description": spec.get("description", ""),
+			"author": spec.get("author", ""), "builtin": spec.get("builtin", false), "shown": _panel_wanted(folder)})
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return a["builtin"] and not b["builtin"] if a["builtin"] != b["builtin"] else str(a["name"]) < str(b["name"]))
+	return out
 
 
 ## A row of round buttons along the near rim of the table, each with a floating label.
@@ -4322,6 +4597,9 @@ func _process_xr(delta: float) -> void:
 	for holder: Node in [_city_info_holder, _city_prod_holder, _overview_holder]:
 		if holder is WorldPanel:
 			panels.append(holder as WorldPanel)
+	for holder: Variant in _panel_holders.values():   # the panels anyone can add (panels.gd)
+		if holder is WorldPanel:
+			panels.append(holder as WorldPanel)
 	for panel: WorldPanel in panels:
 		var hit: Variant = panel.ray_hit(origin, direction)
 		if hit != null:
@@ -4405,6 +4683,10 @@ func _process_xr(delta: float) -> void:
 		elif _pointed_panel == _settings_holder:
 			if absf(right_stick.y) > 0.3:
 				settings_board.scroll_by(-right_stick.y * delta * 700.0)
+		elif _pointed_panel in _panel_holders.values():
+			if absf(right_stick.y) > 0.3:
+				var folder: String = _panel_holders.find_key(_pointed_panel)
+				_panel_boards[folder].scroll_by(-right_stick.y * delta * 700.0)
 		elif _pointed_panel == _overview_holder:
 			if right_stick.length() > 0.3:   # wide tables scroll sideways too
 				overview_board.scroll_by(Vector2(right_stick.x, -right_stick.y) * delta * 900.0)

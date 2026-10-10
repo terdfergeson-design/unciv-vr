@@ -1,0 +1,24 @@
+{
+	// The built-in units list: every unit you have, the ones waiting for orders first. Click one to select it.
+	// It's made the same way a mod would make one - see ../README.md.
+	"name": "Units",
+	"author": "Unciv VR",
+	"description": "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it.",
+	"shown": true,
+	"size": [0.3, 0.8],
+	"home": [-1.02, 0.42, 0.3, 62],
+	"icon": "other:Shield",
+	"title": "Units ({count})",
+	"source": "units",
+	"sort": ["-idle", "name"],
+	"row": {
+		"icon": {"kind": "unit", "name": "{name}", "civ": "{civ}"},
+		"text": "{instanceName|name}",
+		"detail": "{action|'Waiting for orders'}{canPromote?'  -  promotion ready'}",
+		"right": "{movement}/{maxMovement}",
+		"bar": {"value": "{health}", "max": 100}
+	},
+	"selected": "unit",
+	"click": {"do": "select_unit", "id": "{id}"},
+	"empty": "No units yet."
+}

@@ -1,0 +1,22 @@
+{
+	// Unciv's wonders overview as a panel, by era: an example of a panel that asks the bridge for its rows
+	// (getOverview's wonders tab) instead of reading them from getState. Off until you turn it on in Settings.
+	"name": "Wonders",
+	"author": "Unciv VR",
+	"description": "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it.",
+	"shown": false,
+	"size": [0.3, 0.8],
+	"home": [1.05, 0.42, -0.55, -37],
+	"icon": "other:Wonders",
+	"title": "Wonders",
+	"source": {"request": "getOverview", "params": {"tab": "wonders"}, "path": "wonders"},
+	"group": "group",
+	"row": {
+		"icon": "building:{realName}",
+		"text": "{name}",
+		"detail": "{statusText}",
+		"right": "{location}"
+	},
+	"click": {"do": "look_at", "x": "{x}", "y": "{y}"},
+	"empty": "No wonders to show yet."
+}

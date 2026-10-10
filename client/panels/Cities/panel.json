@@ -1,0 +1,24 @@
+{
+	// The built-in cities list: every city you have, the capital first, with what each is building.
+	// Click one to open its card. Made the same way a mod would make one - see ../README.md.
+	"name": "Cities",
+	"author": "Unciv VR",
+	"description": "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card.",
+	"shown": true,
+	"size": [0.3, 0.45],
+	"home": [-1.13, 0.3, 0.65, 80],
+	"icon": "other:Cities",
+	"title": "Cities ({count})",
+	"source": "cities",
+	"sort": ["-isCapital", "-population", "name"],
+	"row": {
+		"icon": "construction:{producing}",
+		"text": "{name}{isCapital?'  (capital)'}{isPuppet?'  (puppet)'}{isBeingRazed?'  (razing)'}",
+		"detail": "{producing|'Nothing to build'}{producingTurns?' - '}{producingTurns#'turn'}",
+		"right": "{population}",
+		"bar": {"value": "{health}", "max": "{maxHealth}"}
+	},
+	"selected": "city",
+	"click": {"do": "open_city", "name": "{name}"},
+	"empty": "No cities yet."
+}

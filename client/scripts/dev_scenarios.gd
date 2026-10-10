@@ -70,6 +70,7 @@ func run(name: String) -> void:
 		"settings_board": await settings_board()
 		"stacking": await stacking()
 		"unit_death": await unit_death()
+		"panels": await panels()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -967,6 +968,80 @@ func unit_death() -> void:
 		(main.state.get("units", []) as Array).size(), main._status_text.replace("\n", " | ")])
 
 
+## From the test save: the panels (panels.gd). The Units panel lists every unit and clicking a row selects it;
+## the Wonders panel asks the bridge for its rows; Settings > Panels turns them on and off. Pictures to --shots.
+func panels() -> void:
+	var folder := str(main.options.get("shots", "user://shots"))
+	DirAccess.make_dir_recursive_absolute(folder)
+	var shot := func(name: String) -> void:
+		main.get_viewport().get_texture().get_image().save_png(folder.path_join("panels_%s.png" % name))
+	say("panels found: %s" % [main._panel_list().map(func(p: Dictionary) -> String:
+		return "%s (%s, %s)" % [p["folder"], "built-in" if p["builtin"] else "mod", "on" if p["shown"] else "off"])])
+	await settle(0.5)
+	var board: Control = main._panel_boards.get("Units")
+	if board == null:
+		say("no Units panel")
+		return
+	var rows: Array = board._rows
+	var units: Array = main.state.get("units", [])
+	say("Units panel: up %s, title '%s', %d rows for %d units" % [main._panel_up("Units"), board._title.text, rows.size(), units.size()])
+	var cities_board: Control = main._panel_boards.get("Cities")
+	if cities_board != null:
+		say("Cities panel: up %s, %s" % [main._panel_up("Cities"), cities_board._rows.map(func(r: Dictionary) -> String:
+			return "%s: %s" % [r.get("name"), main.Panels.fill(str(main._panel_specs["Cities"]["row"]["detail"]), r)])])
+	say("first rows: %s" % [rows.slice(0, 4).map(func(r: Dictionary) -> String:
+		return "%s [%s]" % [r.get("name"), main.Panels.fill("{action|'Waiting for orders'}", r)])])
+	shot.call("units")
+	# Click the fourth row, the way the laser or mouse would: its button
+	var buttons: Array = board._list.get_children().filter(func(c: Node) -> bool: return c is Button)
+	if buttons.size() >= 4:
+		var want := int(rows[3].get("id", -1))
+		(buttons[3] as Button).pressed.emit()
+		await settle(0.6)
+		say("clicked row 4 (%s, unit %d): selected %s (unit %d)" % [rows[3].get("name"), want,
+			main.selected_unit.get("name", "-"), int(main.selected_unit.get("id", -2))])
+		var lit: Array = board._list.get_children().filter(func(c: Node) -> bool:
+			return c is Button and (c as Button).get_theme_stylebox("normal").bg_color == board.SELECTED)
+		say("highlighted rows: %d (want 1)" % lit.size())
+		shot.call("units_selected")
+	# The Wonders panel asks the bridge (getOverview) for its rows
+	main.set_panel_shown("Wonders", true)
+	await settle(1.0)
+	var wonders: Control = main._panel_boards.get("Wonders")
+	if wonders != null:
+		var groups: Array = wonders._rows.filter(func(r: Dictionary) -> bool: return r.has("_group"))
+		say("Wonders panel: up %s, %d rows in %d groups (%s)" % [main._panel_up("Wonders"),
+			wonders._rows.size() - groups.size(), groups.size(), ", ".join(groups.map(func(g: Dictionary) -> String: return g["_group"]))])
+		shot.call("both")
+	# Settings > Panels
+	main.open_settings()
+	await settle(0.3)
+	main.settings_board.show_page("panels")
+	await settle(0.3)
+	shot.call("settings")
+	say("settings page: %s" % [main.settings_board._body.get_children().filter(func(c: Node) -> bool: return c is Label).map(
+		func(l: Label) -> String: return l.text).slice(0, 3)])
+	await main._on_settings_chosen("panel_toggle", "Units")   # what the Units row's On / Off sends
+	await settle(0.4)
+	say("turned Units off from Settings: up %s, saved %s; Cities still up %s" % [main._panel_up("Units"),
+		main.settings["panels"].get("Units"), main._panel_up("Cities")])
+	main.close_settings()
+	# Back to how the panels come (and leave the settings file that way for the next run)
+	main.settings["panels"] = {}
+	main._save_settings()
+	main._refresh_panels()
+	await settle(0.4)
+	say("back to the defaults: Units up %s, Cities up %s, Wonders up %s" % [main._panel_up("Units"),
+		main._panel_up("Cities"), main._panel_up("Wonders")])
+	# In the city view the panels step aside, like the empire overview
+	var cities: Array = main.state.get("cities", [])
+	if not cities.is_empty():
+		await main.enter_city_view(str(cities[0]["name"]))
+		say("in the city view: Units up %s" % main._panel_up("Units"))
+		await main.exit_city_view()
+		say("out again: Units up %s" % main._panel_up("Units"))
+
+
 ## From the test save: moving onto a tile one of your own units is already on. A click there selects that unit
 ## (that's how you pick it), so holding the trigger - or the mouse button - aims at the tile instead, and the
 ## click after that goes. Saves a picture of each aim to --shots, including a tile with no room left on it.
@@ -1053,7 +1128,7 @@ func settings_board() -> void:
 	main.open_settings()
 	await settle(0.4)
 	var board: Control = main.settings_board
-	for page: String in ["look", "gameplay", "automation", "sound", "controls", "game", "about"]:
+	for page: String in ["look", "gameplay", "automation", "sound", "panels", "controls", "game", "about"]:
 		board.show_page(page)
 		await settle(0.3)
 		main.get_viewport().get_texture().get_image().save_png(folder.path_join("settings_%s.png" % page))

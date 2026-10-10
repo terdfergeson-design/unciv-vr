@@ -11,7 +11,7 @@ extends PanelContainer
 ##
 ## Emits chosen(kind, value):
 ##   "setting" ("key|value"), "setting_toggle" (key), "overlay" (map overlay id), "save_game", "main_menu",
-##   "reset_boards", "close"
+##   "reset_boards", "panel_toggle" (panel folder), "reset_panels", "close"
 
 signal chosen(kind: String, value: String)
 
@@ -39,6 +39,7 @@ const PAGES := [
 	["gameplay", "Gameplay", "other", "Options"],
 	["automation", "Automation", "other", "Timer"],
 	["sound", "Sound", "other", "Speaker"],
+	["panels", "Panels", "other", "MenuIcon"],
 	["controls", "Controls", "other", "Keyboard"],
 	["game", "Game and saves", "other", "Score"],
 	["about", "About", "other", "Question"],
@@ -224,6 +225,7 @@ func _rebuild(keep_scroll := false) -> void:
 		"gameplay": _gameplay_page()
 		"automation": _automation_page()
 		"sound": _sound_page()
+		"panels": _panels_page()
 		"controls": _controls_page()
 		"game": _game_page()
 		"about": _about_page()
@@ -281,6 +283,37 @@ func _sound_page() -> void:
 	var found: int = (Sounds.available() as Array).size()
 	_header("", "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's." % found if found > 0
 		else "No sounds found. They live in Unciv's android/assets/sounds, next to this folder.")
+
+
+## Panels: the built-in ones and any in ~/.unciv-vr/Panels, each with an On / Off (panels.gd, panels/README.md).
+func _panels_page() -> void:
+	var panels: Array = info.get("panels", [])
+	var builtin := panels.filter(func(p: Dictionary) -> bool: return p.get("builtin", false))
+	var mods := panels.filter(func(p: Dictionary) -> bool: return not p.get("builtin", false))
+	_header("Panels", "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+		+ "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side.")
+	for panel: Dictionary in builtin:
+		_panel_row(panel)
+	var home := str(info.get("saves_folder", "")).get_base_dir()
+	_header("Your own and mods'", "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s." %
+		(home.path_join("Panels") if home != "" else "~/.unciv-vr/Panels"))
+	if mods.is_empty():
+		_body.add_child(_label("None yet.", 17, DIM))
+	for panel: Dictionary in mods:
+		_panel_row(panel)
+	if bool(info.get("in_vr", false)):
+		_header("", "")
+		_action_row("Put the panels back", "Every panel goes back to where its panel.json puts it.",
+			"Put them back", func() -> void: chosen.emit("reset_panels", ""))
+
+
+func _panel_row(panel: Dictionary) -> void:
+	var folder := str(panel["folder"])
+	var about := str(panel.get("description", ""))
+	if str(panel.get("author", "")) != "":
+		about += ("  " if about != "" else "") + "(by %s)" % panel["author"]
+	_toggle_row(str(panel.get("name", folder)), about, bool(panel.get("shown", false)),
+		func() -> void: chosen.emit("panel_toggle", folder))
 
 
 ## 0 to 100 in tens, for the volume drop-downs.
