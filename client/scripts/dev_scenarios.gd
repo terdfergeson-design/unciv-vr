@@ -62,6 +62,7 @@ func run(name: String) -> void:
 		"cityview_production": await cityview_production()
 		"cityview_pick": await cityview_production(true)
 		"screens": await screens()
+		"tiles": await tiles()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -814,3 +815,68 @@ func screens() -> void:
 	await shot(main.city_info_board, "city_info")
 	await shot(main.city_prod_board, "city_prod")
 	await main.exit_city_view()
+
+
+## The tileset on a real map: reveals the whole map, then pictures of the table zoomed out, at the usual
+## window size and on the natural wonders, with how long each redraw took and how much it draws.
+func tiles() -> void:
+	var capital := await start_civ()
+	await debug({"command": "reveal"})
+	await main.refresh()
+	for alert: Dictionary in main.state.get("alerts", []):
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+	main._set_big_visible(false)
+	var map: Node3D = main.hex_map
+	var wonders: Array[Vector2i] = []
+	for key: Vector2i in map.tiles:
+		if map.tiles[key].has("wonder"):
+			wonders.append(key)
+	say("tileset %s, %d tiles, wonders: %s" % [map.tileset_name, map.tiles.size(),
+		", ".join(wonders.map(func(k: Vector2i) -> String: return str(map.tiles[k]["wonder"])))])
+	var views := [["whole", map.full_center, 0.0], ["window", map._world_of(capital), 14.0], ["close", map._world_of(capital), 6.0]]
+	for w in wonders.slice(0, 5):
+		views.append(["wonder_" + str(map.tiles[w]["wonder"]).replace(" ", "_").replace("'", ""), map._world_of(w), 5.0])
+	for view: Array in views:
+		var started := Time.get_ticks_usec()
+		map.set_view(view[1], view[2])
+		map._rebuild_view()
+		var ms := (Time.get_ticks_usec() - started) / 1000.0
+		main._fit_table()
+		await settle(1.2)
+		var instances := 0
+		var triangles := 0
+		for node: MultiMeshInstance3D in map._piece_nodes.values():
+			var mm := node.multimesh
+			instances += mm.instance_count
+			var per := 0
+			for surface in mm.mesh.get_surface_count():
+				per += (mm.mesh as ArrayMesh).surface_get_array_len(surface) / 3
+			triangles += per * mm.instance_count
+		say("%s: %d tiles drawn in %.0f ms, %d piece meshes, %d instances, %d triangles" % [view[0], map._shown.size(), ms,
+			map._piece_nodes.size(), instances, triangles])
+		await main.get_tree().process_frame
+		await RenderingServer.frame_post_draw
+		var folder := str(main.options.get("shots", "user://shots"))
+		DirAccess.make_dir_recursive_absolute(folder)
+		main.get_viewport().get_texture().get_image().save_png(folder.path_join("tiles_%s.png" % view[0]))
+	# The city view's marks (yields, worked tiles, prices) on top of the pieces
+	var cities: Array = main.state.get("cities", [])
+	if not cities.is_empty():
+		await main.enter_city_view(str(cities[0]["name"]))
+		await settle(1.5)
+		await main.get_tree().process_frame
+		await RenderingServer.frame_post_draw
+		main.get_viewport().get_texture().get_image().save_png(str(main.options.get("shots", "user://shots")).path_join("tiles_cityview.png"))
+		say("city view of %s on %s" % [cities[0]["name"], map.describe_tile(Vector2i(int(cities[0]["x"]), int(cities[0]["y"])))])
+
+
+## --then=switch_tileset:<folder>: picks another tileset in Settings, like a player would, and reports what's drawn.
+func switch_tileset(folder: String) -> void:
+	await main.change_setting("tileset", folder)
+	await settle(0.5)
+	var map: Node3D = main.hex_map
+	var instances := 0
+	for node: MultiMeshInstance3D in map._piece_nodes.values():
+		instances += node.multimesh.instance_count
+	say("tileset now %s (saved %s): %d piece instances, %d plain hexes" % [map.tileset_name, main.settings["tileset"],
+		instances, map._terrain.multimesh.instance_count])

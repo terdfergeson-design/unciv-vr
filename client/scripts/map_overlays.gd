@@ -294,7 +294,7 @@ func _build_improvement_models(shown: Dictionary) -> void:
 			continue
 		var top: float = _map.tile_height(tile)
 		var centre: Vector3 = _map.tile_position(key, top)
-		if tile.has("improvement") and not tile.has("city"):
+		if tile.has("improvement") and not tile.has("city") and not _map.tileset_draws_improvement(tile):
 			var model := _improvement_model(str(tile["improvement"]))
 			if model != null:
 				model.position = centre + Vector3(0.05, 0, -0.05)

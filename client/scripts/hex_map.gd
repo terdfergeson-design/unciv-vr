@@ -3,7 +3,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 extends Node3D
-## Draws the Unciv map as a tabletop of hex prisms, plus units, cities, borders and highlights.
+## Draws the Unciv map on the table: each tile from the chosen tileset's pieces (tileset.gd) or, where
+## the set has nothing for a terrain, a plain coloured hex prism; plus units, cities, borders and highlights.
 ## Works in "map units": a hex has circumradius 1, like Unciv's world coordinates.
 ## Scale this node to fit the table (see main.gd).
 
@@ -11,6 +12,10 @@ const SQRT3 := 1.7320508
 signal view_rebuilt   # the drawn tiles changed (the yields overlay re-asks the bridge then)
 const Icons := preload("res://scripts/icons.gd")
 const OVERLAYS := preload("res://scripts/map_overlays.gd")
+const Tileset := preload("res://scripts/tileset.gd")
+const DEFAULT_TILESET := "LowPoly"
+## With more tiles than this on the table, pieces' simpler "-Far" versions are drawn (they're tiny then)
+const FAR_TILES := 900
 const HEX_RADIUS := 0.97          # slightly under 1 leaves a hairline gap between tiles
 const UNEXPLORED_COLOR := Color(0.16, 0.18, 0.22)   # the ground under the fog
 
@@ -41,11 +46,16 @@ var civ_colors: Dictionary = {}     # civ name -> {outer: Color, inner: Color}
 var civ_info: Dictionary = {}       # civ name -> its getState civs entry (nation, city-state type...)
 var resource_info: Dictionary = {}  # resource name -> {type: Bonus / Luxury / Strategic}
 var overlays: Node3D                # map_overlays.gd: Unciv's five map overlays
+var tileset: RefCounted = null      # tileset.gd; null draws every tile as a plain coloured hex
+var tileset_name := ""
 var map_extent := 10.0              # half-size of the map, in map units
 
 var _content: Node3D                # everything, offset so the map is centred on this node
 var _terrain: MultiMeshInstance3D
 var _trees: MultiMeshInstance3D
+var _pieces_root: Node3D            # one MultiMeshInstance3D per tileset piece in use
+var _piece_nodes: Dictionary = {}   # piece Mesh -> its MultiMeshInstance3D
+var _piece_scenes: Node3D           # pieces that are whole Godot scenes, one instance per tile
 var _borders: MultiMeshInstance3D
 var _highlights: MultiMeshInstance3D
 var _clouds: MultiMeshInstance3D
@@ -84,6 +94,14 @@ func _ready() -> void:
 
 	_terrain = _make_multimesh_node("Terrain", _make_prism_mesh(), _vertex_color_material(0.9))
 	_trees = _make_multimesh_node("Trees", _make_cone_mesh(), _vertex_color_material(0.8))
+	_pieces_root = Node3D.new()
+	_pieces_root.name = "TilesetPieces"
+	_content.add_child(_pieces_root)
+	_piece_scenes = Node3D.new()
+	_piece_scenes.name = "TilesetScenes"
+	_content.add_child(_piece_scenes)
+	if tileset == null and tileset_name == "":
+		set_tileset(DEFAULT_TILESET)
 	_borders = _make_multimesh_node("Borders", _make_ring_mesh(0.80), _vertex_color_material(0.6, true))
 	_highlights = _make_multimesh_node("Highlights", _make_ring_mesh(0.62), _vertex_color_material(0.4, true))
 	var puff := SphereMesh.new()
@@ -136,6 +154,19 @@ func _process(delta: float) -> void:
 		_beacon_time += delta
 		var material := _beacon.material_override as StandardMaterial3D
 		material.albedo_color.a = 0.2 + 0.18 * sin(_beacon_time * 4.0)
+
+
+## Draws tiles with the tileset in folder [param folder_name] ("" or "classic": plain coloured hexes).
+func set_tileset(folder_name: String) -> void:
+	tileset_name = folder_name if folder_name != "" else "classic"
+	tileset = null if tileset_name == "classic" else Tileset.open(tileset_name)
+	if tileset == null and tileset_name != "classic":
+		push_warning("Tileset %s not found; drawing plain hexes" % tileset_name)
+	for node: Node in _piece_nodes.values():
+		node.queue_free()
+	_piece_nodes.clear()
+	if _content != null and not tiles.is_empty():
+		_rebuild_view()
 
 
 func set_ruleset(ruleset: Dictionary) -> void:
@@ -235,9 +266,12 @@ func show_city(city: Dictionary) -> void:
 
 ## Turns map overlays on / off ({"movement": bool, "yields": ..., "worked", "resources", "improvements"}).
 func set_overlay_flags(new_flags: Dictionary) -> void:
+	var pictures_before: bool = overlays.flags.get("improvements", true)
 	for key: String in new_flags:
 		if overlays.flags.has(key):
 			overlays.flags[key] = bool(new_flags[key])
+	if overlays.flags.get("improvements", true) != pictures_before and tileset != null and not tiles.is_empty():
+		_build_terrain()   # the tileset's improvement models follow Unciv's "improvement pictures" toggle
 	overlays.rebuild(_shown)
 
 
@@ -272,12 +306,95 @@ func is_shown(key: Vector2i) -> bool:
 
 
 func _build_terrain() -> void:
+	var far := _shown.size() > FAR_TILES
+	var buckets := {}   # piece Mesh -> [transforms, colours, custom data]
+	for child in _piece_scenes.get_children():
+		child.queue_free()
+	var prism_keys: Array[Vector2i] = []
+	for key: Vector2i in _shown:
+		var tile: Dictionary = tiles[key]
+		if not (tileset != null and tile.get("explored", false) and tileset.covers(tile) and _add_pieces(key, tile, far, buckets)):
+			prism_keys.append(key)
+	_build_prisms(prism_keys)
+	# Hand each piece's instances to its MultiMesh (made the first time it's needed)
+	for mesh: Mesh in _piece_nodes.keys():
+		if not buckets.has(mesh):
+			(_piece_nodes[mesh] as MultiMeshInstance3D).multimesh.instance_count = 0
+	for mesh: Mesh in buckets:
+		if not _piece_nodes.has(mesh):
+			var mm := MultiMesh.new()
+			mm.transform_format = MultiMesh.TRANSFORM_3D
+			mm.use_colors = true
+			mm.use_custom_data = true   # r: 1 on tiles out of sight (the water shader dims its shine there)
+			mm.mesh = mesh
+			var node := MultiMeshInstance3D.new()
+			node.multimesh = mm
+			_pieces_root.add_child(node)
+			_piece_nodes[mesh] = node
+		var mmesh: MultiMesh = (_piece_nodes[mesh] as MultiMeshInstance3D).multimesh
+		var transforms: Array = buckets[mesh][0]
+		var colors: Array = buckets[mesh][1]
+		var custom: Array = buckets[mesh][2]
+		mmesh.instance_count = transforms.size()
+		for n in transforms.size():
+			mmesh.set_instance_transform(n, transforms[n])
+			mmesh.set_instance_color(n, colors[n])
+			mmesh.set_instance_custom_data(n, custom[n])
+	_build_fog()
+
+
+## Queues the tileset's pieces for [param key]; false if the set had nothing to draw there.
+func _add_pieces(key: Vector2i, tile: Dictionary, far: bool, buckets: Dictionary) -> bool:
+	var entries: Array = tileset.pieces_for(tile)
+	if entries.is_empty() or entries[0]["kind"] not in ["terrain", "wonder"]:
+		return false
+	var h := absi(hash(key))
+	var variant := h % 7
+	var turns := (h / 7) % 6 if tileset.random_rotation() else 0
+	var tint := Color.WHITE
+	var unseen := 0.0 if tile.get("visible", false) else 1.0
+	if unseen > 0.0:
+		tint = tint.darkened(0.45)
+	tint = tint.darkened(0.55 * _rim(key))
+	var custom := Color(maxf(unseen, _rim(key)), 0, 0, 0)
+	var at := tile_position(key, 0.0)
+	var drew := false
+	for entry: Dictionary in entries:
+		if entry["kind"] == "improvement" and not overlays.flags.get("improvements", true):
+			continue   # Unciv's "improvement pictures" overlay is off
+		var model: Dictionary = tileset.get_piece(entry["piece"], variant, far)
+		var piece_basis := Basis(Vector3.UP, turns * PI / 3.0) if entry["rotate"] else Basis()
+		piece_basis = piece_basis.scaled(Vector3.ONE * tileset.piece_scale(entry["piece"]))
+		if model.has("mesh"):
+			if not buckets.has(model["mesh"]):
+				buckets[model["mesh"]] = [[], [], []]
+			buckets[model["mesh"]][0].append(Transform3D(piece_basis, at))
+			buckets[model["mesh"]][1].append(tint)
+			buckets[model["mesh"]][2].append(custom)
+			drew = true
+		elif model.has("scene"):
+			var instance: Node = (model["scene"] as PackedScene).instantiate()
+			if instance is Node3D:
+				(instance as Node3D).transform = Transform3D(piece_basis, at)
+			_piece_scenes.add_child(instance)
+			drew = true
+	return drew
+
+
+## True when the tileset draws [param tile]'s improvement itself (so the overlay's little model isn't needed).
+func tileset_draws_improvement(tile: Dictionary) -> bool:
+	return tileset != null and tile.get("explored", false) and tileset.covers(tile) \
+		and tileset.improvement_piece_for(str(tile.get("improvement", ""))) != ""
+
+
+## Plain coloured hex prisms (and cone trees), for unexplored tiles and terrain the tileset doesn't cover.
+func _build_prisms(keys: Array[Vector2i]) -> void:
 	var mm := _terrain.multimesh
-	mm.instance_count = _shown.size()
+	mm.instance_count = keys.size()
 	var tree_transforms: Array[Transform3D] = []
 	var tree_colors: Array[Color] = []
 	var i := 0
-	for key: Vector2i in _shown:
+	for key: Vector2i in keys:
 		var tile: Dictionary = tiles[key]
 		var height := tile_height(tile)
 		var tile_basis := Basis().scaled(Vector3(1, height, 1))
@@ -301,7 +418,6 @@ func _build_terrain() -> void:
 	for t in tree_transforms.size():
 		tmm.set_instance_transform(t, tree_transforms[t])
 		tmm.set_instance_color(t, tree_colors[t])
-	_build_fog()
 
 
 ## A few cloud puffs over every unexplored tile, spilling a little over its edges so the fog's border is soft.
@@ -624,6 +740,9 @@ func tile_position(key: Vector2i, y: float) -> Vector3:
 func tile_height(tile: Dictionary) -> float:
 	if not tile.get("explored", false):
 		return 0.02
+	if tileset != null and tileset.covers(tile):
+		var type := "Water" if terrain_info.get(tile.get("base", ""), {}).get("type") == "Water" else "Land"
+		return tileset.surface_height(tile, type)
 	var features: Array = tile.get("features", [])
 	if tile.get("base") == "Mountain" or "Mountain" in features:
 		return 0.6

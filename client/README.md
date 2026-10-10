@@ -132,13 +132,14 @@ Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-siz
 `--show=unit|aim|city|cityview|cityview-tile|overview-<tab>|overview-diagram|keyboard|research|promotion|settings|setup|setup-world|setup-rules|saves` (opens that card before the screenshot),
 `--keyboard=wrist|float` (VR: where the on-screen keyboard goes, instead of deciding by whether the left controller is tracked),
 `--lobby` (show the main menu even if the bridge is running a game), `--fake-xr` (VR layout without a
-headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=studio|mountains|space` (not saved),
+headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=studio|mountains|space` (not saved), `--tileset=LowPoly|classic` (or any tileset folder; not saved),
 `--overlays=all` or e.g. `--overlays=movement,yields` (turns those map overlays on for this run, not saved).
 
 For testing (needs a bridge started by hand with `--debug`, so use `--no-launch`): `--scenario=<name>` sets up
 a situation from `scripts/dev_scenarios.gd` and plays through it the way a player would, printing `SCENARIO:`
 lines (blockers, alerts, alerts_show, conquest, religion, great_person, victory, diplomacy, unit_actions, bombard,
-espionage, and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
+espionage, **tiles** (reveals the map and saves pictures of the tileset zoomed out, at the usual size, on the
+natural wonders and in the city view to `--shots=<folder>`, with how much it draws), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
 double clicks, popups arriving while something else is open, save and load mid-decision - each printed as OK or
 PROBLEM). `--then=step,step:arg` runs more of its steps afterwards (e.g. `--then=save_load,conquest_answer:puppet`).
 
@@ -151,8 +152,14 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
   and the main menu (lobby, new-game setup, saves)
 - `scripts/world_panel.gd`: puts a 2D card on a quad in VR and feeds it laser-pointer clicks
 - `scripts/backgrounds.gd`: sky, lighting and scenery (studio, low-poly mountains, space), all generated in code
-- `scripts/hex_map.gd`: hex terrain, trees, borders, cities, units, highlights and picking; on big maps only a
-  round window of it is drawn and slides under the table
+- `scripts/hex_map.gd`: the terrain (from the tileset, or plain coloured hexes), borders, cities, units,
+  highlights and picking; on big maps only a round window of it is drawn and slides under the table
+- `scripts/tileset.gd`: loads a tileset (`tilesets/<name>/`, or `~/.unciv-vr/Tilesets/<name>/`) and picks the
+  pieces for each tile the way Unciv picks tile images; see [tilesets/README.md](tilesets/README.md)
+- `scripts/tileset_shaders.gd`: the animated materials (steam, geyser, smoke, lava, sparkle, shimmer, water)
+- `tilesets/LowPoly/`: the built-in low-poly tileset (`tileset.json` and its `.glb` pieces)
+- `tools/make_lowpoly_tileset.gd` (with `lowpoly_pieces.gd`, `lowpoly_wonders.gd`): makes the low-poly
+  pieces; `tools/preview_tileset.gd` renders a tileset to pictures
 - `scripts/minimap.gd`: the overview at the far edge of the table, with the map-overlay buttons
 - `scripts/map_overlays.gd`: Unciv's five map overlays drawn on the table (movement arrows, yields, worked tiles,
   resource / improvement symbols, improvement models and roads)
@@ -172,7 +179,8 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 automated tests through the Godot MCP server, which can't pass command-line arguments.
 
 ## Licence and credits
-The client's code is under the Mozilla Public License 2.0 (see [../LICENSE](../LICENSE)), like Unciv's.
+The client's code is under the Mozilla Public License 2.0 (see [../LICENSE](../LICENSE)), like Unciv's. So are the
+low-poly tileset's models, which are our own (made by `tools/make_lowpoly_tileset.gd`).
 The icons on the boards and the table are Unciv's own, loaded at runtime from `../unciv/android/Images.*` (not
 copied into this repo). They are by many authors under CC BY / CC BY-SA / CC0 licences; see [../CREDITS.md](../CREDITS.md)
 and Unciv's `docs/Credits.md`.

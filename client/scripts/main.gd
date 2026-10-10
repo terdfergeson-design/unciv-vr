@@ -90,7 +90,7 @@ var _trigger_scrollbar: ScrollBar = null   # VR: the scrollbar the held trigger 
 const DECISION_CARDS := ["alert", "alert_tile", "great_person", "vote"]   # VR popups that wait for an answer
 var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
-var settings := {"background": "mountains", "auto_move": "end",
+var settings := {"background": "mountains", "auto_move": "end", "tileset": "LowPoly",
 	# Unciv's Options > Gameplay / Automation (see ActionMenu.GAMEPLAY_OPTIONS and AUTOMATION_OPTIONS)
 	"checkForDueUnits": false, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
 	"orderTradeOffersByAmount": true, "autoAssignCityProduction": true, "autoBuildingRoads": true,
@@ -212,6 +212,9 @@ func _ready() -> void:
 	add_child(table)
 	hex_map = HexMap.new()
 	hex_map.name = "HexMap"
+	if options.has("tileset"):   # dev aid for screenshots (--tileset=LowPoly or classic); not saved
+		settings["tileset"] = options["tileset"]
+	hex_map.set_tileset(str(settings["tileset"]))
 	table.add_child(hex_map)
 
 	_xr_mode = _try_start_xr()
@@ -1490,7 +1493,7 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 			await open_lobby()
 		"reset_boards":
 			reset_board_poses()
-		"background", "auto_move", "setting_toggle":
+		"background", "auto_move", "setting_toggle", "tileset":
 			await change_setting(kind, value)
 		"action_arm":
 			_arm_unit_action(value)
@@ -3413,6 +3416,8 @@ func change_setting(key: String, value: String) -> void:
 	match key:
 		"background":
 			backgrounds.apply(value)
+		"tileset":
+			hex_map.set_tileset(value)   # redraws the map (and the overlays follow via view_rebuilt)
 		"auto_move":
 			await _send_bridge_settings()
 	open_settings()   # refresh the card so the new choice is highlighted

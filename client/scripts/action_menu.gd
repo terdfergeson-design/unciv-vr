@@ -11,7 +11,8 @@ extends PanelContainer
 ##   city card:     "produce" (name, build next), "queue" (name, add to end), "buy" (name), "unqueue" (index)
 ##   research card: "research" (tech name)
 ##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it, "rename_unit" names it
-##   settings card: "background" (studio/mountains/space), "auto_move" (end/start); footer "settings_card" opens it
+##   settings card: "background" (studio/mountains/space), "tileset" (a tileset folder or "classic"),
+##     "auto_move" (end/start); footer "settings_card" opens it
 ##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
 ##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "quit"
 ##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
@@ -27,6 +28,7 @@ signal chosen(kind: String, value: String)
 ## Emitted after the card's contents change, so whoever places it can re-fit it.
 signal layout_changed
 
+const TilesetLoader := preload("res://scripts/tileset.gd")
 const WIDTH := 380
 const Icons := preload("res://scripts/icons.gd")
 const LIST_HEIGHT := 360
@@ -634,6 +636,14 @@ func show_settings(settings: Dictionary) -> void:
 		var selected: bool = settings.get("background", "") == value
 		_list.add_child(_make_button(("> " if selected else "") + option[1],
 			func() -> void: chosen.emit("background", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
+	_add_header("Tiles")
+	var tilesets: Dictionary = TilesetLoader.available()   # folder -> title, built-in and ~/.unciv-vr/Tilesets
+	tilesets["classic"] = "Plain coloured hexes"
+	for folder: String in tilesets:
+		var value: String = folder
+		var selected: bool = settings.get("tileset", "") == value
+		_list.add_child(_make_button(("> " if selected else "") + str(tilesets[folder]),
+			func() -> void: chosen.emit("tileset", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
 	if not lobby_mode:
 		_add_header("Game")
 		_list.add_child(_make_button("Save game", func() -> void: chosen.emit("save_game", ""), Color(0.2, 0.32, 0.25)))

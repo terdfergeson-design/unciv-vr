@@ -1,0 +1,58 @@
+{
+	// Unciv VR's default tileset. The pieces are made by tools/make_lowpoly_tileset.gd;
+	// see tilesets/README.md for how to make your own.
+	"name": "Low poly",
+	"description": "Faceted low-poly terrain, one flat colour per face",
+	"author": "Unciv VR",
+	"fallbackTileSet": null,
+	"randomRotation": true,
+
+	// How high units and cities stand (map units; a hex has circumradius 1)
+	"heights": {
+		"Land": 0.15, "Water": 0.05,
+		"Ocean": 0.03, "Coast": 0.06, "Lakes": 0.07,
+		"Hill": 0.36, "Mountain": 0.7, "Ice": 0.1, "Atoll": 0.09,
+		"NaturalWonder": 0.5, "Great Barrier Reef": 0.06, "Lake Victoria": 0.07, "Barringer Crater": 0.15,
+		"Fountain of Youth": 0.2, "El Dorado": 0.15, "Old Faithful": 0.25
+	},
+
+	"ruleVariants": {
+		// Hills are whole tiles in the base terrain's colours
+		"Grassland+Hill": ["Grassland Hill"],
+		"Plains+Hill": ["Plains Hill"],
+		"Desert+Hill": ["Desert Hill"],
+		"Tundra+Hill": ["Tundra Hill"],
+		"Snow+Hill": ["Snow Hill"],
+		"Grassland+Hill+Forest": ["Grassland Hill", "HillForest"],
+		"Plains+Hill+Forest": ["Plains Hill", "HillForest"],
+		"Tundra+Hill+Forest": ["Tundra Hill", "HillForestT"],
+		"Grassland+Hill+Jungle": ["Grassland Hill", "HillJungle"],
+		"Plains+Hill+Jungle": ["Plains Hill", "HillJungle"],
+		"Grassland+Forest+Hill": ["Grassland Hill", "HillForest"],
+		"Plains+Forest+Hill": ["Plains Hill", "HillForest"],
+		"Tundra+Forest+Hill": ["Tundra Hill", "HillForestT"],
+		"Grassland+Jungle+Hill": ["Grassland Hill", "HillJungle"],
+		"Plains+Jungle+Hill": ["Plains Hill", "HillJungle"],
+
+		// Snowy pines in the cold
+		"Tundra+Forest": ["Tundra", "ForestT"],
+		"Snow+Forest": ["Snow", "ForestT"],
+
+		// Marsh and flood plains replace the ground they lie on
+		"Grassland+Marsh": ["Marsh"],
+		"Plains+Marsh": ["Marsh"],
+		"Tundra+Marsh": ["Marsh"],
+		"Desert+Flood plains": ["Flood plains"],
+		"Desert+Hill+Flood plains": ["Desert Hill"],
+
+		// Fallout over a hill keeps the hill
+		"Grassland+Hill+Fallout": ["Grassland Hill", "Fallout"],
+		"Plains+Hill+Fallout": ["Plains Hill", "Fallout"],
+		"Desert+Hill+Fallout": ["Desert Hill", "Fallout"],
+		"Tundra+Hill+Fallout": ["Tundra Hill", "Fallout"],
+		"Snow+Hill+Fallout": ["Snow Hill", "Fallout"],
+
+		// Fields cover the ground, so a farm's resource sits on top of them
+		"Wheat+Farm": ["Farm", "Wheat"]
+	}
+}
