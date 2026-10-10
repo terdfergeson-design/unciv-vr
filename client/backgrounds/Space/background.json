@@ -1,0 +1,14 @@
+{
+	// The table floats among the stars, with a ringed planet and a moon.
+	// The scenery is made by tools/make_surroundings.gd; see backgrounds/README.md.
+	"name": "Floating in space",
+	"author": "Unciv VR",
+	"description": "The table floats among the stars, by a ringed planet",
+	"sky": {"color": [1, 2, 4]},
+	"ambient": {"color": [140, 153, 217], "energy": 0.55},
+	"sun": {"pitch": -25, "yaw": -60, "color": [255, 247, 230], "energy": 1.8},
+	// No floor: the table has no legs here
+	"floor": false,
+	"scenery": "scenery",
+	"spin": {"Stars": 0.17, "Planet": 1.15}
+}

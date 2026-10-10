@@ -1,0 +1,11 @@
+{
+	// The original table: a round dark wooden slab on a tapering column.
+	// The models are made by tools/make_surroundings.gd; see tables/README.md for how to make your own.
+	"name": "Plain wood",
+	"author": "Unciv VR",
+	"description": "A round dark wooden slab on a tapering column",
+	"top": "top",
+	"column": "column",
+	// Where the column meets the top: metres below the play surface (negative)
+	"columnTop": -0.041
+}

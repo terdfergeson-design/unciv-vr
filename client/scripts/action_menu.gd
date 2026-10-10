@@ -11,8 +11,7 @@ extends PanelContainer
 ##   city card:     "produce" (name, build next), "queue" (name, add to end), "buy" (name), "unqueue" (index)
 ##   research card: "research" (tech name)
 ##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it, "rename_unit" names it
-##   settings card: "background" (studio/mountains/space), "tileset" (a tileset folder or "classic"),
-##     "playback" (normal/fast/off), "auto_move" (end/start); footer "settings_card" opens it
+##   footer "settings_card" opens the settings board (settings_board.gd)
 ##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
 ##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "quit"
 ##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
@@ -28,7 +27,6 @@ signal chosen(kind: String, value: String)
 ## Emitted after the card's contents change, so whoever places it can re-fit it.
 signal layout_changed
 
-const TilesetLoader := preload("res://scripts/tileset.gd")
 const WIDTH := 380
 const Icons := preload("res://scripts/icons.gd")
 const LIST_HEIGHT := 360
@@ -620,85 +618,6 @@ func show_promotions(unit: Dictionary) -> void:
 	if not compact:
 		_add_close()
 	_end()
-
-
-## The settings card. [param settings] is main.gd's settings dictionary; the current choices are highlighted.
-func show_settings(settings: Dictionary) -> void:
-	if not _begin():
-		return
-	_title.text = "Settings"
-	_info.text = "Saved on this PC between sessions."
-	if compact:
-		_add_close()
-	_add_header("Background")
-	for option: Array in [["studio", "Studio"], ["mountains", "Mountains and clouds"], ["space", "Floating in space"]]:
-		var value: String = option[0]
-		var selected: bool = settings.get("background", "") == value
-		_list.add_child(_make_button(("> " if selected else "") + option[1],
-			func() -> void: chosen.emit("background", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
-	_add_header("Tiles")
-	var tilesets: Dictionary = TilesetLoader.available()   # folder -> title, built-in and ~/.unciv-vr/Tilesets
-	tilesets["classic"] = "Plain coloured hexes"
-	for folder: String in tilesets:
-		var value: String = folder
-		var selected: bool = settings.get("tileset", "") == value
-		_list.add_child(_make_button(("> " if selected else "") + str(tilesets[folder]),
-			func() -> void: chosen.emit("tileset", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
-	if not lobby_mode:
-		_add_header("Game")
-		_list.add_child(_make_button("Save game", func() -> void: chosen.emit("save_game", ""), Color(0.2, 0.32, 0.25)))
-		_list.add_child(_make_button("Main menu (the game keeps running)", func() -> void: chosen.emit("main_menu", ""), Color(0.25, 0.25, 0.3)))
-	if in_vr:   # VR only: the boards at the far edge of the table can be dragged around
-		_add_header("Overview and info board")
-		_list.add_child(_make_button("Put them back where they started", func() -> void: chosen.emit("reset_boards", ""), Color(0.25, 0.25, 0.3)))
-	_add_header("Other players' turns")
-	for option: Array in [["normal", "Show the moves and battles I can see"], ["fast", "Show them, fast"], ["off", "Don't show them"]]:
-		var value: String = option[0]
-		var selected: bool = settings.get("playback", "normal") == value
-		_list.add_child(_make_button(("> " if selected else "") + option[1],
-			func() -> void: chosen.emit("playback", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
-	_add_header("Automated and exploring units move")
-	for option: Array in [["end", "When I end my turn"], ["start", "At the start of my turn"]]:
-		var value: String = option[0]
-		var selected: bool = settings.get("auto_move", "") == value
-		_list.add_child(_make_button(("> " if selected else "") + option[1],
-			func() -> void: chosen.emit("auto_move", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
-	_add_header("Gameplay (Unciv's options)")
-	for option: Array in GAMEPLAY_OPTIONS:
-		_add_setting_toggle(option, settings)
-	_add_header("Automation (Unciv's options)")
-	for option: Array in AUTOMATION_OPTIONS:
-		_add_setting_toggle(option, settings)
-	if not compact:
-		_add_close()
-	_end()
-
-
-## Unciv's Options > Gameplay and > Automation that make sense here: [settings key, label, default]
-const GAMEPLAY_OPTIONS := [
-	["checkForDueUnits", "Check for idle units (End turn waits until every unit has orders)", false],
-	["autoUnitCycle", "Auto unit cycle (select the next unit after giving orders)", true],
-	["alternateUnitCycleOrder", "Cycle idle units by distance", false],
-	["confirmNextTurn", "Ask for confirmation when ending the turn", false],
-	["orderTradeOffersByAmount", "Order trade offers by amount", true],
-]
-const AUTOMATION_OPTIONS := [
-	["autoAssignCityProduction", "Auto-assign city production", true],
-	["autoBuildingRoads", "Auto-build roads", true],
-	["automatedWorkersReplaceImprovements", "Automated workers replace improvements", true],
-	["stopAutomatedWorkersRemoveVegetation", "Stop automated workers from removing vegetation", false],
-	["automatedUnitsCanUpgrade", "Automated units can upgrade", false],
-	["automatedUnitsChoosePromotions", "Automated units choose promotions", false],
-	["citiesAutoBombardAtEndOfTurn", "Cities auto-bombard at end of turn", false],
-	["autoAssignSpecialistsInNewCities", "Auto-assign specialists in new cities", true],
-]
-
-
-func _add_setting_toggle(option: Array, settings: Dictionary) -> void:
-	var key: String = option[0]
-	var on: bool = settings.get(key, option[2])
-	_list.add_child(_make_button(("[x] " if on else "[  ] ") + str(option[1]), func() -> void: chosen.emit("setting_toggle", key),
-		Color(0.2, 0.36, 0.3) if on else Color(0.2, 0.22, 0.28)))
 
 
 # region popups from Unciv ---------------------------------------------------------------------

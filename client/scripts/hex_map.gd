@@ -53,6 +53,10 @@ var animate_moves := true
 var overlays: Node3D                # map_overlays.gd: Unciv's five map overlays
 var tileset: RefCounted = null      # tileset.gd; null draws every tile as a plain coloured hex
 var tileset_name := ""
+## Where unit models come from (Unciv's separate "Unitset" option): "tileset" (the tiles' set), "none" (round
+## tokens with Unciv's icons), or another tileset folder whose pieces/Units are used.
+var unitset_name := "tileset"
+var _unitset: RefCounted = null
 var map_extent := 10.0              # half-size of the map, in map units
 
 var _content: Node3D                # everything, offset so the map is centred on this node
@@ -185,6 +189,28 @@ func set_tileset(folder_name: String) -> void:
 	_piece_nodes.clear()
 	if _content != null and not tiles.is_empty():
 		_rebuild_view()
+
+
+## Takes unit models from [param folder_name] ("tileset": the tiles' set; "none": tokens; or a tileset folder).
+func set_unitset(folder_name: String) -> void:
+	unitset_name = folder_name if folder_name != "" else "tileset"
+	_unitset = null
+	if unitset_name not in ["tileset", "none"]:
+		_unitset = Tileset.open(unitset_name)
+		if _unitset == null:
+			push_warning("Unit set %s not found; using the tiles' units" % unitset_name)
+	if _content != null and not tiles.is_empty():
+		_rebuild_view()
+
+
+## The tileset unit models come from, or null for tokens.
+func _units_set() -> RefCounted:
+	match unitset_name:
+		"none":
+			return null
+		"tileset":
+			return tileset
+	return _unitset if _unitset != null else tileset
 
 
 func set_ruleset(ruleset: Dictionary) -> void:
@@ -812,7 +838,8 @@ func _make_unit_token(unit: Dictionary, at: Vector3) -> Node3D:
 	var domain := str(info.get("domain", "Land"))
 	token.set_meta("unit_id", id)
 	token.set_meta("naval", domain == "Water" or unit.get("embarked", false))
-	var model: Dictionary = tileset.unit_model(str(unit["name"]), info, unit.get("embarked", false)) if tileset != null else {}
+	var units := _units_set()
+	var model: Dictionary = units.unit_model(str(unit["name"]), info, unit.get("embarked", false)) if units != null else {}
 	var health_left := int(unit.get("health", 100))
 	var flag_height := 0.42
 	if model.has("mesh") or model.has("scene"):
@@ -835,7 +862,7 @@ func _make_unit_token(unit: Dictionary, at: Vector3) -> Node3D:
 		else:
 			figure = (model["scene"] as PackedScene).instantiate()
 		figure.name = "Model"
-		figure.scale = Vector3.ONE * tileset.unit_scale()
+		figure.scale = Vector3.ONE * units.unit_scale()
 		figure.position.y = 0.016
 		token.add_child(figure)
 		flag_height = 0.95 if domain == "Air" else 0.62

@@ -66,6 +66,8 @@ func run(name: String) -> void:
 		"battles": await battles()
 		"make_test_save": await make_test_save()
 		"playback": await playback()
+		"surroundings": await surroundings()
+		"settings_board": await settings_board()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -869,6 +871,130 @@ func tiles() -> void:
 		await RenderingServer.frame_post_draw
 		main.get_viewport().get_texture().get_image().save_png(str(main.options.get("shots", "user://shots")).path_join("tiles_cityview.png"))
 		say("city view of %s on %s" % [cities[0]["name"], map.describe_tile(Vector2i(int(cities[0]["x"]), int(cities[0]["y"])))])
+
+
+## Every background and table in Settings, like a player picking them, with a picture of each; then the table
+## raised, lowered and scaled, to check its column and feet follow. Run it from the test save (--load).
+func surroundings() -> void:
+	var folder := str(main.options.get("shots", "user://shots"))
+	DirAccess.make_dir_recursive_absolute(folder)
+	var Backgrounds := load("res://scripts/backgrounds.gd")
+	var TableModel := load("res://scripts/table_model.gd")
+	for background: String in Backgrounds.available():
+		await main.change_setting("background", background)
+		await settle(0.4)
+		say("background %s: floor %s, %d scenery nodes" % [main.backgrounds.current, main.backgrounds.has_floor,
+			main.backgrounds.get_node("Scenery").get_child_count()])
+		main.get_viewport().get_texture().get_image().save_png(folder.path_join("background_%s.png" % background))
+	await main.change_setting("background", "Mountains")
+	for table_folder: String in TableModel.available():
+		await main.change_setting("table", table_folder)
+		await settle(0.4)
+		var model: Node3D = main.table_model
+		var parts := []
+		for part: Node in model.get_children() + [main.table.get_node_or_null("TableTop")]:
+			if part is Node3D:
+				parts.append("%s%s" % [part.name, "" if (part as Node3D).visible else " (hidden)"])
+		say("table %s (saved %s): %s" % [model.current, main.settings["table"], ", ".join(parts)])
+		main.get_viewport().get_texture().get_image().save_png(folder.path_join("table_%s.png" % table_folder))
+		var start: Transform3D = main.table.transform
+		for pose: Array in [[0.3, 1.0], [1.5, 1.0], [0.9, 2.0], [0.9, 0.5]]:
+			main.table.position.y = pose[0]
+			main.table.scale = Vector3.ONE * float(pose[1])
+			main._update_pedestal()
+			var column := model.get_node_or_null("TableColumn") as Node3D
+			var base := model.get_node_or_null("TableBase") as Node3D
+			say("  table at %.1f m, scale %.1f: column %s, base %s" % [pose[0], pose[1],
+				"%.2f m" % (column.global_transform.basis.y.length()) if column != null and column.visible else "-",
+				"%.2f tall" % (base.global_transform.basis.y.length()) if base != null and base.visible else "-"])
+		main.table.transform = start
+		main._update_pedestal()
+
+
+## The settings board, through its own buttons: every page (a picture of each), a drop-down opened and used,
+## toggles, the number settings (checked against what the bridge echoes back), then Close.
+func settings_board() -> void:
+	var folder := str(main.options.get("shots", "user://shots"))
+	DirAccess.make_dir_recursive_absolute(folder)
+	main.open_settings()
+	await settle(0.4)
+	var board: Control = main.settings_board
+	for page: String in ["look", "gameplay", "automation", "controls", "game", "about"]:
+		board.show_page(page)
+		await settle(0.3)
+		main.get_viewport().get_texture().get_image().save_png(folder.path_join("settings_%s.png" % page))
+		say("page %s: %d rows" % [page, board._body.get_child_count()])
+	board.show_page("look")
+	await settle(0.2)
+	say("open the background list: %s" % board.press("Mountains and clouds"))
+	await settle(0.3)
+	main.get_viewport().get_texture().get_image().save_png(folder.path_join("settings_look_open.png"))
+	say("pick space: %s" % board.press("Floating in space"))
+	await settle(0.6)
+	say("background now %s (saved %s), list closed: %s" % [main.backgrounds.current, main.settings["background"], board._open_choice == ""])
+	board.press("Floating in space")
+	await settle(0.2)
+	board.press("Mountains and clouds")
+	await settle(0.5)
+	board.press("Plain wood")
+	await settle(0.2)
+	board.press("Ornate oak")
+	await settle(0.5)
+	say("table now %s" % main.table_model.current)
+	var models := func() -> int:
+		return main.hex_map._tokens.values().filter(func(t: Node) -> bool: return is_instance_valid(t) and t.get_node_or_null("Model") != null).size()
+	var with_models: int = models.call()
+	board.press("Same as the tiles")
+	await settle(0.2)
+	board.press("No models")
+	await settle(0.6)
+	say("units: %d models with the tiles' set, %d with No models (saved %s)" % [with_models, models.call(), main.settings["unitset"]])
+	board.press("No models")
+	await settle(0.2)
+	board.press("Same as the tiles")
+	await settle(0.6)
+	say("units back: %d models" % models.call())
+	var yields_before: bool = main.settings["overlays"]["yields"]
+	board._rebuild()
+	await settle(0.2)
+	board.show_page("gameplay")
+	await settle(0.2)
+	var before_cycle: bool = main.settings["autoUnitCycle"]
+	board.press("On") if before_cycle else board.press("Off")
+	await settle(0.5)
+	say("a gameplay toggle: autoUnitCycle %s -> %s" % [before_cycle, main.settings["autoUnitCycle"]])
+	board.press("5 turns")
+	await settle(0.2)
+	board.press("8 turns")
+	await settle(0.5)
+	var echo: Variant = await main.bridge.request("setSettings", {})
+	say("notification log: setting %s, bridge %s" % [main.settings["notificationsLogMaxTurns"], echo.result.get("notificationsLogMaxTurns")])
+	board.show_page("game")
+	await settle(0.2)
+	board.press("Every turn")
+	await settle(0.2)
+	board.press("Every 5 turns")
+	await settle(0.5)
+	echo = await main.bridge.request("setSettings", {})
+	say("autosave: setting %s, bridge %s" % [main.settings["turnsBetweenAutosaves"], echo.result.get("turnsBetweenAutosaves")])
+	board.show_page("look")
+	await settle(0.2)
+	board._open_choice = ""
+	var overlay_rows := board.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text in ["On", "Off"])
+	(overlay_rows[1] as Button).pressed.emit()   # Show tile yields
+	await settle(0.3)
+	say("tile yields overlay %s -> %s" % [yields_before, main.settings["overlays"]["yields"]])
+	(board.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text in ["On", "Off"])[1] as Button).pressed.emit()
+	await settle(0.3)
+	board.press("Close")
+	await settle(0.2)
+	say("closed: %s" % (not main.settings_shown()))
+	# put things back
+	await main.change_setting("table", "Plain")
+	await main.change_setting("notificationsLogMaxTurns", "5")
+	await main.change_setting("turnsBetweenAutosaves", "1")
+	if main.settings["autoUnitCycle"] != before_cycle:
+		await main.change_setting("setting_toggle", "autoUnitCycle")
 
 
 ## --then=switch_tileset:<folder>: picks another tileset in Settings, like a player would, and reports what's drawn.

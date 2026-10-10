@@ -21,8 +21,19 @@ Open this folder in Godot (Import → select `project.godot`) and press **F5** (
 The client opens on the **main menu** (floating over the table): Continue (the autosave), Quick start
 (the same setup as last time), New game (pick your civ, map and rules in three tabs) or Load game.
 A bridge you started by hand that's already running a game is resumed straight away.
-Saves and the autosave (written every turn) live in `~/.unciv-vr/SaveFiles`; Settings has Save game (you
-type the name; it starts as "<civ> - turn <n>") and Main menu.
+Saves and the autosave (written every turn, or as often as Settings > Game and saves says) live in
+`~/.unciv-vr/SaveFiles`; Settings > Game and saves has Save game (you type the name; it starts as
+"<civ> - turn <n>") and Main menu.
+
+### Settings
+The Settings button on the table (O on the desktop) opens the settings board, laid out like Unciv's Options:
+**Look** (background, table, tiles and units as drop-down lists with what each one is, plus Unciv's visual hints - the
+map overlays), **Gameplay** (Unciv's turn and unit-cycling options, how long the notification log is kept, how
+other players' turns are shown), **Automation** (Unciv's automation options, and when automated units move),
+**Controls** (desktop and VR), **Game and saves** (save, main menu, how often to autosave) and **About**
+(versions, this game's rules, and the folders for your own tilesets, backgrounds and tables). In VR it floats
+over the far half of the table and can be moved by its top strip like the other boards; Close, the Settings
+button or (desktop) Esc puts it away.
 
 ## Controls
 Everything can be done with the **right controller alone** (or the mouse on desktop): point at things and
@@ -88,7 +99,7 @@ The board next to the overview shows your civilization's numbers and the tile yo
 All three can be moved (the big screen by the strip along its top): point, hold the trigger (or the left
 mouse button for the overview) and drag;
 in VR the right stick pushes it away / pulls it closer while you hold it. They stay put relative to the
-table between sessions; Settings has "Put them back where they started".
+table between sessions; Settings > Controls has "Put the boards back".
 Unexplored tiles are hidden under clouds.
 
 The **overview** stands at the far edge of the table in every game. The five round buttons down its right
@@ -137,7 +148,7 @@ Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-siz
 `--show=unit|aim|city|cityview|cityview-tile|overview-<tab>|overview-diagram|keyboard|research|promotion|settings|setup|setup-world|setup-rules|saves` (opens that card before the screenshot),
 `--keyboard=wrist|float` (VR: where the on-screen keyboard goes, instead of deciding by whether the left controller is tracked),
 `--lobby` (show the main menu even if the bridge is running a game), `--fake-xr` (VR layout without a
-headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=studio|mountains|space` (not saved), `--tileset=LowPoly|classic` (or any tileset folder; not saved),
+headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=Studio|Mountains|Space` (or any background folder; not saved), `--table=Plain|OrnateOak` (or any table folder; not saved), `--tileset=LowPoly|classic` (or any tileset folder; not saved), `--unitset=tileset|none|<tileset folder>` (where unit models come from; not saved),
 `--overlays=all` or e.g. `--overlays=movement,yields` (turns those map overlays on for this run, not saved).
 
 For testing, start from the test save `--load=res://tests/saves/everything.json` (three cities, a full army, a
@@ -149,7 +160,9 @@ espionage, **tiles** (reveals the map and saves pictures of the tileset zoomed o
 natural wonders and in the city view to `--shots=<folder>`, with how much it draws), **battles** (war with a
 neighbour, enemy troops next to the capital, one of ours shoots, then End turn plays back the AI's attacks; steps
 `staged_fight` and `unit_icons` follow it), **playback** (from the test save: End turn, and the AI's attacks play
-back), **make_test_save** (with `--then=save_test_game`: rebuilds the test save), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
+back), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,
+toggles, and the number settings checked against the bridge), **surroundings** (from the test save: picks every background and table in Settings, saves a picture of
+each to `--shots=<folder>`, and moves the table up, down and bigger to check its column and feet follow), **make_test_save** (with `--then=save_test_game`: rebuilds the test save), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
 double clicks, popups arriving while something else is open, save and load mid-decision - each printed as OK or
 PROBLEM). `--then=step,step:arg` runs more of its steps afterwards (e.g. `--then=save_load,conquest_answer:puppet`).
 
@@ -158,10 +171,15 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 ## Files
 - `scripts/bridge_client.gd`: TCP + JSON-lines client with `await bridge.request(method, params)`
 - `scripts/bridge_launcher.gd`: finds a JDK, starts and stops the bridge
-- `scripts/action_menu.gd`: the card: unit actions and improvements, city production, research, settings,
+- `scripts/action_menu.gd`: the card: unit actions and improvements, city production, research,
   and the main menu (lobby, new-game setup, saves)
 - `scripts/world_panel.gd`: puts a 2D card on a quad in VR and feeds it laser-pointer clicks
-- `scripts/backgrounds.gd`: sky, lighting and scenery (studio, low-poly mountains, space), all generated in code
+- `scripts/backgrounds.gd`: the world around the table (sky, light, fog and scenery), read from a background folder
+  (`backgrounds/<name>/` or `~/.unciv-vr/Backgrounds/<name>/`); see [backgrounds/README.md](backgrounds/README.md)
+- `scripts/table_model.gd`: the table (top, stretchy column and feet), read from a table folder (`tables/<name>/` or
+  `~/.unciv-vr/Tables/<name>/`); see [tables/README.md](tables/README.md)
+- `scripts/settings_board.gd`: the settings board (pages of settings with drop-down lists, after Unciv's Options)
+- `scripts/mod_folders.gd`: finding and loading those folders and their models (shared by backgrounds and tables)
 - `scripts/hex_map.gd`: the terrain (from the tileset, or plain coloured hexes), borders, cities, units,
   highlights and picking; on big maps only a round window of it is drawn and slides under the table
 - `scripts/tileset.gd`: loads a tileset (`tilesets/<name>/`, or `~/.unciv-vr/Tilesets/<name>/`) and picks the
@@ -170,6 +188,9 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/unit_motion.gd`: units moving and fighting on the table (lunges, projectiles, hits, deaths), used for
   your own moves and attacks and to play back what the other players did that you could see
 - `tilesets/LowPoly/`: the built-in low-poly tileset (`tileset.json` and its `.glb` pieces)
+- `backgrounds/Studio/`, `Mountains/`, `Space/` and `tables/Plain/`, `OrnateOak/`: the built-in backgrounds and tables
+  (a json file and `.glb` models each), made by `tools/make_surroundings.gd` (with `lowpoly_backgrounds.gd` and
+  `tables.gd`)
 - `tools/make_lowpoly_tileset.gd` (with `lowpoly_pieces.gd`, `lowpoly_wonders.gd`, `lowpoly_units.gd`): makes
   the low-poly pieces and unit models; `tools/tileset_preview.tscn` is the preview tool for tileset makers
   (every terrain, feature, wonder, resource, improvement and unit drawn with the game's map code, with a report
@@ -195,7 +216,8 @@ automated tests through the Godot MCP server, which can't pass command-line argu
 
 ## Licence and credits
 The client's code is under the Mozilla Public License 2.0 (see [../LICENSE](../LICENSE)), like Unciv's. So are the
-low-poly tileset's models, which are our own (made by `tools/make_lowpoly_tileset.gd`).
+low-poly tileset's models and the backgrounds' and tables' models, which are our own (made by
+`tools/make_lowpoly_tileset.gd` and `tools/make_surroundings.gd`).
 The icons on the boards and the table are Unciv's own, loaded at runtime from `../unciv/android/Images.*` (not
 copied into this repo). They are by many authors under CC BY / CC BY-SA / CC0 licences; see [../CREDITS.md](../CREDITS.md)
 and Unciv's `docs/Credits.md`.

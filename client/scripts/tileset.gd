@@ -203,6 +203,11 @@ func piece_source(piece: String) -> String:
 	return fallback.piece_source(piece) if fallback != null else ""
 
 
+## Whether this set has unit models of its own (pieces/Units).
+func has_units() -> bool:
+	return not _unit_files.is_empty()
+
+
 ## How much bigger than modelled units are drawn ("unitScale" in tileset.json).
 func unit_scale() -> float:
 	return float(config.get("unitScale", 1.0))

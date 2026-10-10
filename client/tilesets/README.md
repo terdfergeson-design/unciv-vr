@@ -64,7 +64,7 @@ model can't do (particles, lights, scripts). Scenes are placed once per tile, so
 
 ## Units
 
-Unit models go in `pieces/Units/`, named after the unit (`Swordsman.glb`). As in Unciv, the game looks for
+Unit models go in `pieces/Units/`, named after the unit (`Swordsman.glb`). Like Unciv's Unitset option, **Settings > Look > Units** can take them from a different tileset than the tiles (or show plain tokens), so a set can be just units: a `tileset.json` and `pieces/Units/`. As in Unciv, the game looks for
 `<unit>-<style>-<era>`, `<unit>-<era>`, `<unit>-<style>`, then `<unit>`; then the unit it replaces (so a civ's
 unique unit, like the Legion, shows as a Swordsman until it has a model of its own); then its unit type
 (`Sword`, `Mounted`, `Melee Water`...); then the fallback tileset; and in the end a round token with the unit's
@@ -119,7 +119,7 @@ Unciv-style json; `//` comments are allowed. Everything but `name` is optional.
 ```json
 {
 	"name": "My tileset",
-	"description": "Shown nowhere yet, but good to have",
+	"description": "Shown in Settings, under the tileset's name",
 	"author": "you",
 	"fallbackTileSet": "LowPoly",
 	"randomRotation": true,

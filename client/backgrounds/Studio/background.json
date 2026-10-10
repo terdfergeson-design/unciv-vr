@@ -1,0 +1,12 @@
+{
+	// A plain, dark room. The floor is backgrounds/Studio/scenery.glb, made by tools/make_surroundings.gd;
+	// see backgrounds/README.md for how to make your own.
+	"name": "Studio",
+	"author": "Unciv VR",
+	"description": "A plain, dark room",
+	"sky": {"color": [28, 31, 38]},
+	"ambient": {"color": [230, 230, 242], "energy": 0.9},
+	"sun": {"pitch": -55, "yaw": 35, "color": [255, 255, 255], "energy": 1.4},
+	"floor": true,
+	"scenery": "scenery"
+}

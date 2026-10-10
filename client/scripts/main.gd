@@ -29,15 +29,18 @@ const HexMap := preload("res://scripts/hex_map.gd")
 const ActionMenu := preload("res://scripts/action_menu.gd")
 const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
+const TableModel := preload("res://scripts/table_model.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 17   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 18   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
 const CityBoard := preload("res://scripts/city_boards.gd")
 const OverviewBoard := preload("res://scripts/overview_board.gd")
 const Keyboard := preload("res://scripts/keyboard.gd")
+const SettingsBoard := preload("res://scripts/settings_board.gd")
 const OVERVIEW_METRES := Vector2(1.6, 0.9778)   # same aspect ratio as OverviewBoard.SIZE
+const SETTINGS_METRES := Vector2(1.3, 0.833)    # same aspect ratio as SettingsBoard.SIZE
 const KEYBOARD_METRES := Vector2(0.34, 0.1507)   # same aspect ratio as Keyboard.SIZE
 const CITY_BOARD_METRES := Vector2(0.7, 1.0013)   # same aspect ratio as CityBoard.SIZE
 const BIG_SCREEN_METRES := Vector2(2.0, 0.875)
@@ -90,15 +93,16 @@ var _trigger_scrollbar: ScrollBar = null   # VR: the scrollbar the held trigger 
 const DECISION_CARDS := ["alert", "alert_tile", "great_person", "vote"]   # VR popups that wait for an answer
 var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
-var settings := {"background": "mountains", "auto_move": "end", "tileset": "LowPoly",
-	# Unciv's Options > Gameplay / Automation (see ActionMenu.GAMEPLAY_OPTIONS and AUTOMATION_OPTIONS)
+var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
+	# Unciv's Options > Gameplay / Automation / Advanced (see SettingsBoard.GAMEPLAY and AUTOMATION)
 	"checkForDueUnits": false, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
 	"orderTradeOffersByAmount": true, "autoAssignCityProduction": true, "autoBuildingRoads": true,
 	"automatedWorkersReplaceImprovements": true, "stopAutomatedWorkersRemoveVegetation": false,
 	"automatedUnitsCanUpgrade": false, "automatedUnitsChoosePromotions": false, "citiesAutoBombardAtEndOfTurn": false,
-	"autoAssignSpecialistsInNewCities": true,
+	"autoAssignSpecialistsInNewCities": true, "notificationsLogMaxTurns": 5, "turnsBetweenAutosaves": 1,
+	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
-	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [],
+	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
 	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
 	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true},
 	# Other players' turns: "normal" (play back the moves and battles you could see), "fast" or "off"
@@ -115,6 +119,10 @@ var _saved_view: Array = []         # [view_center, view_radius] to go back to o
 var _big_was_shown := false
 var _city_tile_armed := Vector2i(999999, 999999)
 var overview_board: OverviewBoard    # Unciv's Empire Overview (stats and info)
+var settings_board: SettingsBoard    # Settings (Unciv's Options)
+var _settings_holder: Node           # WorldPanel (VR) or CanvasLayer (desktop)
+var _uncivVersion := ""
+var _bridge_protocol := 0
 var _overview_holder: Node           # WorldPanel (VR) or CanvasLayer (desktop)
 var keyboard: Keyboard               # on-screen keyboard for names (see open_keyboard)
 var _keyboard_holder: Node           # WorldPanel (VR: on the left wrist or floating) or CanvasLayer (desktop)
@@ -130,7 +138,7 @@ var _yields_pending := false      # a getYields request is out
 var _yields_again := false        # the view changed while it was out
 var _table_buttons: Array[Dictionary] = []   # {id, node, material, color}
 var _hovered_button := ""
-var _pedestal: MeshInstance3D
+var table_model: TableModel   # the table's top, column and feet (tables/<Name>)
 var _launched_bridge := false
 var _initialized := false
 var _state_revision := -1          # getState revision we last merged; -1 = ask for everything
@@ -178,7 +186,8 @@ const WIDE_HOME := [0.0, 1.0, -1.05, 0.0]   # the big screen, above the other tw
 const CITY_INFO_HOME := [-0.98, 0.45, -0.45, 34.0]    # city view: the city's board, left of the table
 const CITY_PROD_HOME := [0.98, 0.45, -0.45, -34.0]    # ... and the production board on the right
 const OVERVIEW_HOME := [1.4, 0.55, 0.8, -88.0]       # the empire overview: off to your right (look right to read it)
-const BOARD_TILT := {"minimap": -20.0, "info": -18.0, "wide": 8.0, "city_info": 0.0, "city_prod": 0.0, "overview": 0.0}
+const SETTINGS_HOME := [0.0, 0.47, -0.45, 0.0]       # settings: floating over the far half of the table
+const BOARD_TILT := {"minimap": -20.0, "info": -18.0, "wide": 8.0, "city_info": 0.0, "city_prod": 0.0, "overview": 0.0, "settings": -8.0}
 var _drag_id := ""               # "minimap" or "info" while one is held
 var _drag_distance := 0.0        # along the pointer ray, from where it was grabbed
 var _drag_offset := Vector3.ZERO # grab point -> board origin, in global space
@@ -220,6 +229,9 @@ func _ready() -> void:
 	if options.has("tileset"):   # dev aid for screenshots (--tileset=LowPoly or classic); not saved
 		settings["tileset"] = options["tileset"]
 	hex_map.set_tileset(str(settings["tileset"]))
+	if options.has("unitset"):   # dev aid (--unitset=none, tileset or a tileset folder); not saved
+		settings["unitset"] = options["unitset"]
+	hex_map.set_unitset(str(settings["unitset"]))
 	table.add_child(hex_map)
 
 	_xr_mode = _try_start_xr()
@@ -234,8 +246,13 @@ func _ready() -> void:
 	backgrounds.position.y = 0.0 if _xr_mode else DESKTOP_FLOOR_Y
 	backgrounds.apply(settings["background"])
 	_setup_table_buttons()
-	_setup_pedestal()
-	_add_table_top()
+	if options.has("table"):   # dev aid for screenshots (--table=OrnateOak); not saved
+		settings["table"] = options["table"]
+	table_model = TableModel.new()
+	table_model.name = "TableModel"
+	add_child(table_model)
+	table_model.apply(str(settings["table"]), table)
+	_update_pedestal()
 	minimap = Minimap.new()
 	minimap.name = "Minimap"
 	table.add_child(minimap)
@@ -260,6 +277,7 @@ func _ready() -> void:
 	_setup_big_screen()
 	_setup_city_boards()
 	_setup_overview_board()
+	_setup_settings_board()
 	_setup_keyboard()
 	_apply_board_poses()
 
@@ -369,6 +387,8 @@ func _on_bridge_connected() -> void:
 		_set_status("Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work." % [protocol, BRIDGE_PROTOCOL])
 		await get_tree().create_timer(3.0).timeout
 	_set_status("Connected to Unciv %s" % ping.result.uncivVersion)
+	_uncivVersion = str(ping.result.uncivVersion)
+	_bridge_protocol = protocol
 
 	# Dev shortcuts skip the main menu; so does a game the bridge is already running (one started by hand)
 	if options.has("load"):   # a test save; res:// paths work (tests/saves/...), and it never replaces your autosave
@@ -799,14 +819,14 @@ func _setup_info_panel() -> void:
 
 ## Puts the overview and the info board where you last left them (or their default spots).
 func _apply_board_poses() -> void:
-	for id: String in ["minimap", "info", "wide", "city_info", "city_prod", "overview"]:
+	for id: String in ["minimap", "info", "wide", "city_info", "city_prod", "overview", "settings"]:
 		var node := _board_node(id)
 		if node == null:
 			continue
 		var pose: Array = settings.get(id + "_pose", [])
 		if pose.size() != 4:
 			pose = {"minimap": MINIMAP_HOME, "info": INFO_HOME, "wide": WIDE_HOME,
-				"city_info": CITY_INFO_HOME, "city_prod": CITY_PROD_HOME, "overview": OVERVIEW_HOME}[id]
+				"city_info": CITY_INFO_HOME, "city_prod": CITY_PROD_HOME, "overview": OVERVIEW_HOME, "settings": SETTINGS_HOME}[id]
 		node.position = Vector3(float(pose[0]), float(pose[1]), float(pose[2]))
 		node.rotation_degrees = Vector3(BOARD_TILT[id], float(pose[3]), 0)
 
@@ -823,6 +843,8 @@ func _board_node(id: String) -> Node3D:
 			return _city_prod_holder as Node3D if _city_prod_holder is Node3D else null
 		"overview":
 			return _overview_holder as Node3D if _overview_holder is Node3D else null
+		"settings":
+			return _settings_holder as Node3D if _settings_holder is Node3D else null
 	return _info_holder as Node3D if _info_holder is Node3D else null
 
 
@@ -841,7 +863,7 @@ func _board_at(origin: Vector3, direction: Vector3) -> Array:
 		var hit: Variant = (_big_holder as WorldPanel).ray_hit(origin, direction)
 		hits["wide"] = hit[0] if hit != null and big_screen.grab_bar_contains(hit[1]) else null
 	for pair: Array in [["city_info", _city_info_holder, city_info_board], ["city_prod", _city_prod_holder, city_prod_board],
-			["overview", _overview_holder, overview_board]]:
+			["overview", _overview_holder, overview_board], ["settings", _settings_holder, settings_board]]:
 		if pair[1] is WorldPanel and (pair[1] as Node3D).is_visible_in_tree():
 			var hit: Variant = (pair[1] as WorldPanel).ray_hit(origin, direction)
 			hits[pair[0]] = hit[0] if hit != null and pair[2].grab_bar_contains(hit[1]) else null
@@ -900,6 +922,7 @@ func reset_board_poses() -> void:
 	settings["city_info_pose"] = []
 	settings["city_prod_pose"] = []
 	settings["overview_pose"] = []
+	settings["settings_pose"] = []
 	_save_settings()
 	_apply_board_poses()
 	_set_status("The overview, info board and big screen are back in their usual spots.")
@@ -1505,7 +1528,7 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 			await open_lobby()
 		"reset_boards":
 			reset_board_poses()
-		"background", "auto_move", "setting_toggle", "tileset", "playback":
+		"background", "table", "auto_move", "setting_toggle", "tileset", "unitset", "playback":
 			await change_setting(kind, value)
 		"action_arm":
 			_arm_unit_action(value)
@@ -3454,11 +3477,15 @@ func _send_bridge_settings() -> void:
 	var params := {"automatedUnitsMoveOnTurnStart": settings["auto_move"] == "start"}
 	for key: String in BRIDGE_SETTINGS:
 		params[key] = bool(settings.get(key, false))
+	for key: String in INT_SETTINGS:
+		params[key] = int(settings.get(key, 1))
 	var reply := await bridge.request("setSettings", params)
 	if not reply.ok:
 		push_warning("setSettings failed: %s" % reply.error)
 
 
+## Unciv options with a number (sent with setSettings too)
+const INT_SETTINGS := ["notificationsLogMaxTurns", "turnsBetweenAutosaves"]
 ## Unciv options the game engine itself reads (sent with setSettings)
 const BRIDGE_SETTINGS := ["checkForDueUnits", "autoUnitCycle", "alternateUnitCycleOrder", "autoAssignCityProduction",
 	"autoBuildingRoads", "automatedWorkersReplaceImprovements", "stopAutomatedWorkersRemoveVegetation",
@@ -3472,21 +3499,26 @@ func change_setting(key: String, value: String) -> void:
 		if value in BRIDGE_SETTINGS:
 			await _send_bridge_settings()
 			await refresh()   # e.g. "Check for idle units" changes what End turn waits for
-		action_menu.keep_scroll_once = true
-		if popup_menu != null:
-			popup_menu.keep_scroll_once = true
-		open_settings()
+		_refresh_settings()
 		return
-	settings[key] = value
+	if key in INT_SETTINGS:
+		settings[key] = int(value)
+	else:
+		settings[key] = value
 	_save_settings()
 	match key:
 		"background":
 			backgrounds.apply(value)
+		"table":
+			table_model.apply(value, table)
+			_update_pedestal()
+		"unitset":
+			hex_map.set_unitset(value)
 		"tileset":
 			hex_map.set_tileset(value)   # redraws the map (and the overlays follow via view_rebuilt)
-		"auto_move":
+		"auto_move", "notificationsLogMaxTurns", "turnsBetweenAutosaves":
 			await _send_bridge_settings()
-	open_settings()   # refresh the card so the new choice is highlighted
+	_refresh_settings()   # so the new choice shows
 
 
 ## Saves the running game in the bridge's save folder, under a name you type ("<civ> - turn <n>" to start with).
@@ -3499,12 +3531,94 @@ func save_game() -> void:
 
 
 func open_settings() -> void:
+	if _xr_mode and _popup_kind != "":
+		_close_popup()   # nothing floats in front of the board (the main menu card comes back when it closes)
+	_set_settings_visible(true)
+	_refresh_settings()
+
+
+func _setup_settings_board() -> void:
+	settings_board = SettingsBoard.new()
+	settings_board.chosen.connect(_on_settings_chosen)
 	if _xr_mode:
-		_popup_kind = "settings"
-		popup_menu.show_settings(settings)
-		_update_popup_panel()
+		var panel := WorldPanel.new()
+		panel.name = "SettingsBoard"
+		panel.setup(settings_board, Vector2i(SettingsBoard.SIZE), SETTINGS_METRES)
+		table.add_child(panel)   # placed by _apply_board_poses
+		_settings_holder = panel
 	else:
-		action_menu.show_settings(settings)
+		var layer := CanvasLayer.new()
+		layer.layer = 6
+		add_child(layer)
+		layer.add_child(settings_board)
+		var place := func() -> void:
+			var window := get_viewport().get_visible_rect().size
+			var fit := minf(1.0, minf((window.x - 40.0) / SettingsBoard.SIZE.x, (window.y - 60.0) / SettingsBoard.SIZE.y))
+			settings_board.scale = Vector2(fit, fit)
+			settings_board.position = Vector2((window.x - SettingsBoard.SIZE.x * fit) / 2.0, (window.y - SettingsBoard.SIZE.y * fit) / 2.0)
+		get_viewport().size_changed.connect(place)
+		place.call()
+		_settings_holder = layer
+	_set_settings_visible(false)
+
+
+func _set_settings_visible(shown: bool) -> void:
+	if _settings_holder is CanvasLayer:
+		(_settings_holder as CanvasLayer).visible = shown
+	elif _settings_holder != null:
+		(_settings_holder as Node3D).visible = shown
+
+
+func settings_shown() -> bool:
+	if _settings_holder is CanvasLayer:
+		return (_settings_holder as CanvasLayer).visible
+	return _settings_holder != null and (_settings_holder as Node3D).visible
+
+
+func close_settings() -> void:
+	if not settings_shown():
+		return
+	_set_settings_visible(false)
+	if _in_lobby:
+		_show_lobby_card("lobby")
+
+
+## Shows the current settings (and what's running) on the settings board, if it's up.
+func _refresh_settings() -> void:
+	if settings_board == null or not settings_shown():
+		return
+	var game := {}
+	if not _in_lobby and not state.is_empty():
+		game = (state.get("game", {}) as Dictionary).duplicate() if state.get("game") is Dictionary else {}
+		game["civ"] = state.get("playerCiv", "?")
+		game["turn"] = int(state.get("turn", 0))
+	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
+		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game,
+		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles")})
+
+
+func _on_settings_chosen(kind: String, value: String) -> void:
+	match kind:
+		"setting":
+			var bits := value.split("|", true, 1)
+			if bits.size() == 2:
+				await change_setting(bits[0], bits[1])
+		"setting_toggle":
+			await change_setting("setting_toggle", value)
+		"overlay":
+			toggle_overlay(value)
+			_refresh_settings()
+		"reset_boards":
+			reset_board_poses()
+		"save_game":
+			close_settings()
+			await save_game()
+		"main_menu":
+			_set_settings_visible(false)
+			await open_lobby()
+		"close":
+			close_settings()
 
 
 ## A row of round buttons along the near rim of the table, each with a floating label.
@@ -3595,60 +3709,19 @@ func press_table_button(id: String) -> void:
 		"recenter":
 			recenter_table()
 		"settings":
-			if _popup_kind == "settings":
-				_close_popup()
+			if settings_shown():
+				close_settings()
 			else:
 				open_settings()
 
 
-## A simple column from the floor up to the table (hidden when floating in space).
-func _setup_pedestal() -> void:
-	_pedestal = MeshInstance3D.new()
-	_pedestal.name = "Pedestal"
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = 0.12
-	mesh.bottom_radius = 0.3
-	mesh.height = 1.0
-	mesh.radial_segments = 24
-	_pedestal.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.26, 0.18, 0.12)
-	material.roughness = 0.8
-	_pedestal.material_override = material
-	add_child(_pedestal)
-	_update_pedestal()
-
-
+## Keeps the table's column and feet under the table top as it moves (hidden when floating in space).
 func _update_pedestal() -> void:
-	if _pedestal == null:
-		return
-	var floor_y := backgrounds.global_position.y
-	var top := table.global_position.y - 0.04 * table.scale.y
-	var height := top - floor_y
-	_pedestal.visible = backgrounds.has_floor and height > 0.05
-	if _pedestal.visible:
-		_pedestal.scale = Vector3(1, height, 1)
-		_pedestal.global_position = Vector3(table.global_position.x, floor_y + height / 2.0, table.global_position.z)
+	if table_model != null:
+		table_model.follow(table, backgrounds.global_position.y, backgrounds.has_floor)
 
 
 # region scene setup ----------------------------------------------------------------------
-
-func _add_table_top() -> void:
-	var top := MeshInstance3D.new()
-	top.name = "TableTop"
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = TABLE_HALF_SIZE * 1.2
-	mesh.bottom_radius = TABLE_HALF_SIZE * 1.2
-	mesh.height = 0.04
-	mesh.radial_segments = 48
-	top.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.32, 0.22, 0.14)
-	material.roughness = 0.8
-	top.material_override = material
-	top.position = Vector3(0, -0.021, 0)
-	table.add_child(top)
-
 
 func _try_start_xr() -> bool:
 	if options.has("fake-xr"):
@@ -3834,9 +3907,14 @@ func _unhandled_input(event: InputEvent) -> void:
 					_set_overview_visible(true)
 					_refresh_overview()
 			KEY_O:
-				open_settings()
+				if settings_shown():
+					close_settings()
+				else:
+					open_settings()
 			KEY_ESCAPE:
-				if not _pick.is_empty():
+				if settings_shown():
+					close_settings()
+				elif not _pick.is_empty():
 					await cancel_pick()
 				elif not _city_place.is_empty():
 					_cancel_city_place()
@@ -3928,6 +4006,8 @@ func _process_xr(delta: float) -> void:
 		panels.push_front(_keyboard_holder as WorldPanel)   # the keyboard is in front of everything while typing
 	if _big_holder is WorldPanel:
 		panels.append(_big_holder as WorldPanel)
+	if _settings_holder is WorldPanel:
+		panels.push_front(_settings_holder as WorldPanel)   # in front of the boards behind it
 	for holder: Node in [_city_info_holder, _city_prod_holder, _overview_holder]:
 		if holder is WorldPanel:
 			panels.append(holder as WorldPanel)
@@ -4005,6 +4085,9 @@ func _process_xr(delta: float) -> void:
 		if _pointed_panel == _big_holder:
 			if right_stick.length() > 0.3:   # the big screen scrolls both ways (the tech tree is wide)
 				big_screen.scroll_by(Vector2(right_stick.x, -right_stick.y) * delta * 900.0)
+		elif _pointed_panel == _settings_holder:
+			if absf(right_stick.y) > 0.3:
+				settings_board.scroll_by(-right_stick.y * delta * 700.0)
 		elif _pointed_panel == _overview_holder:
 			if right_stick.length() > 0.3:   # wide tables scroll sideways too
 				overview_board.scroll_by(Vector2(right_stick.x, -right_stick.y) * delta * 900.0)

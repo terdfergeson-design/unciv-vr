@@ -1,0 +1,16 @@
+{
+	// A meadow ringed by low-poly peaks, with trees and drifting clouds.
+	// The scenery is made by tools/make_surroundings.gd; see backgrounds/README.md.
+	"name": "Mountains and clouds",
+	"author": "Unciv VR",
+	"description": "A meadow ringed by low-poly peaks, with trees and drifting clouds",
+	"sky": {"top": [82, 133, 209], "horizon": [199, 219, 237], "groundHorizon": [153, 173, 153], "groundBottom": [64, 84, 56], "sunSize": 20},
+	// No colour: the light around comes from the sky
+	"ambient": {"energy": 1.0},
+	"fog": {"color": [191, 212, 230], "density": 0.004},
+	"sun": {"pitch": -40, "yaw": 140, "color": [255, 245, 224], "energy": 1.3},
+	"floor": true,
+	"scenery": "scenery",
+	// Nodes in the scenery that turn slowly about the middle: name -> degrees per second
+	"spin": {"Clouds": 0.57}
+}

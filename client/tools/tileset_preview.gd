@@ -43,7 +43,7 @@ var _distance := 20.0
 var _focus := Vector3.ZERO
 var _dragging := 0            # mouse button held
 var _ui: Dictionary = {}      # widgets
-var _background := "studio"
+var _background := "Studio"
 
 
 func _ready() -> void:
@@ -61,7 +61,7 @@ func _ready() -> void:
 
 	backgrounds = Backgrounds.new()
 	add_child(backgrounds)
-	_background = str(options.get("background", "studio"))
+	_background = str(options.get("background", "Studio"))
 	backgrounds.apply(_background)   # plain by default; the game's are in the menu
 	backgrounds.position.y = -0.3    # its meadow just under the tiles
 	map = HexMap.new()
@@ -349,10 +349,12 @@ func _build_ui() -> void:
 		_show_category(category))
 	bar.add_child(rulesets)
 	var looks := OptionButton.new()
-	for b: String in ["studio", "mountains", "space"]:
-		looks.add_item(b.capitalize())
-	looks.select(maxi(0, ["studio", "mountains", "space"].find(_background)))
-	looks.item_selected.connect(func(index: int) -> void: backgrounds.apply(["studio", "mountains", "space"][index]))
+	var background_folders: Array = Backgrounds.available().keys()   # the game's and your own (~/.unciv-vr/Backgrounds)
+	for folder: String in background_folders:
+		looks.add_item(str(Backgrounds.available()[folder]))
+		if folder.to_lower() == _background.to_lower():
+			looks.select(looks.item_count - 1)
+	looks.item_selected.connect(func(index: int) -> void: backgrounds.apply(background_folders[index]))
 	bar.add_child(looks)
 	var tabs := HBoxContainer.new()
 	for c: Array in CATEGORIES:

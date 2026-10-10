@@ -1,0 +1,16 @@
+{
+	// A round oak table with walnut and holly stringing, a gadrooned edge, a scalloped apron and a carved
+	// pedestal on four scroll feet. Made by tools/make_surroundings.gd; see tables/README.md.
+	"name": "Ornate oak",
+	"author": "Unciv VR",
+	"description": "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet",
+	"top": "top",
+	"column": "column",
+	"base": "base",
+	// Where the column meets the top: metres below the play surface (negative)
+	"columnTop": -0.226,
+	// How tall the base is: the column starts this high above the floor
+	"baseHeight": 0.32,
+	// How much the surfaces reflect their surroundings, 0 to 1 (Godot's default is 0.5): a satin finish
+	"specular": 0.2
+}
