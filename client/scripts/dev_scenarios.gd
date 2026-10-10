@@ -68,6 +68,8 @@ func run(name: String) -> void:
 		"playback": await playback()
 		"surroundings": await surroundings()
 		"settings_board": await settings_board()
+		"stacking": await stacking()
+		"unit_death": await unit_death()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -909,6 +911,138 @@ func surroundings() -> void:
 				"%.2f tall" % (base.global_transform.basis.y.length()) if base != null and base.visible else "-"])
 		main.table.transform = start
 		main._update_pedestal()
+
+
+## Killing a unit with your own attack. Its token is freed by the death animation, so nothing may look it
+## up afterwards: the map rebuild that follows the attack did, and the error stopped the client dead in the
+## middle of a game (user, 2026-10-10: "froze right after I had an atlatlist kill a brute").
+func unit_death() -> void:
+	var capital := await start_civ()
+	var others: Array = main.state.get("civs", []).filter(func(c: Dictionary) -> bool:
+		return not c.get("isCityState", false) and not c.get("isBarbarian", false) and c["name"] != main.state.get("playerCiv"))
+	if others.is_empty():
+		say("nobody to fight")
+		return
+	var enemy: String = others[0]["name"]
+	await debug({"command": "war", "other": enemy})
+	await debug({"command": "spawnUnit", "civ": enemy, "unit": "Scout", "x": capital.x + 2, "y": capital.y})
+	var ours: Dictionary = await debug({"command": "spawnUnit", "unit": "Archer", "x": capital.x + 1, "y": capital.y})
+	var archer := str(ours.get("result", ""))
+	await main.refresh()
+	for alert: Dictionary in main.state.get("alerts", []):
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+	main._set_big_visible(false)
+	main.hex_map.set_view(main.hex_map._world_of(capital), 6.0)
+	main._fit_table()
+	await settle(0.5)
+	if not archer.is_valid_int():
+		say("couldn't spawn an archer")
+		return
+	await main._select_unit(int(archer))
+	var targets: Array = main.selected_unit.get("targets", [])
+	if targets.is_empty():
+		say("the archer has nothing to shoot at")
+		return
+	var target: Dictionary = targets[0]
+	var key := Vector2i(int(target["x"]), int(target["y"]))
+	var dead_id := -1
+	for unit: Dictionary in main.hex_map.tiles.get(key, {}).get("units", []):
+		dead_id = int(unit.get("id", -1))
+	say("shooting the %s on %s (unit %d), one hit point left" % [target.get("name", "?"), key, dead_id])
+	await debug({"command": "unitHealth", "x": key.x, "y": key.y, "health": 1})
+	await main.refresh()
+	await main._select_unit(int(archer))
+	await main.attack(key)
+	say("the attack: %s" % main._status_text.replace("\n", " | "))
+	await settle(1.5)
+	# What froze the game: the map rebuild looked the dead unit's freed token up
+	say("the dead unit's token: %s" % main.hex_map.token_for(dead_id))
+	var freed: int = main.hex_map._tokens.values().filter(func(t: Variant) -> bool: return not is_instance_valid(t)).size()
+	say("tokens after the kill: %d, %d of them freed (want 0)" % [main.hex_map._tokens.size(), freed])
+	main.hex_map.build(main.state)   # the rebuild that used to stop the client dead
+	await settle(0.3)
+	say("map rebuilt: %d tokens" % main.hex_map._tokens.size())
+	await main.refresh()
+	say("and another refresh: turn %d, %d units, status '%s'" % [int(main.state.get("turn", 0)),
+		(main.state.get("units", []) as Array).size(), main._status_text.replace("\n", " | ")])
+
+
+## From the test save: moving onto a tile one of your own units is already on. A click there selects that unit
+## (that's how you pick it), so holding the trigger - or the mouse button - aims at the tile instead, and the
+## click after that goes. Saves a picture of each aim to --shots, including a tile with no room left on it.
+func stacking() -> void:
+	var folder := str(main.options.get("shots", "user://shots"))
+	DirAccess.make_dir_recursive_absolute(folder)
+	var shot := func(name: String) -> void:
+		main.get_viewport().get_texture().get_image().save_png(folder.path_join("stack_%s.png" % name))
+	# Two tiles to try: one with room for the unit (Unciv lets a civilian and a military unit share a tile),
+	# and one with none left, which the aim should say so that the click doesn't walk the unit up to it
+	var share: Array = []
+	var crowded: Array = []
+	for u: Dictionary in main.state.get("units", []):
+		if not share.is_empty() and not crowded.is_empty():
+			break
+		await main._select_unit(int(u["id"]))
+		var from: Vector2i = main._selected_key()
+		for t: Dictionary in main.selected_unit.get("reachable", []):
+			var key := Vector2i(int(t["x"]), int(t["y"]))
+			var occupants: Array = main._own_units_at(key)
+			if key == from or occupants.is_empty():
+				continue
+			var room: bool = occupants.size() == 1 \
+				and bool(occupants[0].get("civilian", false)) != bool(u.get("civilian", false))
+			if room and share.is_empty():
+				share = [int(u["id"]), key]
+			elif not room and crowded.is_empty():
+				crowded = [int(u["id"]), key]
+	if share.is_empty():
+		say("no unit could reach a tile with room for it next to one of yours")
+	else:
+		await _stacking_case(share[0], share[1], shot, true)
+	if crowded.is_empty():
+		say("no full tile to try (one with as many units as Unciv allows)")
+	else:
+		await _stacking_case(crowded[0], crowded[1], shot, false)
+
+
+## One tile: click it (which selects whoever is there), hold on it (which aims), then click to go.
+## [param expected] is whether the unit should fit on the tile; [param shot] saves a picture by name.
+func _stacking_case(unit_id: int, key: Vector2i, shot: Callable, expected: bool) -> void:
+	await main._select_unit(unit_id)
+	var mover := str(main.selected_unit.get("name", "?"))
+	var from: Vector2i = main._selected_key()
+	var occupants := ", ".join(main._own_units_at(key).map(func(o: Dictionary) -> String: return str(o["name"])))
+	await main.click_tile(key)
+	say("%s on %s: clicking there selected %s, it didn't move %s" % [occupants, key,
+		main.selected_unit.get("name", "nothing"), mover])
+	await main._select_unit(unit_id)
+	await main._long_press_tile(key)
+	await settle(0.3)
+	var armed: bool = main._forced_aim == key
+	say("holding %s on it: %s%s" % [mover, "aimed, so the next click goes" if armed else "no room for it there",
+		"" if armed == expected else " - NOT what the tile looks like!"])
+	shot.call("aimed" if armed else "no_room")
+	if not armed:
+		await main.click_tile(key)
+		await settle(0.3)
+		say("clicking it anyway: %s is still at %s, and %s is selected" % [mover, from,
+			main.selected_unit.get("name", "nothing")])
+		return
+	await main.click_tile(key)
+	await settle(0.4)
+	say("the click moved %s %s -> %s, %d units on the tile now" % [mover, from, main._selected_key(),
+		main._own_units_at(key).size()])
+	shot.call("moved")
+	# The card's "Move here" does the same without the hold
+	await main._select_unit(unit_id)
+	await main.unit_action("MoveHere")
+	await settle(0.3)
+	say("Move here: picking %s, %d tiles ringed, card says '%s'" % [main._pick.get("kind", "-"),
+		(main._pick.get("targets", []) as Array).size(), main.action_menu.picking_text])
+	shot.call("move_here")
+	await main.cancel_pick()
+	await settle(0.2)
+	say("cancelled: picking %s, status '%s'" % [main._pick.is_empty(), main._status_text])
 
 
 ## The settings board, through its own buttons: every page (a picture of each), a drop-down opened and used,

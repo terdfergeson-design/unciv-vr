@@ -3,9 +3,11 @@
 Around the table is a **background**: the sky, the light, fog, and the scenery. Each one is a folder with a
 `background.json` and (usually) a scenery model. Pick one in **Settings > Background**.
 
-Unciv VR comes with three: **Studio** (a plain dark room), **Mountains and clouds** (the default) and **Floating
-in space**. Their scenery is made by a script, `tools/make_surroundings.gd` (with `tools/lowpoly_backgrounds.gd`),
-which saves it in the same format you'd use for your own.
+Unciv VR comes with five: **Studio** (a plain dark room), **Mountains and clouds** (the default), **Floating
+in space**, **In the Hall of the Mountain King** (a troll king's cavern, lit by braziers and magma) and **Webb
+Deep Field** (the table adrift among the galaxies of the James Webb telescope's first deep field). The first
+three are made by `tools/make_surroundings.gd` (with `tools/lowpoly_backgrounds.gd`) and the cavern by
+`tools/make_mountain_king.gd`, which save them in the same format you'd use for your own.
 
 ## Where backgrounds live
 

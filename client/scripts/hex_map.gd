@@ -594,9 +594,9 @@ func _build_cities() -> void:
 
 func _build_units() -> void:
 	for id: int in _tokens:
-		var old: Node3D = _tokens[id]
+		var old: Variant = _tokens[id]   # Variant: a token freed by a death animation can still be in here
 		if is_instance_valid(old):
-			_facing[id] = old.rotation.y
+			_facing[id] = (old as Node3D).rotation.y
 	for child in _units_root.get_children():
 		child.queue_free()
 	_unit_labels.clear()
@@ -724,7 +724,11 @@ func play_event(e: Dictionary) -> void:
 				else:
 					_change_health(def_id, to, -damage)
 			if e.has("attacker"):
-				_change_health(int(e["attacker"]), from, -int(e.get("damageTaken", 0)))
+				if e.get("attackerDied", false):   # its token has been freed by the death animation
+					_take_unit(int(e["attacker"]), from)
+					_tokens.erase(int(e["attacker"]))
+				else:
+					_change_health(int(e["attacker"]), from, -int(e.get("damageTaken", 0)))
 
 
 ## Your own attack, after the bridge has done it ([param r] is the attack result): the unit fires or charges,
@@ -734,7 +738,8 @@ func animate_attack(unit_id: int, unit_name: String, target: Vector2i, r: Dictio
 	if token == null or not _shown.has(target):
 		return
 	var info: Dictionary = unit_info.get(unit_name, {})
-	var defender := _first_token_on(target, unit_id)
+	var def_id := _first_unit_id_on(target, unit_id)
+	var defender := token_for(def_id)
 	var target_pos := defender.position if defender != null else tile_position(target, tile_height(tiles.get(target, {})))
 	var start_key: Vector2i = _last_key.get(unit_id, target)
 	var died: bool = r.get("defenderDefeated", false)
@@ -748,6 +753,11 @@ func animate_attack(unit_id: int, unit_name: String, target: Vector2i, r: Dictio
 			await motion.move(token, path_points(start_key, target, unit).slice(1, -1))
 		await motion.melee(token, defender, int(r.get("damageToDefender", 0)), int(r.get("damageToAttacker", 0)), died,
 			not r.get("attackerAlive", true))
+	# The fallen are freed by their death animation, so forget their tokens before anything looks them up
+	if died:
+		_tokens.erase(def_id)
+	if not r.get("attackerAlive", true):
+		_tokens.erase(unit_id)
 	if r.has("x") and r.has("y"):
 		var now := Vector2i(int(r["x"]), int(r["y"]))
 		if now == target and is_instance_valid(token) and r.get("attackerAlive", true):
@@ -759,22 +769,25 @@ func animate_attack(unit_id: int, unit_name: String, target: Vector2i, r: Dictio
 func animate_bombard(city_key: Vector2i, target: Vector2i, r: Dictionary) -> void:
 	if not (_shown.has(city_key) or _shown.has(target)):
 		return
-	var defender := _first_token_on(target, -1)
+	var def_id := _first_unit_id_on(target, -1)
+	var defender := token_for(def_id)
 	var target_pos := defender.position if defender != null else tile_position(target, tile_height(tiles.get(target, {})))
 	await motion.ranged(null, target_pos, defender, "cannon", int(r.get("damageToDefender", 0)), r.get("defenderDefeated", false),
 		tile_position(city_key, tile_height(tiles.get(city_key, {}))))
+	if r.get("defenderDefeated", false):
+		_tokens.erase(def_id)
 
 
-func _first_token_on(key: Vector2i, except_id: int) -> Node3D:
+## Which unit on [param key] defends it (the last non-civilian, as Unciv would), by id; -1 if none has a token.
+func _first_unit_id_on(key: Vector2i, except_id: int) -> int:
 	var units: Array = tiles.get(key, {}).get("units", [])
-	var best: Node3D = null
+	var best := -1
 	for unit: Dictionary in units:
 		var id := int(unit.get("id", -1))
-		if id == except_id:
+		if id == except_id or token_for(id) == null:
 			continue
-		var token := token_for(id)
-		if token != null and (best == null or not unit.get("civilian", false)):
-			best = token
+		if best == -1 or not unit.get("civilian", false):
+			best = id
 	return best
 
 
@@ -820,9 +833,14 @@ func note_unit_at(id: int, key: Vector2i) -> void:
 	_last_key[id] = key
 
 
+## The unit's token, or null. Variant on the way in: a unit that died in an animation leaves a freed node
+## behind until the next rebuild, and assigning that to a typed variable is an error that stops the script.
 func token_for(id: int) -> Node3D:
-	var token: Node3D = _tokens.get(id)
-	return token if is_instance_valid(token) else null
+	var token: Variant = _tokens.get(id)
+	if not is_instance_valid(token):
+		_tokens.erase(id)
+		return null
+	return token as Node3D
 
 
 ## A unit on the table: its model from the tileset in its civ's colours (or, without one, a disc with its flag),

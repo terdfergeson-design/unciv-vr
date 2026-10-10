@@ -18,6 +18,7 @@ var port := 8765
 
 var _peer := StreamPeerTCP.new()
 var _buffer := PackedByteArray()
+var pending := 0   # requests sent and still waiting for an answer (main's watchdog looks at this)
 var _next_id := 1
 var _is_connected := false
 var _retry_timer := 0.0
@@ -67,11 +68,14 @@ func request(method: String, params: Dictionary = {}) -> Dictionary:
 	var err := _peer.put_data(line.to_utf8_buffer())
 	if err != OK:
 		return {"ok": false, "error": "Send failed: %s" % error_string(err)}
+	pending += 1
 	while true:
 		var message: Dictionary = await _response
 		if message.get("id") != null and int(message["id"]) == id:
+			pending -= 1
 			return message
 		if message.get("_disconnected", false):
+			pending -= 1
 			return {"ok": false, "error": "Bridge disconnected"}
 	return {}  # unreachable
 

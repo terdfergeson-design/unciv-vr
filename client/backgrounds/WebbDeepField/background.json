@@ -1,0 +1,14 @@
+{
+	// James Webb Space Telescope's First Deep Field (SMACS 0723) - NASA, ESA, CSA, STScI
+	// The table floats in deep space, surrounded by a crisp, high-contrast 360-degree panorama of distant galaxies.
+	"name": "Webb Deep Field",
+	"author": "NASA, ESA, CSA, STScI / Antigravity",
+	"description": "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field",
+	"sky": {"panorama": "sky.jpg", "energy": 1.05},
+	// Crisp celestial ambient lighting with deep shadows
+	"ambient": {"color": [80, 85, 110], "energy": 0.4},
+	"sun": {"pitch": -22, "yaw": -55, "color": [255, 248, 235], "energy": 1.8},
+	// No floor: the table floats in zero-g among the galaxies
+	"floor": false,
+	"scenery": ""
+}

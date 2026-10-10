@@ -43,6 +43,7 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 |---|---|---|
 | Select a unit | left-click it | point + right trigger: its card pops up above it (actions, improvements, Promote) |
 | Move / attack | click a tile to aim (path, turns or expected damage show up), click it again to go | same, with point + right trigger |
+| Move onto a tile one of your own units is on (a civilian and a military unit can share one, and a city holds more) | clicking that tile selects the unit on it, so **hold** the button on it instead: that aims, then click to go. "Move here" on the unit's card does the same, and when there's no room the aim says so (Swap places exchanges the two units) | same, holding the right trigger |
 | Open a city | click it (with a unit selected it also aims the unit there; click again to march in) | point + right trigger: its card floats above the city |
 | Empire overview (Unciv's stats and info screen) | E opens / closes it | always up, off to your right - turn your head to read it |
 | City view | "City view" on the city's card; Esc or "Exit city" leaves | same; B or "Exit city" leaves |
@@ -56,7 +57,7 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Slide the map (when zoomed in) | WASD, or click the overview | hold a grip and drag the map; or point at the overview at the far edge and pull the trigger |
 | Shortcuts | Space end turn, F found city, Tab / Shift+Tab next / previous unit, N idle unit, T tech tree, P policies, G diplomacy, O settings, Esc close the big screen / deselect, R refresh | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
 
-The right trigger clicks when you let go of it (so holding it to zoom doesn't click anything).
+The right trigger clicks when you let go of it (so holding it to zoom, or to aim at a tile, doesn't also click).
 ### Turns, popups and decisions
 Like Unciv's next-turn button, **End turn** first takes you to whatever still needs deciding, and its label says
 what: a message to answer, a free great person to pick, a city with nothing to build, research, a policy, spies to
@@ -148,7 +149,7 @@ Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-siz
 `--show=unit|aim|city|cityview|cityview-tile|overview-<tab>|overview-diagram|keyboard|research|promotion|settings|setup|setup-world|setup-rules|saves` (opens that card before the screenshot),
 `--keyboard=wrist|float` (VR: where the on-screen keyboard goes, instead of deciding by whether the left controller is tracked),
 `--lobby` (show the main menu even if the bridge is running a game), `--fake-xr` (VR layout without a
-headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=Studio|Mountains|Space` (or any background folder; not saved), `--table=Plain|OrnateOak` (or any table folder; not saved), `--tileset=LowPoly|classic` (or any tileset folder; not saved), `--unitset=tileset|none|<tileset folder>` (where unit models come from; not saved),
+headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=Studio|Mountains|Space|MountainKing|WebbDeepField` (or any background folder; not saved), `--table=Plain|OrnateOak` (or any table folder; not saved), `--tileset=LowPoly|classic` (or any tileset folder; not saved), `--unitset=tileset|none|<tileset folder>` (where unit models come from; not saved),
 `--overlays=all` or e.g. `--overlays=movement,yields` (turns those map overlays on for this run, not saved).
 
 For testing, start from the test save `--load=res://tests/saves/everything.json` (three cities, a full army, a
@@ -160,7 +161,7 @@ espionage, **tiles** (reveals the map and saves pictures of the tileset zoomed o
 natural wonders and in the city view to `--shots=<folder>`, with how much it draws), **battles** (war with a
 neighbour, enemy troops next to the capital, one of ours shoots, then End turn plays back the AI's attacks; steps
 `staged_fight` and `unit_icons` follow it), **playback** (from the test save: End turn, and the AI's attacks play
-back), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,
+back), **unit_death** (a war, an enemy hurt to one hit point, one shot: the unit dies and the map is rebuilt - its token is freed by the death animation, and looking it up afterwards used to stop the client dead), **stacking** (from the test save: moving onto a tile one of your own units is on - the hold, the click that follows, "Move here" on the card, and a tile with no room left - with a picture of each aim), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,
 toggles, and the number settings checked against the bridge), **surroundings** (from the test save: picks every background and table in Settings, saves a picture of
 each to `--shots=<folder>`, and moves the table up, down and bigger to check its column and feet follow), **make_test_save** (with `--then=save_test_game`: rebuilds the test save), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
 double clicks, popups arriving while something else is open, save and load mid-decision - each printed as OK or

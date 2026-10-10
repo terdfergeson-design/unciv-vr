@@ -13,6 +13,19 @@ copies Unciv's tileset system, and the choice of which natural wonders get their
 Unciv's FantasyHex tileset and [UnTile](https://github.com/Malwen/UnTile-Civ6-Tileset) by Malwen (MIT); no
 images from either are used.
 
+## Backgrounds and tables
+
+The backgrounds and tables in `client/backgrounds` and `client/tables` are Unciv VR's own, made by the scripts in
+`client/tools` (`make_surroundings.gd`, `lowpoly_backgrounds.gd`, `tables.gd`, `make_mountain_king.gd`) and
+licensed under the Mozilla Public License 2.0 like the rest of the client - with one exception.
+
+**Webb Deep Field** (`client/backgrounds/WebbDeepField/sky.jpg`) is an all-round sky adapted from the James Webb
+Space Telescope's First Deep Field (SMACS 0723). Credit: **NASA, ESA, CSA, STScI**. NASA and STScI release Webb
+images for free use with credit, and ESA/Webb material is licensed
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The image has been adapted into an equirectangular
+panorama and re-encoded as a JPEG to keep the repository small; the credit travels with it, in the background's `author` field and here. It is the only third-party
+media file kept in this repository - everything else is loaded at runtime from the Unciv checkout.
+
 ## Unciv's icons
 
 The client shows Unciv's own icons so Unciv players feel at home. They aren't copied into this repository: the

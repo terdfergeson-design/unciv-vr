@@ -1,0 +1,16 @@
+{
+	// "In the Hall of the Mountain King" (I Dovregubbens hall) - Edvard Grieg / Henrik Ibsen
+	// The subterranean throne hall of the Troll King deep within the Dovre mountains.
+	// Lit by glowing magma fissures, iron fire braziers, and glittering troll crystal hoards.
+	"name": "In the Hall of the Mountain King",
+	"author": "Antigravity",
+	"description": "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins",
+	"sky": {"color": [18, 12, 22]},
+	"ambient": {"color": [72, 48, 62], "energy": 0.95},
+	"fog": {"color": [38, 24, 36], "density": 0.016, "skyAffect": 0.8},
+	"sun": {"pitch": -32, "yaw": 180, "color": [255, 158, 65], "energy": 1.7, "shadows": true},
+	"floor": true,
+	"scenery": "scenery",
+	// Nodes in the scenery that turn slowly about the middle: name -> degrees per second
+	"spin": {"Embers": 0.35}
+}

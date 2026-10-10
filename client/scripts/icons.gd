@@ -48,6 +48,7 @@ const ACTION_ICONS := {
 	"HurryBuilding": "HurryConstruction", "ConductTradeMission": "ConductTradeMission", "FoundReligion": "FoundReligion",
 	"RemoveHeresy": "RemoveHeresy", "EnhanceReligion": "EnhanceReligion", "DisbandUnit": "DisbandUnit",
 	"GiftUnit": "Present", "Skip": "Skip", "AddInCapital": "AddInCapital", "TriggerUnique": "Star",
+	"MoveHere": "MoveTo",   # ours, not one of Unciv's actions (see Main.MOVE_ACTION)
 }
 const BADGE_SIZE := 96
 

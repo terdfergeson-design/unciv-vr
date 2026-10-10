@@ -22,6 +22,8 @@ extends Node3D
 ##   buttons on the card strapped to your left wrist (right stick scrolls the card). A end turn,
 ##   B found city. Either stick raises / lowers the table; with that hand's grip held it rotates (x) /
 ##   scales (y) it instead. Left controller: X next unit, Y previous unit, stick click recenters the table.
+## Either way, holding the trigger (or the mouse button) on a tile aims the selected unit there even when
+## one of your own units is standing on it - a plain click would select that unit instead.
 
 # Loaded by path rather than class_name, so the project runs even before the editor has scanned it
 const BridgeClient := preload("res://scripts/bridge_client.gd")
@@ -31,7 +33,7 @@ const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const TableModel := preload("res://scripts/table_model.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 18   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 19   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -46,6 +48,13 @@ const CITY_BOARD_METRES := Vector2(0.7, 1.0013)   # same aspect ratio as CityBoa
 const BIG_SCREEN_METRES := Vector2(2.0, 0.875)
 const INFO_PANEL_PIXELS := Vector2i(420, 640)
 const INFO_PANEL_METRES := Vector2(0.44, 0.67)
+
+## Holding the trigger (or the left mouse button) on a tile this long aims at it instead of clicking it.
+const LONG_PRESS_MS := 400
+## How long the game may sit "busy" with nothing to wait for before it lets go (see _watch_busy).
+const BUSY_WATCHDOG_MS := 25000
+## Our own "unit action" on the card: pick a tile to move to (not one of Unciv's UnitActionTypes).
+const MOVE_ACTION := "MoveHere"
 
 const TABLE_HALF_SIZE := 0.7   # metres: the map is scaled so its half-width fits this
 # Maps bigger than this (in map units, about a Tiny map) are shown through a window that slides
@@ -128,7 +137,14 @@ var keyboard: Keyboard               # on-screen keyboard for names (see open_ke
 var _keyboard_holder: Node           # WorldPanel (VR: on the left wrist or floating) or CanvasLayer (desktop)
 var _keyboard_on_submit := Callable()
 var _overview_was_shown := false   # a buyable tile clicked once (the next click buys it)
-var _pick: Dictionary = {}          # waiting for a tile click: {kind: unit_action / bombard, targets, ...}
+var _pick: Dictionary = {}          # waiting for a tile click: {kind: unit_action / bombard / move, targets, ...}
+# Pressing on a tile: a short press clicks it, a long one aims at it (see _hold_tile_press)
+var _press_ms := 0                  # when the trigger / left mouse button went down
+var _press_key: Variant = null      # the tile it went down on, or null (it went down somewhere else)
+var _long_pressed := false          # the press has already aimed, so letting go mustn't click as well
+var _forced_aim := HexMap.NO_TILE   # a tile a long press aimed at: a click there moves, whoever stands on it
+var _move_hint_shown := false       # the "hold to move onto a tile" hint has been shown once
+var _busy_since := 0                # when `busy` went true with no request out (0: not waiting)
 var _city_place: Dictionary = {}    # city view: a building that creates an improvement waits for its tile
 var _alert_shown_key := ""          # the Unciv popup (alert) on show, by key
 var alert_menu: ActionMenu          # desktop: a card in the middle of the window for Unciv's popups and pickers
@@ -1340,6 +1356,36 @@ func _fit_table() -> void:
 	pass
 
 
+## The trigger (or the left mouse button) went down on tile [param key] (null: somewhere else). The click
+## itself waits for the release, so that holding it can do something else - see _hold_tile_press.
+func _begin_tile_press(key: Variant) -> void:
+	_press_ms = Time.get_ticks_msec()
+	_press_key = key
+	_long_pressed = false
+
+
+## Called every frame while it's held down: once it has been long enough, aim at the tile under the pointer.
+func _hold_tile_press(key: Variant) -> void:
+	if _long_pressed or _press_key == null or key == null or key != _press_key:
+		return
+	if Time.get_ticks_msec() - _press_ms < LONG_PRESS_MS:
+		return
+	_long_pressed = true   # the release won't click as well
+	await _long_press_tile(key)
+
+
+## Holding on a tile aims the selected unit there even when one of your own units is standing on it, which
+## a click can't do: that selects the unit instead. The click that follows moves, like any other aimed move,
+## so holding by mistake costs nothing.
+func _long_press_tile(key: Vector2i) -> void:
+	var aimable := not (busy or state.is_empty() or _in_lobby or _city_view) and _pick.is_empty() \
+		and not selected_unit.is_empty() and key != _selected_key()
+	if not aimable:
+		await click_tile(key)   # nothing to aim: the hold is just a slow click
+		return
+	await _aim_at(key, true)
+
+
 func click_tile(key: Vector2i) -> void:
 	if busy or state.is_empty() or _in_lobby:
 		return
@@ -1352,6 +1398,16 @@ func click_tile(key: Vector2i) -> void:
 	var own_units := _own_units_at(key)
 	var selected_key := _selected_key()
 
+	# A long press aimed at this tile: the click goes there, even if one of your units is standing on it
+	if key == _forced_aim and key == hex_map.aim_key() and not selected_unit.is_empty() and key != selected_key:
+		_forced_aim = HexMap.NO_TILE
+		hex_map.clear_aim()
+		if hex_map.is_target(key):
+			await attack(key)
+		else:
+			await move_selected_to(key)
+		return
+
 	# Clicking one of your units selects it (clicking the selected tile again cycles through its stack)
 	if not own_units.is_empty() and (selected_unit.is_empty() or key != selected_key or own_units.size() > 1):
 		var pick: Dictionary = own_units[0]
@@ -1362,7 +1418,13 @@ func click_tile(key: Vector2i) -> void:
 				await open_city(key)
 				return
 			pick = own_units[(index + 1) % own_units.size()]
+		# Clicking another of your units is how you select it, so say how to move onto it instead
+		var hint := not selected_unit.is_empty() and key != selected_key and not _move_hint_shown \
+			and float(selected_unit.get("movement", 0)) > 0.0
 		await _select_unit(int(pick["id"]))
+		if hint:
+			_move_hint_shown = true
+			_set_status("Hold %s on a tile to move a unit onto it." % ("the trigger" if _xr_mode else "the mouse button"))
 		return
 
 	# With a unit selected, the first click on a tile aims there (path, turns or expected damage) and a
@@ -1388,7 +1450,9 @@ func click_tile(key: Vector2i) -> void:
 
 
 ## Shows where the selected unit would go (or what an attack would do) if you clicked [param key] again.
-func _aim_at(key: Vector2i) -> void:
+## [param forced]: from a long press, so the click that follows moves there even with your own unit on the tile.
+func _aim_at(key: Vector2i, forced := false) -> void:
+	_forced_aim = HexMap.NO_TILE
 	if hex_map.is_target(key):
 		var t := _target_at(key)
 		hex_map.set_aim(key, [], "Attack %s\ndeal ~%d, take ~%d\nclick again to attack" % [t.get("name", "?"),
@@ -1401,15 +1465,38 @@ func _aim_at(key: Vector2i) -> void:
 		_set_status(reply.error)
 		return
 	var result: Dictionary = reply.result
-	if not result.get("canReach", false):
-		hex_map.set_aim(key, [], "Can't get there", AIM_BLOCKED_COLOR)
+	# Your own units on the tile: moving in shares it (Unciv allows a civilian and a military unit together,
+	# more in a city), and when it doesn't, swapping places is usually what you meant
+	var sharing := ", ".join(_own_units_at(key).map(func(u: Dictionary) -> String: return str(u.get("name", "a unit"))))
+	# canStay false with a unit of yours there: the tile is full, so the unit could only pass through it
+	# (a path to a tile held by someone else may still be worth taking - it can clear before you arrive)
+	var full: bool = sharing != "" and not bool(result.get("canStay", true))
+	if not result.get("canReach", false) or full:
+		var blocked := "Can't get there"
+		if sharing != "":
+			blocked = "No room on this tile\n%s %s already there" % [sharing,
+				"is" if _own_units_at(key).size() == 1 else "are"]
+			if _can_swap_with(key):
+				blocked += "\nSwap places on the card"
+		hex_map.set_aim(key, [], blocked, AIM_BLOCKED_COLOR)
 		return
 	var stops: Array[Vector2i] = []
 	for s: Dictionary in result.get("stops", []):
 		stops.append(Vector2i(int(s["x"]), int(s["y"])))
 	var turns := int(result.get("turns", 1))
 	var text := "Move here" if turns <= 1 else "Move here: %d turns" % turns
+	if sharing != "":
+		text += "\nsharing the tile with %s" % sharing
+	_forced_aim = key if forced else HexMap.NO_TILE
 	hex_map.set_aim(key, stops, text + "\nclick again to go", AIM_MOVE_COLOR)
+
+
+## True when the selected unit's "Swap places" action offers [param key] (its occupant swaps with it).
+func _can_swap_with(key: Vector2i) -> bool:
+	for t: Dictionary in _unit_action_entry("SwapUnits", "").get("targets", []):
+		if int(t["x"]) == key.x and int(t["y"]) == key.y:
+			return true
+	return false
 
 
 func move_selected_to(key: Vector2i) -> void:
@@ -2349,7 +2436,7 @@ func promote(promotion: String) -> void:
 		_set_status(reply.error)
 		return
 	_set_status("%s is now %s." % [selected_unit["name"], promotion])
-	selected_unit = reply.result
+	selected_unit = _with_move_action(reply.result)
 	if selected_unit.get("canPromote", false):
 		open_promotions()   # enough XP for another one
 	else:
@@ -2435,12 +2522,33 @@ func _place_vr_hud() -> void:
 	_hud_label_3d.rotation = Vector3(deg_to_rad(-10), table.rotation.y, 0)
 
 
+## Adds our own "Move here" to a unit's actions, next to Unciv's "Swap places". The map click alone can't
+## move onto a tile that one of your units is on (it selects that unit), so the card offers it too.
+func _with_move_action(unit: Dictionary) -> Dictionary:
+	if unit.is_empty():
+		return unit
+	var actions: Array = (unit.get("actions", []) as Array).duplicate()
+	actions = actions.filter(func(a: Dictionary) -> bool: return str(a.get("type", "")) != MOVE_ACTION)
+	var entry := {"type": MOVE_ACTION, "title": "Move here", "target": "tile",
+		"enabled": not (unit.get("reachable", []) as Array).is_empty(), "targets": unit.get("reachable", [])}
+	var swap := actions.find_custom(func(a: Dictionary) -> bool: return str(a.get("type", "")) == "SwapUnits")
+	if swap < 0:
+		actions.append(entry)
+	else:
+		actions.insert(swap, entry)
+	unit["actions"] = actions
+	return unit
+
+
 ## [param value]: "type|title" from the unit card ("|confirm" appended once a risky action is confirmed), or just a type.
 func unit_action(value: String) -> void:
 	if _in_lobby or busy or selected_unit.is_empty():
 		return
 	var parts := value.split("|")
 	var type := parts[0]
+	if type == MOVE_ACTION:
+		_start_move_pick()
+		return
 	var title := parts[1] if parts.size() > 1 else ""
 	var confirmed := parts.size() > 2 and parts[2] == "confirm"
 	var action := _unit_action_entry(type, title)
@@ -2542,6 +2650,21 @@ func _start_unit_pick(action: Dictionary) -> void:
 	_set_status("%s - click the tile on the map (or Cancel on the card)." % title)
 
 
+## "Move here" on the unit card: where it can get this turn is ringed, but any tile will do (a far one
+## becomes a move it carries on with next turn), including a tile with your own units on it.
+func _start_move_pick() -> void:
+	if selected_unit.is_empty():
+		return
+	var reachable: Array[Vector2i] = []
+	for t: Dictionary in selected_unit.get("reachable", []):
+		reachable.append(Vector2i(int(t["x"]), int(t["y"])))
+	_pick = {"kind": "move", "targets": reachable, "any": true}
+	hex_map.clear_aim()
+	hex_map.set_selection(_selected_key(), reachable, [])
+	_set_pick_text("Move here: click a tile")
+	_set_status("Move %s - click a tile on the map (or Cancel on the card)." % selected_unit.get("name", "the unit"))
+
+
 ## The city's guns: pick one of the enemies in range.
 func _start_bombard_pick() -> void:
 	if selected_city.is_empty():
@@ -2573,7 +2696,7 @@ func cancel_pick() -> void:
 	var was := _pick
 	_pick = {}
 	_set_pick_text("")
-	if was["kind"] == "unit_action" and not selected_unit.is_empty():
+	if was["kind"] != "bombard" and not selected_unit.is_empty():
 		await _select_unit(int(selected_unit["id"]), false)
 	else:
 		hex_map.clear_selection()
@@ -2593,6 +2716,9 @@ func _pick_tile(key: Vector2i) -> void:
 	_pick = {}
 	_set_pick_text("")
 	match pick["kind"]:
+		"move":
+			if not selected_unit.is_empty():
+				await move_selected_to(key)
 		"unit_action":
 			if selected_unit.is_empty():
 				return
@@ -2933,6 +3059,7 @@ func _select_unit(unit_id: int, focus := true) -> void:
 		return
 	if selected_unit.is_empty() or int(selected_unit["id"]) != unit_id:
 		hex_map.clear_aim()
+		_forced_aim = HexMap.NO_TILE
 		# Picking a different unit (Next unit, a click...) abandons a half-done tile pick of the old one,
 		# or a city's bombard - otherwise the next map click would do it with the wrong unit
 		if focus and not _pick.is_empty():
@@ -2940,7 +3067,7 @@ func _select_unit(unit_id: int, focus := true) -> void:
 			action_menu.picking_text = ""
 			if popup_menu != null:
 				popup_menu.picking_text = ""
-	selected_unit = reply.result
+	selected_unit = _with_move_action(reply.result)
 	var reachable: Array[Vector2i] = []
 	for t: Dictionary in selected_unit.get("reachable", []):
 		reachable.append(Vector2i(int(t["x"]), int(t["y"])))
@@ -3016,6 +3143,7 @@ func _deselect() -> void:
 		_set_pick_text("")
 	_clear_armed_action()
 	hex_map.clear_aim()
+	_forced_aim = HexMap.NO_TILE
 	selected_unit = {}
 	selected_city = {}
 	if _popup_kind not in DECISION_CARDS:   # a popup waiting for an answer isn't about the selection
@@ -3141,6 +3269,45 @@ func _run_smoke_test() -> void:
 				print("SMOKE: moved warrior to %s (target %s), status: %s" % [
 					Vector2i(int(mover[0]["x"]), int(mover[0]["y"])) if not mover.is_empty() else "-", move_key, _status_text])
 			break
+	# Moving onto a tile one of your own units is on: a click there selects that unit, so hold (long press)
+	# to aim at it, then click to go. The card's "Move here" picks a tile for the same thing.
+	var stacked_onto := false
+	var no_room := ""
+	for u: Dictionary in state.get("units", []):
+		if stacked_onto:
+			break
+		await _select_unit(int(u["id"]))
+		var mover_id := int(selected_unit["id"])
+		var from := _selected_key()
+		for t: Dictionary in selected_unit.get("reachable", []):
+			var key := Vector2i(int(t["x"]), int(t["y"]))
+			if key == from or _own_units_at(key).is_empty():
+				continue
+			var occupants := ", ".join(_own_units_at(key).map(func(o: Dictionary) -> String: return str(o["name"])))
+			await click_tile(key)
+			var selected_other := int(selected_unit.get("id", 0)) != mover_id
+			await _select_unit(mover_id)
+			await _long_press_tile(key)
+			if _forced_aim != key:   # no room for it on that tile: the aim says so and a click won't move
+				if no_room == "":
+					no_room = "SMOKE: no room on %s (%s): aimed %s, armed %s" % [key, occupants,
+						hex_map.aim_key() == key, _forced_aim == key]
+				continue
+			await click_tile(key)
+			var mover: Array = state.get("units", []).filter(func(m: Dictionary) -> bool: return int(m["id"]) == mover_id)
+			var landed: Variant = Vector2i(int(mover[0]["x"]), int(mover[0]["y"])) if not mover.is_empty() else null
+			print("SMOKE: %s is on %s: a click there selects it (%s), holding aims instead, and the click after it moved %s %s -> %s; %d units on the tile" % [
+				occupants, key, selected_other, u["name"], from, landed, _own_units_at(key).size()])
+			# The same move from the card: "Move here", then a tile click
+			await _select_unit(mover_id)
+			await unit_action(MOVE_ACTION)
+			print("SMOKE: Move here picks a tile: kind %s, %d ringed" % [_pick.get("kind", "-"), (_pick.get("targets", []) as Array).size()])
+			await cancel_pick()
+			print("SMOKE: pick cancelled: %s" % _pick.is_empty())
+			stacked_onto = true
+			break
+	if no_room != "":
+		print(no_room)
 	# Workers: start the first improvement offered
 	for u: Dictionary in state.get("units", []):
 		if u["name"] != "Worker":
@@ -3304,6 +3471,11 @@ func _run_smoke_test() -> void:
 	print("SMOKE: %d nations, %d saves listed" % [_setup_options.get("nations", []).size(), _saves.size()])
 	await _on_menu_chosen("lobby_resume", "")
 	print("SMOKE: resumed: lobby=%s, tiles=%d, table buttons shown=%s" % [_in_lobby, hex_map.tiles.size(), (_table_buttons[0]["node"] as Node3D).visible])
+	# The watchdog that lets go when an order is cut short, so the game doesn't ignore every click after it
+	busy = true
+	_busy_since = Time.get_ticks_msec() - BUSY_WATCHDOG_MS - 1
+	_watch_busy()
+	print("SMOKE: busy watchdog after an order that never finished: busy=%s, status '%s'" % [busy, _status_text])
 	print("SMOKE: done")
 	if not options.has("screenshot"):
 		get_tree().quit()
@@ -3850,10 +4022,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and not event.pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		var released := event as InputEventMouseButton
 		var was_overview := _drag_id == "minimap"
+		var pressed_key: Variant = _press_key
+		var long_pressed := _long_pressed
+		_press_key = null
+		_long_pressed = false
 		if not _end_board_drag() and was_overview and _camera != null:
 			var spot: Variant = minimap.ray_hit(_camera.project_ray_origin(released.position), _camera.project_ray_normal(released.position))
 			if spot != null:
 				_glide_view_to(spot)
+		# A click on the map happens here, so that holding the button can aim instead (see _hold_tile_press)
+		elif pressed_key != null and not long_pressed and _pick_mouse(released.position) == pressed_key:
+			click_tile(pressed_key)
 	elif event is InputEventMouseButton and event.pressed:
 		var button := event as InputEventMouseButton
 		match button.button_index:
@@ -3871,7 +4050,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					return
 				var key: Variant = _pick_mouse(button.position)
 				if key != null:
-					click_tile(key)
+					_begin_tile_press(key)   # clicked when you let go, or aimed at if you hold it
 			MOUSE_BUTTON_WHEEL_UP:
 				if button.ctrl_pressed:
 					_zoom_view(0.9)   # Ctrl + wheel zooms the map itself
@@ -3936,12 +4115,19 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	_update_pedestal()
+	_watch_busy()
 	_process_info_panel(delta)
 	if minimap != null and minimap.visible:
 		minimap.update_window()
 	if _xr_mode:
 		_process_xr(delta)
 		return
+	# Holding the mouse button still on a tile aims at it (a click there selects whoever stands on it instead)
+	if _press_key != null:
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			_hold_tile_press(_pick_mouse(get_viewport().get_mouse_position()))
+		else:
+			_press_key = null   # the release went somewhere else (another window, a popup...)
 	var pan := Vector2.ZERO
 	if Input.is_key_pressed(KEY_W): pan.y -= 1
 	if Input.is_key_pressed(KEY_S): pan.y += 1
@@ -3956,6 +4142,25 @@ func _process(delta: float) -> void:
 			hex_map.pan_view(_global_to_map_delta(move))
 		else:
 			_pan(pan * delta * 0.8 * _distance)
+
+
+## While an order is under way the game ignores clicks (so a double click can't buy twice). If one is ever
+## cut short - a script error in the middle of it, a reply that never comes - nothing would clear `busy` and
+## the game would look frozen from then on. Nothing should sit here this long with no request out and no
+## playback running, so let go and say so instead of leaving the player stuck in a headset.
+func _watch_busy() -> void:
+	if not busy or _playback_active or bridge == null or bridge.pending > 0:
+		_busy_since = 0
+		return
+	if _busy_since == 0:
+		_busy_since = Time.get_ticks_msec()
+		return
+	if Time.get_ticks_msec() - _busy_since < BUSY_WATCHDOG_MS:
+		return
+	busy = false
+	_busy_since = 0
+	push_warning("Busy for %.0f seconds with nothing to wait for - letting go" % (BUSY_WATCHDOG_MS / 1000.0))
+	_set_status("Something didn't finish - carry on. (If it keeps happening, the log says why.)")
 
 
 func _pan(amount: Vector2) -> void:
@@ -4076,6 +4281,12 @@ func _process_xr(delta: float) -> void:
 		_trigger_scrollbar = null
 	if left_trigger and absf(left_stick.y) > 0.25:
 		_zoom_view(1.0 - left_stick.y * delta * 1.2)
+	# Trigger held still on the map: aim at that tile (a click there selects whoever stands on it instead)
+	if right_trigger and not _right_trigger_used_for_zoom and _drag_id == "" and _pointed_panel == null \
+			and _pointed_minimap == null and _pointed_overlay == "" and button == "":
+		_hold_tile_press(hex_map.pick(origin, direction))
+	elif not right_trigger:
+		_press_key = null
 
 	# Right stick: scrolls the card you're pointing at; otherwise raises / lowers the table
 	_right_grip_down = _right_hand.get_float("grip") > 0.6
@@ -4131,10 +4342,13 @@ func _stick_moves_table(stick: Vector2, grip_held: bool, delta: float) -> void:
 		_place_vr_hud()
 
 
-## Right trigger released: click what's pointed at, unless the trigger was held to zoom.
+## Right trigger released: click what's pointed at, unless the trigger was held to zoom or to aim at a tile.
 func _on_xr_button_released(is_right: bool, button: String) -> void:
 	if not is_right or button != "trigger_click":
 		return
+	var long_pressed := _long_pressed
+	_long_pressed = false
+	_press_key = null
 	if _end_board_drag():
 		return   # that was a drag, not a click
 	if _right_trigger_used_for_zoom:
@@ -4155,7 +4369,7 @@ func _on_xr_button_released(is_right: bool, button: String) -> void:
 		press_table_button(_hovered_button)
 		return
 	var key: Variant = hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z)
-	if key != null:
+	if key != null and not long_pressed:
 		click_tile(key)
 
 
@@ -4164,7 +4378,8 @@ func _on_xr_button(is_right: bool, button: String) -> void:
 		match button:
 			"trigger_click":
 				_right_trigger_used_for_zoom = false   # the click itself happens on release
-				_begin_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z)
+				if not _begin_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z):
+					_begin_tile_press(hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z))
 			"ax_button":
 				end_turn()
 			"by_button":
