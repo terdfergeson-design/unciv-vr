@@ -30,6 +30,7 @@ const ActionMenu := preload("res://scripts/action_menu.gd")
 const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
+const BRIDGE_PROTOCOL := 16   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -83,9 +84,19 @@ var busy := false
 var options := {}
 var action_menu: ActionMenu
 var launcher := BridgeLauncher.new()
+var _replaced_old_bridge := false
+var _auto_selecting := false
+var _trigger_scrollbar: ScrollBar = null   # VR: the scrollbar the held trigger is moving
+const DECISION_CARDS := ["alert", "alert_tile", "great_person", "vote"]   # VR popups that wait for an answer
 var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
 var settings := {"background": "mountains", "auto_move": "end",
+	# Unciv's Options > Gameplay / Automation (see ActionMenu.GAMEPLAY_OPTIONS and AUTOMATION_OPTIONS)
+	"checkForDueUnits": false, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
+	"orderTradeOffersByAmount": true, "autoAssignCityProduction": true, "autoBuildingRoads": true,
+	"automatedWorkersReplaceImprovements": true, "stopAutomatedWorkersRemoveVegetation": false,
+	"automatedUnitsCanUpgrade": false, "automatedUnitsChoosePromotions": false, "citiesAutoBombardAtEndOfTurn": false,
+	"autoAssignSpecialistsInNewCities": true,
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [],
 	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
@@ -107,6 +118,12 @@ var keyboard: Keyboard               # on-screen keyboard for names (see open_ke
 var _keyboard_holder: Node           # WorldPanel (VR: on the left wrist or floating) or CanvasLayer (desktop)
 var _keyboard_on_submit := Callable()
 var _overview_was_shown := false   # a buyable tile clicked once (the next click buys it)
+var _pick: Dictionary = {}          # waiting for a tile click: {kind: unit_action / bombard, targets, ...}
+var _city_place: Dictionary = {}    # city view: a building that creates an improvement waits for its tile
+var _alert_shown_key := ""          # the Unciv popup (alert) on show, by key
+var alert_menu: ActionMenu          # desktop: a card in the middle of the window for Unciv's popups and pickers
+var _alert_layer: CanvasLayer
+var _end_turn_armed_until := 0      # "Ask for confirmation when ending the turn": a second press before this ends it
 var _yields_pending := false      # a getYields request is out
 var _yields_again := false        # the view changed while it was out
 var _table_buttons: Array[Dictionary] = []   # {id, node, material, color}
@@ -251,7 +268,7 @@ func _ready() -> void:
 
 ## Starts our own bridge if none answered within the grace period, then watches it until it connects.
 func _maybe_launch_bridge() -> void:
-	if bridge.is_bridge_connected():
+	if bridge.is_bridge_connected() or (_launched_bridge and OS.is_process_running(launcher.pid)):
 		return
 	if not launcher.launch(bridge.port):
 		_set_status("Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run" % launcher.error)
@@ -268,6 +285,24 @@ func _maybe_launch_bridge() -> void:
 			return
 
 
+## Stops an out-of-date bridge we found already running and starts a fresh one from the current code.
+func _replace_old_bridge(protocol: int, game_running: bool) -> void:
+	_set_status("An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..." % protocol)
+	if game_running:   # keep the game it was running: it's what "Continue" offers next
+		await bridge.request("saveGame", {"name": "Autosave"})
+	bridge.send_shutdown()
+	var deadline := Time.get_ticks_msec() + 5000
+	while bridge.is_connection_open() and Time.get_ticks_msec() < deadline:
+		await get_tree().create_timer(0.1).timeout
+	# Let its Gradle launcher finish too, so the log file is free for the new one
+	await get_tree().create_timer(3.0).timeout
+	if bridge.is_bridge_connected():
+		# Still there (shutdown not supported, or it's somebody else's): use it as it is
+		_set_status("Couldn't stop the old bridge - carrying on with it. Some things may not work.")
+		return
+	_maybe_launch_bridge()
+
+
 func _exit_tree() -> void:
 	# Only stop a bridge we started; one started by hand keeps running for the next session
 	# (--stop-bridge stops whichever bridge we're connected to - a dev aid for cleaning up after tests).
@@ -275,7 +310,7 @@ func _exit_tree() -> void:
 		bridge.send_shutdown()
 		# Give the bridge a moment to receive the message and exit on its own before the Gradle
 		# launcher is killed (killing it first can cut the bridge off mid-way).
-		var deadline := Time.get_ticks_msec() + 1500
+		var deadline := Time.get_ticks_msec() + 4000   # it saves the game before exiting
 		while bridge.is_connection_open() and Time.get_ticks_msec() < deadline:
 			OS.delay_msec(50)
 			bridge.poll_now()
@@ -314,6 +349,17 @@ func _on_bridge_connected() -> void:
 	if not ping.ok:
 		_set_status("Bridge error: %s" % ping.error)
 		return
+	var protocol := int(ping.result.get("protocol", 0))
+	if protocol != BRIDGE_PROTOCOL:
+		# Most likely a bridge left running by an earlier session (force-stopped from the editor, or a crash),
+		# still serving old code. Replace it with one built from the current code - once; if that doesn't
+		# match either, the two repos are out of step and we carry on with a warning.
+		if not options.has("no-launch") and not _replaced_old_bridge:
+			_replaced_old_bridge = true
+			await _replace_old_bridge(protocol, bool(ping.result.get("gameRunning", false)))
+			return
+		_set_status("Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work." % [protocol, BRIDGE_PROTOCOL])
+		await get_tree().create_timer(3.0).timeout
 	_set_status("Connected to Unciv %s" % ping.result.uncivVersion)
 
 	# Dev shortcuts skip the main menu; so does a game the bridge is already running (one started by hand)
@@ -342,6 +388,15 @@ func _on_bridge_connected() -> void:
 
 	if options.has("smoke-test"):
 		await _run_smoke_test()
+	if options.has("scenario"):   # dev aid: see dev_scenarios.gd (needs a bridge started with --debug)
+		var scenarios: RefCounted = load("res://scripts/dev_scenarios.gd").new(self)
+		await scenarios.run(str(options["scenario"]))
+		for step: String in str(options.get("then", "")).split(",", false):
+			var bits := step.split(":")
+			if bits.size() > 1:
+				await scenarios.call(bits[0], bits[1])
+			else:
+				await scenarios.call(bits[0])
 	match options.get("show", ""):   # dev aid for screenshots: --show=city or --show=research
 		"overview-cities", "overview-stats", "overview-trades", "overview-units", "overview-politics", "overview-diagram", "overview-resources", "overview-religion", "overview-wonders", "overview-notifications":
 			var ov_tab: String = str(options["show"]).trim_prefix("overview-")
@@ -485,6 +540,12 @@ func open_lobby() -> void:
 	action_menu.lobby_mode = true
 	if popup_menu != null:
 		popup_menu.lobby_mode = true
+	# Nothing of the game stays up over the menu: popups come back (from the game's state) on Resume
+	if _city_view:
+		await exit_city_view()
+	if keyboard_shown():
+		_close_keyboard()
+	_close_alert_card()
 	_deselect()
 	hex_map.visible = false
 	minimap.visible = false
@@ -655,8 +716,15 @@ func refresh() -> void:
 	state = new_state
 	hex_map.build(state)
 	action_menu.civ_colors = hex_map.civ_colors
+	var civ_info := {}
+	for civ: Dictionary in state.get("civs", []):
+		civ_info[civ["name"]] = civ
+	action_menu.civ_info = civ_info
 	if popup_menu != null:
 		popup_menu.civ_colors = hex_map.civ_colors
+		popup_menu.civ_info = civ_info
+	if alert_menu != null:
+		alert_menu.civ_info = civ_info
 	_update_minimap()
 	_refresh_big_screen()   # not awaited: the screen catches up a moment later
 	_refresh_overview()
@@ -668,6 +736,8 @@ func refresh() -> void:
 			_show_tile_info(key)
 	if not selected_unit.is_empty():
 		await _select_unit(int(selected_unit["id"]), false)
+	_update_turn_button()
+	_maybe_show_alert()
 	_update_hud()
 
 
@@ -889,14 +959,91 @@ func _refresh_big_screen() -> void:
 			var reply := await bridge.request("getDiplomacy")
 			if reply.ok:
 				big_screen.set_diplomacy(reply.result)
+		"religion":
+			var reply := await bridge.request("getReligionChoices")
+			if reply.ok:
+				big_screen.set_religion(reply.result)
+		"victory":
+			var reply := await bridge.request("getVictory")
+			if reply.ok:
+				big_screen.set_victory(reply.result)
 
 
 func _on_big_screen_chosen(kind: String, value: String) -> void:
 	match kind:
 		"big_tab":
 			big_screen.war_armed = ""
+			big_screen.diplo_armed = ""
 			big_screen.trade_civ = ""
+			big_screen.civ_detail = ""
 			await show_big_screen(value)
+		"civ_open":
+			big_screen.civ_detail = value
+			big_screen.diplo_armed = ""
+			big_screen.set_diplomacy(big_screen._diplomacy)
+		"civ_close":
+			big_screen.civ_detail = ""
+			big_screen.diplo_armed = ""
+			big_screen.set_diplomacy(big_screen._diplomacy)
+		"diplo_arm":
+			big_screen.diplo_armed = value
+			big_screen.set_diplomacy(big_screen._diplomacy)
+		"diplo_action":
+			await diplomacy_action(value)
+		"look_at":
+			var xy := value.split(",")
+			_look_at_tile(Vector2i(int(xy[0]), int(xy[1])))
+		"religion_slot":
+			big_screen.religion_slot = int(value)
+			big_screen.set_religion(big_screen._religion)
+		"religion_belief":
+			var slot: int = big_screen.religion_slot
+			if slot < big_screen.religion_picks.size():
+				big_screen.religion_picks[slot] = value
+				# move on to the next empty slot
+				var next: int = big_screen.religion_picks.find("")
+				if next >= 0:
+					big_screen.religion_slot = next
+			big_screen.set_religion(big_screen._religion)
+		"religion_icon":
+			big_screen.religion_icon = value
+			if big_screen.religion_name == "":
+				big_screen.religion_name = value
+			big_screen.set_religion(big_screen._religion)
+		"religion_name":
+			open_keyboard("Name your religion", big_screen.religion_name, func(text: String) -> void:
+				if text != "":
+					big_screen.religion_name = text
+					big_screen.set_religion(big_screen._religion))
+		"religion_confirm":
+			var reply := await _order("chooseReligion", big_screen.religion_choice())
+			if reply.has("_busy"):
+				return
+			if not reply.ok:
+				_set_status(reply.error)
+				return
+			_set_status("%s: %s" % [reply.result.get("displayName", "Your religion"), ", ".join(big_screen.religion_picks)])
+			big_screen._religion = {}
+			big_screen.set_religion(reply.result)
+			await refresh()
+		"victory_page":
+			big_screen.victory_page = value
+			big_screen.set_victory(big_screen._victory)
+		"chart_type":
+			big_screen.chart_type = value
+			big_screen.set_victory(big_screen._victory)
+		"one_more_turn":
+			var reply := await _order("oneMoreTurn")
+			if reply.has("_busy"):
+				return
+			if reply.ok:
+				big_screen.set_victory(reply.result)
+				_set_big_visible(false)
+				_set_status("One more turn...!")
+				await refresh()
+		"main_menu":
+			_set_big_visible(false)
+			await open_lobby()
 		"tech_select":
 			big_screen.selected_tech = value
 			big_screen._tech_description = ""
@@ -916,7 +1063,9 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			big_screen.selected_policy = value
 			big_screen.set_policies(big_screen._policies)
 		"adopt_policy":
-			var reply := await bridge.request("adoptPolicy", {"policy": value})
+			var reply := await _order("adoptPolicy", {"policy": value})
+			if reply.has("_busy"):
+				return
 			if not reply.ok:
 				_set_status(reply.error)
 				return
@@ -928,7 +1077,9 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			big_screen.set_diplomacy(big_screen._diplomacy)
 		"declare_war":
 			big_screen.war_armed = ""
-			var reply := await bridge.request("declareWar", {"civ": value})
+			var reply := await _order("declareWar", {"civ": value})
+			if reply.has("_busy"):
+				return
 			if not reply.ok:
 				_set_status(reply.error)
 				return
@@ -936,6 +1087,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			big_screen.set_diplomacy(reply.result)
 			await refresh()
 		"trade_open":
+			big_screen.order_trade_by_amount = settings.get("orderTradeOffersByAmount", true)
 			var reply := await bridge.request("getTradeOptions", {"civ": value})
 			if not reply.ok:
 				_set_status(reply.error)
@@ -948,7 +1100,9 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			var reply := await bridge.request("evaluateTrade", _trade_params())
 			big_screen.set_trade_verdict(reply.result if reply.ok else {"message": reply.error})
 		"trade_propose":
-			var reply := await bridge.request("proposeTrade", _trade_params())
+			var reply := await _order("proposeTrade", _trade_params())
+			if reply.has("_busy"):
+				return
 			if not reply.ok:
 				big_screen.set_trade_verdict({"message": reply.error})
 				return
@@ -957,16 +1111,72 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 				big_screen._diplomacy = reply.result.get("diplomacy", big_screen._diplomacy)
 				big_screen.close_trade()
 				await refresh()
+			elif reply.result.get("counteroffer", false):
+				# Their counteroffer comes up as one of their trade requests (accept / decline / change it)
+				big_screen._diplomacy = reply.result.get("diplomacy", big_screen._diplomacy)
+				big_screen.close_trade()
+				await refresh()
 			else:
 				big_screen.set_trade_verdict({"message": reply.result.get("message", ""), "accepted": false})
 		"offer_peace":
-			var reply := await bridge.request("offerPeace", {"civ": value})
+			var reply := await _order("offerPeace", {"civ": value})
+			if reply.has("_busy"):
+				return
 			if not reply.ok:
 				_set_status(reply.error)
 				return
 			_set_status(reply.result.get("message", ""))
 			big_screen.set_diplomacy(reply.result.get("diplomacy", {}))
 			await refresh()
+
+
+## A request that changes the game, from a button: ignored while another one is under way, so a double click
+## (or a bounce of the trigger) can't buy, trade or adopt twice. Returns {"_busy": true} when ignored.
+func _order(method: String, params: Dictionary = {}) -> Dictionary:
+	if busy:
+		return {"ok": false, "_busy": true, "error": "busy"}
+	busy = true
+	var reply := await bridge.request(method, params)
+	busy = false
+	return reply
+
+
+## [param value]: "civ|action|param" from a civ's diplomacy page.
+func diplomacy_action(value: String) -> void:
+	if busy:
+		return
+	var parts := value.split("|")
+	var civ := parts[0]
+	var action := parts[1]
+	var param := parts[2] if parts.size() > 2 else ""
+	big_screen.diplo_armed = ""
+	var params := {"civ": civ, "action": action}
+	match action:
+		"giftGold":
+			params["gold"] = int(param)
+		"giftImprovement":
+			var bits := param.split(",")
+			params["x"] = int(bits[0])
+			params["y"] = int(bits[1])
+			params["improvement"] = bits[2]
+		"tribute":
+			params["kind"] = param
+		"makeDemand":
+			params["demand"] = param
+	busy = true
+	var reply: Dictionary
+	if action == "peace":
+		reply = await bridge.request("offerPeace", {"civ": civ})
+	else:
+		reply = await bridge.request("diplomacyAction", params)
+	busy = false
+	if not reply.ok:
+		_set_status(reply.error)
+		big_screen.set_diplomacy(big_screen._diplomacy)
+		return
+	_set_status(ActionMenu._plain(str(reply.result.get("message", ""))))
+	big_screen.set_diplomacy(reply.result.get("diplomacy", big_screen._diplomacy))
+	await refresh()
 
 
 func _trade_params() -> Dictionary:
@@ -1098,6 +1308,9 @@ func _fit_table() -> void:
 func click_tile(key: Vector2i) -> void:
 	if busy or state.is_empty() or _in_lobby:
 		return
+	if not _pick.is_empty() and not _city_view:
+		await _pick_tile(key)
+		return
 	if _city_view:
 		await city_view_click(key)
 		return
@@ -1109,6 +1322,10 @@ func click_tile(key: Vector2i) -> void:
 		var pick: Dictionary = own_units[0]
 		if key == selected_key and own_units.size() > 1:
 			var index := own_units.find_custom(func(u: Dictionary) -> bool: return int(u["id"]) == int(selected_unit["id"]))
+			# On your city, clicking past the last unit of the stack opens the city (the next click starts over)
+			if index == own_units.size() - 1 and not _own_city_at(key).is_empty():
+				await open_city(key)
+				return
 			pick = own_units[(index + 1) % own_units.size()]
 		await _select_unit(int(pick["id"]))
 		return
@@ -1171,7 +1388,7 @@ func move_selected_to(key: Vector2i) -> void:
 		_set_status("%s is on its way - it keeps going next turn." % selected_unit["name"])
 	await refresh()
 	if not selected_unit.is_empty() and float(selected_unit.get("movement", 0)) <= 0.0:
-		_select_next_unit()
+		await _after_order()
 
 
 func found_city() -> void:
@@ -1205,7 +1422,7 @@ func attack(key: Vector2i) -> void:
 		_set_status(text)
 	await refresh()
 	if not selected_unit.is_empty() and float(selected_unit.get("movement", 0)) <= 0.0:
-		_select_next_unit()
+		await _after_order()
 
 
 func build_improvement(improvement: String) -> void:
@@ -1223,7 +1440,7 @@ func build_improvement(improvement: String) -> void:
 	else:
 		_set_status("%s: building %s (%d turns)." % [selected_unit["name"], r["improvementInProgress"], int(r["turnsLeft"])])
 	await refresh()
-	_select_next_unit()
+	await _after_order()
 
 
 func _on_menu_chosen(kind: String, value: String) -> void:
@@ -1238,7 +1455,7 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 		"end_turn":
 			await end_turn()
 		"next_idle":
-			await _select_next_unit()
+			await _select_next_unit(false)
 		"next_unit":
 			await cycle_unit(1)
 		"prev_unit":
@@ -1273,8 +1490,20 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 			await open_lobby()
 		"reset_boards":
 			reset_board_poses()
-		"background", "auto_move":
+		"background", "auto_move", "setting_toggle":
 			await change_setting(kind, value)
+		"action_arm":
+			_arm_unit_action(value)
+		"pick_cancel":
+			await cancel_pick()
+		"bombard":
+			_start_bombard_pick()
+		"alert_answer":
+			await answer_alert(value)
+		"great_person":
+			await choose_great_person(value)
+		"vote":
+			await cast_vote(value)
 		"promote":
 			await promote(value)
 
@@ -1337,6 +1566,16 @@ func _smoke_city_view(city_name: String) -> void:
 	print("SMOKE: after Exit city: table buttons %s" % [_table_buttons.filter(func(b: Dictionary) -> bool: return (b["node"] as Node3D).visible).map(func(b: Dictionary) -> String: return b["id"])])
 	var boards_up: bool = (_city_info_holder as CanvasLayer).visible if _city_info_holder is CanvasLayer else (_city_info_holder as Node3D).visible
 	print("SMOKE: left city view: boards hidden=%s, minimap back=%s" % [not boards_up, minimap.visible])
+
+
+## Smoke test: answers Unciv's popups the way a hurried player would (first option), and reports them.
+func _smoke_answer_alerts() -> void:
+	var guard := 0
+	while not state.get("alerts", []).is_empty() and guard < 20:
+		guard += 1
+		var alert: Dictionary = state["alerts"][0]
+		print("SMOKE: message %s '%s' -> %s" % [alert["type"], alert.get("title", ""), alert["options"][0]["id"]])
+		await answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
 
 
 ## Smoke test: waits (up to 5 s) for something a keyboard callback does in the background.
@@ -1536,6 +1775,26 @@ func _refresh_overview() -> void:
 
 func _on_overview_chosen(kind: String, value: String) -> void:
 	match kind:
+		"ov_spy_select":
+			overview_board.selected_spy = "" if overview_board.selected_spy == value else value
+			overview_board.armed = ""
+			overview_board._rebuild()
+			return
+		"ov_spy_move", "ov_spy_coup":
+			var parts := value.split("|")
+			var params := {"spy": parts[0], "confirm": true}
+			if kind == "ov_spy_move" and parts.size() > 1 and parts[1] != "":
+				params["city"] = parts[1]
+			overview_board.armed = ""
+			var reply := await bridge.request("moveSpy" if kind == "ov_spy_move" else "stageCoup", params)
+			if not reply.ok:
+				_set_status(reply.error)
+			else:
+				_set_status("%s: on the way." % parts[0] if kind == "ov_spy_move" else "%s: coup orders given." % parts[0])
+				overview_board.selected_spy = ""
+			await _refresh_overview()
+			await refresh()
+			return
 		"ov_tab":
 			overview_board.show_tab(value)
 			await _refresh_overview()
@@ -1696,6 +1955,7 @@ func exit_city_view() -> void:
 	if not _city_view:
 		return
 	_city_view = false
+	_city_place = {}
 	city_view_data = {}
 	hex_map.show_city({})
 	hex_map.clear_aim()
@@ -1718,7 +1978,51 @@ func exit_city_view() -> void:
 
 ## A click on the table in the city view, like a click on Unciv's city screen: works / stops working the tile,
 ## buys it (second click), or switches to another of your cities.
+## A building that creates an improvement (Unciv's "CreatesOneImprovement") asks where the improvement goes, like
+## Unciv's city screen. Returns true when it now waits for that tile (city_view_click finishes the order).
+func _needs_place_tile(construction: String, method: String, params: Dictionary, queue_index: int) -> bool:
+	if queue_index >= 0:
+		var queue: Array = city_view_data.get("queue", [])
+		if queue_index < queue.size() and (queue[queue_index] as Dictionary).has("tile"):
+			return false   # queued with its tile already
+	for option: Dictionary in city_view_data.get("options", []):
+		if option["name"] != construction or not option.get("needsTile", false):
+			continue
+		var tiles: Array[Vector2i] = []
+		for t: Dictionary in option.get("placeTiles", []):
+			tiles.append(Vector2i(int(t["x"]), int(t["y"])))
+		if tiles.is_empty():
+			_set_status("There's nowhere in %s to put the %s." % [city_view_data.get("name", "the city"), option.get("improvement", "improvement")])
+			return true
+		_city_place = {"method": method, "params": params, "tiles": tiles, "name": construction}
+		hex_map.set_selection(Vector2i(int(city_view_data["x"]), int(city_view_data["y"])), [], tiles)
+		_set_status("Pick the tile for the %s (red rings), or Esc / B to cancel." % option.get("improvement", construction))
+		return true
+	return false
+
+
+func _cancel_city_place() -> void:
+	_city_place = {}
+	hex_map.clear_selection()
+	_set_status("Cancelled.")
+
+
 func city_view_click(key: Vector2i) -> void:
+	if not _city_place.is_empty():
+		var place := _city_place
+		var tiles: Array[Vector2i] = place["tiles"]
+		if key not in tiles:
+			_set_status("Pick one of the ringed tiles (Esc / B cancels).")
+			return
+		_city_place = {}
+		hex_map.clear_selection()
+		var params: Dictionary = (place["params"] as Dictionary).duplicate()
+		params["tileX"] = key.x
+		params["tileY"] = key.y
+		if await _city_request(place["method"], params, "%s: the improvement goes there." % place["name"]):
+			city_prod_board.select_construction("", -1, "")
+			await _refresh_city_view()
+		return
 	var tile := _city_view_tile(key)
 	var tile_state := str(tile.get("state", ""))
 	city_info_board.select_tile(key, hex_map.tiles.get(key, {}))
@@ -1758,7 +2062,7 @@ func _city_view_tile(key: Vector2i) -> Dictionary:
 
 ## Sends a city action (the city is added to [param params]) and shows the updated city. Returns success.
 func _city_request(method: String, params: Dictionary, success_text := "") -> bool:
-	if city_view_data.is_empty():
+	if city_view_data.is_empty() or busy:
 		return false
 	params["name"] = city_view_data["name"]
 	busy = true
@@ -1832,8 +2136,12 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 			if index < queue.size():
 				await _select_city_construction(str(queue[index]["name"]), index)
 		"city_build_now":
+			if _needs_place_tile(value, "setProduction", {"construction": value, "mode": "now"}, -1):
+				return
 			await _city_request("setProduction", {"construction": value, "mode": "now"}, "%s will build %s next." % [city_view_data.get("name", ""), value])
 		"city_queue":
+			if _needs_place_tile(value, "setProduction", {"construction": value, "mode": "queue"}, -1):
+				return
 			await _city_request("setProduction", {"construction": value, "mode": "queue"}, "%s added to the queue." % value)
 		"city_move":
 			var index := int(parts[0])
@@ -1843,6 +2151,8 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 			else:
 				await _city_request("moveInQueue", {"index": index, "to": parts[1]})
 		"city_buy":
+			if _needs_place_tile(parts[0], "buyConstruction", {"construction": parts[0], "stat": parts[1], "queueIndex": int(parts[2])}, int(parts[2])):
+				return
 			if await _city_request("buyConstruction", {"construction": parts[0], "stat": parts[1], "queueIndex": int(parts[2])},
 					"Bought %s." % parts[0]):
 				city_prod_board.select_construction("", -1, "")
@@ -2087,38 +2397,214 @@ func _place_vr_hud() -> void:
 	_hud_label_3d.rotation = Vector3(deg_to_rad(-10), table.rotation.y, 0)
 
 
-func unit_action(action: String) -> void:
-	if _in_lobby:
+## [param value]: "type|title" from the unit card ("|confirm" appended once a risky action is confirmed), or just a type.
+func unit_action(value: String) -> void:
+	if _in_lobby or busy or selected_unit.is_empty():
 		return
-	if busy or selected_unit.is_empty():
+	var parts := value.split("|")
+	var type := parts[0]
+	var title := parts[1] if parts.size() > 1 else ""
+	var confirmed := parts.size() > 2 and parts[2] == "confirm"
+	var action := _unit_action_entry(type, title)
+	if type == "ShowUnitDestination" and action.has("destination"):
+		var where := Vector2i(int(action["destination"]["x"]), int(action["destination"]["y"]))
+		_look_at_tile(where)
+		hex_map.set_aim(where, [], "%s is heading here" % selected_unit.get("name", "The unit"), AIM_MOVE_COLOR)
 		return
+	if action.get("target", "") == "tile":
+		_start_unit_pick(action)
+		return
+	var params := {"unitId": int(selected_unit["id"]), "action": type, "confirm": confirmed}
+	if title != "":
+		params["title"] = title
 	busy = true
-	var reply := await bridge.request("unitAction", {"unitId": int(selected_unit["id"]), "action": action})
+	var reply := await bridge.request("unitAction", params)
 	busy = false
+	await _finish_unit_action(reply, action)
+
+
+func _finish_unit_action(reply: Dictionary, action: Dictionary) -> void:
+	_clear_armed_action()
 	if not reply.ok:
 		_set_status(reply.error)
+		await refresh()
 		return
-	_set_status("%s: done" % action)
+	if not reply.result.get("done", true):
+		_set_status(str(reply.result.get("confirm", "Are you sure?")))
+		return
+	_set_status("%s: %s" % [selected_unit.get("name", "Unit"), _clean_title(str(action.get("title", action.get("type", "done"))))])
 	if not reply.result.get("unitStillExists", true):
 		_deselect()
 	await refresh()
-	if selected_unit.is_empty() or not selected_unit.get("idle", true) or float(selected_unit.get("movement", 0)) <= 0.0:
-		_select_next_unit()
+	if selected_unit.is_empty() or not selected_unit.get("idle", true) or float(selected_unit.get("movement", 0)) <= 0.0 \
+			or not selected_unit.get("due", true):
+		await _after_order()
+
+
+## The getUnit action entry with this type (and title, when there are several), or {}.
+func _unit_action_entry(type: String, title: String) -> Dictionary:
+	var fallback := {}
+	for a: Dictionary in selected_unit.get("actions", []):
+		if a["type"] != type:
+			continue
+		if title == "" or str(a.get("title", "")) == title:
+			return a
+		fallback = a
+	return fallback
+
+
+static func _clean_title(text: String) -> String:
+	return ActionMenu._plain(text.replace("{", "").replace("}", "").replace("[", "").replace("]", ""))
+
+
+## After a unit has its orders: Unciv's "Auto unit cycle" moves on to the next unit that needs some.
+func _after_order() -> void:
+	if settings.get("autoUnitCycle", true):
+		await _select_next_unit()
+
+
+## A risky action's first click (disband, pillage...): both unit cards show it waiting for a second click.
+func _arm_unit_action(key: String) -> void:
+	action_menu.armed_action = key
+	if popup_menu != null:
+		popup_menu.armed_action = key
+	var entry := _unit_action_entry(key.split("|")[0], key.split("|")[1] if key.split("|").size() > 1 else "")
+	_set_status(str(entry.get("confirm", "Click again to confirm.")))
+	_reshow_unit_cards()
+
+
+func _clear_armed_action() -> void:
+	action_menu.armed_action = ""
+	if popup_menu != null:
+		popup_menu.armed_action = ""
+
+
+func _reshow_unit_cards() -> void:
+	if selected_unit.is_empty():
+		return
+	if _xr_mode or selected_city.is_empty():
+		action_menu.show_unit(selected_unit)
+	if _xr_mode and _popup_kind == "unit":
+		_open_unit_popup()
+
+
+# region picking a tile (swap with, road to, bombard...) ----------------------------------------
+
+## A unit action that needs a tile: highlight the choices and wait for a click on one (or Cancel).
+func _start_unit_pick(action: Dictionary) -> void:
+	var targets: Array[Vector2i] = []
+	for t: Dictionary in action.get("targets", []):
+		targets.append(Vector2i(int(t["x"]), int(t["y"])))
+	var title := _clean_title(str(action.get("title", action["type"])))
+	_pick = {"kind": "unit_action", "type": action["type"], "title": str(action.get("title", "")), "targets": targets,
+		"any": not action.has("targets"), "text": title}
+	hex_map.clear_aim()
+	hex_map.set_selection(_selected_key(), [], targets)
+	_set_pick_text("%s: click a %stile" % [title, "highlighted " if not targets.is_empty() else ""])
+	_set_status("%s - click the tile on the map (or Cancel on the card)." % title)
+
+
+## The city's guns: pick one of the enemies in range.
+func _start_bombard_pick() -> void:
+	if selected_city.is_empty():
+		return
+	var targets: Array[Vector2i] = []
+	for t: Dictionary in selected_city.get("bombardTargets", []):
+		targets.append(Vector2i(int(t["x"]), int(t["y"])))
+	if targets.is_empty():
+		_set_status("No enemies in range of %s." % selected_city.get("name", "the city"))
+		return
+	_pick = {"kind": "bombard", "city": str(selected_city["name"]), "targets": targets, "any": false,
+		"key": Vector2i(int(selected_city["x"]), int(selected_city["y"]))}
+	hex_map.clear_aim()
+	hex_map.set_selection(_pick["key"], [], targets)
+	_close_popup()
+	_set_status("Bombard from %s: click a red-ringed enemy (click the city to cancel)." % selected_city["name"])
+
+
+func _set_pick_text(text: String) -> void:
+	action_menu.picking_text = text
+	if popup_menu != null:
+		popup_menu.picking_text = text
+	_reshow_unit_cards()
+
+
+func cancel_pick() -> void:
+	if _pick.is_empty():
+		return
+	var was := _pick
+	_pick = {}
+	_set_pick_text("")
+	if was["kind"] == "unit_action" and not selected_unit.is_empty():
+		await _select_unit(int(selected_unit["id"]), false)
+	else:
+		hex_map.clear_selection()
+	_set_status("Cancelled.")
+
+
+## A click on the map while picking a tile.
+func _pick_tile(key: Vector2i) -> void:
+	var pick := _pick
+	var targets: Array[Vector2i] = pick.get("targets", [] as Array[Vector2i])
+	if not pick.get("any", false) and key not in targets:
+		if pick["kind"] == "bombard" and key == pick["key"]:
+			await cancel_pick()
+		else:
+			_set_status("Pick one of the highlighted tiles (or Cancel).")
+		return
+	_pick = {}
+	_set_pick_text("")
+	match pick["kind"]:
+		"unit_action":
+			if selected_unit.is_empty():
+				return
+			var params := {"unitId": int(selected_unit["id"]), "action": pick["type"], "x": key.x, "y": key.y}
+			if str(pick.get("title", "")) != "":
+				params["title"] = pick["title"]
+			busy = true
+			var reply := await bridge.request("unitAction", params)
+			busy = false
+			await _finish_unit_action(reply, {"type": pick["type"], "title": pick.get("text", pick["type"])})
+		"bombard":
+			busy = true
+			var reply := await bridge.request("cityAttack", {"name": pick["city"], "tileX": key.x, "tileY": key.y})
+			busy = false
+			if not reply.ok:
+				_set_status(reply.error)
+			else:
+				var r: Dictionary = reply.result
+				_set_status("%s bombarded %s: %d damage%s." % [pick["city"], r.get("defender", "?"), int(r.get("damageToDefender", 0)),
+					"  Destroyed!" if r.get("defenderDefeated", false) else ""])
+			hex_map.clear_selection()
+			await refresh()
 
 
 func end_turn() -> void:
-	if _in_lobby:
+	if _in_lobby or busy:
 		return
-	if busy:
-		return
+	# Like Unciv's next-turn button: first whatever still needs deciding (research, production, a message...)
 	busy = true
+	await refresh()
+	busy = false
+	var blockers: Array = state.get("blockers", [])
+	if not blockers.is_empty():
+		await _handle_blocker(blockers[0])
+		return
+	if settings.get("confirmNextTurn", false) and Time.get_ticks_msec() > _end_turn_armed_until:
+		_end_turn_armed_until = Time.get_ticks_msec() + 5000
+		_set_status("End the turn? Press End turn again to confirm.")
+		return
+	_end_turn_armed_until = 0
+	busy = true
+	await cancel_pick()
 	_deselect()
 	_set_status("Ending turn - the AI players are moving...")
 	hex_map.clear_aim()
 	var reply := await bridge.request("endTurn")
 	busy = false
 	if not reply.ok:
-		_set_status("endTurn failed: %s" % reply.error)
+		_set_status(reply.error)
+		await refresh()
 		return
 	var result: Dictionary = reply.result
 	var lines: Array[String] = ["Turn %d" % int(result["turn"])]
@@ -2129,9 +2615,223 @@ func end_turn() -> void:
 		lines.append("- " + str(notes[i]["text"]))
 	_set_status("\n".join(lines))
 	await refresh()
+	if result.get("gameOver", false) or result.get("defeated", false):
+		await show_big_screen("victory")
+		return
 	await _select_next_unit()
 	await _prompt_research_if_needed()
 	await _prompt_policy_if_ready()
+
+
+# region turn blockers, Unciv's popups and pickers ---------------------------------------------
+
+## The End turn button says what's still to do (Unciv's next-turn button: "Pick a tech", "Pick construction"...).
+func _update_turn_button() -> void:
+	var blockers: Array = state.get("blockers", [])
+	for button: Dictionary in _table_buttons:
+		if button["id"] != "end_turn":
+			continue
+		var label: Label3D = button["label"]
+		var material: StandardMaterial3D = button["material"]
+		if blockers.is_empty():
+			label.text = "End turn"
+			label.font_size = 44
+			material.albedo_color = button["color"]
+		else:
+			label.text = ActionMenu._plain(str(blockers[0]["text"]))
+			label.font_size = 32
+			material.albedo_color = Color(0.25, 0.45, 0.8)
+	action_menu.end_turn_text = "End turn" if blockers.is_empty() else ActionMenu._plain(str(blockers[0]["text"]))
+
+
+## Opens whatever the blocker asks for (End turn pressed while something is undecided).
+func _handle_blocker(blocker: Dictionary) -> void:
+	_set_status(ActionMenu._plain(str(blocker.get("text", ""))))
+	match str(blocker.get("type", "")):
+		"AnswerAlerts":
+			_alert_shown_key = ""
+			_maybe_show_alert()
+		"PickGreatPerson":
+			await open_great_people()
+		"PickConstruction":
+			var key := Vector2i(int(blocker["x"]), int(blocker["y"]))
+			_look_at_tile(key)
+			await open_city(key)
+		"PickTech":
+			await show_big_screen("tech")
+		"PickPolicy":
+			await bridge.request("dismissBlocker", {"type": "PickPolicy"})
+			await show_big_screen("policies")
+			await refresh()
+		"MoveSpies":
+			await bridge.request("dismissBlocker", {"type": "MoveSpies"})
+			_set_overview_visible(true)
+			overview_board.show_tab("espionage")
+			await _refresh_overview()
+			await refresh()
+		"FoundPantheon", "ExpandPantheon", "FoundReligion", "EnhanceReligion", "ReformReligion":
+			await show_big_screen("religion")
+		"WorldCongressVote":
+			await open_vote()
+		"NextUnit":
+			if blocker.has("unitId"):
+				await _select_unit(int(blocker["unitId"]))
+
+
+## Shows the oldest of Unciv's popups waiting for you (getState alerts), unless one is on show already.
+func _maybe_show_alert() -> void:
+	if _in_lobby or state.is_empty():
+		return
+	var alerts: Array = state.get("alerts", [])
+	if alerts.is_empty():
+		if _alert_shown_key != "":
+			_close_alert_card()
+		return
+	if _city_view or keyboard_shown() or not _pick.is_empty() or busy:
+		return
+	var alert: Dictionary = alerts[0]
+	if str(alert["key"]) == _alert_shown_key and _alert_card_visible():
+		return
+	_alert_shown_key = str(alert["key"])
+	if alert.has("x"):
+		_look_at_tile(Vector2i(int(alert["x"]), int(alert["y"])))
+	_show_center_card(func(menu: ActionMenu) -> void: menu.show_alert(alert, alerts.size() - 1), "alert",
+		Vector2i(int(alert["x"]), int(alert["y"])) if alert.has("x") else Vector2i(999999, 999999))
+
+
+func _alert_card_visible() -> bool:
+	if _xr_mode:
+		return _popup_kind in ["alert", "alert_tile"]
+	return _alert_layer != null and _alert_layer.visible
+
+
+## A card for a popup or picker: floating over the table (or above [param tile]) in VR, mid-window on the desktop.
+func _show_center_card(fill: Callable, kind: String, tile := Vector2i(999999, 999999)) -> void:
+	if _xr_mode:
+		_popup_kind = kind + ("_tile" if tile.x != 999999 and kind == "alert" else "")
+		_popup_key = tile
+		_popup_unit_id = -1
+		fill.call(popup_menu)
+		_update_popup_panel()
+	else:
+		_ensure_alert_menu()
+		fill.call(alert_menu)
+		_alert_layer.visible = true
+
+
+func _close_alert_card() -> void:
+	_alert_shown_key = ""
+	if _xr_mode:
+		if _popup_kind in ["alert", "alert_tile", "great_person", "vote"]:
+			_close_popup()
+			if not selected_unit.is_empty():
+				_open_unit_popup()
+	elif _alert_layer != null:
+		_alert_layer.visible = false
+
+
+func _ensure_alert_menu() -> void:
+	if alert_menu != null:
+		return
+	_alert_layer = CanvasLayer.new()
+	_alert_layer.layer = 6
+	add_child(_alert_layer)
+	alert_menu = ActionMenu.new()
+	alert_menu.compact = true
+	alert_menu.custom_minimum_size = Vector2(460, 0)
+	alert_menu.chosen.connect(_on_menu_chosen)
+	_alert_layer.add_child(alert_menu)
+	var place := func() -> void:
+		await get_tree().process_frame
+		alert_menu.reset_size()
+		var window := get_viewport().get_visible_rect().size
+		alert_menu.position = Vector2((window.x - alert_menu.size.x) / 2.0, 90)
+	alert_menu.layout_changed.connect(place)
+	get_viewport().size_changed.connect(place)
+	alert_menu.civ_info = action_menu.civ_info
+
+
+## [param value]: "<alert key>|<option id>" (the key has a "|" of its own, so the option is after the last one).
+func answer_alert(value: String) -> void:
+	if busy:
+		return
+	var at := value.rfind("|")
+	var key := value.left(at)
+	var option := value.substr(at + 1)
+	busy = true
+	var reply := await bridge.request("answerAlert", {"key": key, "option": option})
+	busy = false
+	_alert_shown_key = ""
+	_close_alert_card()
+	if not reply.ok:
+		_set_status(reply.error)
+		await refresh()
+		return
+	var result: Dictionary = reply.result
+	if str(result.get("message", "")) != "":
+		_set_status(str(result["message"]))
+	if option == "victory":
+		await show_big_screen("victory")
+	elif option == "counter" and result.has("civ"):
+		# "How about something else...": their offer goes on the trade table, to change and propose back
+		await show_big_screen("diplomacy")
+		var options_reply := await bridge.request("getTradeOptions", {"civ": result["civ"]})
+		if options_reply.ok:
+			big_screen.open_trade(options_reply.result)
+			big_screen.stage_trade(result.get("ours", []), result.get("theirs", []))
+			await _on_big_screen_chosen("trade_changed", "")
+	await refresh()
+	if _city_view:
+		await _refresh_city_view()
+
+
+## Unciv's free great person picker.
+func open_great_people() -> void:
+	var reply := await bridge.request("getGreatPersonChoices")
+	if not reply.ok:
+		_set_status(reply.error)
+		return
+	_show_center_card(func(menu: ActionMenu) -> void: menu.show_great_people(reply.result), "great_person")
+
+
+func choose_great_person(unit_name: String) -> void:
+	if busy:
+		return
+	busy = true
+	var reply := await bridge.request("chooseGreatPerson", {"unit": unit_name})
+	busy = false
+	if not reply.ok:
+		_set_status(reply.error)
+		return
+	_close_alert_card()
+	_set_status("A %s has been born!" % unit_name)
+	await refresh()
+	for u: Dictionary in state.get("units", []):
+		if u["name"] == unit_name:
+			await _select_unit(int(u["id"]))
+
+
+## The World Congress vote for world leader.
+func open_vote() -> void:
+	var reply := await bridge.request("getVoteChoices")
+	if not reply.ok:
+		_set_status(reply.error)
+		return
+	_show_center_card(func(menu: ActionMenu) -> void: menu.show_vote(reply.result), "vote")
+
+
+func cast_vote(civ_name: String) -> void:
+	if busy:
+		return
+	busy = true
+	var reply := await bridge.request("vote", {"civ": civ_name} if civ_name != "" else {})
+	busy = false
+	if not reply.ok:
+		_set_status(reply.error)
+		return
+	_close_alert_card()
+	_set_status("You voted for %s." % civ_name if civ_name != "" else "You abstained.")
+	await refresh()
 
 
 func _select_unit(unit_id: int, focus := true) -> void:
@@ -2141,6 +2841,13 @@ func _select_unit(unit_id: int, focus := true) -> void:
 		return
 	if selected_unit.is_empty() or int(selected_unit["id"]) != unit_id:
 		hex_map.clear_aim()
+		# Picking a different unit (Next unit, a click...) abandons a half-done tile pick of the old one,
+		# or a city's bombard - otherwise the next map click would do it with the wrong unit
+		if focus and not _pick.is_empty():
+			_pick = {}
+			action_menu.picking_text = ""
+			if popup_menu != null:
+				popup_menu.picking_text = ""
 	selected_unit = reply.result
 	var reachable: Array[Vector2i] = []
 	for t: Dictionary in selected_unit.get("reachable", []):
@@ -2154,7 +2861,9 @@ func _select_unit(unit_id: int, focus := true) -> void:
 	# A refresh (focus = false) mustn't close an open city card - on the desktop that card is this same panel
 	if focus or _xr_mode or selected_city.is_empty():
 		action_menu.show_unit(selected_unit)
-	if focus:
+	if focus and _auto_selecting and _popup_kind in DECISION_CARDS:
+		pass   # chosen automatically: the waiting popup stays up (the wrist card shows the unit)
+	elif focus:
 		# You picked this unit: its card pops up above it (replacing any other popup), or its
 		# promotion choice the first time this turn it has earned one
 		if selected_unit.get("canPromote", false) and _promotion_prompted.get(unit_id, -1) != int(state.get("turn", 0)):
@@ -2174,27 +2883,51 @@ func _select_unit(unit_id: int, focus := true) -> void:
 	_update_hud()
 
 
-func _select_next_unit() -> void:
+## [param automatic]: chosen for the player (after an order, a new turn...) rather than asked for with Next idle.
+## In VR an automatic pick doesn't cover a popup that's waiting for an answer (there's one floating card).
+func _select_next_unit(automatic := true) -> void:
 	if _in_lobby:
 		return
+	_auto_selecting = automatic
 	var units: Array = state.get("units", [])
 	var candidates := units.filter(func(u: Dictionary) -> bool:
 		return u.get("idle", false) and float(u.get("movement", 0)) > 0.0)
 	if candidates.is_empty():
+		_auto_selecting = false
 		_deselect()
 		return
 	var start := 0
 	if not selected_unit.is_empty():
 		var current := candidates.find_custom(func(u: Dictionary) -> bool: return int(u["id"]) == int(selected_unit["id"]))
 		start = (current + 1) % candidates.size()
+		if settings.get("alternateUnitCycleOrder", false) and candidates.size() > 1:
+			# Unciv's "Cycle idle units by distance": the nearest one that isn't this one
+			var here := _selected_key()
+			var best := -1
+			var best_distance := INF
+			for i in candidates.size():
+				if int(candidates[i]["id"]) == int(selected_unit["id"]):
+					continue
+				var d := Vector2(int(candidates[i]["x"]) - here.x, int(candidates[i]["y"]) - here.y).length()
+				if d < best_distance:
+					best_distance = d
+					best = i
+			if best >= 0:
+				start = best
 	await _select_unit(int(candidates[start]["id"]))
+	_auto_selecting = false
 
 
 func _deselect() -> void:
+	if not _pick.is_empty():
+		_pick = {}
+		_set_pick_text("")
+	_clear_armed_action()
 	hex_map.clear_aim()
 	selected_unit = {}
 	selected_city = {}
-	_close_popup()
+	if _popup_kind not in DECISION_CARDS:   # a popup waiting for an answer isn't about the selection
+		_close_popup()
 	hex_map.clear_selection()
 	action_menu.show_unit({})
 	_update_hud()
@@ -2397,7 +3130,13 @@ func _run_smoke_test() -> void:
 			await unit_action("Explore")
 			break
 	for i in 3:
+		await _smoke_answer_alerts()
+		var turn_before := int(state.get("turn", 0))
 		await end_turn()
+		if int(state.get("turn", 0)) == turn_before:
+			print("SMOKE: End turn waited for: %s (status '%s')" % [state.get("blockers", []).map(func(b: Dictionary) -> String: return b["type"]), _status_text])
+			await _smoke_answer_alerts()
+			await end_turn()
 		var where: Array = state.get("units", []).filter(func(u: Dictionary) -> bool: return int(u["id"]) == explorer_id)
 		print("SMOKE: ", _status_text.split("\n")[0], "  explorer at ",
 			"(%d,%d)" % [int(where[0]["x"]), int(where[0]["y"])] if not where.is_empty() else "-")
@@ -2591,7 +3330,7 @@ func _update_popup_panel() -> void:
 	var base: Vector3
 	var lift := 0.06   # gap between the anchor and the bottom of the card
 	match _popup_kind:
-		"settings", "research", "lobby":
+		"settings", "research", "lobby", "alert", "great_person", "vote":
 			base = table.to_global(Vector3(0, 0, 0))   # over the middle of the table
 			lift = 0.12
 		"unit", "promotion":
@@ -2643,12 +3382,32 @@ func _save_settings() -> void:
 
 ## Tells the bridge about settings that live in the game engine.
 func _send_bridge_settings() -> void:
-	var reply := await bridge.request("setSettings", {"automatedUnitsMoveOnTurnStart": settings["auto_move"] == "start"})
+	var params := {"automatedUnitsMoveOnTurnStart": settings["auto_move"] == "start"}
+	for key: String in BRIDGE_SETTINGS:
+		params[key] = bool(settings.get(key, false))
+	var reply := await bridge.request("setSettings", params)
 	if not reply.ok:
 		push_warning("setSettings failed: %s" % reply.error)
 
 
+## Unciv options the game engine itself reads (sent with setSettings)
+const BRIDGE_SETTINGS := ["checkForDueUnits", "autoUnitCycle", "alternateUnitCycleOrder", "autoAssignCityProduction",
+	"autoBuildingRoads", "automatedWorkersReplaceImprovements", "stopAutomatedWorkersRemoveVegetation",
+	"automatedUnitsCanUpgrade", "automatedUnitsChoosePromotions", "citiesAutoBombardAtEndOfTurn", "autoAssignSpecialistsInNewCities"]
+
+
 func change_setting(key: String, value: String) -> void:
+	if key == "setting_toggle":
+		settings[value] = not bool(settings.get(value, false))
+		_save_settings()
+		if value in BRIDGE_SETTINGS:
+			await _send_bridge_settings()
+			await refresh()   # e.g. "Check for idle units" changes what End turn waits for
+		action_menu.keep_scroll_once = true
+		if popup_menu != null:
+			popup_menu.keep_scroll_once = true
+		open_settings()
+		return
 	settings[key] = value
 	_save_settings()
 	match key:
@@ -2708,7 +3467,8 @@ func _setup_table_buttons() -> void:
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		label.position = Vector3(0, 0.035, 0)
 		node.add_child(label)
-		_table_buttons.append({"id": spec[0], "node": node, "material": material, "radius": mesh.bottom_radius})
+		_table_buttons.append({"id": spec[0], "node": node, "material": material, "radius": mesh.bottom_radius,
+			"label": label, "color": spec[2]})
 
 
 ## The id of the table button a ray points at, or "".
@@ -2754,7 +3514,7 @@ func press_table_button(id: String) -> void:
 		"next_unit":
 			await cycle_unit(1)
 		"next_idle":
-			await _select_next_unit()
+			await _select_next_unit(false)
 		"research":
 			await open_research()
 		"end_turn":
@@ -2987,7 +3747,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F:
 				found_city()
 			KEY_N:
-				_select_next_unit()
+				_select_next_unit(false)
 			KEY_TAB:
 				cycle_unit(-1 if (event as InputEventKey).shift_pressed else 1)
 			KEY_T:
@@ -3005,7 +3765,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_O:
 				open_settings()
 			KEY_ESCAPE:
-				if _city_view:
+				if not _pick.is_empty():
+					await cancel_pick()
+				elif not _city_place.is_empty():
+					_cancel_city_place()
+				elif _city_view:
 					exit_city_view()
 				elif not _xr_mode and _overview_shown():
 					_set_overview_visible(false)
@@ -3148,9 +3912,17 @@ func _process_xr(delta: float) -> void:
 			_drag_distance = clampf(_drag_distance + right_stick.y * delta * 0.8, 0.25, 3.0)
 			_drag_moved = true
 		_update_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z)
+	elif right_trigger and _pointed_panel != null and (_trigger_scrollbar != null or _pointed_panel.scrollbar_at(_pointed_pixel) != null):
+		# Trigger held on a scrollbar: its handle follows the pointer (and letting go doesn't click)
+		if _trigger_scrollbar == null:
+			_trigger_scrollbar = _pointed_panel.scrollbar_at(_pointed_pixel)
+		WorldPanel.scroll_to(_trigger_scrollbar, _pointed_pixel)
+		_right_trigger_used_for_zoom = true
 	elif right_trigger and absf(right_stick.y) > 0.25:
 		_zoom_view(1.0 - right_stick.y * delta * 1.2)   # up = zoom in
 		_right_trigger_used_for_zoom = true
+	if not right_trigger:
+		_trigger_scrollbar = null
 	if left_trigger and absf(left_stick.y) > 0.25:
 		_zoom_view(1.0 - left_stick.y * delta * 1.2)
 
@@ -3244,6 +4016,10 @@ func _on_xr_button(is_right: bool, button: String) -> void:
 			"by_button":
 				if keyboard_shown():
 					_close_keyboard()
+				elif not _pick.is_empty():
+					await cancel_pick()
+				elif not _city_place.is_empty():
+					_cancel_city_place()
 				elif _city_view:
 					await exit_city_view()
 				else:

@@ -7,6 +7,10 @@ extends RefCounted
 ## (../unciv). Output goes to logs/bridge.log inside the client folder.
 ## Uses Gradle, so the bridge is rebuilt automatically whenever its code has changed.
 
+## A bridge we launched quits by itself once no client has been connected for this long, so one orphaned
+## by a crash or a force-stop from the editor doesn't keep running (and serving old code) for days.
+const IDLE_EXIT_SECONDS := 180
+
 var pid := -1
 var log_path := ""
 var error := ""
@@ -40,7 +44,7 @@ func launch(port: int) -> bool:
 			"@echo off",
 			"set \"JAVA_HOME=%s\"" % jdk.replace("/", "\\"),
 			"cd /d \"%s\"" % unciv.replace("/", "\\"),
-			"call gradlew.bat :bridge:run --console=plain --args=\"--port %d\" > \"%s\" 2>&1" % [port, log_path.replace("/", "\\")],
+			"call gradlew.bat :bridge:run --console=plain --args=\"--port %d --exit-when-idle %d\" > \"%s\" 2>&1" % [port, IDLE_EXIT_SECONDS, log_path.replace("/", "\\")],
 		]) + "\r\n"
 		var file := FileAccess.open(bat, FileAccess.WRITE)
 		if file == null:
@@ -50,7 +54,7 @@ func launch(port: int) -> bool:
 		file.close()
 		pid = OS.create_process("cmd.exe", ["/c", bat.replace("/", "\\")])
 	else:
-		var command := "cd '%s' && ./gradlew :bridge:run --console=plain --args='--port %d' > '%s' 2>&1" % [unciv, port, log_path]
+		var command := "cd '%s' && ./gradlew :bridge:run --console=plain --args='--port %d --exit-when-idle %d' > '%s' 2>&1" % [unciv, port, IDLE_EXIT_SECONDS, log_path]
 		pid = OS.create_process("sh", ["-c", command])
 
 	if pid <= 0:

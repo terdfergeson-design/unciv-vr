@@ -9,8 +9,11 @@ Open this folder in Godot (Import → select `project.godot`) and press **F5** (
 
 - **The bridge starts by itself.** If nothing is listening on port 8765, the client finds a JDK 17+
   (JDK 21 recommended), runs `gradlew :bridge:run` in `../unciv` (rebuilding the bridge if its
-  code changed) and shuts it down when you quit. Its output goes to `logs/bridge.log`.
-  A bridge you started by hand is used as-is and left running.
+  code changed) and shuts it down when you quit (it saves the game as the autosave first). Its output goes to
+  `logs/bridge.log`. A bridge you started by hand is used as-is and left running.
+- **Left-over bridges are replaced.** If a bridge from an earlier session is still running old code (say the
+  client was force-stopped from the editor), the client saves its game, stops it and starts a fresh one.
+  A bridge the client started also quits by itself after three minutes with no client connected.
 - **VR:** have your headset's OpenXR runtime running (SteamVR or Meta Quest Link) before pressing F5.
 - **Desktop:** works with no headset. To skip the OpenXR check, add `--xr-mode off` to
   Project → Project Settings → Editor → Run → Main Run Args.
@@ -43,6 +46,31 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Shortcuts | Space end turn, F found city, Tab / Shift+Tab next / previous unit, N idle unit, T tech tree, P policies, G diplomacy, O settings, Esc close the big screen / deselect, R refresh | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
 
 The right trigger clicks when you let go of it (so holding it to zoom doesn't click anything).
+### Turns, popups and decisions
+Like Unciv's next-turn button, **End turn** first takes you to whatever still needs deciding, and its label says
+what: a message to answer, a free great person to pick, a city with nothing to build, research, a policy, spies to
+place, a pantheon or religion to found, a World Congress vote, or a unit still waiting for orders. With "Confirm next turn" on, it takes a second press.
+
+Unciv's popups (first contact, declarations of friendship, demands, trade requests, a city you've conquered,
+wonders, golden ages, great people, victory and defeat...) come up as a card in the middle of the window, or
+floating over the table (above the place they're about, if any) in VR, with Unciv's choices. They wait while
+you're in the city view, typing, or picking a tile, and come back after a save and load. A conquered city offers
+annex, puppet, raze or liberate, as Unciv would.
+
+**Unit actions** are all of Unciv's (found, build, automate, explore, fortify, sleep, pillage, upgrade, promote,
+escort, swap, connect road, disband...). Ones that need a tile (Swap, Connect road...) highlight the choices and
+wait for a click on the map; Cancel on the card, B or Esc gives up, and so does picking another unit. Risky ones
+(disband, pillage...) ask for a second click. A city with an enemy in range can
+**Bombard** from its card.
+
+The big screen also has **Religion** (Unciv's pantheon / religion pickers: beliefs per slot, symbol and name -
+the name on the on-screen keyboard) and **Victory** (each victory's progress, rankings, the score / stats charts
+over time, demographics; One more turn after a win). Its diplomacy tab opens a page per civ: city-states take
+gifts of gold or an improvement, protection, tribute demands and marriage; major civs take declarations of
+friendship, denouncements, demands, and trades, which they accept, decline or answer with a counter-offer you
+can change and send back. The empire overview's **Espionage** tab moves spies and stages coups.
+
+### The big screen
 The **big screen** above them switches between the **technology tree** (click a tech to research it, or to
 queue it and its prerequisites), **policies** (laid out like Unciv's policy screen with its symbols: click one to see its name and effects
 along the bottom, then Adopt) and **diplomacy** (everyone you've met; Trade opens a deal screen where they
@@ -107,6 +135,13 @@ Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-siz
 headset; `--fake-pitch=-12` tilts the fake head, `--fake-look=-60` turns it right before the screenshot), `--background=studio|mountains|space` (not saved),
 `--overlays=all` or e.g. `--overlays=movement,yields` (turns those map overlays on for this run, not saved).
 
+For testing (needs a bridge started by hand with `--debug`, so use `--no-launch`): `--scenario=<name>` sets up
+a situation from `scripts/dev_scenarios.gd` and plays through it the way a player would, printing `SCENARIO:`
+lines (blockers, alerts, alerts_show, conquest, religion, great_person, victory, diplomacy, unit_actions, bombard,
+espionage, and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
+double clicks, popups arriving while something else is open, save and load mid-decision - each printed as OK or
+PROBLEM). `--then=step,step:arg` runs more of its steps afterwards (e.g. `--then=save_load,conquest_answer:puppet`).
+
 Settings are saved in Godot's user folder (`user://settings.cfg`).
 
 ## Files
@@ -121,7 +156,7 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/minimap.gd`: the overview at the far edge of the table, with the map-overlay buttons
 - `scripts/map_overlays.gd`: Unciv's five map overlays drawn on the table (movement arrows, yields, worked tiles,
   resource / improvement symbols, improvement models and roads)
-- `scripts/big_screen.gd`: the big screen: tech tree, policies, diplomacy and trading
+- `scripts/big_screen.gd`: the big screen: tech tree, policies, diplomacy and trading, religion, victory
 - `scripts/city_boards.gd`: the city view's two boards (the city, and its production)
 - `scripts/overview_board.gd`: the empire overview (Unciv's Empire Overview tabs)
 - `scripts/keyboard.gd`: the on-screen keyboard for names (cities, units, saves)
@@ -129,6 +164,7 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
   and makes the round coloured badges
 - `scripts/info_panel.gd`: the info board: civ numbers and the pointed-at tile, colour-coded like Unciv
 - `scripts/main.gd`: game flow, table buttons, popups, desktop camera, XR rig, HUD and input
+- `scripts/dev_scenarios.gd`: the `--scenario` test situations (developers only)
 
 ## Developer overrides
 `override.cfg` next to `project.godot` (not committed) can change settings for local runs, e.g.

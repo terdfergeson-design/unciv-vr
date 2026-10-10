@@ -196,3 +196,22 @@ static func disc(color: Color) -> Texture2D:
 	var texture := ImageTexture.create_from_image(out)
 	_textures[key] = texture
 	return texture
+
+
+## Scrollbars wide enough to point at with a laser, with a visible handle to drag.
+static func thick_scrollbars(scroll: ScrollContainer) -> void:
+	for bar: ScrollBar in [scroll.get_h_scroll_bar(), scroll.get_v_scroll_bar()]:
+		var track := StyleBoxFlat.new()
+		track.bg_color = Color(0.12, 0.14, 0.2)
+		track.set_corner_radius_all(9)
+		var handle := StyleBoxFlat.new()
+		handle.bg_color = Color(0.45, 0.52, 0.66)
+		handle.set_corner_radius_all(9)
+		var handle_hot := handle.duplicate() as StyleBoxFlat
+		handle_hot.bg_color = Color(0.62, 0.7, 0.85)
+		bar.add_theme_stylebox_override("scroll", track)
+		bar.add_theme_stylebox_override("scroll_focus", track)
+		bar.add_theme_stylebox_override("grabber", handle)
+		bar.add_theme_stylebox_override("grabber_highlight", handle_hot)
+		bar.add_theme_stylebox_override("grabber_pressed", handle_hot)
+		bar.custom_minimum_size = Vector2(18, 18)

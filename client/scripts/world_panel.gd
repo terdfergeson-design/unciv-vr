@@ -70,6 +70,32 @@ func hover(pixel: Vector2) -> void:
 	viewport.push_input(motion)
 
 
+## The scrollbar under [param pixel] (this panel's pixels), or null. A laser can't drag a scrollbar's handle
+## (clicks are a press and release at once), so main.gd moves it with [method scroll_to] while the trigger is held.
+func scrollbar_at(pixel: Vector2) -> ScrollBar:
+	return _scrollbar_in(content, pixel) if content != null else null
+
+
+func _scrollbar_in(node: Node, pixel: Vector2) -> ScrollBar:
+	for child in node.get_children():
+		if child is CanvasItem and not (child as CanvasItem).visible:
+			continue
+		if child is ScrollBar and (child as ScrollBar).get_global_rect().grow(4).has_point(pixel):
+			return child
+		var found := _scrollbar_in(child, pixel)
+		if found != null:
+			return found
+	return null
+
+
+## Moves [param bar] so the part of the page under [param pixel] comes into view (like dragging its handle there).
+static func scroll_to(bar: ScrollBar, pixel: Vector2) -> void:
+	var rect := bar.get_global_rect()
+	var ratio := (pixel.x - rect.position.x) / maxf(1.0, rect.size.x) if bar is HScrollBar else (pixel.y - rect.position.y) / maxf(1.0, rect.size.y)
+	var span := bar.max_value - bar.min_value
+	bar.value = clampf(bar.min_value + clampf(ratio, 0.0, 1.0) * span - bar.page / 2.0, bar.min_value, bar.max_value - bar.page)
+
+
 func click(pixel: Vector2) -> void:
 	for pressed in [true, false]:
 		var event := InputEventMouseButton.new()

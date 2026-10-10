@@ -106,6 +106,7 @@ func _ready() -> void:
 	box.add_child(_subtitle)
 
 	_scroll = ScrollContainer.new()
+	Icons.thick_scrollbars(_scroll)
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	box.add_child(_scroll)
@@ -495,6 +496,10 @@ func _build_tile_footer() -> void:
 	for child in buttons.get_children():
 		(child as Button).disabled = (child as Button).disabled or not can_change
 		(child as Button).size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# In a wrapping row a button is only as wide as its minimum size, which clipped text would make zero
+	for button: Button in buttons.get_children():
+		button.clip_text = false
+		button.custom_minimum_size = Vector2(0, 44)
 	if buttons.get_child_count() > 0:
 		_footer.add_child(buttons)
 
@@ -615,6 +620,11 @@ func _build_construction_footer() -> void:
 	description.add_theme_color_override("default_color", TEXT)
 	description.text = _plain(construction_description) if construction_description != "" else "..."
 	_footer.add_child(description)
+	if option.get("needsTile", false):
+		var place := "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy." % option.get("improvement", "improvement")
+		if queue_entry.has("tile"):
+			place = "Its %s goes on the ringed tile picked when it was queued." % option.get("improvement", "improvement")
+		_footer.add_child(_plain_label(place, 16, DIM))
 
 	var can_change: bool = city.get("canChange", true)
 	var buttons := HFlowContainer.new()
@@ -651,6 +661,10 @@ func _build_construction_footer() -> void:
 			var sell := _button("Sell for %d gold" % int(built["sellGold"]), func() -> void: chosen.emit("city_arm", sell_key), Color(0.42, 0.18, 0.15), 18)
 			sell.disabled = not built.get("canSell", false)
 			buttons.add_child(sell)
+	# In a wrapping row a button is only as wide as its minimum size, which clipped text would make zero
+	for button: Button in buttons.get_children():
+		button.clip_text = false
+		button.custom_minimum_size = Vector2(0, 44)
 	if buttons.get_child_count() > 0:
 		_footer.add_child(buttons)
 

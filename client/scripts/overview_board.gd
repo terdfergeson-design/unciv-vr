@@ -23,6 +23,7 @@ const TABS := [
 	["units", "Units", "other", "Shield"], ["politics", "Politics", "other", "Politics"],
 	["resources", "Resources", "stat", "Happiness"], ["religion", "Religion", "stat", "Faith"],
 	["wonders", "Wonders", "other", "Wonders"], ["notifications", "Notifications", "other", "Notifications"],
+	["espionage", "Espionage", "other", "Spy"],
 ]
 const TEXT := Color(0.92, 0.94, 0.97)
 const DIM := Color(0.66, 0.7, 0.78)
@@ -106,23 +107,26 @@ func _ready() -> void:
 	box.add_child(bar)
 	for t: Array in TABS:
 		var id: String = t[0]
-		var button := _button(t[1], func() -> void: chosen.emit("ov_tab", id), BUTTON, 18)
+		var button := _button(t[1], func() -> void: chosen.emit("ov_tab", id), BUTTON, 16)
 		button.icon = Icons.get_icon(t[2], t[3])
-		button.add_theme_constant_override("icon_max_width", 26)
-		button.custom_minimum_size = Vector2(148, 46)
+		button.add_theme_constant_override("icon_max_width", 24)
+		# All the tabs share the board's width (wider than that, the whole board would spill off its edge)
+		button.custom_minimum_size = Vector2(0, 46)
 		button.clip_text = true
-		button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		bar.add_child(button)
 		_tab_buttons[id] = button
+	# The tab's own summary line (turn, unit supply...) goes under the tabs, right-aligned
 	_header = Label.new()
-	_header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_header.add_theme_font_size_override("font_size", 16)
 	_header.add_theme_color_override("font_color", DIM)
-	bar.add_child(_header)
+	_header.clip_text = true
+	box.add_child(_header)
 
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	Icons.thick_scrollbars(_scroll)
 	box.add_child(_scroll)
 	_body = VBoxContainer.new()
 	_body.add_theme_constant_override("separation", 4)
@@ -191,6 +195,79 @@ func _rebuild() -> void:
 		"religion": _build_religion()
 		"wonders": _build_wonders()
 		"notifications": _build_notifications()
+		"espionage": _build_espionage()
+
+
+# region espionage ----------------------------------------------------------------------------
+# Unciv's espionage overview: pick a spy on the left, then where it should go on the right.
+
+var selected_spy := ""
+
+
+func _build_espionage() -> void:
+	var spies: Array = data.get("spies", [])
+	if spies.is_empty():
+		_body.add_child(_label("You have no spies yet - they come with new eras.", 20, DIM))
+		return
+	if selected_spy != "" and spies.filter(func(s: Dictionary) -> bool: return s["name"] == selected_spy).is_empty():
+		selected_spy = ""
+	var columns := HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 20)
+	_body.add_child(columns)
+	var left := VBoxContainer.new()
+	left.custom_minimum_size = Vector2(560, 0)
+	left.add_theme_constant_override("separation", 4)
+	columns.add_child(left)
+	left.add_child(_label("Spies (pick one, then where it goes)", 18, HEADER))
+	for spy: Dictionary in spies:
+		var spy_name: String = spy["name"]
+		var text := "%s  (rank %d)  -  %s  -  %s%s" % [spy_name, int(spy.get("rank", 1)), spy.get("location", "?"), spy.get("action", ""),
+			"  %d turns" % int(spy["turns"]) if spy.has("turns") else ""]
+		var button := _button(text, func() -> void: chosen.emit("ov_spy_select", spy_name),
+			SELECTED if spy_name == selected_spy else BUTTON, 16)
+		button.disabled = not spy.get("alive", true)
+		button.clip_text = true
+		left.add_child(button)
+		if spy.get("canCoup", false):
+			var key := "coup:" + spy_name
+			var coup_text := "Call off the coup" if spy.get("stagingCoup", false) else (
+				"Click again: stage a coup (%d%% chance)" % int(spy.get("coupChance", 0)) if armed == key else "Stage a coup (%d%% chance)" % int(spy.get("coupChance", 0)))
+			left.add_child(_button(coup_text, func() -> void:
+				if spy.get("stagingCoup", false) or armed == key:
+					chosen.emit("ov_spy_coup", spy_name)
+				else:
+					arm(key), Color(0.5, 0.2, 0.15) if armed == key else Color(0.35, 0.22, 0.2), 15))
+	var right := VBoxContainer.new()
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	right.add_theme_constant_override("separation", 3)
+	columns.add_child(right)
+	right.add_child(_label("Where to" if selected_spy != "" else "Cities", 18, HEADER))
+	if selected_spy != "":
+		right.add_child(_button("Spy hideout (bring %s home)" % selected_spy, func() -> void: chosen.emit("ov_spy_move", selected_spy + "|"), BUTTON, 16))
+	for city: Dictionary in data.get("cities", []):
+		var city_name: String = city["name"]
+		var here: Array = city.get("spies", [])
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 6)
+		var info := _label("%s (%s)%s" % [city_name, city.get("civ", ""), "   spies: " + ", ".join(here) if not here.is_empty() else ""], 16,
+			GOOD if city.get("own", false) else TEXT)
+		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		info.clip_text = true
+		row.add_child(info)
+		if selected_spy != "":
+			var key := "spymove:%s|%s" % [selected_spy, city_name]
+			var can: bool = selected_spy in city.get("canMoveHere", [])
+			var warn := str(city.get("promiseWarning", ""))
+			var move := _button("Click again (%s)" % warn if armed == key and warn != "" else "Move here", func() -> void:
+				if warn != "" and armed != key:
+					arm(key)
+				else:
+					chosen.emit("ov_spy_move", "%s|%s" % [selected_spy, city_name] + ("|confirm" if warn != "" else "")),
+				Color(0.5, 0.3, 0.12) if armed == key else Color(0.2, 0.36, 0.24), 15)
+			move.disabled = not can
+			move.custom_minimum_size = Vector2(150 if armed != key else 420, 36)
+			row.add_child(move)
+		right.add_child(row)
 
 
 # region cities -------------------------------------------------------------------------------
@@ -203,7 +280,7 @@ func _build_cities() -> void:
 	var religion: bool = data.get("religionEnabled", false)
 	var cols: Array = [
 		["name", "Name", 200.0, null], ["status", "", 44.0, Icons.get_icon("other", "CityStatus")],
-		["construction", "Building", 270.0, null], ["population", "", 64.0, Icons.get_icon("stat", "Population")],
+		["construction", "Building", 250.0, null], ["population", "", 64.0, Icons.get_icon("stat", "Population")],
 	]
 	for stat: String in ["food", "gold", "science", "production", "culture", "happiness"] + (["faith"] if religion else []):
 		cols.append([stat, "", 64.0, Icons.get_icon("stat", stat.capitalize())])
@@ -443,7 +520,7 @@ func _build_units() -> void:
 	var cols: Array = [["name", "Name", 230.0, null], ["action", "Doing", 170.0, null],
 		["strength", "", 64.0, Icons.get_icon("stat", "Strength")], ["rangedStrength", "", 64.0, Icons.get_icon("stat", "RangedStrength")],
 		["movement", "", 90.0, Icons.get_icon("stat", "Movement")], ["closestCity", "Closest city", 160.0, null],
-		["promotions", "Promotions", 230.0, null], ["upgrade", "Upgrade", 200.0, null], ["health", "Health", 80.0, null], ["xp", "XP", 90.0, null]]
+		["promotions", "Promotions", 220.0, null], ["upgrade", "Upgrade", 200.0, null], ["health", "Health", 80.0, null], ["xp", "XP", 90.0, null]]
 	_sort(units, {"name": func(u: Dictionary) -> Variant: return str(u["name"]),
 		"action": func(u: Dictionary) -> Variant: return str(u.get("action", "")),
 		"movement": func(u: Dictionary) -> Variant: return int(u.get("maxMovement", 0)),
@@ -900,6 +977,8 @@ func _row(cols: Array, cells: Array, index: int, background := Color(-1, 0, 0)) 
 		content.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		if content is Button:
 			(content as Button).clip_text = true   # fits its column
+		elif content is Label:
+			(content as Label).clip_text = true   # (a long text would otherwise widen its column, and the table past the board)
 		cell.add_child(content)
 		row.add_child(cell)
 	return holder

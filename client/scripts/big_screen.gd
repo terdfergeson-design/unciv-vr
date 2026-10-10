@@ -13,13 +13,20 @@ extends PanelContainer
 ##   "war_arm" (civ - first click on Declare war), "declare_war" (civ - the confirming second click),
 ##   "offer_peace" (civ), "trade_open" (civ), "trade_changed" (the deal on the table changed: get a verdict),
 ##   "trade_propose" (offer the deal on the table)
+##   "civ_open" (civ: its full diplomacy page), "civ_close", "diplo_arm" ("civ|action|param": first click on a
+##   risky one), "diplo_action" ("civ|action|param": giftGold|250, giftImprovement|x,y,improvement, pledgeProtection,
+##   revokeProtection, tribute|gold/worker, marriage, denounce, offerFriendship, makeDemand|<Demand>), "look_at" ("x,y")
+##   "religion_slot" (index), "religion_belief" (name), "religion_icon" (icon), "religion_name" (opens the keyboard),
+##   "religion_confirm"
+##   "victory_page" (ours/global/rankings/charts/demographics), "chart_type" (ranking type), "one_more_turn",
+##   "main_menu"
 signal chosen(kind: String, value: String)
 
 const Icons := preload("res://scripts/icons.gd")
 
 const SIZE := Vector2(1600, 700)
 const GRAB_HEIGHT := 34.0
-const TABS := [["tech", "Technologies"], ["policies", "Policies"], ["diplomacy", "Diplomacy"]]
+const TABS := [["tech", "Technologies"], ["policies", "Policies"], ["diplomacy", "Diplomacy"], ["religion", "Religion"], ["victory", "Victory"]]
 
 # Tech tree layout (pixels)
 const COLUMN_WIDTH := 272.0
@@ -46,6 +53,23 @@ var trade_ours: Array = []      # [{name, type, label, amount, countable}] you g
 var trade_theirs: Array = []    # ... they give
 var _trade_options: Dictionary = {}   # getTradeOptions
 var _trade_verdict: Dictionary = {}   # evaluateTrade / proposeTrade message
+var order_trade_by_amount := true      # Unciv's "Order trade offers by amount"
+
+# Diplomacy: one civ's full page (Unciv's diplomacy screen right side)
+var civ_detail := ""
+var diplo_armed := ""          # "civ|action|param" clicked once (the next click confirms)
+
+# Religion: the picker (getReligionChoices) and what's been picked so far
+var _religion: Dictionary = {}
+var religion_slot := 0
+var religion_picks: Array = []     # belief name per slot ("" = not yet)
+var religion_icon := ""
+var religion_name := ""
+
+# Victory screen (getVictory)
+var _victory: Dictionary = {}
+var victory_page := "ours"
+var chart_type := "Score"
 
 var _techs: Dictionary = {}
 var _policies: Dictionary = {}
@@ -55,6 +79,67 @@ var _header: Label
 var _scroll: ScrollContainer
 var _body: Control
 var _footer: VBoxContainer      # the tech tab's details bar, under the scrolling tree
+
+
+## A line chart of the civs' history for one ranking type (Unciv's victory screen charts).
+class LineChart extends Control:
+	var series: Array = []   # [{name, color, points: [Vector2(turn, value)]}]
+
+	func _draw() -> void:
+		var area := Rect2(Vector2(70, 10), size - Vector2(90, 50))
+		draw_rect(area, Color(0.1, 0.12, 0.17))
+		var max_turn := 1.0
+		var min_turn := 0.0
+		var max_value := 1.0
+		var min_value := 0.0
+		var first := true
+		for line: Dictionary in series:
+			for point: Vector2 in line["points"]:
+				if first:
+					min_turn = point.x
+					max_turn = point.x
+					first = false
+				min_turn = minf(min_turn, point.x)
+				max_turn = maxf(max_turn, point.x)
+				max_value = maxf(max_value, point.y)
+				min_value = minf(min_value, point.y)
+		var font := ThemeDB.fallback_font
+		if first:   # no points at all: Unciv records these at the end of each turn
+			draw_string(font, area.get_center() - Vector2(260, 0), "No history yet - the charts fill in as turns go by.",
+				HORIZONTAL_ALIGNMENT_LEFT, 600, 20, Color(0.7, 0.74, 0.82))
+			return
+		if max_turn <= min_turn:
+			max_turn = min_turn + 1.0
+		# Whole-number gridlines at a round step (1, 2, 5, 10, 20, 50...)
+		var step := 1.0
+		while (max_value - min_value) / step > 5.0:
+			step *= 2.0 if str(int(step))[0] == "1" or str(int(step))[0] == "5" else 2.5
+		min_value = floorf(min_value / step) * step
+		max_value = maxf(min_value + step, ceilf(max_value / step) * step)
+		var value := min_value
+		while value <= max_value + 0.001:
+			var y := area.end.y - (value - min_value) / (max_value - min_value) * area.size.y
+			draw_line(Vector2(area.position.x, y), Vector2(area.end.x, y), Color(0.25, 0.28, 0.35), 1.0)
+			draw_string(font, Vector2(4, y + 6), str(int(value)), HORIZONTAL_ALIGNMENT_RIGHT, 60, 15, Color(0.7, 0.74, 0.82))
+			value += step
+		var turn_step := maxf(1.0, ceilf((max_turn - min_turn) / 6.0))
+		var turn := min_turn
+		while turn <= max_turn + 0.001:
+			var x := area.position.x + (turn - min_turn) / (max_turn - min_turn) * area.size.x
+			draw_string(font, Vector2(x - 14, area.end.y + 22), str(int(turn)), HORIZONTAL_ALIGNMENT_LEFT, 60, 15, Color(0.7, 0.74, 0.82))
+			turn += turn_step
+		draw_string(font, Vector2(area.end.x - 40, area.end.y + 40), "turn", HORIZONTAL_ALIGNMENT_LEFT, 60, 14, Color(0.55, 0.6, 0.68))
+		var order := series.duplicate()
+		order.reverse()   # the first line (yours) is drawn last, on top
+		for line: Dictionary in order:
+			var points := PackedVector2Array()
+			for point: Vector2 in line["points"]:
+				points.append(Vector2(area.position.x + (point.x - min_turn) / (max_turn - min_turn) * area.size.x,
+					area.end.y - (point.y - min_value) / maxf(0.001, max_value - min_value) * area.size.y))
+			if points.size() == 1:
+				draw_circle(points[0], 4.0, line["color"])
+			elif points.size() > 1:
+				draw_polyline(points, line["color"], 3.0, true)
 
 
 ## Draws the arrows between techs underneath the tech buttons.
@@ -109,10 +194,13 @@ func _ready() -> void:
 	_header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_header.add_theme_font_size_override("font_size", 20)
+	_header.clip_text = true   # a long header must never make the screen wider than its board
+	_header.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	bar.add_child(_header)
 
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	Icons.thick_scrollbars(_scroll)
 	box.add_child(_scroll)
 	_footer = VBoxContainer.new()
 	box.add_child(_footer)
@@ -154,6 +242,26 @@ func set_diplomacy(data: Dictionary) -> void:
 		_rebuild()
 
 
+func set_religion(data: Dictionary) -> void:
+	var mode_changed: bool = str(data.get("mode", "")) != str(_religion.get("mode", "")) or data.get("slots", []).size() != religion_picks.size()
+	_religion = data
+	if mode_changed:
+		religion_slot = 0
+		religion_picks = []
+		for i in data.get("slots", []).size():
+			religion_picks.append("")
+		religion_icon = ""
+		religion_name = ""
+	if tab == "religion":
+		_rebuild()
+
+
+func set_victory(data: Dictionary) -> void:
+	_victory = data
+	if tab == "victory":
+		_rebuild()
+
+
 func _rebuild() -> void:
 	if _scroll == null:
 		return
@@ -165,6 +273,10 @@ func _rebuild() -> void:
 			_body = _build_tech()
 		"policies":
 			_body = _build_policies()
+		"religion":
+			_body = _build_religion()
+		"victory":
+			_body = _build_victory()
 		_:
 			_body = _build_diplomacy()
 	_scroll.add_child(_body)
@@ -173,6 +285,8 @@ func _rebuild() -> void:
 	else:
 		for child in _footer.get_children():
 			child.queue_free()
+		if tab == "religion":
+			_build_religion_footer()
 	await get_tree().process_frame
 	_scroll.scroll_horizontal = int(keep.x)
 	_scroll.scroll_vertical = int(keep.y)
@@ -293,10 +407,18 @@ func _tech_node(tech: Dictionary) -> Button:
 		var texture := _unlock_icon(unlock)
 		if texture == null:
 			continue
-		var back := Color(0.55, 0.15, 0.12) if unlock.get("kind") == "obsolete" else Color(0.08, 0.09, 0.13)
-		button.add_child(_icon_disc(texture, 24.0, back, Vector2(x, 29)))
+		button.add_child(_icon_disc(texture, 24.0, _unlock_back(unlock), Vector2(x, 29)))
 		x += 26.0
 	return button
+
+
+## The disc behind an unlock's icon: Unciv's unit icons are white silhouettes (dark disc); building, wonder,
+## improvement and resource pictures are dark line art or colour (light disc, as Unciv shows them); obsolete is red.
+static func _unlock_back(unlock: Dictionary) -> Color:
+	match unlock.get("kind", ""):
+		"obsolete": return Color(0.55, 0.15, 0.12)
+		"unit": return Color(0.08, 0.09, 0.13)
+	return Color(0.86, 0.84, 0.78)
 
 
 static func _unlock_icon(unlock: Dictionary) -> Texture2D:
@@ -390,6 +512,7 @@ func _build_tech_details() -> void:
 		if int(tech.get("queueIndex", -1)) == 0:
 			status = "researching now, " + status
 	title.text = "%s   (%s, %d science)" % [selected_tech, status, int(tech.get("cost", 0))]
+	title.clip_text = true
 	title.add_theme_font_size_override("font_size", 21)
 	title.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45))
 	text.add_child(title)
@@ -402,7 +525,7 @@ func _build_tech_details() -> void:
 		var holder := Control.new()
 		holder.custom_minimum_size = Vector2(26, 26)
 		var obsolete: bool = unlock.get("kind") == "obsolete"
-		holder.add_child(_icon_disc(_unlock_icon(unlock), 26.0, Color(0.55, 0.15, 0.12) if obsolete else Color(0.08, 0.09, 0.13), Vector2.ZERO))
+		holder.add_child(_icon_disc(_unlock_icon(unlock), 26.0, _unlock_back(unlock), Vector2.ZERO))
 		chip.add_child(holder)
 		var chip_name := Label.new()
 		chip_name.text = str(unlock["name"]) + (" (obsolete)" if obsolete else "")
@@ -413,6 +536,7 @@ func _build_tech_details() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	Icons.thick_scrollbars(scroll)
 	text.add_child(scroll)
 	var description := Label.new()
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -637,6 +761,11 @@ func _find_policy(policy_name: String) -> Dictionary:
 func _build_diplomacy() -> Control:
 	if trade_civ != "":
 		return _build_trade()
+	if civ_detail != "":
+		for civ: Dictionary in _diplomacy.get("civs", []):
+			if civ["name"] == civ_detail:
+				return _build_civ_page(civ)
+		civ_detail = ""
 	var flow := HFlowContainer.new()
 	flow.add_theme_constant_override("h_separation", 12)
 	flow.add_theme_constant_override("v_separation", 12)
@@ -709,7 +838,9 @@ func _civ_card(civ: Dictionary) -> PanelContainer:
 			" (%+d)" % int(civ["opinionOfYou"]) if civ.has("opinionOfYou") else ""], _mood_color(relationship))
 	_card_line(box, "Score %d    Cities %d" % [int(civ.get("score", 0)), int(civ.get("cities", 0))], TEXT)
 
-	if not civ.get("isCityState", false):
+	var more := _button("Diplomacy...", func() -> void: chosen.emit("civ_open", civ_name), Color(0.3, 0.3, 0.4), 18)
+	box.add_child(more)
+	if not civ.get("isCityState", false) and civ.get("canTrade", true) and not civ.get("atWar", false):
 		box.add_child(_button("Trade", func() -> void: chosen.emit("trade_open", civ_name), Color(0.2, 0.32, 0.5), 18))
 	if civ.get("canOfferPeace", false):
 		box.add_child(_button("Offer peace", func() -> void: chosen.emit("offer_peace", civ_name), Color(0.2, 0.42, 0.25), 18))
@@ -720,6 +851,187 @@ func _civ_card(civ: Dictionary) -> PanelContainer:
 		else:
 			box.add_child(_button("Declare war", func() -> void: chosen.emit("war_arm", civ_name), Color(0.42, 0.16, 0.14), 18))
 	return card
+
+
+## One civ's whole diplomacy page: what Unciv's diplomacy screen offers for it (gifts, tribute, protection,
+## quests, friendship, denouncing, demands, promises, how they feel about you), plus trade / peace / war.
+func _build_civ_page(civ: Dictionary) -> Control:
+	var civ_name: String = civ["name"]
+	var outer := Color.html(str(civ.get("outerColor", "ffffffff")))
+	var page := HBoxContainer.new()
+	page.add_theme_constant_override("separation", 16)
+	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	_header.text = "%s%s" % [civ_name, "  (city-state)" if civ.get("isCityState", false) else "  -  " + str(civ.get("leader", ""))]
+	_header.add_theme_color_override("font_color", outer.lightened(0.3))
+
+	# Left: who they are and how things stand
+	var left := VBoxContainer.new()
+	left.custom_minimum_size = Vector2(560, 0)
+	left.add_theme_constant_override("separation", 4)
+	page.add_child(left)
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 10)
+	var emblem := Icons.civ_badge(civ)
+	if emblem != null:
+		var picture := TextureRect.new()
+		picture.texture = emblem
+		picture.custom_minimum_size = Vector2(84, 84)
+		picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		top.add_child(picture)
+	var hello := Label.new()
+	hello.text = _plain(str(civ.get("hello", ""))) if str(civ.get("hello", "")) != "" else civ_name
+	hello.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hello.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hello.add_theme_font_size_override("font_size", 19)
+	hello.add_theme_color_override("font_color", TEXT)
+	top.add_child(hello)
+	left.add_child(top)
+	var back := _button("< All civilizations", func() -> void: chosen.emit("civ_close", ""), Color(0.25, 0.25, 0.3), 18)
+	back.custom_minimum_size = Vector2(0, 44)
+	left.add_child(back)
+	var relationship := str(civ.get("relationship", ""))
+	if civ.get("atWar", false):
+		_card_line(left, "AT WAR" + ("  (no peace talks for %d more turns)" % int(civ["peaceBlockedTurns"]) if civ.has("peaceBlockedTurns") else ""), BAD)
+	if civ.get("isCityState", false):
+		_card_line(left, "Type: %s    Personality: %s" % [civ.get("cityStateType", ""), civ.get("personality", "")], TEXT)
+		_card_line(left, "Our relationship: %s (influence %d)" % [relationship, int(civ.get("influence", 0))], _mood_color(relationship))
+		if str(civ.get("nextLevel", "")) != "":
+			_card_line(left, str(civ["nextLevel"]), DIM)
+		if civ.has("allyName"):
+			_card_line(left, "Ally: %s with %d influence" % [civ["allyName"], int(civ.get("allyInfluence", 0))], TEXT)
+		if not civ.get("protectors", []).is_empty():
+			_card_line(left, "Protected by: " + ", ".join(civ["protectors"]), TEXT)
+		if civ.has("relationshipChangeTurns"):
+			_card_line(left, "Relationship changes in another %d turns" % int(civ["relationshipChangeTurns"]), DIM)
+		if not civ.get("resources", []).is_empty():
+			_card_line(left, "Resources: " + ", ".join(civ["resources"].map(func(r: Dictionary) -> String: return "%s %d" % [r["name"], int(r["amount"])])), TEXT)
+		for group: Array in [["friendBonuses", "When Friends:"], ["allyBonuses", "When Allies:"]]:
+			var bonuses: Array = civ.get(group[0], [])
+			if bonuses.is_empty():
+				continue
+			_card_line(left, group[1], Color(0.95, 0.82, 0.45))
+			for bonus: Dictionary in bonuses:
+				_card_line(left, "  " + _plain(str(bonus["text"])), GOOD if bonus.get("active", false) else DIM)
+		if civ.has("uniqueUnit"):
+			_card_line(left, _plain(str(civ["uniqueUnit"])), DIM)
+	else:
+		_card_line(left, "Feels %s about you%s" % [relationship.to_lower(), " (%+d)" % int(civ["opinionOfYou"]) if civ.has("opinionOfYou") else ""], _mood_color(relationship))
+		if civ.get("friends", false):
+			_card_line(left, "You have a declaration of friendship.", GOOD)
+		if civ.get("denounced", false):
+			_card_line(left, "You have denounced them.", BAD)
+		for promise: String in civ.get("promises", []):
+			_card_line(left, _plain(promise), DIM)
+		for modifier: Dictionary in civ.get("modifiers", []):
+			var value := int(modifier["value"])
+			_card_line(left, "%s %s%d" % [_plain(str(modifier["text"])), "+" if value > 0 else "", value], GOOD if value > 0 else BAD)
+	_card_line(left, "Score %d    Cities %d" % [int(civ.get("score", 0)), int(civ.get("cities", 0))], TEXT)
+
+	# Right: what you can do
+	var right := VBoxContainer.new()
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	right.add_theme_constant_override("separation", 6)
+	page.add_child(right)
+	var actions := HFlowContainer.new()
+	actions.add_theme_constant_override("h_separation", 8)
+	actions.add_theme_constant_override("v_separation", 8)
+	right.add_child(actions)
+	var add_action := func(text: String, action: String, color: Color, enabled: bool, confirm := "") -> void:
+		var key := "%s|%s" % [civ_name, action]
+		var label := text
+		var colour := color
+		if confirm != "" and diplo_armed == key:
+			label = confirm
+			colour = Color(0.7, 0.18, 0.12)
+		var button := _button(label, func() -> void:
+			if confirm != "" and diplo_armed != key:
+				chosen.emit("diplo_arm", key)
+			else:
+				chosen.emit("diplo_action", key), colour, 18)
+		button.custom_minimum_size = Vector2(300, 50)
+		button.clip_text = false   # in a wrapping row: as wide as its text needs
+		button.disabled = not enabled
+		actions.add_child(button)
+	if civ.has("capital"):
+		var at := "%d,%d" % [int(civ["capital"]["x"]), int(civ["capital"]["y"])]
+		var go := _button("Go to on map", func() -> void: chosen.emit("look_at", at), Color(0.22, 0.3, 0.4), 18)
+		go.custom_minimum_size = Vector2(300, 50)
+		actions.add_child(go)
+	if civ.get("isCityState", false):
+		for gift: Dictionary in civ.get("goldGifts", []):
+			add_action.call("Gift %d gold (+%d influence)" % [int(gift["gold"]), int(gift["influence"])], "giftGold|%d" % int(gift["gold"]),
+				Color(0.5, 0.4, 0.1), gift.get("enabled", false))
+		for gift: Dictionary in civ.get("improvementGifts", []):
+			add_action.call("Build %s on %s (200 gold)" % [gift["improvement"], gift.get("resource", "")],
+				"giftImprovement|%d,%d,%s" % [int(gift["x"]), int(gift["y"]), gift["improvement"]], Color(0.3, 0.4, 0.2), gift.get("enabled", false))
+		if civ.get("isProtector", false):
+			add_action.call("Revoke protection", "revokeProtection", Color(0.4, 0.28, 0.2), civ.get("canRevoke", false), "Click again: revoke protection?")
+		else:
+			add_action.call("Pledge to protect", "pledgeProtection", Color(0.2, 0.36, 0.5), civ.get("canPledge", false), "Click again: declare protection?")
+		var tribute: Dictionary = civ.get("tribute", {})
+		add_action.call("Take %d gold (-15 influence)" % int(tribute.get("gold", 0)), "tribute|gold", Color(0.45, 0.3, 0.12), tribute.get("canTakeGold", false))
+		add_action.call("Take worker (-50 influence)", "tribute|worker", Color(0.45, 0.3, 0.12), tribute.get("canTakeWorker", false))
+		if civ.has("marriage"):
+			add_action.call("Diplomatic marriage (%d gold)" % int(civ["marriage"]["cost"]), "marriage", Color(0.5, 0.35, 0.5),
+				civ["marriage"].get("enabled", false), "Click again: they join your empire")
+		if civ.get("atWar", false) and civ.has("canMakePeace"):
+			add_action.call("Negotiate peace", "peace", Color(0.2, 0.42, 0.25), civ.get("canMakePeace", false), "Click again: make peace?")
+	else:
+		if civ.get("canTrade", false):
+			var trade := _button("Trade", func() -> void: chosen.emit("trade_open", civ_name), Color(0.2, 0.32, 0.5), 18)
+			trade.custom_minimum_size = Vector2(300, 50)
+			actions.add_child(trade)
+		if civ.get("showFriendship", false):
+			add_action.call("Friendship offered - waiting for their answer" if civ.get("friendshipOffered", false) else "Offer declaration of friendship (30 turns)",
+				"offerFriendship", Color(0.2, 0.42, 0.3), civ.get("canOfferFriendship", false))
+		if civ.get("showDenounce", false):
+			add_action.call("Denounce (30 turns)", "denounce", Color(0.45, 0.25, 0.12), civ.get("canDenounce", false), "Click again: denounce %s?" % civ_name)
+		if civ.get("canOfferPeace", false):
+			var peace := _button("Negotiate peace", func() -> void: chosen.emit("offer_peace", civ_name), Color(0.2, 0.42, 0.25), 18)
+			peace.custom_minimum_size = Vector2(300, 50)
+			actions.add_child(peace)
+	if civ.get("canDeclareWar", false):
+		if war_armed == civ_name:
+			var war := _button("Click again to declare war", func() -> void: chosen.emit("declare_war", civ_name), Color(0.7, 0.15, 0.12), 18)
+			war.custom_minimum_size = Vector2(300, 50)
+			actions.add_child(war)
+		else:
+			var war := _button("Declare war", func() -> void: chosen.emit("war_arm", civ_name), Color(0.42, 0.16, 0.14), 18)
+			war.custom_minimum_size = Vector2(300, 50)
+			actions.add_child(war)
+	if not civ.get("isCityState", false) and not civ.get("demands", []).is_empty():
+		_card_line(right, "Demands:", Color(0.95, 0.82, 0.45))
+		var demands := HFlowContainer.new()
+		demands.add_theme_constant_override("h_separation", 8)
+		demands.add_theme_constant_override("v_separation", 8)
+		right.add_child(demands)
+		for demand: Dictionary in civ["demands"]:
+			var text := _plain(str(demand["text"]))
+			match str(demand.get("status", "")):
+				"asked": text += "  (asked)"
+				"agreed": text += "  (they agreed)"
+			var key := "%s|makeDemand|%s" % [civ_name, demand["id"]]
+			var button := _button(text, func() -> void: chosen.emit("diplo_action", key), Color(0.3, 0.26, 0.2), 16)
+			button.custom_minimum_size = Vector2(470, 46)
+			button.disabled = not demand.get("enabled", false)
+			demands.add_child(button)
+	if civ.get("isCityState", false):
+		var tribute: Dictionary = civ.get("tribute", {})
+		if not tribute.get("modifiers", []).is_empty():
+			_card_line(right, "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):", Color(0.95, 0.82, 0.45))
+			for modifier: Dictionary in tribute["modifiers"]:
+				_card_line(right, "  %s  %d" % [_plain(str(modifier["text"])), int(modifier["value"])], GOOD if int(modifier["value"]) >= 0 else BAD)
+		for quest: Dictionary in civ.get("quests", []):
+			_card_line(right, "%s%s" % [_plain(str(quest["name"])), "  (+%d influence)" % int(quest["influence"]) if int(quest.get("influence", 0)) > 0 else ""], Color(0.95, 0.82, 0.45))
+			_card_line(right, "  " + _plain(str(quest.get("description", ""))), TEXT)
+			if quest.has("turns"):
+				_card_line(right, "  %d turns remaining" % int(quest["turns"]), DIM)
+			if quest.has("leader"):
+				_card_line(right, "  " + _plain(str(quest["leader"])), DIM)
+			if quest.has("progress"):
+				_card_line(right, "  " + _plain(str(quest["progress"])), DIM)
+	return page
 
 
 func _mood_color(level: String) -> Color:
@@ -733,13 +1045,368 @@ func _mood_color(level: String) -> Color:
 	return TEXT
 
 
-func _card_line(parent: Container, text: String, color: Color) -> void:
+## [param wrap]: only where the parent gives the line a width (a column with a minimum width, a full-width box);
+## in a grid or a row nothing does, and a wrapping label there shrinks to one letter per line.
+func _card_line(parent: Container, text: String, color: Color, wrap := true, font_size := 17) -> void:
 	var label := Label.new()
 	label.text = text
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.add_theme_font_size_override("font_size", 17)
+	if wrap:
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_size_override("font_size", font_size)
 	label.add_theme_color_override("font_color", color)
 	parent.add_child(label)
+
+
+# region religion ---------------------------------------------------------------------------
+# Unciv's pantheon picker and religious beliefs picker: the slots to fill on the left, the beliefs that fit
+# the selected slot on the right, and (when founding) the symbol and name of your religion.
+
+const BELIEF_COLORS := {"Pantheon": Color("#44c6cc"), "Founder": Color("#c00000"), "Follower": Color("#ccaa44"),
+	"Enhancer": Color("#72cc45"), "Any": Color(0.7, 0.7, 0.75)}
+
+
+## The bar under the religion picker: what you've picked so far and the confirm button, always in view.
+func _build_religion_footer() -> void:
+	var mode := str(_religion.get("mode", "")) if _religion.get("mode") != null else ""
+	if mode == "" or not _religion.get("enabled", true):
+		return
+	var bar := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.12, 0.2)
+	style.set_corner_radius_all(10)
+	style.set_content_margin_all(8)
+	bar.add_theme_stylebox_override("panel", style)
+	_footer.add_child(bar)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 14)
+	bar.add_child(row)
+	var missing := religion_picks.count("")
+	var summary := Label.new()
+	summary.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	summary.clip_text = true
+	summary.add_theme_font_size_override("font_size", 19)
+	var picked := religion_picks.filter(func(p: String) -> bool: return p != "")
+	if missing > 0:
+		summary.text = "Pick %d more belief%s%s" % [missing, "" if missing == 1 else "s", ("  (so far: %s)" % ", ".join(picked)) if not picked.is_empty() else ""]
+		summary.add_theme_color_override("font_color", DIM)
+	elif mode == "found" and religion_icon == "":
+		summary.text = "Now pick a symbol for your religion (above)."
+		summary.add_theme_color_override("font_color", DIM)
+	else:
+		summary.text = ", ".join(picked)
+		summary.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45))
+	row.add_child(summary)
+	var ready := missing == 0 and (mode != "found" or religion_icon != "")
+	var confirm_text: String = {"pantheon": "Follow this pantheon", "found": "Found %s" % (religion_name if religion_name != "" else religion_icon),
+		"enhance": "Enhance %s" % _religion.get("displayName", ""), "reform": "Reform"}.get(mode, "Confirm")
+	var confirm := _button(confirm_text, func() -> void: chosen.emit("religion_confirm", ""), Color(0.55, 0.35, 0.1), 21)
+	confirm.custom_minimum_size = Vector2(340, 58)
+	confirm.disabled = not ready
+	row.add_child(confirm)
+
+
+func _build_religion() -> Control:
+	var page := VBoxContainer.new()
+	page.add_theme_constant_override("separation", 8)
+	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	var mode := str(_religion.get("mode", "")) if _religion.get("mode") != null else ""
+	_header.add_theme_color_override("font_color", TEXT)
+	if _religion.is_empty():
+		_header.text = "Loading..."
+		return page
+	if not _religion.get("enabled", true):
+		_header.text = "Religion is off in this game."
+		return page
+	_header.text = str({"pantheon": "Choose a pantheon belief", "found": "Found your religion", "enhance": "Enhance your religion",
+		"reform": "Reform your religion"}.get(mode, str(_religion.get("displayName", "No religion yet"))))
+
+	# What you believe now
+	var current: Array = _religion.get("currentBeliefs", [])
+	if not current.is_empty():
+		var have := HFlowContainer.new()
+		have.add_theme_constant_override("h_separation", 8)
+		var label := Label.new()
+		label.text = "%s:" % _religion.get("displayName", "Your beliefs")
+		label.add_theme_font_size_override("font_size", 19)
+		label.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45))
+		have.add_child(label)
+		for belief: Dictionary in current:
+			var chip := _button("%s (%s)" % [belief["name"], belief["type"]], func() -> void: pass, BELIEF_COLORS.get(belief["type"], DIM).darkened(0.55), 16)
+			chip.clip_text = false
+			have.add_child(chip)
+		page.add_child(have)
+	if mode == "":
+		var note := Label.new()
+		note.text = "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+		note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		note.add_theme_font_size_override("font_size", 19)
+		note.add_theme_color_override("font_color", DIM)
+		page.add_child(note)
+		return page
+
+	if mode == "found":
+		var icons_row := HFlowContainer.new()
+		icons_row.add_theme_constant_override("h_separation", 6)
+		icons_row.add_theme_constant_override("v_separation", 6)
+		var prompt := Label.new()
+		prompt.text = "Symbol:"
+		prompt.add_theme_font_size_override("font_size", 19)
+		prompt.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45))
+		icons_row.add_child(prompt)
+		for icon: Dictionary in _religion.get("icons", []):
+			var icon_name: String = icon["name"]
+			var picked := icon_name == religion_icon
+			var button := _button(icon_name, func() -> void: chosen.emit("religion_icon", icon_name),
+				Color(0.22, 0.42, 0.66) if picked else Color(0.2, 0.22, 0.3), 15)
+			button.icon = Icons.get_icon("religion", icon_name)
+			button.add_theme_constant_override("icon_max_width", 30)
+			button.disabled = not icon.get("available", true)
+			button.clip_text = false
+			icons_row.add_child(button)
+		page.add_child(icons_row)
+		var name_row := HBoxContainer.new()
+		name_row.add_theme_constant_override("separation", 10)
+		var name_label := Label.new()
+		name_label.text = "Name: %s" % (religion_name if religion_name != "" else (religion_icon if religion_icon != "" else "(pick a symbol)"))
+		name_label.add_theme_font_size_override("font_size", 20)
+		name_label.add_theme_color_override("font_color", TEXT)
+		name_row.add_child(name_label)
+		var rename := _button("Rename...", func() -> void: chosen.emit("religion_name", ""), Color(0.25, 0.28, 0.38), 17)
+		rename.disabled = religion_icon == ""
+		rename.custom_minimum_size = Vector2(150, 40)
+		name_row.add_child(rename)
+		page.add_child(name_row)
+
+	var columns := HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 16)
+	page.add_child(columns)
+	# Left: one button per belief to choose
+	var slots_box := VBoxContainer.new()
+	slots_box.custom_minimum_size = Vector2(430, 0)
+	slots_box.add_theme_constant_override("separation", 6)
+	columns.add_child(slots_box)
+	var slots: Array = _religion.get("slots", [])
+	for i in slots.size():
+		var index := i
+		var type := str(slots[i])
+		var picked: String = religion_picks[i] if i < religion_picks.size() else ""
+		var text := picked if picked != "" else ("Choose any belief!" if type == "Any" else "Choose a %s belief!" % type)
+		var colour: Color = BELIEF_COLORS.get(type, DIM).darkened(0.45 if i == religion_slot else 0.65)
+		var button := _button("%s:  %s" % [type, text], func() -> void: chosen.emit("religion_slot", str(index)), colour, 18)
+		button.icon = Icons.get_icon("religion", type)
+		button.add_theme_constant_override("icon_max_width", 30)
+		button.custom_minimum_size = Vector2(0, 52)
+		if i == religion_slot:
+			var style := StyleBoxFlat.new()
+			style.bg_color = colour
+			style.border_color = Color(0.95, 0.85, 0.45)
+			style.set_border_width_all(3)
+			style.set_corner_radius_all(6)
+			style.set_content_margin_all(6)
+			button.add_theme_stylebox_override("normal", style)
+		slots_box.add_child(button)
+	# (the confirm button is in the bar along the bottom - _build_religion_footer - so it never scrolls away)
+
+	# Right: the beliefs that fit the selected slot
+	var list := VBoxContainer.new()
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	list.add_theme_constant_override("separation", 4)
+	columns.add_child(list)
+	var slot_type := str(slots[religion_slot]) if religion_slot < slots.size() else ""
+	for belief: Dictionary in _religion.get("beliefs", []):
+		var type := str(belief["type"])
+		if slot_type != "Any" and type != slot_type:
+			continue
+		var belief_name: String = belief["name"]
+		var taken_here := religion_picks.has(belief_name) and religion_picks.find(belief_name) != religion_slot
+		var available: bool = belief.get("available", false) and not taken_here
+		var row := VBoxContainer.new()
+		var why := ""
+		match str(belief.get("why", "")):
+			"taken": why = "  (another religion has it)"
+			"yours": why = "  (you have it)"
+			"blocked": why = "  (not available)"
+		if taken_here:
+			why = "  (picked for another slot)"
+		var button := _button("%s%s%s" % ["> " if religion_picks.find(belief_name) == religion_slot and religion_picks.has(belief_name) else "", belief_name, why],
+			func() -> void: chosen.emit("religion_belief", belief_name), BELIEF_COLORS.get(type, DIM).darkened(0.6) if available else Color(0.16, 0.16, 0.18), 18)
+		button.disabled = not available
+		row.add_child(button)
+		var effects := Label.new()
+		effects.text = _plain(str(belief.get("effects", "")))
+		effects.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		effects.add_theme_font_size_override("font_size", 15)
+		effects.add_theme_color_override("font_color", TEXT if available else DIM)
+		row.add_child(effects)
+		list.add_child(row)
+	return page
+
+
+## What the religion picker has: {beliefs: [...], icon, name} for chooseReligion.
+func religion_choice() -> Dictionary:
+	return {"beliefs": religion_picks.duplicate(), "icon": religion_icon, "name": religion_name if religion_name != "" else religion_icon}
+
+
+# region victory ------------------------------------------------------------------------------
+# Unciv's victory screen: our status, everyone's progress, rankings, charts and demographics.
+
+const CHART_COLORS := [Color(0.95, 0.75, 0.25), Color(0.4, 0.72, 1.0), Color(0.9, 0.35, 0.35), Color(0.45, 0.85, 0.4),
+	Color(0.8, 0.5, 0.98), Color(0.95, 0.55, 0.25), Color(0.6, 0.9, 0.9), Color(0.9, 0.9, 0.9)]
+
+
+func _build_victory() -> Control:
+	var page := VBoxContainer.new()
+	page.add_theme_constant_override("separation", 8)
+	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	_header.add_theme_color_override("font_color", TEXT)
+	if _victory.is_empty():
+		_header.text = "Loading..."
+		return page
+	_header.text = "Turn %d   %s speed   %s%s" % [int(_victory.get("turn", 0)), _victory.get("speed", ""), _victory.get("difficulty", ""),
+		"   max %d turns" % int(_victory["maxTurns"]) if _victory.has("maxTurns") else ""]
+	# Who won (or that you lost), with Unciv's choices
+	if _victory.has("winner") or _victory.has("defeatText"):
+		var banner := VBoxContainer.new()
+		var title := Label.new()
+		var winner: Dictionary = _victory.get("winner", {})
+		if not winner.is_empty():
+			title.text = "You have won a %s Victory!" % winner["victoryType"] if winner.get("isYou", false) else "%s has won a %s Victory!" % [winner["civ"], winner["victoryType"]]
+		else:
+			title.text = "You have been defeated."
+		title.add_theme_font_size_override("font_size", 28)
+		title.add_theme_color_override("font_color", GOOD if winner.get("isYou", false) else BAD)
+		banner.add_child(title)
+		var text := Label.new()
+		text.text = str(winner.get("text", _victory.get("defeatText", "")))
+		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		text.add_theme_font_size_override("font_size", 18)
+		text.add_theme_color_override("font_color", TEXT)
+		banner.add_child(text)
+		var buttons := HBoxContainer.new()
+		buttons.add_theme_constant_override("separation", 12)
+		if not _victory.get("oneMoreTurnMode", false) and not winner.is_empty():
+			var more := _button("One more turn...!", func() -> void: chosen.emit("one_more_turn", ""), Color(0.2, 0.42, 0.25), 20)
+			more.custom_minimum_size = Vector2(280, 52)
+			buttons.add_child(more)
+		var menu := _button("Main menu (start a new game)", func() -> void: chosen.emit("main_menu", ""), Color(0.3, 0.3, 0.4), 20)
+		menu.custom_minimum_size = Vector2(360, 52)
+		buttons.add_child(menu)
+		banner.add_child(buttons)
+		page.add_child(banner)
+	# Pages
+	var pages := HBoxContainer.new()
+	pages.add_theme_constant_override("separation", 8)
+	var available := [["ours", "Our status"], ["global", "Global status"]]
+	if _victory.get("showRankings", false):
+		available.append(["rankings", "Rankings"])
+	if _victory.get("showCharts", false):
+		available.append(["charts", "Charts"])
+	if _victory.get("showDemographics", false):
+		available.append(["demographics", "Demographics"])
+	if available.filter(func(p: Array) -> bool: return p[0] == victory_page).is_empty():
+		victory_page = "ours"
+	for p: Array in available:
+		var id: String = p[0]
+		var button := _button(p[1], func() -> void: chosen.emit("victory_page", id), Color(0.22, 0.42, 0.66) if id == victory_page else Color(0.2, 0.22, 0.3), 18)
+		button.custom_minimum_size = Vector2(200, 44)
+		pages.add_child(button)
+	page.add_child(pages)
+	match victory_page:
+		"ours":
+			var columns := HBoxContainer.new()
+			columns.add_theme_constant_override("separation", 14)
+			for victory: Dictionary in _victory.get("ourStatus", []):
+				var column := VBoxContainer.new()
+				column.custom_minimum_size = Vector2(300, 0)
+				column.add_theme_constant_override("separation", 4)
+				_card_line(column, "%s Victory" % victory["name"], Color(0.95, 0.82, 0.45))
+				_card_line(column, _plain(str(victory.get("header", ""))), DIM)
+				for milestone: Dictionary in victory.get("milestones", []):
+					var status := str(milestone.get("status", ""))
+					_card_line(column, ("[done] " if status == "completed" else "") + _plain(str(milestone["text"])),
+						GOOD if status == "completed" else (TEXT if status == "partial" else DIM))
+					for step: Dictionary in milestone.get("steps", []):
+						_card_line(column, "   " + ("[x] " if step.get("done", false) else "[  ] ") + _plain(str(step["text"])), GOOD if step.get("done", false) else DIM)
+				columns.add_child(column)
+			page.add_child(columns)
+		"global":
+			var columns := HBoxContainer.new()
+			columns.add_theme_constant_override("separation", 14)
+			for victory: Dictionary in _victory.get("global", []):
+				var column := VBoxContainer.new()
+				column.custom_minimum_size = Vector2(300, 0)
+				_card_line(column, "%s Victory" % victory["name"], Color(0.95, 0.82, 0.45))
+				for civ: Dictionary in victory.get("civs", []):
+					_card_line(column, "%s: %s" % [civ["name"], _plain(str(civ.get("next", "")))],
+						DIM if civ.get("defeated", false) else (GOOD if civ.get("isYou", false) else TEXT))
+				columns.add_child(column)
+			page.add_child(columns)
+		"rankings":
+			var grid := GridContainer.new()
+			var rankings: Array = _victory.get("rankings", [])
+			grid.columns = maxi(1, rankings.size())
+			grid.add_theme_constant_override("h_separation", 14)
+			grid.add_theme_constant_override("v_separation", 4)
+			var cell_font := 17 if rankings.size() <= 6 else 15
+			for ranking: Dictionary in rankings:
+				_card_line(grid, str(ranking.get("label", ranking["type"])), Color(0.95, 0.82, 0.45), false, cell_font)
+			var rows := 0
+			for ranking: Dictionary in rankings:
+				rows = maxi(rows, ranking.get("civs", []).size())
+			for r in rows:
+				for ranking: Dictionary in rankings:
+					var civs: Array = ranking.get("civs", [])
+					if r < civs.size():
+						_card_line(grid, "%s %d" % [civs[r]["name"], int(civs[r]["value"])], GOOD if civs[r].get("isYou", false) else TEXT, false, cell_font)
+					else:
+						grid.add_child(Control.new())
+			page.add_child(grid)
+		"charts":
+			var types := HFlowContainer.new()
+			types.add_theme_constant_override("h_separation", 6)
+			for type: String in _victory.get("rankingTypes", []):
+				var t := type
+				var button := _button(type, func() -> void: chosen.emit("chart_type", t), Color(0.22, 0.42, 0.66) if type == chart_type else Color(0.2, 0.22, 0.3), 16)
+				button.clip_text = false
+				types.add_child(button)
+			page.add_child(types)
+			var chart := LineChart.new()
+			chart.custom_minimum_size = Vector2(1100, 380)
+			var legend := VBoxContainer.new()
+			var i := 0
+			for civ: Dictionary in _victory.get("history", []):
+				var points: Array[Vector2] = []
+				var turns: Dictionary = civ.get("turns", {})
+				var keys := turns.keys()
+				keys.sort_custom(func(a: Variant, b: Variant) -> bool: return int(a) < int(b))
+				for turn: Variant in keys:
+					var values: Dictionary = turns[turn]
+					if values.has(chart_type):
+						points.append(Vector2(float(turn), float(values[chart_type])))
+				var colour: Color = CHART_COLORS[i % CHART_COLORS.size()]
+				chart.series.append({"name": civ["name"], "color": colour, "points": points})
+				_card_line(legend, civ["name"], colour, false)
+				i += 1
+			var row := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 16)
+			row.add_child(chart)
+			row.add_child(legend)
+			page.add_child(row)
+		"demographics":
+			var grid := GridContainer.new()
+			grid.columns = 5
+			grid.add_theme_constant_override("h_separation", 24)
+			grid.add_theme_constant_override("v_separation", 4)
+			for heading: String in ["", "Rank", "Value", "Best", "Average / Worst"]:
+				_card_line(grid, heading, Color(0.95, 0.82, 0.45), false)
+			for row: Dictionary in _victory.get("demographics", []):
+				_card_line(grid, str(row.get("label", row["type"])), TEXT, false)
+				_card_line(grid, "#%d" % int(row.get("rank", 0)), TEXT, false)
+				_card_line(grid, str(int(row.get("value", 0))), GOOD, false)
+				_card_line(grid, "%d (%s)" % [int(row.get("best", 0)), row.get("bestCiv", {}).get("name", "?")], TEXT, false)
+				_card_line(grid, "%d / %d (%s)" % [int(row.get("average", 0)), int(row.get("worst", 0)), row.get("worstCiv", {}).get("name", "?")], DIM, false)
+			page.add_child(grid)
+	return page
 
 
 # region trade ------------------------------------------------------------------------------
@@ -752,6 +1419,19 @@ func open_trade(options: Dictionary) -> void:
 	trade_theirs = []
 	_trade_verdict = {}
 	show_tab("diplomacy")
+
+
+## Puts a deal on the table (e.g. their counteroffer, to change and propose back): offers as getTradeOptions items.
+func stage_trade(ours: Array, theirs: Array) -> void:
+	trade_ours = []
+	trade_theirs = []
+	for pair: Array in [[ours, trade_ours], [theirs, trade_theirs]]:
+		for offer: Dictionary in pair[0]:
+			var entry: Dictionary = offer.duplicate()
+			(pair[1] as Array).append(entry)
+	_trade_verdict = {}
+	if trade_civ != "":
+		_rebuild()
 
 
 func _clear_trade() -> void:
@@ -837,7 +1517,16 @@ func _trade_column(title: String, items: Array, table: Array, available: bool) -
 	header.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45))
 	column.add_child(header)
 	var shown := 0
-	for item: Dictionary in items:
+	var sorted := items.duplicate()
+	if available:
+		# Unciv groups offers by kind; "Order trade offers by amount" puts the biggest first within a kind
+		sorted.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+			if a["type"] != b["type"]:
+				return str(a["type"]) < str(b["type"])
+			if order_trade_by_amount and int(a.get("amount", 0)) != int(b.get("amount", 0)):
+				return int(a.get("amount", 0)) > int(b.get("amount", 0))
+			return str(a.get("label", a["name"])) < str(b.get("label", b["name"])))
+	for item: Dictionary in sorted:
 		var on_table := _staged_amount(table, item)
 		var amount := int(item.get("amount", 1))
 		if available:

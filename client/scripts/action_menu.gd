@@ -17,7 +17,12 @@ extends PanelContainer
 ##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
 ##                  "setup_step" ("key|+1"), "setup_start", "lobby" (back to the lobby card)
 ##   saves card:    "load_save" (name), "lobby"
-##   settings card also: "save_game", "main_menu", "reset_boards"
+##   settings card also: "save_game", "main_menu", "reset_boards", "setting_toggle" (an Unciv option's key)
+##   unit card also: "action" ("type|title", "|confirm" appended once a risky action is confirmed), "action_arm"
+##                   (first click on a risky action: "type|title"), "pick_cancel" (stop picking a tile)
+##   city card also: "bombard" (city name: pick a target for the city's guns)
+##   alert card:    "alert_answer" ("key|option")
+##   great people:  "great_person" (unit name); vote card: "vote" (civ name, "" abstains)
 signal chosen(kind: String, value: String)
 ## Emitted after the card's contents change, so whoever places it can re-fit it.
 signal layout_changed
@@ -30,9 +35,22 @@ var show_recenter := false   # VR only
 var in_vr := false
 var compact := false         # no unit/turn footer (the floating city card); set before adding to the tree
 var civ_colors: Dictionary = {}   # civ name -> {inner, outer} (from the map), for unit portraits
+var civ_info: Dictionary = {}     # civ name -> getState civs entry (nation, colours), for emblems
 var lobby_mode := false      # no game on the table yet: hide the unit/turn footer
 var keep_scroll_once := false   # the next card rebuild keeps the scroll position (e.g. after pressing + or -)
 var _restore_scroll := 0
+## A risky unit action clicked once ("type|title"): its button now asks to be clicked again
+var armed_action := ""
+## While main.gd waits for a tile to be picked for a unit action (swap with, road to...): what to say on the card
+var picking_text := ""
+var _armed_unit := -1
+## What the footer's End turn button says (what still has to be decided first, like Unciv's next-turn button)
+var end_turn_text := "End turn":
+	set(value):
+		end_turn_text = value
+		if _end_turn_button != null:
+			_end_turn_button.text = value
+var _end_turn_button: Button
 
 var _title: Label
 var _info: Label
@@ -66,6 +84,7 @@ func _ready() -> void:
 	box.add_child(HSeparator.new())
 
 	_scroll = ScrollContainer.new()
+	Icons.thick_scrollbars(_scroll)
 	_scroll.custom_minimum_size = Vector2(0, LIST_HEIGHT)
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	box.add_child(_scroll)
@@ -89,7 +108,8 @@ func _ready() -> void:
 	_footer.add_child(turn_row)
 	turn_row.add_child(_make_button("Research", func() -> void: chosen.emit("research_card", ""), Color(0.2, 0.3, 0.5)))
 	turn_row.add_child(_make_button("Settings", func() -> void: chosen.emit("settings_card", ""), Color(0.25, 0.25, 0.3)))
-	turn_row.add_child(_make_button("End turn", func() -> void: chosen.emit("end_turn", ""), Color(0.55, 0.35, 0.1)))
+	_end_turn_button = _make_button(end_turn_text, func() -> void: chosen.emit("end_turn", ""), Color(0.55, 0.35, 0.1))
+	turn_row.add_child(_end_turn_button)
 	_recenter_row = HBoxContainer.new()
 	_footer.add_child(_recenter_row)
 	_recenter_row.add_child(_make_button("Recenter table", func() -> void: chosen.emit("recenter", ""), Color(0.25, 0.25, 0.25)))
@@ -115,6 +135,9 @@ func show_unit(unit: Dictionary) -> void:
 		_end()
 		return
 
+	if int(unit.get("id", -1)) != _armed_unit:
+		armed_action = ""   # a different unit: forget the half-confirmed action
+		_armed_unit = int(unit.get("id", -1))
 	var name: String = str(unit.get("name", "?"))
 	var given_name := str(unit.get("instanceName", ""))
 	_title.text = given_name if given_name != "" else name
@@ -157,6 +180,12 @@ func show_unit(unit: Dictionary) -> void:
 	rename.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	top.add_child(rename)
 	_list.add_child(top)
+
+	if picking_text != "":
+		var pick := _make_row(picking_text, Color(0.22, 0.34, 0.5), [["Cancel", func() -> void: chosen.emit("pick_cancel", ""), Color(0.4, 0.22, 0.2)]])
+		_list.add_child(pick)
+	if not unit.get("due", true):
+		_add_note("Skipping this turn (Skip again to give it orders).")
 
 	# Health, then experience towards the next promotion
 	var health := int(unit.get("health", 100))
@@ -212,23 +241,49 @@ func show_unit(unit: Dictionary) -> void:
 		grid.columns = 2
 		grid.add_theme_constant_override("h_separation", 4)
 		grid.add_theme_constant_override("v_separation", 4)
+		var armed_text := ""
 		for action: Dictionary in actions:
 			var type: String = action["type"]
-			var title: String = _plain(str(action.get("title", type)).replace("{", "").replace("}", ""))   # Unciv templates like "{Found city}"
+			var raw_title := str(action.get("title", type))
+			var title: String = _plain(raw_title.replace("{", "").replace("}", ""))   # Unciv templates like "{Found city}"
 			var active: bool = action.get("current", false)
 			var colour := Color(0.24, 0.36, 0.55) if active else Color(0.2, 0.22, 0.3)
 			if type == "FoundCity":
 				colour = Color(0.45, 0.35, 0.1)
 			elif type in ["DisbandUnit", "Pillage"]:
 				colour = Color(0.42, 0.18, 0.15)
-			var button := _make_button(title, func() -> void: chosen.emit("action", type), colour)
+			var key := "%s|%s" % [type, raw_title]
+			var confirm_text := str(action.get("confirm", ""))
+			if action.get("target", "") == "tile":
+				title += "..."   # then pick a tile on the map
+			if confirm_text != "" and armed_action == key:
+				title = "Sure? Click again"
+				colour = Color(0.6, 0.2, 0.15)
+			var button := _make_button(title, func() -> void:
+				if confirm_text != "" and armed_action != key:
+					armed_action = key
+					chosen.emit("action_arm", key)
+				else:
+					armed_action = ""
+					chosen.emit("action", key + ("|confirm" if confirm_text != "" else "")), colour)
+			if confirm_text != "" and armed_action == key:
+				button.tooltip_text = confirm_text
+				armed_text = confirm_text
 			button.icon = Icons.action(type)
 			button.add_theme_constant_override("icon_max_width", 24)
 			button.add_theme_font_size_override("font_size", 15)
 			button.custom_minimum_size = Vector2(0, 40)
-			button.tooltip_text = title
+			if button.tooltip_text == "":
+				button.tooltip_text = title
 			grid.add_child(button)
 		_list.add_child(grid)
+		if armed_text != "":
+			var warn := Label.new()
+			warn.text = armed_text + "  (click the red button again)"
+			warn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			warn.add_theme_font_size_override("font_size", 15)
+			warn.add_theme_color_override("font_color", Color(1.0, 0.6, 0.45))
+			_list.add_child(warn)
 
 	var improvements: Array = unit.get("improvements", [])
 	if not improvements.is_empty():
@@ -352,6 +407,15 @@ func show_city(city: Dictionary, gold: int) -> void:
 		Color(0.5, 0.38, 0.12))
 	view.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_list.add_child(view)
+	if city.get("canBombard", false) and not city.get("bombardTargets", []).is_empty():
+		var shots: Array = city["bombardTargets"]
+		var bombard := _make_button("Bombard  -  %d enem%s in range (strength %d)" % [shots.size(), "y" if shots.size() == 1 else "ies",
+			int(city.get("rangedStrength", 0))], func() -> void: chosen.emit("bombard", city_name), Color(0.55, 0.2, 0.15))
+		bombard.icon = Icons.get_icon("stat", "RangedStrength")
+		bombard.add_theme_constant_override("icon_max_width", 24)
+		_list.add_child(bombard)
+	if city.get("isBeingRazed", false):
+		_add_note("This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view.")
 
 	# What it's building: the current item with its progress, then the rest of the queue
 	var queue: Array = city.get("queue", [])
@@ -583,7 +647,164 @@ func show_settings(settings: Dictionary) -> void:
 		var selected: bool = settings.get("auto_move", "") == value
 		_list.add_child(_make_button(("> " if selected else "") + option[1],
 			func() -> void: chosen.emit("auto_move", value), Color(0.2, 0.4, 0.6) if selected else Color(0.2, 0.22, 0.28)))
+	_add_header("Gameplay (Unciv's options)")
+	for option: Array in GAMEPLAY_OPTIONS:
+		_add_setting_toggle(option, settings)
+	_add_header("Automation (Unciv's options)")
+	for option: Array in AUTOMATION_OPTIONS:
+		_add_setting_toggle(option, settings)
 	if not compact:
+		_add_close()
+	_end()
+
+
+## Unciv's Options > Gameplay and > Automation that make sense here: [settings key, label, default]
+const GAMEPLAY_OPTIONS := [
+	["checkForDueUnits", "Check for idle units (End turn waits until every unit has orders)", false],
+	["autoUnitCycle", "Auto unit cycle (select the next unit after giving orders)", true],
+	["alternateUnitCycleOrder", "Cycle idle units by distance", false],
+	["confirmNextTurn", "Ask for confirmation when ending the turn", false],
+	["orderTradeOffersByAmount", "Order trade offers by amount", true],
+]
+const AUTOMATION_OPTIONS := [
+	["autoAssignCityProduction", "Auto-assign city production", true],
+	["autoBuildingRoads", "Auto-build roads", true],
+	["automatedWorkersReplaceImprovements", "Automated workers replace improvements", true],
+	["stopAutomatedWorkersRemoveVegetation", "Stop automated workers from removing vegetation", false],
+	["automatedUnitsCanUpgrade", "Automated units can upgrade", false],
+	["automatedUnitsChoosePromotions", "Automated units choose promotions", false],
+	["citiesAutoBombardAtEndOfTurn", "Cities auto-bombard at end of turn", false],
+	["autoAssignSpecialistsInNewCities", "Auto-assign specialists in new cities", true],
+]
+
+
+func _add_setting_toggle(option: Array, settings: Dictionary) -> void:
+	var key: String = option[0]
+	var on: bool = settings.get(key, option[2])
+	_list.add_child(_make_button(("[x] " if on else "[  ] ") + str(option[1]), func() -> void: chosen.emit("setting_toggle", key),
+		Color(0.2, 0.36, 0.3) if on else Color(0.2, 0.22, 0.28)))
+
+
+# region popups from Unciv ---------------------------------------------------------------------
+
+## One of Unciv's popups (getState alerts): who says it, what, and the answers to pick from.
+func show_alert(alert: Dictionary, waiting := 0) -> void:
+	if not _begin():
+		return
+	_title.text = _plain(str(alert.get("title", "")))
+	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
+	var lines: Array[String] = []
+	if alert.has("leader"):
+		lines.append(str(alert["leader"]) if not alert.get("isCityState", false) else str(alert.get("civ", "")))   # e.g. "Boudicca of Celts"
+	if waiting > 0:
+		lines.append("%d more message%s after this one" % [waiting, "s" if waiting > 1 else ""])
+	_info.text = "\n".join(lines)
+	if alert.has("nation"):
+		var head := HBoxContainer.new()
+		head.add_theme_constant_override("separation", 10)
+		var badge := Icons.civ_badge(civ_info.get(str(alert.get("civ", "")), {"nation": alert["nation"]}))
+		if badge != null:
+			head.add_child(_icon(badge, 64))
+		var text := Label.new()
+		text.text = _plain(str(alert.get("text", "")))
+		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		text.add_theme_font_size_override("font_size", 17)
+		head.add_child(text)
+		_list.add_child(head)
+	elif str(alert.get("text", "")) != "":
+		var text := Label.new()
+		text.text = _plain(str(alert["text"]))
+		text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		text.add_theme_font_size_override("font_size", 17)
+		_list.add_child(text)
+	if alert.get("type", "") in ["TechResearched", "WonderBuilt"]:
+		var icon: Texture2D = Icons.get_icon("tech", str(alert.get("tech", ""))) if alert.has("tech") else Icons.construction(str(alert.get("wonder", "")))
+		if icon != null:
+			_list.add_child(_icon(icon, 72))
+	# A trade offer: what each side gives
+	if alert.has("theyGive"):
+		_add_header("%s gives:" % alert.get("civ", "They"))
+		for offer: Dictionary in alert["theyGive"]:
+			_add_note(_offer_text(offer))
+		_add_header("You give:")
+		for offer: Dictionary in alert.get("youGive", []):
+			_add_note(_offer_text(offer))
+	# The World Congress results
+	if alert.has("votes"):
+		for civ: Dictionary in alert["votes"].get("civs", []):
+			var text := str(civ["name"])
+			if civ.get("isMajor", false):
+				text = "%d votes  %s" % [int(civ.get("votesReceived", 0)), text]
+			text += "  -  " + ("abstained" if civ.get("abstained", false) else "voted for %s" % civ.get("votedFor", "?"))
+			_add_note(text)
+	_list.add_child(HSeparator.new())
+	var key := str(alert.get("key", ""))
+	for option: Dictionary in alert.get("options", []):
+		var option_id: String = option["id"]
+		var colour := Color(0.2, 0.3, 0.45)
+		if option_id in ["accept", "annex", "yes", "victory"]:
+			colour = Color(0.2, 0.42, 0.25)
+		elif option_id in ["raze", "war", "refuse", "destroy"]:
+			colour = Color(0.48, 0.2, 0.15)
+		elif option_id in ["liberate"]:
+			colour = Color(0.45, 0.38, 0.12)
+		var button := _make_button(_plain(str(option["label"])), func() -> void: chosen.emit("alert_answer", key + "|" + option_id), colour)
+		button.disabled = not option.get("enabled", true)
+		button.clip_text = false
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		_list.add_child(button)
+		if str(option.get("description", "")) != "":
+			_add_note(_plain(str(option["description"])))
+	_end()
+
+
+static func _offer_text(offer: Dictionary) -> String:
+	var text := _plain(str(offer.get("label", offer.get("name", "?"))))
+	if offer.get("countable", false) and int(offer.get("amount", 0)) > 1:
+		text = "%d %s" % [int(offer["amount"]), text]
+	if int(offer.get("duration", -1)) > 0:
+		text += " (%d turns)" % int(offer["duration"])
+	return text
+
+
+## Unciv's free great person picker (getGreatPersonChoices).
+func show_great_people(data: Dictionary) -> void:
+	if not _begin():
+		return
+	_title.text = "Choose a free great person"
+	_info.text = "You have %d free great person%s to pick." % [int(data.get("free", 0)), "" if int(data.get("free", 0)) == 1 else "s"]
+	for choice: Dictionary in data.get("choices", []):
+		var unit_name: String = choice["name"]
+		var button := _make_button(unit_name, func() -> void: chosen.emit("great_person", unit_name),
+			Color(0.45, 0.35, 0.1) if choice.get("available", false) else Color(0.18, 0.18, 0.2))
+		button.icon = Icons.get_icon("unit", unit_name)
+		button.add_theme_constant_override("icon_max_width", 28)
+		button.disabled = not choice.get("available", false)
+		_list.add_child(button)
+		if choice.get("available", false):
+			_add_note(_plain(str(choice.get("description", ""))))
+	if compact:
+		_add_close()
+	_end()
+
+
+## The World Congress vote: who should become world leader (getVoteChoices).
+func show_vote(data: Dictionary) -> void:
+	if not _begin():
+		return
+	_title.text = "Vote for world leader"
+	_info.text = "Choose who should become the world leader and win a Diplomatic Victory!"
+	for civ: Dictionary in data.get("civs", []):
+		var civ_name: String = civ["name"]
+		var button := _make_button("Vote for %s" % civ_name, func() -> void: chosen.emit("vote", civ_name), Color(0.2, 0.3, 0.45))
+		var badge := Icons.civ_badge(civ_info.get(civ_name, {"nation": civ.get("nation", civ_name)}))
+		if badge != null:
+			button.icon = badge
+			button.add_theme_constant_override("icon_max_width", 28)
+		_list.add_child(button)
+	_list.add_child(_make_button("Abstain", func() -> void: chosen.emit("vote", ""), Color(0.3, 0.25, 0.25)))
+	if compact:
 		_add_close()
 	_end()
 
