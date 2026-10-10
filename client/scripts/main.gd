@@ -36,7 +36,7 @@ const Sounds := preload("res://scripts/sounds.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 22   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 23   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -130,6 +130,8 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	"pedia_pose": [], "task_pose": [],
 	# Unciv's tutorials: the popups and the task card (Settings > Gameplay)
 	"showTutorials": true,
+	# Unciv's "Show suggested city locations for units that can found cities"
+	"showSettlersSuggestedCityLocations": true,
 	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
 	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true},
 	# Other players' turns: "normal" (play back the moves and battles you could see), "fast" or "off"
@@ -738,7 +740,10 @@ func _on_lobby_choice(kind: String, value: String) -> void:
 		"setup_set":
 			_keep_card_scroll()
 			var parts := value.split("|", true, 1)
+			var changed_rules: bool = parts[0] == "ruleset" and str(_setup.get("ruleset", "")) != parts[1]
 			_setup[parts[0]] = parts[1]
+			if changed_rules:
+				await _load_setup_options()
 			_show_lobby_card("setup")
 		"setup_toggle":
 			_keep_card_scroll()
@@ -767,6 +772,28 @@ func _on_lobby_choice(kind: String, value: String) -> void:
 			await _start_new_game(_setup)
 		"quit":
 			get_tree().quit()
+
+
+## Another ruleset (Vanilla / Gods & Kings) was picked: its nations, difficulties, eras and victory types, and the
+## setup's choices moved onto ones it has (a civ it doesn't have becomes Random; victory types go back to all).
+func _load_setup_options() -> void:
+	var reply := await bridge.request("listOptions", {"ruleset": str(_setup.get("ruleset", ""))})
+	if not reply.ok:
+		_set_status("Couldn't read those rules: %s" % reply.error)
+		return
+	_setup_options = reply.result
+	var nations: Array = _setup_options.get("nations", []).map(func(n: Dictionary) -> String: return str(n["name"]))
+	if str(_setup.get("civ", "Random")) not in nations:
+		_setup["civ"] = "Random"
+	for pair: Array in [["difficulty", "difficulties"], ["speed", "speeds"], ["startingEra", "eras"]]:
+		var allowed: Array = _setup_options.get(pair[1], [])
+		if not allowed.is_empty() and str(_setup.get(pair[0], "")) not in allowed:
+			_setup[pair[0]] = allowed[mini(allowed.size() - 1, 3)] if pair[0] == "difficulty" else allowed[0]
+	_setup["victoryTypes"] = []
+	_setup["aiPlayers"] = clampi(int(_setup.get("aiPlayers", 3)), 1, maxi(1, nations.size() - 1))
+	_setup["cityStates"] = clampi(int(_setup.get("cityStates", 0)), 0, int(_setup_options.get("cityStatesAvailable", 0)))
+	if str(_setup.get("ruleset", "")).contains("Vanilla"):
+		_setup["espionage"] = false   # Vanilla has no spies
 
 
 ## The next rebuild of the main-menu card keeps its scroll position (changing an option shouldn't jump to the top).
@@ -3191,6 +3218,12 @@ func _select_unit(unit_id: int, focus := true) -> void:
 	var targets: Array[Vector2i] = []
 	for t: Dictionary in selected_unit.get("targets", []):
 		targets.append(Vector2i(int(t["x"]), int(t["y"])))
+	# Unciv's suggested spots for a new city, while a settler is selected (Settings > Gameplay can turn them off)
+	var spots: Array[Vector2i] = []
+	if bool(settings.get("showSettlersSuggestedCityLocations", true)):
+		for t: Dictionary in selected_unit.get("suggestedCitySpots", []):
+			spots.append(Vector2i(int(t["x"]), int(t["y"])))
+	hex_map.set_city_spots(spots)
 	hex_map.set_selection(_selected_key(), reachable, targets)
 	if focus:
 		selected_city = {}
@@ -3411,6 +3444,12 @@ func _run_smoke_test() -> void:
 		await _select_unit(int(settler["id"]))
 		print("SMOKE: settler actions ", selected_unit.get("actions", []).map(func(a: Dictionary) -> String:
 			return "%s(%s)" % [a["type"], a.get("sound", "-")]))
+		print("SMOKE: suggested city spots %s, %d marked on the map" % [selected_unit.get("suggestedCitySpots", []).map(
+			func(t: Dictionary) -> String: return "(%d, %d) %d" % [int(t["x"]), int(t["y"]), int(t["value"])]),
+			hex_map._city_spot_marks.filter(func(m: Sprite3D) -> bool: return m.visible).size()])
+		if options.has("screenshot") and options.has("shots"):
+			await get_tree().create_timer(0.5).timeout
+			get_viewport().get_texture().get_image().save_png(str(options["shots"]).path_join("city_spots.png"))
 		await found_city()
 		print("SMOKE: cities after founding ", state.get("cities", []).map(func(c: Dictionary) -> String: return c["name"]))
 	# Combat: attack the first target any military unit can reach
@@ -3646,6 +3685,14 @@ func _run_smoke_test() -> void:
 	await _on_menu_chosen("setup_toggle", "victory|Science")
 	print("SMOKE: setup now ", _setup)
 	print("SMOKE: %d nations, %d saves listed" % [_setup_options.get("nations", []).size(), _saves.size()])
+	# The Rules tab's ruleset choice: Vanilla has fewer nations and no espionage; a civ it doesn't have becomes Random
+	var rules_before := str(_setup.get("ruleset", ""))
+	_setup["civ"] = "Byzantium"   # Gods & Kings only
+	await _on_menu_chosen("setup_set", "ruleset|Civ V - Vanilla")
+	print("SMOKE: rules -> %s: %d nations, civ %s, espionage %s, rulesets offered %s" % [_setup.get("ruleset"),
+		_setup_options.get("nations", []).size(), _setup.get("civ"), _setup.get("espionage"), _setup_options.get("rulesets", [])])
+	await _on_menu_chosen("setup_set", "ruleset|" + rules_before)
+	print("SMOKE: rules back -> %s: %d nations" % [_setup.get("ruleset"), _setup_options.get("nations", []).size()])
 	await _on_menu_chosen("lobby_resume", "")
 	print("SMOKE: resumed: lobby=%s, tiles=%d, table buttons shown=%s" % [_in_lobby, hex_map.tiles.size(), (_table_buttons[0]["node"] as Node3D).visible])
 	# Sounds: Unciv's, read from its folder. Every name the client and the ruleset can ask for must be there.
@@ -3919,6 +3966,8 @@ func change_setting(key: String, value: String) -> void:
 		if value in BRIDGE_SETTINGS:
 			await _send_bridge_settings()
 			await refresh()   # e.g. "Check for idle units" changes what End turn waits for
+		elif value == "showSettlersSuggestedCityLocations" and not selected_unit.is_empty():
+			await _select_unit(int(selected_unit["id"]), false)   # the marks come or go at once
 		_refresh_settings()
 		return
 	if key in VOLUME_SETTINGS:

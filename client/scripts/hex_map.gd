@@ -90,6 +90,8 @@ var _hover := Vector2i(999999, 999999)
 var _selected := Vector2i(999999, 999999)
 var _reachable: Array[Vector2i] = []
 var _targets: Array[Vector2i] = []
+var _city_spots: Array[Vector2i] = []   # Unciv's suggested city locations for the selected settler
+var _city_spot_marks: Array[Sprite3D] = []
 var _beacon: MeshInstance3D       # a pulsing light column over the selected unit, to find it at a glance
 var _beacon_time := 0.0
 var _unit_labels: Dictionary = {}   # Vector2i -> Array[Label3D]; shown only for hovered/selected tiles
@@ -993,7 +995,39 @@ func _place_beacon() -> void:
 
 
 func clear_selection() -> void:
+	_city_spots = []
 	set_selection(Vector2i(999999, 999999), [], [])
+
+
+## Unciv's suggested city locations (getUnit suggestedCitySpots): a ring and Unciv's city symbol over each.
+## Set them before set_selection, which draws them; clear_selection clears them.
+func set_city_spots(spots: Array[Vector2i]) -> void:
+	_city_spots = spots
+
+
+func _place_city_spots() -> void:
+	var shown: Array[Vector2i] = []
+	for key in _city_spots:
+		if _shown.has(key):
+			shown.append(key)
+	while _city_spot_marks.size() < shown.size():
+		var mark := Sprite3D.new()
+		mark.name = "CitySpot"
+		mark.texture = Icons.badge("other", "Cities", Color(0.16, 0.3, 0.14), Color(1.0, 0.88, 0.4), 0.62)
+		mark.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		mark.no_depth_test = false
+		mark.shaded = false
+		mark.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if mark.texture != null:
+			mark.pixel_size = 0.8 / float(mark.texture.get_width())
+		_content.add_child(mark)
+		_city_spot_marks.append(mark)
+	for i in _city_spot_marks.size():
+		var mark := _city_spot_marks[i]
+		mark.visible = i < shown.size()
+		if mark.visible:
+			var key := shown[i]
+			mark.position = tile_position(key, tile_height(tiles.get(key, {})) + 0.75)
 
 
 func is_target(key: Vector2i) -> bool:
@@ -1068,10 +1102,13 @@ func _update_label_visibility() -> void:
 func _build_highlights() -> void:
 	var rings: Array = []  # [key, color]
 	for key in _reachable:
-		if key not in _targets:
+		if key not in _targets and key not in _city_spots:
 			rings.append([key, Color(0.3, 0.9, 1.0)])
 	for key in _targets:
 		rings.append([key, Color(1.0, 0.2, 0.15)])
+	for key in _city_spots:
+		if key not in _targets and key != _selected:
+			rings.append([key, Color(1.0, 0.8, 0.25)])   # gold, like the city symbol over it
 	if tiles.has(_selected):
 		rings.append([_selected, Color(1.0, 0.85, 0.2)])
 	if tiles.has(_hover):
@@ -1084,6 +1121,7 @@ func _build_highlights() -> void:
 		var tile: Dictionary = tiles.get(key, {})
 		mm.set_instance_transform(i, Transform3D(Basis(), tile_position(key, tile_height(tile) + 0.01)))
 		mm.set_instance_color(i, rings[i][1])
+	_place_city_spots()
 
 
 # region queries ---------------------------------------------------------------------------

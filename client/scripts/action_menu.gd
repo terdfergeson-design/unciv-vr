@@ -881,6 +881,8 @@ func show_setup(setup: Dictionary, options: Dictionary, tab: String) -> void:
 			_add_toggle("No natural wonders", "noNaturalWonders", setup)
 			_add_note("Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge.")
 		"rules":
+			_add_choices("Rules", "ruleset", options.get("rulesets", []), setup)
+			_add_note("Gods & Kings adds religion, espionage, more civilizations and more units and buildings.")
 			_add_choices("Difficulty", "difficulty", options.get("difficulties", []), setup)
 			_add_choices("Game speed", "speed", options.get("speeds", []), setup)
 			_add_choices("Starting era", "startingEra", options.get("eras", []), setup)

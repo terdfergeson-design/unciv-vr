@@ -52,6 +52,7 @@ const GAMEPLAY := [
 	["alternateUnitCycleOrder", "Cycle idle units by distance", "Next / previous unit go to the nearest unit rather than in a fixed order.", false],
 	["confirmNextTurn", "Ask for confirmation when ending the turn", "End turn needs a second press.", false],
 	["orderTradeOffersByAmount", "Order trade offers by amount", "On the trade table, the biggest offers come first.", true],
+	["showSettlersSuggestedCityLocations", "Show suggested city locations", "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map.", true],
 ]
 ## Unciv's Options > Automation: [settings key, label, what it does, default]
 const AUTOMATION := [

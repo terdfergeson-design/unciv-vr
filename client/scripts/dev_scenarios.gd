@@ -73,6 +73,7 @@ func run(name: String) -> void:
 		"panels": await panels()
 		"civilopedia": await civilopedia()
 		"tutorials": await tutorials()
+		"city_spots": await city_spots()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -1652,3 +1653,28 @@ func tutorials() -> void:
 	await settle(0.5)
 	check("back on", bool(main.settings["showTutorials"]) and main.state.has("tutorialTask"))
 	say("problems: %d" % _problems)
+
+
+## Unciv's suggested city spots: a settler selected, the map zoomed in on it, a picture of the marks (--shots).
+func city_spots() -> void:
+	for u: Dictionary in main.state.get("units", []):
+		if u["name"] == "Settler":
+			await main._select_unit(int(u["id"]))
+			var spots: Array = main.selected_unit.get("suggestedCitySpots", [])
+			check("spots for the settler", not spots.is_empty(), str(spots))
+			main._set_big_visible(false)
+			main._close_alert_card()
+			main._close_popup()
+			main._look_at_tile(Vector2i(int(u["x"]), int(u["y"])))
+			main._zoom_view(0.75)
+			await settle(1.0)
+			var marks: int = main.hex_map._city_spot_marks.filter(func(m: Sprite3D) -> bool: return m.visible).size()
+			check("marked on the map", marks == spots.size(), "%d marks" % marks)
+			await shot(main.action_menu, "city_spots")
+			main.settings["showSettlersSuggestedCityLocations"] = true
+			await main.change_setting("setting_toggle", "showSettlersSuggestedCityLocations")
+			marks = main.hex_map._city_spot_marks.filter(func(m: Sprite3D) -> bool: return m.visible).size()
+			check("turned off in Settings: no marks", marks == 0, "%d marks" % marks)
+			await main.change_setting("setting_toggle", "showSettlersSuggestedCityLocations")
+			return
+	say("no settler")
