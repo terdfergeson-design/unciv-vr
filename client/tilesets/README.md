@@ -144,16 +144,38 @@ Unciv-style json; `//` comments are allowed. Everything but `name` is optional.
 | `heights` | Where units and cities stand on a tile, in map units: by natural wonder name (then `NaturalWonder`), feature (the last one listed wins), base terrain, then `Land` / `Water` |
 | `ruleVariants` | Which pieces to stack, in order, for a particular combination (see above) |
 
-## Trying a tileset quickly
+## Previewing your tileset
 
-`tools/preview_tileset.gd` renders every tile type, the wonders, or a sample map to pictures:
+`tools/tileset_preview.tscn` shows your tileset the way the game draws it, while you work on it:
 
 ```
-godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder>
-godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> wonders
-godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> anim "Old Faithful"
-godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> units
-godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> battle
+godot --path client --xr-mode off tools/tileset_preview.tscn
+```
+
+(or open the scene in the Godot editor and press F6). `--xr-mode off` keeps SteamVR from starting; the tool is
+a normal window.
+
+- **What it shows:** pick your tileset and a ruleset at the top, then a category: **Terrain**, **Features**
+  (every feature on every terrain it can occur on, and forests / jungles on hills), **Natural wonders**,
+  **Resources** (on the first terrain they occur on, alone and with their improvement), **Improvements** (also
+  pillaged) or **Units** (in four civs' colours). The examples come from Unciv's own ruleset files, so every
+  combination the game can produce is there.
+- **Coverage report:** the panel on the right lists each example with the pieces it was drawn with, which set
+  they came from (yours or the fallback), and what's missing: a terrain drawn as a plain hex, a resource that's
+  only an icon, a wonder using `NaturalWonder`, a unit borrowing another unit's model, a missing `-Pillaged`
+  piece. Pointing at a tile shows the same for it.
+- **Reload files** reads your folder again after you've exported or changed pieces, without restarting.
+- **Save picture** saves the view as `preview-<category>.png` in your tileset's folder.
+- Mouse: left-drag turns the view, right- or middle-drag slides it, the wheel zooms. The background menu
+  switches between a plain studio and the game's backgrounds.
+- From a script: `godot --path client --xr-mode off tools/tileset_preview.tscn -- --tileset=MyTileset --category=units
+  --save=units.png` saves one picture and quits (`--ruleset="Civ V - Vanilla"`, `--background=mountains`).
+
+`tools/preview_tileset.gd` makes the review sheets we use when designing the built-in set (one picture per
+piece, the wonders, an animation, the units, the battle motion):
+
+```
+godot --path client -s tools/preview_tileset.gd -- <TilesetFolder> <output folder> [wonders | units | battle | anim "Old Faithful"]
 ```
 
 The Low poly set is rebuilt with:

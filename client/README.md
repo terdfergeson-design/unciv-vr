@@ -171,7 +171,10 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
   your own moves and attacks and to play back what the other players did that you could see
 - `tilesets/LowPoly/`: the built-in low-poly tileset (`tileset.json` and its `.glb` pieces)
 - `tools/make_lowpoly_tileset.gd` (with `lowpoly_pieces.gd`, `lowpoly_wonders.gd`, `lowpoly_units.gd`): makes
-  the low-poly pieces and unit models; `tools/preview_tileset.gd` renders a tileset to pictures
+  the low-poly pieces and unit models; `tools/tileset_preview.tscn` is the preview tool for tileset makers
+  (every terrain, feature, wonder, resource, improvement and unit drawn with the game's map code, with a report
+  of what each used and what's missing; see [tilesets/README.md](tilesets/README.md)); `tools/preview_tileset.gd`
+  renders review sheets
 - `scripts/minimap.gd`: the overview at the far edge of the table, with the map-overlay buttons
 - `scripts/map_overlays.gd`: Unciv's five map overlays drawn on the table (movement arrows, yields, worked tiles,
   resource / improvement symbols, improvement models and roads)

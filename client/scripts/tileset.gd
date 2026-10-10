@@ -181,6 +181,28 @@ func unit_model(unit: String, info: Dictionary, embarked := false, era := "", st
 	return fallback.unit_model(unit, info, embarked, era, style) if fallback != null else {}
 
 
+## Which model [method unit_model] would use for [param unit] ("Swordsman", "Sword"...), and from which set:
+## [model name, tileset folder], or ["", ""] when there's none (the map draws a token).
+func unit_model_source(unit: String, info: Dictionary, embarked := false) -> Array:
+	var candidates: Array[String] = []
+	if embarked:
+		candidates.append("Embarked")
+	for name_: String in [unit, str(info.get("replaces", "")), str(info.get("unitType", ""))]:
+		if name_ != "":
+			candidates.append(name_)
+	for candidate in candidates:
+		if _unit_files.has(candidate):
+			return [candidate, name]
+	return fallback.unit_model_source(unit, info, embarked) if fallback != null else ["", ""]
+
+
+## Which set has [param piece]: this one's folder name, the fallback's, or "" if none.
+func piece_source(piece: String) -> String:
+	if _files.has(piece):
+		return name
+	return fallback.piece_source(piece) if fallback != null else ""
+
+
 ## How much bigger than modelled units are drawn ("unitScale" in tileset.json).
 func unit_scale() -> float:
 	return float(config.get("unitScale", 1.0))
