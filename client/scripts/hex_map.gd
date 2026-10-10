@@ -26,9 +26,10 @@ shader_type spatial;
 render_mode diffuse_lambert, specular_disabled;
 
 void vertex() {
-	// Each puff bobs gently, out of step with its neighbours
-	vec3 origin = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
-	float phase = fract(sin(dot(origin.xz, vec2(12.9898, 78.233))) * 43758.5453) * 6.2831;
+	// Each puff bobs gently, out of step with its neighbours. Its phase comes with it (INSTANCE_CUSTOM.r, picked
+	// from its tile): a phase worked out from where it is in the world would jump about every frame whenever the
+	// map is dragged or the table moved, and every cloud would jiggle.
+	float phase = INSTANCE_CUSTOM.r * 6.2831;
 	VERTEX.y += sin(TIME * 0.7 + phase) * 0.05;
 	VERTEX.xz *= 1.0 + sin(TIME * 0.45 + phase * 1.7) * 0.04;
 }
@@ -130,7 +131,7 @@ func _ready() -> void:
 	var fog := ShaderMaterial.new()
 	fog.shader = Shader.new()
 	fog.shader.code = FOG_SHADER
-	_clouds = _make_multimesh_node("Fog", puff, fog)
+	_clouds = _make_multimesh_node("Fog", puff, fog, true)
 	_clouds.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 	_units_root = Node3D.new()
@@ -491,6 +492,7 @@ func _build_fog() -> void:
 			cmm.set_instance_transform(i, Transform3D(puff_basis, base + offset + Vector3(0, height, 0)))
 			var shade := rng.randf_range(0.5, 0.64)
 			cmm.set_instance_color(i, Color(shade, shade + 0.02, shade + 0.06))
+			cmm.set_instance_custom_data(i, Color(rng.randf(), 0, 0, 0))   # its bobbing phase, the same every time
 			i += 1
 
 
@@ -1194,10 +1196,12 @@ func _terrain_rgb(terrain_name: String, fallback: Color) -> Color:
 
 # region mesh helpers ----------------------------------------------------------------------
 
-func _make_multimesh_node(node_name: String, mesh: Mesh, material: Material) -> MultiMeshInstance3D:
+## [param custom_data]: each instance also carries four numbers of its own for the shader (INSTANCE_CUSTOM).
+func _make_multimesh_node(node_name: String, mesh: Mesh, material: Material, custom_data := false) -> MultiMeshInstance3D:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
 	mm.use_colors = true
+	mm.use_custom_data = custom_data
 	mm.mesh = mesh
 	var node := MultiMeshInstance3D.new()
 	node.name = node_name

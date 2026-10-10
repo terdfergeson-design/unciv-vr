@@ -53,6 +53,7 @@ const INFO_PANEL_PIXELS := Vector2i(420, 640)
 const INFO_PANEL_METRES := Vector2(0.44, 0.67)
 
 ## Holding the trigger (or the left mouse button) on a tile this long aims at it instead of clicking it.
+const LASER_REACH := 3.0   # metres, when the beam isn't on anything
 const LONG_PRESS_MS := 400
 ## How long the game may sit "busy" with nothing to wait for before it lets go (see _watch_busy).
 const BUSY_WATCHDOG_MS := 25000
@@ -220,6 +221,7 @@ var _drag_start := Vector3.ZERO
 var _drag_moved := false
 var _view_tween: Tween   # hand -> its last global position while its grip drags the map
 var _pointer_dot: MeshInstance3D
+var _laser: MeshInstance3D          # the right hand's beam; stretched each frame to stop at what it hits
 var _wrist_panel: WorldPanel
 var _popup_panel: WorldPanel       # VR: a card floating above the map - a city's card or a promotion choice
 var popup_menu: ActionMenu         # what's on the popup panel
@@ -3331,6 +3333,24 @@ func _run_smoke_test() -> void:
 		settings = saved_settings
 		_save_settings()
 		_apply_board_poses()
+	# The beam stops on a card instead of shining through it, and at the map when on nothing else
+	if _xr_mode and _laser != null and _panel_holders.get("Units") is WorldPanel and _panel_up("Units") and not hex_map.tiles.is_empty():
+		var holder := _panel_holders["Units"] as Node3D
+		var hand_was := _right_hand.global_transform
+		var aim_from := holder.global_position + holder.global_transform.basis.z * 0.5
+		_right_hand.global_transform = Transform3D(Basis.looking_at(holder.global_position - aim_from), aim_from)
+		_process_xr(0.0)
+		var on_panel := _laser.scale.z
+		var was_on_panel := _pointed_panel != null
+		var map_centre := hex_map.to_global(hex_map.tile_local_center(hex_map.tiles.keys()[hex_map.tiles.size() / 2]))
+		aim_from = map_centre + Vector3(0, 0.6, 0.3)
+		_right_hand.global_transform = Transform3D(Basis.looking_at(map_centre - aim_from), aim_from)
+		_process_xr(0.0)
+		var on_map := _laser.scale.z
+		_right_hand.global_transform = hand_was
+		_process_xr(0.0)
+		print("SMOKE: laser: %.2f m to a card 0.50 m away (on it %s), %.2f m to the map about %.2f m away" % [on_panel,
+			was_on_panel, on_map, Vector3(0, 0.6, 0.3).length()])
 	# Info panel: point at the first unit's tile and wait for the bridge's details
 	if not state.get("units", []).is_empty():
 		var info_key := Vector2i(int(state["units"][0]["x"]), int(state["units"][0]["y"]))
@@ -4323,9 +4343,11 @@ func _setup_xr_rig() -> void:
 	# laser on the right hand
 	var laser := MeshInstance3D.new()
 	var laser_mesh := BoxMesh.new()
-	laser_mesh.size = Vector3(0.003, 0.003, 2.0)
+	laser_mesh.size = Vector3(0.003, 0.003, 1.0)   # 1 m, scaled to the distance of whatever it's on
 	laser.mesh = laser_mesh
-	laser.position = Vector3(0, 0, -1.0)
+	laser.position = Vector3(0, 0, -LASER_REACH / 2.0)
+	laser.scale.z = LASER_REACH
+	_laser = laser
 	var laser_material := StandardMaterial3D.new()
 	laser_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	laser_material.albedo_color = Color(0.4, 0.9, 1.0, 0.6)
@@ -4578,6 +4600,27 @@ func _update_hover(key: Variant) -> void:
 		_update_hud()
 
 
+## Stops the beam at whatever it's on (a card, the overview, a board, a button, the map) so it never
+## shines through them; with nothing in the way it ends at LASER_REACH.
+func _fit_laser(origin: Vector3, direction: Vector3, on_board_or_button: bool) -> void:
+	if _laser == null:
+		return
+	var end: Variant = null
+	if _pointed_panel != null or _pointed_overlay != "" or on_board_or_button:
+		end = _pointer_dot.global_position
+	elif _pointed_minimap != null and minimap != null:
+		end = minimap.ray_hit_point(origin, direction)
+	elif not hex_map.tiles.is_empty():
+		# The map: where the ray meets its surface, not the tile's centre (the dot snaps; the beam doesn't)
+		end = Plane(hex_map.global_transform.basis.y.normalized(),
+				hex_map.global_position + hex_map.global_transform.basis.y * 0.15).intersects_ray(origin, direction)
+	var reach := LASER_REACH
+	if end != null:
+		reach = clampf(origin.distance_to(end as Vector3), 0.01, LASER_REACH)
+	_laser.scale.z = reach
+	_laser.position.z = -reach / 2.0
+
+
 func _process_xr(delta: float) -> void:
 	if _right_hand == null:
 		return
@@ -4639,6 +4682,7 @@ func _process_xr(delta: float) -> void:
 		_pointer_dot.visible = key != null
 		if key != null:
 			_pointer_dot.global_position = hex_map.to_global(hex_map.tile_local_center(key))
+	_fit_laser(origin, direction, not board.is_empty() or button != "")
 
 	# Trigger held + that hand's stick up / down zooms the map. The right trigger's click waits for the
 	# release, so a zoom doesn't also click whatever you're pointing at.
