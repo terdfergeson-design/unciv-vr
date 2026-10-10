@@ -36,7 +36,7 @@ const Sounds := preload("res://scripts/sounds.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 21   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 22   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -44,6 +44,11 @@ const CityBoard := preload("res://scripts/city_boards.gd")
 const OverviewBoard := preload("res://scripts/overview_board.gd")
 const Keyboard := preload("res://scripts/keyboard.gd")
 const SettingsBoard := preload("res://scripts/settings_board.gd")
+const CivilopediaBoard := preload("res://scripts/civilopedia_board.gd")
+const TutorialTaskCard := preload("res://scripts/tutorial_task_card.gd")
+const PEDIA_METRES := Vector2(1.5, 0.9)          # same aspect ratio as CivilopediaBoard.SIZE
+const TASK_PIXELS := Vector2i(520, 420)          # the task card sits at the top; the rest is see-through
+const TASK_METRES := Vector2(0.44, 0.3554)
 const OVERVIEW_METRES := Vector2(1.6, 0.9778)   # same aspect ratio as OverviewBoard.SIZE
 const SETTINGS_METRES := Vector2(1.3, 0.833)    # same aspect ratio as SettingsBoard.SIZE
 const KEYBOARD_METRES := Vector2(0.34, 0.1507)   # same aspect ratio as Keyboard.SIZE
@@ -81,6 +86,7 @@ const TABLE_BUTTONS := [
 	["end_turn", "End turn", Color(0.75, 0.45, 0.12), 65.0],
 	["recenter", "Recenter", Color(0.35, 0.35, 0.38), 90.0],
 	["settings", "Settings", Color(0.35, 0.35, 0.38), 110.0],
+	["civilopedia", "Civilopedia", Color(0.3, 0.42, 0.36), -100.0],
 	["exit_city", "Exit city", Color(0.8, 0.12, 0.1), 65.0],   # only in the city view, where End turn usually is
 ]
 const TABLE_BUTTON_RADIUS := 0.785     # distance from the table centre (map half-size is 0.7, table top 0.84)
@@ -121,6 +127,9 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
+	"pedia_pose": [], "task_pose": [],
+	# Unciv's tutorials: the popups and the task card (Settings > Gameplay)
+	"showTutorials": true,
 	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
 	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true},
 	# Other players' turns: "normal" (play back the moves and battles you could see), "fast" or "off"
@@ -139,6 +148,12 @@ var _city_tile_armed := Vector2i(999999, 999999)
 var overview_board: OverviewBoard    # Unciv's Empire Overview (stats and info)
 var settings_board: SettingsBoard    # Settings (Unciv's Options)
 var _settings_holder: Node           # WorldPanel (VR) or CanvasLayer (desktop)
+var civilopedia_board: CivilopediaBoard   # Unciv's Civilopedia (the Civilopedia button on the table, F1)
+var _pedia_holder: Node              # WorldPanel (VR) or CanvasLayer (desktop)
+var _pedia_ruleset := ""             # what the Civilopedia's categories were loaded for ("" = not yet)
+var task_card: TutorialTaskCard      # Unciv's tutorial task ("Move a unit!"...)
+var _task_holder: Node               # WorldPanel (VR) or CanvasLayer (desktop)
+var _task_hidden := ""               # the task Hide was pressed on (it stays hidden until another comes up)
 var _uncivVersion := ""
 var _bridge_protocol := 0
 var _overview_holder: Node           # WorldPanel (VR) or CanvasLayer (desktop)
@@ -213,7 +228,10 @@ const CITY_INFO_HOME := [-0.98, 0.45, -0.45, 34.0]    # city view: the city's bo
 const CITY_PROD_HOME := [0.98, 0.45, -0.45, -34.0]    # ... and the production board on the right
 const OVERVIEW_HOME := [1.4, 0.55, 0.8, -88.0]       # the empire overview: off to your right (look right to read it)
 const SETTINGS_HOME := [0.0, 0.47, -0.45, 0.0]       # settings: floating over the far half of the table
-const BOARD_TILT := {"minimap": -20.0, "info": -18.0, "wide": 8.0, "city_info": 0.0, "city_prod": 0.0, "overview": 0.0, "settings": -8.0}
+const PEDIA_HOME := [0.0, 0.52, -0.5, 0.0]           # the Civilopedia: the same, a little bigger (one at a time)
+const TASK_HOME := [-0.56, 0.3, -0.82, 16.0]         # the tutorial task: left of the overview, mirroring the info board
+const BOARD_TILT := {"minimap": -20.0, "info": -18.0, "wide": 8.0, "city_info": 0.0, "city_prod": 0.0, "overview": 0.0, "settings": -8.0,
+	"pedia": -8.0, "task": -18.0}
 var _drag_id := ""               # "minimap" or "info" while one is held
 var _drag_distance := 0.0        # along the pointer ray, from where it was grabbed
 var _drag_offset := Vector3.ZERO # grab point -> board origin, in global space
@@ -314,6 +332,8 @@ func _ready() -> void:
 	_setup_city_boards()
 	_setup_overview_board()
 	_setup_settings_board()
+	_setup_civilopedia()
+	_setup_task_card()
 	_setup_panels()
 	_setup_keyboard()
 	_apply_board_poses()
@@ -466,6 +486,8 @@ func _on_bridge_connected() -> void:
 			else:
 				await scenarios.call(bits[0])
 	match options.get("show", ""):   # dev aid for screenshots: --show=city or --show=research
+		"civilopedia":
+			await open_civilopedia(str(options.get("pedia", "")))
 		"overview-cities", "overview-stats", "overview-trades", "overview-units", "overview-politics", "overview-diagram", "overview-resources", "overview-religion", "overview-wonders", "overview-notifications":
 			var ov_tab: String = str(options["show"]).trim_prefix("overview-")
 			if ov_tab == "diagram":
@@ -622,6 +644,7 @@ func open_lobby() -> void:
 	_set_info_visible(false)
 	_set_big_visible(false)
 	_set_overview_visible(false)
+	_set_task_visible(false)
 	_update_panels_visible()
 	_info_key = null
 	var ping := await bridge.request("ping")
@@ -763,7 +786,8 @@ func _toggle_big_screen(tab: String) -> void:
 func _set_table_buttons_visible(shown: bool) -> void:
 	for button: Dictionary in _table_buttons:
 		var city_only: bool = button["id"] == "exit_city"
-		(button["node"] as Node3D).visible = shown and city_only == _city_view
+		var always: bool = button["id"] == "civilopedia"   # in the city view too
+		(button["node"] as Node3D).visible = shown and (always or city_only == _city_view)
 
 
 func refresh() -> void:
@@ -809,6 +833,7 @@ func refresh() -> void:
 		await _select_unit(int(selected_unit["id"]), false)
 	_update_turn_button()
 	_maybe_show_alert()
+	_update_task_card()
 	_update_hud()
 
 
@@ -858,14 +883,15 @@ func _setup_info_panel() -> void:
 
 ## Puts the overview and the info board where you last left them (or their default spots).
 func _apply_board_poses() -> void:
-	for id: String in ["minimap", "info", "wide", "city_info", "city_prod", "overview", "settings"]:
+	for id: String in ["minimap", "info", "wide", "city_info", "city_prod", "overview", "settings", "pedia", "task"]:
 		var node := _board_node(id)
 		if node == null:
 			continue
 		var pose: Array = settings.get(id + "_pose", [])
 		if pose.size() != 4:
-			pose = {"minimap": MINIMAP_HOME, "info": INFO_HOME, "wide": WIDE_HOME,
-				"city_info": CITY_INFO_HOME, "city_prod": CITY_PROD_HOME, "overview": OVERVIEW_HOME, "settings": SETTINGS_HOME}[id]
+			pose = {"minimap": MINIMAP_HOME, "info": INFO_HOME, "wide": WIDE_HOME, "city_info": CITY_INFO_HOME,
+				"city_prod": CITY_PROD_HOME, "overview": OVERVIEW_HOME, "settings": SETTINGS_HOME, "pedia": PEDIA_HOME,
+				"task": TASK_HOME}[id]
 		node.position = Vector3(float(pose[0]), float(pose[1]), float(pose[2]))
 		node.rotation_degrees = Vector3(BOARD_TILT[id], float(pose[3]), 0)
 	for folder: String in _panel_holders:
@@ -889,6 +915,10 @@ func _board_node(id: String) -> Node3D:
 			return _overview_holder as Node3D if _overview_holder is Node3D else null
 		"settings":
 			return _settings_holder as Node3D if _settings_holder is Node3D else null
+		"pedia":
+			return _pedia_holder as Node3D if _pedia_holder is Node3D else null
+		"task":
+			return _task_holder as Node3D if _task_holder is Node3D else null
 	return _info_holder as Node3D if _info_holder is Node3D else null
 
 
@@ -907,7 +937,8 @@ func _board_at(origin: Vector3, direction: Vector3) -> Array:
 		var hit: Variant = (_big_holder as WorldPanel).ray_hit(origin, direction)
 		hits["wide"] = hit[0] if hit != null and big_screen.grab_bar_contains(hit[1]) else null
 	for pair: Array in [["city_info", _city_info_holder, city_info_board], ["city_prod", _city_prod_holder, city_prod_board],
-			["overview", _overview_holder, overview_board], ["settings", _settings_holder, settings_board]]:
+			["overview", _overview_holder, overview_board], ["settings", _settings_holder, settings_board],
+			["pedia", _pedia_holder, civilopedia_board], ["task", _task_holder, task_card]]:
 		if pair[1] is WorldPanel and (pair[1] as Node3D).is_visible_in_tree():
 			var hit: Variant = (pair[1] as WorldPanel).ray_hit(origin, direction)
 			hits[pair[0]] = hit[0] if hit != null and pair[2].grab_bar_contains(hit[1]) else null
@@ -976,6 +1007,8 @@ func reset_board_poses() -> void:
 	settings["city_prod_pose"] = []
 	settings["overview_pose"] = []
 	settings["settings_pose"] = []
+	settings["pedia_pose"] = []
+	settings["task_pose"] = []
 	settings["panel_poses"] = {}
 	_save_settings()
 	_apply_board_poses()
@@ -1028,6 +1061,8 @@ func show_big_screen(tab: String) -> void:
 		return
 	_set_big_visible(true)
 	big_screen.show_tab(tab)
+	if tab == "policies":
+		_tutorial_request("showTutorial", {"name": "CultureAndPolicies"})   # Unciv's policy screen shows this
 	await _refresh_big_screen()
 
 
@@ -1652,6 +1687,8 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 			open_promotions()
 		"settings_card":
 			open_settings()
+		"civilopedia_card":
+			await open_civilopedia()
 		"save_game":
 			await save_game()
 		"rename_unit":
@@ -1971,6 +2008,8 @@ func _on_overview_chosen(kind: String, value: String) -> void:
 			return
 		"ov_tab":
 			overview_board.show_tab(value)
+			if value == "stats":
+				_tutorial_request("tutorialTaskDone", {"task": "See your stats breakdown"})
 			await _refresh_overview()
 		"ov_city":
 			await enter_city_view(value)
@@ -2093,6 +2132,7 @@ func enter_city_view(city_name: String) -> void:
 	_deselect()
 	_close_popup()
 	selected_city = {}
+	_tutorial_request("tutorialTaskDone", {"task": "Enter city screen"})
 	hex_map.clear_aim()
 	_city_tile_armed = Vector2i(999999, 999999)
 	minimap.visible = false
@@ -2484,6 +2524,7 @@ func open_promotions() -> void:
 	if selected_unit.is_empty():
 		return
 	_promotion_prompted[int(selected_unit["id"])] = int(state.get("turn", 0))
+	_tutorial_request("showTutorial", {"name": "Experience"})   # as Unciv's promotion screen
 	if _xr_mode:
 		_popup_kind = "promotion"
 		_popup_key = _selected_key()
@@ -3659,10 +3700,28 @@ func _run_smoke_test() -> void:
 			await _on_panel_clicked(Panels.click_for(_panel_specs["Cities"], city_rows[0]))
 			print("SMOKE: clicked the first city: card for %s" % selected_city.get("name", "-"))
 	# The watchdog that lets go when an order is cut short, so the game doesn't ignore every click after it
+	var settle_guard := 0
+	while bridge.pending > 0 and settle_guard < 50:   # requests still on their way back (not stuck) hold the watchdog off
+		settle_guard += 1
+		await get_tree().create_timer(0.1).timeout
 	busy = true
 	_busy_since = Time.get_ticks_msec() - BUSY_WATCHDOG_MS - 1
 	_watch_busy()
 	print("SMOKE: busy watchdog after an order that never finished: busy=%s, status '%s'" % [busy, _status_text])
+	# The Civilopedia: the table button opens it, a link on a page opens that entry, the button closes it again
+	await press_table_button("civilopedia")
+	await civilopedia_board.open_link("Unit/Warrior")
+	var pedia_links := civilopedia_board.page_links()
+	if not pedia_links.is_empty():
+		await civilopedia_board.follow(pedia_links[0])
+	print("SMOKE: civilopedia: shown %s, %d categories, followed %s -> %s, page '%s'" % [civilopedia_shown(),
+		civilopedia_board.categories.size(), pedia_links.slice(0, 1), civilopedia_board.link, civilopedia_board.page_text().left(40).replace("\n", " | ")])
+	await press_table_button("civilopedia")
+	print("SMOKE: civilopedia closed: %s" % (not civilopedia_shown()))
+	# Tutorials: the task card shows Unciv's current task (tutorials are on unless turned off in Settings)
+	var smoke_task: Dictionary = state.get("tutorialTask", {}) if state.get("tutorialTask") is Dictionary else {}
+	print("SMOKE: tutorials %s: task '%s', card up %s, tutorial messages %d" % ["on" if settings.get("showTutorials", true) else "off",
+		smoke_task.get("task", "-"), task_card_shown(), state.get("alerts", []).filter(func(a: Dictionary) -> bool: return a.get("type", "") == "Tutorial").size()])
 	print("SMOKE: done")
 	if not options.has("screenshot"):
 		get_tree().quit()
@@ -3848,7 +3907,7 @@ const INT_SETTINGS := ["notificationsLogMaxTurns", "turnsBetweenAutosaves"]
 ## Ours: how loud, 0 to 100 (nothing to do with the bridge)
 const VOLUME_SETTINGS := ["soundVolume", "ambienceVolume"]
 ## Unciv options the game engine itself reads (sent with setSettings)
-const BRIDGE_SETTINGS := ["checkForDueUnits", "autoUnitCycle", "alternateUnitCycleOrder", "autoAssignCityProduction",
+const BRIDGE_SETTINGS := ["showTutorials", "checkForDueUnits", "autoUnitCycle", "alternateUnitCycleOrder", "autoAssignCityProduction",
 	"autoBuildingRoads", "automatedWorkersReplaceImprovements", "stopAutomatedWorkersRemoveVegetation",
 	"automatedUnitsCanUpgrade", "automatedUnitsChoosePromotions", "citiesAutoBombardAtEndOfTurn", "autoAssignSpecialistsInNewCities"]
 
@@ -3901,7 +3960,9 @@ func save_game() -> void:
 func open_settings() -> void:
 	if _xr_mode and _popup_kind != "":
 		_close_popup()   # nothing floats in front of the board (the main menu card comes back when it closes)
+	close_civilopedia()   # they share a spot over the table
 	_set_settings_visible(true)
+	_tutorial_request("tutorialTaskDone", {"task": "Open the options table"})
 	_refresh_settings()
 
 
@@ -3979,6 +4040,12 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 		"panel_toggle":
 			set_panel_shown(value, not _panel_wanted(value))
 			_refresh_settings()
+		"reset_tutorials":
+			var reply := await bridge.request("setSettings", {"resetTutorials": true})
+			_set_status("The tutorials will show again from the start." if reply.ok else "Couldn't reset the tutorials: %s" % reply.error)
+			_task_hidden = ""
+			if not _in_lobby and not state.is_empty():
+				await refresh()
 		"reset_panels":
 			settings["panel_poses"] = {}
 			_save_settings()
@@ -4286,6 +4353,191 @@ func press_table_button(id: String) -> void:
 				close_settings()
 			else:
 				open_settings()
+		"civilopedia":
+			if civilopedia_shown():
+				close_civilopedia()
+			else:
+				await open_civilopedia()
+
+
+# region civilopedia and tutorials ----------------------------------------------------------
+
+## The Civilopedia board: over the table in VR (where the settings board goes - one at a time), a window on the desktop.
+func _setup_civilopedia() -> void:
+	civilopedia_board = CivilopediaBoard.new()
+	civilopedia_board.fetch = func(target: String) -> Dictionary:
+		var reply := await bridge.request("getCivilopediaEntry", {"link": target})
+		if not reply.ok:
+			_set_status("Civilopedia: %s" % reply.error)
+			return {}
+		return reply.result
+	civilopedia_board.chosen.connect(_on_pedia_chosen)
+	if _xr_mode:
+		var panel := WorldPanel.new()
+		panel.name = "Civilopedia"
+		panel.setup(civilopedia_board, Vector2i(CivilopediaBoard.SIZE), PEDIA_METRES)
+		table.add_child(panel)   # placed by _apply_board_poses
+		_pedia_holder = panel
+	else:
+		var layer := CanvasLayer.new()
+		layer.layer = 7   # over the message cards: it's opened on purpose, and closed again
+		add_child(layer)
+		layer.add_child(civilopedia_board)
+		var place := func() -> void:
+			var window := get_viewport().get_visible_rect().size
+			var fit := minf(1.0, minf((window.x - 40.0) / CivilopediaBoard.SIZE.x, (window.y - 60.0) / CivilopediaBoard.SIZE.y))
+			civilopedia_board.scale = Vector2(fit, fit)
+			civilopedia_board.position = Vector2((window.x - CivilopediaBoard.SIZE.x * fit) / 2.0, (window.y - CivilopediaBoard.SIZE.y * fit) / 2.0)
+		get_viewport().size_changed.connect(place)
+		place.call()
+		_pedia_holder = layer
+	_set_civilopedia_visible(false)
+
+
+func _set_civilopedia_visible(shown: bool) -> void:
+	if _pedia_holder is CanvasLayer:
+		(_pedia_holder as CanvasLayer).visible = shown
+	elif _pedia_holder != null:
+		(_pedia_holder as Node3D).visible = shown
+
+
+func civilopedia_shown() -> bool:
+	if _pedia_holder is CanvasLayer:
+		return (_pedia_holder as CanvasLayer).visible
+	return _pedia_holder != null and (_pedia_holder as Node3D).visible
+
+
+## Opens the Civilopedia (at [param target], "Category/Name", when given; otherwise where it was left - or, the
+## first time, at Unciv's own starting page, the "Civilopedia" tutorial). Loads its contents for the game running.
+func open_civilopedia(target := "") -> void:
+	if civilopedia_board == null:
+		return
+	if _xr_mode and _popup_kind != "" and _popup_kind not in DECISION_CARDS:
+		_close_popup()   # nothing floats in front of the board
+	close_settings()
+	# The game decides what's in it (ruleset, mods, victory types): load again for another game
+	var wanted := "lobby" if _in_lobby else "game:%s|%s" % [JSON.stringify(state.get("game", {})), state.get("playerCiv", "")]
+	if _pedia_ruleset != wanted or not civilopedia_board.has_categories():
+		var reply := await bridge.request("getCivilopedia")
+		if not reply.ok:
+			_set_status("Couldn't open the Civilopedia: %s" % reply.error)
+			return
+		civilopedia_board.set_categories(reply.result)
+		civilopedia_board.history.clear()
+		civilopedia_board.link = ""
+		civilopedia_board.category = ""
+		_pedia_ruleset = wanted
+	_set_civilopedia_visible(true)
+	if target != "":
+		await civilopedia_board.open_link(target)
+	elif civilopedia_board.link == "":
+		await civilopedia_board.open_link("Tutorial/Civilopedia", false)
+		if civilopedia_board.link == "":
+			await civilopedia_board.open_category(str(civilopedia_board.categories[0]["key"]))
+
+
+func close_civilopedia() -> void:
+	if not civilopedia_shown():
+		return
+	_set_civilopedia_visible(false)
+	if _in_lobby:
+		_show_lobby_card("lobby")
+
+
+func _on_pedia_chosen(kind: String, value: String) -> void:
+	sounds.play(Sounds.CLICK)
+	match kind:
+		"close":
+			close_civilopedia()
+		"external":
+			OS.shell_open(value)
+			_set_status("Opened %s in your browser." % value)
+
+
+## The tutorial task card: left of the overview in VR (grabbed by its top strip), bottom-middle on the desktop.
+func _setup_task_card() -> void:
+	task_card = TutorialTaskCard.new()
+	task_card.chosen.connect(_on_task_chosen)
+	if _xr_mode:
+		var panel := WorldPanel.new()
+		panel.name = "TutorialTask"
+		panel.setup(task_card, TASK_PIXELS, TASK_METRES)
+		table.add_child(panel)   # placed by _apply_board_poses
+		_task_holder = panel
+	else:
+		var layer := CanvasLayer.new()
+		layer.layer = 5   # over the big screen and the overview, under the message cards
+		add_child(layer)
+		layer.add_child(task_card)
+		var place := func() -> void:
+			await get_tree().process_frame
+			task_card.reset_size()
+			var window := get_viewport().get_visible_rect().size
+			task_card.position = Vector2((window.x - task_card.size.x) / 2.0, window.y - task_card.size.y - 12)
+		task_card.resized.connect(place)
+		get_viewport().size_changed.connect(place)
+		_task_holder = layer
+	_set_task_visible(false)
+
+
+func _set_task_visible(shown: bool) -> void:
+	if _task_holder is CanvasLayer:
+		(_task_holder as CanvasLayer).visible = shown
+	elif _task_holder != null:
+		(_task_holder as Node3D).visible = shown
+
+
+func task_card_shown() -> bool:
+	if _task_holder is CanvasLayer:
+		return (_task_holder as CanvasLayer).visible
+	return _task_holder != null and (_task_holder as Node3D).visible
+
+
+## Shows the task in getState's tutorialTask (if any, and not hidden), or puts the card away.
+func _update_task_card() -> void:
+	if task_card == null:
+		return
+	var task: Dictionary = state.get("tutorialTask", {}) if state.get("tutorialTask") is Dictionary else {}
+	var name := str(task.get("name", ""))
+	if _in_lobby or task.is_empty() or name == _task_hidden or not bool(settings.get("showTutorials", true)):
+		_set_task_visible(false)
+		return
+	if JSON.stringify(task) != JSON.stringify(task_card.task):
+		task_card.show_task(task, _xr_mode)
+	_set_task_visible(true)
+
+
+func _on_task_chosen(kind: String, value: String) -> void:
+	sounds.play(Sounds.CLICK)
+	match kind:
+		"task_hide":
+			_task_hidden = value
+			_set_task_visible(false)
+			_set_status("Tutorial task hidden - the next one will show when it comes up.")
+		"task_choice":
+			var at := value.rfind("|")
+			await _tutorial_request("chooseTutorialTask", {"name": value.left(at), "index": int(value.substr(at + 1))})
+
+
+## Tells the bridge about a tutorial moment the client sees (a task done here, a screen with a tutorial of its own),
+## then shows what that brings up. Quietly does nothing with tutorials off, outside a game, or an older bridge.
+func _tutorial_request(method: String, params: Dictionary) -> void:
+	if _in_lobby or state.is_empty() or not bool(settings.get("showTutorials", true)) or _bridge_protocol < 22:
+		return
+	var reply := await bridge.request(method, params)
+	if not reply.ok:
+		push_warning("%s: %s" % [method, reply.error])
+		return
+	var status: Dictionary = reply.result
+	if status.has("alerts"):
+		state["alerts"] = status["alerts"]
+		state["blockers"] = status.get("blockers", state.get("blockers", []))
+		if status.has("tutorialTask"):
+			state["tutorialTask"] = status["tutorialTask"]
+		else:
+			state.erase("tutorialTask")
+		_maybe_show_alert()
+		_update_task_card()
 
 
 ## Keeps the table's column and feet under the table top as it moves (hidden when floating in space).
@@ -4493,8 +4745,15 @@ func _unhandled_input(event: InputEvent) -> void:
 					close_settings()
 				else:
 					open_settings()
+			KEY_F1:   # Unciv's Civilopedia key
+				if civilopedia_shown():
+					close_civilopedia()
+				else:
+					await open_civilopedia()
 			KEY_ESCAPE:
-				if settings_shown():
+				if civilopedia_shown():
+					close_civilopedia()
+				elif settings_shown():
 					close_settings()
 				elif not _pick.is_empty():
 					await cancel_pick()
@@ -4637,6 +4896,10 @@ func _process_xr(delta: float) -> void:
 		panels.append(_big_holder as WorldPanel)
 	if _settings_holder is WorldPanel:
 		panels.push_front(_settings_holder as WorldPanel)   # in front of the boards behind it
+	if _pedia_holder is WorldPanel:
+		panels.push_front(_pedia_holder as WorldPanel)
+	if _task_holder is WorldPanel:
+		panels.append(_task_holder as WorldPanel)
 	for holder: Node in [_city_info_holder, _city_prod_holder, _overview_holder]:
 		if holder is WorldPanel:
 			panels.append(holder as WorldPanel)
@@ -4727,6 +4990,9 @@ func _process_xr(delta: float) -> void:
 		elif _pointed_panel == _settings_holder:
 			if absf(right_stick.y) > 0.3:
 				settings_board.scroll_by(-right_stick.y * delta * 700.0)
+		elif _pointed_panel == _pedia_holder:
+			if absf(right_stick.y) > 0.3:   # the entry list or the page, whichever the laser is on
+				civilopedia_board.scroll_at(_pointed_pixel, -right_stick.y * delta * 800.0)
 		elif _pointed_panel in _panel_holders.values():
 			if absf(right_stick.y) > 0.3:
 				var folder: String = _panel_holders.find_key(_pointed_panel)

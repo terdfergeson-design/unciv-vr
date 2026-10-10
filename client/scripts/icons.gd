@@ -28,13 +28,26 @@ const FOLDERS := {
 	"action": "Images.ConstructionIcons/UnitActionIcons",
 	"promotion": "Images.UnitPromotionIcons/UnitPromotionIcons",
 	"religion": "Images.ReligionIcons/ReligionIcons",
+	"emoji": "Images.Icons/EmojiIcons",
+	"victory": "Images.NationIcons/VictoryTypeIcons",
 }
 ## Unciv image paths ("StatIcons/Gold", "UnitIcons/Warrior"...) -> our kinds
 const PATH_KINDS := {
 	"StatIcons": "stat", "UnitIcons": "unit", "BuildingIcons": "building", "TechIcons": "tech", "ResourceIcons": "resource",
 	"ImprovementIcons": "improvement", "OtherIcons": "other", "ReligionIcons": "religion", "NationIcons": "nation",
 	"PolicyIcons": "policy", "PolicyBranchIcons": "branch", "UnitPromotionIcons": "promotion", "UnitActionIcons": "action",
-	"CityStateIcons": "citystate", "TileIcons": "tile", "UnitTypeIcons": "unittype",
+	"CityStateIcons": "citystate", "TileIcons": "tile", "UnitTypeIcons": "unittype", "EmojiIcons": "emoji",
+	"VictoryTypeIcons": "victory",
+}
+## Unciv's icon characters (Fonts.allSymbols): written in its texts, drawn as these icons
+const SYMBOLS := {
+	"⏳": "EmojiIcons/Turn", "†": "StatIcons/Strength", "‡": "StatIcons/RangedStrength", "…": "StatIcons/Range",
+	"➡": "StatIcons/Movement", "⚙": "EmojiIcons/Production", "¤": "EmojiIcons/Gold", "⁂": "EmojiIcons/Food",
+	"⍾": "EmojiIcons/Science", "♪": "EmojiIcons/Culture", "⌣": "EmojiIcons/Happiness", "☮": "EmojiIcons/Faith",
+	"♬": "EmojiIcons/Great Artist", "⚒": "EmojiIcons/Great Engineer", "⛤": "EmojiIcons/Great General",
+	"⚖": "EmojiIcons/Great Merchant", "⚛": "EmojiIcons/Great Scientist", "☠": "EmojiIcons/Death",
+	"⛏": "EmojiIcons/Automate", "∞": "EmojiIcons/Infinity", "⌚": "EmojiIcons/SortedByTime", "✯": "EmojiIcons/Star",
+	"◉": "EmojiIcons/SortedByStatus", "→": "EmojiIcons/RightArrow",
 }
 ## Unciv's unit action types -> their icon in UnitActionIcons (from Unciv's UnitActionType)
 const ACTION_ICONS := {

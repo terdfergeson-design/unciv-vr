@@ -11,7 +11,7 @@ extends PanelContainer
 ##
 ## Emits chosen(kind, value):
 ##   "setting" ("key|value"), "setting_toggle" (key), "overlay" (map overlay id), "save_game", "main_menu",
-##   "reset_boards", "panel_toggle" (panel folder), "reset_panels", "close"
+##   "reset_boards", "panel_toggle" (panel folder), "reset_panels", "reset_tutorials", "close"
 
 signal chosen(kind: String, value: String)
 
@@ -98,6 +98,7 @@ const CONTROLS := [
 	["Tech tree, policies, diplomacy", "T, P, G", "The wrist card, or the buttons on the boards"],
 	["Empire overview", "E", "Always up, off to your right"],
 	["Settings", "O", "The Settings button on the table"],
+	["Civilopedia", "F1", "The Civilopedia button on the table"],
 	["Close / deselect", "Esc", "B closes the keyboard and the city view"],
 	["Recenter the table", "-", "Left stick click, or the Recenter button"],
 ]
@@ -264,6 +265,11 @@ func _gameplay_page() -> void:
 	for n in range(3, 16):
 		log_turns.append([str(n), "%d turns" % n, "", ""])
 	_choice("notificationsLogMaxTurns", "Notification log keeps", "How many turns of messages the overview's Notifications tab keeps.", log_turns)
+	_header("Tutorials", "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try.")
+	_toggle_row("Show tutorials", "The tutorial messages and the task card. Every tutorial is in the Civilopedia too.",
+		bool(settings.get("showTutorials", true)), func() -> void: chosen.emit("setting_toggle", "showTutorials"))
+	_action_row("Reset tutorials", "Show every tutorial and task again, as if you were new.", "Reset",
+		func() -> void: chosen.emit("reset_tutorials", ""))
 	_header("Other players", "")
 	_choice("playback", "Other players' turns", "What you see of the other players' turns after you end yours.", _simple_options(PLAYBACK))
 

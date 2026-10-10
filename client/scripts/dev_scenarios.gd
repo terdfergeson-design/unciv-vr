@@ -71,6 +71,8 @@ func run(name: String) -> void:
 		"stacking": await stacking()
 		"unit_death": await unit_death()
 		"panels": await panels()
+		"civilopedia": await civilopedia()
+		"tutorials": await tutorials()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -1512,3 +1514,141 @@ func _clear_blockers() -> void:
 				_:
 					await main.bridge.request("dismissBlocker", {"type": blocker.get("type", "")})
 	say("blockers left: %s" % [main.state.get("blockers", [])])
+
+
+## The Civilopedia: open it as the table button does, look up a few entries the way a player would (a category, an
+## entry, a link on its page, Back), and save pictures of it to --shots.
+func civilopedia() -> void:
+	await main.press_table_button("civilopedia")
+	await settle(0.8)
+	var board: Control = main.civilopedia_board
+	check("open after the table button", main.civilopedia_shown())
+	check("categories", board.categories.size() >= 15, "%d: %s" % [board.categories.size(),
+		", ".join(board.categories.map(func(c: Dictionary) -> String: return "%s %d" % [c["label"], c["entries"].size()]))])
+	check("starts at Unciv's own first page", board.link == "Tutorial/Civilopedia", board.link)
+	await shot(board, "pedia_start")
+	board.press("Units")
+	await settle(0.8)
+	check("Units category", board.category == "Unit" and board.entry_count() > 50, "%s, %d entries" % [board.category, board.entry_count()])
+	board.press("Warrior")
+	await settle(0.8)
+	var text: String = board.page_text()
+	check("Warrior's page", board.link == "Unit/Warrior" and text.contains("club"), text.left(120).replace("\n", " | "))
+	var links: Array = board.page_links()
+	check("links on the page", links.has("Technology/Agriculture"), str(links))
+	await shot(board, "pedia_warrior")
+	await board.follow("Technology/Agriculture")
+	await settle(0.8)
+	check("a link opens its entry", board.link == "Technology/Agriculture" and board.category == "Technology", board.link)
+	await shot(board, "pedia_tech")
+	await board.back()
+	await settle(0.8)
+	check("Back", board.link == "Unit/Warrior", board.link)
+	for target: String in ["Terrain/Hill", "Nation/Babylon", "Building/Granary", "Promotion/Shock I", "Policy/Tradition",
+			"Belief/Religions", "UnitType/Domain: [Land]", "Resource/Iron", "Improvement/Farm", "Victory/Domination"]:
+		await board.open_link(target)
+		await settle(0.5)
+		var icon_missing: Array = board._entry_buttons.keys().filter(func(l: String) -> bool:
+			return (board._entry_buttons[l] as Button).icon == null)
+		check("entry %s" % target, board.link == target and board.page_text().length() > 10,
+			"%d chars, %d of %d list icons missing" % [board.page_text().length(), icon_missing.size(), board.entry_count()])
+		if target in ["Terrain/Hill", "Nation/Babylon"]:
+			await shot(board, "pedia_" + target.get_slice("/", 0).to_lower())
+	# Closed with its own button, opened again from the table where it was left
+	board.press("Close")
+	await settle(0.3)
+	check("Close", not main.civilopedia_shown())
+	await main.press_table_button("civilopedia")
+	await settle(0.5)
+	check("opens again where it was left", main.civilopedia_shown() and board.link == "Victory/Domination", board.link)
+	await main.press_table_button("civilopedia")
+	await settle(0.3)
+	check("the table button closes it too", not main.civilopedia_shown())
+	# One board over the table at a time
+	await main.open_civilopedia()
+	main.open_settings()
+	await settle(0.3)
+	check("settings take its place", main.settings_shown() and not main.civilopedia_shown())
+	main.close_settings()
+
+
+## Unciv's tutorials, from the start (Settings > Reset tutorials): the popups as alerts, the task card, tasks done
+## by playing, the tutorials a screen brings up, and switching them off.
+func tutorials() -> void:
+	await main._on_settings_chosen("reset_tutorials", "")
+	await settle(0.5)
+	var tutorial_alerts := func() -> Array:
+		return main.state.get("alerts", []).filter(func(a: Dictionary) -> bool: return a.get("type", "") == "Tutorial")
+	var first: Array = tutorial_alerts.call()
+	check("a tutorial is waiting", not first.is_empty(), str(first.map(func(a: Dictionary) -> String: return a["title"])))
+	# Answer the game's own messages first (they come before the tutorials)
+	var guard := 0
+	while not main.state.get("alerts", []).is_empty() and main.state["alerts"][0].get("type", "") != "Tutorial" and guard < 10:
+		guard += 1
+		var alert: Dictionary = main.state["alerts"][0]
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+		await settle(0.3)
+	main._alert_shown_key = ""
+	main._maybe_show_alert()
+	await settle(0.4)
+	var menu: Control = main.popup_menu if main._xr_mode else main.alert_menu
+	check("the Introduction shows as a card", main._alert_card_visible() and _has_label(menu, "Introduction"))
+	await shot(menu, "tutorial_popup")
+	var seen: Array[String] = []
+	guard = 0
+	while not tutorial_alerts.call().is_empty() and guard < 12:
+		guard += 1
+		var alert: Dictionary = tutorial_alerts.call()[0]
+		seen.append("%s %d/%d" % [alert["title"], int(alert["step"]), int(alert["steps"])])
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+		await settle(0.3)
+	say("tutorials answered: %s" % ", ".join(seen))
+	check("all answered", tutorial_alerts.call().is_empty())
+	# The task card
+	var task: Dictionary = main.state.get("tutorialTask", {})
+	check("a task is up", not task.is_empty() and main.task_card_shown(), str(task.get("task", "-")))
+	await shot(main.task_card, "tutorial_task")
+	var card_text := ", ".join(main.task_card.find_children("*", "RichTextLabel", true, false).map(
+		func(l: RichTextLabel) -> String: return l.get_parsed_text()))
+	say("task card: %s" % card_text)
+	check("worded for here", not card_text.contains("Click on a unit →") and card_text.length() > 20)
+	# Doing it: move a unit somewhere
+	var done_before := str(task.get("task", ""))
+	if done_before == "Move unit":
+		for u: Dictionary in main.state.get("units", []):
+			if u["name"] != "Settler":
+				var at := Vector2i(int(u["x"]), int(u["y"]))
+				var to := _free_tile(at, 1.0)
+				await main.bridge.request("moveUnit", {"unitId": int(u["id"]), "x": to.x, "y": to.y})
+				break
+		await main.refresh()
+		await settle(0.3)
+		var next: Dictionary = main.state.get("tutorialTask", {})
+		check("moving a unit completes Move unit", str(next.get("task", "")) != "Move unit", str(next.get("task", "-")))
+	# The policies screen brings up its own tutorial
+	await main.show_big_screen("policies")
+	await settle(0.5)
+	# (one tutorial shows at a time: answer any that came up first)
+	var policy_tutorial: Array[String] = []
+	guard = 0
+	while not tutorial_alerts.call().is_empty() and guard < 6 and not policy_tutorial.has("Culture and Policies"):
+		guard += 1
+		var alert: Dictionary = tutorial_alerts.call()[0]
+		policy_tutorial.append(str(alert["tutorial"]))
+		await main.answer_alert("%s|%s" % [alert["key"], alert["options"][0]["id"]])
+		await settle(0.3)
+	check("policies screen -> Culture and Policies", policy_tutorial.has("Culture and Policies"), str(policy_tutorial))
+	main._set_big_visible(main._xr_mode)
+	# Hide puts the card away until the next task
+	main.task_card.chosen.emit("task_hide", str(main.state.get("tutorialTask", {}).get("name", "")))
+	await settle(0.2)
+	check("Hide", not main.task_card_shown())
+	# Off in the settings: no tutorial messages, no card
+	await main._on_settings_chosen("setting_toggle", "showTutorials")
+	await settle(0.5)
+	check("off: nothing shows", tutorial_alerts.call().is_empty() and not main.state.has("tutorialTask") and not main.task_card_shown(),
+		"%d tutorial alerts, task %s" % [tutorial_alerts.call().size(), main.state.get("tutorialTask", {}).get("task", "-")])
+	await main._on_settings_chosen("setting_toggle", "showTutorials")
+	await settle(0.5)
+	check("back on", bool(main.settings["showTutorials"]) and main.state.has("tutorialTask"))
+	say("problems: %d" % _problems)

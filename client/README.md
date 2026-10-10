@@ -50,14 +50,14 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Empire overview (Unciv's stats and info screen) | E opens / closes it | always up, off to your right - turn your head to read it |
 | City view | "City view" on the city's card; Esc or "Exit city" leaves | same; B or "Exit city" leaves |
 | Rename a city / unit, name a save | "Rename" in the city view's header, on the unit card or in the overview's Units tab; type on the keyboard (or the on-screen one), Enter / Esc | the on-screen keyboard pops up on your left wrist (or floats in front of you if the left controller isn't tracked): point + right trigger on the keys, OK; B or Cancel closes it |
-| Table buttons: Idle unit (left side); End turn, Recenter, Settings (right side); in the city view only a red Exit city | click | point + right trigger |
+| Table buttons: Idle unit, Civilopedia (left side); End turn, Recenter, Settings (right side); in the city view only a red Exit city (and the Civilopedia) | click | point + right trigger |
 | Scroll a card | mouse wheel | point at it + right stick |
 | Table height | – | either stick up / down (the right one only when not pointing at a card) |
 | Rotate / scale table | right-drag orbit, wheel zoom, WASD / middle-drag pan | hold either grip + that stick: left / right rotates, up / down scales |
 | Zoom the map (all the way out = whole map) | +/- or Ctrl + wheel | hold a trigger + that hand's stick up / down |
 | Map overlays (Unciv's five: unit movements, tile yields, worked tiles, resources and improvements, improvement pictures) | click the round buttons beside the overview | point at one + right trigger |
 | Slide the map (when zoomed in) | WASD, or click the overview | hold a grip and drag the map; or point at the overview at the far edge and pull the trigger |
-| Shortcuts | Space end turn, F found city, Tab / Shift+Tab next / previous unit, N idle unit, T tech tree, P policies, G diplomacy, O settings, Esc close the big screen / deselect, R refresh | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
+| Shortcuts | Space end turn, F found city, Tab / Shift+Tab next / previous unit, N idle unit, T tech tree, P policies, G diplomacy, O settings, F1 Civilopedia, Esc close the Civilopedia / the big screen / deselect, R refresh | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
 
 The right trigger clicks when you let go of it (so holding it to zoom, or to aim at a tile, doesn't also click).
 ### Turns, popups and decisions
@@ -69,6 +69,23 @@ After End turn, the moves and battles of the other players that you could see pl
 order, with the view gliding to fights outside it; **End turn** (now labelled **Skip**, or A / Space) skips the
 rest. Settings > "Other players' turns" plays them normally, fast, or not at all. Your own moves and attacks
 are animated too.
+
+### The Civilopedia and the tutorials
+The **Civilopedia** button on the table (F1 on the desktop, or Civilopedia on the main menu) opens Unciv's
+Civilopedia on a large board over the table: the categories along the top, that category's entries down the
+left, and the entry's page on the right - Unciv's own pages, with their icons, headings and links. Clicking a
+linked line opens that entry; Back goes back the way you came; Close (or the table button again) puts it away,
+and it opens again where you left it. It shows the rules of the game you're playing, mods included. In VR it
+moves by its top strip like the other boards, and the right stick scrolls the list or the page, whichever you're
+pointing at.
+
+**Unciv's tutorials** are on to start with: when something new comes up (the first turns, a barbarian, a luxury
+resource, a golden age, the policies screen...) its tutorial shows as a message card, a page at a time, once.
+A **task card** shows Unciv's next tutorial task ("Move a unit!", "Found a city!", "Pick a technology"...) with
+how to do it here, and moves on as you do them; Hide puts it away until the next one. In VR it stands left of the
+overview (move it by its top strip); on the desktop it's at the bottom of the window. Settings > Gameplay turns
+the tutorials off, and Reset tutorials shows them all again. What you've seen and done is kept in
+`~/.unciv-vr/tutorials.json`. Every tutorial is in the Civilopedia's Tutorials category too.
 
 ### Panels
 **Panels** are boards with a list on them, built from what the game knows - and anyone can make one with a
@@ -191,6 +208,9 @@ neighbour, enemy troops next to the capital, one of ours shoots, then End turn p
 `staged_fight` and `unit_icons` follow it), **playback** (from the test save: End turn, and the AI's attacks play
 back), **unit_death** (a war, an enemy hurt to one hit point, one shot: the unit dies and the map is rebuilt - its token is freed by the death animation, and looking it up afterwards used to stop the client dead), **panels** (from the test save: the Units panel's rows, a click on one selecting that unit, the Wonders panel
 asking the bridge for its rows, Settings > Panels, and the panels stepping aside in the city view, with pictures),
+**civilopedia** (the table button, a category, an entry, a link on its page, Back, a page from every kind of
+category, Close and opening it again, with pictures), **tutorials** (Reset tutorials, the tutorial messages, the
+task card and a task done by playing, the policies screen's tutorial, Hide, and switching them off),
 **stacking** (from the test save: moving onto a tile one of your own units is on - the hold, the click that follows, "Move here" on the card, and a tile with no room left - with a picture of each aim), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,
 toggles, and the number settings checked against the bridge), **surroundings** (from the test save: picks every background and table in Settings, saves a picture of
 each to `--shots=<folder>`, and moves the table up, down and bigger to check its column and feet follow), **make_test_save** (with `--then=save_test_game`: rebuilds the test save), and **sequences**: inputs in orders nobody planned for - switching units halfway through an action,
@@ -210,6 +230,9 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/table_model.gd`: the table (top, stretchy column and feet), read from a table folder (`tables/<name>/` or
   `~/.unciv-vr/Tables/<name>/`); see [tables/README.md](tables/README.md)
 - `scripts/settings_board.gd`: the settings board (pages of settings with drop-down lists, after Unciv's Options)
+- `scripts/civilopedia_board.gd`: the Civilopedia board, and the drawing of Unciv's formatted lines (headings,
+  icons, links, Unciv's icon characters as icons) that the task card uses too
+- `scripts/tutorial_task_card.gd`: the tutorial task card, with the instructions for doing each of Unciv's tasks here
 - `scripts/mod_folders.gd`: finding and loading those folders and their models (shared by backgrounds, tables,
   panels and sounds)
 - `scripts/panels.gd`: panels (`panels/<name>/panel.json`, or `~/.unciv-vr/Panels/<name>/`): reading them, their

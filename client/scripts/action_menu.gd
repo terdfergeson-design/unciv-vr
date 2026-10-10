@@ -13,7 +13,7 @@ extends PanelContainer
 ##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it, "rename_unit" names it
 ##   footer "settings_card" opens the settings board (settings_board.gd)
 ##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
-##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "quit"
+##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "civilopedia_card", "quit"
 ##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
 ##                  "setup_step" ("key|+1"), "setup_start", "lobby" (back to the lobby card)
 ##   saves card:    "load_save" (name), "lobby"
@@ -629,6 +629,8 @@ func show_alert(alert: Dictionary, waiting := 0) -> void:
 	_title.text = _plain(str(alert.get("title", "")))
 	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
 	var lines: Array[String] = []
+	if alert.get("type", "") == "Tutorial":   # one of Unciv's tutorials, a step at a time
+		lines.append("Tutorial" + ("  -  %d of %d" % [int(alert["step"]), int(alert["steps"])] if int(alert.get("steps", 1)) > 1 else ""))
 	if alert.has("leader"):
 		lines.append(str(alert["leader"]) if not alert.get("isCityState", false) else str(alert.get("civ", "")))   # e.g. "Boudicca of Celts"
 	if waiting > 0:
@@ -691,6 +693,8 @@ func show_alert(alert: Dictionary, waiting := 0) -> void:
 		_list.add_child(button)
 		if str(option.get("description", "")) != "":
 			_add_note(_plain(str(option["description"])))
+	if alert.get("type", "") == "Tutorial":
+		_add_note("Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too.")
 	_end()
 
 
@@ -818,6 +822,7 @@ func show_lobby(info: Dictionary) -> void:
 	if info.get("has_saves", false):
 		_list.add_child(_make_button("Load game...", func() -> void: chosen.emit("lobby_load", ""), Color(0.22, 0.25, 0.32)))
 	_list.add_child(_make_button("Settings", func() -> void: chosen.emit("settings_card", ""), Color(0.25, 0.25, 0.3)))
+	_list.add_child(_make_button("Civilopedia", func() -> void: chosen.emit("civilopedia_card", ""), Color(0.22, 0.32, 0.28)))
 	_list.add_child(_make_button("Quit", func() -> void: chosen.emit("quit", ""), Color(0.35, 0.18, 0.18)))
 	_end()
 
