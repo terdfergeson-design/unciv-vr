@@ -30,6 +30,7 @@ const DataPaths := preload("res://scripts/data_paths.gd")
 const BridgeClient := preload("res://scripts/bridge_client.gd")
 const HexMap := preload("res://scripts/hex_map.gd")
 const ActionMenu := preload("res://scripts/action_menu.gd")
+const Lang := preload("res://scripts/lang.gd")
 const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const TableModel := preload("res://scripts/table_model.gd")
@@ -37,7 +38,7 @@ const Sounds := preload("res://scripts/sounds.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 23   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 24   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -116,7 +117,7 @@ var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
 var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
 	# Unciv's Options > Gameplay / Automation / Advanced (see SettingsBoard.GAMEPLAY and AUTOMATION)
-	"checkForDueUnits": true, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
+	"language": "English", "checkForDueUnits": true, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
 	"orderTradeOffersByAmount": true, "autoAssignCityProduction": false, "autoBuildingRoads": true,
 	"automatedWorkersReplaceImprovements": true, "stopAutomatedWorkersRemoveVegetation": false,
 	"automatedUnitsCanUpgrade": false, "automatedUnitsChoosePromotions": false, "citiesAutoBombardAtEndOfTurn": false,
@@ -491,6 +492,7 @@ func _on_bridge_connected() -> void:
 	_set_status("Connected to Unciv %s" % ping.result.uncivVersion)
 	_uncivVersion = str(ping.result.uncivVersion)
 	_bridge_protocol = protocol
+	await _send_bridge_settings()   # the language first, so the main menu comes up in it
 
 	# Dev shortcuts skip the main menu; so does a game the bridge is already running (one started by hand)
 	if options.has("load"):   # a test save; res:// paths work (tests/saves/...), and it never replaces your autosave
@@ -2761,7 +2763,7 @@ func _finish_unit_action(reply: Dictionary, action: Dictionary) -> void:
 	if not reply.result.get("done", true):
 		_set_status(str(reply.result.get("confirm", "Are you sure?")))
 		return
-	_set_status("%s: %s" % [selected_unit.get("name", "Unit"), _clean_title(str(action.get("title", action.get("type", "done"))))])
+	_set_status("%s: %s" % [selected_unit.get("name", "Unit"), _clean_title(str(action.get("label", action.get("title", action.get("type", "done")))))])
 	if not reply.result.get("unitStillExists", true):
 		_deselect()
 	await refresh()
@@ -2824,7 +2826,7 @@ func _start_unit_pick(action: Dictionary) -> void:
 	var targets: Array[Vector2i] = []
 	for t: Dictionary in action.get("targets", []):
 		targets.append(Vector2i(int(t["x"]), int(t["y"])))
-	var title := _clean_title(str(action.get("title", action["type"])))
+	var title := _clean_title(str(action.get("label", action.get("title", action["type"]))))
 	_pick = {"kind": "unit_action", "type": action["type"], "title": str(action.get("title", "")), "targets": targets,
 		"any": not action.has("targets"), "text": title}
 	hex_map.clear_aim()
@@ -3995,9 +3997,29 @@ func _send_bridge_settings() -> void:
 		params[key] = bool(settings.get(key, false))
 	for key: String in INT_SETTINGS:
 		params[key] = int(settings.get(key, 1))
+	params["language"] = str(settings.get("language", "English"))
 	var reply := await bridge.request("setSettings", params)
 	if not reply.ok:
 		push_warning("setSettings failed: %s" % reply.error)
+		return
+	if _languages.is_empty() or Lang.language != str(reply.result.get("language", "English")):
+		await _apply_language()
+
+
+## The languages Unciv has translations for (getLanguages: name, label, tag, percent), for Settings.
+var _languages: Array = []
+
+
+## Takes on the bridge's language: Unciv's translations of names and words for this side (see lang.gd).
+func _apply_language() -> void:
+	var listed := await bridge.request("getLanguages")
+	if listed.ok:
+		_languages = listed.result.get("languages", [])
+	var reply := await bridge.request("getTranslations")
+	if not reply.ok:
+		push_warning("getTranslations failed: %s" % reply.error)
+		return
+	Lang.apply(str(reply.result.get("language", "English")), reply.result.get("entries", {}), str(reply.result.get("tag", "en")))
 
 
 ## Unciv options with a number (sent with setSettings too)
@@ -4048,6 +4070,10 @@ func change_setting(key: String, value: String) -> void:
 			hex_map.set_tileset(value)   # redraws the map (and the overlays follow via view_rebuilt)
 		"auto_move", "notificationsLogMaxTurns", "turnsBetweenAutosaves":
 			await _send_bridge_settings()
+		"language":
+			await _send_bridge_settings()
+			if not _in_lobby and not state.is_empty():
+				await refresh()   # the messages, popups and cards come again in the new language
 	_refresh_settings()   # so the new choice shows
 
 
@@ -4126,7 +4152,7 @@ func _refresh_settings() -> void:
 		game["turn"] = int(state.get("turn", 0))
 	var home := DataPaths.home_dir()
 	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
-		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game,
+		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game, "languages": _languages,
 		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list(),
 		"table_moved": (settings.get("background_spots", {}) as Dictionary).has(backgrounds.current)})
 

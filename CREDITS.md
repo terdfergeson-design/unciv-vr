@@ -61,6 +61,12 @@ loud it is, and in VR plays it from the spot on the table it belongs to.
 Unciv's music ("Thatched Villagers" by Kevin MacLeod, CC BY 4.0) is not part of Unciv's repository - Unciv
 downloads it separately - and the client doesn't play music.
 
+## Unciv's translations
+
+The game's languages are Unciv's own translation files (`unciv/android/assets/jsons/translations`), made by Unciv's
+translators and part of Unciv (Mozilla Public License 2.0). They're read when the game runs; the Quest app carries
+them in its packed data.
+
 ## If you share screenshots or builds
 
 - **Screenshots and videos** show Unciv's icons, and videos have its sounds. Credit them as "Icons and sounds

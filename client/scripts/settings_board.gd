@@ -269,6 +269,15 @@ func _look_page() -> void:
 
 
 func _gameplay_page() -> void:
+	_header("Language", "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English.")
+	var languages: Array = []
+	for language: Dictionary in info.get("languages", []):
+		var percent := int(language.get("percent", 0))
+		languages.append([str(language.get("name", "")), str(language.get("label", "")), "",
+			"" if percent >= 100 else "%d%% translated" % percent])
+	if languages.is_empty():
+		languages.append(["English", "English", "", ""])
+	_choice("language", "Language", "Text Unciv has no translation for stays in English.", languages)
 	_header("Turns", "")
 	for option: Array in GAMEPLAY:
 		_setting_toggle(option)

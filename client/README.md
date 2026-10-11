@@ -37,6 +37,14 @@ see below), **Controls** (desktop and VR), **Game and saves**
 over the far half of the table and can be moved by its top strip like the other boards; Close, the Settings
 button or (desktop) Esc puts it away.
 
+### Language
+Settings > Gameplay > **Language** plays the game in any of the ~50 languages Unciv's translators have translated
+it into (each with how complete its translation is). It uses Unciv's own translation files: the game engine writes
+its messages, popups, descriptions, notifications, quests and victory texts in that language, and the names of units,
+buildings, techs, nations, cities and the rest - and those of our buttons that use Unciv's own words ("Next turn",
+"Found city") - show in it too. The rest of our own menus and hints are still English. Chinese, Japanese, Korean and
+other scripts use the computer's (or headset's) own fonts.
+
 ## Controls
 Everything can be done with the **right controller alone** (or the mouse on desktop): point at things and
 pull the trigger. The left controller and the wrist card are optional shortcuts.

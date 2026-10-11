@@ -5,7 +5,7 @@
 extends SceneTree
 ## Packs the files the Quest app reads at run time into android_data.pack (gitignored), which the Android export
 ## includes and the app unpacks on its first start (scripts/data_paths.gd):
-##   unciv/android/Images.*, assets/jsons (not the translations), assets/sounds, assets/ExtraImages  - from ../unciv
+##   unciv/android/Images.*, assets/jsons (with Unciv's translations), assets/sounds, assets/ExtraImages  - from ../unciv
 ##   builtin/backgrounds, tables, tilesets, panels                                                   - from this project
 ##   credits/: our CREDITS.md and LICENSE, and Unciv's docs/Credits.md - the app carries Unciv's icons and sounds,
 ##   and their licences ask for the authors' credits to travel with them
@@ -37,7 +37,7 @@ func _init() -> void:
 		if sub.begins_with("Images."):
 			count += _add_tree(android.path_join(sub), "unciv/android/" + sub, [])
 	for sub in ["jsons", "sounds", "ExtraImages"]:
-		count += _add_tree(android.path_join("assets").path_join(sub), "unciv/android/assets/" + sub, ["translations"])
+		count += _add_tree(android.path_join("assets").path_join(sub), "unciv/android/assets/" + sub, [])
 	for kind in ["backgrounds", "tables", "tilesets", "panels"]:
 		count += _add_tree(project.path_join(kind), "builtin/" + kind, [])
 	for pair in [[project.path_join("../CREDITS.md"), "credits/CREDITS.md"], [project.path_join("../LICENSE"), "credits/LICENSE"],

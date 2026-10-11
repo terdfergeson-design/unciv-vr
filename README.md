@@ -27,6 +27,7 @@ the app (`unciv/bridge-android`). Either way the client talks to it the same way
   Unciv's empire overview - on boards around the table you can move wherever you like.
 - **Unciv's Civilopedia and tutorials**, Unciv's popups and decisions, Unciv's icons and sound effects (in VR, sounds
   come from where they happen on the table).
+- **Unciv's languages**: the game in any of about 50 languages Unciv has been translated into (see Languages below).
 - **Make it yours**: backgrounds and tables to stand in (or move the table anywhere in a big 3D background), 3D or
   Unciv-style 2D tilesets and unit sets, and panels - all of which you can add your own of, no code needed.
 - **VR controls** with the right controller alone: point and pull the trigger. You see the controllers you're
@@ -66,10 +67,28 @@ sources. More in [client/README.md](client/README.md#the-standalone-quest-app).
 Your saves, settings and own content live in `~/.unciv-vr` (Windows: `C:\Users\<you>\.unciv-vr`) on the PC, and in
 the app's own storage on the Quest.
 
+## Languages
+**Now:** Settings > Gameplay > Language offers every language Unciv has a translation for (about 50, with how
+complete each is), using Unciv's own translation files by Unciv's translators. The game's side is translated: messages
+and popups, notifications, descriptions, the Civilopedia and tutorials, quests, victory texts, and the names of units,
+buildings, techs, nations and cities - plus those of our buttons that use Unciv's own words. Chinese, Japanese, Korean
+and other scripts show with the computer's or headset's own fonts. Our own menus, hints and instructions are still
+English.
+
+**Later**, to go all the way:
+- **Our own text**: about 1,100 strings of the client's own (settings, board titles, VR hints, controller labels,
+  task-card instructions) wrapped for Godot's translation system, with a translation file per language in
+  `client/translations/` - reusing Unciv's wording wherever ours matches, the rest translated (a machine-translated
+  first draft, checked by someone who speaks the language).
+- **Layout**: longer languages (German, Russian...) overflow some buttons and cards; Godot's pseudo-localization
+  finds those spots and any text still untranslated.
+- **Fonts and scripts**: bundling open fonts (Noto) for headsets without them, and checking right-to-left languages
+  (Arabic, Hebrew).
+- **Typing**: the on-screen keyboard is English-only; other layouts for naming cities, units and saves.
+
 ## Not there yet
-Unciv mods, world wrap, music, and Unciv's end-of-game map replay; multiplayer and other languages are left out on
-purpose. On the Quest, text is a little softer than over Link, since the headset renders at a lower resolution on
-its own.
+Unciv mods, world wrap, music, and Unciv's end-of-game map replay; multiplayer is left out on purpose. On the Quest,
+text is a little softer than over Link, since the headset renders at a lower resolution on its own.
 
 ## Licence and credits
 Unciv VR is under the Mozilla Public License 2.0, like Unciv ([LICENSE](LICENSE)). Unciv's icons and sound effects

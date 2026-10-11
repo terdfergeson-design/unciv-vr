@@ -245,7 +245,8 @@ func show_unit(unit: Dictionary) -> void:
 		for action: Dictionary in actions:
 			var type: String = action["type"]
 			var raw_title := str(action.get("title", type))
-			var title: String = _plain(raw_title.replace("{", "").replace("}", ""))   # Unciv templates like "{Found city}"
+			# Shown: the bridge's label, in the chosen language (the title stays English: it's what picks the action)
+			var title: String = _plain(str(action.get("label", raw_title)).replace("{", "").replace("}", ""))   # Unciv templates like "{Found city}"
 			var active: bool = action.get("current", false)
 			var colour := Color(0.24, 0.36, 0.55) if active else Color(0.2, 0.22, 0.3)
 			if type == "FoundCity":
