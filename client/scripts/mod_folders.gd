@@ -9,6 +9,7 @@ extends RefCounted
 ## A thing is a sub-folder with a json file (background.json, table.json) and its models, read when the
 ## game runs, so there's nothing to import.
 
+const DataPaths := preload("res://scripts/data_paths.gd")
 const Tileset := preload("res://scripts/tileset.gd")
 const Shaders := preload("res://scripts/tileset_shaders.gd")
 const MODEL_EXTENSIONS := ["glb", "gltf", "tscn", "scn"]
@@ -16,10 +17,10 @@ const MODEL_EXTENSIONS := ["glb", "gltf", "tscn", "scn"]
 
 ## Where things of [param kind] ("Backgrounds", "Tables") are looked for: built-in first, then the user's.
 static func search_dirs(kind: String) -> Array:
-	var dirs := ["res://" + kind.to_lower()]
-	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	var dirs := [DataPaths.builtin_dir(kind.to_lower())]
+	var home := DataPaths.home_dir()
 	if home != "":
-		dirs.append(home.replace("\\", "/").path_join(".unciv-vr").path_join(kind))
+		dirs.append(home.path_join(".unciv-vr").path_join(kind))
 	return dirs
 
 

@@ -26,6 +26,7 @@ extends Node3D
 ## one of your own units is standing on it - a plain click would select that unit instead.
 
 # Loaded by path rather than class_name, so the project runs even before the editor has scanned it
+const DataPaths := preload("res://scripts/data_paths.gd")
 const BridgeClient := preload("res://scripts/bridge_client.gd")
 const HexMap := preload("res://scripts/hex_map.gd")
 const ActionMenu := preload("res://scripts/action_menu.gd")
@@ -115,8 +116,8 @@ var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
 var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
 	# Unciv's Options > Gameplay / Automation / Advanced (see SettingsBoard.GAMEPLAY and AUTOMATION)
-	"checkForDueUnits": false, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
-	"orderTradeOffersByAmount": true, "autoAssignCityProduction": true, "autoBuildingRoads": true,
+	"checkForDueUnits": true, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
+	"orderTradeOffersByAmount": true, "autoAssignCityProduction": false, "autoBuildingRoads": true,
 	"automatedWorkersReplaceImprovements": true, "stopAutomatedWorkersRemoveVegetation": false,
 	"automatedUnitsCanUpgrade": false, "automatedUnitsChoosePromotions": false, "citiesAutoBombardAtEndOfTurn": false,
 	"autoAssignSpecialistsInNewCities": true, "notificationsLogMaxTurns": 5, "turnsBetweenAutosaves": 1,
@@ -273,6 +274,10 @@ const CLICKS_ITSELF := ["action", "improvement", "produce", "queue", "buy", "res
 
 func _ready() -> void:
 	options = _parse_args()
+	# The Quest app: Unciv's images, sounds and rules and our built-in folders come packed; unpack them first
+	var unpack_problem := DataPaths.unpack_android_data()
+	if unpack_problem != "":
+		push_error("Game data: " + unpack_problem)
 	_load_settings()
 	if options.has("background"):   # dev aid for screenshots; not saved
 		settings["background"] = options["background"]
@@ -362,6 +367,9 @@ func _ready() -> void:
 
 ## Starts our own bridge if none answered within the grace period, then watches it until it connects.
 func _maybe_launch_bridge() -> void:
+	if DataPaths.is_android():
+		_start_android_bridge()
+		return
 	if bridge.is_bridge_connected() or (_launched_bridge and OS.is_process_running(launcher.pid)):
 		return
 	if not launcher.launch(bridge.port):
@@ -377,6 +385,32 @@ func _maybe_launch_bridge() -> void:
 			_launched_bridge = false
 			_set_status("The bridge stopped before it was ready. From %s:\n%s" % [launcher.log_path, launcher.log_tail()])
 			return
+
+
+## The Quest app: Unciv's engine runs inside the app (the UncivBridge Android plugin, built from the Unciv fork's
+## bridge-android module); it listens on 127.0.0.1 like the PC's, so everything else is the same.
+func _start_android_bridge() -> void:
+	if bridge.is_bridge_connected() or _launched_bridge:
+		return
+	if not Engine.has_singleton("UncivBridge"):
+		_set_status("The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export).")
+		return
+	var plugin: Object = Engine.get_singleton("UncivBridge")
+	var started: bool = plugin.call("startBridge", DataPaths.unciv_android_dir().path_join("assets"), DataPaths.home_dir(), bridge.port)
+	if not started:
+		_set_status("The Unciv engine couldn't start: %s" % plugin.call("lastError"))
+		return
+	_launched_bridge = true
+	# Say what the engine is doing, and if it stops, why (there's no console to look at in the headset)
+	var started_at := Time.get_ticks_msec()
+	while not bridge.is_bridge_connected():
+		if not bool(plugin.call("isRunning")):
+			var error := str(plugin.call("lastError"))
+			push_error("Unciv's engine stopped: " + error)
+			_set_status("Unciv's engine stopped:\n%s" % error)
+			return
+		_set_status("Starting Unciv's engine: %s... (%d s)" % [plugin.call("stage"), (Time.get_ticks_msec() - started_at) / 1000])
+		await get_tree().create_timer(1.0).timeout
 
 
 ## Stops an out-of-date bridge we found already running and starts a fresh one from the current code.
@@ -4090,7 +4124,7 @@ func _refresh_settings() -> void:
 		game = (state.get("game", {}) as Dictionary).duplicate() if state.get("game") is Dictionary else {}
 		game["civ"] = state.get("playerCiv", "?")
 		game["turn"] = int(state.get("turn", 0))
-	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	var home := DataPaths.home_dir()
 	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
 		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game,
 		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list(),

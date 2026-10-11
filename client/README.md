@@ -78,8 +78,8 @@ undoes it.
 
 ### Your controllers
 In VR you see the controllers you're actually holding - Quest Touch, Index, Vive wands... - as the headset's runtime
-draws them (OpenXR render models: SteamVR provides them; Meta's own Quest Link runtime doesn't yet, so with it you get
-a plain stand-in). Floating labels beside each controller say what its buttons do right now, with the controller's
+draws them (OpenXR render models: SteamVR provides them, and on the Quest Meta's own render models come through the
+OpenXR vendors plugin; where the runtime has none you get a plain stand-in). Floating labels beside each controller say what its buttons do right now, with the controller's
 own button names (A / B / X / Y, trackpad...) - B says "Leave the city" in the city view, "Cancel" while picking a
 tile, and so on. Settings > Controls > "Show button labels" turns them off. The action map has native bindings for
 Touch, Index, Vive and Windows Mixed Reality controllers (and Pico 4 and the generic profile).
@@ -204,6 +204,26 @@ The city card keeps quick production picks (click to build next, with a gold pri
 
 Rings: cyan = reachable this turn, red = attackable, yellow = selected, white = under the pointer.
 The glowing beam marks the selected unit.
+
+## The standalone Quest app
+The game also builds as an Android app that runs on its own on a Quest 2 / 3 / Pro, with no PC: the Unciv bridge runs
+inside the app (unciv/bridge-android turns it into a Godot Android plugin, `UncivBridge`), and Unciv's images, sounds
+and rules plus the built-in backgrounds, tables, tilesets and panels travel in the app as android_data.pack, which the
+first start unpacks into the app's storage (that first start takes a little longer). Saves and your own folders live
+in the app's own private storage too (they go when the app is uninstalled).
+
+To build it (Windows): install Android Studio with its Command-line Tools, a JDK 17 or newer, and Godot 4.7.2's
+export templates; in Godot's Editor Settings > Export > Android set the SDK and a JDK 17. Then, from the repo root:
+
+    client\tools\build_quest.bat install
+
+It builds the bridge plugin with Unciv's gradle, packs the data (tools/pack_android_data.gd), exports the "Quest"
+preset to `build\UncivVR-Quest.apk` and, with `install`, installs it with adb. Installing needs the Quest in developer
+mode and plugged in by USB once, with "Allow USB debugging" accepted in the headset (Air Link doesn't carry adb). The
+app then shows up in the headset's Library under Unknown sources.
+
+The OpenXR vendors plugin (client/addons/godotopenxrvendors, v5.1.0, trimmed to Windows, Linux and Android arm64)
+brings Meta's OpenXR extensions; its Meta parts come under the Oculus SDK licence in its meta/ folder.
 
 ## Command-line options
 Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-size=Small`):

@@ -11,6 +11,7 @@ extends RefCounted
 ## and unit flags - composed once and cached.
 ## civ_badge(civ): a civilization's emblem (nation icon, or the city-state type icon) in its colours.
 
+const DataPaths := preload("res://scripts/data_paths.gd")
 const FOLDERS := {
 	"policy": "Images.PolicyIcons/PolicyIcons",
 	"branch": "Images.PolicyIcons/PolicyBranchIcons",
@@ -76,7 +77,7 @@ static func _image(kind: String, name: String) -> Image:
 	var image: Image = null
 	var folder: String = FOLDERS.get(kind, "")
 	if folder != "":
-		var path := ProjectSettings.globalize_path("res://").path_join("../unciv/android").path_join(folder).path_join(name + ".png").simplify_path()
+		var path := DataPaths.unciv_android_dir().path_join(folder).path_join(name + ".png").simplify_path()
 		if FileAccess.file_exists(path):
 			image = Image.load_from_file(path)
 			if image != null and image.is_empty():

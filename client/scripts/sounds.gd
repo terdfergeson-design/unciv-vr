@@ -13,6 +13,7 @@ extends Node3D
 ## In VR a sound that happens somewhere on the table comes from there (play_at), while button clicks and
 ## the like are flat (play). The city view's ambience loops from the table, fading in and out.
 
+const DataPaths := preload("res://scripts/data_paths.gd")
 const ModFolders := preload("res://scripts/mod_folders.gd")
 const KIND := "Sounds"
 const EXTENSIONS := ["mp3", "ogg", "wav"]
@@ -65,7 +66,7 @@ func _ready() -> void:
 ## Where sounds are looked for, in order: a player's or mod's own first, then Unciv's own.
 static func search_dirs() -> Array:
 	var dirs: Array = ModFolders.search_dirs(KIND)
-	dirs.append(ProjectSettings.globalize_path("res://").path_join("../unciv/android/assets/sounds").simplify_path())
+	dirs.append(DataPaths.unciv_android_dir().path_join("assets/sounds"))
 	return dirs
 
 

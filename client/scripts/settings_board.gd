@@ -15,6 +15,7 @@ extends PanelContainer
 
 signal chosen(kind: String, value: String)
 
+const DataPaths := preload("res://scripts/data_paths.gd")
 const Icons := preload("res://scripts/icons.gd")
 const Tileset := preload("res://scripts/tileset.gd")
 const ModFolders := preload("res://scripts/mod_folders.gd")
@@ -47,7 +48,7 @@ const PAGES := [
 
 ## Unciv's Options > Gameplay that apply here: [settings key, label, what it does, default]
 const GAMEPLAY := [
-	["checkForDueUnits", "Check for idle units", "End turn first takes you to every unit that still has no orders.", false],
+	["checkForDueUnits", "Check for idle units", "End turn first takes you to every unit that still has no orders.", true],
 	["autoUnitCycle", "Auto unit cycle", "After you give a unit its orders, the next unit waiting for orders is selected.", true],
 	["alternateUnitCycleOrder", "Cycle idle units by distance", "Next / previous unit go to the nearest unit rather than in a fixed order.", false],
 	["confirmNextTurn", "Ask for confirmation when ending the turn", "End turn needs a second press.", false],
@@ -56,7 +57,7 @@ const GAMEPLAY := [
 ]
 ## Unciv's Options > Automation: [settings key, label, what it does, default]
 const AUTOMATION := [
-	["autoAssignCityProduction", "Auto-assign city production", "A city that finishes building something picks what to build next itself.", true],
+	["autoAssignCityProduction", "Auto-assign city production", "A city that finishes building something picks what to build next itself.", false],
 	["autoBuildingRoads", "Auto-build roads", "Automated workers build roads between your cities.", true],
 	["automatedWorkersReplaceImprovements", "Automated workers replace improvements", "Automated workers may swap an improvement for a better one.", true],
 	["stopAutomatedWorkersRemoveVegetation", "Stop automated workers from removing vegetation", "Automated workers leave forests, jungles and marshes alone.", false],
@@ -391,7 +392,7 @@ func _about_page() -> void:
 		if not (game.get("mods", []) as Array).is_empty():
 			_info_row("Mods", ", ".join(game["mods"]))
 	_header("Your own tilesets, backgrounds and tables", "Put their folders here; they show up in Look.")
-	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
+	var home := DataPaths.home_dir()
 	for kind: String in ["Tilesets", "Backgrounds", "Tables"]:
 		_info_row(kind, home.replace("\\", "/").path_join(".unciv-vr").path_join(kind))
 	_info_row("Settings file", ProjectSettings.globalize_path("user://settings.cfg"))

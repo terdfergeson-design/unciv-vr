@@ -12,6 +12,37 @@ var content: Control
 var pixels := Vector2i(400, 700)
 var metres := Vector2(0.17, 0.3)
 
+## Panels are seen from further away than their pixels are drawn for: from a metre or two, several of a panel's
+## pixels land on one pixel of the headset's screen. A viewport's picture has no mipmaps, so plain sampling then picks
+## one pixel in several and the text breaks up (badly on the Quest's own, lower resolution). This samples the whole
+## patch of the panel under each screen pixel instead (up to 4 x 4 samples, from how fast UV changes across it),
+## weighting by alpha so the transparent surround doesn't darken the edges.
+const SHADER := """
+shader_type spatial;
+render_mode unshaded, cull_disabled, depth_prepass_alpha;
+uniform sampler2D panel : source_color, filter_linear, repeat_disable;
+
+void fragment() {
+	vec2 size = vec2(textureSize(panel, 0));
+	vec2 dx = dFdx(UV);
+	vec2 dy = dFdy(UV);
+	int nx = clamp(int(ceil(length(dx * size))), 1, 4);
+	int ny = clamp(int(ceil(length(dy * size))), 1, 4);
+	vec4 sum = vec4(0.0);
+	for (int i = 0; i < nx; i++) {
+		for (int j = 0; j < ny; j++) {
+			vec2 offset = ((float(i) + 0.5) / float(nx) - 0.5) * dx + ((float(j) + 0.5) / float(ny) - 0.5) * dy;
+			vec4 c = texture(panel, UV + offset);
+			sum += vec4(c.rgb * c.a, c.a);
+		}
+	}
+	float count = float(nx * ny);
+	ALBEDO = sum.a > 0.0 ? sum.rgb / sum.a : vec3(0.0);
+	ALPHA = sum.a / count;
+}
+"""
+static var _shader: Shader
+
 
 ## Puts [param card] on a panel [param size_metres] big, rendered at [param size_pixels].
 func setup(card: Control, size_pixels: Vector2i, size_metres: Vector2) -> void:
@@ -31,12 +62,14 @@ func setup(card: Control, size_pixels: Vector2i, size_metres: Vector2) -> void:
 	var mesh := QuadMesh.new()
 	mesh.size = metres
 	quad.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	# Depth pre-pass: the card hides what is behind it (labels, other cards) instead of letting it bleed through
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_DEPTH_PRE_PASS
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	material.albedo_texture = viewport.get_texture()
+	# Unshaded, both sides, and a depth pre-pass: the card hides what is behind it (labels, other cards) instead of
+	# letting it bleed through
+	if _shader == null:
+		_shader = Shader.new()
+		_shader.code = SHADER
+	var material := ShaderMaterial.new()
+	material.shader = _shader
+	material.set_shader_parameter("panel", viewport.get_texture())
 	quad.material_override = material
 	quad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(quad)

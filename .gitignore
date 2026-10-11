@@ -1,0 +1,6 @@
+
+# The Quest app: Godot's Android build template (Project > Install Android Build Template), the packed game data
+# (tools/pack_android_data.gd) and the exported APK
+client/android/
+client/android_data.pack
+build/

@@ -19,6 +19,7 @@ extends RefCounted
 ## Materials named Steam, Geyser, Smoke, Lava, Sparkle or Shimmer are animated (tileset_shaders.gd).
 ## Anything this set lacks comes from fallbackTileSet, and in the end from a plain coloured hex.
 
+const DataPaths := preload("res://scripts/data_paths.gd")
 const Shaders := preload("res://scripts/tileset_shaders.gd")
 const BUILT_IN_DIR := "res://tilesets"
 const MODEL_EXTENSIONS := ["glb", "gltf", "tscn", "scn", "res", "obj"]
@@ -27,10 +28,10 @@ const MODEL_EXTENSIONS := ["glb", "gltf", "tscn", "scn", "res", "obj"]
 ## Where tilesets are looked for: the built-in ones, then the players' and mods' own in
 ## ~/.unciv-vr/Tilesets (next to the saved games).
 static func search_dirs() -> Array:
-	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
-	var dirs := [BUILT_IN_DIR]
+	var home := DataPaths.home_dir()
+	var dirs := [DataPaths.builtin_dir("tilesets")]
 	if home != "":
-		dirs.append(home.replace("\\", "/").path_join(".unciv-vr/Tilesets"))
+		dirs.append(home.path_join(".unciv-vr/Tilesets"))
 	return dirs
 
 var name := ""

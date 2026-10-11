@@ -4,8 +4,9 @@
 
 extends Node3D
 ## What you see of a controller in your hand: the controller itself - the real one, as the headset's runtime draws it
-## (Quest Touch, Index, Vive wand... through OpenXR render models, which SteamVR provides; Meta's own runtime doesn't
-## yet), or a plain stand-in when the runtime has no model - and, optionally, floating labels saying what each
+## (Quest Touch, Index, Vive wand... through OpenXR render models: XR_EXT_render_model, which SteamVR provides, or
+## Meta's XR_FB_render_model through the OpenXR vendors plugin, on the Quest and Meta's PC runtime), or a plain
+## stand-in when the runtime has no model - and, optionally, floating labels saying what each
 ## button does, named the way that controller names them (A / B / X / Y, trackpad, menu...).
 ## Lives under an XRController3D using the "aim" pose; set [member is_right] before adding it.
 
@@ -21,6 +22,8 @@ var labels_shown := true:
 var profile := ""            # the interaction profile the runtime says this controller is
 
 var _manager: Node3D         # OpenXRRenderModelManager (when the engine has it)
+var _meta_holder: Node3D     # Meta's model (OpenXRFbRenderModel) is made for the grip pose: this holds it there
+var _meta_model: Node3D
 var _fallback: Node3D        # our stand-in, while there's no render model
 var _labels: Node3D
 var _rows: Array = []        # [[button, what it does], ...] on show
@@ -42,10 +45,14 @@ func _ready() -> void:
 ## The runtime's controller models, when OpenXR is running and the runtime has render models (XR_EXT_render_model).
 ## Without them the manager would only complain every frame, so it's left out and the stand-in stays.
 func _add_render_models() -> void:
-	if _manager != null or not ClassDB.class_exists("OpenXRRenderModelManager"):
+	if _manager != null or _meta_model != null:
 		return
 	var xr := XRServer.find_interface("OpenXR")
-	if xr == null or not xr.is_initialized() or not Engine.has_singleton("OpenXRRenderModelExtension"):
+	if xr == null or not xr.is_initialized():
+		return
+	if _add_meta_model():
+		return
+	if not ClassDB.class_exists("OpenXRRenderModelManager") or not Engine.has_singleton("OpenXRRenderModelExtension"):
 		return
 	var extension: Object = Engine.get_singleton("OpenXRRenderModelExtension")
 	if not extension.call("is_active"):
@@ -58,13 +65,46 @@ func _add_render_models() -> void:
 	print("Controller models from the runtime (%s hand)" % ("right" if is_right else "left"))
 
 
+## Meta's runtime (Quest, and Quest Link on the PC): XR_FB_render_model, from the OpenXR vendors plugin.
+func _add_meta_model() -> bool:
+	if not ClassDB.class_exists("OpenXRFbRenderModel") or not Engine.has_singleton("OpenXRFbRenderModelExtension"):
+		return false
+	var extension: Object = Engine.get_singleton("OpenXRFbRenderModelExtension")
+	if not extension.call("is_enabled"):
+		return false
+	_meta_holder = Node3D.new()
+	_meta_holder.name = "MetaModel"
+	add_child(_meta_holder)
+	_meta_model = ClassDB.instantiate("OpenXRFbRenderModel") as Node3D
+	_meta_model.set("render_model_type", 1 if is_right else 0)   # MODEL_CONTROLLER_RIGHT / LEFT
+	_meta_holder.add_child(_meta_model)
+	print("Controller models from Meta's runtime (%s hand)" % ("right" if is_right else "left"))
+	return true
+
+
 ## Whether the runtime is drawing the real controller (a render model has arrived).
 func has_real_model() -> bool:
+	if _meta_model != null:
+		return bool(_meta_model.call("has_render_model_node"))
 	return _manager != null and _manager.get_child_count() > 0
+
+
+## Meta's model sits on the grip pose; we follow the aim pose, so it's offset by the difference between the two.
+func _place_meta_model() -> void:
+	var tracker := XRServer.get_tracker("right_hand" if is_right else "left_hand") as XRPositionalTracker
+	if tracker == null:
+		return
+	var aim := tracker.get_pose("aim")
+	var grip := tracker.get_pose("grip")
+	if aim == null or grip == null or not aim.has_tracking_data or not grip.has_tracking_data:
+		return
+	_meta_holder.transform = aim.transform.affine_inverse() * grip.transform
 
 
 func _process(_delta: float) -> void:
 	_fallback.visible = not has_real_model()
+	if _meta_holder != null:
+		_place_meta_model()
 	# The labels stand upright beside the controller as you see it, whichever way the controller is turned
 	if _labels.visible and not _label_nodes.is_empty():
 		var camera := get_viewport().get_camera_3d()

@@ -15,6 +15,7 @@ extends PanelContainer
 
 signal chosen(kind: String, value: String)
 
+const DataPaths := preload("res://scripts/data_paths.gd")
 const Icons := preload("res://scripts/icons.gd")
 
 const SIZE := Vector2(1600, 960)
@@ -598,7 +599,7 @@ static func extra_image(name: String) -> Texture2D:
 	if _extra_images.has(name):
 		return _extra_images[name]
 	var texture: Texture2D = null
-	var folder := ProjectSettings.globalize_path("res://").path_join("../unciv/android/assets/ExtraImages").simplify_path()
+	var folder := DataPaths.unciv_android_dir().path_join("assets/ExtraImages")
 	for extension: String in [".png", ".jpg", ".jpeg", ".webp"]:
 		var path := folder.path_join(name + extension)
 		if FileAccess.file_exists(path):
