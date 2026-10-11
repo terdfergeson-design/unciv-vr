@@ -65,6 +65,12 @@ downloads it separately - and the client doesn't play music.
 
 - **Screenshots and videos** show Unciv's icons, and videos have its sounds. Credit them as "Icons and sounds
   from Unciv (see Unciv's docs/Credits.md), licensed CC BY / CC BY-SA / CC0 by their authors".
+- **The Quest app** bundles Unciv's images and sounds (they can't be read from an Unciv checkout on the headset).
+  `client/tools/pack_android_data.gd` packs Unciv's `docs/Credits.md`, this file and our LICENSE into the app with
+  them (they're unpacked to the app's storage, under `data/credits`), and the note below about modified icons
+  applies to it as to any build.
+- **The OpenXR vendors plugin** (`client/addons/godotopenxrvendors`, by the Godot XR contributors, MIT) gives the
+  Quest app Meta's OpenXR extensions; its Meta parts come under the Oculus SDK licence in its `meta` folder.
 - **Builds that bundle the images or sounds** must include Unciv's Credits.md, or an equivalent list of authors,
   titles, licences and licence links. They must also keep the note above that the icons are modified. Any
   CC BY-SA files that get adapted must stay under CC BY-SA. Today we don't use any of them: the CC BY-SA files are

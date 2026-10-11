@@ -7,6 +7,8 @@ extends SceneTree
 ## includes and the app unpacks on its first start (scripts/data_paths.gd):
 ##   unciv/android/Images.*, assets/jsons (not the translations), assets/sounds, assets/ExtraImages  - from ../unciv
 ##   builtin/backgrounds, tables, tilesets, panels                                                   - from this project
+##   credits/: our CREDITS.md and LICENSE, and Unciv's docs/Credits.md - the app carries Unciv's icons and sounds,
+##   and their licences ask for the authors' credits to travel with them
 ## Run before exporting:  godot --headless --path client -s tools/pack_android_data.gd
 ##
 ## The format is as plain as can be, so the app can unpack it in one straight read (a zip file has to be searched
@@ -38,6 +40,9 @@ func _init() -> void:
 		count += _add_tree(android.path_join("assets").path_join(sub), "unciv/android/assets/" + sub, ["translations"])
 	for kind in ["backgrounds", "tables", "tilesets", "panels"]:
 		count += _add_tree(project.path_join(kind), "builtin/" + kind, [])
+	for pair in [[project.path_join("../CREDITS.md"), "credits/CREDITS.md"], [project.path_join("../LICENSE"), "credits/LICENSE"],
+			[android.path_join("../docs/Credits.md"), "credits/Unciv-Credits.md"]]:
+		count += _add_file(str(pair[0]).simplify_path(), pair[1])
 	var hashing := HashingContext.new()
 	hashing.start(HashingContext.HASH_MD5)
 	hashing.update(JSON.stringify(_files).to_utf8_buffer())
@@ -59,6 +64,16 @@ func _init() -> void:
 	out.close()
 	print("Packed %d files into %s (%.1f MB)" % [count, OUT, size / 1048576.0])
 	quit(0)
+
+
+func _add_file(from: String, to: String) -> int:
+	if not FileAccess.file_exists(from):
+		push_warning("Missing " + from)
+		return 0
+	var bytes := FileAccess.get_file_as_bytes(from)
+	_files.append([to, bytes.size()])
+	_blobs.append(bytes)
+	return 1
 
 
 func _add_tree(from: String, to: String, skip: Array) -> int:
