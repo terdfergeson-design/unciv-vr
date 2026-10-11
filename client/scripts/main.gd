@@ -46,6 +46,7 @@ const Keyboard := preload("res://scripts/keyboard.gd")
 const SettingsBoard := preload("res://scripts/settings_board.gd")
 const CivilopediaBoard := preload("res://scripts/civilopedia_board.gd")
 const TutorialTaskCard := preload("res://scripts/tutorial_task_card.gd")
+const ControllerVisuals := preload("res://scripts/controller_visuals.gd")
 const PEDIA_METRES := Vector2(1.5, 0.9)          # same aspect ratio as CivilopediaBoard.SIZE
 const TASK_PIXELS := Vector2i(520, 420)          # the task card sits at the top; the rest is see-through
 const TASK_METRES := Vector2(0.44, 0.3554)
@@ -132,6 +133,8 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	"showTutorials": true,
 	# Unciv's "Show suggested city locations for units that can found cities"
 	"showSettlersSuggestedCityLocations": true,
+	# VR: floating labels beside the controllers saying what each button does (Settings > Controls)
+	"showButtonLabels": true,
 	# Unciv's map overlays (the round buttons beside the overview); Unciv's defaults
 	"overlays": {"movement": false, "yields": false, "worked": false, "resources": true, "improvements": true, "unit_icons": true},
 	# Other players' turns: "normal" (play back the moves and battles you could see), "fast" or "off"
@@ -154,6 +157,9 @@ var civilopedia_board: CivilopediaBoard   # Unciv's Civilopedia (the Civilopedia
 var _pedia_holder: Node              # WorldPanel (VR) or CanvasLayer (desktop)
 var _pedia_ruleset := ""             # what the Civilopedia's categories were loaded for ("" = not yet)
 var task_card: TutorialTaskCard      # Unciv's tutorial task ("Move a unit!"...)
+var _left_visuals: ControllerVisuals    # the controllers as you see them, with their button labels
+var _right_visuals: ControllerVisuals
+var _labels_timer := 0.0
 var _task_holder: Node               # WorldPanel (VR) or CanvasLayer (desktop)
 var _task_hidden := ""               # the task Hide was pressed on (it stays hidden until another comes up)
 var _uncivVersion := ""
@@ -3425,6 +3431,14 @@ func _run_smoke_test() -> void:
 		_process_xr(0.0)
 		print("SMOKE: laser: %.2f m to a card 0.50 m away (on it %s), %.2f m to the map about %.2f m away" % [on_panel,
 			was_on_panel, on_map, Vector3(0, 0.6, 0.3).length()])
+	# The controllers: a stand-in without a runtime model, and the button labels (off and on again in Settings)
+	if _xr_mode and _right_visuals != null:
+		_update_button_labels()
+		print("SMOKE: controllers: real model %s, right labels %s" % [_right_visuals.has_real_model(), _right_visuals.label_texts()])
+		await change_setting("setting_toggle", "showButtonLabels")
+		var hidden := not _right_visuals.labels_shown
+		await change_setting("setting_toggle", "showButtonLabels")
+		print("SMOKE: button labels off: %s, back on: %s" % [hidden, _right_visuals.labels_shown])
 	# Info panel: point at the first unit's tile and wait for the bridge's details
 	if not state.get("units", []).is_empty():
 		var info_key := Vector2i(int(state["units"][0]["x"]), int(state["units"][0]["y"]))
@@ -3966,6 +3980,8 @@ func change_setting(key: String, value: String) -> void:
 		if value in BRIDGE_SETTINGS:
 			await _send_bridge_settings()
 			await refresh()   # e.g. "Check for idle units" changes what End turn waits for
+		elif value == "showButtonLabels":
+			_update_button_labels()
 		elif value == "showSettlersSuggestedCityLocations" and not selected_unit.is_empty():
 			await _select_unit(int(selected_unit["id"]), false)   # the marks come or go at once
 		_refresh_settings()
@@ -4670,12 +4686,59 @@ func _make_controller(tracker: String) -> XRController3D:
 	var controller := XRController3D.new()
 	controller.tracker = tracker
 	controller.pose = "aim"
-	var model := MeshInstance3D.new()
-	var box := BoxMesh.new()
-	box.size = Vector3(0.03, 0.03, 0.1)
-	model.mesh = box
-	controller.add_child(model)
+	var visuals := ControllerVisuals.new()
+	visuals.name = "Visuals"
+	visuals.is_right = tracker == "right_hand"
+	visuals.labels_shown = bool(settings.get("showButtonLabels", true))
+	controller.add_child(visuals)
+	if visuals.is_right:
+		_right_visuals = visuals
+	else:
+		_left_visuals = visuals
 	return controller
+
+
+## The button labels beside each controller: what each button does right now, in the controller's own names.
+func _update_button_labels() -> void:
+	for visuals: ControllerVisuals in [_left_visuals, _right_visuals]:
+		if visuals == null:
+			continue
+		visuals.labels_shown = bool(settings.get("showButtonLabels", true))
+		if not visuals.labels_shown:
+			continue
+		var tracker := XRServer.get_tracker("right_hand" if visuals.is_right else "left_hand") as XRPositionalTracker
+		visuals.profile = tracker.profile if tracker != null else ""
+		var names := ControllerVisuals.button_names(visuals.profile, visuals.is_right)
+		var rows: Array = []
+		var stick: String = names["stick"]
+		if visuals.is_right:
+			rows.append([names["trigger"], "point, click (hold: aim)"])
+			if not _in_lobby:
+				if names["ax"] != "":
+					rows.append([names["ax"], "Skip" if _playback_active else "End turn"])
+				if names["by"] != "":
+					var back := "Found city"
+					if keyboard_shown():
+						back = "Cancel typing"
+					elif not _pick.is_empty() or not _city_place.is_empty():
+						back = "Cancel"
+					elif _city_view:
+						back = "Leave the city"
+					rows.append([names["by"], back])
+			rows.append([stick, "scroll" if _pointed_panel != null else "table height"])
+			rows.append([names["grip"], "slide the map"])
+			rows.append([names["grip"] + " + " + stick.to_lower(), "turn / size the table"])
+		else:
+			if not _in_lobby:
+				if names["ax"] != "":
+					rows.append([names["ax"], "Next unit"])
+				if names["by"] != "":
+					rows.append([names["by"], "Previous unit"])
+				rows.append([names["trigger"] + " + " + stick.to_lower(), "zoom the map"])
+			rows.append([stick, "table height, click: recenter"])
+			rows.append([names["grip"], "slide the map"])
+			rows.append([names["grip"] + " + " + stick.to_lower(), "turn / size the table"])
+		visuals.set_rows(rows)
 
 
 func _setup_desktop_camera() -> void:
@@ -4933,6 +4996,10 @@ func _process_xr(delta: float) -> void:
 	if _right_hand == null:
 		return
 	_update_popup_panel()
+	_labels_timer -= delta
+	if _labels_timer <= 0.0:
+		_labels_timer = 0.25
+		_update_button_labels()
 	var origin := _right_hand.global_position
 	var direction := -_right_hand.global_transform.basis.z
 

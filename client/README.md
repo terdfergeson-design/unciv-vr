@@ -70,6 +70,14 @@ order, with the view gliding to fights outside it; **End turn** (now labelled **
 rest. Settings > "Other players' turns" plays them normally, fast, or not at all. Your own moves and attacks
 are animated too.
 
+### Your controllers
+In VR you see the controllers you're actually holding - Quest Touch, Index, Vive wands... - as the headset's runtime
+draws them (OpenXR render models: SteamVR provides them; Meta's own Quest Link runtime doesn't yet, so with it you get
+a plain stand-in). Floating labels beside each controller say what its buttons do right now, with the controller's
+own button names (A / B / X / Y, trackpad...) - B says "Leave the city" in the city view, "Cancel" while picking a
+tile, and so on. Settings > Controls > "Show button labels" turns them off. The action map has native bindings for
+Touch, Index, Vive and Windows Mixed Reality controllers (and Pico 4 and the generic profile).
+
 ### Settling and the rules
 With a settler selected, Unciv's **suggested city locations** - the three best spots nearby - get a gold ring and
 Unciv's city symbol on the map (Settings > Gameplay turns them off). The New game setup's **Rules** tab picks
@@ -236,6 +244,8 @@ Settings are saved in Godot's user folder (`user://settings.cfg`).
 - `scripts/table_model.gd`: the table (top, stretchy column and feet), read from a table folder (`tables/<name>/` or
   `~/.unciv-vr/Tables/<name>/`); see [tables/README.md](tables/README.md)
 - `scripts/settings_board.gd`: the settings board (pages of settings with drop-down lists, after Unciv's Options)
+- `scripts/controller_visuals.gd`: the VR controllers as you see them (the runtime's own models, or a stand-in) and their
+  floating button labels
 - `scripts/civilopedia_board.gd`: the Civilopedia board, and the drawing of Unciv's formatted lines (headings,
   icons, links, Unciv's icon characters as icons) that the task card uses too
 - `scripts/tutorial_task_card.gd`: the tutorial task card, with the instructions for doing each of Unciv's tasks here

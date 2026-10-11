@@ -332,6 +332,9 @@ func _volume_options() -> Array:
 
 
 func _controls_page() -> void:
+	_header("Your controllers", "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in).")
+	_toggle_row("Show button labels", "Floating labels beside each controller saying what its buttons do right now.",
+		bool(settings.get("showButtonLabels", true)), func() -> void: chosen.emit("setting_toggle", "showButtonLabels"))
 	_header("Controls", "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything.")
 	var grid := GridContainer.new()
 	grid.columns = 3
