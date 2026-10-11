@@ -13,6 +13,7 @@ extends Node3D
 ## Command-line options (after "--"):  --new-game  --civ=Rome  --map-size=Small  --ai=3
 ##   --load=C:/path/to/save  --port=8765  --no-launch (never start a bridge)
 ##   --smoke-test (scripted run that exits; for testing)  --screenshot=file.png
+##   --autoplay (a whole game played by Unciv's AI through the client, then a report: see autoplay.gd)
 ##
 ## Desktop: left-click select / move / attack (red rings) / open a city; the card on the right,
 ##   right-drag orbit, middle-drag or WASD pan, wheel zoom,
@@ -275,6 +276,8 @@ const CLICKS_ITSELF := ["action", "improvement", "produce", "queue", "buy", "res
 
 func _ready() -> void:
 	options = _parse_args()
+	if options.has("autoplay"):
+		launcher.extra_args = " --debug"   # the AI plays your turns through a debug command
 	# The Quest app: Unciv's images, sounds and rules and our built-in folders come packed; unpack them first
 	var unpack_problem := DataPaths.unpack_android_data()
 	if unpack_problem != "":
@@ -504,7 +507,7 @@ func _on_bridge_connected() -> void:
 			_set_status("Couldn't load the save: %s" % loaded.error)
 			return
 		await _enter_game()
-	elif options.has("new-game") or options.has("smoke-test"):
+	elif options.has("new-game") or options.has("smoke-test") or options.has("autoplay"):
 		var params := {
 			"mapSize": options.get("map-size", "Tiny"),
 			"aiPlayers": int(options.get("ai", 3)),
@@ -514,6 +517,8 @@ func _on_bridge_connected() -> void:
 		params["remember"] = false   # dev shortcut: don't change Quick start or the autosave
 		if options.has("smoke-test"):
 			params["seed"] = 42
+		if options.has("seed"):
+			params["seed"] = int(options["seed"])
 		if not await _start_new_game(params):
 			return
 	elif ping.result.gameRunning and not options.has("lobby"):
@@ -523,6 +528,12 @@ func _on_bridge_connected() -> void:
 
 	if options.has("smoke-test"):
 		await _run_smoke_test()
+	if options.has("autoplay"):   # a whole game played by Unciv's AI, through the client: see autoplay.gd
+		var autoplay: Node = load("res://scripts/autoplay.gd").new(self)
+		add_child(autoplay)
+		var code: int = await autoplay.run()
+		get_tree().quit(code)
+		return
 	if options.has("scenario"):   # dev aid: see dev_scenarios.gd (needs a bridge started with --debug)
 		var scenarios: RefCounted = load("res://scripts/dev_scenarios.gd").new(self)
 		await scenarios.run(str(options["scenario"]))

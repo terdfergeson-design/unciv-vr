@@ -233,6 +233,30 @@ app then shows up in the headset's Library under Unknown sources.
 The OpenXR vendors plugin (client/addons/godotopenxrvendors, v5.1.0, trimmed to Windows, Linux and Android arm64)
 brings Meta's OpenXR extensions; its Meta parts come under the Oculus SDK licence in its meta/ folder.
 
+## Playtesting without playing
+Two kinds of automatic playtest play whole games where Unciv's AI plays every civilization, yours included, so a lot
+of the "does anything break" testing needs nobody in the headset:
+
+- **The game engine** (fast - a game to the end in about a minute): `unciv/bridge/autoplay_test.py` asks the bridge
+  everything this client asks, every turn, and does random things a player would; see
+  [the bridge's README](../unciv/bridge/README.md#playtest-whole-games-with-nobody-playing).
+- **This client**: run it with `--autoplay` and it plays a whole game itself, through its own boards and buttons:
+  every turn it selects your units, answers Unciv's messages through their buttons, clears what stops the turn with
+  its own pickers, and ends the turn with the other players' moves played back; every few turns it also opens a city
+  view, the overview's tabs, the big screen's tabs, the Civilopedia and the settings. Every script error and warning
+  (with the turn and what it was doing), slow frame and hang goes into `logs/autoplay/<date-time>/report.md`, with a
+  screenshot every few turns to flip through. From the repository folder:
+
+      Godot_v4.7.2-stable_win64.exe --path client -- --autoplay --map-size=Small --max-turns=300
+
+  Options: `--seed=`, `--map-size=`, `--ai=` (AI players), `--max-turns=`, `--shots=` (a screenshot every that many
+  turns, 0 for none), `--playback=off|fast|normal`, `--speed=` (animations run that many times faster, 4 to start
+  with), `--fake-xr` (the VR layout without a headset). With a headset on, it plays in VR. The client starts its
+  bridge with debug commands for this; a bridge you started yourself needs `--debug`.
+
+What these can't tell is how the game feels - comfort, readability, whether something is easy to hit or clear to
+understand. That's still for playing.
+
 ## Command-line options
 Put these after `--` (e.g. in Main Run Args: `-- --new-game --civ=Rome --map-size=Small`):
 `--new-game`, `--civ=<nation>`, `--map-size=Tiny|Small|Medium|Large|Huge`, `--ai=<count>`,

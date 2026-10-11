@@ -632,7 +632,9 @@ func _build_construction_footer() -> void:
 	buttons.add_theme_constant_override("v_separation", 6)
 	if queue_entry.is_empty() and option.get("buildable", false):
 		var now := _button("Build now", func() -> void: chosen.emit("city_build_now", name), Color(0.2, 0.42, 0.25), 18)
-		now.disabled = not can_change
+		# A full queue (Unciv's limit is 10) takes nothing more, not even at the front
+		var queue_full := (city.get("queue", []) as Array).size() >= 10
+		now.disabled = not can_change or queue_full
 		buttons.add_child(now)
 		var queue := _button("Add to queue", func() -> void: chosen.emit("city_queue", name), BUTTON, 18)
 		queue.disabled = not can_change or not option.get("canQueue", true)

@@ -21,6 +21,10 @@ func unciv_dir() -> String:
 
 
 ## Returns true if a launch was started. On failure, [member error] says why.
+## More arguments for the bridge (" --debug" for --autoplay, whose AI turns go through a debug command)
+var extra_args := ""
+
+
 func launch(port: int) -> bool:
 	var unciv := unciv_dir()
 	if not DirAccess.dir_exists_absolute(unciv.path_join("bridge")):
@@ -44,7 +48,7 @@ func launch(port: int) -> bool:
 			"@echo off",
 			"set \"JAVA_HOME=%s\"" % jdk.replace("/", "\\"),
 			"cd /d \"%s\"" % unciv.replace("/", "\\"),
-			"call gradlew.bat :bridge:run --console=plain --args=\"--port %d --exit-when-idle %d\" > \"%s\" 2>&1" % [port, IDLE_EXIT_SECONDS, log_path.replace("/", "\\")],
+			"call gradlew.bat :bridge:run --console=plain --args=\"--port %d --exit-when-idle %d%s\" > \"%s\" 2>&1" % [port, IDLE_EXIT_SECONDS, extra_args, log_path.replace("/", "\\")],
 		]) + "\r\n"
 		var file := FileAccess.open(bat, FileAccess.WRITE)
 		if file == null:
@@ -54,7 +58,7 @@ func launch(port: int) -> bool:
 		file.close()
 		pid = OS.create_process("cmd.exe", ["/c", bat.replace("/", "\\")])
 	else:
-		var command := "cd '%s' && ./gradlew :bridge:run --console=plain --args='--port %d --exit-when-idle %d' > '%s' 2>&1" % [unciv, port, IDLE_EXIT_SECONDS, log_path]
+		var command := "cd '%s' && ./gradlew :bridge:run --console=plain --args='--port %d --exit-when-idle %d%s' > '%s' 2>&1" % [unciv, port, IDLE_EXIT_SECONDS, extra_args, log_path]
 		pid = OS.create_process("sh", ["-c", command])
 
 	if pid <= 0:
