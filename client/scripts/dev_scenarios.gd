@@ -1703,6 +1703,12 @@ func table_spot() -> void:
 	await settle(0.3)
 	await shot(main.action_menu, "spot_turned")
 	main.stop_placing_table()
+	check("done: back on the settings board", not main._placing_table and main.settings_shown())
+	if main._in_lobby:
+		main.close_settings()
+		await settle(0.3)
+		check("over the main menu: closing settings brings the menu back", main._popup_kind == "lobby" if main._xr_mode
+			else main.action_menu.is_visible_in_tree(), main._popup_kind)
 	var saved: Array = main.settings["background_spots"].get(bg, [])
 	check("saved for this background", saved.size() == 4 and absf(float(saved[3]) - 90.0) < 1.0, str(saved))
 	# Another background doesn't move; coming back here does

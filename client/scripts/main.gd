@@ -4651,7 +4651,7 @@ func start_placing_table() -> void:
 	_close_popup()
 	_placing_table = true
 	_set_status("Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done." % [
-		"pull the trigger" if _xr_mode else "click", "The right stick" if _xr_mode else "Q / E", "B" if _xr_mode else "Esc"])
+		"pull the trigger" if _xr_mode else "click", "The right stick" if _xr_mode else "Q / E", "Press A or B" if _xr_mode else "Esc"])
 
 
 func stop_placing_table() -> void:
@@ -4661,6 +4661,8 @@ func stop_placing_table() -> void:
 	if _pointer_dot != null:
 		_pointer_dot.visible = false
 	_set_status("The table stays here - Settings > Look > Back to the middle puts it back.")
+	# Back to where it started: the settings board (closing that brings the main menu back, over the main menu)
+	open_settings()
 
 
 ## Puts the table where a ray meets the scenery. Returns whether it hit anything.
@@ -4806,6 +4808,15 @@ func _update_button_labels() -> void:
 		var names := ControllerVisuals.button_names(visuals.profile, visuals.is_right)
 		var rows: Array = []
 		var stick: String = names["stick"]
+		if _placing_table:   # Settings > Look > Move the table
+			if visuals.is_right:
+				rows.append([names["trigger"], "put the table here"])
+				rows.append([stick, "turn the scenery"])
+			for key: String in ["ax", "by"]:
+				if names[key] != "":
+					rows.append([names[key], "done moving the table"])
+			visuals.set_rows(rows)
+			continue
 		if visuals.is_right:
 			rows.append([names["trigger"], "point, click (hold: aim)"])
 			if not _in_lobby:
@@ -5099,10 +5110,13 @@ func _process_xr(delta: float) -> void:
 	if _right_hand == null:
 		return
 	_update_popup_panel()
+	_labels_timer -= delta
+	if _labels_timer <= 0.0 and _placing_table:
+		_labels_timer = 0.25
+		_update_button_labels()
 	if _placing_table:
 		_process_table_placing(delta)
 		return
-	_labels_timer -= delta
 	if _labels_timer <= 0.0:
 		_labels_timer = 0.25
 		_update_button_labels()
@@ -5297,7 +5311,7 @@ func _on_xr_button(is_right: bool, button: String) -> void:
 	if _placing_table:
 		if is_right and button == "trigger_click":
 			_place_table_at(_right_hand.global_position, -_right_hand.global_transform.basis.z)
-		elif button == "by_button":
+		elif button in ["by_button", "ax_button"]:   # B, A (or X / Y): done
 			stop_placing_table()
 		return
 	if is_right:
