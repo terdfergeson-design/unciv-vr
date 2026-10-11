@@ -19,6 +19,12 @@ var has_floor := true          # false when the table should look like it floats
 var _environment: Environment
 var _sun: DirectionalLight3D
 var _scenery: Node3D
+var _sun_yaw := 35.0           # the background's own sun direction, before turning (see place)
+var _spot := Vector3.ZERO       # where the table stands in the scenery, in the scenery's own metres
+var _spot_yaw := 0.0            # how far the scenery is turned around the table, degrees
+var _home := Vector3.ZERO       # the table's usual spot, in this node's space (the scenery's middle goes here)
+var _colliders_built := false   # collision for pointing at the scenery is built on demand (spot_at)
+const SCENERY_LAYER := 1 << 19      # physics layer of those colliders; nothing else uses physics
 var _spinners: Array[Array] = []   # [node, radians per second] slowly turned in _process
 
 
@@ -57,6 +63,7 @@ func apply(background: String) -> void:
 	for child in _scenery.get_children():
 		_scenery.remove_child(child)
 		child.queue_free()
+	_colliders_built = false
 	_spinners.clear()
 	if path == "":
 		push_warning("No backgrounds found")
@@ -145,8 +152,64 @@ func _set_fog(fog: Variant) -> void:
 ## "sun": {"pitch": degrees down (negative) or up, "yaw": degrees, "color": c, "energy": 1, "shadows": true}.
 ## Energy 0 turns it off. Yaw 0 shines from behind you towards the far side of the table.
 func _set_sun(sun: Dictionary) -> void:
-	_sun.rotation_degrees = Vector3(float(sun.get("pitch", -55.0)), float(sun.get("yaw", 35.0)), 0)
+	_sun_yaw = float(sun.get("yaw", 35.0))
+	_sun.rotation_degrees = Vector3(float(sun.get("pitch", -55.0)), _sun_yaw + _spot_yaw, 0)
 	_sun.light_color = ModFolders.color(sun.get("color"), Color(1, 1, 1))
 	_sun.light_energy = float(sun.get("energy", 1.4))
 	_sun.visible = _sun.light_energy > 0.0
 	_sun.shadow_enabled = bool(sun.get("shadows", true))
+
+
+# region where the table stands ------------------------------------------------------------------
+
+## Stands the table somewhere else in a big scenery (a converted map, a skatepark...): [param spot] is that place in
+## the scenery's own coordinates (its floor there becomes the floor under the table), [param yaw] turns the scenery
+## around the table, and [param home] is where the table usually stands in this node's space. The sun and a sky
+## picture turn with it. spot ZERO, yaw 0 is the background as made.
+func place(spot: Vector3, yaw: float, home: Vector3) -> void:
+	_spot = spot
+	_spot_yaw = yaw
+	_home = Vector3(home.x, 0.0, home.z)
+	var turn := Basis(Vector3.UP, deg_to_rad(yaw))
+	_scenery.transform = Transform3D(turn, _home - turn * spot)
+	_sun.rotation_degrees.y = _sun_yaw + yaw
+	_environment.sky_rotation = Vector3(0, deg_to_rad(yaw), 0)
+
+
+func spot() -> Vector3:
+	return _spot
+
+
+func spot_yaw() -> float:
+	return _spot_yaw
+
+
+## Where a ray meets the scenery: [global point, the same point in the scenery's own coordinates], or [] if it
+## misses. The first call builds collision shapes from the scenery's meshes (big maps take a moment).
+func spot_at(origin: Vector3, direction: Vector3) -> Array:
+	if not _colliders_built:
+		_build_colliders()
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + direction.normalized() * 400.0, SCENERY_LAYER)
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	if hit.is_empty():
+		return []
+	var point: Vector3 = hit["position"]
+	return [point, _scenery.to_local(point)]
+
+
+func _build_colliders() -> void:
+	for node in _scenery.find_children("*", "MeshInstance3D", true, false):
+		var mesh_node := node as MeshInstance3D
+		if mesh_node.mesh == null or not mesh_node.is_visible_in_tree():
+			continue
+		var shape := mesh_node.mesh.create_trimesh_shape()
+		if shape == null:
+			continue
+		var body := StaticBody3D.new()
+		body.collision_layer = SCENERY_LAYER
+		body.collision_mask = 0
+		var collision := CollisionShape3D.new()
+		collision.shape = shape
+		body.add_child(collision)
+		mesh_node.add_child(body)
+	_colliders_built = true

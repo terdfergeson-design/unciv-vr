@@ -70,6 +70,12 @@ order, with the view gliding to fights outside it; **End turn** (now labelled **
 rest. Settings > "Other players' turns" plays them normally, fast, or not at all. Your own moves and attacks
 are animated too.
 
+### Where the table stands
+In a big background (a converted map, say), Settings > Look > **Move the table...** lets you put the table anywhere
+in the scenery: point at a spot and pull the trigger (click on the desktop), turn the scenery around the table with
+the right stick (Q / E), and press B (Esc) when it's right. Each background remembers its spot; **Back to the middle**
+undoes it.
+
 ### Your controllers
 In VR you see the controllers you're actually holding - Quest Touch, Index, Vive wands... - as the headset's runtime
 draws them (OpenXR render models: SteamVR provides them; Meta's own Quest Link runtime doesn't yet, so with it you get
@@ -222,7 +228,7 @@ neighbour, enemy troops next to the capital, one of ours shoots, then End turn p
 `staged_fight` and `unit_icons` follow it), **playback** (from the test save: End turn, and the AI's attacks play
 back), **unit_death** (a war, an enemy hurt to one hit point, one shot: the unit dies and the map is rebuilt - its token is freed by the death animation, and looking it up afterwards used to stop the client dead), **panels** (from the test save: the Units panel's rows, a click on one selecting that unit, the Wonders panel
 asking the bridge for its rows, Settings > Panels, and the panels stepping aside in the city view, with pictures),
-**city_spots** (a settler's suggested city spots on the map, a picture, and the setting turning them off), **civilopedia** (the table button, a category, an entry, a link on its page, Back, a page from every kind of
+**table_spot** (moves the table in a background, turns it, checks it's remembered per background and Back to the middle), **city_spots** (a settler's suggested city spots on the map, a picture, and the setting turning them off), **civilopedia** (the table button, a category, an entry, a link on its page, Back, a page from every kind of
 category, Close and opening it again, with pictures), **tutorials** (Reset tutorials, the tutorial messages, the
 task card and a task done by playing, the policies screen's tutorial, Hide, and switching them off),
 **stacking** (from the test save: moving onto a tile one of your own units is on - the hold, the click that follows, "Move here" on the card, and a tile with no room left - with a picture of each aim), **settings_board** (from the test save: every settings page as a picture, a drop-down opened and used,

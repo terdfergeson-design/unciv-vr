@@ -68,6 +68,15 @@ from 0 to 255 (as in Unciv's nation colours), or `"#rrggbb"`.
 | `scenery` | The model file, with or without its extension (default `scenery`) |
 | `spin` | Nodes in the scenery that turn about the middle: node name -> degrees per second |
 
+## Moving the table around a big scenery
+
+Settings > Look > **Move the table...** lets a player stand the table anywhere in a background - useful for big ones
+like a converted map. Point at a spot in the scenery and pull the trigger (click on the desktop) to put the table
+there; the floor at that spot becomes the floor under the table. The right stick (Q / E on the desktop) turns the
+scenery around the table, and the sun and a sky picture turn with it. B / Esc finishes. The spot is remembered per
+background (`background_spots` in the settings); **Back to the middle** returns to the background as you made it.
+So a big scenery doesn't need its best spot at its middle - but it's still the place the table starts.
+
 ## Trying it
 
 `godot --path client -- --background=MyBackground` starts the game with it (not saved). The tileset preview tool's

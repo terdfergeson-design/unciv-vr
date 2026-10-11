@@ -11,7 +11,7 @@ extends PanelContainer
 ##
 ## Emits chosen(kind, value):
 ##   "setting" ("key|value"), "setting_toggle" (key), "overlay" (map overlay id), "save_game", "main_menu",
-##   "reset_boards", "panel_toggle" (panel folder), "reset_panels", "reset_tutorials", "close"
+##   "reset_boards", "panel_toggle" (panel folder), "reset_panels", "reset_tutorials", "place_table", "reset_table_spot", "close"
 
 signal chosen(kind: String, value: String)
 
@@ -242,6 +242,15 @@ func _look_page() -> void:
 	_header("Around the table", "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md.")
 	_choice("background", "Background", "The world around the table: sky, light and scenery.", _folder_options("Backgrounds", "background.json"))
 	_choice("table", "Table", "What the map lies on. In VR its column stretches to the height you set.", _folder_options("Tables", "table.json"))
+	var moved := bool(info.get("table_moved", false))
+	var spot_row := _row("Where the table stands", "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+		+ ("Remembered for this background." if not moved else "It's been moved here; Back to the middle puts it where the background starts it."), null)
+	var spot_buttons := HBoxContainer.new()
+	spot_buttons.add_theme_constant_override("separation", 8)
+	spot_buttons.add_child(_button("Move the table...", func() -> void: chosen.emit("place_table", ""), Color(0.22, 0.32, 0.42), 18))
+	if moved:
+		spot_buttons.add_child(_button("Back to the middle", func() -> void: chosen.emit("reset_table_spot", ""), Color(0.3, 0.25, 0.25), 18))
+	spot_row.add_child(spot_buttons)
 	_header("The map", "")
 	var tiles := _tileset_options()
 	tiles.append(["classic", "Plain coloured hexes", "Flat hexes in Unciv's terrain colours, no models.", ""])

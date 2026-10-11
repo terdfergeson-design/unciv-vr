@@ -74,6 +74,7 @@ func run(name: String) -> void:
 		"civilopedia": await civilopedia()
 		"tutorials": await tutorials()
 		"city_spots": await city_spots()
+		"table_spot": await table_spot()
 		_: say("unknown scenario " + name)
 	say("end " + name)
 
@@ -1678,3 +1679,38 @@ func city_spots() -> void:
 			await main.change_setting("setting_toggle", "showSettlersSuggestedCityLocations")
 			return
 	say("no settler")
+
+
+## Settings > Look > Move the table: in a big background, point at a spot in the scenery and put the table there,
+## turn the scenery around it, then Back to the middle. Pictures to --shots. Puts the background setting back.
+func table_spot() -> void:
+	var before_bg := str(main.settings["background"])
+	var bg := str(main.options.get("spot-background", "MountainKing"))
+	await main.change_setting("background", bg)
+	await settle(0.5)
+	await shot(main.action_menu, "spot_middle")
+	await main._on_settings_chosen("place_table", "")
+	check("placing", main._placing_table)
+	var camera: Camera3D = main.get_viewport().get_camera_3d()
+	var target: Vector3 = main.table.global_position + Vector3(float(main.options.get("spot-x", 6)), -0.8, float(main.options.get("spot-z", -6)))
+	var from := camera.global_position
+	var placed: bool = main._place_table_at(from, (target - from).normalized())
+	check("put the table on the scenery", placed, "spot %s" % main.backgrounds.spot())
+	await settle(0.5)
+	await shot(main.action_menu, "spot_moved")
+	main._turn_background(90.0)
+	main._save_background_spot()
+	await settle(0.3)
+	await shot(main.action_menu, "spot_turned")
+	main.stop_placing_table()
+	var saved: Array = main.settings["background_spots"].get(bg, [])
+	check("saved for this background", saved.size() == 4 and absf(float(saved[3]) - 90.0) < 1.0, str(saved))
+	# Another background doesn't move; coming back here does
+	await main.change_setting("background", "Studio")
+	check("Studio stays in the middle", main.backgrounds.spot() == Vector3.ZERO)
+	await main.change_setting("background", bg)
+	check("back in %s, where it was" % bg, main.backgrounds.spot() != Vector3.ZERO, str(main.backgrounds.spot()))
+	await main._on_settings_chosen("reset_table_spot", "")
+	check("Back to the middle", main.backgrounds.spot() == Vector3.ZERO and not main.settings["background_spots"].has(bg))
+	await main.change_setting("background", before_bg)
+	say("problems: %d" % _problems)

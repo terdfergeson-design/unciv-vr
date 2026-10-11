@@ -129,6 +129,8 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
 	"pedia_pose": [], "task_pose": [],
+	# Where the table stands in each background's scenery (Settings > Look): folder -> [x, y, z, yaw degrees]
+	"background_spots": {},
 	# Unciv's tutorials: the popups and the task card (Settings > Gameplay)
 	"showTutorials": true,
 	# Unciv's "Show suggested city locations for units that can found cities"
@@ -307,6 +309,7 @@ func _ready() -> void:
 	# The floor is at y=0 in VR (the play space) and below the table on desktop
 	backgrounds.position.y = 0.0 if _xr_mode else DESKTOP_FLOOR_Y
 	backgrounds.apply(settings["background"])
+	_apply_background_spot()
 	_setup_table_buttons()
 	if options.has("table"):   # dev aid for screenshots (--table=OrnateOak); not saved
 		settings["table"] = options["table"]
@@ -4001,6 +4004,7 @@ func change_setting(key: String, value: String) -> void:
 	match key:
 		"background":
 			backgrounds.apply(value)
+			_apply_background_spot()
 		"table":
 			table_model.apply(value, table)
 			_update_pedestal()
@@ -4089,7 +4093,8 @@ func _refresh_settings() -> void:
 	var home := OS.get_environment("USERPROFILE") if OS.get_name() == "Windows" else OS.get_environment("HOME")
 	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
 		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game,
-		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list()})
+		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list(),
+		"table_moved": (settings.get("background_spots", {}) as Dictionary).has(backgrounds.current)})
 
 
 func _on_settings_chosen(kind: String, value: String) -> void:
@@ -4121,6 +4126,14 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 			_refresh_settings()
 		"reset_boards":
 			reset_board_poses()
+		"place_table":
+			start_placing_table()
+		"reset_table_spot":
+			(settings["background_spots"] as Dictionary).erase(backgrounds.current)
+			_save_settings()
+			_apply_background_spot()
+			_set_status("The table is back in the middle of the background.")
+			_refresh_settings()
 		"save_game":
 			close_settings()
 			await save_game()
@@ -4605,6 +4618,88 @@ func _tutorial_request(method: String, params: Dictionary) -> void:
 		_update_task_card()
 
 
+# region where the table stands in the background --------------------------------------------
+
+var _placing_table := false     # "Move the table": the laser / mouse points at the scenery, the trigger / click puts it there
+var _turn_dirty := false
+
+
+## Where the table usually stands, in the backgrounds node's space (its middle goes there when not moved).
+func _table_home() -> Vector3:
+	return VR_TABLE_POSITION if _xr_mode else Vector3.ZERO
+
+
+func _apply_background_spot() -> void:
+	var spot: Array = (settings.get("background_spots", {}) as Dictionary).get(backgrounds.current, [])
+	if spot.size() == 4:
+		backgrounds.place(Vector3(float(spot[0]), float(spot[1]), float(spot[2])), float(spot[3]), _table_home())
+	else:
+		backgrounds.place(Vector3.ZERO, 0.0, _table_home())
+
+
+func _save_background_spot() -> void:
+	var spot := backgrounds.spot()
+	settings["background_spots"][backgrounds.current] = [snappedf(spot.x, 0.01), snappedf(spot.y, 0.01), snappedf(spot.z, 0.01),
+		snappedf(backgrounds.spot_yaw(), 0.1)]
+	_save_settings()
+
+
+## Settings > Look > Move the table: point at a spot in the scenery and pull the trigger (click on the desktop) to
+## stand the table there; the right stick (Q / E) turns the scenery around it; B / Esc finishes.
+func start_placing_table() -> void:
+	close_settings()
+	_close_popup()
+	_placing_table = true
+	_set_status("Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done." % [
+		"pull the trigger" if _xr_mode else "click", "The right stick" if _xr_mode else "Q / E", "B" if _xr_mode else "Esc"])
+
+
+func stop_placing_table() -> void:
+	if not _placing_table:
+		return
+	_placing_table = false
+	if _pointer_dot != null:
+		_pointer_dot.visible = false
+	_set_status("The table stays here - Settings > Look > Back to the middle puts it back.")
+
+
+## Puts the table where a ray meets the scenery. Returns whether it hit anything.
+func _place_table_at(origin: Vector3, direction: Vector3) -> bool:
+	var hit := backgrounds.spot_at(origin, direction)
+	if hit.is_empty():
+		_set_status("That's not on the scenery - point at the ground somewhere.")
+		return false
+	backgrounds.place(hit[1], backgrounds.spot_yaw(), _table_home())
+	_save_background_spot()
+	sounds.play(Sounds.WHOOSH)
+	return true
+
+
+func _turn_background(degrees: float) -> void:
+	backgrounds.place(backgrounds.spot(), wrapf(backgrounds.spot_yaw() + degrees, -180.0, 180.0), _table_home())
+
+
+## VR, while placing: the laser shows where on the scenery the table would go; the right stick turns the scenery.
+func _process_table_placing(delta: float) -> void:
+	var origin := _right_hand.global_position
+	var direction := -_right_hand.global_transform.basis.z
+	var hit := backgrounds.spot_at(origin, direction)
+	_pointer_dot.visible = not hit.is_empty()
+	var reach := LASER_REACH
+	if not hit.is_empty():
+		_pointer_dot.global_position = hit[0]
+		reach = origin.distance_to(hit[0])
+	_laser.scale.z = reach
+	_laser.position.z = -reach / 2.0
+	var stick := _right_hand.get_vector2("primary")
+	if absf(stick.x) > 0.3:
+		_turn_background(-stick.x * delta * 45.0)
+		_turn_dirty = true
+	elif _turn_dirty:
+		_turn_dirty = false
+		_save_background_spot()
+
+
 ## Keeps the table's column and feet under the table top as it moves (hidden when floating in space).
 func _update_pedestal() -> void:
 	if table_model != null:
@@ -4804,6 +4899,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		var button := event as InputEventMouseButton
 		match button.button_index:
 			MOUSE_BUTTON_LEFT:
+				if _placing_table and _camera != null:
+					_place_table_at(_camera.project_ray_origin(button.position), _camera.project_ray_normal(button.position))
+					return
 				if _camera != null and minimap != null:
 					var overlay := minimap.overlay_button_at(_camera.project_ray_origin(button.position), _camera.project_ray_normal(button.position))
 					if overlay != "":
@@ -4832,6 +4930,11 @@ func _unhandled_input(event: InputEvent) -> void:
 					_update_camera()
 	elif event is InputEventKey and event.pressed and not event.echo:
 		match (event as InputEventKey).keycode:
+			KEY_Q, KEY_E when _placing_table:
+				_turn_background(15.0 if (event as InputEventKey).keycode == KEY_Q else -15.0)
+				_save_background_spot()
+			KEY_ESCAPE when _placing_table:
+				stop_placing_table()
 			KEY_SPACE, KEY_ENTER:
 				end_turn()
 			KEY_F:
@@ -4996,6 +5099,9 @@ func _process_xr(delta: float) -> void:
 	if _right_hand == null:
 		return
 	_update_popup_panel()
+	if _placing_table:
+		_process_table_placing(delta)
+		return
 	_labels_timer -= delta
 	if _labels_timer <= 0.0:
 		_labels_timer = 0.25
@@ -5158,7 +5264,7 @@ func _stick_moves_table(stick: Vector2, grip_held: bool, delta: float) -> void:
 
 ## Right trigger released: click what's pointed at, unless the trigger was held to zoom or to aim at a tile.
 func _on_xr_button_released(is_right: bool, button: String) -> void:
-	if not is_right or button != "trigger_click":
+	if not is_right or button != "trigger_click" or _placing_table:
 		return
 	var long_pressed := _long_pressed
 	_long_pressed = false
@@ -5188,6 +5294,12 @@ func _on_xr_button_released(is_right: bool, button: String) -> void:
 
 
 func _on_xr_button(is_right: bool, button: String) -> void:
+	if _placing_table:
+		if is_right and button == "trigger_click":
+			_place_table_at(_right_hand.global_position, -_right_hand.global_transform.basis.z)
+		elif button == "by_button":
+			stop_placing_table()
+		return
 	if is_right:
 		match button:
 			"trigger_click":
