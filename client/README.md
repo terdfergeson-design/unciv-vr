@@ -230,6 +230,36 @@ preset to `build\UncivVR-Quest.apk` and, with `install`, installs it with adb. I
 mode and plugged in by USB once, with "Allow USB debugging" accepted in the headset (Air Link doesn't carry adb). The
 app then shows up in the headset's Library under Unknown sources.
 
+### A signed build to share
+That one is signed with Godot's debug key, which is fine for your own headset. A build for anyone else is signed
+with your own key:
+
+    client\tools\build_quest.bat release
+
+It makes `build\UncivVR-v<version>-quest.apk` (`UncivVR-v0.1.0-alpha-quest.apk` today) and prints the certificate it
+ended up signed with. The version is `version/name` in `export_presets.cfg`, so there's one place to bump it; raise
+`version/code` too, or a headset won't take the new build as an update to the old one. `release install` installs it.
+
+The key can come from the Godot editor or from the environment. In the editor it's Project > Export > Quest >
+Keystore > Release - but **close the export window afterwards**, because the editor only writes the keystore to
+`client/.godot/export_credentials.cfg` when it closes, and a build from the command line reads that file. It belongs
+to the project folder you typed it into, so a key set up in one checkout of this repository is missing in another
+(copy that one file across, or use the environment variables below, which work anywhere). Keep the editor shut while
+building, or it will write its own copy of the preset back over any change.
+
+The other way, which needs no editor, is three environment variables. Set them once, in a Command Prompt (`setx`
+only reaches windows opened afterwards):
+
+    setx GODOT_ANDROID_KEYSTORE_RELEASE_PATH "C:\path\to\your.keystore"
+    setx GODOT_ANDROID_KEYSTORE_RELEASE_USER "your-key-alias"
+    setx GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD "your-password"
+
+`keytool -list -keystore your.keystore` says what the alias is. Keep the keystore out of this repository
+(`*.keystore` and `*.jks` are gitignored, and so is the `export_credentials.cfg` the editor keeps the password in)
+and back it up somewhere else: **every later update has to be signed with that same key**,
+and there's no way to recover it. A debug and a release build are signed differently, so Android won't install one
+over the other - uninstall first, which deletes that app's saves.
+
 The OpenXR vendors plugin (client/addons/godotopenxrvendors, v5.1.0, trimmed to Windows, Linux and Android arm64)
 brings Meta's OpenXR extensions; its Meta parts come under the Oculus SDK licence in its meta/ folder.
 

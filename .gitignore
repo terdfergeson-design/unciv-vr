@@ -4,3 +4,8 @@
 client/android/
 client/android_data.pack
 build/
+
+# Android signing keys: never in the repository, and back yours up elsewhere - every update of the Quest app has
+# to be signed with the same key (client/.godot, where Godot keeps the editor's copy, is ignored already)
+*.keystore
+*.jks

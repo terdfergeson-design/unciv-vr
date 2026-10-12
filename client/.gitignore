@@ -1,4 +1,8 @@
 .godot/
+# The Godot editor keeps the export keystore's path, alias and password in .godot/export_credentials.cfg (ignored
+# with the rest of .godot above); this catches it should a Godot version put it here instead. Never commit either.
+# The keystore file itself belongs outside this repository; the root .gitignore covers *.keystore and *.jks.
+export_credentials.cfg
 # local developer overrides (see scripts/main.gd _parse_args)
 override.cfg
 *.png.tmp

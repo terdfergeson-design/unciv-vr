@@ -58,9 +58,13 @@ JDK 17 in Godot's Editor Settings > Export > Android, then from the repository f
 
     client\tools\build_quest.bat
 
-That makes `build\UncivVR-Quest.apk`. Install it with SideQuest, or with `client\tools\build_quest.bat install`
-over a USB data cable (the Quest needs developer mode on). It shows up in the headset's Library under Unknown
-sources. More in [client/README.md](client/README.md#the-standalone-quest-app).
+That makes `build\UncivVR-Quest.apk`, signed with Godot's debug key. Install it with SideQuest, or with
+`client\tools\build_quest.bat install` over a USB data cable (the Quest needs developer mode on). It shows up in the
+headset's Library under Unknown sources.
+
+For a build to share, sign it with your own key: `client\tools\build_quest.bat release` makes
+`build\UncivVR-v0.1.0-alpha-quest.apk` (the version comes from the export preset) and prints the certificate it was
+signed with. More in [client/README.md](client/README.md#the-standalone-quest-app).
 
 ## Where things are
 | | |
