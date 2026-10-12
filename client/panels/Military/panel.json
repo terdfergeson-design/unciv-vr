@@ -1,0 +1,25 @@
+{
+	// Military units list: an example panel filtering for combat units only (civilian: false).
+	// Off until turned on in Settings > Panels. Made the same way a mod would make one.
+	"name": "Military",
+	"author": "Unciv VR",
+	"description": "Every military unit you have, with its action, moves and health. Click one to select it.",
+	"shown": false,
+	"size": [0.3, 0.8],
+	"home": [1.05, 0.42, 0.3, -62],
+	"icon": "other:Shield",
+	"title": "Military ({count})",
+	"source": "units",
+	"filter": {"civilian": false},
+	"sort": ["-idle", "-strength", "name"],
+	"row": {
+		"icon": {"kind": "unit", "name": "{name}", "civ": "{civ}"},
+		"text": "{instanceName|name}",
+		"detail": "{action|'Waiting for orders'}{canPromote?'  -  promotion ready'}",
+		"right": "{movement}/{maxMovement}",
+		"bar": {"value": "{health}", "max": 100}
+	},
+	"selected": "unit",
+	"click": {"do": "select_unit", "id": "{id}"},
+	"empty": "No military units yet."
+}
