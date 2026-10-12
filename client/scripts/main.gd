@@ -2962,6 +2962,7 @@ func end_turn() -> void:
 		_set_status("End the turn? Press End turn again to confirm.")
 		return
 	_end_turn_armed_until = 0
+	exit_city_view()   # the next turn starts back on the map
 	busy = true
 	await cancel_pick()
 	_deselect()

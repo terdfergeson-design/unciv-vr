@@ -451,7 +451,7 @@ func show_city(city: Dictionary, gold: int) -> void:
 			var option_name: String = option["name"]
 			var turns := int(option.get("turns", -1))
 			var row := _icon_row(Icons.construction(option_name), option_name, ("%d turns" % turns) if turns >= 0 else "",
-				Color(0.15, 0.17, 0.23), func() -> void: chosen.emit("produce", option_name), 30)
+				Color(0.15, 0.17, 0.23), func() -> void: chosen.emit("queue", option_name), 30)   # to the end of the queue
 			if option.get("canBuy", false):
 				var buy := _make_button("%d" % int(option["goldCost"]), func() -> void: chosen.emit("buy", option_name), Color(0.5, 0.4, 0.08))
 				buy.icon = Icons.get_icon("stat", "Gold")
