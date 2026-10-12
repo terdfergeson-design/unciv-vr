@@ -3,9 +3,8 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 extends RefCounted
-## Starts the Unciv bridge when nobody else has, using the Unciv repo next to this project
-## (../unciv). Output goes to logs/bridge.log inside the client folder.
-## Uses Gradle, so the bridge is rebuilt automatically whenever its code has changed.
+## Starts the Unciv bridge when nobody else has. Development runs use the Unciv repo next to this project;
+## portable Windows builds use their bundled bridge jar, assets and Java runtime. Output goes to user://logs.
 
 ## A bridge we launched quits by itself once no client has been connected for this long, so one orphaned
 ## by a crash or a force-stop from the editor doesn't keep running (and serving old code) for days.
@@ -26,17 +25,27 @@ var extra_args := ""
 
 
 func launch(port: int) -> bool:
+	var logs := ProjectSettings.globalize_path("user://logs")
 	var unciv := unciv_dir()
-	if not DirAccess.dir_exists_absolute(unciv.path_join("bridge")):
-		error = "Can't find the Unciv repo with the bridge at %s" % unciv
-		return false
-
-	var logs := ProjectSettings.globalize_path("res://").path_join("logs")
 	DirAccess.make_dir_recursive_absolute(logs)
 	# Its own log when it isn't on the usual port (an autoplay run next to a game you are playing)
 	log_path = logs.path_join("bridge.log" if port == 8765 else "bridge-%d.log" % port)
 
 	if OS.get_name() == "Windows":
+		var app_dir := OS.get_executable_path().get_base_dir()
+		var packaged_runtime := app_dir.path_join("runtime/bin/java.exe")
+		var packaged_jar := app_dir.path_join("bridge/UncivBridge.jar")
+		if FileAccess.file_exists(packaged_jar) or DirAccess.dir_exists_absolute(app_dir.path_join("runtime")):
+			var packaged_assets := ProjectSettings.globalize_path("user://data/unciv/android/assets")
+			if not FileAccess.file_exists(packaged_runtime) or not FileAccess.file_exists(packaged_jar) or not DirAccess.dir_exists_absolute(packaged_assets.path_join("jsons")):
+				error = "The bundled Unciv bridge is incomplete. Reinstall the game files."
+				return false
+			return _launch_packaged_windows(packaged_runtime, packaged_jar, packaged_assets, port, logs)
+
+		if not DirAccess.dir_exists_absolute(unciv.path_join("bridge")):
+			error = "Can't find the Unciv repo with the bridge at %s" % unciv
+			return false
+
 		# A small batch file keeps all the quoting under our control. We pick the JDK ourselves because
 		# our own environment can be stale (Windows only hands new variables to newly started programs).
 		var jdk := find_jdk()
@@ -59,11 +68,35 @@ func launch(port: int) -> bool:
 		file.close()
 		pid = OS.create_process("cmd.exe", ["/c", bat.replace("/", "\\")])
 	else:
+		if not DirAccess.dir_exists_absolute(unciv.path_join("bridge")):
+			error = "Can't find the Unciv repo with the bridge at %s" % unciv
+			return false
 		var command := "cd '%s' && ./gradlew :bridge:run --console=plain --args='--port %d --exit-when-idle %d%s' > '%s' 2>&1" % [unciv, port, IDLE_EXIT_SECONDS, extra_args, log_path]
 		pid = OS.create_process("sh", ["-c", command])
 
 	if pid <= 0:
 		error = "Couldn't start Gradle"
+		return false
+	return true
+
+
+## Starts the prebuilt bridge from a portable Windows package, without Gradle or a system Java install.
+func _launch_packaged_windows(java_exe: String, bridge_jar: String, assets: String, port: int, logs: String) -> bool:
+	var bat := logs.path_join("start_bridge.bat")
+	var script := "\r\n".join([
+		"@echo off",
+		"cd /d \"%s\"" % assets.replace("/", "\\"),
+		"\"%s\" -Xmx4G -jar \"%s\" --port %d --exit-when-idle %d > \"%s\" 2>&1" % [java_exe.replace("/", "\\"), bridge_jar.replace("/", "\\"), port, IDLE_EXIT_SECONDS, log_path.replace("/", "\\")],
+	]) + "\r\n"
+	var file := FileAccess.open(bat, FileAccess.WRITE)
+	if file == null:
+		error = "Couldn't write %s" % bat
+		return false
+	file.store_string(script)
+	file.close()
+	pid = OS.create_process("cmd.exe", ["/c", bat.replace("/", "\\")])
+	if pid <= 0:
+		error = "Couldn't start the bundled Unciv bridge"
 		return false
 	return true
 

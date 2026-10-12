@@ -24,7 +24,7 @@ static func is_android() -> bool:
 ## Whether the game's files come from the unpacked android_data.pack: in the Android app, or on the PC with the
 ## environment variable UNCIV_VR_PACKED_DATA=1 (to test the packed data without a headset).
 static func packed() -> bool:
-	return is_android() or OS.get_environment("UNCIV_VR_PACKED_DATA") == "1"
+	return is_android() or OS.has_feature("packed_data") or OS.get_environment("UNCIV_VR_PACKED_DATA") == "1"
 
 
 ## Unciv's android folder (Images.*, assets/jsons, assets/sounds, assets/ExtraImages), as an absolute path.

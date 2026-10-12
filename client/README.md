@@ -10,7 +10,7 @@ Open this folder in Godot (Import → select `project.godot`) and press **F5** (
 - **The bridge starts by itself.** If nothing is listening on port 8765, the client finds a JDK 17+
   (JDK 21 recommended), runs `gradlew :bridge:run` in `../unciv` (rebuilding the bridge if its
   code changed) and shuts it down when you quit (it saves the game as the autosave first). Its output goes to
-  `logs/bridge.log`. A bridge you started by hand is used as-is and left running.
+  `user://logs/bridge.log`. A bridge you started by hand is used as-is and left running.
 - **Left-over bridges are replaced.** If a bridge from an earlier session is still running old code (say the
   client was force-stopped from the editor), the client saves its game, stops it and starts a fresh one.
   A bridge the client started also quits by itself after three minutes with no client connected.
@@ -212,6 +212,18 @@ The city card keeps quick production picks (click to build next, with a gold pri
 
 Rings: cyan = reachable this turn, red = attackable, yellow = selected, white = under the pointer.
 The glowing beam marks the selected unit.
+
+## Portable Windows build
+The repository includes a Windows x86_64 export preset and a packaging script. On the build PC, install Godot
+4.7.2 with its Windows export templates and JDK 21, then from the repository root run:
+
+    powershell -ExecutionPolicy Bypass -File client\tools\build_windows.ps1
+
+The script packs the Unciv and built-in game data into the Godot export, builds the bridge JAR, and creates a trimmed
+Java runtime containing the bridge's detected Java modules. Game data is unpacked to the user's Godot data folder
+on first launch. It writes a portable folder to
+`build\windows\UncivVR` and a shareable `build\windows\UncivVR-Windows-x86_64.zip`. Players do not need Godot,
+Java, Gradle, or the Unciv source checkout installed. The first build may download Gradle and its dependencies.
 
 ## The standalone Quest app
 The game also builds as an Android app that runs on its own on a Quest 2 / 3 / Pro, with no PC: the Unciv bridge runs

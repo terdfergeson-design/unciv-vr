@@ -52,6 +52,15 @@ One-time setup:
 Then open `client\project.godot` in Godot and press **F5**. The client starts the bridge itself (the first time
 takes several minutes of downloads) and stops it when you quit. With no headset running it opens in a window.
 
+## Building a portable Windows release
+With Godot 4.7.2 Windows export templates and JDK 21 installed, run this from the repository folder:
+
+    powershell -ExecutionPolicy Bypass -File client\tools\build_windows.ps1
+
+It creates `build\windows\UncivVR-Windows-x86_64.zip`, containing the Windows client, Unciv bridge and assets,
+and a trimmed Java runtime. The player does not need Godot or Java installed. The first build may download Gradle
+and its dependencies.
+
 ## Building the Quest app
 Install Android Studio (with its Command-line Tools) and Godot 4.7.2's export templates, set the Android SDK and a
 JDK 17 in Godot's Editor Settings > Export > Android, then from the repository folder:
