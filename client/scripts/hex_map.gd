@@ -67,7 +67,8 @@ var _pieces_root: Node3D            # one MultiMeshInstance3D per tileset piece 
 var _piece_nodes: Dictionary = {}   # piece Mesh -> its MultiMeshInstance3D
 var _piece_scenes: Node3D           # pieces that are whole Godot scenes, one instance per tile
 var _borders: MeshInstance3D           # territory edges, rebuilt with the view
-const BORDER_INNER := 0.92             # the border strip runs from the hex's edge in to this fraction of it
+const BORDER_LINE := 0.94              # outer edge line (accent/inner colour) from 1.0 to this fraction
+const BORDER_INNER := 0.87             # inner band (civ/outer colour) from BORDER_LINE to this fraction
 var _highlights: MultiMeshInstance3D
 var _clouds: MultiMeshInstance3D
 var _units_root: Node3D
@@ -498,8 +499,8 @@ func _build_fog() -> void:
 			i += 1
 
 
-## Territory borders like Unciv's: a thin strip in the owner's colour along each edge where the territory ends
-## (the next tile belongs to someone else or no one), lying on the ground at the tile's rim.
+## Territory borders like Unciv's: two-tone strips along each edge where the territory ends:
+## a crisp outer line in the civ's accent/inner colour, and an inner band in its base/outer colour.
 func _build_borders() -> void:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -510,7 +511,9 @@ func _build_borders() -> void:
 			continue
 		var territory := str(tile["owner"])
 		var center := tile_position(key, edge_height(tile) + 0.012)
-		var color := civ_color(territory, "outer").darkened(0.55 * _rim(key))
+		var rim_factor := 0.55 * _rim(key)
+		var line_color := civ_color(territory, "inner").darkened(rim_factor)
+		var band_color := civ_color(territory, "outer").darkened(rim_factor)
 		for neighbour: Vector2i in NEIGHBOURS:
 			var other: Dictionary = tiles.get(key + neighbour, {})
 			if str(other.get("owner", "")) == territory:
@@ -520,10 +523,23 @@ func _build_borders() -> void:
 				continue
 			var a := _hex_corner(edge, HEX_RADIUS)
 			var b := _hex_corner(edge + 1, HEX_RADIUS)
-			for v: Vector3 in [a, b, b * BORDER_INNER, a, b * BORDER_INNER, a * BORDER_INNER]:
+			var a_mid := a * BORDER_LINE
+			var b_mid := b * BORDER_LINE
+			var a_in := a * BORDER_INNER
+			var b_in := b * BORDER_INNER
+
+			# Outer accent line (inner colour)
+			for v: Vector3 in [a, b, b_mid, a, b_mid, a_mid]:
 				st.set_normal(Vector3.UP)
-				st.set_color(color)
+				st.set_color(line_color)
 				st.add_vertex(center + v)
+
+			# Inner band (outer colour)
+			for v: Vector3 in [a_mid, b_mid, b_in, a_mid, b_in, a_in]:
+				st.set_normal(Vector3.UP)
+				st.set_color(band_color)
+				st.add_vertex(center + v)
+
 			strips += 1
 	_borders.mesh = st.commit() if strips > 0 else null
 
