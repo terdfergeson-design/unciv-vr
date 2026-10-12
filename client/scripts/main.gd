@@ -1005,36 +1005,63 @@ func _board_node(id: String) -> Node3D:
 	return _info_holder as Node3D if _info_holder is Node3D else null
 
 
+## Returns the board id if the panel is grabbable at the given pixel (grab bar, or info panel), or "" if not.
+func _grab_id_for(panel: WorldPanel, pixel: Vector2) -> String:
+	if panel == _info_holder:
+		return "info"
+	if panel == _big_holder and big_screen != null and big_screen.grab_bar_contains(pixel):
+		return "wide"
+	if panel == _city_info_holder and city_info_board != null and city_info_board.grab_bar_contains(pixel):
+		return "city_info"
+	if panel == _city_prod_holder and city_prod_board != null and city_prod_board.grab_bar_contains(pixel):
+		return "city_prod"
+	if panel == _overview_holder and overview_board != null and overview_board.grab_bar_contains(pixel):
+		return "overview"
+	if panel == _settings_holder and settings_board != null and settings_board.grab_bar_contains(pixel):
+		return "settings"
+	if panel == _pedia_holder and civilopedia_board != null and civilopedia_board.grab_bar_contains(pixel):
+		return "pedia"
+	if panel == _task_holder and task_card != null and task_card.grab_bar_contains(pixel):
+		return "task"
+	for folder: String in _panel_holders:
+		if _panel_holders[folder] == panel and _panel_boards.has(folder):
+			var pboard: PanelBoard = _panel_boards[folder]
+			if pboard != null and pboard.grab_bar_contains(pixel):
+				return "panel:" + folder
+	return ""
+
+
 ## The board a pointer ray is on: [id, global hit point], or [] if none. The nearer one wins.
 func _board_at(origin: Vector3, direction: Vector3) -> Array:
 	var best: Array = []
 	var best_distance := INF
-	var hits := {}
-	if minimap != null:
-		hits["minimap"] = minimap.ray_hit_point(origin, direction)
+	if minimap != null and minimap.is_visible_in_tree():
+		var mini_hit: Variant = minimap.ray_hit_point(origin, direction)
+		if mini_hit != null:
+			best_distance = origin.distance_to(mini_hit as Vector3)
+			best = ["minimap", mini_hit]
+	var panels: Array[WorldPanel] = []
 	if _info_holder is WorldPanel and (_info_holder as Node3D).is_visible_in_tree():
-		var hit: Variant = (_info_holder as WorldPanel).ray_hit(origin, direction)
-		hits["info"] = hit[0] if hit != null else null
+		panels.append(_info_holder as WorldPanel)
 	if _big_holder is WorldPanel and (_big_holder as Node3D).is_visible_in_tree():
-		# The big screen is full of buttons, so only its handle strip along the top grabs it
-		var hit: Variant = (_big_holder as WorldPanel).ray_hit(origin, direction)
-		hits["wide"] = hit[0] if hit != null and big_screen.grab_bar_contains(hit[1]) else null
-	for pair: Array in [["city_info", _city_info_holder, city_info_board], ["city_prod", _city_prod_holder, city_prod_board],
-			["overview", _overview_holder, overview_board], ["settings", _settings_holder, settings_board],
-			["pedia", _pedia_holder, civilopedia_board], ["task", _task_holder, task_card]]:
-		if pair[1] is WorldPanel and (pair[1] as Node3D).is_visible_in_tree():
-			var hit: Variant = (pair[1] as WorldPanel).ray_hit(origin, direction)
-			hits[pair[0]] = hit[0] if hit != null and pair[2].grab_bar_contains(hit[1]) else null
-	for folder: String in _panel_holders:   # panels: grabbed by their top strip, like the settings board
-		var holder: Variant = _panel_holders[folder]
+		panels.append(_big_holder as WorldPanel)
+	for holder: Node in [_city_info_holder, _city_prod_holder, _overview_holder, _settings_holder, _pedia_holder, _task_holder]:
 		if holder is WorldPanel and (holder as Node3D).is_visible_in_tree():
-			var hit: Variant = (holder as WorldPanel).ray_hit(origin, direction)
-			hits["panel:" + folder] = hit[0] if hit != null and _panel_boards[folder].grab_bar_contains(hit[1]) else null
-	for id: String in hits:
-		if hits[id] != null and origin.distance_to(hits[id]) < best_distance:
-			best_distance = origin.distance_to(hits[id])
-			best = [id, hits[id]]
+			panels.append(holder as WorldPanel)
+	for holder: Variant in _panel_holders.values():
+		if holder is WorldPanel and (holder as Node3D).is_visible_in_tree():
+			panels.append(holder as WorldPanel)
+	for panel: WorldPanel in panels:
+		var hit: Variant = panel.ray_hit(origin, direction)
+		if hit != null:
+			var grab_id := _grab_id_for(panel, hit[1])
+			if grab_id != "":
+				var d: float = origin.distance_to(hit[0] as Vector3)
+				if d < best_distance:
+					best_distance = d
+					best = [grab_id, hit[0]]
 	return best
+
 
 
 func _begin_board_drag(origin: Vector3, direction: Vector3) -> bool:
@@ -5163,10 +5190,8 @@ func _fit_laser(origin: Vector3, direction: Vector3, on_board_or_button: bool) -
 	if _laser == null:
 		return
 	var end: Variant = null
-	if _pointed_panel != null or _pointed_overlay != "" or on_board_or_button:
+	if _pointed_panel != null or _pointed_overlay != "" or on_board_or_button or _pointed_minimap != null:
 		end = _pointer_dot.global_position
-	elif _pointed_minimap != null and minimap != null:
-		end = minimap.ray_hit_point(origin, direction)
 	elif not hex_map.tiles.is_empty():
 		# The map: where the ray meets its surface, not the tile's centre (the dot snaps; the beam doesn't)
 		end = Plane(hex_map.global_transform.basis.y.normalized(),
@@ -5195,64 +5220,164 @@ func _process_xr(delta: float) -> void:
 	var origin := _right_hand.global_position
 	var direction := -_right_hand.global_transform.basis.z
 
-	# Cards take priority over the map behind them; the city card is checked first
-	_pointed_panel = null
-	var panels: Array[WorldPanel] = [_popup_panel, _wrist_panel]
-	if keyboard_shown():
-		panels.push_front(_keyboard_holder as WorldPanel)   # the keyboard is in front of everything while typing
-	if _big_holder is WorldPanel:
+	# Find the nearest interactive object / display in front of the laser ray
+	var nearest_distance := INF
+	var hit_kind := ""   # "panel", "board", "minimap_map", "minimap_overlay", "button"
+	var hit_pos := Vector3.ZERO
+	var hit_pixel := Vector2.ZERO
+	var hit_panel: WorldPanel = null
+	var hit_board_id := ""
+	var hit_overlay_id := ""
+	var hit_minimap_coords: Variant = null
+	var hit_button_id := ""
+
+	# 1. Virtual keyboard: when shown, takes top priority while typing
+	if keyboard_shown() and _keyboard_holder is WorldPanel and (_keyboard_holder as Node3D).is_visible_in_tree():
+		var hit: Variant = (_keyboard_holder as WorldPanel).ray_hit(origin, direction)
+		if hit != null:
+			nearest_distance = 0.0
+			hit_kind = "panel"
+			hit_panel = _keyboard_holder as WorldPanel
+			hit_pos = hit[0] as Vector3
+			hit_pixel = hit[1] as Vector2
+
+	# 2. All 3D WorldPanels (cards, boards, mod panels, info board)
+	var panels: Array[WorldPanel] = []
+	if _popup_panel != null and _popup_panel.is_visible_in_tree():
+		panels.append(_popup_panel)
+	if _wrist_panel != null and _wrist_panel.is_visible_in_tree():
+		panels.append(_wrist_panel)
+	if _info_holder is WorldPanel and (_info_holder as Node3D).is_visible_in_tree():
+		panels.append(_info_holder as WorldPanel)
+	if _big_holder is WorldPanel and (_big_holder as Node3D).is_visible_in_tree():
 		panels.append(_big_holder as WorldPanel)
-	if _settings_holder is WorldPanel:
-		panels.push_front(_settings_holder as WorldPanel)   # in front of the boards behind it
-	if _pedia_holder is WorldPanel:
-		panels.push_front(_pedia_holder as WorldPanel)
-	if _task_holder is WorldPanel:
+	if _settings_holder is WorldPanel and (_settings_holder as Node3D).is_visible_in_tree():
+		panels.append(_settings_holder as WorldPanel)
+	if _pedia_holder is WorldPanel and (_pedia_holder as Node3D).is_visible_in_tree():
+		panels.append(_pedia_holder as WorldPanel)
+	if _task_holder is WorldPanel and (_task_holder as Node3D).is_visible_in_tree():
 		panels.append(_task_holder as WorldPanel)
 	for holder: Node in [_city_info_holder, _city_prod_holder, _overview_holder]:
-		if holder is WorldPanel:
+		if holder is WorldPanel and (holder as Node3D).is_visible_in_tree():
 			panels.append(holder as WorldPanel)
-	for holder: Variant in _panel_holders.values():   # the panels anyone can add (panels.gd)
-		if holder is WorldPanel:
+	for holder: Variant in _panel_holders.values():
+		if holder is WorldPanel and (holder as Node3D).is_visible_in_tree():
 			panels.append(holder as WorldPanel)
+
 	for panel: WorldPanel in panels:
 		var hit: Variant = panel.ray_hit(origin, direction)
-		if hit != null:
-			_pointed_panel = panel
-			_pointed_pixel = hit[1]
+		if hit == null:
+			continue
+		var pos: Vector3 = hit[0]
+		var dist: float = origin.distance_to(pos)
+		if dist < nearest_distance:
+			var px: Vector2 = hit[1]
+			var grab_id := _grab_id_for(panel, px)
+			nearest_distance = dist
+			hit_pos = pos
+			if grab_id != "":
+				hit_kind = "board"
+				hit_board_id = grab_id
+				hit_panel = null
+			else:
+				hit_kind = "panel"
+				hit_panel = panel
+				hit_pixel = px
+				hit_board_id = ""
+
+	# 3. Minimap (overlay buttons, map area, frame)
+	if minimap != null and minimap.is_visible_in_tree():
+		var overlay_btn: String = minimap.overlay_button_at(origin, direction)
+		if overlay_btn != "":
+			var btn_pos: Vector3 = minimap.button_global_position(overlay_btn)
+			var dist: float = origin.distance_to(btn_pos)
+			if dist < nearest_distance:
+				nearest_distance = dist
+				hit_kind = "minimap_overlay"
+				hit_overlay_id = overlay_btn
+				hit_pos = btn_pos
+				hit_panel = null
+				hit_board_id = ""
+		else:
+			var map_coords: Variant = minimap.ray_hit(origin, direction)
+			var frame_hit: Variant = minimap.ray_hit_point(origin, direction)
+			if map_coords != null and frame_hit != null:
+				var dist: float = origin.distance_to(frame_hit as Vector3)
+				if dist < nearest_distance:
+					nearest_distance = dist
+					hit_kind = "minimap_map"
+					hit_minimap_coords = map_coords
+					hit_pos = frame_hit as Vector3
+					hit_panel = null
+					hit_board_id = ""
+			elif frame_hit != null:
+				var dist: float = origin.distance_to(frame_hit as Vector3)
+				if dist < nearest_distance:
+					nearest_distance = dist
+					hit_kind = "board"
+					hit_board_id = "minimap"
+					hit_pos = frame_hit as Vector3
+					hit_panel = null
+
+	# 4. Table buttons along the front edge of the table
+	var tbl_button := _table_button_at(origin, direction)
+	if tbl_button != "":
+		var btn_pos: Vector3 = _table_button_position(tbl_button)
+		var dist: float = origin.distance_to(btn_pos)
+		if dist < nearest_distance:
+			nearest_distance = dist
+			hit_kind = "button"
+			hit_button_id = tbl_button
+			hit_pos = btn_pos
+			hit_panel = null
+			hit_board_id = ""
+
+	_pointed_panel = null
+	_pointed_minimap = null
+	_pointed_overlay = ""
+	var board: Array = []
+	var button := ""
+
+	match hit_kind:
+		"panel":
+			_pointed_panel = hit_panel
+			_pointed_pixel = hit_pixel
 			_pointer_dot.visible = true
-			_pointer_dot.global_position = hit[0]
-			panel.hover(_pointed_pixel)
+			_pointer_dot.global_position = hit_pos
+			_pointed_panel.hover(_pointed_pixel)
 			_update_hover(null)
-			break
-	_pointed_minimap = minimap.ray_hit(origin, direction) if _pointed_panel == null and minimap != null else null
+		"board":
+			board = [hit_board_id, hit_pos]
+			_pointer_dot.visible = true
+			_pointer_dot.global_position = hit_pos
+			_update_hover(null)
+		"minimap_overlay":
+			_pointed_overlay = hit_overlay_id
+			_pointer_dot.visible = true
+			_pointer_dot.global_position = hit_pos
+			_update_hover(null)
+		"minimap_map":
+			_pointed_minimap = hit_minimap_coords
+			_pointer_dot.visible = false
+			_pointer_dot.global_position = hit_pos
+			_update_hover(null)
+		"button":
+			button = hit_button_id
+			_pointer_dot.visible = true
+			_pointer_dot.global_position = hit_pos
+			_update_hover(null)
+		_:
+			if not hex_map.tiles.is_empty():
+				var key: Variant = hex_map.pick(origin, direction)
+				_update_hover(key)
+				_pointer_dot.visible = key != null
+				if key != null:
+					_pointer_dot.global_position = hex_map.to_global(hex_map.tile_local_center(key))
+
 	if minimap != null:
 		minimap.show_hover(_pointed_minimap)
-	_pointed_overlay = minimap.overlay_button_at(origin, direction) if _pointed_panel == null and _pointed_minimap == null and minimap != null else ""
-	if minimap != null:
 		minimap.hover_button(_pointed_overlay)
-	var board := _board_at(origin, direction) if _pointed_panel == null and _pointed_minimap == null and _pointed_overlay == "" else []
-	var button := _table_button_at(origin, direction) if _pointed_panel == null and _pointed_minimap == null and _pointed_overlay == "" and board.is_empty() else ""
 	_highlight_table_button(button)
-	if _pointed_minimap != null:
-		_pointer_dot.visible = false
-		_update_hover(null)
-	elif _pointed_overlay != "":
-		_pointer_dot.visible = true
-		_pointer_dot.global_position = minimap.button_global_position(_pointed_overlay)
-		_update_hover(null)
-	elif not board.is_empty():   # on the info board (or the overview's frame): grab it with the trigger to move it
-		_pointer_dot.visible = true
-		_pointer_dot.global_position = board[1]
-	elif button != "":
-		_pointer_dot.visible = true
-		_pointer_dot.global_position = _table_button_position(button)
-		_update_hover(null)
-	elif _pointed_panel == null and not hex_map.tiles.is_empty():
-		var key: Variant = hex_map.pick(origin, direction)
-		_update_hover(key)
-		_pointer_dot.visible = key != null
-		if key != null:
-			_pointer_dot.global_position = hex_map.to_global(hex_map.tile_local_center(key))
 	_fit_laser(origin, direction, not board.is_empty() or button != "")
 
 	# Trigger held + that hand's stick up / down zooms the map. The right trigger's click waits for the
@@ -5369,11 +5494,11 @@ func _on_xr_button_released(is_right: bool, button: String) -> void:
 	if _pointed_overlay != "":
 		toggle_overlay(_pointed_overlay)
 		return
-	if not _board_at(_right_hand.global_position, -_right_hand.global_transform.basis.z).is_empty():
-		return   # a click on the info board does nothing (grab and drag moves it)
 	if _hovered_button != "":
 		press_table_button(_hovered_button)
 		return
+	if not _board_at(_right_hand.global_position, -_right_hand.global_transform.basis.z).is_empty():
+		return   # a click on the info board does nothing (grab and drag moves it)
 	var key: Variant = hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z)
 	if key != null and not long_pressed:
 		click_tile(key)
@@ -5390,8 +5515,9 @@ func _on_xr_button(is_right: bool, button: String) -> void:
 		match button:
 			"trigger_click":
 				_right_trigger_used_for_zoom = false   # the click itself happens on release
-				if not _begin_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z):
-					_begin_tile_press(hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z))
+				if _pointed_panel == null and _pointed_overlay == "" and _hovered_button == "":
+					if not _begin_board_drag(_right_hand.global_position, -_right_hand.global_transform.basis.z):
+						_begin_tile_press(hex_map.pick(_right_hand.global_position, -_right_hand.global_transform.basis.z))
 			"ax_button":
 				end_turn()
 			"by_button":
