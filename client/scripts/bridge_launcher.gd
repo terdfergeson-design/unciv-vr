@@ -33,7 +33,8 @@ func launch(port: int) -> bool:
 
 	var logs := ProjectSettings.globalize_path("res://").path_join("logs")
 	DirAccess.make_dir_recursive_absolute(logs)
-	log_path = logs.path_join("bridge.log")
+	# Its own log when it isn't on the usual port (an autoplay run next to a game you are playing)
+	log_path = logs.path_join("bridge.log" if port == 8765 else "bridge-%d.log" % port)
 
 	if OS.get_name() == "Windows":
 		# A small batch file keeps all the quoting under our control. We pick the JDK ourselves because

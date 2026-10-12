@@ -79,8 +79,24 @@ func _process(delta: float) -> void:
 	_collect_errors()
 	var real := delta / maxf(Engine.time_scale, 0.001)   # delta runs faster with --speed; this is the frame's real time
 	_frames += 1
+	_wave_pointer()
 	if real > SLOW_FRAME and turn > 0:
 		hitches.append([turn, phase, snappedf(real, 0.01)])
+
+
+## The laser (or mouse) never rests: every frame it points somewhere new on the map - mostly at units - so whatever
+## the pointer touches is exercised while units move, fight and die (a freed unit's label under the pointer once
+## stopped the game: see the freeze-after-a-kill notes).
+func _wave_pointer() -> void:
+	var map: Node = main.hex_map
+	if map == null or main.state.is_empty() or main._in_lobby or turn == 0:
+		return
+	var keys: Array = map._unit_labels.keys()
+	if keys.is_empty() or _frames % 4 == 3:
+		keys = map._shown.keys()
+	if keys.is_empty():
+		return
+	map.set_hover(keys[_frames * 7 % keys.size()])
 
 
 func _collect_errors() -> void:
@@ -167,9 +183,20 @@ func _look_around() -> void:
 	var player := str(main.state.get("playerCiv", ""))
 	var units: Array = main.state.get("units", []).filter(func(u: Dictionary) -> bool: return u.get("civ") == player)
 	_enter("selecting units")
+	var attacked := false
 	for unit: Dictionary in units.slice(0, 6):
 		await main._select_unit(int(unit["id"]), false)
 		await _settle()
+		# A player attacks whatever their units can reach: through the client's own attack, with its animation
+		var targets: Array = main.selected_unit.get("targets", []) if not main.selected_unit.is_empty() else []
+		if not attacked and not targets.is_empty():
+			var t: Dictionary = targets[turn % targets.size()]
+			_enter("attacking with %s" % unit.get("name", "a unit"))
+			await main.attack(Vector2i(int(t["x"]), int(t["y"])))
+			for i in 30:   # the pointer keeps moving over the map while the fight and any death play out
+				await get_tree().process_frame
+			attacked = true
+			_enter("selecting units")
 	main._deselect()
 	var cities: Array = main.state.get("cities", []).filter(func(c: Dictionary) -> bool: return c.get("civ", player) == player and not c.get("isPuppet", false))
 	if turn % 5 == 0 and not cities.is_empty():

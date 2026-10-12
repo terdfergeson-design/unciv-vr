@@ -1095,8 +1095,10 @@ func aim_key() -> Vector2i:
 func _update_label_visibility() -> void:
 	for key: Vector2i in _unit_labels:
 		var shown := key == _hover or key == _selected or key in _targets
-		for label: Label3D in _unit_labels[key]:
-			label.visible = shown
+		# Variant, checked: a label goes with its token, and a death animation frees the token (see freeze-after-a-kill)
+		for label: Variant in _unit_labels[key]:
+			if is_instance_valid(label):
+				(label as Label3D).visible = shown
 
 
 func _build_highlights() -> void:
