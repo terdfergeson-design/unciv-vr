@@ -4,7 +4,7 @@ A **panel** is a board with a list on it, built from what the game already knows
 wonders overview, anything the bridge can tell the client. Each one is a folder with a `panel.json`; there's no
 code to write. Turn panels on and off in **Settings > Panels**.
 
-Unciv VR comes with four, made the same way you'd make yours:
+Unciv VR comes with five, made the same way you'd make yours:
 
 - **Units** (`Units/`, on to start with): every unit you have, the ones waiting for orders first, with what each
   is doing, its moves and its health. Click one to select it.
@@ -12,6 +12,8 @@ Unciv VR comes with four, made the same way you'd make yours:
   building (its picture, and how many turns) and how big it is. Click one to open its card.
 - **Military** (`Military/`, off to start with): every military unit you have, filtering out civilian units
   (`"filter": {"civilian": false}`). Click one to select it.
+- **Rankings** (`Rankings/`, off to start with): current score rankings of all known civilizations, fetched
+  from the politics overview and sorted by score.
 - **Wonders** (`Wonders/`, off to start with): Unciv's wonders overview by era - an example of a panel that asks
   the bridge for its rows instead of reading them from the game state. Click a built one to look at it.
 

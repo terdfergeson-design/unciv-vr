@@ -1095,13 +1095,17 @@ func set_aim(key: Vector2i, stops: Array[Vector2i], text: String, color: Color) 
 	label.no_depth_test = true   # always readable, even behind a unit or a city
 	label.position = tile_position(key, tile_height(tiles[key]) + 1.3)
 	_aim_root.add_child(label)
+	_update_label_visibility()
 
 
 func clear_aim() -> void:
+	var had_aim := _aim_key != NO_TILE
 	_aim_key = NO_TILE
 	if _aim_root != null:
 		_aim_root.queue_free()
 		_aim_root = null
+	if had_aim:
+		_update_label_visibility()
 
 
 func aim_key() -> Vector2i:
@@ -1110,7 +1114,7 @@ func aim_key() -> Vector2i:
 
 func _update_label_visibility() -> void:
 	for key: Vector2i in _unit_labels:
-		var shown := key == _hover or key == _selected or key in _targets
+		var shown := (key == _hover or key == _selected or key in _targets) and key != _aim_key
 		# Variant, checked: a label goes with its token, and a death animation frees the token (see freeze-after-a-kill)
 		for label: Variant in _unit_labels[key]:
 			if is_instance_valid(label):

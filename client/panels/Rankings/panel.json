@@ -1,0 +1,26 @@
+{
+	// Civilization rankings by total score: an example panel requesting the politics overview.
+	// Off until turned on in Settings > Panels. Made the same way a mod would make one.
+	"name": "Rankings",
+	"author": "Unciv VR",
+	"description": "Rankings of all known civilizations by total score points.",
+	"shown": false,
+	"size": [0.3, 0.6],
+	"home": [1.12, 0.3, 0.65, -80],
+	"icon": "other:Score",
+	"title": "Rankings ({count})",
+	"source": {
+		"request": "getOverview",
+		"params": {"tab": "politics"},
+		"path": "civs"
+	},
+	"filter": {"defeated": false},
+	"sort": ["-score", "name"],
+	"row": {
+		"icon": "nation:{name}",
+		"text": "{name}",
+		"detail": "{leader}  -  {era} Era",
+		"right": "{score} pts"
+	},
+	"empty": "No civilizations met yet."
+}
