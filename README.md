@@ -33,6 +33,7 @@ Original icons from Unciv have been tinted and scaled.  Shared under various CC 
   queue, buying and selling, specialists, focus, religion. Unciv's suggested city spots for settlers.
 - **Empire**: the tech tree, policies, diplomacy and trade, religion, espionage, victory progress, and all nine tabs of
   Unciv's empire overview - on boards around the table you can move wherever you like.
+- **After a game ends**, replay the changing borders and city locations with the whole map zoomed out on the table.
 - **Unciv's Civilopedia and tutorials**, Unciv's popups and decisions, Unciv's icons and sound effects (in VR, sounds
   come from where they happen on the table).
 - **Unciv's languages**: the game in any of about 50 languages Unciv has been translated into (see Languages below).
@@ -108,7 +109,7 @@ English.
 - **Typing**: the on-screen keyboard is English-only; other layouts for naming cities, units and saves.
 
 ## Not there yet
-Unciv mods, world wrap, music, and Unciv's end-of-game map replay; multiplayer is left out on purpose. On the Quest,
+Unciv mods, world wrap and music; multiplayer is left out on purpose. On the Quest,
 text is a little softer than over Link, since the headset renders at a lower resolution on its own.
 
 ## Licence and credits

@@ -69,6 +69,7 @@ var _piece_scenes: Node3D           # pieces that are whole Godot scenes, one in
 var _borders: MeshInstance3D           # territory edges, rebuilt with the view
 const BORDER_LINE := 0.94              # outer edge line (accent/inner colour) from 1.0 to this fraction
 const BORDER_INNER := 0.87             # inner band (civ/outer colour) from BORDER_LINE to this fraction
+var _territory: MultiMeshInstance3D     # replay: translucent civ-colour fill on owned tiles
 var _highlights: MultiMeshInstance3D
 var _clouds: MultiMeshInstance3D
 var _units_root: Node3D
@@ -100,6 +101,10 @@ var _tokens: Dictionary = {}        # unit id -> its token on the table
 var _last_key: Dictionary = {}      # unit id -> the tile it was drawn on last time (to see who moved)
 var _facing: Dictionary = {}        # unit id -> which way it faces (radians about Y), kept between redraws
 var _civ_materials: Dictionary = {} # "material id|colour" -> a copy of a CivOuter / CivInner material in that colour
+var _replay_active := false
+var _replay_states: Dictionary = {} # Vector2i -> ordered historical ownership/city states
+var _replay_records: Dictionary = {} # Vector2i -> full end-game tile appearance
+var _replay_original: Dictionary = {} # Vector2i -> original tile dictionary, restored when replay closes
 const NO_TILE := Vector2i(999999, 999999)
 var _aim_key := NO_TILE            # where the selected unit is aimed (click again there to go)
 var _aim_root: Node3D
@@ -136,6 +141,16 @@ func _ready() -> void:
 	fog.shader.code = FOG_SHADER
 	_clouds = _make_multimesh_node("Fog", puff, fog, true)
 	_clouds.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var territory_hex := CylinderMesh.new()
+	territory_hex.top_radius = HEX_RADIUS * 0.82
+	territory_hex.bottom_radius = territory_hex.top_radius
+	territory_hex.height = 0.012
+	territory_hex.radial_segments = 6
+	var territory_material := _vertex_color_material(1.0, true)
+	territory_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	territory_material.albedo_color = Color(1, 1, 1, 0.38)
+	_territory = _make_multimesh_node("ReplayTerritory", territory_hex, territory_material)
+	_territory.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 	_units_root = Node3D.new()
 	_units_root.name = "Units"
@@ -226,6 +241,10 @@ func set_ruleset(ruleset: Dictionary) -> void:
 # region building -------------------------------------------------------------------------
 
 func build(state: Dictionary) -> void:
+	_replay_active = false
+	_replay_states.clear()
+	_replay_records.clear()
+	_replay_original.clear()
 	civ_colors.clear()
 	civ_info.clear()
 	for civ: Dictionary in state.get("civs", []):
@@ -247,6 +266,76 @@ func build(state: Dictionary) -> void:
 
 	full_center = (min_corner + max_corner) / 2.0
 	full_extent = max((max_corner - min_corner).x, (max_corner - min_corner).y) / 2.0 + 1.0
+	_rebuild_view()
+
+
+## Replaces current ownership and city markers with the recorded state for one replay turn.
+func show_replay_turn(data: Dictionary, turn: int) -> void:
+	var entering_replay := not _replay_active
+	if not _replay_active:
+		_replay_active = true
+		_replay_states.clear()
+		_replay_records.clear()
+		_replay_original.clear()
+		for key: Vector2i in tiles:
+			_replay_original[key] = (tiles[key] as Dictionary).duplicate(true)
+		_selected = NO_TILE
+		_reachable.clear()
+		_targets.clear()
+		_city_spots.clear()
+		for record: Dictionary in data.get("tiles", []):
+			var record_key := Vector2i(int(record.get("x", 0)), int(record.get("y", 0)))
+			_replay_states[record_key] = record.get("states", [])
+			_replay_records[record_key] = record
+	for key: Vector2i in tiles:
+		var tile: Dictionary = (_replay_original[key] as Dictionary).duplicate(true)
+		var record: Dictionary = _replay_records.get(key, {})
+		if not record.is_empty():
+			tile["base"] = record.get("base", tile.get("base", ""))
+			tile["features"] = record.get("features", [])
+			for field: String in ["wonder", "resource", "improvement", "river"]:
+				tile.erase(field)
+				if record.has(field):
+					tile[field] = record[field]
+			tile["road"] = record.get("road", "None")
+			tile["explored"] = true
+			tile["visible"] = true
+		tile.erase("owner")
+		tile.erase("city")
+		var history: Array = _replay_states.get(key, [])
+		var found: Dictionary = {}
+		for entry: Dictionary in history:
+			if int(entry.get("turn", -1)) > turn:
+				break
+			found = entry
+		if found.is_empty():
+			continue
+		var owner := str(found.get("owner", ""))
+		if owner != "":
+			tile["owner"] = owner
+		var city_type := str(found.get("city", "N"))
+		if city_type != "N" and owner != "":
+			tile["city"] = {"civ": owner, "name": "", "population": 0, "replayType": city_type}
+		tiles[key] = tile
+	if entering_replay:
+		_rebuild_view()
+	else:
+		_build_borders()
+		_build_territory_highlights()
+		_build_cities()
+
+
+## Restores the live map after leaving the replay.
+func end_replay() -> void:
+	if not _replay_active:
+		return
+	for key: Vector2i in tiles:
+		if _replay_original.has(key):
+			tiles[key] = (_replay_original[key] as Dictionary).duplicate(true)
+	_replay_active = false
+	_replay_states.clear()
+	_replay_records.clear()
+	_replay_original.clear()
 	_rebuild_view()
 
 
@@ -298,6 +387,7 @@ func _rebuild_view() -> void:
 			_shown[key] = true
 	_build_terrain()
 	_build_borders()
+	_build_territory_highlights()
 	_build_cities()
 	_build_units()
 	_build_highlights()
@@ -474,6 +564,9 @@ func _build_prisms(keys: Array[Vector2i]) -> void:
 
 ## A few cloud puffs over every unexplored tile, spilling a little over its edges so the fog's border is soft.
 func _build_fog() -> void:
+	if _replay_active:
+		_clouds.multimesh.instance_count = 0
+		return
 	var unexplored: Array[Vector2i] = []
 	for key: Vector2i in _shown:
 		if not tiles[key].get("explored", false):
@@ -511,9 +604,11 @@ func _build_borders() -> void:
 			continue
 		var territory := str(tile["owner"])
 		var center := tile_position(key, edge_height(tile) + 0.012)
-		var rim_factor := 0.55 * _rim(key)
+		var rim_factor := 0.0 if _replay_active else 0.55 * _rim(key)
 		var line_color := civ_color(territory, "inner").darkened(rim_factor)
 		var band_color := civ_color(territory, "outer").darkened(rim_factor)
+		var line_fraction := 0.92 if _replay_active else BORDER_LINE
+		var inner_fraction := 0.76 if _replay_active else BORDER_INNER
 		for neighbour: Vector2i in NEIGHBOURS:
 			var other: Dictionary = tiles.get(key + neighbour, {})
 			if str(other.get("owner", "")) == territory:
@@ -523,10 +618,10 @@ func _build_borders() -> void:
 				continue
 			var a := _hex_corner(edge, HEX_RADIUS)
 			var b := _hex_corner(edge + 1, HEX_RADIUS)
-			var a_mid := a * BORDER_LINE
-			var b_mid := b * BORDER_LINE
-			var a_in := a * BORDER_INNER
-			var b_in := b * BORDER_INNER
+			var a_mid := a * line_fraction
+			var b_mid := b * line_fraction
+			var a_in := a * inner_fraction
+			var b_in := b * inner_fraction
 
 			# Outer accent line (inner colour)
 			for v: Vector3 in [a, b, b_mid, a, b_mid, a_mid]:
@@ -542,6 +637,25 @@ func _build_borders() -> void:
 
 			strips += 1
 	_borders.mesh = st.commit() if strips > 0 else null
+
+
+## Replay: a translucent civ-colour wash makes whole areas readable at a glance, with a bolder border.
+func _build_territory_highlights() -> void:
+	if _territory == null:
+		return
+	var owned: Array[Vector2i] = []
+	if _replay_active:
+		for key: Vector2i in _shown:
+			if tiles[key].has("owner"):
+				owned.append(key)
+	var mm := _territory.multimesh
+	mm.instance_count = owned.size()
+	for i in owned.size():
+		var key := owned[i]
+		var tile: Dictionary = tiles[key]
+		var color := civ_color(str(tile["owner"]), "outer").lerp(civ_color(str(tile["owner"]), "inner"), 0.2)
+		mm.set_instance_transform(i, Transform3D(Basis(), tile_position(key, edge_height(tile) + 0.025)))
+		mm.set_instance_color(i, color)
 
 
 ## Unciv's six neighbours of a tile, as offsets of its (x, y).
@@ -601,6 +715,18 @@ func _build_cities() -> void:
 			box.position = blocks[b] + Vector3(0, heights[b] / 2.0, 0)
 			node.add_child(box)
 
+		if _replay_active:
+			var marker := MeshInstance3D.new()
+			var marker_mesh := CylinderMesh.new()
+			marker_mesh.top_radius = 0.33 if city.get("replayType", "R") == "C" else 0.24
+			marker_mesh.bottom_radius = marker_mesh.top_radius
+			marker_mesh.height = 0.18
+			marker_mesh.radial_segments = 12
+			marker.mesh = marker_mesh
+			marker.material_override = _flat_material(outer)
+			marker.position = Vector3(0, 0.2, 0)
+			node.add_child(marker)
+			continue
 		var label := _make_label("%s  %d" % [city["name"], int(city["population"])], 72)
 		label.position = Vector3(0, 1.0, 0)
 		label.outline_size = 14
@@ -621,6 +747,8 @@ func _build_units() -> void:
 		child.queue_free()
 	_unit_labels.clear()
 	_tokens.clear()
+	if _replay_active:
+		return
 	var moved: Array = []   # [token, from key, to key]
 	var seen := {}
 	for key: Vector2i in _shown:

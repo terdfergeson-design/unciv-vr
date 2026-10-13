@@ -69,6 +69,12 @@ var religion_name := ""
 # Victory screen (getVictory)
 var _victory: Dictionary = {}
 var victory_page := "ours"
+var map_replay_turn := 0
+var map_replay_active := false
+var map_replay_playing := false
+var _map_replay_slider: HSlider
+var _map_replay_turn_label: Label
+var _map_replay_play_button: Button
 var chart_type := "Score"
 
 var _techs: Dictionary = {}
@@ -260,6 +266,18 @@ func set_victory(data: Dictionary) -> void:
 	_victory = data
 	if tab == "victory":
 		_rebuild()
+
+
+func set_map_replay_position(turn: int, playing: bool) -> void:
+	map_replay_turn = turn
+	map_replay_active = true
+	map_replay_playing = playing
+	if is_instance_valid(_map_replay_slider):
+		_map_replay_slider.set_value_no_signal(turn)
+	if is_instance_valid(_map_replay_turn_label):
+		_map_replay_turn_label.text = "Turn %d of %d" % [turn, int(_victory.get("mapReplay", {}).get("endTurn", turn))]
+	if is_instance_valid(_map_replay_play_button):
+		_map_replay_play_button.text = "Pause" if playing else "Play"
 
 
 func _rebuild() -> void:
@@ -1255,6 +1273,9 @@ const CHART_COLORS := [Color(0.95, 0.75, 0.25), Color(0.4, 0.72, 1.0), Color(0.9
 
 
 func _build_victory() -> Control:
+	_map_replay_slider = null
+	_map_replay_turn_label = null
+	_map_replay_play_button = null
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 8)
 	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
@@ -1303,6 +1324,9 @@ func _build_victory() -> Control:
 		available.append(["charts", "Charts"])
 	if _victory.get("showDemographics", false):
 		available.append(["demographics", "Demographics"])
+	var map_replay: Dictionary = _victory.get("mapReplay", {})
+	if (_victory.has("winner") or _victory.has("defeatText")) and int(map_replay.get("startTurn", -1)) >= 0 and not map_replay.get("tiles", []).is_empty():
+		available.append(["replay", "Map replay"])
 	if available.filter(func(p: Array) -> bool: return p[0] == victory_page).is_empty():
 		victory_page = "ours"
 	for p: Array in available:
@@ -1406,6 +1430,42 @@ func _build_victory() -> Control:
 				_card_line(grid, "%d (%s)" % [int(row.get("best", 0)), row.get("bestCiv", {}).get("name", "?")], TEXT, false)
 				_card_line(grid, "%d / %d (%s)" % [int(row.get("average", 0)), int(row.get("worst", 0)), row.get("worstCiv", {}).get("name", "?")], DIM, false)
 			page.add_child(grid)
+		"replay":
+			var replay: Dictionary = _victory.get("mapReplay", {})
+			var start_turn := int(replay.get("startTurn", 0))
+			var end_turn := int(replay.get("endTurn", start_turn))
+			_card_line(page, "Map replay", Color(0.95, 0.82, 0.45), false, 24)
+			_card_line(page, "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play.", DIM, false, 17)
+			var controls := HBoxContainer.new()
+			controls.add_theme_constant_override("separation", 10)
+			var start_button := _button("Start replay", func() -> void: chosen.emit("replay_start", ""), Color(0.2, 0.42, 0.25), 18)
+			start_button.custom_minimum_size = Vector2(190, 48)
+			controls.add_child(start_button)
+			var play_label := "Pause" if map_replay_playing else "Play"
+			var play_button := _button(play_label, func() -> void: chosen.emit("replay_toggle", ""), Color(0.22, 0.42, 0.66), 18)
+			_map_replay_play_button = play_button
+			play_button.custom_minimum_size = Vector2(140, 48)
+			play_button.disabled = not map_replay_active
+			controls.add_child(play_button)
+			var end_button := _button("Return to game", func() -> void: chosen.emit("replay_end", ""), Color(0.3, 0.3, 0.4), 18)
+			end_button.custom_minimum_size = Vector2(200, 48)
+			end_button.disabled = not map_replay_active
+			controls.add_child(end_button)
+			page.add_child(controls)
+			var slider := HSlider.new()
+			_map_replay_slider = slider
+			slider.min_value = start_turn
+			slider.max_value = maxf(start_turn, end_turn)
+			slider.step = 1
+			slider.value = clampf(map_replay_turn, start_turn, end_turn)
+			slider.custom_minimum_size = Vector2(760, 40)
+			slider.value_changed.connect(func(value: float) -> void: chosen.emit("replay_seek", str(roundi(value))))
+			page.add_child(slider)
+			_map_replay_turn_label = Label.new()
+			_map_replay_turn_label.text = "Turn %d of %d" % [map_replay_turn if map_replay_active else start_turn, end_turn]
+			_map_replay_turn_label.add_theme_color_override("font_color", TEXT)
+			_map_replay_turn_label.add_theme_font_size_override("font_size", 18)
+			page.add_child(_map_replay_turn_label)
 	return page
 
 

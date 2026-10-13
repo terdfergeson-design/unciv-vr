@@ -39,7 +39,7 @@ const Sounds := preload("res://scripts/sounds.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 24   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 25   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -127,7 +127,7 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	"soundVolume": 70, "ambienceVolume": 50,
 	# Panels (panels/ and ~/.unciv-vr/Panels): folder -> shown (missing: the panel's own "shown"), and where
 	# each has been dragged to in VR, relative to the table: folder -> [x, y, z, yaw degrees]
-	"panels": {}, "panel_poses": {},
+	"panels": {}, "panel_poses": {}, "desktop_window_positions": {}, # desktop: window id -> Vector2
 	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
@@ -217,6 +217,10 @@ var _yaw := 0.0
 var _pitch := deg_to_rad(55.0)
 var _distance := 1.7
 var _focus := Vector3.ZERO
+var _desktop_windows: Dictionary = {}  # id -> {control, layer, header_height}
+var _desktop_drag: Control
+var _desktop_drag_offset := Vector2.ZERO
+var _desktop_focus_serial := 0
 
 # VR rig
 var _right_hand: XRController3D
@@ -267,7 +271,18 @@ var _table_height_set := false   # after the first recenter, recentering keeps t
 var _xr_camera: XRCamera3D
 var _playback_active := false   # other players' moves and battles are being played back (End turn skips them)
 var _skip_playback := false
+var _map_replay_active := false
+var _map_replay_playing := false
+var _map_replay_runner_active := false
+var _map_replay_turn := 0
+var _map_replay_data: Dictionary = {}
+var _map_replay_saved_view: Array = []
+var _map_replay_hud: CanvasLayer
+var _map_replay_button: Button
+var _map_replay_slider: HSlider
+var _map_replay_label: Label
 const PLAYBACK_SPEEDS := {"normal": 1.0, "fast": 2.5}
+const MAP_REPLAY_SECONDS_PER_TURN := 0.16 # 5x the original 0.8-second turn interval
 ## Buttons play Unciv's click, except where the thing they do has a sound of its own below (a unit action
 ## plays the action's, buying plays coin or choir, research paper, and so on - as Unciv does it).
 const CLICKS_ITSELF := ["action", "improvement", "produce", "queue", "buy", "research", "promote",
@@ -349,6 +364,7 @@ func _ready() -> void:
 	hex_map.view_rebuilt.connect(_on_view_rebuilt)
 	_setup_info_panel()
 	_setup_big_screen()
+	_setup_map_replay_hud()
 	_setup_city_boards()
 	_setup_overview_board()
 	_setup_settings_board()
@@ -955,10 +971,11 @@ func _setup_info_panel() -> void:
 		layer.add_child(info_panel)
 		var place := func() -> void:
 			info_panel.reset_size()
-			info_panel.position = Vector2(12, get_viewport().get_visible_rect().size.y - info_panel.size.y - 12)
+			_desktop_place_window("info", info_panel, Vector2(12, get_viewport().get_visible_rect().size.y - info_panel.size.y - 12))
 		info_panel.resized.connect(place)
 		get_viewport().size_changed.connect(place)
 		_info_holder = layer
+		_register_desktop_window("info", info_panel, layer, 54.0)
 	_set_info_visible(false)
 
 
@@ -1145,11 +1162,82 @@ func _setup_big_screen() -> void:
 			var window := get_viewport().get_visible_rect().size
 			var fit := minf(1.0, (window.x - 40.0) / BigScreen.SIZE.x)
 			big_screen.scale = Vector2(fit, fit)
-			big_screen.position = Vector2((window.x - BigScreen.SIZE.x * fit) / 2.0, 70)
+			_desktop_place_window("wide", big_screen, Vector2((window.x - BigScreen.SIZE.x * fit) / 2.0, 70))
 		get_viewport().size_changed.connect(place)
 		place.call()
 		_big_holder = layer
+		_register_desktop_window("wide", big_screen, layer)
 	_set_big_visible(false)
+
+
+func _setup_map_replay_hud() -> void:
+	if _xr_mode:
+		return
+	_map_replay_hud = CanvasLayer.new()
+	_map_replay_hud.layer = 126
+	add_child(_map_replay_hud)
+	var bar := HBoxContainer.new()
+	bar.name = "MapReplayControls"
+	bar.add_theme_constant_override("separation", 10)
+	bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	bar.offset_left = 24
+	bar.offset_top = -82
+	bar.offset_right = -24
+	bar.offset_bottom = -18
+	bar.alignment = BoxContainer.ALIGNMENT_CENTER
+	var background := StyleBoxFlat.new()
+	background.bg_color = Color(0.06, 0.07, 0.1, 0.92)
+	background.set_corner_radius_all(12)
+	background.content_margin_left = 14
+	background.content_margin_right = 14
+	background.content_margin_top = 8
+	background.content_margin_bottom = 8
+	var panel := PanelContainer.new()
+	panel.name = "ReplayHudPanel"
+	panel.add_theme_stylebox_override("panel", background)
+	panel.add_child(bar)
+	panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	panel.offset_left = 24
+	panel.offset_top = -92
+	panel.offset_right = -24
+	panel.offset_bottom = -12
+	_map_replay_hud.add_child(panel)
+	var pause_button := Button.new()
+	pause_button.text = "Play"
+	pause_button.custom_minimum_size.x = 110
+	pause_button.pressed.connect(_toggle_map_replay)
+	bar.add_child(pause_button)
+	_map_replay_button = pause_button
+	_map_replay_slider = HSlider.new()
+	_map_replay_slider.custom_minimum_size.x = 520
+	_map_replay_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_map_replay_slider.value_changed.connect(func(value: float) -> void: _begin_map_replay(roundi(value)))
+	bar.add_child(_map_replay_slider)
+	_map_replay_label = Label.new()
+	_map_replay_label.custom_minimum_size.x = 120
+	bar.add_child(_map_replay_label)
+	var close_button := Button.new()
+	close_button.text = "Close replay"
+	close_button.custom_minimum_size.x = 140
+	close_button.pressed.connect(_end_map_replay)
+	bar.add_child(close_button)
+	_map_replay_hud.visible = false
+
+
+func _toggle_map_replay() -> void:
+	_map_replay_playing = not _map_replay_playing
+	if _xr_mode:
+		big_screen.set_map_replay_position(_map_replay_turn, _map_replay_playing)
+	else:
+		_update_map_replay_button()
+	if _map_replay_playing:
+		_play_map_replay()
+
+
+func _update_map_replay_button() -> void:
+	if _map_replay_button == null:
+		return
+	_map_replay_button.text = "Pause" if _map_replay_playing else "Play"
 
 
 func _set_big_visible(shown: bool) -> void:
@@ -1177,6 +1265,89 @@ func show_big_screen(tab: String) -> void:
 
 
 ## Reloads the data on the big screen's current tab (after anything that may have changed it).
+func _begin_map_replay(turn: int) -> void:
+	if big_screen == null:
+		return
+	_map_replay_data = big_screen._victory.get("mapReplay", {})
+	if _map_replay_data.is_empty() or hex_map.tiles.is_empty():
+		return
+	var was_active := _map_replay_active
+	var start_turn := int(_map_replay_data.get("startTurn", 0))
+	var end_turn := int(_map_replay_data.get("endTurn", start_turn))
+	if not _map_replay_active:
+		_map_replay_saved_view = [hex_map.view_center, hex_map.view_radius]
+		_map_replay_active = true
+	_map_replay_turn = clampi(turn, start_turn, end_turn)
+	_map_replay_playing = false
+	big_screen.set_map_replay_position(_map_replay_turn, false)
+	hex_map.set_view(hex_map.full_center, hex_map.full_extent)
+	_fit_table()
+	hex_map.show_replay_turn(_map_replay_data, _map_replay_turn)
+	if _xr_mode and not was_active:
+		big_screen.set_victory(big_screen._victory)
+		big_screen.set_map_replay_position(_map_replay_turn, false)
+	else:
+		if not _xr_mode:
+			_set_big_visible(false)
+			_map_replay_hud.visible = true
+			var start := float(start_turn)
+			var finish := float(maxi(start_turn, end_turn))
+			_map_replay_slider.min_value = start
+			_map_replay_slider.max_value = finish
+			_map_replay_slider.set_value_no_signal(_map_replay_turn)
+			_map_replay_label.text = "Turn %d / %d" % [_map_replay_turn, end_turn]
+			_update_map_replay_button()
+
+
+func _end_map_replay() -> void:
+	if not _map_replay_active:
+		return
+	_map_replay_active = false
+	_map_replay_playing = false
+	hex_map.end_replay()
+	if not _map_replay_saved_view.is_empty():
+		hex_map.set_view(_map_replay_saved_view[0], float(_map_replay_saved_view[1]))
+		_map_replay_saved_view.clear()
+	_fit_table()
+	if _map_replay_hud != null:
+		_map_replay_hud.visible = false
+	_set_big_visible(true)
+	if big_screen != null:
+		big_screen.map_replay_active = false
+		big_screen.map_replay_playing = false
+		big_screen.set_victory(big_screen._victory)
+
+
+func _play_map_replay() -> void:
+	if _map_replay_runner_active:
+		return
+	_map_replay_runner_active = true
+	var end_turn := int(_map_replay_data.get("endTurn", _map_replay_turn))
+	while _map_replay_active:
+		if not _map_replay_playing:
+			await get_tree().create_timer(0.1).timeout
+			continue
+		if _map_replay_turn >= end_turn:
+			_map_replay_playing = false
+			if _xr_mode:
+				big_screen.set_map_replay_position(_map_replay_turn, false)
+			else:
+				_update_map_replay_button()
+			break
+		await get_tree().create_timer(MAP_REPLAY_SECONDS_PER_TURN, true, false, true).timeout
+		if not _map_replay_active:
+			break
+		if not _map_replay_playing:
+			continue
+		_map_replay_turn += 1
+		big_screen.set_map_replay_position(_map_replay_turn, true)
+		hex_map.show_replay_turn(_map_replay_data, _map_replay_turn)
+		if _map_replay_hud != null:
+			_map_replay_slider.set_value_no_signal(_map_replay_turn)
+			_map_replay_label.text = "Turn %d / %d" % [_map_replay_turn, end_turn]
+	_map_replay_runner_active = false
+
+
 func _refresh_big_screen() -> void:
 	if big_screen == null or _in_lobby or not _big_screen_shown():
 		return
@@ -1269,7 +1440,17 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 		"chart_type":
 			big_screen.chart_type = value
 			big_screen.set_victory(big_screen._victory)
+		"replay_start":
+			var replay: Dictionary = big_screen._victory.get("mapReplay", {})
+			_begin_map_replay(int(replay.get("startTurn", 0)))
+		"replay_seek":
+			_begin_map_replay(int(value))
+		"replay_toggle":
+			_toggle_map_replay()
+		"replay_end":
+			_end_map_replay()
 		"one_more_turn":
+			_end_map_replay()
 			var reply := await _order("oneMoreTurn")
 			if reply.has("_busy"):
 				return
@@ -1279,6 +1460,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 				_set_status("One more turn...!")
 				await refresh()
 		"main_menu":
+			_end_map_replay()
 			_set_big_visible(false)
 			await open_lobby()
 		"tech_select":
@@ -1575,7 +1757,7 @@ func _long_press_tile(key: Vector2i) -> void:
 
 
 func click_tile(key: Vector2i) -> void:
-	if busy or state.is_empty() or _in_lobby:
+	if busy or state.is_empty() or _in_lobby or _map_replay_active:
 		return
 	if not _pick.is_empty() and not _city_view:
 		await _pick_tile(key)
@@ -2060,10 +2242,11 @@ func _setup_overview_board() -> void:
 			var window := get_viewport().get_visible_rect().size
 			var fit := minf(1.0, minf((window.x - 40.0) / OverviewBoard.SIZE.x, (window.y - 70.0) / OverviewBoard.SIZE.y))
 			overview_board.scale = Vector2(fit, fit)
-			overview_board.position = Vector2((window.x - OverviewBoard.SIZE.x * fit) / 2.0, 50)
+			_desktop_place_window("overview", overview_board, Vector2((window.x - OverviewBoard.SIZE.x * fit) / 2.0, 50))
 		get_viewport().size_changed.connect(place)
 		place.call()
 		_overview_holder = layer
+		_register_desktop_window("overview", overview_board, layer)
 	_set_overview_visible(false)
 
 
@@ -2208,12 +2391,14 @@ func _setup_city_boards() -> void:
 			var fit := minf(1.0, minf((window.y - 54.0) / CityBoard.SIZE.y, (window.x * 0.3) / CityBoard.SIZE.x))
 			for board: CityBoard in [city_info_board, city_prod_board]:
 				board.scale = Vector2(fit, fit)
-			city_info_board.position = Vector2(10, 44)   # under the status line
-			city_prod_board.position = Vector2(window.x - CityBoard.SIZE.x * fit - 10, 44)
+			_desktop_place_window("city_info", city_info_board, Vector2(10, 44))
+			_desktop_place_window("city_prod", city_prod_board, Vector2(window.x - CityBoard.SIZE.x * fit - 10, 44))
 		get_viewport().size_changed.connect(place)
 		place.call()
 		_city_info_holder = layer
 		_city_prod_holder = layer
+		_register_desktop_window("city_info", city_info_board, layer)
+		_register_desktop_window("city_prod", city_prod_board, layer)
 	_set_city_boards_visible(false)
 
 
@@ -2971,6 +3156,8 @@ func _pick_tile(key: Vector2i) -> void:
 
 
 func end_turn() -> void:
+	if _map_replay_active:
+		return
 	if _playback_active:   # End turn (button, A, Space) during playback skips the rest of it
 		_skip_playback = true
 		return
@@ -3160,6 +3347,7 @@ func _show_center_card(fill: Callable, kind: String, tile := Vector2i(999999, 99
 	else:
 		_ensure_alert_menu()
 		fill.call(alert_menu)
+		_alert_layer.layer = 127
 		_alert_layer.visible = true
 
 
@@ -3945,6 +4133,7 @@ func _setup_action_menu() -> void:
 		action_menu.layout_changed.connect(_place_desktop_menu)
 		get_viewport().size_changed.connect(_place_desktop_menu)
 		_place_desktop_menu()
+		_register_desktop_window("action", action_menu, layer)
 		return
 
 	action_menu.custom_minimum_size = Vector2(WRIST_PANEL_PIXELS.x, 0)
@@ -4009,7 +4198,7 @@ func _place_desktop_menu() -> void:
 	await get_tree().process_frame   # let removed buttons actually leave first
 	action_menu.reset_size()
 	var window := get_viewport().get_visible_rect().size
-	action_menu.position = Vector2(window.x - action_menu.size.x - 12, 12)
+	_desktop_place_window("action", action_menu, Vector2(window.x - action_menu.size.x - 12, 12))
 
 
 # region settings -------------------------------------------------------------------------
@@ -4152,10 +4341,11 @@ func _setup_settings_board() -> void:
 			var window := get_viewport().get_visible_rect().size
 			var fit := minf(1.0, minf((window.x - 40.0) / SettingsBoard.SIZE.x, (window.y - 60.0) / SettingsBoard.SIZE.y))
 			settings_board.scale = Vector2(fit, fit)
-			settings_board.position = Vector2((window.x - SettingsBoard.SIZE.x * fit) / 2.0, (window.y - SettingsBoard.SIZE.y * fit) / 2.0)
+			_desktop_place_window("settings", settings_board, Vector2((window.x - SettingsBoard.SIZE.x * fit) / 2.0, (window.y - SettingsBoard.SIZE.y * fit) / 2.0))
 		get_viewport().size_changed.connect(place)
 		place.call()
 		_settings_holder = layer
+		_register_desktop_window("settings", settings_board, layer)
 	_set_settings_visible(false)
 
 
@@ -4278,6 +4468,7 @@ func _setup_panels() -> void:
 		else:
 			_panel_layer.add_child(board)
 			_panel_holders[folder] = board
+			_register_desktop_window("panel:" + folder, board, _panel_layer, 30.0)
 	_update_panels_visible()
 
 
@@ -4314,7 +4505,7 @@ func _place_desktop_panels() -> void:
 		if not board.visible:
 			continue
 		board.fit_height(clampf(bottom - 44.0, 200.0, board.size_pixels.y))
-		board.position = Vector2(x, 44.0)
+		_desktop_place_window("panel:" + folder, board, Vector2(x, 44.0))
 		x += board.size_pixels.x + 10.0
 
 
@@ -4564,10 +4755,11 @@ func _setup_civilopedia() -> void:
 			var window := get_viewport().get_visible_rect().size
 			var fit := minf(1.0, minf((window.x - 40.0) / CivilopediaBoard.SIZE.x, (window.y - 60.0) / CivilopediaBoard.SIZE.y))
 			civilopedia_board.scale = Vector2(fit, fit)
-			civilopedia_board.position = Vector2((window.x - CivilopediaBoard.SIZE.x * fit) / 2.0, (window.y - CivilopediaBoard.SIZE.y * fit) / 2.0)
+			_desktop_place_window("pedia", civilopedia_board, Vector2((window.x - CivilopediaBoard.SIZE.x * fit) / 2.0, (window.y - CivilopediaBoard.SIZE.y * fit) / 2.0))
 		get_viewport().size_changed.connect(place)
 		place.call()
 		_pedia_holder = layer
+		_register_desktop_window("pedia", civilopedia_board, layer)
 	_set_civilopedia_visible(false)
 
 
@@ -4650,10 +4842,11 @@ func _setup_task_card() -> void:
 			await get_tree().process_frame
 			task_card.reset_size()
 			var window := get_viewport().get_visible_rect().size
-			task_card.position = Vector2((window.x - task_card.size.x) / 2.0, window.y - task_card.size.y - 12)
+			_desktop_place_window("task", task_card, Vector2((window.x - task_card.size.x) / 2.0, window.y - task_card.size.y - 12))
 		task_card.resized.connect(place)
 		get_viewport().size_changed.connect(place)
 		_task_holder = layer
+		_register_desktop_window("task", task_card, layer)
 	_set_task_visible(false)
 
 
@@ -4966,6 +5159,88 @@ func _update_camera() -> void:
 
 
 # region input ----------------------------------------------------------------------------
+
+## Desktop windows share one drag/focus path. The narrow top strip is the handle; other clicks still reach
+## the controls underneath, while raising their window so it comes in front of overlapping panels.
+func _register_desktop_window(id: String, control: Control, layer: CanvasLayer, header_height := 38.0) -> void:
+	if _xr_mode:
+		return
+	_desktop_windows[id] = {"control": control, "layer": layer, "header_height": header_height}
+	var saved: Dictionary = settings.get("desktop_window_positions", {})
+	if saved.has(id) and saved[id] is Vector2:
+		control.position = saved[id]
+
+
+func _desktop_place_window(id: String, control: Control, fallback: Vector2) -> void:
+	var saved: Dictionary = settings.get("desktop_window_positions", {})
+	control.position = saved.get(id, fallback)
+
+
+func _desktop_window_at(point: Vector2) -> Dictionary:
+	var best: Dictionary = {}
+	var best_layer := -1000
+	var best_z := -1000
+	for id: String in _desktop_windows:
+		var entry: Dictionary = _desktop_windows[id]
+		var control: Control = entry["control"]
+		if not is_instance_valid(control) or not control.is_visible_in_tree():
+			continue
+		var rect := control.get_global_rect()
+		if not rect.has_point(point):
+			continue
+		var layer: CanvasLayer = entry["layer"]
+		var layer_order := layer.layer if is_instance_valid(layer) else 0
+		if layer_order > best_layer or (layer_order == best_layer and control.z_index >= best_z):
+			best = {"id": id, "control": control, "layer": layer, "rect": rect, "header_height": float(entry["header_height"])}
+			best_layer = layer_order
+			best_z = control.z_index
+	return best
+
+
+func _focus_desktop_window(entry: Dictionary) -> void:
+	_desktop_focus_serial += 1
+	var layer: CanvasLayer = entry["layer"]
+	if is_instance_valid(layer):
+		# Keep focused windows above fixed HUD layers and all earlier focused windows.
+		layer.layer = 32 + (_desktop_focus_serial % 80)
+	var control: Control = entry["control"]
+	control.z_index = 100 + (_desktop_focus_serial % 3000)
+
+
+func _input(event: InputEvent) -> void:
+	if _xr_mode:
+		return
+	if event is InputEventMouseButton and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+		var button := event as InputEventMouseButton
+		if button.pressed:
+			var entry := _desktop_window_at(button.position)
+			if entry.is_empty():
+				return
+			_focus_desktop_window(entry)
+			var rect: Rect2 = entry["rect"]
+			if button.position.y <= rect.position.y + float(entry["header_height"]):
+				_desktop_drag = entry["control"]
+				_desktop_drag_offset = button.position - rect.position
+				get_viewport().set_input_as_handled()
+		elif is_instance_valid(_desktop_drag):
+			var positions: Dictionary = settings.get("desktop_window_positions", {})
+			for id: String in _desktop_windows:
+				if _desktop_windows[id]["control"] == _desktop_drag:
+					positions[id] = _desktop_drag.position
+					break
+			settings["desktop_window_positions"] = positions
+			_save_settings()
+			_desktop_drag = null
+			get_viewport().set_input_as_handled()
+	elif event is InputEventMouseMotion and is_instance_valid(_desktop_drag):
+		var wanted := (event as InputEventMouseMotion).position - _desktop_drag_offset
+		var viewport_size := get_viewport().get_visible_rect().size
+		var window_size := _desktop_drag.get_global_rect().size
+		_desktop_drag.position = Vector2(
+			clampf(wanted.x, 0.0, maxf(0.0, viewport_size.x - window_size.x)),
+			clampf(wanted.y, 0.0, maxf(0.0, viewport_size.y - minf(48.0, window_size.y)))
+		)
+		get_viewport().set_input_as_handled()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and keyboard_shown():

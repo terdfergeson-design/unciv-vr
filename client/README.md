@@ -292,7 +292,7 @@ of the "does anything break" testing needs nobody in the headset:
       Godot_v4.7.2-stable_win64.exe --path client -- --autoplay --map-size=Small --max-turns=300
 
   Options: `--seed=`, `--map-size=`, `--ai=` (AI players), `--max-turns=`, `--shots=` (a screenshot every that many
-  turns, 0 for none), `--playback=off|fast|normal`, `--speed=` (animations run that many times faster, 4 to start
+  turns, 0 for none), `--playback=off|fast|normal`, `--speed=` (animations run that many times faster, 6 to start
   with), `--fake-xr` (the VR layout without a headset). With a headset on, it plays in VR. The client starts its
   bridge with debug commands for this; a bridge you started yourself needs `--debug`.
 
