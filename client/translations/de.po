@@ -1,0 +1,4042 @@
+msgid ""
+msgstr ""
+"Language: de\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: scripts/big_screen.gd
+msgid "Map replay"
+msgstr "Kartenrückblick"
+
+#: scripts/big_screen.gd
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Die Karte ist so weit herausgezoomt, dass sie vollständig zu sehen ist. Gebietsgrenzen und Städte verändern sich im Verlauf der Runden."
+
+#: scripts/big_screen.gd
+msgid "Start replay"
+msgstr "Rückblick starten"
+
+#: scripts/big_screen.gd
+msgid "Return to game"
+msgstr "Zurück zum Spiel"
+
+#: scripts/big_screen.gd
+msgid "Turn %d of %d"
+msgstr "Runde %d von %d"
+
+#: scripts/main.gd
+msgid "Close replay"
+msgstr "Rückblick schließen"
+
+#: scripts/main.gd
+msgid "Turn %d / %d"
+msgstr "Runde %d / %d"
+
+#: scripts/settings_board.gd
+msgid "Saved on this PC between sessions"
+msgstr "Wird zwischen Sitzungen auf diesem PC gespeichert"
+
+#: scripts/settings_board.gd
+msgid "Move the table..."
+msgstr "Tisch verschieben …"
+
+#: scripts/settings_board.gd
+msgid "Back to the middle"
+msgstr "Zur Mitte zurück"
+
+#: scripts/settings_board.gd
+msgid "Your controllers"
+msgstr "Deine Controller"
+
+#: scripts/settings_board.gd
+msgid "Show button labels"
+msgstr "Tastenbeschriftungen anzeigen"
+
+#: scripts/settings_board.gd
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Schwebende Beschriftungen neben jedem Controller zeigen, wofür seine Tasten gerade verwendet werden."
+
+#: scripts/settings_board.gd
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Der rechte Trigger klickt erst beim Loslassen. Wenn du ihn zum Zoomen gedrückt hältst, wird nichts angeklickt."
+
+#: scripts/settings_board.gd
+msgid "Look"
+msgstr "Aussehen"
+
+#: scripts/settings_board.gd
+msgid "Gameplay"
+msgstr "Spielablauf"
+
+#: scripts/settings_board.gd
+msgid "Automation"
+msgstr "Automatisierung"
+
+#: scripts/settings_board.gd
+msgid "Sound"
+msgstr "Sound"
+
+#: scripts/settings_board.gd
+msgid "Panels"
+msgstr "Tafeln"
+
+#: scripts/settings_board.gd
+msgid "Controls"
+msgstr "Steuerung"
+
+#: scripts/settings_board.gd
+msgid "Game and saves"
+msgstr "Spiel und Spielstände"
+
+#: scripts/settings_board.gd
+msgid "About"
+msgstr "Über"
+
+#: scripts/settings_board.gd
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: scripts/settings_board.gd
+msgid "Close"
+msgstr "Schließen"
+
+#: scripts/settings_board.gd
+msgid "Around the table"
+msgstr "Rund um den Tisch"
+
+#: scripts/settings_board.gd
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Hintergründe und Tische können als Ordner hinzugefügt werden. Siehe backgrounds/README.md und tables/README.md."
+
+#: scripts/settings_board.gd
+msgid "Background"
+msgstr "Hintergrund"
+
+#: scripts/settings_board.gd
+msgid "The world around the table: sky, light and scenery."
+msgstr "Die Welt um den Tisch: Himmel, Licht und Landschaft."
+
+#: scripts/settings_board.gd
+msgid "Table"
+msgstr "Tisch"
+
+#: scripts/settings_board.gd
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Die Unterlage der Karte. In VR lässt sich die Säule auf die gewünschte Höhe einstellen."
+
+#: scripts/settings_board.gd
+msgid "Where the table stands"
+msgstr "Position des Tisches"
+
+#: scripts/settings_board.gd
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Verschiebe den Tisch an eine beliebige Stelle in der Hintergrundlandschaft – praktisch bei großen Hintergründen wie einer umgewandelten Karte. Die Position wird für diesen Hintergrund gespeichert."
+
+#: scripts/settings_board.gd
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Verschiebe den Tisch an eine beliebige Stelle in der Hintergrundlandschaft – praktisch bei großen Hintergründen wie einer umgewandelten Karte. Er wurde hierher verschoben. Mit „Zur Mitte zurück“ kehrt er zur ursprünglichen Position des Hintergrunds zurück."
+
+#: scripts/settings_board.gd
+msgid "Remembered for this background."
+msgstr "Wird für diesen Hintergrund gespeichert."
+
+#: scripts/settings_board.gd
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Der Tisch wurde verschoben. Mit „Zur Mitte zurück“ kommt er an die ursprüngliche Position des Hintergrunds."
+
+#: scripts/settings_board.gd
+msgid "The map"
+msgstr "Karte"
+
+#: scripts/settings_board.gd
+msgid "Tiles"
+msgstr "Gelände"
+
+#: scripts/settings_board.gd
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "So sehen Gelände, Weltwunder, Ressourcen und Modernisierungen aus. Kachelsets funktionieren wie in Unciv: siehe tilesets/README.md."
+
+#: scripts/settings_board.gd
+msgid "Plain coloured hexes"
+msgstr "Einfache farbige Sechsecke"
+
+#: scripts/settings_board.gd
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Flache Sechsecke in Uncivs Geländefarben, ohne Modelle."
+
+#: scripts/settings_board.gd
+msgid "Units"
+msgstr "Einheiten"
+
+#: scripts/settings_board.gd
+msgid "Same as the tiles"
+msgstr "Wie das Gelände"
+
+#: scripts/settings_board.gd
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Die Einheitenmodelle des obigen Kachelsets. Fehlende Modelle werden durch das Ersatzset des Geländes ergänzt."
+
+#: scripts/settings_board.gd
+msgid "No models"
+msgstr "Keine Modelle"
+
+#: scripts/settings_board.gd
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Runde Spielsteine mit Uncivs Einheitensymbolen."
+
+#: scripts/settings_board.gd
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "So sehen Einheiten aus (Uncivs Einheitenset): Jedes Kachelset mit Einheitenmodellen (pieces/Units) kann sie bereitstellen."
+
+#: scripts/settings_board.gd
+msgid "Visual hints"
+msgstr "Kartenhinweise"
+
+#: scripts/settings_board.gd
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Uncivs Kartenebenen. Mit den runden Schaltflächen neben der Übersicht kannst du sie ebenfalls ein- und ausschalten."
+
+#: scripts/settings_board.gd
+msgid "Show unit movement arrows"
+msgstr "Bewegungspfeile der Einheiten anzeigen"
+
+#: scripts/settings_board.gd
+msgid "Where units have just moved and who attacked whom."
+msgstr "Zeigt, wohin sich Einheiten bewegt haben und wer wen angegriffen hat."
+
+#: scripts/settings_board.gd
+msgid "Show tile yields"
+msgstr "Geländeerträge anzeigen"
+
+#: scripts/settings_board.gd
+msgid "Food, production, gold... on every tile."
+msgstr "Nahrung, Produktion, Gold … auf jedem Geländefeld."
+
+#: scripts/settings_board.gd
+msgid "Show worked tiles"
+msgstr "Bewirtschaftete Felder anzeigen"
+
+#: scripts/settings_board.gd
+msgid "Which tiles your cities' citizens work."
+msgstr "Zeigt, welche Felder von den Bürgern deiner Städte bewirtschaftet werden."
+
+#: scripts/settings_board.gd
+msgid "Show resources and improvements"
+msgstr "Ressourcen und Modernisierungen anzeigen"
+
+#: scripts/settings_board.gd
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Symbole für Ressourcen und Modernisierungen auf den Feldern."
+
+#: scripts/settings_board.gd
+msgid "Show improvement pictures"
+msgstr "Abbildungen von Modernisierungen anzeigen"
+
+#: scripts/settings_board.gd
+msgid "Farms, mines, roads and the like as models."
+msgstr "Bauernhöfe, Minen, Straßen und Ähnliches als Modelle."
+
+#: scripts/settings_board.gd
+msgid "Show unit icons"
+msgstr "Einheitensymbole anzeigen"
+
+#: scripts/settings_board.gd
+msgid "The small Unciv icon above each unit model."
+msgstr "Das kleine Unciv-Symbol über jedem Einheitenmodell."
+
+#: scripts/settings_board.gd
+msgid "Language"
+msgstr "Sprache"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Uncivs Übersetzungen von den Unciv-Übersetzern: Spielmeldungen, Namen und Beschreibungen. Unsere Menüs sind noch auf Englisch."
+
+#: scripts/settings_board.gd
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Texte ohne Unciv-Übersetzung bleiben auf Englisch."
+
+#: scripts/settings_board.gd
+msgid "Turns"
+msgstr "Runden"
+
+#: scripts/settings_board.gd
+msgid "Check for idle units"
+msgstr "Untätige Einheiten prüfen"
+
+#: scripts/settings_board.gd
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Vor dem Rundenende wird jede Einheit ohne Befehle angezeigt."
+
+#: scripts/settings_board.gd
+msgid "Auto unit cycle"
+msgstr "Einheiten automatisch durchschalten"
+
+#: scripts/settings_board.gd
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Nach den Befehlen für eine Einheit wird automatisch die nächste Einheit ausgewählt, die auf Befehle wartet."
+
+#: scripts/settings_board.gd
+msgid "Cycle idle units by distance"
+msgstr "Untätige Einheiten nach Entfernung durchschalten"
+
+#: scripts/settings_board.gd
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Die nächste oder vorherige Einheit ist die jeweils nächste Einheit statt der nächsten in einer festen Reihenfolge."
+
+#: scripts/settings_board.gd
+msgid "Ask for confirmation when ending the turn"
+msgstr "Vor dem Rundenende nachfragen"
+
+#: scripts/settings_board.gd
+msgid "End turn needs a second press."
+msgstr "Zum Beenden der Runde ist ein zweiter Tastendruck erforderlich."
+
+#: scripts/settings_board.gd
+msgid "Order trade offers by amount"
+msgstr "Handelsangebote nach Wert sortieren"
+
+#: scripts/settings_board.gd
+msgid "On the trade table, the biggest offers come first."
+msgstr "In der Handelstafel stehen die wertvollsten Angebote zuerst."
+
+#: scripts/settings_board.gd
+msgid "Show suggested city locations"
+msgstr "Empfohlene Stadtstandorte anzeigen"
+
+#: scripts/settings_board.gd
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Wenn ein Siedler ausgewählt ist, markiert Unciv die drei besten Standorte für eine neue Stadt in der Nähe auf der Karte."
+
+#: scripts/settings_board.gd
+msgid "Tutorials"
+msgstr "Tutorials"
+
+#: scripts/settings_board.gd
+msgid "Show tutorials"
+msgstr "Tutorials anzeigen"
+
+#: scripts/settings_board.gd
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Tutorialmeldungen und Aufgabenkarte. Alle Tutorials stehen auch in der Zivilopädie."
+
+#: scripts/settings_board.gd
+msgid "Reset tutorials"
+msgstr "Tutorials zurücksetzen"
+
+#: scripts/settings_board.gd
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Alle Tutorials und Aufgaben erneut anzeigen, als wäre dies dein erstes Spiel."
+
+#: scripts/settings_board.gd
+msgid "Other players"
+msgstr "Andere Spieler"
+
+#: scripts/settings_board.gd
+msgid "Other players' turns"
+msgstr "Runden der anderen Spieler"
+
+#: scripts/settings_board.gd
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Was nach deiner Runde von den Zügen der anderen Spieler angezeigt wird."
+
+#: scripts/settings_board.gd
+msgid "Show the moves and battles I can see"
+msgstr "Sichtbare Bewegungen und Kämpfe zeigen"
+
+#: scripts/settings_board.gd
+msgid "Played back in order; the view glides to fights."
+msgstr "Wird der Reihe nach abgespielt. Die Ansicht bewegt sich zu den Kämpfen."
+
+#: scripts/settings_board.gd
+msgid "Show them, fast"
+msgstr "Schnell abspielen"
+
+#: scripts/settings_board.gd
+msgid "The same, at two and a half times the speed."
+msgstr "Wie oben, aber zweieinhalbmal so schnell."
+
+#: scripts/settings_board.gd
+msgid "Don't show them"
+msgstr "Nicht anzeigen"
+
+#: scripts/settings_board.gd
+msgid "The map just updates."
+msgstr "Die Karte wird einfach aktualisiert."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own options for automated units and cities."
+msgstr "Uncivs Optionen für automatisierte Einheiten und Städte."
+
+#: scripts/settings_board.gd
+msgid "Automated and exploring units move"
+msgstr "Automatisierte und erkundende Einheiten bewegen sich"
+
+#: scripts/settings_board.gd
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Legt fest, wann automatisierte Einheiten, Erkunder und Einheiten auf mehrzügigen Wegen ziehen."
+
+#: scripts/settings_board.gd
+msgid "When I end my turn"
+msgstr "Wenn ich meine Runde beende"
+
+#: scripts/settings_board.gd
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Erkunder, automatisierte Bautrupps und Einheiten auf langen Wegen ziehen beim Beenden deiner Runde."
+
+#: scripts/settings_board.gd
+msgid "At the start of my turn"
+msgstr "Zu Beginn meiner Runde"
+
+#: scripts/settings_board.gd
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Sie ziehen zu Beginn deiner Runde (Uncivs Option „Automatisierte Einheiten bewegen sich zu Rundenbeginn“)."
+
+#: scripts/settings_board.gd
+msgid "Auto-assign city production"
+msgstr "Stadtproduktion automatisch festlegen"
+
+#: scripts/settings_board.gd
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Eine Stadt wählt selbst, was sie als Nächstes baut, sobald ein Bauvorhaben abgeschlossen ist."
+
+#: scripts/settings_board.gd
+msgid "Auto-build roads"
+msgstr "Straßen automatisch bauen"
+
+#: scripts/settings_board.gd
+msgid "Automated workers build roads between your cities."
+msgstr "Automatisierte Bautrupps bauen Straßen zwischen deinen Städten."
+
+#: scripts/settings_board.gd
+msgid "Automated workers replace improvements"
+msgstr "Bautrupps ersetzen Modernisierungen automatisch"
+
+#: scripts/settings_board.gd
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Automatisierte Bautrupps können eine Modernisierung durch eine bessere ersetzen."
+
+#: scripts/settings_board.gd
+msgid "Stop automated workers from removing vegetation"
+msgstr "Automatisierte Bautrupps sollen keine Vegetation entfernen"
+
+#: scripts/settings_board.gd
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Automatisierte Bautrupps lassen Wälder, Dschungel und Sümpfe unangetastet."
+
+#: scripts/settings_board.gd
+msgid "Automated units can upgrade"
+msgstr "Automatisierte Einheiten können aufgewertet werden"
+
+#: scripts/settings_board.gd
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Automatisierte Militäreinheiten werten sich selbst auf, wenn du dir das leisten kannst."
+
+#: scripts/settings_board.gd
+msgid "Automated units choose promotions"
+msgstr "Automatisierte Einheiten wählen Beförderungen"
+
+#: scripts/settings_board.gd
+msgid "Automated units pick their own promotions."
+msgstr "Automatisierte Einheiten wählen ihre Beförderungen selbst."
+
+#: scripts/settings_board.gd
+msgid "Cities auto-bombard at end of turn"
+msgstr "Städte bombardieren automatisch am Rundenende"
+
+#: scripts/settings_board.gd
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Schussbereite Städte greifen beim Beenden deiner Runde Gegner in Reichweite an."
+
+#: scripts/settings_board.gd
+msgid "Auto-assign specialists in new cities"
+msgstr "Spezialisten in neuen Städten automatisch zuweisen"
+
+#: scripts/settings_board.gd
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Neue Städte weisen ihre Bürger selbst Spezialistenplätzen zu."
+
+#: scripts/settings_board.gd
+msgid "Sound effects"
+msgstr "Soundeffekte"
+
+#: scripts/settings_board.gd
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Schaltflächen, Bewegungen, Kämpfe und mehr. In VR kommen die Geräusche von der jeweiligen Stelle auf dem Tisch."
+
+#: scripts/settings_board.gd
+msgid "City ambience"
+msgstr "Stadtgeräusche"
+
+#: scripts/settings_board.gd
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Die Geräuschkulisse, die in einer Stadt abgespielt wird. Unciv bietet eine für jede Epoche."
+
+#: scripts/settings_board.gd
+msgid "Your own and mods'"
+msgstr "Eigene und Mod-Tafeln"
+
+#: scripts/settings_board.gd
+msgid "None yet."
+msgstr "Noch keine vorhanden."
+
+#: scripts/settings_board.gd
+msgid "Put the panels back"
+msgstr "Tafeln zurücksetzen"
+
+#: scripts/settings_board.gd
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Jede Tafel wird an die Position aus ihrer panel.json zurückgesetzt."
+
+#: scripts/settings_board.gd
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "In VR siehst du die Controller, die du hältst, so wie sie von der Laufzeitumgebung deines Headsets dargestellt werden. SteamVR zeigt die echten Modelle; andere Umgebungen verwenden einfache Platzhalter."
+
+#: scripts/settings_board.gd
+msgid "Boards"
+msgstr "Tafeln"
+
+#: scripts/settings_board.gd
+msgid "Put the boards back"
+msgstr "Tafeln zurücksetzen"
+
+#: scripts/settings_board.gd
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Übersicht, Infotafel, Großbildschirm, Stadttafeln, Reichsübersicht und diese Tafel kehren an ihre Ausgangspositionen zurück."
+
+#: scripts/settings_board.gd
+msgid "This game"
+msgstr "Dieses Spiel"
+
+#: scripts/settings_board.gd
+msgid "Save game"
+msgstr "Spiel speichern"
+
+#: scripts/settings_board.gd
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Speichert das Spiel unter einem Namen deiner Wahl im Speicherordner der Bridge."
+
+#: scripts/settings_board.gd
+msgid "Save..."
+msgstr "Speichern …"
+
+#: scripts/settings_board.gd
+msgid "Main menu"
+msgstr "Hauptmenü"
+
+#: scripts/settings_board.gd
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Zurück zum Hauptmenü. Das Spiel läuft weiter, und mit „Fortsetzen“ kehrst du zurück."
+
+#: scripts/settings_board.gd
+msgid "Saves"
+msgstr "Spielstände"
+
+#: scripts/settings_board.gd
+msgid "Autosave"
+msgstr "Automatisches Speichern"
+
+#: scripts/settings_board.gd
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Wie oft das Spiel automatisch als „Autosave“ gespeichert wird. „Fortsetzen“ im Hauptmenü lädt diesen Spielstand."
+
+#: scripts/settings_board.gd
+msgid "Save folder"
+msgstr "Speicherordner"
+
+#: scripts/settings_board.gd
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Ein virtueller Spieltisch für Unciv, das quelloffene Remake von Civilization V."
+
+#: scripts/settings_board.gd
+msgid "Bridge protocol"
+msgstr "Bridge-Protokoll"
+
+#: scripts/settings_board.gd
+msgid "Mods"
+msgstr "Mods"
+
+#: scripts/settings_board.gd
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Eigene Kachelsets, Hintergründe und Tische"
+
+#: scripts/settings_board.gd
+msgid "Put their folders here; they show up in Look."
+msgstr "Lege ihre Ordner hier ab. Sie erscheinen dann unter „Aussehen“."
+
+#: scripts/settings_board.gd
+msgid "Settings file"
+msgstr "Einstellungsdatei"
+
+#: scripts/settings_board.gd
+msgid "Licence and credits"
+msgstr "Lizenz und Mitwirkende"
+
+#: scripts/settings_board.gd
+msgid "Desktop"
+msgstr "Desktop"
+
+#: scripts/settings_board.gd
+msgid "Off"
+msgstr "Aus"
+
+#: scripts/settings_board.gd
+msgid "On"
+msgstr "Ein"
+
+#: action_menu:48,main:91,main:3270,main:3277,main:5121,settings_board:96
+msgid "End turn"
+msgstr "Runde beenden"
+
+#: action_menu:103
+msgid "< Prev"
+msgstr "< Zurück"
+
+#: action_menu:104,main:90,settings_board:99
+msgid "Idle unit"
+msgstr "Untätige Einheit"
+
+#: action_menu:105
+msgid "Next >"
+msgstr "Weiter >"
+
+#: action_menu:109,action_menu:757,big_screen:567
+msgid "Research"
+msgstr "Forschung"
+
+#: action_menu:115
+msgid "Recenter table"
+msgstr "Tisch zentrieren"
+
+#: action_menu:133
+msgid "No unit selected"
+msgstr "Keine Einheit ausgewählt"
+
+#: action_menu:134
+msgid "Point at a unit or city to select it."
+msgstr "Zeige auf eine Einheit oder Stadt, um sie auszuwählen."
+
+#: action_menu:150
+msgid "Fortified"
+msgstr "Verschanzt"
+
+#: action_menu:150
+msgid "Sleeping"
+msgstr "Schlafend"
+
+#: action_menu:150
+msgid "Automated"
+msgstr "Automatisiert"
+
+#: action_menu:151
+msgid "On its way"
+msgstr "Unterwegs"
+
+#: action_menu:151,tileset:163,tileset:190
+msgid "Embarked"
+msgstr "Eingeschifft"
+
+#: action_menu:169,overview_board:521
+msgid "Strength"
+msgstr "Stärke"
+
+#: action_menu:171,action_menu:415,overview_board:521
+msgid "RangedStrength"
+msgstr "Fernkampfstärke"
+
+#: action_menu:172
+msgid "Range"
+msgstr "Reichweite"
+
+#: action_menu:173,overview_board:522
+msgid "Movement"
+msgstr "Bewegung"
+
+#: action_menu:176,city_boards:91,overview_board:543
+msgid "Rename"
+msgstr "Umbenennen"
+
+#: action_menu:185,action_menu:295,keyboard:92,main:5127
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: action_menu:188
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Diese Runde wird übersprungen (erneut überspringen, um Befehle zu geben)."
+
+#: action_menu:193,overview_board:523
+msgid "Health"
+msgstr "Gesundheit"
+
+#: action_menu:197,overview_board:523
+msgid "XP"
+msgstr "EP"
+
+#: action_menu:199
+msgid "Promote!  Choose a promotion"
+msgstr "Beförderung! Wähle eine Beförderung"
+
+#: action_menu:200,action_menu:237,icons:58,icons:58,overview_board:566
+msgid "Promote"
+msgstr "Befördern"
+
+#: action_menu:225
+msgid "Building %s"
+msgstr "Baut %s"
+
+#: action_menu:225
+msgid "%d turns left"
+msgstr "Noch %d Runden"
+
+#: action_menu:229
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "Feindliche Ziele in Reichweite (rote Ringe): %d. Klicke eines zum Zielen an"
+
+#: action_menu:239
+msgid "Actions"
+msgstr "Aktionen"
+
+#: action_menu:254,icons:59,icons:59
+msgid "Pillage"
+msgstr "Plündern"
+
+#: action_menu:261
+msgid "Sure? Click again"
+msgstr "Sicher? Erneut klicken"
+
+#: action_menu:283
+msgid "click the red button again"
+msgstr "klicke erneut auf die rote Schaltfläche"
+
+#: action_menu:291
+msgid "Build here"
+msgstr "Hier bauen"
+
+#: action_menu:296,icons:56,icons:58
+msgid "Stop"
+msgstr "Anhalten"
+
+#: action_menu:297,action_menu:428,action_menu:453,settings_board:286
+msgid "%d turns"
+msgstr "%d Runden"
+
+#: action_menu:358
+msgid "Population %d"
+msgstr "Bevölkerung %d"
+
+#: action_menu:360,city_boards:202
+msgid "Defense %d"
+msgstr "Verteidigung %d"
+
+#: action_menu:361,city_boards:201
+msgid "Health %d/%d"
+msgstr "Gesundheit %d/%d"
+
+#: action_menu:363
+msgid "%d idle citizens"
+msgstr "Untätige Bürger: %d"
+
+#: action_menu:365,city_boards:204,overview_board:311
+msgid "Puppet"
+msgstr "Marionette"
+
+#: action_menu:387
+msgid "Starving! %d turns"
+msgstr "Hungersnot! %d Runden"
+
+#: action_menu:390
+msgid "Grows in %d turns"
+msgstr "Wächst in %d Runden"
+
+#: action_menu:392
+msgid "Food -> production"
+msgstr "Nahrung -> Produktion"
+
+#: action_menu:394
+msgid "Not growing"
+msgstr "Kein Wachstum"
+
+#: action_menu:402
+msgid "Border in %d turns"
+msgstr "Grenzerweiterung in %d Runden"
+
+#: action_menu:402
+msgid "Borders stopped"
+msgstr "Keine Grenzerweiterung"
+
+#: action_menu:407
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Stadtansicht – Felder, Bürger, Bauliste, Käufe"
+
+#: action_menu:419
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Diese Stadt wird niedergebrannt und schrumpft jede Runde, bis sie verschwunden ist. Du kannst dies in der Stadtansicht stoppen."
+
+#: action_menu:423
+msgid "Producing"
+msgstr "Produziert"
+
+#: action_menu:423
+msgid "Producing nothing - pick something below"
+msgstr "Keine Produktion – wähle unten etwas aus"
+
+#: action_menu:445,city_boards:412,city_boards:552,civilopedia_board:528
+msgid "Buildings"
+msgstr "Gebäude"
+
+#: action_menu:445,city_boards:412,city_boards:552,civilopedia_board:528,overview_board:25,overview_board:25,overview_board:823
+msgid "Wonders"
+msgstr "Wunder"
+
+#: action_menu:445,city_boards:552
+msgid "Other"
+msgstr "Sonstiges"
+
+#: action_menu:457,big_screen:1630,info_panel:197,main:3607,main:3955,overview_board:22,panel_board:30
+msgid "Gold"
+msgstr "Gold"
+
+#: action_menu:462
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Jetzt für %d Gold kaufen (du hast %d)"
+
+#: action_menu:601
+msgid "Promote %s"
+msgstr "%s befördern"
+
+#: action_menu:603
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "EP %d/%d. Wähle eine Beförderung.%s"
+
+#: action_menu:604
+msgid "Has: %s"
+msgstr "Vorhanden: %s"
+
+#: action_menu:609
+msgid "No promotion available right now."
+msgstr "Derzeit keine Beförderung verfügbar."
+
+#: action_menu:633,action_menu:634,action_menu:697,main:4054
+msgid "Tutorial"
+msgstr "Einführung"
+
+#: action_menu:634
+msgid "%d of %d"
+msgstr "%d von %d"
+
+#: action_menu:638
+msgid "%d more messages after this one"
+msgstr "Weitere Nachrichten danach: %d"
+
+#: action_menu:665
+msgid "%s gives:"
+msgstr "%s gibt:"
+
+#: action_menu:665
+msgid "They"
+msgstr "Sie"
+
+#: action_menu:668
+msgid "You give:"
+msgstr "Du gibst:"
+
+#: action_menu:676
+msgid "%d votes  %s"
+msgstr "%d Stimmen  %s"
+
+#: action_menu:677
+msgid "voted for %s"
+msgstr "stimmte für %s"
+
+#: action_menu:698
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Einführungen lassen sich unter Einstellungen > Spielablauf abschalten. Sie stehen auch in der Zivilopädie."
+
+#: action_menu:707
+msgid " (%d turns)"
+msgstr " (%d Runden)"
+
+#: action_menu:715
+msgid "Choose a free great person"
+msgstr "Wähle eine kostenlose große Persönlichkeit"
+
+#: action_menu:716
+msgid "You have %d free great people to pick."
+msgstr "Kostenlose große Persönlichkeiten zur Auswahl: %d."
+
+#: action_menu:736
+msgid "Vote for world leader"
+msgstr "Weltoberhaupt wählen"
+
+#: action_menu:737
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Wähle, wer Weltoberhaupt werden und einen Diplomatiesieg erringen soll!"
+
+#: action_menu:740
+msgid "Vote for %s"
+msgstr "Für %s stimmen"
+
+#: action_menu:746
+msgid "Abstain"
+msgstr "Enthalten"
+
+#: action_menu:760
+msgid "Nothing being researched - pick a tech!"
+msgstr "Keine Forschung aktiv – wähle eine Technologie!"
+
+#: action_menu:762,big_screen:324,info_panel:105
+msgid "Researching %s"
+msgstr "Erforscht %s"
+
+#: action_menu:764
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Kostenlose Technologien zur Auswahl: %d. Wähle eine hervorgehobene aus."
+
+#: action_menu:765
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Wissenschaft %+d pro Runde. Bei späteren Technologien werden die Voraussetzungen eingereiht."
+
+#: action_menu:783,big_screen:414,big_screen:529
+msgid "%s turns"
+msgstr "%s Runden"
+
+#: action_menu:812
+msgid "Pick up where you left off, or start a new game."
+msgstr "Setze dein Spiel fort oder beginne ein neues."
+
+#: action_menu:814
+msgid "Resume"
+msgstr "Fortsetzen"
+
+#: action_menu:818,main:442
+msgid "Continue"
+msgstr "Weiterspielen"
+
+#: action_menu:820
+msgid "Quick start"
+msgstr "Schnellstart"
+
+#: action_menu:822
+msgid "New game..."
+msgstr "Neues Spiel ..."
+
+#: action_menu:824
+msgid "Load game..."
+msgstr "Spiel laden ..."
+
+#: action_menu:826,civilopedia_board:92,civilopedia_board:216,main:94,main:4750,settings_board:103
+msgid "Civilopedia"
+msgstr "Zivilopädie"
+
+#: action_menu:827
+msgid "Quit"
+msgstr "Beenden"
+
+#: action_menu:835
+msgid "New game"
+msgstr "Neues Spiel"
+
+#: action_menu:838,overview_board:475
+msgid "You"
+msgstr "Du"
+
+#: action_menu:838
+msgid "World"
+msgstr "Welt"
+
+#: action_menu:838,action_menu:885
+msgid "Rules"
+msgstr "Regeln"
+
+#: action_menu:846,action_menu:863,action_menu:863,action_menu:864,main:534,main:763,main:763,main:861,main:862
+msgid "Random"
+msgstr "Zufällig"
+
+#: action_menu:847
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s  –  Karte: %s, %s; %s, %d KI, %d Stadtstaaten"
+
+#: action_menu:858
+msgid "%s, led by %s"
+msgstr "%s, angeführt von %s"
+
+#: action_menu:861
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Zufällig: Du erfährst beim Spielstart, wer du bist."
+
+#: action_menu:862
+msgid "Your civilization"
+msgstr "Deine Zivilisation"
+
+#: action_menu:876
+msgid "Map size"
+msgstr "Kartengröße"
+
+#: action_menu:877
+msgid "Map type"
+msgstr "Kartentyp"
+
+#: action_menu:878
+msgid "Shape"
+msgstr "Form"
+
+#: action_menu:879,civilopedia_board:532,overview_board:24
+msgid "Resources"
+msgstr "Ressourcen"
+
+#: action_menu:880,action_menu:898,settings_board:40
+msgid "Options"
+msgstr "Optionen"
+
+#: action_menu:881
+msgid "No ancient ruins"
+msgstr "Keine antiken Ruinen"
+
+#: action_menu:882
+msgid "No natural wonders"
+msgstr "Keine Naturwunder"
+
+#: action_menu:883
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Größere Karten lassen sich unter dem Tisch verschieben: Halte eine Grifftaste und ziehe, oder nutze die Übersicht am hinteren Rand."
+
+#: action_menu:886
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings ergänzt Religion, Spionage sowie weitere Zivilisationen, Einheiten und Gebäude."
+
+#: action_menu:887
+msgid "Difficulty"
+msgstr "Schwierigkeitsgrad"
+
+#: action_menu:888
+msgid "Game speed"
+msgstr "Spieltempo"
+
+#: action_menu:889
+msgid "Starting era"
+msgstr "Startzeitalter"
+
+#: action_menu:890
+msgid "AI players"
+msgstr "KI-Spieler"
+
+#: action_menu:891
+msgid "City-states"
+msgstr "Stadtstaaten"
+
+#: action_menu:892
+msgid "Victory types (none picked = all)"
+msgstr "Siegarten (keine ausgewählt = alle)"
+
+#: action_menu:899
+msgid "No barbarians"
+msgstr "Keine Barbaren"
+
+#: action_menu:900
+msgid "Raging barbarians"
+msgstr "Wütende Barbaren"
+
+#: action_menu:901
+msgid "One-city challenge"
+msgstr "Ein-Stadt-Herausforderung"
+
+#: action_menu:902
+msgid "No city razing"
+msgstr "Kein Niederbrennen von Städten"
+
+#: action_menu:903
+msgid "Nuclear weapons"
+msgstr "Atomwaffen"
+
+#: action_menu:904,overview_board:26
+msgid "Espionage"
+msgstr "Spionage"
+
+#: action_menu:908,action_menu:923,big_screen:1539
+msgid "< Back"
+msgstr "< Zurück"
+
+#: action_menu:909
+msgid "Start game"
+msgstr "Spiel starten"
+
+#: action_menu:921
+msgid "Load game"
+msgstr "Spiel laden"
+
+#: action_menu:922
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Spielstände im Unciv-VR-Ordner, neueste zuerst."
+
+#: backgrounds:12,main:311,settings_board:244,settings_board:405
+msgid "Backgrounds"
+msgstr "Hintergründe"
+
+#: backgrounds:14,main:120
+msgid "Mountains"
+msgstr "Berge"
+
+#: backgrounds:48
+msgid "Scenery"
+msgstr "Landschaft"
+
+#: big_screen:29,civilopedia_board:536
+msgid "Technologies"
+msgstr "Technologien"
+
+#: big_screen:29,civilopedia_board:541
+msgid "Policies"
+msgstr "Sozialpolitiken"
+
+#: big_screen:29,overview_board:911
+msgid "Diplomacy"
+msgstr "Diplomatie"
+
+#: big_screen:29,city_boards:399,civilopedia_board:546,overview_board:24,overview_board:291,overview_board:770,overview_board:779,overview_board:782,overview_board:913
+msgid "Religion"
+msgstr "Religion"
+
+#: big_screen:29,civilopedia_board:565
+msgid "Victory"
+msgstr "Sieg"
+
+#: big_screen:48,big_screen:870,big_screen:1018
+msgid "Declare war"
+msgstr "Krieg erklären"
+
+#: big_screen:78,overview_board:411,overview_board:411,settings_board:45
+msgid "Score"
+msgstr "Punktzahl"
+
+#: big_screen:114
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Noch kein Verlauf – die Diagramme füllen sich im Laufe der Runden."
+
+#: big_screen:181
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "=====   Zum Verschieben hier den Trigger halten und ziehen   ====="
+
+#: big_screen:280,big_screen:1444,main:1243
+msgid "Pause"
+msgstr "Pause"
+
+#: big_screen:280,big_screen:1444,main:1209,main:1243
+msgid "Play"
+msgstr "Abspielen"
+
+#: big_screen:321
+msgid "Loading the technology tree..."
+msgstr "Technologiebaum wird geladen ..."
+
+#: big_screen:324
+msgid "Pick something to research!"
+msgstr "Wähle eine Technologie zum Erforschen!"
+
+#: big_screen:325
+msgid "Science %+d per turn"
+msgstr "Wissenschaft %+d pro Runde"
+
+#: big_screen:512
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Klicke eine Technologie an, um ihre Auswirkungen und freigeschalteten Bauoptionen zu sehen. Die kleinen Symbole darunter zeigen, was sie freischaltet."
+
+#: big_screen:529
+msgid "needs science"
+msgstr "benötigt Wissenschaft"
+
+#: big_screen:531
+msgid "researching now, "
+msgstr "wird gerade erforscht, "
+
+#: big_screen:532
+msgid "%s   (%s, %d science)"
+msgstr "%s   (%s, %d Wissenschaft)"
+
+#: big_screen:599
+msgid "Loading policies..."
+msgstr "Sozialpolitiken werden geladen ..."
+
+#: big_screen:603
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Kultur %d / %d  (%+d pro Runde)%s"
+
+#: big_screen:604
+msgid "You can adopt a policy!"
+msgstr "Du kannst eine Sozialpolitik einführen!"
+
+#: big_screen:724
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Klicke ein Symbol an, um die Sozialpolitik zu sehen. Eröffne zuerst einen Zweig (großes Symbol), bevor du dessen Sozialpolitiken einführst."
+
+#: big_screen:740
+msgid "ready to adopt"
+msgstr "kann eingeführt werden"
+
+#: big_screen:741
+msgid "needs more culture"
+msgstr "benötigt mehr Kultur"
+
+#: big_screen:741
+msgid "not available yet"
+msgstr "noch nicht verfügbar"
+
+#: big_screen:751
+msgid "(no special effects)"
+msgstr "(keine besonderen Effekte)"
+
+#: big_screen:758
+msgid "Adopt"
+msgstr "Einführen"
+
+#: big_screen:792
+msgid "Your score: %d"
+msgstr "Deine Punktzahl: %d"
+
+#: big_screen:796
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Du hast noch niemanden getroffen. Erkunde die Welt, um andere Zivilisationen und Stadtstaaten zu finden."
+
+#: big_screen:796,big_screen:1133,big_screen:1284,overview_board:186
+msgid "Loading..."
+msgstr "Wird geladen ..."
+
+#: big_screen:835
+msgid "   (city-state)"
+msgstr "   (Stadtstaat)"
+
+#: big_screen:844
+msgid "Destroyed"
+msgstr "Zerstört"
+
+#: big_screen:847,big_screen:913
+msgid "AT WAR"
+msgstr "IM KRIEG"
+
+#: big_screen:849
+msgid "At peace"
+msgstr "Im Frieden"
+
+#: big_screen:849
+msgid "  (treaty: %d more turns)"
+msgstr "  (Vertrag: noch %d Runden)"
+
+#: big_screen:852
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s – Einfluss %d%s"
+
+#: big_screen:853
+msgid "   allied with %s"
+msgstr "   verbündet mit %s"
+
+#: big_screen:855,big_screen:937
+msgid "Feels %s about you%s"
+msgstr "Einstellung zu dir: %s%s"
+
+#: big_screen:857,big_screen:947
+msgid "Score %d    Cities %d"
+msgstr "Punktzahl %d    Städte %d"
+
+#: big_screen:859
+msgid "Diplomacy..."
+msgstr "Diplomatie ..."
+
+#: big_screen:862,big_screen:1000
+msgid "Trade"
+msgstr "Handeln"
+
+#: big_screen:864
+msgid "Offer peace"
+msgstr "Frieden anbieten"
+
+#: big_screen:867
+msgid "Click again to declare war on %s"
+msgstr "Erneut klicken, um %s den Krieg zu erklären"
+
+#: big_screen:908
+msgid "< All civilizations"
+msgstr "< Alle Zivilisationen"
+
+#: big_screen:913
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (keine Friedensgespräche für weitere %d Runden)"
+
+#: big_screen:915
+msgid "Type: %s    Personality: %s"
+msgstr "Typ: %s    Persönlichkeit: %s"
+
+#: big_screen:916
+msgid "Our relationship: %s (influence %d)"
+msgstr "Unsere Beziehung: %s (Einfluss %d)"
+
+#: big_screen:920
+msgid "Ally: %s with %d influence"
+msgstr "Verbündeter: %s mit %d Einfluss"
+
+#: big_screen:922
+msgid "Protected by: "
+msgstr "Beschützt von: "
+
+#: big_screen:924
+msgid "Relationship changes in another %d turns"
+msgstr "Beziehung ändert sich in weiteren %d Runden"
+
+#: big_screen:926
+msgid "Resources: "
+msgstr "Ressourcen: "
+
+#: big_screen:927
+msgid "When Friends:"
+msgstr "Bei Freundschaft:"
+
+#: big_screen:927
+msgid "When Allies:"
+msgstr "Bei Bündnis:"
+
+#: big_screen:939
+msgid "You have a declaration of friendship."
+msgstr "Ihr habt eine Freundschaftserklärung."
+
+#: big_screen:941
+msgid "You have denounced them."
+msgstr "Du hast sie denunziert."
+
+#: big_screen:976
+msgid "Go to on map"
+msgstr "Auf der Karte zeigen"
+
+#: big_screen:981
+msgid "Gift %d gold (+%d influence)"
+msgstr "%d Gold schenken (+%d Einfluss)"
+
+#: big_screen:984
+msgid "Build %s on %s (200 gold)"
+msgstr "%s auf %s bauen (200 Gold)"
+
+#: big_screen:987
+msgid "Revoke protection"
+msgstr "Schutzversprechen zurücknehmen"
+
+#: big_screen:987
+msgid "Click again: revoke protection?"
+msgstr "Erneut klicken: Schutzversprechen zurücknehmen?"
+
+#: big_screen:989
+msgid "Pledge to protect"
+msgstr "Schutz versprechen"
+
+#: big_screen:989
+msgid "Click again: declare protection?"
+msgstr "Erneut klicken: Schutz versprechen?"
+
+#: big_screen:991
+msgid "Take %d gold (-15 influence)"
+msgstr "%d Gold fordern (-15 Einfluss)"
+
+#: big_screen:992
+msgid "Take worker (-50 influence)"
+msgstr "Bautrupp fordern (-50 Einfluss)"
+
+#: big_screen:994
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Diplomatische Heirat (%d Gold)"
+
+#: big_screen:995
+msgid "Click again: they join your empire"
+msgstr "Erneut klicken: deinem Reich anschließen"
+
+#: big_screen:997,big_screen:1009
+msgid "Negotiate peace"
+msgstr "Frieden aushandeln"
+
+#: big_screen:997
+msgid "Click again: make peace?"
+msgstr "Erneut klicken: Frieden schließen?"
+
+#: big_screen:1004
+msgid "Friendship offered - waiting for their answer"
+msgstr "Freundschaft angeboten – Antwort steht aus"
+
+#: big_screen:1004
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Freundschaftserklärung anbieten (30 Runden)"
+
+#: big_screen:1007
+msgid "Denounce (30 turns)"
+msgstr "Denunzieren (30 Runden)"
+
+#: big_screen:1007
+msgid "Click again: denounce %s?"
+msgstr "Erneut klicken: %s denunzieren?"
+
+#: big_screen:1014
+msgid "Click again to declare war"
+msgstr "Erneut klicken, um Krieg zu erklären"
+
+#: big_screen:1022
+msgid "Demands:"
+msgstr "Forderungen:"
+
+#: big_screen:1030
+msgid "  (asked)"
+msgstr "  (gefordert)"
+
+#: big_screen:1031
+msgid "  (they agreed)"
+msgstr "  (zugestimmt)"
+
+#: big_screen:1040
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Tributbereitschaft (mindestens 0 für Gold; mindestens 30 und Stadtgröße 4 für einen Bautrupp):"
+
+#: big_screen:1044
+msgid "  (+%d influence)"
+msgstr "  (+%d Einfluss)"
+
+#: big_screen:1047
+msgid "  %d turns remaining"
+msgstr "  Noch %d Runden"
+
+#: big_screen:1057,overview_board:44,overview_board:692
+msgid "Unforgivable"
+msgstr "Unversöhnlich"
+
+#: big_screen:1057,overview_board:45,overview_board:692
+msgid "Enemy"
+msgstr "Feind"
+
+#: big_screen:1059,overview_board:45,overview_board:692
+msgid "Afraid"
+msgstr "Ängstlich"
+
+#: big_screen:1059,overview_board:45,overview_board:692
+msgid "Competitor"
+msgstr "Konkurrent"
+
+#: big_screen:1061,overview_board:46,overview_board:692
+msgid "Favorable"
+msgstr "Wohlwollend"
+
+#: big_screen:1061,overview_board:46,overview_board:692
+msgid "Friend"
+msgstr "Freund"
+
+#: big_screen:1061,overview_board:47,overview_board:77,overview_board:692
+msgid "Ally"
+msgstr "Verbündeter"
+
+#: big_screen:1082,overview_board:782
+msgid "Pantheon"
+msgstr "Pantheon"
+
+#: big_screen:1082
+msgid "Founder"
+msgstr "Gründer"
+
+#: big_screen:1082
+msgid "Follower"
+msgstr "Anhänger"
+
+#: big_screen:1083
+msgid "Enhancer"
+msgstr "Verbesserung"
+
+#: big_screen:1083,big_screen:1211,big_screen:1236
+msgid "Any"
+msgstr "Beliebig"
+
+#: big_screen:1108
+msgid "Pick %d more beliefs%s"
+msgstr "Wähle noch %d Glaubenssätze%s"
+
+#: big_screen:1108
+msgid "so far: %s"
+msgstr "bisher: %s"
+
+#: big_screen:1111
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Wähle jetzt oben ein Symbol für deine Religion."
+
+#: big_screen:1118
+msgid "Follow this pantheon"
+msgstr "Diesem Pantheon folgen"
+
+#: big_screen:1118
+msgid "Found %s"
+msgstr "%s gründen"
+
+#: big_screen:1119
+msgid "Enhance %s"
+msgstr "%s verbessern"
+
+#: big_screen:1119
+msgid "Reform"
+msgstr "Reformieren"
+
+#: big_screen:1119
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#: big_screen:1136
+msgid "Religion is off in this game."
+msgstr "Religion ist in diesem Spiel deaktiviert."
+
+#: big_screen:1138
+msgid "Choose a pantheon belief"
+msgstr "Pantheon-Glaubenssatz wählen"
+
+#: big_screen:1138
+msgid "Found your religion"
+msgstr "Deine Religion gründen"
+
+#: big_screen:1138
+msgid "Enhance your religion"
+msgstr "Deine Religion verbessern"
+
+#: big_screen:1139
+msgid "Reform your religion"
+msgstr "Deine Religion reformieren"
+
+#: big_screen:1139
+msgid "No religion yet"
+msgstr "Noch keine Religion"
+
+#: big_screen:1147
+msgid "Your beliefs"
+msgstr "Deine Glaubenssätze"
+
+#: big_screen:1158
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Derzeit gibt es nichts auszuwählen. Sammle Glauben, um ein Pantheon zu gründen. Ein Großer Prophet gründet (und verbessert später) eine Religion in einer deiner Städte."
+
+#: big_screen:1170
+msgid "Symbol:"
+msgstr "Symbol:"
+
+#: big_screen:1188
+msgid "Name: %s"
+msgstr "Name: %s"
+
+#: big_screen:1188
+msgid "(pick a symbol)"
+msgstr "(Symbol wählen)"
+
+#: big_screen:1192
+msgid "Rename..."
+msgstr "Umbenennen ..."
+
+#: big_screen:1211
+msgid "Choose any belief!"
+msgstr "Wähle einen beliebigen Glaubenssatz!"
+
+#: big_screen:1211
+msgid "Choose a %s belief!"
+msgstr "Wähle einen Glaubenssatz vom Typ %s!"
+
+#: big_screen:1244
+msgid "  (another religion has it)"
+msgstr "  (gehört einer anderen Religion)"
+
+#: big_screen:1245
+msgid "  (you have it)"
+msgstr "  (bereits vorhanden)"
+
+#: big_screen:1246
+msgid "  (not available)"
+msgstr "  (nicht verfügbar)"
+
+#: big_screen:1248
+msgid "  (picked for another slot)"
+msgstr "  (für einen anderen Platz gewählt)"
+
+#: big_screen:1286
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Runde %d   Tempo: %s   %s%s"
+
+#: big_screen:1287
+msgid "max %d turns"
+msgstr "max. %d Runden"
+
+#: big_screen:1294
+msgid "You have won a %s Victory!"
+msgstr "Du hast einen %s-Sieg errungen!"
+
+#: big_screen:1294
+msgid "%s has won a %s Victory!"
+msgstr "%s hat einen %s-Sieg errungen!"
+
+#: big_screen:1296
+msgid "You have been defeated."
+msgstr "Du wurdest besiegt."
+
+#: big_screen:1309,main:1463
+msgid "One more turn...!"
+msgstr "Nur noch eine Runde ...!"
+
+#: big_screen:1312
+msgid "Main menu (start a new game)"
+msgstr "Hauptmenü (neues Spiel starten)"
+
+#: big_screen:1320
+msgid "Our status"
+msgstr "Unser Fortschritt"
+
+#: big_screen:1320
+msgid "Global status"
+msgstr "Weltweiter Fortschritt"
+
+#: big_screen:1322
+msgid "Rankings"
+msgstr "Rangliste"
+
+#: big_screen:1324
+msgid "Charts"
+msgstr "Diagramme"
+
+#: big_screen:1326
+msgid "Demographics"
+msgstr "Demografie"
+
+#: big_screen:1346,big_screen:1362
+msgid "%s Victory"
+msgstr "%s-Sieg"
+
+#: big_screen:1350
+msgid "[done] "
+msgstr "[erledigt] "
+
+#: big_screen:1424
+msgid "Rank"
+msgstr "Rang"
+
+#: big_screen:1424
+msgid "Value"
+msgstr "Wert"
+
+#: big_screen:1424
+msgid "Best"
+msgstr "Bester Wert"
+
+#: big_screen:1424
+msgid "Average / Worst"
+msgstr "Durchschnitt / Schlechtester Wert"
+
+#: big_screen:1525
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Handel mit %s     Dein Gold: %d, deren Gold: %d"
+
+#: big_screen:1531
+msgid "You can offer"
+msgstr "Du kannst anbieten"
+
+#: big_screen:1532
+msgid "You give"
+msgstr "Du gibst"
+
+#: big_screen:1533
+msgid "You get"
+msgstr "Du erhältst"
+
+#: big_screen:1534
+msgid "They can offer"
+msgstr "Sie können anbieten"
+
+#: big_screen:1539,keyboard:88
+msgid "Clear"
+msgstr "Leeren"
+
+#: big_screen:1551
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Klicke Gegenstände in den äußeren Spalten an, um sie anzubieten. Erneutes Klicken entfernt sie."
+
+#: big_screen:1554
+msgid "%s would accept this."
+msgstr "%s würde dies annehmen."
+
+#: big_screen:1558
+msgid "%s wants more for this%s."
+msgstr "%s verlangt mehr dafür%s."
+
+#: big_screen:1558
+msgid "about %d gold's worth"
+msgstr "etwa %d Gold wert"
+
+#: big_screen:1561
+msgid "Propose deal"
+msgstr "Handel vorschlagen"
+
+#: big_screen:1602,overview_board:225,overview_board:319
+msgid "  %d turns"
+msgstr "  %d Runden"
+
+#: big_screen:1630
+msgid "Gold_Per_Turn"
+msgstr "Gold pro Runde"
+
+#: bridge_client:64
+msgid "Not connected to the bridge"
+msgstr "Keine Verbindung zur Spielengine"
+
+#: bridge_client:79
+msgid "Bridge disconnected"
+msgstr "Verbindung zur Spielengine getrennt"
+
+#: bridge_launcher:41
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Die mitgelieferte Unciv-Bridge ist unvollständig. Installiere die Spieldateien erneut."
+
+#: bridge_launcher:46,bridge_launcher:72
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Das Unciv-Repository mit der Bridge wurde unter %s nicht gefunden"
+
+#: bridge_launcher:53
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Kein Java 17 oder neuer gefunden (Unciv benötigt JDK 21). Installiere es und setze JAVA_HOME."
+
+#: bridge_launcher:65,bridge_launcher:93
+msgid "Couldn't write %s"
+msgstr "%s konnte nicht geschrieben werden"
+
+#: bridge_launcher:78
+msgid "Couldn't start Gradle"
+msgstr "Gradle konnte nicht gestartet werden"
+
+#: bridge_launcher:99
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Die mitgelieferte Unciv-Bridge konnte nicht gestartet werden"
+
+#: city_boards:73
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "=====   Zum Verschieben hier den Trigger halten und ziehen   ====="
+
+#: city_boards:99,main:95
+msgid "Exit city"
+msgstr "Stadt verlassen"
+
+#: city_boards:175,overview_board:903
+msgid "City"
+msgstr "Stadt"
+
+#: city_boards:206
+msgid "BEING RAZED"
+msgstr "WIRD NIEDERGEBRANNT"
+
+#: city_boards:232
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Nicht zugewiesene Bürger: %d/%d%s"
+
+#: city_boards:232
+msgid "click: let the city place them"
+msgstr "klicken: Stadt weist sie zu"
+
+#: city_boards:236
+msgid "(%d/%d food)"
+msgstr "(%d/%d Nahrung)"
+
+#: city_boards:239
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Hungersnot: verliert in %d Runden einen Bürger %s"
+
+#: city_boards:241
+msgid "Food goes into production while this unit is built"
+msgstr "Während des Baus dieser Einheit wird Nahrung in Produktion umgewandelt"
+
+#: city_boards:243
+msgid "New citizen in %d turns %s"
+msgstr "Neuer Bürger in %d Runden %s"
+
+#: city_boards:245
+msgid "Not growing %s"
+msgstr "Kein Wachstum %s"
+
+#: city_boards:248
+msgid "(%d/%d culture)"
+msgstr "(%d/%d Kultur)"
+
+#: city_boards:250
+msgid "Borders grow in %d turns %s"
+msgstr "Grenzerweiterung in %d Runden %s"
+
+#: city_boards:252
+msgid "Borders have stopped growing"
+msgstr "Keine Grenzerweiterung mehr"
+
+#: city_boards:254
+msgid "In resistance for another %d turns"
+msgstr "Noch %d Runden Widerstand"
+
+#: city_boards:256
+msgid "We Love The King Day for another %d turns"
+msgstr "Noch %d Runden „Wir lieben den König“-Tag"
+
+#: city_boards:258
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Verlangt %s („Wir lieben den König“-Tag bei Erfüllung)"
+
+#: city_boards:268
+msgid "Annex city (stop it being a puppet)"
+msgstr "Stadt annektieren (Marionettenstatus beenden)"
+
+#: city_boards:270
+msgid "Stop razing city"
+msgstr "Niederbrennen stoppen"
+
+#: city_boards:273
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Erneut klicken: %s NIEDERBRENNEN (verliert einen Bürger pro Runde)"
+
+#: city_boards:276
+msgid "Raze city"
+msgstr "Stadt niederbrennen"
+
+#: city_boards:294
+msgid "Citizen management"
+msgstr "Bürgerverwaltung"
+
+#: city_boards:297
+msgid "Reset citizens"
+msgstr "Bürger zurücksetzen"
+
+#: city_boards:302
+msgid "Avoid growth"
+msgstr "Wachstum vermeiden"
+
+#: city_boards:308
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Bürgerfokus (bevorzugte Felder zur Bewirtschaftung):"
+
+#: city_boards:341
+msgid "Specialists"
+msgstr "Spezialisten"
+
+#: city_boards:343
+msgid "Manual specialists (click for automatic)"
+msgstr "Manuelle Spezialisten (klicken für Automatik)"
+
+#: city_boards:343
+msgid "Automatic specialists (click for manual)"
+msgstr "Automatische Spezialisten (klicken für manuell)"
+
+#: city_boards:362,city_boards:426,overview_board:391
+msgid "Specialist"
+msgstr "Spezialist"
+
+#: city_boards:379
+msgid "Great people"
+msgstr "Große Persönlichkeiten"
+
+#: city_boards:401
+msgid "Majority religion: %s"
+msgstr "Mehrheitsreligion: %s"
+
+#: city_boards:403
+msgid "Former holy city of %s"
+msgstr "Ehemalige heilige Stadt von %s"
+
+#: city_boards:403
+msgid "Holy city of %s"
+msgstr "Heilige Stadt von %s"
+
+#: city_boards:405
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d Anhänger, Druck %+d"
+
+#: city_boards:412
+msgid "Specialist buildings"
+msgstr "Spezialistengebäude"
+
+#: city_boards:422
+msgid "  (free)"
+msgstr "  (kostenlos)"
+
+#: city_boards:443
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Klicke ein Feld auf dem Tisch an: Bewirtschaftete Felder werden freigegeben, freie Bürger werden unbewirtschafteten Feldern zugewiesen, "
+
+#: city_boards:444
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "und Felder mit Preis können gekauft werden (zweimal klicken)."
+
+#: city_boards:451
+msgid "Tile"
+msgstr "Feld"
+
+#: city_boards:453
+msgid "city centre"
+msgstr "Stadtzentrum"
+
+#: city_boards:453
+msgid "worked (locked)"
+msgstr "bewirtschaftet (gesperrt)"
+
+#: city_boards:453
+msgid "not worked"
+msgstr "unbewirtschaftet"
+
+#: city_boards:454
+msgid "gives its yield without a citizen"
+msgstr "liefert Ertrag ohne Bürger"
+
+#: city_boards:454
+msgid "gives nothing"
+msgstr "liefert keinen Ertrag"
+
+#: city_boards:454
+msgid "blockaded by an enemy"
+msgstr "vom Feind blockiert"
+
+#: city_boards:455,info_panel:162
+msgid "worked by %s"
+msgstr "bewirtschaftet von %s"
+
+#: city_boards:455
+msgid "another city"
+msgstr "einer anderen Stadt"
+
+#: city_boards:455
+msgid "too far to work"
+msgstr "zu weit zur Bewirtschaftung"
+
+#: city_boards:456
+msgid "can be bought"
+msgstr "kann gekauft werden"
+
+#: city_boards:456
+msgid "not yours"
+msgstr "gehört dir nicht"
+
+#: city_boards:467,info_panel:145
+msgid "Resource: %s"
+msgstr "Ressource: %s"
+
+#: city_boards:469
+msgid "Improvement: %s"
+msgstr "Modernisierung: %s"
+
+#: city_boards:471
+msgid "Owned by %s"
+msgstr "Besitzer: %s"
+
+#: city_boards:480
+msgid "Lock (keep a citizen here)"
+msgstr "Sperren (Bürger hier lassen)"
+
+#: city_boards:481,city_boards:484
+msgid "Stop working"
+msgstr "Bewirtschaftung beenden"
+
+#: city_boards:483
+msgid "Unlock"
+msgstr "Entsperren"
+
+#: city_boards:486
+msgid "Work this tile"
+msgstr "Dieses Feld bewirtschaften"
+
+#: city_boards:487
+msgid "Work and lock"
+msgstr "Bewirtschaften und sperren"
+
+#: city_boards:491
+msgid "Click again: buy for %d gold"
+msgstr "Erneut klicken: für %d Gold kaufen"
+
+#: city_boards:493
+msgid "Buy for %d gold (you have %d)"
+msgstr "Für %d Gold kaufen (du hast %d)"
+
+#: city_boards:517,info_panel:198
+msgid "Production"
+msgstr "Produktion"
+
+#: city_boards:518
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Gold %d   Glaube %d   Produktion %+d pro Runde"
+
+#: city_boards:522
+msgid "Being built"
+msgstr "Im Bau"
+
+#: city_boards:522
+msgid "Nothing being built - pick something below"
+msgstr "Kein Bauauftrag – wähle unten etwas aus"
+
+#: city_boards:534,city_boards:566
+msgid "   %d turns"
+msgstr "   %d Runden"
+
+#: city_boards:578
+msgid "Hide what can't be built yet"
+msgstr "Noch nicht baubare Optionen ausblenden"
+
+#: city_boards:578
+msgid "Show what can't be built yet (and why)"
+msgstr "Noch nicht baubare Optionen und Gründe anzeigen"
+
+#: city_boards:586
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Klicke eine Option an, um ihre Wirkung zu sehen. Baue sie sofort, füge sie der Bauliste hinzu oder kaufe sie."
+
+#: city_boards:603
+msgid "   %d production"
+msgstr "   %d Produktion"
+
+#: city_boards:605
+msgid ", %d turns"
+msgstr ", %d Runden"
+
+#: city_boards:607
+msgid "   (built)"
+msgstr "   (gebaut)"
+
+#: city_boards:624
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "%s wird auf einem Feld platziert, das du nach „Jetzt bauen“, „Zur Bauliste“ oder „Kaufen“ auswählst."
+
+#: city_boards:626
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "%s wird auf dem markierten Feld platziert, das beim Einreihen gewählt wurde."
+
+#: city_boards:634
+msgid "Build now"
+msgstr "Jetzt bauen"
+
+#: city_boards:639
+msgid "Add to queue"
+msgstr "Zur Bauliste"
+
+#: city_boards:649
+msgid "Click again: buy for %d %s"
+msgstr "Erneut klicken: für %d %s kaufen"
+
+#: city_boards:651
+msgid "Buy for %d %s"
+msgstr "Für %d %s kaufen"
+
+#: city_boards:651
+msgid "you have %d"
+msgstr "du hast %d"
+
+#: city_boards:655
+msgid "Buy: move the unit out of the city first"
+msgstr "Kaufen: Bewege zuerst die Einheit aus der Stadt"
+
+#: city_boards:661
+msgid "Click again: sell for %d gold"
+msgstr "Erneut klicken: für %d Gold verkaufen"
+
+#: city_boards:663
+msgid "Sell for %d gold"
+msgstr "Für %d Gold verkaufen"
+
+#: civilopedia_board:74
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Zivilopädie – Zum Verschieben hier den Trigger halten   ====="
+
+#: civilopedia_board:83
+msgid "<  Back"
+msgstr "< Zurück"
+
+#: civilopedia_board:295
+msgid "This entry couldn't be loaded."
+msgstr "Dieser Eintrag konnte nicht geladen werden."
+
+#: civilopedia_board:528,overview_board:283
+msgid "Building"
+msgstr "Gebäude"
+
+#: civilopedia_board:528
+msgid "Wonder"
+msgstr "Wunder"
+
+#: civilopedia_board:530,main:2992
+msgid "Unit"
+msgstr "Einheit"
+
+#: civilopedia_board:532,overview_board:715
+msgid "Resource"
+msgstr "Ressource"
+
+#: civilopedia_board:534
+msgid "Improvement"
+msgstr "Modernisierung"
+
+#: civilopedia_board:534
+msgid "Tile Improvements"
+msgstr "Feldmodernisierungen"
+
+#: civilopedia_board:536
+msgid "Technology"
+msgstr "Technologie"
+
+#: civilopedia_board:538
+msgid "Promotion"
+msgstr "Beförderung"
+
+#: civilopedia_board:538,overview_board:523
+msgid "Promotions"
+msgstr "Beförderungen"
+
+#: civilopedia_board:541,overview_board:909
+msgid "Policy"
+msgstr "Sozialpolitik"
+
+#: civilopedia_board:544
+msgid "Belief"
+msgstr "Glaubenssatz"
+
+#: civilopedia_board:544
+msgid "Religions and Beliefs"
+msgstr "Religionen und Glaubenssätze"
+
+#: civilopedia_board:547
+msgid "Nation"
+msgstr "Nation"
+
+#: civilopedia_board:547
+msgid "Nations"
+msgstr "Nationen"
+
+#: civilopedia_board:556,hex_map:118,overview_board:823
+msgid "Terrain"
+msgstr "Gelände"
+
+#: civilopedia_board:556,settings_board:39
+msgid "Terrains"
+msgstr "Geländearten"
+
+#: civilopedia_board:558
+msgid "Unit types"
+msgstr "Einheitentypen"
+
+#: civilopedia_board:562
+msgid "Unit Names"
+msgstr "Einheitennamen"
+
+#: civilopedia_board:565
+msgid "Victory Types"
+msgstr "Siegarten"
+
+#: controller_visuals:194
+msgid "Thumbstick"
+msgstr "Stick"
+
+#: controller_visuals:194
+msgid "Menu"
+msgstr "Menü"
+
+#: controller_visuals:195
+msgid "Trigger"
+msgstr "Trigger"
+
+#: controller_visuals:195
+msgid "Grip"
+msgstr "Grifftaste"
+
+#: controller_visuals:202
+msgid "Trackpad"
+msgstr "Touchpad"
+
+#: controller_visuals:207
+msgid "Button 1"
+msgstr "Taste 1"
+
+#: controller_visuals:208
+msgid "Button 2"
+msgstr "Taste 2"
+
+#: hex_map:159,hex_map:1160,main:4023,main:4024,main:4026,main:4028,main:4030,overview_board:22,overview_board:22,overview_board:244
+msgid "Cities"
+msgstr "Städte"
+
+#: hex_map:300,info_panel:150,info_panel:150,map_overlays:302,map_overlays:303,map_overlays:308,map_overlays:308,map_overlays:310,map_overlays:310,map_overlays:310,overview_board:757
+msgid "None"
+msgstr "Keine"
+
+#: hex_map:1357
+msgid "Unexplored (%d, %d)"
+msgstr "Unerforscht (%d, %d)"
+
+#: hex_map:1369
+msgid " - %s territory"
+msgstr " – Gebiet von %s"
+
+#: hex_map:1371
+msgid " - city of %s"
+msgstr " – Stadt %s"
+
+#: hex_map:1373
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d TP)"
+
+#: icons:55,icons:55
+msgid "Automate"
+msgstr "Automatisieren"
+
+#: icons:56,icons:56,icons:57
+msgid "Sleep"
+msgstr "Schlafen"
+
+#: icons:57,icons:57
+msgid "Fortify"
+msgstr "Verschanzen"
+
+#: icons:57,icons:57
+msgid "Guard"
+msgstr "Bewachen"
+
+#: icons:58,icons:58,main:3888
+msgid "Explore"
+msgstr "Erkunden"
+
+#: icons:58,icons:58,overview_board:523
+msgid "Upgrade"
+msgstr "Modernisieren"
+
+#: icons:58,icons:58
+msgid "Transform"
+msgstr "Umwandeln"
+
+#: icons:60,icons:60
+msgid "Repair"
+msgstr "Reparieren"
+
+#: icons:64,icons:64,main:3227,main:5121
+msgid "Skip"
+msgstr "Überspringen"
+
+#: info_panel:79
+msgid "%s   Turn %d  (%s)"
+msgstr "%s   Runde %d  (%s)"
+
+#: info_panel:79,main:4080,overview_board:852
+msgid "%d BC"
+msgstr "%d v. Chr."
+
+#: info_panel:79,main:4080,overview_board:852
+msgid "%d AD"
+msgstr "%d n. Chr."
+
+#: info_panel:105
+msgid "Not researching anything - pick a tech!"
+msgstr "Keine Forschung aktiv – wähle eine Technologie!"
+
+#: info_panel:118
+msgid "Point at a tile"
+msgstr "Zeige auf ein Feld"
+
+#: info_panel:123
+msgid "Unexplored"
+msgstr "Unerforscht"
+
+#: info_panel:125
+msgid "Send a unit to find out what's here."
+msgstr "Schicke eine Einheit, um dieses Gebiet zu erkunden."
+
+#: info_panel:143
+msgid "Natural wonder: %s"
+msgstr "Naturwunder: %s"
+
+#: info_panel:148
+msgid "Improvement: %s%s"
+msgstr "Modernisierung: %s%s"
+
+#: info_panel:153
+msgid "River"
+msgstr "Fluss"
+
+#: info_panel:156
+msgid "City of %s  (population %d)"
+msgstr "Stadt %s  (Bevölkerung %d)"
+
+#: info_panel:160
+msgid "%s territory"
+msgstr "Gebiet von %s"
+
+#: info_panel:167
+msgid "%d HP"
+msgstr "%d TP"
+
+#: info_panel:172
+msgid "%+d%% to unit defense"
+msgstr "%+d%% Einheitenverteidigung"
+
+#: info_panel:174
+msgid "Impassable"
+msgstr "Unpassierbar"
+
+#: info_panel:176
+msgid "Not currently in sight - last seen like this"
+msgstr "Derzeit nicht sichtbar – zuletzt bekannter Zustand"
+
+#: info_panel:178
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "%s angreifen: ca. %d Schaden verursachen, ca. %d erleiden"
+
+#: info_panel:197,main:3608,panel_board:30
+msgid "Science"
+msgstr "Wissenschaft"
+
+#: info_panel:197,info_panel:206,overview_board:24,overview_board:373,overview_board:373
+msgid "Happiness"
+msgstr "Zufriedenheit"
+
+#: info_panel:197
+msgid "Malcontent"
+msgstr "Unzufriedenheit"
+
+#: info_panel:197,main:3609,panel_board:30
+msgid "Culture"
+msgstr "Kultur"
+
+#: info_panel:198,main:2682,main:3610,overview_board:24,panel_board:30
+msgid "Faith"
+msgstr "Glaube"
+
+#: info_panel:198,map_overlays:233,overview_board:283
+msgid "Population"
+msgstr "Bevölkerung"
+
+#: info_panel:198
+msgid "Food"
+msgstr "Nahrung"
+
+#: keyboard:82
+msgid "Shift"
+msgstr "Umschalt"
+
+#: keyboard:86,settings_board:96
+msgid "Space"
+msgstr "Leertaste"
+
+#: keyboard:87
+msgid "< Del"
+msgstr "< Löschen"
+
+#: main:92
+msgid "Recenter"
+msgstr "Zentrieren"
+
+#: main:165
+msgid "Move a unit!"
+msgstr "Bewege eine Einheit!"
+
+#: main:184
+msgid "hold to move onto a tile"
+msgstr "Zum Bewegen auf ein Feld gedrückt halten"
+
+#: main:212
+msgid "Connecting..."
+msgstr "Verbindung wird hergestellt ..."
+
+#: main:384
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Verbindung zur Spielengine verloren – neuer Versuch ..."
+
+#: main:386
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Suche Spielengine unter 127.0.0.1:%d ..."
+
+#: main:399
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Spielengine konnte nicht gestartet werden: %s\nStarte sie manuell mit:  gradlew :bridge:run"
+
+#: main:402
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Unciv-Bridge wird gestartet ... (bei Codeänderungen wird neu gebaut – kann eine Minute dauern)"
+
+#: main:409
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Die Bridge wurde beendet, bevor sie bereit war. Aus %s:\n%s"
+
+#: main:419
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Die Unciv-Engine fehlt in dieser App (das UncivBridge-Plugin wurde nicht exportiert)."
+
+#: main:424
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Die Unciv-Engine konnte nicht starten: %s"
+
+#: main:433
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Die Unciv-Engine wurde beendet:\n%s"
+
+#: main:435
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Unciv-Engine wird gestartet: %s ... (%d s)"
+
+#: main:441
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Eine ältere Unciv-Bridge (Protokoll v%d) lief noch – Neustart mit aktuellem Code ..."
+
+#: main:452
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Die alte Bridge konnte nicht beendet werden. Sie wird weiterverwendet; einige Funktionen könnten ausfallen."
+
+#: main:492
+msgid "Reconnected to the bridge."
+msgstr "Verbindung zur Spielengine wiederhergestellt."
+
+#: main:501
+msgid "Bridge error: %s"
+msgstr "Bridge-Fehler: %s"
+
+#: main:512
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Warnung: Bridge-Protokoll v%d, erwartet wird v%d. Aktualisiere beide Repositories gemeinsam. Einige Funktionen könnten ausfallen."
+
+#: main:514
+msgid "Connected to Unciv %s"
+msgstr "Mit Unciv %s verbunden"
+
+#: main:526
+msgid "Couldn't load the save: %s"
+msgstr "Spielstand konnte nicht geladen werden: %s"
+
+#: main:681
+msgid "Your move."
+msgstr "Du bist am Zug."
+
+#: main:691
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Neues Spiel wird gestartet ... (größere Karten brauchen etwas länger)"
+
+#: main:692
+msgid "Starting a new game..."
+msgstr "Neues Spiel wird gestartet ..."
+
+#: main:695
+msgid "Couldn't start a game: %s"
+msgstr "Spiel konnte nicht gestartet werden: %s"
+
+#: main:742
+msgid "saved "
+msgstr "gespeichert "
+
+#: main:747
+msgid "%s, turn %d"
+msgstr "%s, Runde %d"
+
+#: main:755
+msgid "Main menu: point at the card over the table."
+msgstr "Hauptmenü: Zeige auf die Karte über dem Tisch."
+
+#: main:762
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s auf einer Karte (%s, %s), %s, %d KI, %d Stadtstaaten"
+
+#: main:763
+msgid "A random civilization"
+msgstr "Eine zufällige Zivilisation"
+
+#: main:798
+msgid "Loading %s..."
+msgstr "%s wird geladen ..."
+
+#: main:801
+msgid "Couldn't load %s: %s"
+msgstr "%s konnte nicht geladen werden: %s"
+
+#: main:857
+msgid "Couldn't read those rules: %s"
+msgstr "Regeln konnten nicht gelesen werden: %s"
+
+#: main:902
+msgid "getState failed: %s"
+msgstr "Spielzustand konnte nicht abgerufen werden: %s"
+
+#: main:1145
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Übersicht, Infotafel, große Tafel und Listen sind wieder an ihren ursprünglichen Plätzen."
+
+#: main:1424
+msgid "Name your religion"
+msgstr "Benenne deine Religion"
+
+#: main:1436
+msgid "Your religion"
+msgstr "Deine Religion"
+
+#: main:1482,main:2863
+msgid "Researching %s."
+msgstr "Erforscht %s."
+
+#: main:1496
+msgid "Adopted %s."
+msgstr "%s eingeführt."
+
+#: main:1510
+msgid "You declared war on %s!"
+msgstr "Du hast %s den Krieg erklärt!"
+
+#: main:1653,minimap:16
+msgid "Unit movements"
+msgstr "Einheitenbewegungen"
+
+#: main:1653,minimap:17
+msgid "Tile yields"
+msgstr "Felderträge"
+
+#: main:1653,minimap:18
+msgid "Worked tiles"
+msgstr "Bewirtschaftete Felder"
+
+#: main:1654,minimap:19
+msgid "Resources and improvements"
+msgstr "Ressourcen und Modernisierungen"
+
+#: main:1654,minimap:20
+msgid "Improvement pictures"
+msgstr "Modernisierungsmodelle"
+
+#: main:1654
+msgid "Unit icons"
+msgstr "Einheitensymbole"
+
+#: main:1800
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Halte %s über einem Feld gedrückt, um eine Einheit dorthin zu bewegen."
+
+#: main:1800
+msgid "the trigger"
+msgstr "den Trigger"
+
+#: main:1800
+msgid "the mouse button"
+msgstr "die Maustaste"
+
+#: main:1831
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "%s angreifen\nca. %d Schaden verursachen, ca. %d erleiden\nzum Angreifen erneut klicken"
+
+#: main:1843
+msgid "a unit"
+msgstr "eine Einheit"
+
+#: main:1848
+msgid "Can't get there"
+msgstr "Ziel nicht erreichbar"
+
+#: main:1850
+msgid "No room on this tile\n%s %s already there"
+msgstr "Kein Platz auf diesem Feld\n%s %s ist bereits dort"
+
+#: main:1853
+msgid "\nSwap places on the card"
+msgstr "\nAuf der Einheitenkarte Plätze tauschen"
+
+#: main:1860,main:2941,overview_board:261
+msgid "Move here"
+msgstr "Hierhin bewegen"
+
+#: main:1860
+msgid "Move here: %d turns"
+msgstr "Hierhin bewegen: %d Runden"
+
+#: main:1862
+msgid "\nsharing the tile with %s"
+msgstr "\nTeilt das Feld mit %s"
+
+#: main:1864
+msgid "\nclick again to go"
+msgstr "\nZum Bewegen erneut klicken"
+
+#: main:1884
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s ist unterwegs und setzt den Weg nächste Runde fort."
+
+#: main:1910
+msgid "No attack happened."
+msgstr "Kein Angriff erfolgt."
+
+#: main:1912
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s griff %s an: %d Schaden verursacht, %d erlitten."
+
+#: main:1915
+msgid "  City captured!"
+msgstr "  Stadt erobert!"
+
+#: main:1917
+msgid "  %s destroyed!"
+msgstr "  %s zerstört!"
+
+#: main:1919
+msgid "  Your %s was lost."
+msgstr "  Deine Einheit %s ging verloren."
+
+#: main:1938
+msgid "Improvement order cancelled."
+msgstr "Modernisierungsauftrag abgebrochen."
+
+#: main:1940
+msgid "%s: building %s (%d turns)."
+msgstr "%s: baut %s (%d Runden)."
+
+#: main:2206
+msgid "Rename %s"
+msgstr "%s umbenennen"
+
+#: main:2209
+msgid "%s is now called %s."
+msgstr "%s heißt jetzt %s."
+
+#: main:2219
+msgid "Name your %s (empty: no name)"
+msgstr "Benenne %s (leer: kein Name)"
+
+#: main:2224
+msgid "Renamed to %s."
+msgstr "In %s umbenannt."
+
+#: main:2224
+msgid "Name removed."
+msgstr "Name entfernt."
+
+#: main:2300
+msgid "%s: on the way."
+msgstr "%s: unterwegs."
+
+#: main:2300
+msgid "%s: coup orders given."
+msgstr "%s: Putsch befohlen."
+
+#: main:2308,tutorial_task_card:41
+msgid "See your stats breakdown"
+msgstr "Ertragsaufstellung ansehen"
+
+#: main:2328
+msgid "Selected %s."
+msgstr "%s ausgewählt."
+
+#: main:2328,main:3076
+msgid "the unit"
+msgstr "die Einheit"
+
+#: main:2342
+msgid "Upgraded to %s."
+msgstr "Zu %s modernisiert."
+
+#: main:2433,tutorial_task_card:27
+msgid "Enter city screen"
+msgstr "Stadtansicht öffnen"
+
+#: main:2448
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Stadtansicht: %s. Klicke Felder zur Bewirtschaftung an. „Stadt verlassen“ (oder B / Esc) führt zur Karte zurück."
+
+#: main:2494
+msgid "Back to the map."
+msgstr "Zurück auf der Karte."
+
+#: main:2514
+msgid "There's nowhere in %s to put the %s."
+msgstr "In %s gibt es keinen Platz für %s."
+
+#: main:2514,main:3087
+msgid "the city"
+msgstr "die Stadt"
+
+#: main:2518
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Wähle das Feld für %s (rote Ringe), oder brich mit Esc / B ab."
+
+#: main:2526,main:3114
+msgid "Cancelled."
+msgstr "Abgebrochen."
+
+#: main:2534
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Wähle eines der markierten Felder (Esc / B bricht ab)."
+
+#: main:2541
+msgid "%s: the improvement goes there."
+msgstr "%s: Die Modernisierung wird dort platziert."
+
+#: main:2560
+msgid "Bought the tile for %d gold."
+msgstr "Feld für %d Gold gekauft."
+
+#: main:2566
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Für %d Gold kaufen\nZum Kaufen erneut klicken"
+
+#: main:2566
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Kostet %d Gold\n(nicht genug Gold)"
+
+#: main:2630
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Bürger neu zugewiesen (Sperren aufgehoben)."
+
+#: main:2651
+msgid "Annexed."
+msgstr "Annektiert."
+
+#: main:2663,main:2766
+msgid "%s will build %s next."
+msgstr "%s baut als Nächstes %s."
+
+#: main:2668
+msgid "%s added to the queue."
+msgstr "%s zur Bauliste hinzugefügt."
+
+#: main:2681
+msgid "Bought %s."
+msgstr "%s gekauft."
+
+#: main:2686
+msgid "Sold the %s."
+msgstr "%s verkauft."
+
+#: main:2767
+msgid "%s added to %s's queue."
+msgstr "%s zur Bauliste von %s hinzugefügt."
+
+#: main:2769
+msgid "Bought %s in %s."
+msgstr "%s in %s gekauft."
+
+#: main:2825
+msgid "Experience"
+msgstr "Erfahrung"
+
+#: main:2846
+msgid "%s is now %s."
+msgstr "%s ist jetzt %s."
+
+#: main:2876
+msgid "Pick something to research."
+msgstr "Wähle eine Technologie zum Erforschen."
+
+#: main:2886
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Du kannst eine Sozialpolitik einführen – öffne den Reiter „Sozialpolitiken“ auf der großen Tafel."
+
+#: main:2967
+msgid "%s is heading here"
+msgstr "%s ist hierhin unterwegs"
+
+#: main:2967
+msgid "The unit"
+msgstr "Die Einheit"
+
+#: main:2990
+msgid "Are you sure?"
+msgstr "Bist du sicher?"
+
+#: main:3029
+msgid "Click again to confirm."
+msgstr "Zum Bestätigen erneut klicken."
+
+#: main:3060
+msgid "%s: click a %stile"
+msgstr "%s: Klicke auf ein %sFeld"
+
+#: main:3060
+msgid "highlighted "
+msgstr "hervorgehobenes "
+
+#: main:3061
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s – klicke das Feld auf der Karte an (oder „Abbrechen“ auf der Einheitenkarte)."
+
+#: main:3075
+msgid "Move here: click a tile"
+msgstr "Hierhin bewegen: Klicke ein Feld an"
+
+#: main:3076
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "%s bewegen – klicke ein Feld auf der Karte an (oder „Abbrechen“ auf der Einheitenkarte)."
+
+#: main:3087
+msgid "No enemies in range of %s."
+msgstr "Keine Feinde in Reichweite von %s."
+
+#: main:3094
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Von %s bombardieren: Klicke einen rot markierten Feind an (Stadt anklicken zum Abbrechen)."
+
+#: main:3125
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Wähle eines der hervorgehobenen Felder (oder „Abbrechen“)."
+
+#: main:3155
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bombardierte %s: %d Schaden%s."
+
+#: main:3156
+msgid "Destroyed!"
+msgstr "Zerstört!"
+
+#: main:3179
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Runde beenden? Drücke zur Bestätigung erneut „Runde beenden“."
+
+#: main:3186
+msgid "Ending turn - the AI players are moving..."
+msgstr "Runde wird beendet – die KI-Spieler ziehen ..."
+
+#: main:3196,overview_board:184
+msgid "Turn %d"
+msgstr "Runde %d"
+
+#: main:3198
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "SPIELENDE – %s gewinnt (%s-Sieg)"
+
+#: main:3443
+msgid "A %s has been born!"
+msgstr "Eine große Persönlichkeit wurde geboren: %s!"
+
+#: main:3470
+msgid "You voted for %s."
+msgstr "Du hast für %s gestimmt."
+
+#: main:3470
+msgid "You abstained."
+msgstr "Du hast dich enthalten."
+
+#: main:4072
+msgid "ATTACK"
+msgstr "ANGRIFF"
+
+#: main:4081
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s  –  Runde %d (%s)   Gold %d (%+d)   Wissenschaft %+d   Zufriedenheit %d"
+
+#: main:4085
+msgid "Researching: %s"
+msgstr "Forschung: %s"
+
+#: main:4315
+msgid "%s - turn %d"
+msgstr "%s – Runde %d"
+
+#: main:4315
+msgid "Game"
+msgstr "Spiel"
+
+#: main:4316
+msgid "Save game as"
+msgstr "Spiel speichern unter"
+
+#: main:4319
+msgid "Saved as \"%s\"."
+msgstr "Als „%s“ gespeichert."
+
+#: main:4319
+msgid "Couldn't save: %s"
+msgstr "Speichern fehlgeschlagen: %s"
+
+#: main:4327,tutorial_task_card:37
+msgid "Open the options table"
+msgstr "Einstellungen öffnen"
+
+#: main:4409
+msgid "The tutorials will show again from the start."
+msgstr "Die Einführungen werden wieder von Anfang an angezeigt."
+
+#: main:4409
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Einführungen konnten nicht zurückgesetzt werden: %s"
+
+#: main:4417
+msgid "The panels are back where they started."
+msgstr "Die Tafeln stehen wieder an ihren ursprünglichen Plätzen."
+
+#: main:4429
+msgid "The table is back in the middle of the background."
+msgstr "Der Tisch steht wieder in der Mitte der Umgebung."
+
+#: main:4744
+msgid "Civilopedia: %s"
+msgstr "Zivilopädie: %s"
+
+#: main:4797
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Zivilopädie konnte nicht geöffnet werden: %s"
+
+#: main:4828
+msgid "Opened %s in your browser."
+msgstr "%s im Browser geöffnet."
+
+#: main:4891
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Einführungsaufgabe ausgeblendet – die nächste erscheint, sobald sie verfügbar ist."
+
+#: main:4920
+msgid "Move the table"
+msgstr "Tisch verschieben"
+
+#: main:4950
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Tisch verschieben: Zeige auf eine Stelle in der Umgebung und nutze %s zum Platzieren. Drehen: %s. Fertig: %s."
+
+#: main:4951
+msgid "pull the trigger"
+msgstr "den Trigger"
+
+#: main:4951
+msgid "The right stick"
+msgstr "den rechten Stick"
+
+#: main:4951
+msgid "Press A or B"
+msgstr "A oder B drücken"
+
+#: main:4960
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Der Tisch bleibt hier. Einstellungen > Aussehen > Zurück zur Mitte setzt ihn zurück."
+
+#: main:4969
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Das ist nicht in der Umgebung – zeige auf eine Stelle am Boden."
+
+#: main:5110
+msgid "put the table here"
+msgstr "Tisch hier platzieren"
+
+#: main:5111
+msgid "turn the scenery"
+msgstr "Umgebung drehen"
+
+#: main:5114
+msgid "done moving the table"
+msgstr "Tischplatzierung abschließen"
+
+#: main:5118
+msgid "point, click (hold: aim)"
+msgstr "zeigen, klicken (halten: zielen)"
+
+#: main:5123,tutorial_task_card:26
+msgid "Found city"
+msgstr "Stadt gründen"
+
+#: main:5125
+msgid "Cancel typing"
+msgstr "Eingabe abbrechen"
+
+#: main:5129
+msgid "Leave the city"
+msgstr "Stadt verlassen"
+
+#: main:5131
+msgid "table height"
+msgstr "Tischhöhe"
+
+#: main:5132,main:5142
+msgid "slide the map"
+msgstr "Karte verschieben"
+
+#: main:5133,main:5143
+msgid "turn / size the table"
+msgstr "Tisch drehen / skalieren"
+
+#: main:5137
+msgid "Next unit"
+msgstr "Nächste Einheit"
+
+#: main:5139
+msgid "Previous unit"
+msgstr "Vorherige Einheit"
+
+#: main:5140
+msgid "zoom the map"
+msgstr "Karte zoomen"
+
+#: main:5141
+msgid "table height, click: recenter"
+msgstr "Tischhöhe, klicken: zentrieren"
+
+#: main:5430
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Ein Vorgang wurde nicht abgeschlossen – du kannst weiterspielen. Falls es wiederholt passiert, steht der Grund im Protokoll."
+
+#: main:5458
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "%s ANGREIFEN (%s, %d/%d TP)"
+
+#: main:5461
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  erwartet: %d Schaden verursachen, %d erleiden"
+
+#: map_overlays:241,overview_board:725,overview_board:726
+msgid "Luxury"
+msgstr "Luxus"
+
+#: map_overlays:243,overview_board:725,overview_board:726
+msgid "Strategic"
+msgstr "Strategisch"
+
+#: minimap:21
+msgid "Unit icons over the unit models"
+msgstr "Einheitensymbole über den Modellen"
+
+#: minimap:85,minimap:180
+msgid "Overview: point and click to go there"
+msgstr "Übersicht: Zeigen und klicken, um dorthin zu gelangen"
+
+#: minimap:173
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (klicken zum Umschalten auf %s)"
+
+#: minimap:182,overview_board:915
+msgid "Overview"
+msgstr "Übersicht"
+
+#: overview_board:22
+msgid "Stats"
+msgstr "Statistik"
+
+#: overview_board:22
+msgid "Trades"
+msgstr "Handel"
+
+#: overview_board:23,overview_board:23
+msgid "Politics"
+msgstr "Politik"
+
+#: overview_board:25,overview_board:25
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#: overview_board:26
+msgid "Spy"
+msgstr "Spion"
+
+#: overview_board:44,overview_board:77,overview_board:692
+msgid "War"
+msgstr "Krieg"
+
+#: overview_board:44,overview_board:77,overview_board:692,overview_board:699
+msgid "DefensivePact"
+msgstr "Verteidigungsbündnis"
+
+#: overview_board:46,overview_board:692
+msgid "Neutral"
+msgstr "Neutral"
+
+#: overview_board:97
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Reichsübersicht – Zum Verschieben hier den Trigger halten   ====="
+
+#: overview_board:210
+msgid "You have no spies yet - they come with new eras."
+msgstr "Du hast noch keine Spione – du erhältst sie mit neuen Zeitaltern."
+
+#: overview_board:221
+msgid "Spies (pick one, then where it goes)"
+msgstr "Spione (wähle einen Spion und dann sein Ziel)"
+
+#: overview_board:224
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s  (Rang %d)  –  %s  –  %s%s"
+
+#: overview_board:233
+msgid "Call off the coup"
+msgstr "Putsch abbrechen"
+
+#: overview_board:234
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Erneut klicken: Putsch versuchen (%d%% Chance)"
+
+#: overview_board:234
+msgid "Stage a coup (%d%% chance)"
+msgstr "Putsch versuchen (%d%% Chance)"
+
+#: overview_board:244
+msgid "Where to"
+msgstr "Ziel"
+
+#: overview_board:246
+msgid "Spy hideout (bring %s home)"
+msgstr "Spionversteck (%s zurückrufen)"
+
+#: overview_board:252
+msgid "   spies: "
+msgstr "   Spione: "
+
+#: overview_board:261
+msgid "Click again (%s)"
+msgstr "Erneut klicken (%s)"
+
+#: overview_board:278
+msgid "You have no cities yet."
+msgstr "Du hast noch keine Städte."
+
+#: overview_board:282,overview_board:520,overview_board:810
+msgid "Name"
+msgstr "Name"
+
+#: overview_board:289
+msgid "Defence"
+msgstr "Verteidigung"
+
+#: overview_board:308
+msgid "Open the city view"
+msgstr "Stadtansicht öffnen"
+
+#: overview_board:310
+msgid "Resistance"
+msgstr "Widerstand"
+
+#: overview_board:326
+msgid "%d t"
+msgstr "%d R."
+
+#: overview_board:329
+msgid "Demanding %s"
+msgstr "Verlangt %s"
+
+#: overview_board:344
+msgid " (holy)"
+msgstr " (heilig)"
+
+#: overview_board:351
+msgid "Total %d"
+msgstr "Gesamt %d"
+
+#: overview_board:381
+msgid "Convert gold to science: %d%%"
+msgstr "Gold in Wissenschaft umwandeln: %d%%"
+
+#: overview_board:391
+msgid "Great person points"
+msgstr "Punkte für große Persönlichkeiten"
+
+#: overview_board:396
+msgid "Points"
+msgstr "Punkte"
+
+#: overview_board:397
+msgid "Per turn"
+msgstr "Pro Runde"
+
+#: overview_board:426,overview_board:718
+msgid "Total"
+msgstr "Gesamt"
+
+#: overview_board:466
+msgid "Pending trades"
+msgstr "Ausstehende Handelsangebote"
+
+#: overview_board:466
+msgid "Current trades"
+msgstr "Laufende Handelsabkommen"
+
+#: overview_board:479
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Keine laufenden Handelsabkommen. Schließe eines unter „Diplomatie“ auf der großen Tafel ab."
+
+#: overview_board:514
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Einheitenversorgung: %d von %d genutzt (Basis %d, Städte %d, Bevölkerung %d)"
+
+#: overview_board:517
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Defizit %d: %d%% Produktion in jeder Stadt. Erhöhe die Versorgung oder löse Einheiten auf."
+
+#: overview_board:520
+msgid "Doing"
+msgstr "Aufgabe"
+
+#: overview_board:522
+msgid "Closest city"
+msgstr "Nächste Stadt"
+
+#: overview_board:573
+msgid "Click again: %d gold"
+msgstr "Erneut klicken: %d Gold"
+
+#: overview_board:573
+msgid "%s %dg"
+msgstr "%s %d G"
+
+#: overview_board:597
+msgid "Show global politics"
+msgstr "Weltpolitik anzeigen"
+
+#: overview_board:597
+msgid "Show diagram"
+msgstr "Diagramm anzeigen"
+
+#: overview_board:601
+msgid "Hide city-states"
+msgstr "Stadtstaaten ausblenden"
+
+#: overview_board:601
+msgid "Include city-states"
+msgstr "Stadtstaaten einbeziehen"
+
+#: overview_board:605
+msgid "   %s civilizations in the game"
+msgstr "   %s Zivilisationen im Spiel"
+
+#: overview_board:620
+msgid "Score %d"
+msgstr "Punktzahl %d"
+
+#: overview_board:641
+msgid "Defeated"
+msgstr "Besiegt"
+
+#: overview_board:643
+msgid "At war with %s"
+msgstr "Im Krieg mit %s"
+
+#: overview_board:645
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Verteidigungsbündnis mit %s (%d Runden)"
+
+#: overview_board:647
+msgid "Friends with %s (%d turns)"
+msgstr "Befreundet mit %s (%d Runden)"
+
+#: overview_board:649
+msgid "Denounced %s (%d turns)"
+msgstr "%s denunziert (%d Runden)"
+
+#: overview_board:651
+msgid "Allied with %s"
+msgstr "Verbündet mit %s"
+
+#: overview_board:691
+msgid "Relations"
+msgstr "Beziehungen"
+
+#: overview_board:699
+msgid "Defensive pact"
+msgstr "Verteidigungsbündnis"
+
+#: overview_board:710
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Du hast noch keine Luxus- oder strategischen Ressourcen."
+
+#: overview_board:714,overview_board:714
+msgid "Unimproved"
+msgstr "Nicht erschlossen"
+
+#: overview_board:714
+msgid "Trade offer"
+msgstr "Handelsangebot"
+
+#: overview_board:714,overview_board:714
+msgid "Stockpile"
+msgstr "Vorrat"
+
+#: overview_board:741
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Nicht erschlossen: Felder mit dieser Ressource in deinem Gebiet oder dem verbündeter Stadtstaaten, denen die nötige Modernisierung fehlt.  "
+
+#: overview_board:742
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: Städte, die den „Wir lieben den König“-Tag feiern oder dafür die Ressource verlangen."
+
+#: overview_board:752
+msgid "Religions to be founded: %s"
+msgstr "Noch gründbare Religionen: %s"
+
+#: overview_board:756
+msgid "Minimal faith for the next %s: %d"
+msgstr "Mindestglaube für %s: %d"
+
+#: overview_board:756
+msgid "Great Prophet"
+msgstr "Großer Prophet"
+
+#: overview_board:757
+msgid "Religious status: %s"
+msgstr "Religiöser Status: %s"
+
+#: overview_board:762
+msgid "No religions or pantheons have been founded yet."
+msgstr "Noch keine Religionen oder Pantheons gegründet."
+
+#: overview_board:782
+msgid "%s name:"
+msgstr "Name (%s):"
+
+#: overview_board:783
+msgid "Founding civ:"
+msgstr "Gründerzivilisation:"
+
+#: overview_board:785
+msgid "Holy city:"
+msgstr "Heilige Stadt:"
+
+#: overview_board:786
+msgid "Cities following this religion:"
+msgstr "Städte dieser Religion:"
+
+#: overview_board:787
+msgid "Followers of this religion:"
+msgstr "Anhänger dieser Religion:"
+
+#: overview_board:810
+msgid "Status"
+msgstr "Status"
+
+#: overview_board:810,overview_board:905
+msgid "Location"
+msgstr "Standort"
+
+#: overview_board:820
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: overview_board:827
+msgid "Owned"
+msgstr "Im Besitz"
+
+#: overview_board:827
+msgid "Known"
+msgstr "Bekannt"
+
+#: overview_board:851
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s   Runde %d   %s"
+
+#: overview_board:851
+msgid "Current turn  |"
+msgstr "Aktuelle Runde  |"
+
+#: overview_board:864,overview_board:865,overview_board:866
+msgid "General"
+msgstr "Allgemein"
+
+#: overview_board:870
+msgid "No notifications yet."
+msgstr "Noch keine Benachrichtigungen."
+
+#: overview_board:907
+msgid "Tech"
+msgstr "Technologie"
+
+#: panel_board:67
+msgid "Panel"
+msgstr "Tafel"
+
+#: panel_board:133
+msgid "Nothing to show."
+msgstr "Nichts anzuzeigen."
+
+#: settings_board:87
+msgid "Select a unit"
+msgstr "Einheit auswählen"
+
+#: settings_board:87
+msgid "Left-click it"
+msgstr "Mit links anklicken"
+
+#: settings_board:87
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Zeigen + rechter Trigger: Einheitenkarte erscheint darüber"
+
+#: settings_board:88
+msgid "Move / attack"
+msgstr "Bewegen / angreifen"
+
+#: settings_board:88
+msgid "Click a tile to aim, again to go"
+msgstr "Feld anklicken zum Zielen, erneut zum Ausführen"
+
+#: settings_board:88
+msgid "The same with the laser"
+msgstr "Genauso mit dem Laser"
+
+#: settings_board:89
+msgid "Open a city"
+msgstr "Stadt öffnen"
+
+#: settings_board:89
+msgid "Click it"
+msgstr "Anklicken"
+
+#: settings_board:89
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Zeigen + rechter Trigger: Karte erscheint über der Stadt"
+
+#: settings_board:90
+msgid "Scroll a card"
+msgstr "Karte scrollen"
+
+#: settings_board:90
+msgid "Mouse wheel"
+msgstr "Mausrad"
+
+#: settings_board:90
+msgid "Point at it + right stick"
+msgstr "Darauf zeigen + rechter Stick"
+
+#: settings_board:91
+msgid "Move the view"
+msgstr "Ansicht bewegen"
+
+#: settings_board:91
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Rechts ziehen: drehen; Mausrad: zoomen; WASD / mittlere Taste ziehen: verschieben"
+
+#: settings_board:91
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Grifftaste + Stick: links/rechts dreht den Tisch, oben/unten skaliert ihn"
+
+#: settings_board:92
+msgid "Table height"
+msgstr "Tischhöhe"
+
+#: settings_board:92
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Stick nach oben/unten (rechter Stick, wenn er nicht auf eine Karte zeigt)"
+
+#: settings_board:93
+msgid "Zoom the map"
+msgstr "Karte zoomen"
+
+#: settings_board:93
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - oder Strg + Mausrad"
+
+#: settings_board:93
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Trigger halten + zugehörigen Stick nach oben/unten"
+
+#: settings_board:94
+msgid "Slide the map"
+msgstr "Karte verschieben"
+
+#: settings_board:94
+msgid "WASD, or click the overview"
+msgstr "WASD oder Übersicht anklicken"
+
+#: settings_board:94
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Grifftaste halten und ziehen; oder auf die Übersicht zeigen + Trigger"
+
+#: settings_board:95
+msgid "Move a board"
+msgstr "Tafel verschieben"
+
+#: settings_board:95
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Trigger auf dem oberen Streifen (oder der Infotafel) halten und bewegen"
+
+#: settings_board:96
+msgid "A, or the End turn button on the table"
+msgstr "A oder „Runde beenden“ auf dem Tisch"
+
+#: settings_board:97
+msgid "Found a city"
+msgstr "Stadt gründen"
+
+#: settings_board:98
+msgid "Next / previous unit"
+msgstr "Nächste / vorherige Einheit"
+
+#: settings_board:98
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Umschalt+Tab"
+
+#: settings_board:99
+msgid "The Idle unit button on the table"
+msgstr "„Untätige Einheit“ auf dem Tisch"
+
+#: settings_board:100
+msgid "Tech tree, policies, diplomacy"
+msgstr "Technologiebaum, Sozialpolitiken, Diplomatie"
+
+#: settings_board:100
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Handgelenkkarte oder Schaltflächen auf den Tafeln"
+
+#: settings_board:101
+msgid "Empire overview"
+msgstr "Reichsübersicht"
+
+#: settings_board:101
+msgid "Always up, off to your right"
+msgstr "Immer rechts neben dir sichtbar"
+
+#: settings_board:102
+msgid "The Settings button on the table"
+msgstr "„Einstellungen“ auf dem Tisch"
+
+#: settings_board:103
+msgid "The Civilopedia button on the table"
+msgstr "„Zivilopädie“ auf dem Tisch"
+
+#: settings_board:104
+msgid "Close / deselect"
+msgstr "Schließen / abwählen"
+
+#: settings_board:104
+msgid "B closes the keyboard and the city view"
+msgstr "B schließt Tastatur und Stadtansicht"
+
+#: settings_board:105
+msgid "Recenter the table"
+msgstr "Tisch zentrieren"
+
+#: settings_board:105
+msgid "Left stick click, or the Recenter button"
+msgstr "Linken Stick drücken oder „Zentrieren“"
+
+#: settings_board:136
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Einstellungen – Zum Verschieben hier den Trigger halten   ====="
+
+#: settings_board:245,settings_board:405,table_model:17
+msgid "Tables"
+msgstr "Tische"
+
+#: settings_board:247
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Platziere den Tisch an einer beliebigen Stelle in der Umgebung – praktisch bei großen Umgebungen wie importierten Karten. "
+
+#: settings_board:277
+msgid "%d%% translated"
+msgstr "%d%% übersetzt"
+
+#: settings_board:287
+msgid "Notification log keeps"
+msgstr "Nachrichtenverlauf aufbewahren"
+
+#: settings_board:287
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Anzahl der Runden, deren Nachrichten im Reiter „Benachrichtigungen“ erhalten bleiben."
+
+#: settings_board:288
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Uncivs Einführungen: Nachrichten zu neuen Spielinhalten und eine Aufgabenkarte mit dem nächsten Schritt."
+
+#: settings_board:291
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: settings_board:306
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Uncivs eigene Soundeffekte. Sie werden beim Start aus dem benachbarten Unciv-Ordner geladen. Lege eigene Dateien mit denselben Namen unter ~/.unciv-vr/Sounds ab, um sie zu ersetzen."
+
+#: settings_board:310
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d Klänge gefunden. Die Angriffsklänge der Einheiten stammen wie bei Unciv aus dem Regelwerk."
+
+#: settings_board:311
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Keine Klänge gefunden. Sie liegen im benachbarten Unciv-Ordner unter android/assets/sounds."
+
+#: settings_board:319
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Listentafeln mit Informationen aus dem Spiel. In VR stehen sie um den Tisch herum "
+
+#: settings_board:320
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(zum Verschieben den Trigger auf dem oberen Streifen halten); auf dem Desktop stehen sie links."
+
+#: settings_board:324
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Eine Tafel ist ein Ordner mit einer panel.json – siehe panels/README.md. Lege eigene Tafeln unter %s ab."
+
+#: settings_board:333,settings_board:377
+msgid "Put them back"
+msgstr "Zurückstellen"
+
+#: settings_board:340
+msgid "(by %s)"
+msgstr "(von %s)"
+
+#: settings_board:389
+msgid "Every turn"
+msgstr "Jede Runde"
+
+#: settings_board:389
+msgid "Every %d turns"
+msgstr "Alle %d Runden"
+
+#: settings_board:396
+msgid "not connected"
+msgstr "nicht verbunden"
+
+#: settings_board:397
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (dieser Client erwartet v%s)"
+
+#: settings_board:405
+msgid "Tilesets"
+msgstr "Geländesätze"
+
+#: settings_board:409
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR steht wie Unciv unter der Mozilla Public License 2.0. Die Symbole stammen von vielen Mitwirkenden an Unciv "
+
+#: settings_board:410
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "und stehen unter CC BY / CC BY-SA / CC0 (siehe CREDITS.md und Uncivs docs/Credits.md). Die Gelände-, Einheiten-, Umgebungs- "
+
+#: settings_board:411
+msgid "and table models are Unciv VR's own."
+msgstr "und Tischmodelle stammen von Unciv VR."
+
+#: settings_board:421
+msgid "%s speed"
+msgstr "Tempo: %s"
+
+#: settings_board:423
+msgid "%s map"
+msgstr "Karte: %s"
+
+#: settings_board:424
+msgid "%s, turn %s"
+msgstr "%s, Runde %s"
+
+#: settings_board:462
+msgid "by "
+msgstr "von "
+
+#: settings_board:462
+msgid "  -  from %s"
+msgstr "  – aus %s"
+
+#: tutorial_task_card:24
+msgid "Move unit"
+msgstr "Einheit bewegen"
+
+#: tutorial_task_card:24
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Zeige auf eine deiner Einheiten und drücke den Trigger. Zeige dann auf ein Feld und drücke zweimal: erst zum Zielen, dann zum Bewegen."
+
+#: tutorial_task_card:25
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Klicke eine deiner Einheiten an, dann zweimal ein Feld: erst zum Zielen, dann zum Bewegen."
+
+#: tutorial_task_card:26
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Wähle den Siedler und drücke „Stadt gründen“ auf seiner Karte (oder B)."
+
+#: tutorial_task_card:26
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Wähle den Siedler und drücke „Stadt gründen“ auf seiner Karte (oder F)."
+
+#: tutorial_task_card:27
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Zeige auf eine deiner Städte, drücke den Trigger und wähle „Stadtansicht“ auf ihrer Karte."
+
+#: tutorial_task_card:28
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Klicke eine deiner Städte an und wähle „Stadtansicht“ auf ihrer Karte."
+
+#: tutorial_task_card:29
+msgid "Pick technology"
+msgstr "Technologie wählen"
+
+#: tutorial_task_card:29
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Öffne den Technologiebaum über die Handgelenkkarte und wähle eine Technologie zum Erforschen."
+
+#: tutorial_task_card:30
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Öffne den Technologiebaum (T) und wähle eine Technologie zum Erforschen."
+
+#: tutorial_task_card:31
+msgid "Pick construction"
+msgstr "Bauauftrag wählen"
+
+#: tutorial_task_card:31
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Öffne eine deiner Städte und wähle auf ihrer Karte einen Bauauftrag."
+
+#: tutorial_task_card:32
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Klicke eine deiner Städte an und wähle auf ihrer Karte einen Bauauftrag."
+
+#: tutorial_task_card:33
+msgid "Pass a turn"
+msgstr "Runde beenden"
+
+#: tutorial_task_card:33
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Gib deinen Einheiten Befehle und drücke dann „Runde beenden“ auf dem Tisch (oder A)."
+
+#: tutorial_task_card:34
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Gib deinen Einheiten Befehle und drücke dann „Runde beenden“ (oder Leertaste)."
+
+#: tutorial_task_card:35
+msgid "Reassign worked tiles"
+msgstr "Bewirtschaftete Felder neu zuweisen"
+
+#: tutorial_task_card:35
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Zeige in der Stadtansicht auf ein Feld und drücke den Trigger, um die Bewirtschaftung zu beginnen oder zu beenden."
+
+#: tutorial_task_card:36
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "Klicke in der Stadtansicht auf ein Feld, um die Bewirtschaftung zu beginnen oder zu beenden."
+
+#: tutorial_task_card:37
+msgid "Press Settings on the table."
+msgstr "Drücke „Einstellungen“ auf dem Tisch."
+
+#: tutorial_task_card:37
+msgid "Press Settings on the table (or O)."
+msgstr "Drücke „Einstellungen“ auf dem Tisch (oder O)."
+
+#: tutorial_task_card:38
+msgid "Construct an improvement"
+msgstr "Modernisierung bauen"
+
+#: tutorial_task_card:38,tutorial_task_card:39
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Baue einen Bautrupp, bewege ihn auf eine Ebene oder ein Graslandfeld, drücke auf seiner Karte „Modernisierung bauen“ und wähle „Bauernhof“. Lass ihn dort, bis der Bau abgeschlossen ist."
+
+#: tutorial_task_card:40
+msgid "Move an air unit"
+msgstr "Lufteinheit bewegen"
+
+#: tutorial_task_card:40,tutorial_task_card:40
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Wähle eine Lufteinheit und bewege sie in eine andere deiner Städte in Reichweite."
+
+#: tutorial_task_card:41
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Wende dich zur Reichsübersicht rechts neben dir und öffne den Reiter „Statistik“."
+
+#: tutorial_task_card:42
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Öffne die Reichsübersicht (E) und den Reiter „Statistik“."
+
+#: tutorial_task_card:81
+msgid "Tutorial task"
+msgstr "Einführungsaufgabe"
+
+#: tutorial_task_card:87
+msgid "Hide"
+msgstr "Ausblenden"
+
+msgid "Defence %d"
+msgstr "Verteidigung %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% Einheitenverteidigung"
+
+msgid "  (%d HP)"
+msgstr "  (%d TP)"
+
+msgid " (pillaged)"
+msgstr " (geplündert)"
+
+msgid ", worked by %s"
+msgstr ", bewirtschaftet von %s"
+
+msgid "  (click the red button again)"
+msgstr "  (klicke erneut auf die rote Schaltfläche)"
+
+msgid "  -  %d of %d"
+msgstr "  –  %d von %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s Runden)"
+
+msgid "     Science %+d per turn"
+msgstr "     Wissenschaft %+d pro Runde"
+
+msgid "  (city-state)"
+msgstr "  (Stadtstaat)"
+
+msgid "   max %d turns"
+msgstr "   max. %d Runden"
+
+msgid " (about %d gold's worth)"
+msgstr " (etwa %d Gold wert)"
+
+msgid " (you have %d)"
+msgstr " (du hast %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (bisher: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (veraltet)"
+
+msgid " (obsolete)"
+msgstr " (veraltet)"
+
+msgid "abstained"
+msgstr "enthielt sich"
+
+msgid "researched"
+msgstr "erforscht"
+
+msgid "adopted"
+msgstr "eingeführt"
+
+msgid "gold"
+msgstr "Gold"
+
+msgid "faith"
+msgstr "Glaube"
+
+msgid "  - complete!"
+msgstr "  – abgeschlossen!"
+
+msgid "complete"
+msgstr "abgeschlossen"
+
+msgid "worked"
+msgstr "bewirtschaftet"
+
+msgid "on"
+msgstr "ein"
+
+msgid "off"
+msgstr "aus"
+
+msgid "click"
+msgstr "Klicken"
+
+msgid "improvement"
+msgstr "Modernisierung"
+
+msgid "done"
+msgstr "erledigt"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Feindliche Ziele in Reichweite (rote Ringe): %d. Klicke eines zum Zielen an."
+
+msgid "Idle citizens: %d"
+msgstr "Untätige Bürger: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombardieren – Feinde in Reichweite: %d (Stärke %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Weitere Nachrichten danach: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Kostenlose große Persönlichkeiten zur Auswahl: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Kostenlose Technologien zur Auswahl: %d. Wähle eine hervorgehobene aus."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Noch zu wählende Glaubenssätze: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv liefert die Meldungen, Namen und Beschreibungen des Spiels. Einige Sprachen übersetzen auch die Oberfläche von Unciv VR. Fehlende Übersetzungen bleiben Englisch."
+
+msgid "Units ({count})"
+msgstr "Einheiten ({count})"
+
+msgid "Cities ({count})"
+msgstr "Städte ({count})"
+
+msgid "Military"
+msgstr "Militär"
+
+msgid "Military ({count})"
+msgstr "Militär ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Rangliste ({count})"
+
+msgid "Waiting for orders"
+msgstr "Wartet auf Befehle"
+
+msgid "  -  promotion ready"
+msgstr "  –  Beförderung verfügbar"
+
+msgid "  (capital)"
+msgstr "  (Hauptstadt)"
+
+msgid "  (puppet)"
+msgstr "  (Marionette)"
+
+msgid "  (razing)"
+msgstr "  (wird niedergebrannt)"
+
+msgid "Nothing to build"
+msgstr "Kein Bauauftrag"
+
+msgid "turn"
+msgstr "Runde"
+
+msgid "turns"
+msgstr "Runden"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader}  –  Zeitalter: {era}"
+
+msgid "{score} pts"
+msgstr "{score} Pkt."
+
+msgid "No units yet."
+msgstr "Noch keine Einheiten."
+
+msgid "No cities yet."
+msgstr "Noch keine Städte."
+
+msgid "No military units yet."
+msgstr "Noch keine Militäreinheiten."
+
+msgid "No civilizations met yet."
+msgstr "Noch keine Zivilisationen getroffen."
+
+msgid "No wonders to show yet."
+msgstr "Noch keine Wunder anzuzeigen."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Alle deine Einheiten mit ihren Aufgaben. Einheiten ohne Befehle stehen oben. Klicke eine an, um sie auszuwählen."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Alle deine Städte mit Bauauftrag und Größe, die Hauptstadt zuerst. Klicke eine an, um ihre Karte zu öffnen."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Alle deine Militäreinheiten mit Aufgabe, Bewegung und Gesundheit. Klicke eine an, um sie auszuwählen."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Rangliste aller bekannten Zivilisationen nach Gesamtpunktzahl."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Uncivs Wunderübersicht nach Zeitalter: fertiggestellte, im Bau befindliche und noch verfügbare Wunder. Klicke ein gebautes Wunder an, um es anzusehen."
+
+msgid "In the Hall of the Mountain King"
+msgstr "In der Halle des Bergkönigs"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Die unterirdische Thronhalle des Trollkönigs tief im Dovre-Gebirge, erhellt von Feuerschalen und glühenden Magmaadern"
+
+msgid "Mountains and clouds"
+msgstr "Berge und Wolken"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Eine Wiese zwischen kantigen Berggipfeln, mit Bäumen und vorbeiziehenden Wolken"
+
+msgid "Floating in space"
+msgstr "Schwebend im All"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Der Tisch schwebt zwischen Sternen neben einem Ringplaneten"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Ein schlichter, dunkler Raum"
+
+msgid "Webb Deep Field"
+msgstr "Webb-Tiefenfeld"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Der Tisch schwebt im All, umgeben von der ersten Tiefenfeldaufnahme des James-Webb-Weltraumteleskops"
+
+msgid "Ornate oak"
+msgstr "Verzierte Eiche"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Eiche mit Walnuss- und Stechpalmenintarsien, geschnitztem Seilrand und einem Sockel auf geschwungenen Füßen"
+
+msgid "Plain wood"
+msgstr "Schlichtes Holz"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Eine runde, dunkle Holzplatte auf einer schmal zulaufenden Säule"
+
+msgid "Low poly"
+msgstr "Kantige Modelle"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Facettiertes Gelände mit einer einheitlichen Farbe pro Fläche"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s – %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  –  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Die Oberfläche ist übersetzt; Spielinhalte erscheinen ersatzweise auf Englisch."
+
+msgid "Turns: %s"
+msgstr "Runden: %s"
+
+msgid "Latin keyboard"
+msgstr "Lateinische Tastatur"
+
+msgid "Arabic keyboard"
+msgstr "Arabische Tastatur"
+
+msgid "Hebrew keyboard"
+msgstr "Hebräische Tastatur"
+
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Manual"
+msgstr "Manuell"

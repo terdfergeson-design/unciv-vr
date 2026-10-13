@@ -1,0 +1,3117 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv; new translations are AI-assisted.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: sv\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Map replay"
+msgstr "Kartrepris"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Kartan zoomas ut så att allt syns. Territorier och städer uppdateras när turerna spelas upp."
+
+msgid "Start replay"
+msgstr "Starta repris"
+
+msgid "Return to game"
+msgstr "Tillbaka till spelet"
+
+msgid "Turn %d of %d"
+msgstr "Tur %d av %d"
+
+msgid "Close replay"
+msgstr "Stäng repris"
+
+msgid "Turn %d / %d"
+msgstr "Tur %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Sparas på denna dator mellan sessioner"
+
+msgid "Move the table..."
+msgstr "Flytta bordet..."
+
+msgid "Back to the middle"
+msgstr "Tillbaka till mitten"
+
+msgid "Your controllers"
+msgstr "Dina handkontroller"
+
+msgid "Show button labels"
+msgstr "Visa knappetiketter"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Flytande etiketter vid varje handkontroll visar vad knapparna gör just nu."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Höger avtryckare klickar när du släpper den, så att hålla den för zoom klickar inte på något."
+
+msgid "Look"
+msgstr "Utseende"
+
+msgid "Gameplay"
+msgstr "Spelupplägg"
+
+msgid "Automation"
+msgstr "Automatisering"
+
+msgid "Sound"
+msgstr "Ljud"
+
+msgid "Panels"
+msgstr "Paneler"
+
+msgid "Controls"
+msgstr "Kontroller"
+
+msgid "Game and saves"
+msgstr "Spel och sparfiler"
+
+msgid "About"
+msgstr "Om"
+
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid "Close"
+msgstr "Stäng"
+
+msgid "Around the table"
+msgstr "Runt bordet"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Alla kan lägga till mappar med bakgrunder och bord: se backgrounds/README.md och tables/README.md."
+
+msgid "Background"
+msgstr "Bakgrund"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Världen runt bordet: himmel, ljus och omgivning."
+
+msgid "Table"
+msgstr "Bord"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Kartans underlag. I VR anpassas pelaren till den höjd du väljer."
+
+msgid "Where the table stands"
+msgstr "Bordets placering"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Flytta bordet i omgivningen, praktiskt i stora bakgrunder som konverterade kartor. Positionen sparas för denna bakgrund."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Flytta bordet i omgivningen, praktiskt i stora bakgrunder som konverterade kartor. Det har flyttats; Tillbaka till mitten återställer startpositionen."
+
+msgid "Remembered for this background."
+msgstr "Sparas för denna bakgrund."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Det har flyttats hit; Tillbaka till mitten återställer bakgrundens startposition."
+
+msgid "The map"
+msgstr "Kartan"
+
+msgid "Tiles"
+msgstr "Rutor"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Utseende för terräng, underverk, resurser och förbättringar. Rutuppsättningar fungerar som i Unciv: se tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Enfärgade hexagoner"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Platta hexagoner i Uncivs terrängfärger, utan modeller."
+
+msgid "Units"
+msgstr "Enheter"
+
+msgid "Same as the tiles"
+msgstr "Samma som rutorna"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Enhetsmodeller som följer med rutuppsättningen ovan; reservuppsättningen fyller luckorna."
+
+msgid "No models"
+msgstr "Inga modeller"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Runda brickor med Uncivs enhetsikoner."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Enheternas utseende: alla rutuppsättningar med modeller i pieces/Units kan användas."
+
+msgid "Visual hints"
+msgstr "Visuella hjälpmedel"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Uncivs kartlager; även de runda knapparna vid översikten slår på och av dem."
+
+msgid "Show unit movement arrows"
+msgstr "Visa pilar för enhetsförflyttning"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Senaste förflyttningar och vem som anföll vem."
+
+msgid "Show tile yields"
+msgstr "Visa rutors avkastning "
+
+msgid "Food, production, gold... on every tile."
+msgstr "Mat, produktion, guld... på varje ruta."
+
+msgid "Show worked tiles"
+msgstr "Visa arbetade rutor"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Rutor som dina städers invånare arbetar på."
+
+msgid "Show resources and improvements"
+msgstr "Visa resurser och förbättringar"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Symboler för resurser och förbättringar på rutorna."
+
+msgid "Show improvement pictures"
+msgstr "Visa förbättringsbilder"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Gårdar, gruvor, vägar och liknande som modeller."
+
+msgid "Show unit icons"
+msgstr "Visa enhetsikoner"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "Den lilla Unciv-ikonen ovanför varje enhetsmodell."
+
+msgid "Language"
+msgstr "Språk"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Uncivs egna översättningar av dess översättare: spelets meddelanden, namn och beskrivningar. Våra menyer är fortfarande på engelska."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Text som saknar översättning i Unciv förblir på engelska."
+
+msgid "Turns"
+msgstr "Turer"
+
+msgid "Check for idle units"
+msgstr "Kontrollera overksamma enheter"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Avsluta tur går först till varje enhet som saknar order."
+
+msgid "Auto unit cycle"
+msgstr "Automatiskt enhetsbyte"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "När du ger en enhet order väljs nästa enhet som väntar på order."
+
+msgid "Cycle idle units by distance"
+msgstr "Växla overksamma enheter efter avstånd"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Nästa/föregående enhet går till den närmaste i stället för en fast ordning."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Bekräfta när turen avslutas"
+
+msgid "End turn needs a second press."
+msgstr "Avsluta tur kräver ett andra tryck."
+
+msgid "Order trade offers by amount"
+msgstr "Sortera handelserbjudanden efter mängd"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "De största erbjudandena visas först på handelsbordet."
+
+msgid "Show suggested city locations"
+msgstr "Visa föreslagna stadsplatser"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Med en nybyggare vald markeras Uncivs tre bästa närliggande stadsplatser."
+
+msgid "Tutorials"
+msgstr "Handledningar"
+
+msgid "Show tutorials"
+msgstr "Visa handledningar"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Handledningsmeddelanden och uppgiftskortet. Alla handledningar finns även i Civilopedian."
+
+msgid "Reset tutorials"
+msgstr "Återställ handledningar"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Visa alla handledningar och uppgifter igen, som för en ny spelare."
+
+msgid "Other players"
+msgstr "Andra spelare"
+
+msgid "Other players' turns"
+msgstr "Andra spelares turer"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Vad du ser av andra spelares turer när din är slut."
+
+msgid "Show the moves and battles I can see"
+msgstr "Visa synliga rörelser och strider"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Spelas upp i ordning; vyn glider till striderna."
+
+msgid "Show them, fast"
+msgstr "Visa snabbt"
+
+msgid "The same, at two and a half times the speed."
+msgstr "Samma sak, med två och en halv gånger hastigheten."
+
+msgid "Don't show them"
+msgstr "Visa inte"
+
+msgid "The map just updates."
+msgstr "Kartan uppdateras direkt."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Uncivs alternativ för automatiserade enheter och städer."
+
+msgid "Automated and exploring units move"
+msgstr "Automatiserade och utforskande enheters rörelser"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "När automatiserade, utforskande enheter och enheter på längre förflyttningar rör sig."
+
+msgid "When I end my turn"
+msgstr "När jag avslutar min tur"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Utforskare, automatiserade arbetare och enheter på långa förflyttningar rör sig när turen avslutas."
+
+msgid "At the start of my turn"
+msgstr "I början av min tur"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "De rör sig när din tur börjar (Uncivs alternativ för automatiserad rörelse vid turstart)."
+
+msgid "Auto-assign city production"
+msgstr "Tilldela stadsproduktion automatiskt"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "En stad som bygger klart väljer själv vad den ska bygga härnäst."
+
+msgid "Auto-build roads"
+msgstr "Bygg vägar automatiskt"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Automatiserade arbetare bygger vägar mellan dina städer."
+
+msgid "Automated workers replace improvements"
+msgstr "Automatiserade arbetare ersätter förbättringar"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Automatiserade arbetare kan ersätta en förbättring med en bättre."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Hindra automatiserade arbetare från att ta bort vegetation"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Automatiserade arbetare lämnar skogar, djungler och träsk i fred."
+
+msgid "Automated units can upgrade"
+msgstr "Automatiserade enheter kan uppgraderas"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Automatiserade militärenheter uppgraderas när du har råd."
+
+msgid "Automated units choose promotions"
+msgstr "Automatiserade enheter väljer befordringar"
+
+msgid "Automated units pick their own promotions."
+msgstr "Automatiserade enheter väljer sina befordringar."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "Städer bombarderar automatiskt i slutet av draget"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Städer som fortfarande kan skjuta anfaller fiender inom räckhåll när turen avslutas."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Tilldela specialister automatiskt i nya städer"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Nya städer placerar själva invånare på specialistplatser."
+
+msgid "Sound effects"
+msgstr "Ljudeffekter"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Knappar, rörelser, strider och annat. I VR kommer ljudet från platsen på bordet där det händer."
+
+msgid "City ambience"
+msgstr "Stadsatmosfär"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Stadsljud som upprepas medan du är i en stad; Unciv har ett för varje era."
+
+msgid "Your own and mods'"
+msgstr "Egna och från moddar"
+
+msgid "None yet."
+msgstr "Inga ännu."
+
+msgid "Put the panels back"
+msgstr "Återställ panelerna"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Varje panel återgår till positionen i sin panel.json."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "I VR ritas handkontrollerna av headsetets system (SteamVR gör det; andra använder en enkel ersättningsmodell)."
+
+msgid "Boards"
+msgstr "Tavlor"
+
+msgid "Put the boards back"
+msgstr "Återställ tavlorna"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Översikten, infotavlan, storbilden, stadstavlorna, imperieöversikten och denna tavla återgår till sina startplatser."
+
+msgid "This game"
+msgstr "Detta spel"
+
+msgid "Save game"
+msgstr "Spara spel"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Sparar med namnet du skriver i bryggans sparmapp."
+
+msgid "Save..."
+msgstr "Spara..."
+
+msgid "Main menu"
+msgstr "Huvudmeny"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Till huvudmenyn; spelet förblir öppet och Återuppta tar dig tillbaka."
+
+msgid "Saves"
+msgstr "Sparfiler"
+
+msgid "Autosave"
+msgstr "Autosparning"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Hur ofta spelet sparas som ”Autosave” (Fortsätt i huvudmenyn laddar det)."
+
+msgid "Save folder"
+msgstr "Sparmapp"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Ett VR-bord för Unciv, återskapandet av Civilization V med öppen källkod."
+
+msgid "Bridge protocol"
+msgstr "Bryggprotokoll"
+
+msgid "Mods"
+msgstr "Moddar"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Egna rutuppsättningar, bakgrunder och bord"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Lägg deras mappar här; de visas under Utseende."
+
+msgid "Settings file"
+msgstr "Inställningsfil"
+
+msgid "Licence and credits"
+msgstr "Licens och medverkande"
+
+msgid "Desktop"
+msgstr "Skrivbord"
+
+msgid "Off"
+msgstr "Av"
+
+msgid "On"
+msgstr "På"
+
+msgid "End turn"
+msgstr "Avsluta tur"
+
+msgid "< Prev"
+msgstr "< Föregående"
+
+msgid "Idle unit"
+msgstr "Overksam enhet"
+
+msgid "Next >"
+msgstr "Nästa >"
+
+msgid "Research"
+msgstr "Forskning"
+
+msgid "Recenter table"
+msgstr "Centrera bordet"
+
+msgid "No unit selected"
+msgstr "Ingen enhet vald"
+
+msgid "Point at a unit or city to select it."
+msgstr "Peka på en enhet eller stad för att välja den."
+
+msgid "Fortified"
+msgstr "Befäst"
+
+msgid "Sleeping"
+msgstr "Vilande"
+
+msgid "Automated"
+msgstr "Automatiserad"
+
+msgid "On its way"
+msgstr "På väg"
+
+msgid "Embarked"
+msgstr "Ombordstigen"
+
+msgid "Strength"
+msgstr "Styrka"
+
+msgid "RangedStrength"
+msgstr "Distansstyrka"
+
+msgid "Range"
+msgstr "Räckvidd"
+
+msgid "Movement"
+msgstr "Förflyttning"
+
+msgid "Rename"
+msgstr "Döp om"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Hoppar över denna tur (tryck Hoppa över igen för att ge order)."
+
+msgid "Health"
+msgstr "Hälsa"
+
+msgid "XP"
+msgstr "EP"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Befordran! Välj en"
+
+msgid "Promote"
+msgstr "Befordra"
+
+msgid "Building %s"
+msgstr "Bygger %s"
+
+msgid "%d turns left"
+msgstr "%d turer kvar"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d fiendemål inom räckhåll (röda ringar): klicka för att sikta"
+
+msgid "Actions"
+msgstr "Handlingar"
+
+msgid "Pillage"
+msgstr "Plundra"
+
+msgid "Sure? Click again"
+msgstr "Säker? Klicka igen"
+
+msgid "click the red button again"
+msgstr "klicka på den röda knappen igen"
+
+msgid "Build here"
+msgstr "Bygg här"
+
+msgid "Stop"
+msgstr "Stoppa"
+
+msgid "%d turns"
+msgstr "%d turer"
+
+msgid "Population %d"
+msgstr "Befolkning %d"
+
+msgid "Defense %d"
+msgstr "Försvar %d"
+
+msgid "Health %d/%d"
+msgstr "Hälsa %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d overksamma invånare"
+
+msgid "Puppet"
+msgstr "Lydstad"
+
+msgid "Starving! %d turns"
+msgstr "Svält! %d turer"
+
+msgid "Grows in %d turns"
+msgstr "Växer om %d turer"
+
+msgid "Food -> production"
+msgstr "Mat -> produktion"
+
+msgid "Not growing"
+msgstr "Ingen tillväxt"
+
+msgid "Border in %d turns"
+msgstr "Gräns om %d turer"
+
+msgid "Borders stopped"
+msgstr "Gränstillväxt stoppad"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Stadsvy: rutor, invånare, kö, köp"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Staden raseras och krymper varje tur tills den försvinner. Stoppa det i stadsvyn."
+
+msgid "Producing"
+msgstr "Producerar"
+
+msgid "Producing nothing - pick something below"
+msgstr "Ingen produktion: välj nedan"
+
+msgid "Buildings"
+msgstr "Byggnader"
+
+msgid "Wonders"
+msgstr "Underverk"
+
+msgid "Other"
+msgstr "Övrig"
+
+msgid "Gold"
+msgstr "Guld"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Köp för %d guld (du har %d)"
+
+msgid "Promote %s"
+msgstr "Befordra %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "EP %d/%d. Välj en befordran.%s"
+
+msgid "Has: %s"
+msgstr "Har: %s"
+
+msgid "No promotion available right now."
+msgstr "Ingen befordran tillgänglig nu."
+
+msgid "Tutorial"
+msgstr "Handledning"
+
+msgid "%d of %d"
+msgstr "%d av %d"
+
+msgid "%d more messages after this one"
+msgstr "%d meddelanden till efter detta"
+
+msgid "%s gives:"
+msgstr "%s erbjuder:"
+
+msgid "They"
+msgstr "De"
+
+msgid "You give:"
+msgstr "Du erbjuder:"
+
+msgid "%d votes  %s"
+msgstr "%d röster  %s"
+
+msgid "voted for %s"
+msgstr "röstade på %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Handledningar kan stängas av i Inställningar > Spelupplägg. De finns även i Civilopedian."
+
+msgid " (%d turns)"
+msgstr " (%d turer)"
+
+msgid "Choose a free great person"
+msgstr "Välj en kostnadsfri stor person"
+
+msgid "You have %d free great people to pick."
+msgstr "Du kan välja %d gratis stora personer."
+
+msgid "Vote for world leader"
+msgstr "Rösta på världsledare"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Välj vem som ska bli världsledare och vinna en diplomatiseger!"
+
+msgid "Vote for %s"
+msgstr "Rösta på %s"
+
+msgid "Abstain"
+msgstr "Avstå"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Ingen forskning: välj en teknologi!"
+
+msgid "Researching %s"
+msgstr "Forskar på %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Du kan välja %d gratis teknologier: välj en markerad."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Vetenskap %+d per tur. Väljer du en senare teknologi köas dess förkrav."
+
+msgid "%s turns"
+msgstr "%s turer"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Fortsätt där du slutade eller starta ett nytt spel."
+
+msgid "Resume"
+msgstr "Återgå"
+
+msgid "Continue"
+msgstr "Fortsätt"
+
+msgid "Quick start"
+msgstr "Snabbstart"
+
+msgid "New game..."
+msgstr "Nytt spel..."
+
+msgid "Load game..."
+msgstr "Ladda spel..."
+
+msgid "Civilopedia"
+msgstr "Civilopedian"
+
+msgid "Quit"
+msgstr "Avsluta"
+
+msgid "New game"
+msgstr "Nytt spel"
+
+msgid "You"
+msgstr "Du"
+
+msgid "World"
+msgstr "Värld"
+
+msgid "Rules"
+msgstr "Regler"
+
+msgid "Random"
+msgstr "Slumpmässig"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - karta %s %s, %s, %d AI, %d stadsstater"
+
+msgid "%s, led by %s"
+msgstr "%s, ledd av %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Slumpmässig: du får veta vem du är när spelet börjar."
+
+msgid "Your civilization"
+msgstr "Din civilisation"
+
+msgid "Map size"
+msgstr "Kartstorlek"
+
+msgid "Map type"
+msgstr "Karttyp"
+
+msgid "Shape"
+msgstr "Form"
+
+msgid "Resources"
+msgstr "Resurser"
+
+msgid "Options"
+msgstr "Alternativ"
+
+msgid "No ancient ruins"
+msgstr "Inga forntida ruiner"
+
+msgid "No natural wonders"
+msgstr "Inga naturunderverk"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Stora kartor glider under bordet: håll en greppknapp och dra, eller använd översikten vid bortre kanten."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings lägger till religion, spionage och fler civilisationer, enheter och byggnader."
+
+msgid "Difficulty"
+msgstr "Svårighetsgrad"
+
+msgid "Game speed"
+msgstr "Spelhastighet"
+
+msgid "Starting era"
+msgstr "Startera"
+
+msgid "AI players"
+msgstr "AI-spelare"
+
+msgid "City-states"
+msgstr "Stadsstater"
+
+msgid "Victory types (none picked = all)"
+msgstr "Segertyper (inga valda = alla)"
+
+msgid "No barbarians"
+msgstr "Inga barbarer"
+
+msgid "Raging barbarians"
+msgstr "Rasande barbarer"
+
+msgid "One-city challenge"
+msgstr "Enstadsutmaning"
+
+msgid "No city razing"
+msgstr "Ingen rasering av städer"
+
+msgid "Nuclear weapons"
+msgstr "Kärnvapen"
+
+msgid "Espionage"
+msgstr "Spionage"
+
+msgid "< Back"
+msgstr "< Tillbaka"
+
+msgid "Start game"
+msgstr "Starta spel"
+
+msgid "Load game"
+msgstr "Ladda spel"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Sparfiler i din Unciv VR-mapp, nyaste först."
+
+msgid "Backgrounds"
+msgstr "Bakgrunder"
+
+msgid "Mountains"
+msgstr "Berg"
+
+msgid "Scenery"
+msgstr "Omgivning"
+
+msgid "Technologies"
+msgstr "Teknologier"
+
+msgid "Policies"
+msgstr "Samhällsinriktningar"
+
+msgid "Diplomacy"
+msgstr "Diplomati"
+
+msgid "Religion"
+msgstr "Religion"
+
+msgid "Victory"
+msgstr "Seger"
+
+msgid "Declare war"
+msgstr "Förklara krig"
+
+msgid "Score"
+msgstr "Poäng"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Ingen historik ännu: diagrammen fylls på med turerna."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== håll avtryckaren här och dra för att flytta skärmen ====="
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Play"
+msgstr "Spela"
+
+msgid "Loading the technology tree..."
+msgstr "Laddar teknologiträdet..."
+
+msgid "Pick something to research!"
+msgstr "Välj något att forska på!"
+
+msgid "Science %+d per turn"
+msgstr "Vetenskap %+d per tur"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Klicka på en teknologi för effekter och byggmöjligheter. Ikonerna under visar vad den låser upp."
+
+msgid "needs science"
+msgstr "kräver vetenskap"
+
+msgid "researching now, "
+msgstr "forskas nu, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d vetenskap)"
+
+msgid "Loading policies..."
+msgstr "Laddar principer..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Kultur %d / %d (%+d per tur)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Du kan anta en princip!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Klicka på en symbol för att se principen. Öppna grenen (stor symbol) innan du antar dess principer."
+
+msgid "ready to adopt"
+msgstr "redo att antas"
+
+msgid "needs more culture"
+msgstr "kräver mer kultur"
+
+msgid "not available yet"
+msgstr "inte tillgänglig ännu"
+
+msgid "(no special effects)"
+msgstr "(inga specialeffekter)"
+
+msgid "Adopt"
+msgstr "Anta"
+
+msgid "Your score: %d"
+msgstr "Din poäng: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Du har inte mött någon ännu. Utforska för att hitta civilisationer och stadsstater."
+
+msgid "Loading..."
+msgstr "Laddar…"
+
+msgid "   (city-state)"
+msgstr "   (stadsstat)"
+
+msgid "Destroyed"
+msgstr "Förstörd"
+
+msgid "AT WAR"
+msgstr "I KRIG"
+
+msgid "At peace"
+msgstr "I fred"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (avtal: %d turer kvar)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - inflytande %d%s"
+
+msgid "   allied with %s"
+msgstr "   allierad med %s"
+
+msgid "Feels %s about you%s"
+msgstr "Inställning till dig: %s%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Poäng %d    Städer %d"
+
+msgid "Diplomacy..."
+msgstr "Diplomati..."
+
+msgid "Trade"
+msgstr "Handelsavtal"
+
+msgid "Offer peace"
+msgstr "Erbjud fred"
+
+msgid "Click again to declare war on %s"
+msgstr "Klicka igen för att förklara krig mot %s"
+
+msgid "< All civilizations"
+msgstr "< Alla civilisationer"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (inga fredssamtal på %d turer)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Typ: %s    Personlighet: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Relation: %s (inflytande %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Allierad: %s med %d inflytande"
+
+msgid "Protected by: "
+msgstr "Skyddad av: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Relationen ändras om %d turer"
+
+msgid "Resources: "
+msgstr "Resurser: "
+
+msgid "When Friends:"
+msgstr "Vid Vänskap:"
+
+msgid "When Allies:"
+msgstr "Vid Allians:"
+
+msgid "You have a declaration of friendship."
+msgstr "Ni har en vänskapsförklaring."
+
+msgid "You have denounced them."
+msgstr "Du har fördömt dem."
+
+msgid "Go to on map"
+msgstr "Visa på kartan"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Ge %d guld (+%d inflytande)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Bygg %s på %s (200 guld)"
+
+msgid "Revoke protection"
+msgstr "Återkalla skydd"
+
+msgid "Click again: revoke protection?"
+msgstr "Klicka igen: återkalla skydd?"
+
+msgid "Pledge to protect"
+msgstr "Lova att beskydda"
+
+msgid "Click again: declare protection?"
+msgstr "Klicka igen: utlova skydd?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Ta %d guld (-15 inflytande)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Ta arbetare (-50 inflytande)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Diplomatiskt äktenskap (%d guld)"
+
+msgid "Click again: they join your empire"
+msgstr "Klicka igen: de ansluter till ditt imperium"
+
+msgid "Negotiate peace"
+msgstr "Förhandla om fred"
+
+msgid "Click again: make peace?"
+msgstr "Klicka igen: sluta fred?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Vänskap erbjuden: väntar på svar"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Erbjud vänskapsförklaring (30 turer)"
+
+msgid "Denounce (30 turns)"
+msgstr "Fördöm (30 turer)"
+
+msgid "Click again: denounce %s?"
+msgstr "Klicka igen: fördöma %s?"
+
+msgid "Click again to declare war"
+msgstr "Klicka igen för att förklara krig"
+
+msgid "Demands:"
+msgstr "Krav:"
+
+msgid "  (asked)"
+msgstr "  (begärt)"
+
+msgid "  (they agreed)"
+msgstr "  (de samtyckte)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Tributvilja (minst 0 för guld; minst 30 och en stad av storlek 4 för en arbetare):"
+
+msgid "  (+%d influence)"
+msgstr "  (+%d inflytande)"
+
+msgid "  %d turns remaining"
+msgstr "  %d turer kvar"
+
+msgid "Unforgivable"
+msgstr "Oförlåtlig"
+
+msgid "Enemy"
+msgstr "Fiende"
+
+msgid "Afraid"
+msgstr "Rädd"
+
+msgid "Competitor"
+msgstr "Konkurrent"
+
+msgid "Favorable"
+msgstr "Välvillig"
+
+msgid "Friend"
+msgstr "Vän"
+
+msgid "Ally"
+msgstr "Allierad"
+
+msgid "Pantheon"
+msgstr "Panteon"
+
+msgid "Founder"
+msgstr "Grundare"
+
+msgid "Follower"
+msgstr "Anhängare"
+
+msgid "Enhancer"
+msgstr "Förbättrare"
+
+msgid "Any"
+msgstr "Valfri"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Välj %d trosuppfattningar till%s"
+
+msgid "so far: %s"
+msgstr "hittills: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Välj nu en symbol för din religion (ovan)."
+
+msgid "Follow this pantheon"
+msgstr "Följ detta panteon"
+
+msgid "Found %s"
+msgstr "Grunda %s"
+
+msgid "Enhance %s"
+msgstr "Förstärk %s"
+
+msgid "Reform"
+msgstr "Reformera"
+
+msgid "Confirm"
+msgstr "Bekräfta"
+
+msgid "Religion is off in this game."
+msgstr "Religion är avstängd i detta spel."
+
+msgid "Choose a pantheon belief"
+msgstr "Välj en panteontro"
+
+msgid "Found your religion"
+msgstr "Grunda din religion"
+
+msgid "Enhance your religion"
+msgstr "Förstärk din religion"
+
+msgid "Reform your religion"
+msgstr "Reformera din religion"
+
+msgid "No religion yet"
+msgstr "Ingen religion ännu"
+
+msgid "Your beliefs"
+msgstr "Dina trosuppfattningar"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Inget att välja nu. Samla tro för att grunda ett panteon; en stor profet grundar och förstärker sedan en religion i en av dina städer."
+
+msgid "Symbol:"
+msgstr "Symbol:"
+
+msgid "Name: %s"
+msgstr "Namn: %s"
+
+msgid "(pick a symbol)"
+msgstr "(välj en symbol)"
+
+msgid "Rename..."
+msgstr "Byt namn..."
+
+msgid "Choose any belief!"
+msgstr "Välj valfri trossats!"
+
+msgid "Choose a %s belief!"
+msgstr "Välj en trosuppfattning för %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (en annan religion har den)"
+
+msgid "  (you have it)"
+msgstr "  (du har den)"
+
+msgid "  (not available)"
+msgstr "  (inte tillgänglig)"
+
+msgid "  (picked for another slot)"
+msgstr "  (vald för en annan plats)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Tur %d   Hastighet %s   %s%s"
+
+msgid "max %d turns"
+msgstr "max %d turer"
+
+msgid "You have won a %s Victory!"
+msgstr "Du har vunnit en %s-seger!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s har vunnit en %s-seger!"
+
+msgid "You have been defeated."
+msgstr "Du har besegrats."
+
+msgid "One more turn...!"
+msgstr "Ett till drag…!"
+
+msgid "Main menu (start a new game)"
+msgstr "Huvudmeny (nytt spel)"
+
+msgid "Our status"
+msgstr "Vår status"
+
+msgid "Global status"
+msgstr "Global status"
+
+msgid "Rankings"
+msgstr "Rankningar"
+
+msgid "Charts"
+msgstr "Diagram"
+
+msgid "Demographics"
+msgstr "Demografi"
+
+msgid "%s Victory"
+msgstr "%s-seger"
+
+msgid "[done] "
+msgstr "[klart] "
+
+msgid "Rank"
+msgstr "Rankning"
+
+msgid "Value"
+msgstr "Värde"
+
+msgid "Best"
+msgstr "Bäst"
+
+msgid "Average / Worst"
+msgstr "Medel / Sämst"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Handel med %s     Ditt guld %d, deras %d"
+
+msgid "You can offer"
+msgstr "Du kan erbjuda"
+
+msgid "You give"
+msgstr "Du ger"
+
+msgid "You get"
+msgstr "Du får"
+
+msgid "They can offer"
+msgstr "De kan erbjuda"
+
+msgid "Clear"
+msgstr "Rensa"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Klicka på objekt i ytterkolumnerna för att lägga dem på bordet; klicka igen för att ta bort dem."
+
+msgid "%s would accept this."
+msgstr "%s skulle acceptera detta."
+
+msgid "%s wants more for this%s."
+msgstr "%s vill ha mer för detta%s."
+
+msgid "about %d gold's worth"
+msgstr "ett värde av cirka %d guld"
+
+msgid "Propose deal"
+msgstr "Föreslå avtal"
+
+msgid "  %d turns"
+msgstr "  %d turer"
+
+msgid "Gold_Per_Turn"
+msgstr "Guld per tur"
+
+msgid "Not connected to the bridge"
+msgstr "Inte ansluten till bryggan"
+
+msgid "Bridge disconnected"
+msgstr "Bryggan frånkopplad"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Den medföljande Unciv-bryggan är ofullständig. Installera om spelfilerna."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Hittar inte Unciv-förrådet med bryggan på %s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Java 17 eller senare saknas (Unciv kräver JDK 21). Installera det och ange JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "Kunde inte skriva %s"
+
+msgid "Couldn't start Gradle"
+msgstr "Kunde inte starta Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Kunde inte starta den medföljande Unciv-bryggan"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== håll avtryckaren här och dra för att flytta ====="
+
+msgid "Exit city"
+msgstr "Lämna stad"
+
+msgid "City"
+msgstr "Stad"
+
+msgid "BEING RAZED"
+msgstr "RASERAS"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Ej tilldelade invånare: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "klicka för att låta staden placera dem"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d mat)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Svält: förlorar en invånare om %d turer %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Mat går till produktion medan enheten byggs"
+
+msgid "New citizen in %d turns %s"
+msgstr "Ny invånare om %d turer %s"
+
+msgid "Not growing %s"
+msgstr "Ingen tillväxt %s"
+
+msgid "(%d/%d culture)"
+msgstr "(%d/%d kultur)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Gränserna växer om %d turer %s"
+
+msgid "Borders have stopped growing"
+msgstr "Gränserna har slutat växa"
+
+msgid "In resistance for another %d turns"
+msgstr "Motstånd i %d turer till"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "Vi älskar kungen-dagen i %d turer till"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Kräver %s (Vi älskar kungen-dagen om du får det)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Annektera staden (sluta vara marionett)"
+
+msgid "Stop razing city"
+msgstr "Sluta riva stad"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Klicka igen för att RASERA %s (en invånare försvinner per tur)"
+
+msgid "Raze city"
+msgstr "Riv stad"
+
+msgid "Citizen management"
+msgstr "Invånarhantering"
+
+msgid "Reset citizens"
+msgstr "Återställ invånare"
+
+msgid "Avoid growth"
+msgstr "Undvik tillväxt"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Invånarfokus (rutor som staden föredrar):"
+
+msgid "Specialists"
+msgstr "Specialister"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Manuella specialister (klicka för automatiskt)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Automatiska specialister (klicka för manuellt)"
+
+msgid "Specialist"
+msgstr "Specialist"
+
+msgid "Great people"
+msgstr "Stora personer"
+
+msgid "Majority religion: %s"
+msgstr "Majoritetsreligion: %s"
+
+msgid "Former holy city of %s"
+msgstr "Tidigare helig stad för %s"
+
+msgid "Holy city of %s"
+msgstr "Helig stad för %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d anhängare, tryck %+d"
+
+msgid "Specialist buildings"
+msgstr "Specialistbyggnader"
+
+msgid "  (free)"
+msgstr "  (gratis)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Klicka på en ruta: arbetade rutor överges, lediga invånare går till andra rutor, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "och rutor med pris kan köpas (klicka två gånger)."
+
+msgid "Tile"
+msgstr "Ruta"
+
+msgid "city centre"
+msgstr "stadskärna"
+
+msgid "worked (locked)"
+msgstr "arbetad (låst)"
+
+msgid "not worked"
+msgstr "inte arbetad"
+
+msgid "gives its yield without a citizen"
+msgstr "ger avkastning utan invånare"
+
+msgid "gives nothing"
+msgstr "ger ingenting"
+
+msgid "blockaded by an enemy"
+msgstr "blockerad av fiende"
+
+msgid "worked by %s"
+msgstr "arbetad av %s"
+
+msgid "another city"
+msgstr "en annan stad"
+
+msgid "too far to work"
+msgstr "för långt bort att arbeta"
+
+msgid "can be bought"
+msgstr "kan köpas"
+
+msgid "not yours"
+msgstr "inte din"
+
+msgid "Resource: %s"
+msgstr "Resurs: %s"
+
+msgid "Improvement: %s"
+msgstr "Förbättring: %s"
+
+msgid "Owned by %s"
+msgstr "Ägs av %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Lås (behåll en invånare här)"
+
+msgid "Stop working"
+msgstr "Sluta arbeta"
+
+msgid "Unlock"
+msgstr "Lås upp"
+
+msgid "Work this tile"
+msgstr "Arbeta denna ruta"
+
+msgid "Work and lock"
+msgstr "Arbeta och lås"
+
+msgid "Click again: buy for %d gold"
+msgstr "Klicka igen: köp för %d guld"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Köp för %d guld (du har %d)"
+
+msgid "Production"
+msgstr "Produktion"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Guld %d   Tro %d   Produktion %+d per tur"
+
+msgid "Being built"
+msgstr "Under byggnad"
+
+msgid "Nothing being built - pick something below"
+msgstr "Inget byggs: välj nedan"
+
+msgid "   %d turns"
+msgstr "   %d turer"
+
+msgid "Hide what can't be built yet"
+msgstr "Dölj det som inte kan byggas ännu"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Visa det som inte kan byggas ännu och varför"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Klicka för att se effekterna, bygg sedan, lägg i kö eller köp."
+
+msgid "   %d production"
+msgstr "   %d produktion"
+
+msgid ", %d turns"
+msgstr ", %d turer"
+
+msgid "   (built)"
+msgstr "   (byggd)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "Dess %s placeras på en ruta du väljer efter Bygg nu, Lägg i kö eller Köp."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "Dess %s placeras på den inringade ruta som valdes vid köläggningen."
+
+msgid "Build now"
+msgstr "Bygg nu"
+
+msgid "Add to queue"
+msgstr "Lägg till i kön"
+
+msgid "Click again: buy for %d %s"
+msgstr "Klicka igen: köp för %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Köp för %d %s"
+
+msgid "you have %d"
+msgstr "du har %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Köp: flytta först enheten ur staden"
+
+msgid "Click again: sell for %d gold"
+msgstr "Klicka igen: sälj för %d guld"
+
+msgid "Sell for %d gold"
+msgstr "Sälj för %d guld"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia: håll avtryckaren här och dra för att flytta ====="
+
+msgid "<  Back"
+msgstr "<  Tillbaka"
+
+msgid "This entry couldn't be loaded."
+msgstr "Kunde inte ladda denna artikel."
+
+msgid "Building"
+msgstr "Byggnad"
+
+msgid "Wonder"
+msgstr "Underverk"
+
+msgid "Unit"
+msgstr "Enhet"
+
+msgid "Resource"
+msgstr "Resurs"
+
+msgid "Improvement"
+msgstr "Förbättring"
+
+msgid "Tile Improvements"
+msgstr "Rutförbättringar"
+
+msgid "Technology"
+msgstr "Teknologi"
+
+msgid "Promotion"
+msgstr "Befordran"
+
+msgid "Promotions"
+msgstr "Befordringar"
+
+msgid "Policy"
+msgstr "Samhällsinriktning"
+
+msgid "Belief"
+msgstr "Trosuppfattning"
+
+msgid "Religions and Beliefs"
+msgstr "Religioner och trossatser"
+
+msgid "Nation"
+msgstr "Nation"
+
+msgid "Nations"
+msgstr "Nationer"
+
+msgid "Terrain"
+msgstr "Terräng"
+
+msgid "Terrains"
+msgstr "Terränger"
+
+msgid "Unit types"
+msgstr "Enhetstyper"
+
+msgid "Unit Names"
+msgstr "Enhetsnamn"
+
+msgid "Victory Types"
+msgstr "Segertyper"
+
+msgid "Thumbstick"
+msgstr "Styrspak"
+
+msgid "Menu"
+msgstr "Meny"
+
+msgid "Trigger"
+msgstr "Avtryckare"
+
+msgid "Grip"
+msgstr "Grepp"
+
+msgid "Trackpad"
+msgstr "Styrplatta"
+
+msgid "Button 1"
+msgstr "Knapp 1"
+
+msgid "Button 2"
+msgstr "Knapp 2"
+
+msgid "Cities"
+msgstr "Städer"
+
+msgid "None"
+msgstr "Ingen"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Outforskat (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - territorium för %s"
+
+msgid " - city of %s"
+msgstr " - staden %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Automatisera"
+
+msgid "Sleep"
+msgstr "Sov"
+
+msgid "Fortify"
+msgstr "Förskansa"
+
+msgid "Guard"
+msgstr "Bevaka"
+
+msgid "Explore"
+msgstr "Utforska"
+
+msgid "Upgrade"
+msgstr "Uppgradera"
+
+msgid "Transform"
+msgstr "Omvandla"
+
+msgid "Repair"
+msgstr "Reparera"
+
+msgid "Skip"
+msgstr "Hoppa över"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s   Tur %d (%s)"
+
+msgid "%d BC"
+msgstr "%d f.Kr."
+
+msgid "%d AD"
+msgstr "%d e.Kr."
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Ingen forskning: välj en teknologi!"
+
+msgid "Point at a tile"
+msgstr "Peka på en ruta"
+
+msgid "Unexplored"
+msgstr "Outforskat"
+
+msgid "Send a unit to find out what's here."
+msgstr "Skicka en enhet för att upptäcka vad som finns här."
+
+msgid "Natural wonder: %s"
+msgstr "Naturunderverk: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Förbättring: %s%s"
+
+msgid "River"
+msgstr "Flod"
+
+msgid "City of %s  (population %d)"
+msgstr "Staden %s (befolkning %d)"
+
+msgid "%s territory"
+msgstr "Territorium för %s"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% enhetsförsvar"
+
+msgid "Impassable"
+msgstr "Oframkomlig"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Utom synhåll: senast känt tillstånd"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Anfall %s: ger ~%d, tar ~%d"
+
+msgid "Science"
+msgstr "Vetenskap"
+
+msgid "Happiness"
+msgstr "Lycka"
+
+msgid "Malcontent"
+msgstr "Missnöjd"
+
+msgid "Culture"
+msgstr "Kultur"
+
+msgid "Faith"
+msgstr "Tro"
+
+msgid "Population"
+msgstr "Befolkning"
+
+msgid "Food"
+msgstr "Mat"
+
+msgid "Shift"
+msgstr "Skift"
+
+msgid "Space"
+msgstr "Mellanslag"
+
+msgid "< Del"
+msgstr "< Radera"
+
+msgid "Recenter"
+msgstr "Centrera"
+
+msgid "Move a unit!"
+msgstr "Flytta en enhet!"
+
+msgid "hold to move onto a tile"
+msgstr "håll för att flytta till en ruta"
+
+msgid "Connecting..."
+msgstr "Ansluter..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Förlorade anslutningen till bryggan; försöker igen..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Söker bryggan på 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Kunde inte starta bryggan: %s\nStarta manuellt med: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Startar Unciv-bryggan... (byggs om vid kodändringar; kan ta en minut)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Bryggan stannade innan den var klar. Från %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Unciv-motorn saknas i appen (insticksprogrammet UncivBridge saknas i exporten)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Kunde inte starta Unciv-motorn: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Unciv-motorn stannade:\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Startar Unciv-motorn: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "En äldre Unciv-brygga (protokoll v%d) kördes ännu; startar om med aktuell kod..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Kunde inte stoppa den gamla bryggan; fortsätter med den. Vissa saker kanske inte fungerar."
+
+msgid "Reconnected to the bridge."
+msgstr "Återansluten till bryggan."
+
+msgid "Bridge error: %s"
+msgstr "Bryggfel: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Varning: bryggan använder protokoll v%d men klienten väntar sig v%d. Uppdatera båda förråden tillsammans. Vissa saker kanske inte fungerar."
+
+msgid "Connected to Unciv %s"
+msgstr "Ansluten till Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "Kunde inte ladda sparfilen: %s"
+
+msgid "Your move."
+msgstr "Din tur."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Startar nytt spel... (större kartor tar lite längre tid)"
+
+msgid "Starting a new game..."
+msgstr "Startar nytt spel..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Kunde inte starta spelet: %s"
+
+msgid "saved "
+msgstr "sparat "
+
+msgid "%s, turn %d"
+msgstr "%s, tur %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Huvudmeny: peka på kortet över bordet."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s på en %s %s-karta, %s, %d AI, %d stadsstater"
+
+msgid "A random civilization"
+msgstr "En slumpmässig civilisation"
+
+msgid "Loading %s..."
+msgstr "Laddar %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Kunde inte ladda %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Kunde inte läsa reglerna: %s"
+
+msgid "getState failed: %s"
+msgstr "getState misslyckades: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Översikten, infotavlan, storbilden och panelerna är tillbaka på sina vanliga platser."
+
+msgid "Name your religion"
+msgstr "Namnge din religion"
+
+msgid "Your religion"
+msgstr "Din religion"
+
+msgid "Researching %s."
+msgstr "Forskar på %s."
+
+msgid "Adopted %s."
+msgstr "Antog %s."
+
+msgid "You declared war on %s!"
+msgstr "Du förklarade krig mot %s!"
+
+msgid "Unit movements"
+msgstr "Enhetsrörelser"
+
+msgid "Tile yields"
+msgstr "Rutavkastning"
+
+msgid "Worked tiles"
+msgstr "Arbetade rutor"
+
+msgid "Resources and improvements"
+msgstr "Resurser och förbättringar"
+
+msgid "Improvement pictures"
+msgstr "Förbättringsbilder"
+
+msgid "Unit icons"
+msgstr "Enhetsikoner"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Håll %s på en ruta för att flytta en enhet dit."
+
+msgid "the trigger"
+msgstr "avtryckaren"
+
+msgid "the mouse button"
+msgstr "musknappen"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Anfall %s\nger ~%d, tar ~%d\nklicka igen för att anfalla"
+
+msgid "a unit"
+msgstr "en enhet"
+
+msgid "Can't get there"
+msgstr "Kan inte nå dit"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "Ingen plats\n%s %s är redan där"
+
+msgid "\nSwap places on the card"
+msgstr "\nByt plats på kortet"
+
+msgid "Move here"
+msgstr "Flytta hit"
+
+msgid "Move here: %d turns"
+msgstr "Flytta hit: %d turer"
+
+msgid "\nsharing the tile with %s"
+msgstr "\ndelar rutan med %s"
+
+msgid "\nclick again to go"
+msgstr "\nklicka igen för att gå"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s är på väg och fortsätter nästa tur."
+
+msgid "No attack happened."
+msgstr "Inget anfall skedde."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s anföll %s: gav %d skada, tog %d."
+
+msgid "  City captured!"
+msgstr "  Staden erövrad!"
+
+msgid "  %s destroyed!"
+msgstr "  %s förstörd!"
+
+msgid "  Your %s was lost."
+msgstr "  Din %s gick förlorad."
+
+msgid "Improvement order cancelled."
+msgstr "Förbättringsorder avbruten."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: bygger %s (%d turer)."
+
+msgid "Rename %s"
+msgstr "Byt namn på %s"
+
+msgid "%s is now called %s."
+msgstr "%s heter nu %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Namnge din %s (tomt: inget namn)"
+
+msgid "Renamed to %s."
+msgstr "Nytt namn: %s."
+
+msgid "Name removed."
+msgstr "Namnet borttaget."
+
+msgid "%s: on the way."
+msgstr "%s: på väg."
+
+msgid "%s: coup orders given."
+msgstr "%s: kupporder givna."
+
+msgid "See your stats breakdown"
+msgstr "Visa statistikfördelning"
+
+msgid "Selected %s."
+msgstr "Valde %s."
+
+msgid "the unit"
+msgstr "enheten"
+
+msgid "Upgraded to %s."
+msgstr "Uppgraderad till %s."
+
+msgid "Enter city screen"
+msgstr "Öppna stadsvyn"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Stad: %s. Klicka på rutor för att arbeta dem; Lämna staden (eller B / Esc) återgår till kartan."
+
+msgid "Back to the map."
+msgstr "Tillbaka till kartan."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "Det finns ingen plats i %s för %s."
+
+msgid "the city"
+msgstr "staden"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Välj ruta för %s (röda ringar), eller Esc / B för att avbryta."
+
+msgid "Cancelled."
+msgstr "Avbrutet."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Välj en inringad ruta (Esc / B avbryter)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: förbättringen placeras där."
+
+msgid "Bought the tile for %d gold."
+msgstr "Köpte rutan för %d guld."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Köp för %d guld\nklicka igen för att köpa"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Kostar %d guld\n(för lite guld)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Invånare omfördelade (lås borttagna)."
+
+msgid "Annexed."
+msgstr "Annekterad."
+
+msgid "%s will build %s next."
+msgstr "%s bygger %s härnäst."
+
+msgid "%s added to the queue."
+msgstr "%s lades i kön."
+
+msgid "Bought %s."
+msgstr "Köpte %s."
+
+msgid "Sold the %s."
+msgstr "Sålde %s."
+
+msgid "%s added to %s's queue."
+msgstr "%s lades i kön för %s."
+
+msgid "Bought %s in %s."
+msgstr "Köpte %s i %s."
+
+msgid "Experience"
+msgstr "Erfarenhet"
+
+msgid "%s is now %s."
+msgstr "%s är nu %s."
+
+msgid "Pick something to research."
+msgstr "Välj något att forska på."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Du kan anta en princip: öppna Principer på storbilden."
+
+msgid "%s is heading here"
+msgstr "%s är på väg hit"
+
+msgid "The unit"
+msgstr "Enheten"
+
+msgid "Are you sure?"
+msgstr "Är du säker?"
+
+msgid "Click again to confirm."
+msgstr "Klicka igen för att bekräfta."
+
+msgid "%s: click a %stile"
+msgstr "%s: klicka på en %sruta"
+
+msgid "highlighted "
+msgstr "markerad "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s: klicka på rutan på kartan (eller Avbryt på kortet)."
+
+msgid "Move here: click a tile"
+msgstr "Flytta hit: klicka på en ruta"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Flytta %s: klicka på en ruta (eller Avbryt på kortet)."
+
+msgid "No enemies in range of %s."
+msgstr "Inga fiender inom räckhåll för %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombardera från %s: klicka på en rödmarkerad fiende (klicka på staden för att avbryta)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Välj en markerad ruta (eller Avbryt)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bombarderade %s: %d skada%s."
+
+msgid "Destroyed!"
+msgstr "Förstörd!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Avsluta turen? Tryck Avsluta tur igen."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Avslutar tur: AI-spelarna rör sig..."
+
+msgid "Turn %d"
+msgstr "Tur %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "SPELET SLUT: %s vinner (%s-seger)"
+
+msgid "A %s has been born!"
+msgstr "En %s har fötts!"
+
+msgid "You voted for %s."
+msgstr "Du röstade på %s."
+
+msgid "You abstained."
+msgstr "Du avstod."
+
+msgid "ATTACK"
+msgstr "ANFALL"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Tur %d (%s)   Guld %d (%+d)   Vetenskap %+d   Lycka %d"
+
+msgid "Researching: %s"
+msgstr "Forskar på: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - tur %d"
+
+msgid "Game"
+msgstr "Spel"
+
+msgid "Save game as"
+msgstr "Spara spel som"
+
+msgid "Saved as \"%s\"."
+msgstr "Sparat som ”%s”."
+
+msgid "Couldn't save: %s"
+msgstr "Kunde inte spara: %s"
+
+msgid "Open the options table"
+msgstr "Öppna alternativbordet"
+
+msgid "The tutorials will show again from the start."
+msgstr "Handledningar visas igen från början."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Kunde inte återställa handledningarna: %s"
+
+msgid "The panels are back where they started."
+msgstr "Panelerna är tillbaka på startplatserna."
+
+msgid "The table is back in the middle of the background."
+msgstr "Bordet är tillbaka i bakgrundens mitt."
+
+msgid "Civilopedia: %s"
+msgstr "Civilopedia: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Kunde inte öppna Civilopedian: %s"
+
+msgid "Opened %s in your browser."
+msgstr "Öppnade %s i din webbläsare."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Handledningsuppgiften dold; nästa visas när det är dags."
+
+msgid "Move the table"
+msgstr "Flytta bordet"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Flytta bordet: peka på en plats och %s för att placera det. %s vrider det. %s när du är klar."
+
+msgid "pull the trigger"
+msgstr "tryck på avtryckaren"
+
+msgid "The right stick"
+msgstr "Höger styrspak"
+
+msgid "Press A or B"
+msgstr "Tryck A eller B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Bordet stannar här; Inställningar > Utseende > Tillbaka till mitten återställer det."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Det är inte på omgivningen; peka på marken."
+
+msgid "put the table here"
+msgstr "placera bordet här"
+
+msgid "turn the scenery"
+msgstr "vrid omgivningen"
+
+msgid "done moving the table"
+msgstr "slutför bordflytt"
+
+msgid "point, click (hold: aim)"
+msgstr "peka, klicka (håll: sikta)"
+
+msgid "Found city"
+msgstr "Grunda stad"
+
+msgid "Cancel typing"
+msgstr "Avbryt inmatning"
+
+msgid "Leave the city"
+msgstr "Lämna staden"
+
+msgid "table height"
+msgstr "bordshöjd"
+
+msgid "slide the map"
+msgstr "skjut kartan"
+
+msgid "turn / size the table"
+msgstr "vrid / skala bordet"
+
+msgid "Next unit"
+msgstr "Nästa enhet"
+
+msgid "Previous unit"
+msgstr "Föregående enhet"
+
+msgid "zoom the map"
+msgstr "zooma kartan"
+
+msgid "table height, click: recenter"
+msgstr "bordshöjd, klick: centrera"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Något slutfördes inte; fortsätt. Om det återkommer finns orsaken i loggen."
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "ANFALL %s (%s, %d/%d HP)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  förväntat: ge %d, ta %d"
+
+msgid "Luxury"
+msgstr "Lyx"
+
+msgid "Strategic"
+msgstr "Strategisk"
+
+msgid "Unit icons over the unit models"
+msgstr "Enhetsikoner ovanför modellerna"
+
+msgid "Overview: point and click to go there"
+msgstr "Översikt: peka och klicka för att gå dit"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (klicka för %s)"
+
+msgid "Overview"
+msgstr "Översikt"
+
+msgid "Stats"
+msgstr "Statistik"
+
+msgid "Trades"
+msgstr "Handelsavtal"
+
+msgid "Politics"
+msgstr "Politik"
+
+msgid "Notifications"
+msgstr "Aviseringar"
+
+msgid "Spy"
+msgstr "Spion"
+
+msgid "War"
+msgstr "Krig"
+
+msgid "DefensivePact"
+msgstr "Försvarspakt"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Imperieöversikt: håll avtryckaren här och dra för att flytta ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Du har inga spioner ännu; de kommer med nya eror."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Spioner (välj en och sedan resmål)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (rang %d) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Avblås kuppen"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Klicka igen: kupp (%d%% chans)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Genomför kupp (%d%% chans)"
+
+msgid "Where to"
+msgstr "Resmål"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Gömställe (ta hem %s)"
+
+msgid "   spies: "
+msgstr "   spioner: "
+
+msgid "Click again (%s)"
+msgstr "Klicka igen (%s)"
+
+msgid "You have no cities yet."
+msgstr "Du har inga städer ännu."
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Defence"
+msgstr "Försvar"
+
+msgid "Open the city view"
+msgstr "Öppna stadsvyn"
+
+msgid "Resistance"
+msgstr "Motstånd"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "Kräver %s"
+
+msgid " (holy)"
+msgstr " (helig)"
+
+msgid "Total %d"
+msgstr "Totalt %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Omvandla guld till vetenskap: %d%%"
+
+msgid "Great person points"
+msgstr "Poäng för stora personer"
+
+msgid "Points"
+msgstr "Poäng"
+
+msgid "Per turn"
+msgstr "Per tur"
+
+msgid "Total"
+msgstr "Totalt"
+
+msgid "Pending trades"
+msgstr "Väntande Handelsavtal"
+
+msgid "Current trades"
+msgstr "Nuvarande Handelsavtal"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Ingen handel pågår. Skapa ett avtal under Diplomati på storbilden."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Försörjning: %d av %d använt (grund %d, städer %d, befolkning %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Underskott %d: %d%% produktion i varje stad. Öka försörjningen eller upplös enheter."
+
+msgid "Doing"
+msgstr "Aktivitet"
+
+msgid "Closest city"
+msgstr "Närmaste stad"
+
+msgid "Click again: %d gold"
+msgstr "Klicka igen: %d guld"
+
+msgid "%s %dg"
+msgstr "%s %d guld"
+
+msgid "Show global politics"
+msgstr "Visa global politik"
+
+msgid "Show diagram"
+msgstr "Visa Diagram"
+
+msgid "Hide city-states"
+msgstr "Dölj stadsstater"
+
+msgid "Include city-states"
+msgstr "Inkludera stadsstater"
+
+msgid "   %s civilizations in the game"
+msgstr "   %s civilisationer i spelet"
+
+msgid "Score %d"
+msgstr "Poäng %d"
+
+msgid "Defeated"
+msgstr "Besegrad"
+
+msgid "At war with %s"
+msgstr "I krig med %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Försvarspakt med %s (%d turer)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Vänskap med %s (%d turer)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Fördömt %s (%d turer)"
+
+msgid "Allied with %s"
+msgstr "Allierad med %s"
+
+msgid "Relations"
+msgstr "Relationer"
+
+msgid "Defensive pact"
+msgstr "Försvarspakt"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Du har inga lyxresurser eller strategiska resurser ännu."
+
+msgid "Unimproved"
+msgstr "Oförbättrad"
+
+msgid "Trade offer"
+msgstr "Handelsförslag"
+
+msgid "Stockpile"
+msgstr "Lager"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Oförbättrade: rutor i ditt eller allierade stadsstaters land med resursen men utan rätt förbättring.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "Kungadagen +/-: städer som firar / kräver resursen för Vi älskar kungen-dagen."
+
+msgid "Religions to be founded: %s"
+msgstr "Religioner kvar att grunda: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Minsta tro för nästa %s: %d"
+
+msgid "Great Prophet"
+msgstr "Stor profet"
+
+msgid "Religious status: %s"
+msgstr "Religiös status: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Inga religioner eller panteon har grundats ännu."
+
+msgid "%s name:"
+msgstr "Namn på %s:"
+
+msgid "Founding civ:"
+msgstr "Grundande civilisation:"
+
+msgid "Holy city:"
+msgstr "Helig stad:"
+
+msgid "Cities following this religion:"
+msgstr "Städer som följer denna religion:"
+
+msgid "Followers of this religion:"
+msgstr "Religionens anhängare:"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Location"
+msgstr "Plats"
+
+msgid "Unknown"
+msgstr "Okänd"
+
+msgid "Owned"
+msgstr "Ägd"
+
+msgid "Known"
+msgstr "Känd"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s   Tur %d   %s"
+
+msgid "Current turn  |"
+msgstr "Aktuell tur  |"
+
+msgid "General"
+msgstr "General"
+
+msgid "No notifications yet."
+msgstr "Inga aviseringar ännu."
+
+msgid "Tech"
+msgstr "Teknologi"
+
+msgid "Panel"
+msgstr "Panel"
+
+msgid "Nothing to show."
+msgstr "Inget att visa."
+
+msgid "Select a unit"
+msgstr "Välj en enhet"
+
+msgid "Left-click it"
+msgstr "Vänsterklicka på den"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Peka och tryck höger avtryckare: kortet visas ovanför"
+
+msgid "Move / attack"
+msgstr "Flytta / anfalla"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Klicka på en ruta för att sikta, igen för att gå"
+
+msgid "The same with the laser"
+msgstr "Samma sak med lasern"
+
+msgid "Open a city"
+msgstr "Öppna en stad"
+
+msgid "Click it"
+msgstr "Klicka på den"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Peka och tryck höger avtryckare: kortet svävar över staden"
+
+msgid "Scroll a card"
+msgstr "Rulla ett kort"
+
+msgid "Mouse wheel"
+msgstr "Mushjul"
+
+msgid "Point at it + right stick"
+msgstr "Peka på det och använd höger styrspak"
+
+msgid "Move the view"
+msgstr "Flytta vyn"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Högerdra: rotera; hjul: zooma; WASD / mittendra: panorera"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Grepp + styrspak: vänster/höger vrider bordet, upp/ned skalar det"
+
+msgid "Table height"
+msgstr "Bordshöjd"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Valfri styrspak upp/ned (höger när du inte pekar på ett kort)"
+
+msgid "Zoom the map"
+msgstr "Zooma kartan"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - eller Ctrl + hjul"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Håll en avtryckare och för samma hands styrspak upp/ned"
+
+msgid "Slide the map"
+msgstr "Skjut kartan"
+
+msgid "WASD, or click the overview"
+msgstr "WASD eller klicka på översikten"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Håll en greppknapp och dra, eller peka på översikten och tryck avtryckaren"
+
+msgid "Move a board"
+msgstr "Flytta en tavla"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Håll avtryckaren på överkanten (eller infotavlan) och flytta"
+
+msgid "A, or the End turn button on the table"
+msgstr "A eller knappen Avsluta tur på bordet"
+
+msgid "Found a city"
+msgstr "Grunda en stad"
+
+msgid "Next / previous unit"
+msgstr "Nästa / föregående enhet"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Skift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Knappen Overksam enhet på bordet"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Teknologier, principer, diplomati"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Handledskortet eller knapparna på tavlorna"
+
+msgid "Empire overview"
+msgstr "Imperieöversikt"
+
+msgid "Always up, off to your right"
+msgstr "Alltid framme, till höger"
+
+msgid "The Settings button on the table"
+msgstr "Knappen Inställningar på bordet"
+
+msgid "The Civilopedia button on the table"
+msgstr "Knappen Civilopedia på bordet"
+
+msgid "Close / deselect"
+msgstr "Stäng / avmarkera"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B stänger tangentbordet och stadsvyn"
+
+msgid "Recenter the table"
+msgstr "Centrera bordet"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Klicka vänster styrspak eller knappen Centrera"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Inställningar: håll avtryckaren här och dra för att flytta ====="
+
+msgid "Tables"
+msgstr "Bord"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Flytta bordet i omgivningen, praktiskt i stora bakgrunder som konverterade kartor. "
+
+msgid "%d%% translated"
+msgstr "%d%% översatt"
+
+msgid "Notification log keeps"
+msgstr "Aviseringshistorik"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Antal turer som sparas i översiktens flik Aviseringar."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Uncivs handledningar: ett meddelande när något nytt händer och ett kort med nästa uppgift."
+
+msgid "Reset"
+msgstr "Återställ"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Uncivs ljud läses från Unciv-mappen intill när spelet körs. Ersätt dem med egna filer med samma namn i ~/.unciv-vr/Sounds."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d ljud hittades. Varje enhets anfallsljud kommer från regeluppsättningen, som i Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Inga ljud hittades. De finns i Uncivs android/assets/sounds, intill denna mapp."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Tavlor med listor utifrån spelets tillstånd. I VR står de runt bordet "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(håll avtryckaren på överkanten för att flytta dem); på skrivbordet finns de till vänster."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "En panel är en mapp med en panel.json; se panels/README.md. Lägg dina i %s."
+
+msgid "Put them back"
+msgstr "Återställ platser"
+
+msgid "(by %s)"
+msgstr "(av %s)"
+
+msgid "Every turn"
+msgstr "Varje tur"
+
+msgid "Every %d turns"
+msgstr "Var %d:e tur"
+
+msgid "not connected"
+msgstr "inte ansluten"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (klienten väntar sig v%s)"
+
+msgid "Tilesets"
+msgstr "Rutuppsättningar"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR använder Mozilla Public License 2.0, liksom Unciv. Ikonerna är Uncivs egna, av många upphovspersoner "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "under CC BY / CC BY-SA / CC0 (se CREDITS.md och Uncivs docs/Credits.md). Modeller för rutor, enheter, bakgrunder "
+
+msgid "and table models are Unciv VR's own."
+msgstr "och bord är Unciv VR:s egna."
+
+msgid "%s speed"
+msgstr "Hastighet %s"
+
+msgid "%s map"
+msgstr "Karta %s"
+
+msgid "%s, turn %s"
+msgstr "%s, tur %s"
+
+msgid "by "
+msgstr "av "
+
+msgid "  -  from %s"
+msgstr "  - från %s"
+
+msgid "Move unit"
+msgstr "Förflytta enhet"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Peka på en av dina enheter och tryck avtryckaren. Peka sedan på en ruta och tryck två gånger: för att sikta och för att gå."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Klicka på en av dina enheter och sedan två gånger på en ruta: för att sikta och för att gå."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Välj nybyggaren och tryck Grunda en stad på kortet (eller B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Välj nybyggaren och tryck Grunda en stad på kortet (eller F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Peka på en av dina städer och tryck avtryckaren, sedan Stadsvy på kortet."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Klicka på en av dina städer och sedan Stadsvy på kortet."
+
+msgid "Pick technology"
+msgstr "Välj teknologi"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Öppna teknologiträdet från handledskortet och välj något att forska på."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Öppna teknologiträdet (T) och välj något att forska på."
+
+msgid "Pick construction"
+msgstr "Välj bygge"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Öppna en av dina städer och välj något att bygga på kortet."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Klicka på en av dina städer och välj något att bygga på kortet."
+
+msgid "Pass a turn"
+msgstr "Passera en tur"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Ge dina enheter order och tryck sedan Avsluta tur på bordet (eller A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Ge dina enheter order och tryck sedan Avsluta tur (eller Mellanslag)."
+
+msgid "Reassign worked tiles"
+msgstr "Omfördela arbetade rutor"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "I stadsvyn, peka på en ruta och tryck avtryckaren för att arbeta den eller sluta."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "I stadsvyn, klicka på en ruta för att arbeta den eller sluta."
+
+msgid "Press Settings on the table."
+msgstr "Tryck Inställningar på bordet."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Tryck Inställningar på bordet (eller O)."
+
+msgid "Construct an improvement"
+msgstr "Bygg en förbättring"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Skapa en arbetare, flytta till slätt eller gräsmark, tryck Bygg en förbättring på kortet och välj Gård. Låt arbetaren stanna tills gården är klar."
+
+msgid "Move an air unit"
+msgstr "Flytta en flygenhet"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Välj en flygenhet och flytta den till en annan av dina städer inom räckhåll."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Vänd dig till imperieöversikten till höger och öppna Statistik."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Öppna imperieöversikten (E) och fliken Statistik."
+
+msgid "Tutorial task"
+msgstr "Handledningsuppgift"
+
+msgid "Hide"
+msgstr "Dölj"
+
+msgid "Defence %d"
+msgstr "Försvar %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% enhetsförsvar"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (plundrad)"
+
+msgid ", worked by %s"
+msgstr ", arbetad av %s"
+
+msgid "  (click the red button again)"
+msgstr "  (klicka på den röda knappen igen)"
+
+msgid "  -  %d of %d"
+msgstr "  - %d av %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s turer)"
+
+msgid "     Science %+d per turn"
+msgstr "     Vetenskap %+d per tur"
+
+msgid "  (city-state)"
+msgstr "  (stadsstat)"
+
+msgid "   max %d turns"
+msgstr "   max %d turer"
+
+msgid " (about %d gold's worth)"
+msgstr " (värt cirka %d guld)"
+
+msgid " (you have %d)"
+msgstr " (du har %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (hittills: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (föråldrad)"
+
+msgid " (obsolete)"
+msgstr " (föråldrad)"
+
+msgid "abstained"
+msgstr "avstod"
+
+msgid "researched"
+msgstr "forskat"
+
+msgid "adopted"
+msgstr "antagen"
+
+msgid "gold"
+msgstr "guld"
+
+msgid "faith"
+msgstr "tro"
+
+msgid "  - complete!"
+msgstr "  - klart!"
+
+msgid "complete"
+msgstr "klart"
+
+msgid "worked"
+msgstr "bearbetad"
+
+msgid "on"
+msgstr "på"
+
+msgid "off"
+msgstr "av"
+
+msgid "click"
+msgstr "klicka"
+
+msgid "improvement"
+msgstr "förbättring"
+
+msgid "done"
+msgstr "klart"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Fiendemål inom räckhåll (röda ringar): %d. Klicka för att sikta."
+
+msgid "Idle citizens: %d"
+msgstr "Overksamma invånare: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombardera: fiender inom räckhåll: %d (styrka %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Meddelanden efter detta: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Gratis stora personer att välja: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Gratis teknologier att välja: %d. Välj en markerad."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Trosuppfattningar kvar att välja: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv tillhandahåller spelets meddelanden, namn och beskrivningar. Språk som stöds översätter även Unciv VR:s gränssnitt. Saknade översättningar förblir på engelska."
+
+msgid "Units ({count})"
+msgstr "Enheter ({count})"
+
+msgid "Cities ({count})"
+msgstr "Städer ({count})"
+
+msgid "Military"
+msgstr "Militär"
+
+msgid "Military ({count})"
+msgstr "Militär ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Rankning ({count})"
+
+msgid "Waiting for orders"
+msgstr "Väntar på order"
+
+msgid "  -  promotion ready"
+msgstr "  - befordran redo"
+
+msgid "  (capital)"
+msgstr "  (huvudstad)"
+
+msgid "  (puppet)"
+msgstr "  (marionett)"
+
+msgid "  (razing)"
+msgstr "  (raseras)"
+
+msgid "Nothing to build"
+msgstr "Inget att bygga"
+
+msgid "turn"
+msgstr "drag"
+
+msgid "turns"
+msgstr "drag"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - {era}-eran"
+
+msgid "{score} pts"
+msgstr "{score} poäng"
+
+msgid "No units yet."
+msgstr "Inga enheter ännu."
+
+msgid "No cities yet."
+msgstr "Inga städer ännu."
+
+msgid "No military units yet."
+msgstr "Inga militärenheter ännu."
+
+msgid "No civilizations met yet."
+msgstr "Inga civilisationer mötta ännu."
+
+msgid "No wonders to show yet."
+msgstr "Inga underverk att visa ännu."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Alla dina enheter och deras aktiviteter, de som väntar på order först. Klicka på en för att välja den."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Alla dina städer, huvudstaden först, med storlek och bygge. Klicka för att öppna kortet."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Alla dina militärenheter med handling, rörelser och hälsa. Klicka för att välja en."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Kända civilisationer rankade efter totalpoäng."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Uncivs underverk per era: byggda, under byggnad eller kvar att bygga. Klicka på ett byggt för att se det."
+
+msgid "In the Hall of the Mountain King"
+msgstr "I bergakungens sal"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Trollkungens underjordiska tronsal djupt i Dovrefjällen, upplyst av eldfat och glödande magmaådror."
+
+msgid "Mountains and clouds"
+msgstr "Berg och moln"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "En äng omgiven av lågpolygonberg, med träd och drivande moln."
+
+msgid "Floating in space"
+msgstr "Svävande i rymden"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Bordet svävar bland stjärnorna, vid en planet med ringar."
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Ett enkelt, mörkt rum"
+
+msgid "Webb Deep Field"
+msgstr "Webbs djupfält"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Bordet svävar i rymden, omgivet av James Webb-teleskopets första djupfältsbild."
+
+msgid "Ornate oak"
+msgstr "Utsmyckad ek"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Ek med inläggningar av valnöt och järnek, snidad repkant och piedestal med svängda fötter."
+
+msgid "Plain wood"
+msgstr "Enkelt trä"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "En rund mörk träskiva på en avsmalnande pelare."
+
+msgid "Low poly"
+msgstr "Lågpolygon"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Facetterad lågpolygonterräng, en enfärgad yta per sida."
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Gränssnittet översatt; spelinnehållet använder engelska som reserv."
+
+msgid "Turns: %s"
+msgstr "Turer: %s"
+
+msgid "Latin keyboard"
+msgstr "Latinskt tangentbord"
+
+msgid "Arabic keyboard"
+msgstr "Arabiskt tangentbord"
+
+msgid "Hebrew keyboard"
+msgstr "Hebreiskt tangentbord"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "Manual"
+msgstr "Manuellt"

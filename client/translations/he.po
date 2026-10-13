@@ -1,0 +1,3115 @@
+msgid ""
+msgstr ""
+"Language: he\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n!=0 && n%10==0 ? 2 : 3);\n"
+
+msgid "Map replay"
+msgstr "שחזור המפה"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "המפה מוצגת מרחוק במלואה. הבעלות על השטחים ומיקומי הערים מתעדכנים עם התקדמות התורות."
+
+msgid "Start replay"
+msgstr "התחלת השחזור"
+
+msgid "Return to game"
+msgstr "חזרה למשחק"
+
+msgid "Turn %d of %d"
+msgstr "תור ⁦%d⁩ מתוך ⁦%d⁩"
+
+msgid "Close replay"
+msgstr "סגירת השחזור"
+
+msgid "Turn %d / %d"
+msgstr "תור ⁦%d / %d⁩"
+
+msgid "Saved on this PC between sessions"
+msgstr "נשמר במחשב הזה בין הפעלות"
+
+msgid "Move the table..."
+msgstr "הזזת השולחן..."
+
+msgid "Back to the middle"
+msgstr "חזרה למרכז"
+
+msgid "Your controllers"
+msgstr "הבקרים שלך"
+
+msgid "Show button labels"
+msgstr "הצגת תוויות הכפתורים"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "תוויות צפות ליד כל בקר מציגות את הפעולה הנוכחית של כל כפתור."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "ההדק הימני מבצע לחיצה כשמשחררים אותו, כך שהחזקתו לצורך זום לא לוחצת על דבר."
+
+msgid "Look"
+msgstr "מראה"
+
+msgid "Gameplay"
+msgstr "משחקיות"
+
+msgid "Automation"
+msgstr "אוטומציה"
+
+msgid "Sound"
+msgstr "צליל"
+
+msgid "Panels"
+msgstr "לוחות"
+
+msgid "Controls"
+msgstr "שליטה"
+
+msgid "Game and saves"
+msgstr "משחק ושמירות"
+
+msgid "About"
+msgstr "אודות"
+
+msgid "Settings"
+msgstr "הגדרות"
+
+msgid "Close"
+msgstr "סגירה"
+
+msgid "Around the table"
+msgstr "מסביב לשולחן"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "רקעים ושולחנות הם תיקיות שכל אחד יכול להוסיף: ראו ⁦backgrounds/README.md⁩ ו־⁦tables/README.md.⁩"
+
+msgid "Background"
+msgstr "רקע"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "העולם סביב השולחן: שמיים, תאורה ונוף."
+
+msgid "Table"
+msgstr "שולחן"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "המשטח שעליו מונחת המפה. במציאות מדומה העמוד שלו נמתח לגובה שנקבע."
+
+msgid "Where the table stands"
+msgstr "מיקום השולחן"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "אפשר להזיז את השולחן לכל מקום בנוף הרקע — שימושי ברקעים גדולים כמו מפה שהומרה. המיקום נשמר לרקע הזה."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "אפשר להזיז את השולחן לכל מקום בנוף הרקע — שימושי ברקעים גדולים כמו מפה שהומרה. השולחן הוזז לכאן; חזרה למרכז מחזירה אותו למיקום ההתחלתי."
+
+msgid "Remembered for this background."
+msgstr "המיקום נשמר לרקע הזה."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "השולחן הוזז לכאן; חזרה למרכז מחזירה אותו למיקום ההתחלתי."
+
+msgid "The map"
+msgstr "המפה"
+
+msgid "Tiles"
+msgstr "משבצות"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "מראה התוואי, הפלאים, המשאבים והשיפורים. ערכות המשבצות פועלות כמו ב־Unciv: ראו ⁦tilesets/README.md.⁩"
+
+msgid "Plain coloured hexes"
+msgstr "משושים בצבע אחיד"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "משושים שטוחים בצבעי התוואי של Unciv, ללא מודלים."
+
+msgid "Units"
+msgstr "יחידות"
+
+msgid "Same as the tiles"
+msgstr "כמו המשבצות"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "מודלי היחידות שמגיעים עם ערכת המשבצות שלמעלה; ערכת הגיבוי משלימה את החסר."
+
+msgid "No models"
+msgstr "ללא מודלים"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "אסימונים עגולים עם סמלי היחידות של Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "מראה היחידות (Unitset של Unciv): כל ערכת משבצות הכוללת מודלי יחידות (⁦pieces/Units⁩) יכולה לספק אותם."
+
+msgid "Visual hints"
+msgstr "עזרי תצוגה"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "שכבות המפה של Unciv; גם הכפתורים העגולים ליד הסקירה מפעילים ומכבים אותן."
+
+msgid "Show unit movement arrows"
+msgstr "הצגת חיצי תנועת יחידות"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "לאן נעו היחידות לאחרונה ומי תקף את מי."
+
+msgid "Show tile yields"
+msgstr "הצגת תפוקת משבצות"
+
+msgid "Food, production, gold... on every tile."
+msgstr "מזון, ייצור, זהב... בכל משבצת."
+
+msgid "Show worked tiles"
+msgstr "הצגת משבצות מעובדות"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "המשבצות שבהן עובדים תושבי הערים שלך."
+
+msgid "Show resources and improvements"
+msgstr "הצגת משאבים ושיפורים"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "סמלי משאבים ושיפורים על המשבצות."
+
+msgid "Show improvement pictures"
+msgstr "הצגת תמונות שיפורים"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "חוות, מכרות, דרכים וכדומה כמודלים."
+
+msgid "Show unit icons"
+msgstr "הצגת סמלי יחידות"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "סמל Unciv הקטן מעל כל מודל יחידה."
+
+msgid "Language"
+msgstr "שפה"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "תרגומי Unciv להודעות, לשמות ולתיאורים במשחק, לצד תרגום ממשק Unciv VR. טקסט שטרם תורגם נשאר באנגלית."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "טקסט שאין לו תרגום ב־Unciv נשאר באנגלית."
+
+msgid "Turns"
+msgstr "תורות"
+
+msgid "Check for idle units"
+msgstr "בדיקת יחידות ממתינות"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "סיום התור מעביר אותך תחילה לכל יחידה שטרם קיבלה פקודות."
+
+msgid "Auto unit cycle"
+msgstr "מעבר אוטומטי בין יחידות"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "לאחר מתן פקודות ליחידה, נבחרת היחידה הבאה שממתינה לפקודות."
+
+msgid "Cycle idle units by distance"
+msgstr "מעבר בין יחידות ממתינות לפי מרחק"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "היחידה הבאה / הקודמת בוחרת ביחידה הקרובה ביותר במקום בסדר קבוע."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "בקשת אישור בסיום תור"
+
+msgid "End turn needs a second press."
+msgstr "סיום תור דורש לחיצה נוספת."
+
+msgid "Order trade offers by amount"
+msgstr "מיון הצעות סחר לפי כמות"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "ההצעות הגדולות ביותר מופיעות ראשונות בשולחן הסחר."
+
+msgid "Show suggested city locations"
+msgstr "הצגת מיקומים מוצעים לערים"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "כשנבחר מתיישב, שלושת המיקומים הקרובים הטובים ביותר לעיר חדשה לפי Unciv מסומנים במפה."
+
+msgid "Tutorials"
+msgstr "הדרכות"
+
+msgid "Show tutorials"
+msgstr "הצגת הדרכות"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "הודעות ההדרכה וכרטיס המשימות. כל ההדרכות מופיעות גם באנציקלופדיה."
+
+msgid "Reset tutorials"
+msgstr "איפוס ההדרכות"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "הצגת כל ההדרכות והמשימות מחדש, כמו לשחקן חדש."
+
+msgid "Other players"
+msgstr "שחקנים אחרים"
+
+msgid "Other players' turns"
+msgstr "תורות השחקנים האחרים"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "מה שיוצג מתורות השחקנים האחרים לאחר סיום התור שלך."
+
+msgid "Show the moves and battles I can see"
+msgstr "הצגת תנועות וקרבות שבטווח הראייה שלי"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "מוצגים לפי הסדר; התצוגה עוברת בהדרגה לקרבות."
+
+msgid "Show them, fast"
+msgstr "הצגה מהירה"
+
+msgid "The same, at two and a half times the speed."
+msgstr "אותה תצוגה, במהירות פי שניים וחצי."
+
+msgid "Don't show them"
+msgstr "ללא הצגה"
+
+msgid "The map just updates."
+msgstr "המפה פשוט מתעדכנת."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "האפשרויות של Unciv ליחידות ולערים אוטומטיות."
+
+msgid "Automated and exploring units move"
+msgstr "מועד תנועת יחידות אוטומטיות וחוקרות"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "מתי נעות יחידות אוטומטיות, חוקרות או יחידות במסלול שנמשך כמה תורות."
+
+msgid "When I end my turn"
+msgstr "בסיום התור שלי"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "חוקרים, עובדים אוטומטיים ויחידות במסלולים ארוכים נעים בסיום התור."
+
+msgid "At the start of my turn"
+msgstr "בתחילת התור שלי"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "הן נעות בתחילת התור שלך (האפשרות של Unciv להזזת יחידות אוטומטיות בתחילת התור)."
+
+msgid "Auto-assign city production"
+msgstr "בחירת ייצור עירוני אוטומטית"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "עיר שסיימה בנייה בוחרת בעצמה מה לבנות בהמשך."
+
+msgid "Auto-build roads"
+msgstr "סלילת דרכים אוטומטית"
+
+msgid "Automated workers build roads between your cities."
+msgstr "עובדים אוטומטיים סוללים דרכים בין הערים שלך."
+
+msgid "Automated workers replace improvements"
+msgstr "עובדים אוטומטיים מחליפים שיפורים"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "עובדים אוטומטיים רשאים להחליף שיפור בשיפור טוב יותר."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "מניעת הסרת צמחייה בידי עובדים אוטומטיים"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "עובדים אוטומטיים משאירים יערות, ג'ונגלים וביצות ללא שינוי."
+
+msgid "Automated units can upgrade"
+msgstr "יחידות אוטומטיות יכולות להשתדרג"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "יחידות צבאיות אוטומטיות משתדרגות כשיש מספיק זהב."
+
+msgid "Automated units choose promotions"
+msgstr "יחידות אוטומטיות בוחרות קידומים"
+
+msgid "Automated units pick their own promotions."
+msgstr "יחידות אוטומטיות בוחרות את הקידומים שלהן בעצמן."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "הפגזה אוטומטית מערים בסיום התור"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "ערים שעדיין יכולות לירות תוקפות אויבים בטווח בסיום התור."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "שיבוץ מומחים אוטומטי בערים חדשות"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "ערים חדשות משבצות בעצמן תושבים בתפקידי מומחים."
+
+msgid "Sound effects"
+msgstr "אפקטים קוליים"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "כפתורים, תנועות, קרבות ועוד. במציאות מדומה הצליל מגיע ממיקום האירוע על השולחן."
+
+msgid "City ambience"
+msgstr "צלילי העיר"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "רחש העיר שחוזר ברצף בזמן השהייה בה; ל־Unciv יש צליל לכל תקופה."
+
+msgid "Your own and mods'"
+msgstr "הלוחות שלך ושל מודים"
+
+msgid "None yet."
+msgstr "אין עדיין."
+
+msgid "Put the panels back"
+msgstr "החזרת הלוחות למקומם"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "כל לוח חוזר למיקום שהוגדר בקובץ panel.json שלו."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "במציאות מדומה מוצגים הבקרים שבידיך כפי שמציירת אותם סביבת ההפעלה של המשקפיים (SteamVR תומכת בכך; אחרות מציגות תחליף פשוט)."
+
+msgid "Boards"
+msgstr "לוחות תצוגה"
+
+msgid "Put the boards back"
+msgstr "החזרת לוחות התצוגה למקומם"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "הסקירה, לוח המידע, המסך הגדול, לוחות העיר, סקירת האימפריה והלוח הזה חוזרים למיקומיהם המקוריים."
+
+msgid "This game"
+msgstr "המשחק הזה"
+
+msgid "Save game"
+msgstr "שמירת המשחק"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "שמירה בשם שתקלידו, בתיקיית השמירות של הגשר."
+
+msgid "Save..."
+msgstr "שמירה..."
+
+msgid "Main menu"
+msgstr "תפריט ראשי"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "חזרה לתפריט הראשי; המשחק ממשיך לפעול וכפתור החזרה למשחק מחזיר אותך אליו."
+
+msgid "Saves"
+msgstr "שמירות"
+
+msgid "Autosave"
+msgstr "שמירה אוטומטית"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "תדירות השמירה האוטומטית בשם Autosave (כפתור ההמשך בתפריט הראשי טוען אותה)."
+
+msgid "Save folder"
+msgstr "תיקיית שמירות"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "שולחן במציאות מדומה עבור Unciv, העיבוד בקוד פתוח של Civilization V."
+
+msgid "Bridge protocol"
+msgstr "פרוטוקול הגשר"
+
+msgid "Mods"
+msgstr "מודים"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "ערכות משבצות, רקעים ושולחנות משלך"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "הניחו את התיקיות כאן; הן יופיעו תחת מראה."
+
+msgid "Settings file"
+msgstr "קובץ הגדרות"
+
+msgid "Licence and credits"
+msgstr "רישיון ותודות"
+
+msgid "Desktop"
+msgstr "מחשב"
+
+msgid "Off"
+msgstr "כבוי"
+
+msgid "On"
+msgstr "פעיל"
+
+msgid "End turn"
+msgstr "סיום תור"
+
+msgid "< Prev"
+msgstr "הקודם"
+
+msgid "Idle unit"
+msgstr "יחידה ממתינה"
+
+msgid "Next >"
+msgstr "הבא"
+
+msgid "Research"
+msgstr "מחקר"
+
+msgid "Recenter table"
+msgstr "מרכוז השולחן"
+
+msgid "No unit selected"
+msgstr "לא נבחרה יחידה"
+
+msgid "Point at a unit or city to select it."
+msgstr "הצביעו על יחידה או עיר כדי לבחור בה."
+
+msgid "Fortified"
+msgstr "מחופרת"
+
+msgid "Sleeping"
+msgstr "ישנה"
+
+msgid "Automated"
+msgstr "אוטומטית"
+
+msgid "On its way"
+msgstr "בדרך"
+
+msgid "Embarked"
+msgstr "בים"
+
+msgid "Strength"
+msgstr "עוצמה"
+
+msgid "RangedStrength"
+msgstr "עוצמת טווח"
+
+msgid "Range"
+msgstr "טווח"
+
+msgid "Movement"
+msgstr "תנועה"
+
+msgid "Rename"
+msgstr "שינוי שם"
+
+msgid "Cancel"
+msgstr "ביטול"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "מדלגת על התור הזה (לחצו שוב על דילוג כדי לתת פקודות)."
+
+msgid "Health"
+msgstr "בריאות"
+
+msgid "XP"
+msgstr "ניסיון"
+
+msgid "Promote!  Choose a promotion"
+msgstr "קידום! בחרו קידום"
+
+msgid "Promote"
+msgstr "קידום"
+
+msgid "Building %s"
+msgstr "בבנייה: %s"
+
+msgid "%d turns left"
+msgstr "תורות שנותרו: ⁦%d⁩"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "מטרות אויב בטווח (טבעות אדומות): ⁦%d⁩. לחצו על אחת כדי לכוון"
+
+msgid "Actions"
+msgstr "פעולות"
+
+msgid "Pillage"
+msgstr "ביזה"
+
+msgid "Sure? Click again"
+msgstr "בטוחים? לחצו שוב"
+
+msgid "click the red button again"
+msgstr "לחצו שוב על הכפתור האדום"
+
+msgid "Build here"
+msgstr "בנייה כאן"
+
+msgid "Stop"
+msgstr "עצירה"
+
+msgid "%d turns"
+msgstr "תורות: ⁦%d⁩"
+
+msgid "Population %d"
+msgstr "אוכלוסייה: ⁦%d⁩"
+
+msgid "Defense %d"
+msgstr "הגנה: ⁦%d⁩"
+
+msgid "Health %d/%d"
+msgstr "בריאות: ⁦%d/%d⁩"
+
+msgid "%d idle citizens"
+msgstr "תושבים ללא תפקיד: ⁦%d⁩"
+
+msgid "Puppet"
+msgstr "עיר בובה"
+
+msgid "Starving! %d turns"
+msgstr "רעב! תורות: ⁦%d⁩"
+
+msgid "Grows in %d turns"
+msgstr "תורות עד לצמיחה: ⁦%d⁩"
+
+msgid "Food -> production"
+msgstr "מזון לייצור"
+
+msgid "Not growing"
+msgstr "ללא צמיחה"
+
+msgid "Border in %d turns"
+msgstr "תורות עד להתרחבות הגבולות: ⁦%d⁩"
+
+msgid "Borders stopped"
+msgstr "הגבולות אינם מתרחבים"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "תצוגת העיר — משבצות, תושבים, תור בנייה ורכישה"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "העיר נהרסת — היא מצטמצמת בכל תור עד שתיעלם. אפשר להפסיק את ההריסה בתצוגת העיר."
+
+msgid "Producing"
+msgstr "בייצור"
+
+msgid "Producing nothing - pick something below"
+msgstr "אין ייצור — בחרו משהו למטה"
+
+msgid "Buildings"
+msgstr "מבנים"
+
+msgid "Wonders"
+msgstr "פלאים"
+
+msgid "Other"
+msgstr "אחר"
+
+msgid "Gold"
+msgstr "זהב"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "רכישה עכשיו תמורת ⁦%d⁩ זהב (ברשותך ⁦%d⁩)"
+
+msgid "Promote %s"
+msgstr "קידום %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "ניסיון ⁦%d/%d⁩. בחרו קידום אחד.%s"
+
+msgid "Has: %s"
+msgstr "ברשותה: %s"
+
+msgid "No promotion available right now."
+msgstr "אין קידום זמין כרגע."
+
+msgid "Tutorial"
+msgstr "הדרכה"
+
+msgid "%d of %d"
+msgstr "⁦%d⁩ מתוך ⁦%d⁩"
+
+msgid "%d more messages after this one"
+msgstr "הודעות נוספות אחרי זו: ⁦%d⁩"
+
+msgid "%s gives:"
+msgstr "%s נותן:"
+
+msgid "They"
+msgstr "הצד השני"
+
+msgid "You give:"
+msgstr "ממך:"
+
+msgid "%d votes  %s"
+msgstr "קולות: ⁦%d⁩  %s"
+
+msgid "voted for %s"
+msgstr "הצביע בעד %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "אפשר לכבות הדרכות בהגדרות > משחקיות. כולן מופיעות גם באנציקלופדיה."
+
+msgid " (%d turns)"
+msgstr " (תורות: ⁦%d⁩)"
+
+msgid "Choose a free great person"
+msgstr "בחירת אישיות דגולה בחינם"
+
+msgid "You have %d free great people to pick."
+msgstr "מספר האישיויות הדגולות שאפשר לבחור בחינם: ⁦%d⁩."
+
+msgid "Vote for world leader"
+msgstr "הצבעה למנהיג העולם"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "בחרו מי יהיה מנהיג העולם ויזכה בניצחון דיפלומטי!"
+
+msgid "Vote for %s"
+msgstr "הצבעה בעד %s"
+
+msgid "Abstain"
+msgstr "הימנעות"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "אין מחקר פעיל — בחרו טכנולוגיה!"
+
+msgid "Researching %s"
+msgstr "מחקר: %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "טכנולוגיות לבחירה בחינם: ⁦%d⁩ — בחרו אחת מהמודגשות."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "מדע ⁦%+d⁩ לתור. בחירת טכנולוגיה מאוחרת מוסיפה את דרישות הקדם שלה לתור המחקר."
+
+msgid "%s turns"
+msgstr "תורות: %s"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "המשיכו מהמקום שבו עצרתם, או התחילו משחק חדש."
+
+msgid "Resume"
+msgstr "חזרה למשחק"
+
+msgid "Continue"
+msgstr "המשך"
+
+msgid "Quick start"
+msgstr "התחלה מהירה"
+
+msgid "New game..."
+msgstr "משחק חדש..."
+
+msgid "Load game..."
+msgstr "טעינת משחק..."
+
+msgid "Civilopedia"
+msgstr "אנציקלופדיה"
+
+msgid "Quit"
+msgstr "יציאה"
+
+msgid "New game"
+msgstr "משחק חדש"
+
+msgid "You"
+msgstr "אתם"
+
+msgid "World"
+msgstr "עולם"
+
+msgid "Rules"
+msgstr "כללים"
+
+msgid "Random"
+msgstr "אקראי"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s — מפה %s %s, %s, שחקני מחשב: ⁦%d⁩, ערי מדינה: ⁦%d⁩"
+
+msgid "%s, led by %s"
+msgstr "%s, בהנהגת %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "אקראי: הציוויליזציה שלך תתגלה בתחילת המשחק."
+
+msgid "Your civilization"
+msgstr "הציוויליזציה שלך"
+
+msgid "Map size"
+msgstr "גודל המפה"
+
+msgid "Map type"
+msgstr "סוג המפה"
+
+msgid "Shape"
+msgstr "צורה"
+
+msgid "Resources"
+msgstr "משאבים"
+
+msgid "Options"
+msgstr "אפשרויות"
+
+msgid "No ancient ruins"
+msgstr "ללא חורבות עתיקות"
+
+msgid "No natural wonders"
+msgstr "ללא פלאי טבע"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "מפות גדולות מחליקות מתחת לשולחן: החזיקו כפתור אחיזה וגררו, או השתמשו בסקירה שבקצה הרחוק."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings מוסיפה דת, ריגול, ציוויליזציות נוספות ועוד יחידות ומבנים."
+
+msgid "Difficulty"
+msgstr "רמת קושי"
+
+msgid "Game speed"
+msgstr "מהירות המשחק"
+
+msgid "Starting era"
+msgstr "תקופה התחלתית"
+
+msgid "AI players"
+msgstr "שחקני מחשב"
+
+msgid "City-states"
+msgstr "ערי מדינה"
+
+msgid "Victory types (none picked = all)"
+msgstr "סוגי ניצחון (ללא בחירה = הכול)"
+
+msgid "No barbarians"
+msgstr "ללא ברברים"
+
+msgid "Raging barbarians"
+msgstr "ברברים משתוללים"
+
+msgid "One-city challenge"
+msgstr "אתגר עיר אחת"
+
+msgid "No city razing"
+msgstr "ללא הריסת ערים"
+
+msgid "Nuclear weapons"
+msgstr "נשק גרעיני"
+
+msgid "Espionage"
+msgstr "ריגול"
+
+msgid "< Back"
+msgstr "חזרה"
+
+msgid "Start game"
+msgstr "התחלת המשחק"
+
+msgid "Load game"
+msgstr "טעינת משחק"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "שמירות בתיקיית Unciv VR שלך, מהחדשה לישנה."
+
+msgid "Backgrounds"
+msgstr "רקעים"
+
+msgid "Mountains"
+msgstr "הרים"
+
+msgid "Scenery"
+msgstr "נוף"
+
+msgid "Technologies"
+msgstr "טכנולוגיות"
+
+msgid "Policies"
+msgstr "מדיניות"
+
+msgid "Diplomacy"
+msgstr "דיפלומטיה"
+
+msgid "Religion"
+msgstr "דת"
+
+msgid "Victory"
+msgstr "ניצחון"
+
+msgid "Declare war"
+msgstr "הכרזת מלחמה"
+
+msgid "Score"
+msgstr "ניקוד"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "אין היסטוריה עדיין — התרשימים מתמלאים עם התקדמות התורות."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "=====   החזיקו כאן את ההדק וגררו להזזת המסך   ====="
+
+msgid "Pause"
+msgstr "השהיה"
+
+msgid "Play"
+msgstr "ניגון"
+
+msgid "Loading the technology tree..."
+msgstr "טוען את עץ הטכנולוגיות..."
+
+msgid "Pick something to research!"
+msgstr "בחרו משהו למחקר!"
+
+msgid "Science %+d per turn"
+msgstr "מדע ⁦%+d⁩ לתור"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "לחצו על טכנולוגיה כדי לראות את השפעתה ומה היא מאפשרת לבנות. הסמלים הקטנים מתחתיה מציגים מה היא פותחת."
+
+msgid "needs science"
+msgstr "דרוש מדע"
+
+msgid "researching now, "
+msgstr "במחקר כעת, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s   (%s, מדע: ⁦%d⁩)"
+
+msgid "Loading policies..."
+msgstr "טוען מדיניות..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "תרבות ⁦%d / %d⁩  (⁦%+d⁩ לתור)%s"
+
+msgid "You can adopt a policy!"
+msgstr "אפשר לאמץ מדיניות!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "לחצו על סמל כדי להציג מדיניות. פתחו ענף (הסמל הגדול שלו) לפני אימוץ המדיניות שבתוכו."
+
+msgid "ready to adopt"
+msgstr "זמינה לאימוץ"
+
+msgid "needs more culture"
+msgstr "דרושה עוד תרבות"
+
+msgid "not available yet"
+msgstr "עדיין לא זמינה"
+
+msgid "(no special effects)"
+msgstr "(ללא השפעות מיוחדות)"
+
+msgid "Adopt"
+msgstr "אימוץ"
+
+msgid "Your score: %d"
+msgstr "הניקוד שלך: ⁦%d⁩"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "עדיין לא פגשתם אף אחד. חקרו כדי למצוא ציוויליזציות וערי מדינה אחרות."
+
+msgid "Loading..."
+msgstr "טוען..."
+
+msgid "   (city-state)"
+msgstr "   (עיר מדינה)"
+
+msgid "Destroyed"
+msgstr "הושמדה"
+
+msgid "AT WAR"
+msgstr "במלחמה"
+
+msgid "At peace"
+msgstr "בשלום"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (הסכם: עוד ⁦%d⁩ תורות)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s — השפעה ⁦%d⁩%s"
+
+msgid "   allied with %s"
+msgstr "   בברית עם %s"
+
+msgid "Feels %s about you%s"
+msgstr "היחס כלפיך: %s%s"
+
+msgid "Score %d    Cities %d"
+msgstr "ניקוד ⁦%d⁩    ערים ⁦%d⁩"
+
+msgid "Diplomacy..."
+msgstr "דיפלומטיה..."
+
+msgid "Trade"
+msgstr "סחר"
+
+msgid "Offer peace"
+msgstr "הצעת שלום"
+
+msgid "Click again to declare war on %s"
+msgstr "לחצו שוב להכרזת מלחמה על %s"
+
+msgid "< All civilizations"
+msgstr "כל הציוויליזציות"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (תורות עד שאפשר לדון בשלום: ⁦%d⁩)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "סוג: %s    אישיות: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "היחסים בינינו: %s (השפעה ⁦%d⁩)"
+
+msgid "Ally: %s with %d influence"
+msgstr "בעלת ברית: %s עם השפעה ⁦%d⁩"
+
+msgid "Protected by: "
+msgstr "תחת חסות: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "תורות עד לשינוי היחסים: ⁦%d⁩"
+
+msgid "Resources: "
+msgstr "משאבים: "
+
+msgid "When Friends:"
+msgstr "במצב ידידות:"
+
+msgid "When Allies:"
+msgstr "במצב ברית:"
+
+msgid "You have a declaration of friendship."
+msgstr "יש ביניכם הצהרת ידידות."
+
+msgid "You have denounced them."
+msgstr "גיניתם אותם."
+
+msgid "Go to on map"
+msgstr "מעבר למיקום במפה"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "מתנה של ⁦%d⁩ זהב (⁦+%d⁩ השפעה)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "בניית %s על %s (200 זהב)"
+
+msgid "Revoke protection"
+msgstr "ביטול החסות"
+
+msgid "Click again: revoke protection?"
+msgstr "לחצו שוב: לבטל חסות?"
+
+msgid "Pledge to protect"
+msgstr "התחייבות לחסות"
+
+msgid "Click again: declare protection?"
+msgstr "לחצו שוב: להכריז על חסות?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "לקיחת ⁦%d⁩ זהב (-15 השפעה)"
+
+msgid "Take worker (-50 influence)"
+msgstr "לקיחת עובד (-50 השפעה)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "נישואים דיפלומטיים (⁦%d⁩ זהב)"
+
+msgid "Click again: they join your empire"
+msgstr "לחצו שוב: היא תצטרף לאימפריה שלך"
+
+msgid "Negotiate peace"
+msgstr "משא ומתן לשלום"
+
+msgid "Click again: make peace?"
+msgstr "לחצו שוב: לכרות שלום?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "הוצעה ידידות — ממתינים לתשובתם"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "הצעת הצהרת ידידות (30 תורות)"
+
+msgid "Denounce (30 turns)"
+msgstr "גינוי (30 תורות)"
+
+msgid "Click again: denounce %s?"
+msgstr "לחצו שוב: לגנות את %s?"
+
+msgid "Click again to declare war"
+msgstr "לחצו שוב להכרזת מלחמה"
+
+msgid "Demands:"
+msgstr "דרישות:"
+
+msgid "  (asked)"
+msgstr "  (התבקש)"
+
+msgid "  (they agreed)"
+msgstr "  (הסכימו)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "נכונות לשלם מס (לפחות 0 ללקיחת זהב, לפחות 30 ועיר בגודל 4 ללקיחת עובד):"
+
+msgid "  (+%d influence)"
+msgstr "  (⁦+%d⁩ השפעה)"
+
+msgid "  %d turns remaining"
+msgstr "  תורות שנותרו: ⁦%d⁩"
+
+msgid "Unforgivable"
+msgstr "עוינות מוחלטת"
+
+msgid "Enemy"
+msgstr "אויב"
+
+msgid "Afraid"
+msgstr "מפוחד"
+
+msgid "Competitor"
+msgstr "מתחרה"
+
+msgid "Favorable"
+msgstr "אוהד"
+
+msgid "Friend"
+msgstr "ידיד"
+
+msgid "Ally"
+msgstr "בעל ברית"
+
+msgid "Pantheon"
+msgstr "פנתאון"
+
+msgid "Founder"
+msgstr "מייסד"
+
+msgid "Follower"
+msgstr "מאמין"
+
+msgid "Enhancer"
+msgstr "מחזק"
+
+msgid "Any"
+msgstr "כל סוג"
+
+msgid "Pick %d more beliefs%s"
+msgstr "אמונות שנותרו לבחירה: ⁦%d⁩%s"
+
+msgid "so far: %s"
+msgstr "עד כה: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "כעת בחרו סמל לדת שלך (למעלה)."
+
+msgid "Follow this pantheon"
+msgstr "אימוץ הפנתאון הזה"
+
+msgid "Found %s"
+msgstr "ייסוד %s"
+
+msgid "Enhance %s"
+msgstr "חיזוק %s"
+
+msgid "Reform"
+msgstr "רפורמה"
+
+msgid "Confirm"
+msgstr "אישור"
+
+msgid "Religion is off in this game."
+msgstr "הדת כבויה במשחק הזה."
+
+msgid "Choose a pantheon belief"
+msgstr "בחירת אמונת פנתאון"
+
+msgid "Found your religion"
+msgstr "ייסוד הדת שלך"
+
+msgid "Enhance your religion"
+msgstr "חיזוק הדת שלך"
+
+msgid "Reform your religion"
+msgstr "רפורמה בדת שלך"
+
+msgid "No religion yet"
+msgstr "אין דת עדיין"
+
+msgid "Your beliefs"
+msgstr "האמונות שלך"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "אין מה לבחור כרגע. צברו אמונה לייסוד פנתאון; נביא דגול מייסד דת באחת הערים שלך ובהמשך מחזק אותה."
+
+msgid "Symbol:"
+msgstr "סמל:"
+
+msgid "Name: %s"
+msgstr "שם: %s"
+
+msgid "(pick a symbol)"
+msgstr "(בחרו סמל)"
+
+msgid "Rename..."
+msgstr "שינוי שם..."
+
+msgid "Choose any belief!"
+msgstr "בחרו כל אמונה!"
+
+msgid "Choose a %s belief!"
+msgstr "בחרו אמונה מסוג %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (כבר שייכת לדת אחרת)"
+
+msgid "  (you have it)"
+msgstr "  (כבר ברשותך)"
+
+msgid "  (not available)"
+msgstr "  (לא זמינה)"
+
+msgid "  (picked for another slot)"
+msgstr "  (נבחרה למשבצת אחרת)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "תור ⁦%d⁩   מהירות %s   %s%s"
+
+msgid "max %d turns"
+msgstr "מגבלת תורות: ⁦%d⁩"
+
+msgid "You have won a %s Victory!"
+msgstr "זכית בניצחון מסוג %s!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s זכתה בניצחון מסוג %s!"
+
+msgid "You have been defeated."
+msgstr "הובסת."
+
+msgid "One more turn...!"
+msgstr "עוד תור אחד...!"
+
+msgid "Main menu (start a new game)"
+msgstr "תפריט ראשי (התחלת משחק חדש)"
+
+msgid "Our status"
+msgstr "המצב שלנו"
+
+msgid "Global status"
+msgstr "המצב העולמי"
+
+msgid "Rankings"
+msgstr "דירוגים"
+
+msgid "Charts"
+msgstr "תרשימים"
+
+msgid "Demographics"
+msgstr "דמוגרפיה"
+
+msgid "%s Victory"
+msgstr "ניצחון %s"
+
+msgid "[done] "
+msgstr "[הושלם] "
+
+msgid "Rank"
+msgstr "דירוג"
+
+msgid "Value"
+msgstr "ערך"
+
+msgid "Best"
+msgstr "הטוב ביותר"
+
+msgid "Average / Worst"
+msgstr "ממוצע / הגרוע ביותר"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "סחר עם %s     הזהב שלך ⁦%d⁩, שלהם ⁦%d⁩"
+
+msgid "You can offer"
+msgstr "מה שאפשר להציע"
+
+msgid "You give"
+msgstr "ממך"
+
+msgid "You get"
+msgstr "אליך"
+
+msgid "They can offer"
+msgstr "מה שהם יכולים להציע"
+
+msgid "Clear"
+msgstr "ניקוי"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "לחצו על פריטים בעמודות החיצוניות כדי להניח אותם על השולחן; לחצו שוב כדי להסירם."
+
+msgid "%s would accept this."
+msgstr "%s יסכים להצעה הזו."
+
+msgid "%s wants more for this%s."
+msgstr "%s רוצה יותר בתמורה%s."
+
+msgid "about %d gold's worth"
+msgstr "בשווי של כ־⁦%d⁩ זהב"
+
+msgid "Propose deal"
+msgstr "הצעת עסקה"
+
+msgid "  %d turns"
+msgstr "  תורות: ⁦%d⁩"
+
+msgid "Gold_Per_Turn"
+msgstr "זהב לתור"
+
+msgid "Not connected to the bridge"
+msgstr "אין חיבור לגשר"
+
+msgid "Bridge disconnected"
+msgstr "החיבור לגשר נותק"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "גשר Unciv המצורף אינו שלם. יש להתקין מחדש את קובצי המשחק."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "לא נמצא מאגר Unciv עם הגשר ב־%s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "לא נמצאה Java 17 או חדשה יותר (Unciv דורשת JDK 21). התקינו אותה והגדירו JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "לא ניתן לכתוב את %s"
+
+msgid "Couldn't start Gradle"
+msgstr "לא ניתן להפעיל את Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "לא ניתן להפעיל את גשר Unciv המצורף"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "=====   החזיקו כאן את ההדק וגררו להזזה   ====="
+
+msgid "Exit city"
+msgstr "יציאה מהעיר"
+
+msgid "City"
+msgstr "עיר"
+
+msgid "BEING RAZED"
+msgstr "נהרסת"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "תושבים ללא תפקיד: ⁦%d/%d⁩%s"
+
+msgid "click: let the city place them"
+msgstr "לחצו לשיבוץ אוטומטי"
+
+msgid "(%d/%d food)"
+msgstr "(⁦%d/%d⁩ מזון)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "רעב: תורות עד לאובדן תושב: ⁦%d⁩ %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "מזון מומר לייצור בזמן בניית היחידה הזו"
+
+msgid "New citizen in %d turns %s"
+msgstr "תורות עד לתושב חדש: ⁦%d⁩ %s"
+
+msgid "Not growing %s"
+msgstr "ללא צמיחה %s"
+
+msgid "(%d/%d culture)"
+msgstr "(⁦%d/%d⁩ תרבות)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "תורות עד להתרחבות הגבולות: ⁦%d⁩ %s"
+
+msgid "Borders have stopped growing"
+msgstr "התרחבות הגבולות נעצרה"
+
+msgid "In resistance for another %d turns"
+msgstr "תורות התנגדות שנותרו: ⁦%d⁩"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "תורות שנותרו לחגיגת אהבת המלך: ⁦%d⁩"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "דורשת %s (חגיגת אהבת המלך תתחיל אם יושג)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "סיפוח העיר (ביטול מעמד עיר בובה)"
+
+msgid "Stop razing city"
+msgstr "הפסקת הריסת העיר"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "לחצו שוב להריסת %s (תאבד תושב בכל תור)"
+
+msgid "Raze city"
+msgstr "הריסת העיר"
+
+msgid "Citizen management"
+msgstr "ניהול תושבים"
+
+msgid "Reset citizens"
+msgstr "איפוס שיבוץ תושבים"
+
+msgid "Avoid growth"
+msgstr "מניעת צמיחה"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "מיקוד תושבים (אילו משבצות העיר מעדיפה לעבד):"
+
+msgid "Specialists"
+msgstr "מומחים"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "מומחים בשיבוץ ידני (לחצו לאוטומטי)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "מומחים בשיבוץ אוטומטי (לחצו לידני)"
+
+msgid "Specialist"
+msgstr "מומחה"
+
+msgid "Great people"
+msgstr "אישיויות דגולות"
+
+msgid "Majority religion: %s"
+msgstr "דת הרוב: %s"
+
+msgid "Former holy city of %s"
+msgstr "עיר קדושה לשעבר של %s"
+
+msgid "Holy city of %s"
+msgstr "עיר קדושה של %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: מאמינים ⁦%d⁩, לחץ ⁦%+d⁩"
+
+msgid "Specialist buildings"
+msgstr "מבני מומחים"
+
+msgid "  (free)"
+msgstr "  (בחינם)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "לחצו על משבצת בשולחן: משבצות מעובדות מפסיקות להיעבד, תושבים פנויים עוברים למשבצות שאינן מעובדות, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "ומשבצות עם מחיר ניתנות לרכישה (לחיצה כפולה)."
+
+msgid "Tile"
+msgstr "משבצת"
+
+msgid "city centre"
+msgstr "מרכז העיר"
+
+msgid "worked (locked)"
+msgstr "מעובדת (נעולה)"
+
+msgid "not worked"
+msgstr "אינה מעובדת"
+
+msgid "gives its yield without a citizen"
+msgstr "מניבה תפוקה ללא תושב"
+
+msgid "gives nothing"
+msgstr "אינה מניבה דבר"
+
+msgid "blockaded by an enemy"
+msgstr "חסומה בידי אויב"
+
+msgid "worked by %s"
+msgstr "מעובדת בידי %s"
+
+msgid "another city"
+msgstr "עיר אחרת"
+
+msgid "too far to work"
+msgstr "רחוקה מדי לעיבוד"
+
+msgid "can be bought"
+msgstr "ניתנת לרכישה"
+
+msgid "not yours"
+msgstr "אינה בבעלותך"
+
+msgid "Resource: %s"
+msgstr "משאב: %s"
+
+msgid "Improvement: %s"
+msgstr "שיפור: %s"
+
+msgid "Owned by %s"
+msgstr "בבעלות %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "נעילה (השארת תושב כאן)"
+
+msgid "Stop working"
+msgstr "הפסקת עיבוד"
+
+msgid "Unlock"
+msgstr "ביטול נעילה"
+
+msgid "Work this tile"
+msgstr "עיבוד המשבצת"
+
+msgid "Work and lock"
+msgstr "עיבוד ונעילה"
+
+msgid "Click again: buy for %d gold"
+msgstr "לחצו שוב: רכישה תמורת ⁦%d⁩ זהב"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "רכישה תמורת ⁦%d⁩ זהב (ברשותך ⁦%d⁩)"
+
+msgid "Production"
+msgstr "ייצור"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "זהב ⁦%d⁩   אמונה ⁦%d⁩   ייצור ⁦%+d⁩ לתור"
+
+msgid "Being built"
+msgstr "בבנייה"
+
+msgid "Nothing being built - pick something below"
+msgstr "אין בנייה פעילה — בחרו משהו למטה"
+
+msgid "   %d turns"
+msgstr "   תורות: ⁦%d⁩"
+
+msgid "Hide what can't be built yet"
+msgstr "הסתרת מה שעדיין אי אפשר לבנות"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "הצגת מה שעדיין אי אפשר לבנות (והסיבה)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "לחצו על פריט כדי לראות את השפעתו, ואז בנו אותו כעת, הוסיפו לתור הבנייה או רכשו אותו."
+
+msgid "   %d production"
+msgstr "   ייצור: ⁦%d⁩"
+
+msgid ", %d turns"
+msgstr ", תורות: ⁦%d⁩"
+
+msgid "   (built)"
+msgstr "   (נבנה)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "ה־%s שלו יוצב במשבצת שתיבחר בשולחן לאחר בנייה כעת / הוספה לתור / רכישה."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "ה־%s שלו יוצב במשבצת המסומנת בטבעת שנבחרה בעת ההוספה לתור."
+
+msgid "Build now"
+msgstr "בנייה כעת"
+
+msgid "Add to queue"
+msgstr "הוספה לתור הבנייה"
+
+msgid "Click again: buy for %d %s"
+msgstr "לחצו שוב: רכישה תמורת ⁦%d⁩ %s"
+
+msgid "Buy for %d %s"
+msgstr "רכישה תמורת ⁦%d⁩ %s"
+
+msgid "you have %d"
+msgstr "ברשותך ⁦%d⁩"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "לרכישה: הוציאו תחילה את היחידה מהעיר"
+
+msgid "Click again: sell for %d gold"
+msgstr "לחצו שוב: מכירה תמורת ⁦%d⁩ זהב"
+
+msgid "Sell for %d gold"
+msgstr "מכירה תמורת ⁦%d⁩ זהב"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "=====   אנציקלופדיה — החזיקו כאן את ההדק וגררו להזזה   ====="
+
+msgid "<  Back"
+msgstr "חזרה"
+
+msgid "This entry couldn't be loaded."
+msgstr "לא ניתן לטעון את הערך הזה."
+
+msgid "Building"
+msgstr "מבנה"
+
+msgid "Wonder"
+msgstr "פלא"
+
+msgid "Unit"
+msgstr "יחידה"
+
+msgid "Resource"
+msgstr "משאב"
+
+msgid "Improvement"
+msgstr "שיפור"
+
+msgid "Tile Improvements"
+msgstr "שיפורי משבצות"
+
+msgid "Technology"
+msgstr "טכנולוגיה"
+
+msgid "Promotion"
+msgstr "קידום"
+
+msgid "Promotions"
+msgstr "קידומים"
+
+msgid "Policy"
+msgstr "מדיניות"
+
+msgid "Belief"
+msgstr "אמונה"
+
+msgid "Religions and Beliefs"
+msgstr "דתות ואמונות"
+
+msgid "Nation"
+msgstr "אומה"
+
+msgid "Nations"
+msgstr "אומות"
+
+msgid "Terrain"
+msgstr "תוואי"
+
+msgid "Terrains"
+msgstr "סוגי תוואי"
+
+msgid "Unit types"
+msgstr "סוגי יחידות"
+
+msgid "Unit Names"
+msgstr "שמות יחידות"
+
+msgid "Victory Types"
+msgstr "סוגי ניצחון"
+
+msgid "Thumbstick"
+msgstr "מוט ההיגוי"
+
+msgid "Menu"
+msgstr "תפריט"
+
+msgid "Trigger"
+msgstr "הדק"
+
+msgid "Grip"
+msgstr "אחיזה"
+
+msgid "Trackpad"
+msgstr "משטח מגע"
+
+msgid "Button 1"
+msgstr "כפתור 1"
+
+msgid "Button 2"
+msgstr "כפתור 2"
+
+msgid "Cities"
+msgstr "ערים"
+
+msgid "None"
+msgstr "ללא"
+
+msgid "Unexplored (%d, %d)"
+msgstr "לא נחקר (⁦%d⁩, ⁦%d⁩)"
+
+msgid " - %s territory"
+msgstr " — שטח של %s"
+
+msgid " - city of %s"
+msgstr " — העיר %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, בריאות ⁦%d⁩)"
+
+msgid "Automate"
+msgstr "אוטומציה"
+
+msgid "Sleep"
+msgstr "שינה"
+
+msgid "Fortify"
+msgstr "התחפרות"
+
+msgid "Guard"
+msgstr "שמירה"
+
+msgid "Explore"
+msgstr "חקירה"
+
+msgid "Upgrade"
+msgstr "שדרוג"
+
+msgid "Transform"
+msgstr "המרה"
+
+msgid "Repair"
+msgstr "תיקון"
+
+msgid "Skip"
+msgstr "דילוג"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s   תור ⁦%d⁩  (%s)"
+
+msgid "%d BC"
+msgstr "⁦%d⁩ לפנה״ס"
+
+msgid "%d AD"
+msgstr "⁦%d⁩ לספירה"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "אין מחקר פעיל — בחרו טכנולוגיה!"
+
+msgid "Point at a tile"
+msgstr "הצביעו על משבצת"
+
+msgid "Unexplored"
+msgstr "לא נחקר"
+
+msgid "Send a unit to find out what's here."
+msgstr "שלחו יחידה לגלות מה נמצא כאן."
+
+msgid "Natural wonder: %s"
+msgstr "פלא טבע: %s"
+
+msgid "Improvement: %s%s"
+msgstr "שיפור: %s%s"
+
+msgid "River"
+msgstr "נהר"
+
+msgid "City of %s  (population %d)"
+msgstr "העיר %s (אוכלוסייה ⁦%d⁩)"
+
+msgid "%s territory"
+msgstr "שטח של %s"
+
+msgid "%d HP"
+msgstr "בריאות ⁦%d⁩"
+
+msgid "%+d%% to unit defense"
+msgstr "⁦%+d%%⁩ להגנת היחידה"
+
+msgid "Impassable"
+msgstr "בלתי עבירה"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "מחוץ לטווח הראייה כרגע — כך נראתה לאחרונה"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "תקיפת %s: נזק לאויב כ־⁦%d⁩, נזק לנו כ־⁦%d⁩"
+
+msgid "Science"
+msgstr "מדע"
+
+msgid "Happiness"
+msgstr "אושר"
+
+msgid "Malcontent"
+msgstr "מורת רוח"
+
+msgid "Culture"
+msgstr "תרבות"
+
+msgid "Faith"
+msgstr "אמונה"
+
+msgid "Population"
+msgstr "אוכלוסייה"
+
+msgid "Food"
+msgstr "מזון"
+
+msgid "Shift"
+msgstr "אותיות גדולות"
+
+msgid "Space"
+msgstr "רווח"
+
+msgid "< Del"
+msgstr "מחיקה"
+
+msgid "Recenter"
+msgstr "מרכוז"
+
+msgid "Move a unit!"
+msgstr "הזיזו יחידה!"
+
+msgid "hold to move onto a tile"
+msgstr "החזיקו כדי לעבור למשבצת"
+
+msgid "Connecting..."
+msgstr "מתחבר..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "החיבור לגשר אבד — מנסה שוב..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "מחפש את הגשר ב־127.0.0.1:⁦%d⁩..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "לא ניתן להפעיל את הגשר: %s\nהפעילו ידנית באמצעות: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "מפעיל את גשר Unciv... (נבנה מחדש אם הקוד השתנה — עשוי להימשך כדקה)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "הגשר נעצר לפני שהיה מוכן. מתוך %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "מנוע Unciv חסר ביישום הזה (התוסף UncivBridge לא נכלל בייצוא)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "לא ניתן להפעיל את מנוע Unciv: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "מנוע Unciv נעצר:\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "מפעיל את מנוע Unciv: %s... (⁦%d⁩ שניות)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "גשר Unciv ישן (פרוטוקול v⁦%d⁩) עדיין פעל — מפעיל אותו מחדש עם הקוד הנוכחי..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "לא ניתן לעצור את הגשר הישן — ממשיכים איתו. ייתכן שחלק מהתכונות לא יעבדו."
+
+msgid "Reconnected to the bridge."
+msgstr "החיבור לגשר חודש."
+
+msgid "Bridge error: %s"
+msgstr "שגיאת גשר: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "אזהרה: הגשר משתמש בפרוטוקול v⁦%d⁩ אך הלקוח מצפה ל־v⁦%d⁩ — עדכנו את שני המאגרים יחד. ייתכן שחלק מהתכונות לא יעבדו."
+
+msgid "Connected to Unciv %s"
+msgstr "מחובר ל־Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "לא ניתן לטעון את השמירה: %s"
+
+msgid "Your move."
+msgstr "התור שלך."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "מתחיל משחק חדש... (מפות גדולות דורשות מעט יותר זמן)"
+
+msgid "Starting a new game..."
+msgstr "מתחיל משחק חדש..."
+
+msgid "Couldn't start a game: %s"
+msgstr "לא ניתן להתחיל משחק: %s"
+
+msgid "saved "
+msgstr "נשמר "
+
+msgid "%s, turn %d"
+msgstr "%s, תור ⁦%d⁩"
+
+msgid "Main menu: point at the card over the table."
+msgstr "תפריט ראשי: הצביעו על הכרטיס שמעל השולחן."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s במפה %s %s, %s, שחקני מחשב ⁦%d⁩, ערי מדינה ⁦%d⁩"
+
+msgid "A random civilization"
+msgstr "ציוויליזציה אקראית"
+
+msgid "Loading %s..."
+msgstr "טוען %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "לא ניתן לטעון %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "לא ניתן לקרוא את הכללים: %s"
+
+msgid "getState failed: %s"
+msgstr "getState נכשל: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "הסקירה, לוח המידע, המסך הגדול והלוחות חזרו למקומם הרגיל."
+
+msgid "Name your religion"
+msgstr "מתן שם לדת שלך"
+
+msgid "Your religion"
+msgstr "הדת שלך"
+
+msgid "Researching %s."
+msgstr "חוקר %s."
+
+msgid "Adopted %s."
+msgstr "אומצה %s."
+
+msgid "You declared war on %s!"
+msgstr "הכרזת מלחמה על %s!"
+
+msgid "Unit movements"
+msgstr "תנועות יחידות"
+
+msgid "Tile yields"
+msgstr "תפוקת משבצות"
+
+msgid "Worked tiles"
+msgstr "משבצות מעובדות"
+
+msgid "Resources and improvements"
+msgstr "משאבים ושיפורים"
+
+msgid "Improvement pictures"
+msgstr "תמונות שיפורים"
+
+msgid "Unit icons"
+msgstr "סמלי יחידות"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "החזיקו את %s מעל משבצת כדי להעביר אליה יחידה."
+
+msgid "the trigger"
+msgstr "ההדק"
+
+msgid "the mouse button"
+msgstr "כפתור העכבר"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "תקיפת %s\nנזק לאויב כ־⁦%d⁩, נזק לנו כ־⁦%d⁩\nלחצו שוב לתקיפה"
+
+msgid "a unit"
+msgstr "יחידה"
+
+msgid "Can't get there"
+msgstr "אין דרך להגיע לשם"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "אין מקום במשבצת הזו\n%s %s כבר שם"
+
+msgid "\nSwap places on the card"
+msgstr "\nהחלפת מקומות בכרטיס"
+
+msgid "Move here"
+msgstr "מעבר לכאן"
+
+msgid "Move here: %d turns"
+msgstr "מעבר לכאן: תורות ⁦%d⁩"
+
+msgid "\nsharing the tile with %s"
+msgstr "\nשיתוף המשבצת עם %s"
+
+msgid "\nclick again to go"
+msgstr "\nלחצו שוב לתנועה"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s בדרך — תמשיך לנוע בתור הבא."
+
+msgid "No attack happened."
+msgstr "לא התרחשה תקיפה."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s תקפה את %s: גרמה ⁦%d⁩ נזק וספגה ⁦%d⁩."
+
+msgid "  City captured!"
+msgstr "  העיר נכבשה!"
+
+msgid "  %s destroyed!"
+msgstr "  %s הושמדה!"
+
+msgid "  Your %s was lost."
+msgstr "  ה־%s שלך אבדה."
+
+msgid "Improvement order cancelled."
+msgstr "פקודת השיפור בוטלה."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: בונה %s (תורות ⁦%d⁩)."
+
+msgid "Rename %s"
+msgstr "שינוי השם של %s"
+
+msgid "%s is now called %s."
+msgstr "השם של %s הוא כעת %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "שם עבור %s (ריק: ללא שם)"
+
+msgid "Renamed to %s."
+msgstr "השם שונה ל־%s."
+
+msgid "Name removed."
+msgstr "השם הוסר."
+
+msgid "%s: on the way."
+msgstr "%s: בדרך."
+
+msgid "%s: coup orders given."
+msgstr "%s: ניתנו פקודות להפיכה."
+
+msgid "See your stats breakdown"
+msgstr "הצגת פירוט הנתונים שלך"
+
+msgid "Selected %s."
+msgstr "נבחרה %s."
+
+msgid "the unit"
+msgstr "היחידה"
+
+msgid "Upgraded to %s."
+msgstr "שודרגה ל־%s."
+
+msgid "Enter city screen"
+msgstr "פתיחת מסך העיר"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "תצוגת העיר: %s. לחצו על משבצות לעיבודן; יציאה מהעיר (או B / Esc) מחזירה למפה."
+
+msgid "Back to the map."
+msgstr "חזרה למפה."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "אין מקום ב־%s להצבת %s."
+
+msgid "the city"
+msgstr "העיר"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "בחרו משבצת עבור %s (טבעות אדומות), או Esc / B לביטול."
+
+msgid "Cancelled."
+msgstr "בוטל."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "בחרו אחת מהמשבצות המסומנות בטבעת (Esc / B לביטול)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: השיפור יוצב שם."
+
+msgid "Bought the tile for %d gold."
+msgstr "המשבצת נרכשה תמורת ⁦%d⁩ זהב."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "רכישה תמורת ⁦%d⁩ זהב\nלחצו שוב לרכישה"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "עלות ⁦%d⁩ זהב\n(אין מספיק זהב)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "התושבים שובצו מחדש (הנעילות בוטלו)."
+
+msgid "Annexed."
+msgstr "סופחה."
+
+msgid "%s will build %s next."
+msgstr "%s תבנה את %s בהמשך."
+
+msgid "%s added to the queue."
+msgstr "%s נוסף לתור הבנייה."
+
+msgid "Bought %s."
+msgstr "%s נרכש."
+
+msgid "Sold the %s."
+msgstr "%s נמכר."
+
+msgid "%s added to %s's queue."
+msgstr "%s נוסף לתור הבנייה של %s."
+
+msgid "Bought %s in %s."
+msgstr "%s נרכש ב־%s."
+
+msgid "Experience"
+msgstr "ניסיון"
+
+msgid "%s is now %s."
+msgstr "%s היא כעת %s."
+
+msgid "Pick something to research."
+msgstr "בחרו משהו למחקר."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "אפשר לאמץ מדיניות חדשה — פתחו את לשונית המדיניות במסך הגדול."
+
+msgid "%s is heading here"
+msgstr "%s בדרך לכאן"
+
+msgid "The unit"
+msgstr "היחידה"
+
+msgid "Are you sure?"
+msgstr "בטוחים?"
+
+msgid "Click again to confirm."
+msgstr "לחצו שוב לאישור."
+
+msgid "%s: click a %stile"
+msgstr "%s: לחצו על משבצת %s"
+
+msgid "highlighted "
+msgstr "מודגשת "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s — לחצו על המשבצת במפה (או ביטול בכרטיס)."
+
+msgid "Move here: click a tile"
+msgstr "מעבר לכאן: לחצו על משבצת"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "הזזת %s — לחצו על משבצת במפה (או ביטול בכרטיס)."
+
+msgid "No enemies in range of %s."
+msgstr "אין אויבים בטווח של %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "הפגזה מ־%s: לחצו על אויב עם טבעת אדומה (לחצו על העיר לביטול)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "בחרו אחת מהמשבצות המודגשות (או ביטול)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s הפגיזה את %s: נזק ⁦%d⁩%s."
+
+msgid "Destroyed!"
+msgstr "הושמדה!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "לסיים את התור? לחצו שוב על סיום תור לאישור."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "מסיים תור — שחקני המחשב נעים..."
+
+msgid "Turn %d"
+msgstr "תור ⁦%d⁩"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "המשחק הסתיים — %s ניצחה (ניצחון %s)"
+
+msgid "A %s has been born!"
+msgstr "נולדה אישיות מסוג %s!"
+
+msgid "You voted for %s."
+msgstr "הצבעת בעד %s."
+
+msgid "You abstained."
+msgstr "נמנעת מהצבעה."
+
+msgid "ATTACK"
+msgstr "תקיפה"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s — תור ⁦%d⁩ (%s)   זהב ⁦%d⁩ (⁦%+d⁩)   מדע ⁦%+d⁩   אושר ⁦%d⁩"
+
+msgid "Researching: %s"
+msgstr "מחקר: %s"
+
+msgid "%s - turn %d"
+msgstr "%s — תור ⁦%d⁩"
+
+msgid "Game"
+msgstr "משחק"
+
+msgid "Save game as"
+msgstr "שמירת המשחק בשם"
+
+msgid "Saved as \"%s\"."
+msgstr "נשמר בשם ״%s״."
+
+msgid "Couldn't save: %s"
+msgstr "לא ניתן לשמור: %s"
+
+msgid "Open the options table"
+msgstr "פתיחת שולחן האפשרויות"
+
+msgid "The tutorials will show again from the start."
+msgstr "ההדרכות יוצגו שוב מההתחלה."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "לא ניתן לאפס את ההדרכות: %s"
+
+msgid "The panels are back where they started."
+msgstr "הלוחות חזרו למיקומם המקורי."
+
+msgid "The table is back in the middle of the background."
+msgstr "השולחן חזר למרכז הרקע."
+
+msgid "Civilopedia: %s"
+msgstr "אנציקלופדיה: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "לא ניתן לפתוח את האנציקלופדיה: %s"
+
+msgid "Opened %s in your browser."
+msgstr "%s נפתח בדפדפן שלך."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "משימת ההדרכה הוסתרה — הבאה תוצג כשתגיע."
+
+msgid "Move the table"
+msgstr "הזזת השולחן"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "הזזת השולחן: הצביעו על מקום בנוף ובצעו %s להצבה שם. %s מסובב אותו. %s בסיום."
+
+msgid "pull the trigger"
+msgstr "לחיצה על ההדק"
+
+msgid "The right stick"
+msgstr "המוט הימני"
+
+msgid "Press A or B"
+msgstr "לחצו A או B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "השולחן נשאר כאן — הגדרות > מראה > חזרה למרכז תחזיר אותו."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "המיקום אינו בנוף — הצביעו על הקרקע."
+
+msgid "put the table here"
+msgstr "הצבת השולחן כאן"
+
+msgid "turn the scenery"
+msgstr "סיבוב הנוף"
+
+msgid "done moving the table"
+msgstr "סיום הזזת השולחן"
+
+msgid "point, click (hold: aim)"
+msgstr "הצבעה ולחיצה (החזקה: כיוון)"
+
+msgid "Found city"
+msgstr "ייסוד עיר"
+
+msgid "Cancel typing"
+msgstr "ביטול ההקלדה"
+
+msgid "Leave the city"
+msgstr "יציאה מהעיר"
+
+msgid "table height"
+msgstr "גובה השולחן"
+
+msgid "slide the map"
+msgstr "הזזת המפה"
+
+msgid "turn / size the table"
+msgstr "סיבוב / שינוי גודל השולחן"
+
+msgid "Next unit"
+msgstr "היחידה הבאה"
+
+msgid "Previous unit"
+msgstr "היחידה הקודמת"
+
+msgid "zoom the map"
+msgstr "זום המפה"
+
+msgid "table height, click: recenter"
+msgstr "גובה השולחן, לחיצה: מרכוז"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "פעולה כלשהי לא הסתיימה — אפשר להמשיך. (אם זה חוזר, הסיבה מופיעה ביומן.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "תקיפת %s (%s, בריאות ⁦%d/%d⁩)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  צפוי: נזק לאויב ⁦%d⁩, נזק לנו ⁦%d⁩"
+
+msgid "Luxury"
+msgstr "מותרות"
+
+msgid "Strategic"
+msgstr "אסטרטגי"
+
+msgid "Unit icons over the unit models"
+msgstr "סמלי יחידות מעל המודלים"
+
+msgid "Overview: point and click to go there"
+msgstr "סקירה: הצביעו ולחצו למעבר"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (לחצו לשינוי ל־%s)"
+
+msgid "Overview"
+msgstr "סקירה"
+
+msgid "Stats"
+msgstr "נתונים"
+
+msgid "Trades"
+msgstr "עסקאות"
+
+msgid "Politics"
+msgstr "פוליטיקה"
+
+msgid "Notifications"
+msgstr "התראות"
+
+msgid "Spy"
+msgstr "מרגל"
+
+msgid "War"
+msgstr "מלחמה"
+
+msgid "DefensivePact"
+msgstr "הסכם הגנה"
+
+msgid "Neutral"
+msgstr "ניטרלי"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "=====   סקירת האימפריה — החזיקו כאן את ההדק וגררו להזזה   ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "אין לך מרגלים עדיין — הם מגיעים עם תקופות חדשות."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "מרגלים (בחרו אחד ואז יעד)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (דרגה ⁦%d⁩) — %s — %s%s"
+
+msgid "Call off the coup"
+msgstr "ביטול ההפיכה"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "לחצו שוב: ביצוע הפיכה (סיכוי ⁦%d%%⁩)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "ביצוע הפיכה (סיכוי ⁦%d%%⁩)"
+
+msgid "Where to"
+msgstr "יעד"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "מחבוא המרגלים (החזרת %s הביתה)"
+
+msgid "   spies: "
+msgstr "   מרגלים: "
+
+msgid "Click again (%s)"
+msgstr "לחצו שוב (%s)"
+
+msgid "You have no cities yet."
+msgstr "אין לך ערים עדיין."
+
+msgid "Name"
+msgstr "שם"
+
+msgid "Defence"
+msgstr "הגנה"
+
+msgid "Open the city view"
+msgstr "פתיחת תצוגת העיר"
+
+msgid "Resistance"
+msgstr "התנגדות"
+
+msgid "%d t"
+msgstr "תורות: ⁦%d⁩"
+
+msgid "Demanding %s"
+msgstr "דורשת %s"
+
+msgid " (holy)"
+msgstr " (קדושה)"
+
+msgid "Total %d"
+msgstr "סך הכול ⁦%d⁩"
+
+msgid "Convert gold to science: %d%%"
+msgstr "המרת זהב למדע: ⁦%d%%⁩"
+
+msgid "Great person points"
+msgstr "נקודות אישיויות דגולות"
+
+msgid "Points"
+msgstr "נקודות"
+
+msgid "Per turn"
+msgstr "לתור"
+
+msgid "Total"
+msgstr "סך הכול"
+
+msgid "Pending trades"
+msgstr "עסקאות ממתינות"
+
+msgid "Current trades"
+msgstr "עסקאות פעילות"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "אין עסקאות פעילות. אפשר ליצור עסקה בלשונית הדיפלומטיה במסך הגדול."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "אספקת יחידות: בשימוש ⁦%d⁩ מתוך ⁦%d⁩ (בסיס ⁦%d⁩, ערים ⁦%d⁩, אוכלוסייה ⁦%d⁩)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "גירעון ⁦%d⁩: ייצור ⁦%d%%⁩ בכל עיר. הגדילו את האספקה או פרקו יחידות."
+
+msgid "Doing"
+msgstr "פעולה"
+
+msgid "Closest city"
+msgstr "העיר הקרובה"
+
+msgid "Click again: %d gold"
+msgstr "לחצו שוב: ⁦%d⁩ זהב"
+
+msgid "%s %dg"
+msgstr "%s ⁦%d⁩ זהב"
+
+msgid "Show global politics"
+msgstr "הצגת הפוליטיקה העולמית"
+
+msgid "Show diagram"
+msgstr "הצגת תרשים"
+
+msgid "Hide city-states"
+msgstr "הסתרת ערי מדינה"
+
+msgid "Include city-states"
+msgstr "הכללת ערי מדינה"
+
+msgid "   %s civilizations in the game"
+msgstr "   ציוויליזציות במשחק: %s"
+
+msgid "Score %d"
+msgstr "ניקוד ⁦%d⁩"
+
+msgid "Defeated"
+msgstr "הובסה"
+
+msgid "At war with %s"
+msgstr "במלחמה עם %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "הסכם הגנה עם %s (תורות ⁦%d⁩)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "ידידות עם %s (תורות ⁦%d⁩)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "גינתה את %s (תורות ⁦%d⁩)"
+
+msgid "Allied with %s"
+msgstr "בברית עם %s"
+
+msgid "Relations"
+msgstr "יחסים"
+
+msgid "Defensive pact"
+msgstr "הסכם הגנה"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "אין לך עדיין משאבי מותרות או משאבים אסטרטגיים."
+
+msgid "Unimproved"
+msgstr "ללא שיפור"
+
+msgid "Trade offer"
+msgstr "הצעת סחר"
+
+msgid "Stockpile"
+msgstr "מלאי"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "ללא שיפור: משבצות בשטח שלך (או של ערי מדינה בעלות ברית) עם המשאב אך ללא שיפור לניצולו.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "חגיגת המלך +/-: ערים שחוגגות / דורשות את המשאב לחגיגת אהבת המלך."
+
+msgid "Religions to be founded: %s"
+msgstr "דתות שנותרו לייסוד: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "האמונה המזערית עבור %s הבא: ⁦%d⁩"
+
+msgid "Great Prophet"
+msgstr "נביא דגול"
+
+msgid "Religious status: %s"
+msgstr "מצב דתי: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "טרם נוסדו דתות או פנתאונים."
+
+msgid "%s name:"
+msgstr "שם %s:"
+
+msgid "Founding civ:"
+msgstr "הציוויליזציה המייסדת:"
+
+msgid "Holy city:"
+msgstr "העיר הקדושה:"
+
+msgid "Cities following this religion:"
+msgstr "ערים המשתייכות לדת הזו:"
+
+msgid "Followers of this religion:"
+msgstr "מאמיני הדת הזו:"
+
+msgid "Status"
+msgstr "מצב"
+
+msgid "Location"
+msgstr "מיקום"
+
+msgid "Unknown"
+msgstr "לא ידוע"
+
+msgid "Owned"
+msgstr "בבעלות"
+
+msgid "Known"
+msgstr "ידוע"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s   תור ⁦%d⁩   %s"
+
+msgid "Current turn  |"
+msgstr "התור הנוכחי  |"
+
+msgid "General"
+msgstr "כללי"
+
+msgid "No notifications yet."
+msgstr "אין התראות עדיין."
+
+msgid "Tech"
+msgstr "טכנולוגיה"
+
+msgid "Panel"
+msgstr "לוח"
+
+msgid "Nothing to show."
+msgstr "אין מה להציג."
+
+msgid "Select a unit"
+msgstr "בחירת יחידה"
+
+msgid "Left-click it"
+msgstr "לחיצה עליה בכפתור העכבר השמאלי"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "הצבעה והדק ימני: הכרטיס שלה מופיע מעליה"
+
+msgid "Move / attack"
+msgstr "תנועה / תקיפה"
+
+msgid "Click a tile to aim, again to go"
+msgstr "לחיצה על משבצת לכיוון, ושוב לתנועה"
+
+msgid "The same with the laser"
+msgstr "אותה פעולה עם הלייזר"
+
+msgid "Open a city"
+msgstr "פתיחת עיר"
+
+msgid "Click it"
+msgstr "לחיצה עליה"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "הצבעה והדק ימני: הכרטיס צף מעל העיר"
+
+msgid "Scroll a card"
+msgstr "גלילה בכרטיס"
+
+msgid "Mouse wheel"
+msgstr "גלגל העכבר"
+
+msgid "Point at it + right stick"
+msgstr "הצבעה עליה והמוט הימני"
+
+msgid "Move the view"
+msgstr "הזזת התצוגה"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "גרירה ימנית לסיבוב, גלגל לזום, WASD / גרירה אמצעית להזזה"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "אחיזה ומוט: שמאלה / ימינה לסיבוב השולחן, למעלה / למטה לשינוי גודלו"
+
+msgid "Table height"
+msgstr "גובה השולחן"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "כל אחד מהמוטות למעלה / למטה (הימני כשלא מצביעים על כרטיס)"
+
+msgid "Zoom the map"
+msgstr "זום המפה"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - או Ctrl וגלגל"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "החזיקו הדק והזיזו את המוט באותה יד למעלה / למטה"
+
+msgid "Slide the map"
+msgstr "הזזת המפה"
+
+msgid "WASD, or click the overview"
+msgstr "WASD, או לחיצה בסקירה"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "החזיקו אחיזה וגררו; או הצביעו על הסקירה ולחצו על ההדק"
+
+msgid "Move a board"
+msgstr "הזזת לוח"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "החזיקו את ההדק על הפס העליון (או על לוח המידע) והזיזו"
+
+msgid "A, or the End turn button on the table"
+msgstr "A, או כפתור סיום תור על השולחן"
+
+msgid "Found a city"
+msgstr "ייסוד עיר"
+
+msgid "Next / previous unit"
+msgstr "היחידה הבאה / הקודמת"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "כפתור היחידה הממתינה על השולחן"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "עץ הטכנולוגיות, מדיניות, דיפלומטיה"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "כרטיס פרק היד, או הכפתורים שעל הלוחות"
+
+msgid "Empire overview"
+msgstr "סקירת האימפריה"
+
+msgid "Always up, off to your right"
+msgstr "מוצגת תמיד מימינך"
+
+msgid "The Settings button on the table"
+msgstr "כפתור ההגדרות על השולחן"
+
+msgid "The Civilopedia button on the table"
+msgstr "כפתור האנציקלופדיה על השולחן"
+
+msgid "Close / deselect"
+msgstr "סגירה / ביטול בחירה"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B סוגר את המקלדת ואת תצוגת העיר"
+
+msgid "Recenter the table"
+msgstr "מרכוז השולחן"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "לחיצה על המוט השמאלי, או כפתור המרכוז"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "=====   הגדרות — החזיקו כאן את ההדק וגררו להזזה   ====="
+
+msgid "Tables"
+msgstr "שולחנות"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "אפשר להזיז את השולחן לכל מקום בנוף הרקע — שימושי ברקעים גדולים כמו מפה שהומרה. "
+
+msgid "%d%% translated"
+msgstr "⁦%d%%⁩ תורגמו"
+
+msgid "Notification log keeps"
+msgstr "שמירת יומן התראות"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "מספר התורות שהודעותיהם נשמרות בלשונית ההתראות שבסקירה."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "הדרכות Unciv: הודעה כשמשהו חדש מופיע, וכרטיס משימה עם הפעולה הבאה שכדאי לנסות."
+
+msgid "Reset"
+msgstr "איפוס"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "האפקטים הקוליים של Unciv. נקראים מתיקיית Unciv הסמוכה בזמן ההפעלה; להחלפתם, שימו קבצים משלכם ב־⁦~/.unciv-vr/Sounds⁩ באותם שמות."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "נמצאו ⁦%d⁩ צלילים. צליל התקיפה של כל יחידה מגיע מערכת הכללים, כמו ב־Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "לא נמצאו צלילים. הם נמצאים ב־⁦android/assets/sounds⁩ של Unciv, לצד התיקייה הזו."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "לוחות עם רשימות המבוססות על מידע מהמשחק. במציאות מדומה הם ניצבים סביב השולחן "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(החזיקו את ההדק על הפס העליון להזזה); במחשב הם מוצגים בצד שמאל."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "לוח הוא תיקייה עם panel.json — ראו ⁦panels/README.md.⁩ שימו לוחות משלכם ב־%s."
+
+msgid "Put them back"
+msgstr "החזרה למקום"
+
+msgid "(by %s)"
+msgstr "(מאת %s)"
+
+msgid "Every turn"
+msgstr "בכל תור"
+
+msgid "Every %d turns"
+msgstr "כל ⁦%d⁩ תורות"
+
+msgid "not connected"
+msgstr "לא מחובר"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (הלקוח מצפה ל־v%s)"
+
+msgid "Tilesets"
+msgstr "ערכות משבצות"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR מופצת ברישיון Mozilla Public License 2.0, כמו Unciv. הסמלים הם של Unciv, מאת יוצרים רבים "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "ברישיונות CC BY / CC BY-SA / CC0 (ראו CREDITS.md ו־⁦docs/Credits.md⁩ של Unciv). מודלי המשבצות, היחידות, הרקעים "
+
+msgid "and table models are Unciv VR's own."
+msgstr "והשולחנות הם יצירות של Unciv VR."
+
+msgid "%s speed"
+msgstr "מהירות %s"
+
+msgid "%s map"
+msgstr "מפה %s"
+
+msgid "%s, turn %s"
+msgstr "%s, תור %s"
+
+msgid "by "
+msgstr "מאת "
+
+msgid "  -  from %s"
+msgstr "  — מאת %s"
+
+msgid "Move unit"
+msgstr "הזזת יחידה"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "הצביעו על אחת היחידות שלך ולחצו על ההדק, ואז הצביעו על משבצת ולחצו פעמיים: פעם לכיוון ופעם לתנועה."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "לחצו על אחת היחידות שלך, ואז על משבצת פעמיים: פעם לכיוון ופעם לתנועה."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "בחרו במתיישב ולחצו על ייסוד עיר בכרטיס שלו (או B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "בחרו במתיישב ולחצו על ייסוד עיר בכרטיס שלו (או F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "הצביעו על אחת הערים שלך ולחצו על ההדק, ואז על תצוגת העיר בכרטיס שלה."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "לחצו על אחת הערים שלך, ואז על תצוגת העיר בכרטיס שלה."
+
+msgid "Pick technology"
+msgstr "בחירת טכנולוגיה"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "פתחו את עץ הטכנולוגיות מכרטיס פרק היד ובחרו משהו למחקר."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "פתחו את עץ הטכנולוגיות (T) ובחרו משהו למחקר."
+
+msgid "Pick construction"
+msgstr "בחירת בנייה"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "פתחו אחת הערים שלך ובחרו בכרטיס שלה מה לבנות."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "לחצו על אחת הערים שלך ובחרו בכרטיס שלה מה לבנות."
+
+msgid "Pass a turn"
+msgstr "העברת תור"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "תנו פקודות ליחידות, ואז לחצו על סיום תור בשולחן (או A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "תנו פקודות ליחידות, ואז לחצו על סיום תור (או רווח)."
+
+msgid "Reassign worked tiles"
+msgstr "שינוי שיבוץ המשבצות המעובדות"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "בתצוגת העיר, הצביעו על אחת המשבצות שלה ולחצו על ההדק לעיבוד או להפסקת עיבוד."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "בתצוגת העיר, לחצו על אחת המשבצות שלה לעיבוד או להפסקת עיבוד."
+
+msgid "Press Settings on the table."
+msgstr "לחצו על הגדרות בשולחן."
+
+msgid "Press Settings on the table (or O)."
+msgstr "לחצו על הגדרות בשולחן (או O)."
+
+msgid "Construct an improvement"
+msgstr "בניית שיפור"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "בנו עובד, העבירו אותו למשבצת מישורים או ערבות, לחצו על בניית שיפור בכרטיס שלו ובחרו חווה. השאירו אותו שם עד להשלמת החווה."
+
+msgid "Move an air unit"
+msgstr "הזזת יחידה אווירית"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "בחרו יחידה אווירית והעבירו אותה לעיר אחרת שלך שבטווח."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "פנו לסקירת האימפריה שמימינך ופתחו את לשונית הנתונים."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "פתחו את סקירת האימפריה (E) ואת לשונית הנתונים שלה."
+
+msgid "Tutorial task"
+msgstr "משימת הדרכה"
+
+msgid "Hide"
+msgstr "הסתרה"
+
+msgid "Defence %d"
+msgstr "הגנה ⁦%d⁩"
+
+msgid "%+d%% to unit defence"
+msgstr "⁦%+d%%⁩ להגנת היחידה"
+
+msgid "  (%d HP)"
+msgstr "  (בריאות ⁦%d⁩)"
+
+msgid " (pillaged)"
+msgstr " (נבזז)"
+
+msgid ", worked by %s"
+msgstr ", מעובדת בידי %s"
+
+msgid "  (click the red button again)"
+msgstr "  (לחצו שוב על הכפתור האדום)"
+
+msgid "  -  %d of %d"
+msgstr "  — ⁦%d⁩ מתוך ⁦%d⁩"
+
+msgid "  (%s turns)"
+msgstr "  (תורות: %s)"
+
+msgid "     Science %+d per turn"
+msgstr "     מדע ⁦%+d⁩ לתור"
+
+msgid "  (city-state)"
+msgstr "  (עיר מדינה)"
+
+msgid "   max %d turns"
+msgstr "   מגבלת תורות ⁦%d⁩"
+
+msgid " (about %d gold's worth)"
+msgstr " (בשווי של כ־⁦%d⁩ זהב)"
+
+msgid " (you have %d)"
+msgstr " (ברשותך ⁦%d⁩)"
+
+msgid "  (so far: %s)"
+msgstr "  (עד כה: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (מיושן)"
+
+msgid " (obsolete)"
+msgstr " (מיושן)"
+
+msgid "abstained"
+msgstr "נמנע"
+
+msgid "researched"
+msgstr "נחקרה"
+
+msgid "adopted"
+msgstr "אומצה"
+
+msgid "gold"
+msgstr "זהב"
+
+msgid "faith"
+msgstr "אמונה"
+
+msgid "  - complete!"
+msgstr "  — הושלם!"
+
+msgid "complete"
+msgstr "הושלם"
+
+msgid "worked"
+msgstr "מעובדת"
+
+msgid "on"
+msgstr "פעיל"
+
+msgid "off"
+msgstr "כבוי"
+
+msgid "click"
+msgstr "לחיצה"
+
+msgid "improvement"
+msgstr "שיפור"
+
+msgid "done"
+msgstr "בוצע"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "מטרות אויב בטווח (טבעות אדומות): ⁦%d⁩. לחצו על אחת כדי לכוון."
+
+msgid "Idle citizens: %d"
+msgstr "תושבים ללא תפקיד: ⁦%d⁩"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "הפגזה — אויבים בטווח: ⁦%d⁩ (עוצמה ⁦%d⁩)"
+
+msgid "More messages after this one: %d"
+msgstr "הודעות נוספות אחרי זו: ⁦%d⁩"
+
+msgid "Free great people to choose: %d."
+msgstr "אישיויות דגולות לבחירה בחינם: ⁦%d⁩."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "טכנולוגיות לבחירה בחינם: ⁦%d⁩. בחרו אחת מהמודגשות."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "אמונות שנותרו לבחירה: ⁦%d⁩%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv מספק את הודעות המשחק, השמות והתיאורים. חלק מהשפות מתרגמות גם את ממשק Unciv VR. טקסטים ללא תרגום נשארים באנגלית."
+
+msgid "Units ({count})"
+msgstr "יחידות ({count})"
+
+msgid "Cities ({count})"
+msgstr "ערים ({count})"
+
+msgid "Military"
+msgstr "צבא"
+
+msgid "Military ({count})"
+msgstr "צבא ({count})"
+
+msgid "Rankings ({count})"
+msgstr "דירוגים ({count})"
+
+msgid "Waiting for orders"
+msgstr "ממתינה לפקודות"
+
+msgid "  -  promotion ready"
+msgstr "  — קידום זמין"
+
+msgid "  (capital)"
+msgstr "  (בירה)"
+
+msgid "  (puppet)"
+msgstr "  (עיר בובה)"
+
+msgid "  (razing)"
+msgstr "  (נהרסת)"
+
+msgid "Nothing to build"
+msgstr "אין בנייה"
+
+msgid "turn"
+msgstr "תור"
+
+msgid "turns"
+msgstr "תורות"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} — תקופת {era}"
+
+msgid "{score} pts"
+msgstr "{score} נקודות"
+
+msgid "No units yet."
+msgstr "אין יחידות עדיין."
+
+msgid "No cities yet."
+msgstr "אין ערים עדיין."
+
+msgid "No military units yet."
+msgstr "אין יחידות צבאיות עדיין."
+
+msgid "No civilizations met yet."
+msgstr "טרם פגשת ציוויליזציות."
+
+msgid "No wonders to show yet."
+msgstr "אין פלאים להצגה עדיין."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "כל היחידות שלך, הממתינות לפקודות ראשונות, עם הפעולה של כל אחת. לחצו על יחידה לבחירתה."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "כל הערים שלך, הבירה ראשונה, עם הבנייה והגודל של כל אחת. לחצו על עיר לפתיחת הכרטיס שלה."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "כל היחידות הצבאיות שלך, עם הפעולה, התנועה והבריאות שלהן. לחצו על יחידה לבחירתה."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "דירוג כל הציוויליזציות המוכרות לפי סך הניקוד."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "סקירת הפלאים של Unciv לפי תקופה: מה נבנה, מה בבנייה ומה טרם נבנה. לחצו על פלא שנבנה כדי לצפות בו."
+
+msgid "In the Hall of the Mountain King"
+msgstr "באולם מלך ההר"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "אולם הכס התת־קרקעי של מלך הטרולים בעומק הרי דוברה, מואר במחתות אש ובעורקי מגמה זוהרים"
+
+msgid "Mountains and clouds"
+msgstr "הרים ועננים"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "אחו מוקף פסגות מעוטות מצולעים, עם עצים ועננים חולפים"
+
+msgid "Floating in space"
+msgstr "ריחוף בחלל"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "השולחן מרחף בין הכוכבים ליד כוכב לכת בעל טבעות"
+
+msgid "Studio"
+msgstr "סטודיו"
+
+msgid "A plain, dark room"
+msgstr "חדר פשוט וחשוך"
+
+msgid "Webb Deep Field"
+msgstr "השדה העמוק של וב"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "השולחן מרחף בחלל העמוק, מוקף בשדה העמוק הראשון של טלסקופ החלל ג'יימס וב"
+
+msgid "Ornate oak"
+msgstr "אלון מעוטר"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "אלון עם שיבוצי אגוז וצינית, שפת חבל מגולפת ובסיס בעל רגליים מסולסלות"
+
+msgid "Plain wood"
+msgstr "עץ פשוט"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "לוח עץ עגול וכהה על עמוד מתחדד"
+
+msgid "Low poly"
+msgstr "מעט מצולעים"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "תוואי בעל מעט מצולעים, עם צבע אחיד לכל פאה"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: ⁦%d⁩"
+
+msgid "%s %d"
+msgstr "%s ⁦%d⁩"
+
+msgid "%s %d/%d"
+msgstr "%s ⁦%d/%d⁩"
+
+msgid "%s (+%d)"
+msgstr "%s (⁦+%d⁩)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "⁦%d⁩. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (⁦%d⁩)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "⁦%d⁩ (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "⁦%d / %d⁩ (%s)"
+
+msgid "%s %s%d"
+msgstr "%s ⁦%s%d⁩"
+
+msgid "  %s  %d"
+msgstr "  %s  ⁦%d⁩"
+
+msgid "   %s: %d"
+msgstr "   %s: ⁦%d⁩"
+
+msgid "%d. %s"
+msgstr "⁦%d⁩. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "הממשק מתורגם; תוכן המשחק החסר מוצג באנגלית."
+
+msgid "Turns: %s"
+msgstr "תורות: %s"
+
+msgid "Latin keyboard"
+msgstr "מקלדת לטינית"
+
+msgid "Arabic keyboard"
+msgstr "מקלדת ערבית"
+
+msgid "Hebrew keyboard"
+msgstr "מקלדת עברית"
+
+
+msgid "OK"
+msgstr "אישור"
+
+msgid "Default"
+msgstr "ברירת מחדל"
+
+msgid "Manual"
+msgstr "ידני"

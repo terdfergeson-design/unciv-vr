@@ -213,7 +213,7 @@ func open_link(target: String, remember := true) -> void:
 	_last_entry[data["key"]] = full
 	_highlight_entry()
 	_update_back()
-	_title.text = "Civilopedia  -  " + _entry_label(data, target.substr(slash + 1))
+	_title.text = tr("Civilopedia") + "  -  " + _entry_label(data, target.substr(slash + 1))
 	if not fetch.is_valid():
 		return
 	_loading += 1

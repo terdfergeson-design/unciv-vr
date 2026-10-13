@@ -7,6 +7,8 @@ extends Node3D
 ## Shows explored terrain, borders, your cities and units, and a ring for the part the table shows.
 ## Point at it and pull the trigger (or click it) to slide the table's window there.
 
+const Lang := preload("res://scripts/lang.gd")
+
 const IMAGE_SIZE := 256
 const SIZE := 0.42                       # metres across
 const FRAME_COLOR := Color(0.2, 0.14, 0.09)
@@ -170,7 +172,7 @@ func hover_button(id: String) -> void:
 		_paint_button(id)
 		for entry: Array in OVERLAY_BUTTONS:
 			if entry[0] == id:
-				_title.text = "%s: %s (click to turn %s)" % [entry[2], "on" if _button_states[id] else "off", "off" if _button_states[id] else "on"]
+				_title.text = Lang.format("%s: %s (click to turn %s)", [entry[2], "on" if _button_states[id] else "off", "off" if _button_states[id] else "on"])
 	else:
 		_update_title()
 

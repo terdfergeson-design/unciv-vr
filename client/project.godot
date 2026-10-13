@@ -25,14 +25,24 @@ window/size/viewport_height=900
 
 enabled=PackedStringArray("res://addons/unciv_bridge/plugin.cfg")
 
+[editor]
+
+; Avoid Godot 4.7's concurrent font-import crash on a fresh checkout.
+import/use_multiple_threads=false
+
 [gui]
 
 theme/default_font_generate_mipmaps=true
+theme/default_font="res://fonts/ui_font.tres"
 
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true
 anti_aliasing/quality/msaa_3d=2
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://translations/de.po", "res://translations/ar.po", "res://translations/he.po", "res://translations/es.po", "res://translations/fr.po", "res://translations/it.po", "res://translations/pt_BR.po", "res://translations/sv.po")
 
 [xr]
 

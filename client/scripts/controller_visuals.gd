@@ -10,6 +10,8 @@ extends Node3D
 ## button does, named the way that controller names them (A / B / X / Y, trackpad, menu...).
 ## Lives under an XRController3D using the "aim" pose; set [member is_right] before adding it.
 
+const Lang := preload("res://scripts/lang.gd")
+var _label_language := ""
 const LABEL_COLOR := Color(0.95, 0.97, 1.0)
 const BUTTON_COLOR := Color(1.0, 0.85, 0.4)
 
@@ -117,8 +119,9 @@ func _process(_delta: float) -> void:
 
 ## The labels: [[button name, what it does], ...], top to bottom. Rebuilt only when they change.
 func set_rows(rows: Array) -> void:
-	if rows == _rows:
+	if rows == _rows and _label_language == Lang.language:
 		return
+	_label_language = Lang.language
 	_rows = rows.duplicate(true)
 	for node in _label_nodes:
 		node.queue_free()
@@ -126,7 +129,7 @@ func set_rows(rows: Array) -> void:
 	for i in rows.size():
 		var row: Array = rows[i]
 		var label := Label3D.new()
-		label.text = "%s:  %s" % [row[0], row[1]]
+		label.text = Lang.format("%s:  %s", [row[0], row[1]])
 		label.font_size = 28
 		label.pixel_size = 0.0003
 		label.outline_size = 10

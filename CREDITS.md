@@ -67,7 +67,15 @@ The game's languages are Unciv's own translation files (`unciv/android/assets/js
 translators and part of Unciv (Mozilla Public License 2.0). They're read when the game runs; the Quest app carries
 them in its packed data.
 
+The frontend catalogs in `client/translations/` reuse matching wording from Unciv's translators under MPL 2.0.
+New VR-specific translations are AI-assisted drafts maintained in this repository and awaiting native-speaker
+review. The Arabic and Hebrew game-content additions are also drafts; see `client/translations/CONTENT.md`.
+
 ## If you share screenshots or builds
+
+The frontend bundles **Noto Sans**, **Noto Sans Arabic** and **Noto Sans Hebrew** (The Noto Project Authors),
+under the SIL Open Font License 1.1. Original fonts and the license are in `client/fonts/`; the license is
+included in exported game packs. See [Noto's font collection](https://github.com/notofonts/noto-fonts).
 
 - **Screenshots and videos** show Unciv's icons, and videos have its sounds. Credit them as "Icons and sounds
   from Unciv (see Unciv's docs/Credits.md), licensed CC BY / CC BY-SA / CC0 by their authors".

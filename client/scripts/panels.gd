@@ -10,6 +10,7 @@ extends RefCounted
 ## Everything here is data in, data out (no nodes), so the client and the tests use the same code.
 ## A panel can only read: requests are limited to READ_METHODS and clicks to CLICKS.
 
+const Lang := preload("res://scripts/lang.gd")
 const ModFolders := preload("res://scripts/mod_folders.gd")
 const KIND := "Panels"
 const JSON_NAME := "panel.json"
@@ -199,7 +200,7 @@ static func value_at(data: Variant, path: String) -> Variant:
 
 ## Fills a template: "{field}" is the row's value ("{a.b}" goes deeper); "{a|b|'text'}" is the first of
 ## them that isn't empty, quoted ones being plain text. [param extra] adds names of its own (like "count").
-static func fill(template: String, row: Dictionary, extra := {}) -> String:
+static func fill(template: String, row: Dictionary, extra := {}, localize := false) -> String:
 	var out := ""
 	var i := 0
 	while i < template.length():
@@ -212,12 +213,17 @@ static func fill(template: String, row: Dictionary, extra := {}) -> String:
 			out += template.substr(i)
 			break
 		out += template.substr(i, open - i)
-		out += _first_of(template.substr(open + 1, close - open - 1), row, extra)
+		out += _first_of(template.substr(open + 1, close - open - 1), row, extra, localize)
 		i = close + 1
 	return out
 
 
-static func _first_of(choices: String, row: Dictionary, extra: Dictionary) -> String:
+## Display-only expansion. Click arguments and icon names must continue to use fill().
+static func display(template: String, row: Dictionary, extra := {}) -> String:
+	return fill(Lang.t(template), row, extra, true)
+
+
+static func _first_of(choices: String, row: Dictionary, extra: Dictionary, localize := false) -> String:
 	for choice in choices.split("|"):
 		var name := choice.strip_edges()
 		# "field?'text'": the text (or another field) only when the field is set - "{canPromote?'Promotion ready'}"
@@ -227,18 +233,22 @@ static func _first_of(choices: String, row: Dictionary, extra: Dictionary) -> St
 				continue
 			name = name.substr(question + 1).strip_edges()
 		if name.begins_with("'") and name.ends_with("'") and name.length() >= 2:
-			return name.substr(1, name.length() - 2)
+			var literal := name.substr(1, name.length() - 2)
+			return Lang.t(literal) if localize else literal
 		# "field#'word'": a count with its word, "1 turn" / "38 turns"; nothing unless it's above 0
 		var hash := name.find("#")
 		if hash > 0:
 			var count: Variant = _named(name.substr(0, hash).strip_edges(), row, extra)
 			var word := name.substr(hash + 1).strip_edges().trim_prefix("'").trim_suffix("'")
 			if (count is int or count is float) and float(count) > 0.0:
-				return "%s %s%s" % [show(count), word, "" if is_equal_approx(float(count), 1.0) else "s"]
+				if localize and Lang.is_rtl() and word == "turn":
+					return Lang.format("Turns: %s", show(count))
+				var unit := word if is_equal_approx(float(count), 1.0) else word + "s"
+				return "%s %s" % [show(count), Lang.t(unit) if localize else unit]
 			continue
 		var text := show(_named(name, row, extra))
 		if text != "":
-			return text
+			return Lang.display_value(text) if localize else text
 	return ""
 
 

@@ -11,9 +11,19 @@ extends PanelContainer
 signal submitted(text: String)
 signal cancelled
 
-const SIZE := Vector2(880, 390)
+const SIZE := Vector2(880, 450)
 const MAX_LENGTH := 40
-const ROWS := ["1234567890", "qwertyuiop", "asdfghjkl'", "zxcvbnm-.,"]
+const ROWS := ["1234567890", "qwertyuiop", "asdfghjkl'", "zxcvbnm-.,", "äöüß"]
+const ACCENT_KEYS := {
+	"Spanish": "áéíóúüñ¿¡",
+	"French": "àâæçéèêëîïôœùûüÿ",
+	"Italian": "àèéìíîòóùú",
+	"Brazilian_Portuguese": "áàâãéêíóôõúüç",
+	"Swedish": "åäöé",
+}
+const ARABIC_ROWS := ["1234567890", "ضصثقفغعهخحجد", "شسيبلاتنمكط", "ئءؤرىةوزظ", "أإآذَُِّْ؟،.-"]
+const HEBREW_ROWS := ["1234567890", "קראטוןםפ", "שדגכעיחלךף", "זסבהנמצתץ", "'\"-.,?!"]
+const Lang := preload("res://scripts/lang.gd")
 const TEXT := Color(0.92, 0.94, 0.97)
 const DIM := Color(0.66, 0.7, 0.78)
 const KEY := Color(0.2, 0.22, 0.3)
@@ -21,10 +31,13 @@ const KEY := Color(0.2, 0.22, 0.3)
 var text := ""
 var shift := true
 var _title: Label
-var _field: Label
+var _field: LineEdit
+var _rows_box: VBoxContainer
+var _layout_key: Button
+var _latin := false
+var _keyboard_language := ""
 var _letter_keys: Array[Button] = []
 var _shift_key: Button
-var _blink := 0.0
 
 
 func _ready() -> void:
@@ -44,7 +57,15 @@ func _ready() -> void:
 	_title = Label.new()
 	_title.add_theme_font_size_override("font_size", 20)
 	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
-	box.add_child(_title)
+	var heading := HBoxContainer.new()
+	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	heading.add_child(_title)
+	_layout_key = _key("Latin keyboard", func() -> void:
+		_latin = not _latin
+		_build_keys()
+		_refresh(), KEY, Vector2(200, 28))
+	heading.add_child(_layout_key)
+	box.add_child(heading)
 
 	var field_back := PanelContainer.new()
 	var field_style := StyleBoxFlat.new()
@@ -56,25 +77,22 @@ func _ready() -> void:
 	field_style.content_margin_right = 12
 	field_back.add_theme_stylebox_override("panel", field_style)
 	field_back.custom_minimum_size = Vector2(0, 48)
-	_field = Label.new()
+	_field = LineEdit.new()
+	_field.focus_mode = Control.FOCUS_NONE   # desktop input still goes through handle_key()
+	_field.caret_force_displayed = true
+	_field.caret_blink = true
+	_field.max_length = MAX_LENGTH
+	_field.flat = true
+	_field.text_direction = Control.TEXT_DIRECTION_AUTO
+	_field.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED   # names typed by the player are literal
 	_field.add_theme_font_size_override("font_size", 26)
 	_field.add_theme_color_override("font_color", TEXT)
-	_field.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_field.clip_text = true
 	field_back.add_child(_field)
 	box.add_child(field_back)
 
-	for row: String in ROWS:
-		var line := HBoxContainer.new()
-		line.add_theme_constant_override("separation", 5)
-		line.alignment = BoxContainer.ALIGNMENT_CENTER
-		for i in row.length():
-			var character := row[i]
-			var key := _key(character, func() -> void: _type(character), KEY, Vector2(78, 50))
-			if character != character.to_upper():
-				_letter_keys.append(key)
-			line.add_child(key)
-		box.add_child(line)
+	_rows_box = VBoxContainer.new()
+	_rows_box.add_theme_constant_override("separation", 6)
+	box.add_child(_rows_box)
 
 	var bottom := HBoxContainer.new()
 	bottom.add_theme_constant_override("separation", 5)
@@ -92,23 +110,51 @@ func _ready() -> void:
 	bottom.add_child(_key("Cancel", func() -> void: cancelled.emit(), Color(0.3, 0.3, 0.32), Vector2(100, 50)))
 	bottom.add_child(_key("OK", func() -> void: submitted.emit(text.strip_edges()), Color(0.2, 0.45, 0.25), Vector2(110, 50)))
 	box.add_child(bottom)
+	_build_keys()
 	_refresh()
 
 
-func _process(delta: float) -> void:
-	if not is_visible_in_tree():
-		return
-	_blink += delta
-	var cursor := "|" if fmod(_blink, 1.0) < 0.55 else " "
-	_field.text = text + cursor
+func _build_keys() -> void:
+	_letter_keys.clear()
+	for child: Node in _rows_box.get_children():
+		_rows_box.remove_child(child)
+		child.queue_free()
+	var native := Lang.language in ["Arabic", "Hebrew"]
+	_layout_key.visible = native
+	_layout_key.text = ("Arabic keyboard" if Lang.language == "Arabic" else "Hebrew keyboard") if _latin else "Latin keyboard"
+	var rows: Array = ROWS.duplicate()
+	if ACCENT_KEYS.has(Lang.language):
+		rows[rows.size() - 1] = ACCENT_KEYS[Lang.language]
+	if native and not _latin:
+		rows = ARABIC_ROWS if Lang.language == "Arabic" else HEBREW_ROWS
+	_shift_key.disabled = native and not _latin
+	for row: String in rows:
+		var line := HBoxContainer.new()
+		# Physical key order stays stable; the entry field shapes RTL text itself.
+		line.layout_direction = Control.LAYOUT_DIRECTION_LTR
+		line.add_theme_constant_override("separation", 5)
+		line.alignment = BoxContainer.ALIGNMENT_CENTER
+		for i in row.length():
+			var character := row[i]
+			var width := minf(78, (SIZE.x - 30 - 5 * (row.length() - 1)) / row.length())
+			var key := _key(character, func() -> void: _type(character), KEY, Vector2(width, 50))
+			key.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+			if character != character.to_upper():
+				key.set_meta("character", character)
+				_letter_keys.append(key)
+			line.add_child(key)
+		_rows_box.add_child(line)
 
 
 ## Starts typing: [param title] above the field, [param initial] already in it.
 func open(title: String, initial: String) -> void:
+	if _keyboard_language != Lang.language:
+		_keyboard_language = Lang.language
+		_latin = false
+		_build_keys()
 	_title.text = title
 	text = initial.left(MAX_LENGTH)
 	shift = text.is_empty()
-	_blink = 0.0
 	_refresh()
 
 
@@ -136,7 +182,7 @@ func handle_key(event: InputEventKey) -> bool:
 func _type(character: String) -> void:
 	if text.length() >= MAX_LENGTH:
 		return
-	text += character.to_upper() if shift else character
+	text += ("ẞ" if character == "ß" else character.to_upper()) if shift else character
 	if shift and character != character.to_upper():
 		shift = false   # one-shot, like a phone keyboard
 	elif character == " " and text.strip_edges().is_empty():
@@ -153,9 +199,11 @@ func _backspace() -> void:
 
 func _refresh() -> void:
 	for key: Button in _letter_keys:
-		key.text = key.text.to_upper() if shift else key.text.to_lower()
+		var character: String = key.get_meta("character")
+		key.text = ("ẞ" if character == "ß" else character.to_upper()) if shift else character
 	_restyle(_shift_key, Color(0.25, 0.45, 0.7) if shift else KEY)
 	_field.text = text
+	_field.caret_column = text.length()
 
 
 func _key(label: String, on_press: Callable, colour: Color, key_size: Vector2) -> Button:

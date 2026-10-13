@@ -86,6 +86,9 @@ func show_task(new_task: Dictionary, in_vr: bool) -> void:
 	var event_name := str(task.get("name", ""))
 	top.add_child(_button("Hide", func() -> void: chosen.emit("task_hide", event_name), Color(0.3, 0.22, 0.22), 15))
 	var lines := lines_for(task, in_vr).map(func(line: Dictionary) -> Dictionary:
+		if line.has("text"):
+			line = line.duplicate()
+			line["text"] = tr(str(line["text"]))
 		if line.get("centered", false) and not line.has("color"):   # the task's title, in the card's gold
 			var title := line.duplicate()
 			title["color"] = "#f5d77a"

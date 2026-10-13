@@ -13,6 +13,8 @@ extends PanelContainer
 ##   "ov_upgrade" ("unit id|unit to upgrade to"), "ov_gold_science" (0..1), "ov_big" (tech / policies / diplomacy)
 signal chosen(kind: String, value: String)
 
+const Lang := preload("res://scripts/lang.gd")
+
 const Icons := preload("res://scripts/icons.gd")
 
 const SIZE := Vector2(1440, 880)
@@ -65,6 +67,11 @@ var _body: VBoxContainer
 
 ## Draws the politics diagram: everyone you know on a circle, a coloured line for each pair that knows each other.
 class Diagram extends Control:
+	func _ready() -> void:
+		for child: Control in get_children():
+			if child.has_meta("diagram_position"):
+				child.position = child.get_meta("diagram_position")
+
 	var civs: Array = []     # [{name, ...}]
 	var lines: Array = []    # [{a, b, relation}]
 	var positions := {}      # civ name -> Vector2
@@ -181,7 +188,7 @@ func arm(key: String) -> void:
 func _rebuild() -> void:
 	for child in _body.get_children():
 		child.queue_free()
-	_header.text = "Turn %d" % int(data.get("turn", 0)) if data.has("turn") else ""
+	_header.text = Lang.format("Turn %d", int(data.get("turn", 0))) if data.has("turn") else ""
 	if data.is_empty() or data.get("tab") != tab:
 		_body.add_child(_label("Loading...", 20, DIM))
 		return
@@ -221,8 +228,8 @@ func _build_espionage() -> void:
 	left.add_child(_label("Spies (pick one, then where it goes)", 18, HEADER))
 	for spy: Dictionary in spies:
 		var spy_name: String = spy["name"]
-		var text := "%s  (rank %d)  -  %s  -  %s%s" % [spy_name, int(spy.get("rank", 1)), spy.get("location", "?"), spy.get("action", ""),
-			"  %d turns" % int(spy["turns"]) if spy.has("turns") else ""]
+		var text := Lang.format("%s  (rank %d)  -  %s  -  %s%s", [spy_name, int(spy.get("rank", 1)), spy.get("location", "?"), spy.get("action", ""),
+			Lang.format("  %d turns", int(spy["turns"])) if spy.has("turns") else ""])
 		var button := _button(text, func() -> void: chosen.emit("ov_spy_select", spy_name),
 			SELECTED if spy_name == selected_spy else BUTTON, 16)
 		button.disabled = not spy.get("alive", true)
@@ -231,7 +238,7 @@ func _build_espionage() -> void:
 		if spy.get("canCoup", false):
 			var key := "coup:" + spy_name
 			var coup_text := "Call off the coup" if spy.get("stagingCoup", false) else (
-				"Click again: stage a coup (%d%% chance)" % int(spy.get("coupChance", 0)) if armed == key else "Stage a coup (%d%% chance)" % int(spy.get("coupChance", 0)))
+				Lang.format("Click again: stage a coup (%d%% chance)", int(spy.get("coupChance", 0))) if armed == key else Lang.format("Stage a coup (%d%% chance)", int(spy.get("coupChance", 0))))
 			left.add_child(_button(coup_text, func() -> void:
 				if spy.get("stagingCoup", false) or armed == key:
 					chosen.emit("ov_spy_coup", spy_name)
@@ -243,13 +250,13 @@ func _build_espionage() -> void:
 	columns.add_child(right)
 	right.add_child(_label("Where to" if selected_spy != "" else "Cities", 18, HEADER))
 	if selected_spy != "":
-		right.add_child(_button("Spy hideout (bring %s home)" % selected_spy, func() -> void: chosen.emit("ov_spy_move", selected_spy + "|"), BUTTON, 16))
+		right.add_child(_button(Lang.format("Spy hideout (bring %s home)", selected_spy), func() -> void: chosen.emit("ov_spy_move", selected_spy + "|"), BUTTON, 16))
 	for city: Dictionary in data.get("cities", []):
 		var city_name: String = city["name"]
 		var here: Array = city.get("spies", [])
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 6)
-		var info := _label("%s (%s)%s" % [city_name, city.get("civ", ""), "   spies: " + ", ".join(here) if not here.is_empty() else ""], 16,
+		var info := _label(Lang.format("%s (%s)%s", [city_name, city.get("civ", ""), Lang.t("   spies: ") + Lang.join(", ", here) if not here.is_empty() else ""]), 16,
 			GOOD if city.get("own", false) else TEXT)
 		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		info.clip_text = true
@@ -258,7 +265,7 @@ func _build_espionage() -> void:
 			var key := "spymove:%s|%s" % [selected_spy, city_name]
 			var can: bool = selected_spy in city.get("canMoveHere", [])
 			var warn := str(city.get("promiseWarning", ""))
-			var move := _button("Click again (%s)" % warn if armed == key and warn != "" else "Move here", func() -> void:
+			var move := _button(Lang.format("Click again (%s)", warn) if armed == key and warn != "" else "Move here", func() -> void:
 				if warn != "" and armed != key:
 					arm(key)
 				else:
@@ -304,7 +311,7 @@ func _build_cities() -> void:
 	for c: Dictionary in cities:
 		var cells: Array = []
 		var name: String = c["name"]
-		var city_button := _button(("* " if c.get("isCapital", false) else "") + name, func() -> void: chosen.emit("ov_city", name), Color(0.25, 0.3, 0.42), 17)
+		var city_button := _button(("* " if c.get("isCapital", false) else "") + Lang.t(name), func() -> void: chosen.emit("ov_city", name), Color(0.25, 0.3, 0.42), 17)
 		city_button.tooltip_text = "Open the city view"
 		cells.append(city_button)
 		var status_icon := {"razing": Icons.get_icon("other", "Fire"), "resistance": Icons.get_icon("stat", "Resistance"),
@@ -316,17 +323,17 @@ func _build_cities() -> void:
 		building.add_theme_constant_override("separation", 6)
 		if construction != "":
 			building.add_child(_icon(Icons.construction(construction), 30))
-		building.add_child(_label(construction + (("  %d turns" % turns) if turns >= 0 else ""), 16, TEXT if construction != "" else DIM))
+		building.add_child(_label(Lang.t(construction) + ((Lang.format("  %d turns", turns)) if turns >= 0 else ""), 16, TEXT if construction != "" else DIM))
 		cells.append(building)
 		cells.append(_num(int(c.get("population", 0)), TEXT))
 		for stat: String in ["food", "gold", "science", "production", "culture", "happiness"] + (["faith"] if religion else []):
 			var value := int(c.get(stat, 0))
 			cells.append(_num(value, BAD if value < 0 else STAT_COLORS[stat].lightened(0.2)))
 		if c.get("wltk", false):
-			cells.append(_label("%d t" % int(c.get("wltkTurns", 0)), 15, GOOD))
+			cells.append(_label(Lang.format("%d t", int(c.get("wltkTurns", 0))), 15, GOOD))
 		elif c.has("demanding"):
 			var want := _icon(Icons.badge("resource", str(c["demanding"]), Color(0.3, 0.3, 0.38)), 30)
-			want.tooltip_text = "Demanding %s" % c["demanding"]
+			want.tooltip_text = Lang.format("Demanding %s", c["demanding"])
 			want.mouse_filter = Control.MOUSE_FILTER_PASS
 			cells.append(want)
 		else:
@@ -341,14 +348,14 @@ func _build_cities() -> void:
 			cells.append(Control.new())
 		cells.append(_label("%d/%d" % [int(c.get("defense", 0)), int(c.get("maxHealth", 0))], 16, TEXT))
 		if religion:
-			cells.append(_label(str(c.get("religion", "")) + (" (holy)" if c.get("holyCity", false) else ""), 15, TEXT))
+			cells.append(_label(Lang.t(str(c.get("religion", ""))) + (Lang.t(" (holy)") if c.get("holyCity", false) else ""), 15, TEXT))
 		for r: String in data.get("cityWideResources", []):
 			var amount := int(c.get("resources", {}).get(r, 0))
 			cells.append(_num(amount, TEXT) if amount != 0 else Control.new())
 		_body.add_child(_row(cols, cells, i))
 		i += 1
 	# Totals
-	var totals: Array = [_label("Total %d" % cities.size(), 17, HEADER), Control.new(), Control.new()]
+	var totals: Array = [_label(Lang.format("Total %d", cities.size()), 17, HEADER), Control.new(), Control.new()]
 	var sum := func(key: String) -> int:
 		var total := 0
 		for c: Dictionary in cities:
@@ -378,7 +385,7 @@ func _build_stats() -> void:
 		if stat == "gold" and data.has("goldToScience"):
 			var percent := float(data["goldToScience"])
 			var row := HBoxContainer.new()
-			row.add_child(_label("Convert gold to science: %d%%" % roundi(percent * 100), 16, TEXT))
+			row.add_child(_label(Lang.format("Convert gold to science: %d%%", roundi(percent * 100)), 16, TEXT))
 			for step: Array in [["-", -0.1], ["+", 0.1]]:
 				var target := clampf(percent + float(step[1]), 0.0, 1.0)
 				var b := _button(step[0], func() -> void: chosen.emit("ov_gold_science", str(target)), BUTTON, 18)
@@ -511,10 +518,10 @@ func _build_units() -> void:
 	var deficit := int(supply.get("deficit", 0))
 	var top := HBoxContainer.new()
 	top.add_theme_constant_override("separation", 20)
-	top.add_child(_label("Unit supply: %d of %d used  (base %d, cities %d, population %d)" % [int(supply.get("inUse", 0)), int(supply.get("total", 0)),
-		int(supply.get("base", 0)), int(supply.get("cities", 0)), int(supply.get("population", 0))], 17, BAD if deficit > 0 else TEXT))
+	top.add_child(_label(Lang.format("Unit supply: %d of %d used  (base %d, cities %d, population %d)", [int(supply.get("inUse", 0)), int(supply.get("total", 0)),
+		int(supply.get("base", 0)), int(supply.get("cities", 0)), int(supply.get("population", 0))]), 17, BAD if deficit > 0 else TEXT))
 	if deficit > 0:
-		top.add_child(_label("Deficit %d: %d%% production in every city. Increase your supply or disband units." % [deficit, int(supply.get("productionPenalty", 0))], 17, BAD))
+		top.add_child(_label(Lang.format("Deficit %d: %d%% production in every city. Increase your supply or disband units.", [deficit, int(supply.get("productionPenalty", 0))]), 17, BAD))
 	_body.add_child(top)
 	var units: Array = data.get("units", []).duplicate()
 	var cols: Array = [["name", "Name", 230.0, null], ["action", "Doing", 170.0, null],
@@ -602,7 +609,7 @@ func _build_politics() -> void:
 			diagram_city_states = not diagram_city_states
 			_rebuild(), BUTTON, 17))
 	var count := int(data.get("civsInGame", -1))
-	toggles.add_child(_label("   %s civilizations in the game" % ("?" if count < 0 else str(count)), 17, DIM))
+	toggles.add_child(_label(Lang.format("   %s civilizations in the game", ("?" if count < 0 else str(count))), 17, DIM))
 	_body.add_child(toggles)
 	if show_diagram:
 		_build_diagram()
@@ -617,14 +624,14 @@ func _build_politics() -> void:
 		info.add_child(_label(str(c.get("leader", "")), 24, Color.html(str(c.get("outerColor", "ffffffff"))).lightened(0.2)))
 		info.add_child(_label(str(c["name"]), 17, TEXT))
 		info.add_child(_label(str(c.get("era", "")), 16, DIM))
-		info.add_child(_label("Score %d" % int(c.get("score", 0)), 16, DIM))
+		info.add_child(_label(Lang.format("Score %d", int(c.get("score", 0))), 16, DIM))
 		row.add_child(info)
 		var policies := VBoxContainer.new()
 		policies.custom_minimum_size = Vector2(220, 0)
 		for p: Dictionary in c.get("policies", []):
 			var line := HBoxContainer.new()
 			line.add_child(_icon(Icons.get_icon("branch", str(p["branch"])), 22))
-			line.add_child(_label("%s: %d" % [p["branch"], int(p["count"])], 16, TEXT))
+			line.add_child(_label(Lang.format("%s: %d", [p["branch"], int(p["count"])]), 16, TEXT))
 			policies.add_child(line)
 		row.add_child(policies)
 		var wonders := VBoxContainer.new()
@@ -640,15 +647,15 @@ func _build_politics() -> void:
 		if c.get("defeated", false):
 			relations.add_child(_label("Defeated", 18, BAD))
 		for w: String in c.get("wars", []):
-			relations.add_child(_label("At war with %s" % w, 16, BAD))
+			relations.add_child(_label(Lang.format("At war with %s", w), 16, BAD))
 		for p: Dictionary in c.get("defensivePacts", []):
-			relations.add_child(_label("Defensive pact with %s (%d turns)" % [p["civ"], int(p["turns"])], 16, Color(0.5, 0.9, 1.0)))
+			relations.add_child(_label(Lang.format("Defensive pact with %s (%d turns)", [p["civ"], int(p["turns"])]), 16, Color(0.5, 0.9, 1.0)))
 		for p: Dictionary in c.get("friends", []):
-			relations.add_child(_label("Friends with %s (%d turns)" % [p["civ"], int(p["turns"])], 16, GOOD))
+			relations.add_child(_label(Lang.format("Friends with %s (%d turns)", [p["civ"], int(p["turns"])]), 16, GOOD))
 		for p: Dictionary in c.get("denounced", []):
-			relations.add_child(_label("Denounced %s (%d turns)" % [p["civ"], int(p["turns"])], 16, BAD))
+			relations.add_child(_label(Lang.format("Denounced %s (%d turns)", [p["civ"], int(p["turns"])]), 16, BAD))
 		for a: String in c.get("alliedCityStates", []):
-			relations.add_child(_label("Allied with %s" % a, 16, Color(0.5, 0.9, 1.0)))
+			relations.add_child(_label(Lang.format("Allied with %s", a), 16, Color(0.5, 0.9, 1.0)))
 		row.add_child(relations)
 		var holder := PanelContainer.new()
 		var style := StyleBoxFlat.new()
@@ -667,6 +674,7 @@ func _build_diagram() -> void:
 	var holder := HBoxContainer.new()
 	holder.add_theme_constant_override("separation", 20)
 	var diagram := Diagram.new()
+	diagram.layout_direction = Control.LAYOUT_DIRECTION_LTR
 	diagram.custom_minimum_size = Vector2(760, 720)
 	var centre := Vector2(380, 360)
 	var radius := 300.0
@@ -675,12 +683,16 @@ func _build_diagram() -> void:
 		var at := centre + Vector2(cos(angle), sin(angle)) * radius
 		diagram.positions[civs[i]["name"]] = at
 		var badge := _icon(Icons.civ_badge(civs[i]), 54)
+		badge.layout_direction = Control.LAYOUT_DIRECTION_LTR
 		badge.position = at - Vector2(27, 27)
+		badge.set_meta("diagram_position", at - Vector2(27, 27))
 		badge.tooltip_text = str(civs[i]["name"])
 		badge.mouse_filter = Control.MOUSE_FILTER_PASS
 		diagram.add_child(badge)
 		var name := _label(str(civs[i]["name"]), 14, TEXT)
+		name.layout_direction = Control.LAYOUT_DIRECTION_LTR
 		name.position = at + Vector2(-60, 30)
+		name.set_meta("diagram_position", at + Vector2(-60, 30))
 		name.size = Vector2(120, 20)
 		name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		diagram.add_child(name)
@@ -738,8 +750,8 @@ func _build_resources() -> void:
 			cells.append(_label(str(int(extra[o])), 17, DIM) if extra.has(o) else Control.new())
 		_body.add_child(_row(cols, cells, i))
 		i += 1
-	_body.add_child(_label("Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  " +
-		"WLTK+/-: cities celebrating / demanding it for We Love The King Day.", 15, DIM))
+	_body.add_child(_label(Lang.t("Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  ") +
+		Lang.t("WLTK+/-: cities celebrating / demanding it for We Love The King Day."), 15, DIM))
 
 
 # region religion ----------------------------------------------------------------------------
@@ -749,12 +761,12 @@ func _build_religion() -> void:
 	top.add_theme_constant_override("separation", 30)
 	var facts := VBoxContainer.new()
 	var to_found := int(data.get("toFound", -1))
-	facts.add_child(_label("Religions to be founded: %s" % ("?" if to_found < 0 else str(to_found)), 18, TEXT))
+	facts.add_child(_label(Lang.format("Religions to be founded: %s", ("?" if to_found < 0 else str(to_found))), 18, TEXT))
 	for b: Dictionary in data.get("toFoundBreakdown", []):
-		facts.add_child(_label("   %s: %d" % [_plain(str(b["text"])), int(b["value"])], 15, DIM))
+		facts.add_child(_label(Lang.format("   %s: %d", [_plain(str(b["text"])), int(b["value"])]), 15, DIM))
 	if data.has("faithForProphet"):
-		facts.add_child(_label("Minimal faith for the next %s: %d" % [data.get("prophet", "Great Prophet"), int(data["faithForProphet"])], 17, STAT_COLORS["faith"]))
-	facts.add_child(_label("Religious status: %s" % data.get("status", "None"), 17, TEXT))
+		facts.add_child(_label(Lang.format("Minimal faith for the next %s: %d", [data.get("prophet", "Great Prophet"), int(data["faithForProphet"])]), 17, STAT_COLORS["faith"]))
+	facts.add_child(_label(Lang.format("Religious status: %s", data.get("status", "None")), 17, TEXT))
 	top.add_child(facts)
 	_body.add_child(top)
 	var religions: Array = data.get("religions", [])
@@ -779,7 +791,7 @@ func _build_religion() -> void:
 		var panel := _panel_box(_plain(str(r.get("displayName", r["name"]))), Icons.get_icon("religion", str(r.get("icon", "Religion"))), STAT_COLORS["faith"])
 		panel.custom_minimum_size = Vector2(900, 0)
 		var box: VBoxContainer = panel.get_child(0)
-		box.add_child(_value_text("%s name:" % ("Pantheon" if r.get("pantheon", false) else "Religion"), _plain(str(r.get("displayName", "")))))
+		box.add_child(_value_text(Lang.format("%s name:", ("Pantheon" if r.get("pantheon", false) else "Religion")), _plain(str(r.get("displayName", "")))))
 		box.add_child(_value_text("Founding civ:", str(r.get("foundingCiv", "?"))))
 		if r.has("holyCity"):
 			box.add_child(_value_text("Holy city:", str(r["holyCity"])))
@@ -787,7 +799,7 @@ func _build_religion() -> void:
 		box.add_child(_value_text("Followers of this religion:", str(int(r.get("followers", 0)))))
 		for belief: Dictionary in r.get("beliefs", []):
 			box.add_child(HSeparator.new())
-			box.add_child(_label("%s  (%s)" % [belief["name"], belief.get("type", "")], 19, HEADER))
+			box.add_child(_label(Lang.format("%s  (%s)", [belief["name"], belief.get("type", "")]), 19, HEADER))
 			var text := _label(_plain(str(belief.get("text", ""))), 16, TEXT)
 			text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			text.custom_minimum_size = Vector2(860, 0)
@@ -848,8 +860,8 @@ func _build_notifications() -> void:
 		var turn := int(t["turn"])
 		var year := int(t.get("year", 0))
 		var open := not closed_turns.has(turn)
-		var title := "%s%s   Turn %d   %s" % ["v " if open else "> ", "Current turn  |" if t.get("current", false) else "",
-			turn, ("%d BC" % -year) if year < 0 else ("%d AD" % year)]
+		var title := Lang.format("%s%s   Turn %d   %s", ["v " if open else "> ", "Current turn  |" if t.get("current", false) else "",
+			turn, (Lang.format("%d BC", -year)) if year < 0 else (Lang.format("%d AD", year))])
 		var head := _button(title, func() -> void:
 			if closed_turns.has(turn):
 				closed_turns.erase(turn)
@@ -864,7 +876,7 @@ func _build_notifications() -> void:
 			if str(n.get("category", "General")) != category:
 				category = str(n.get("category", "General"))
 				if category != "General":
-					_body.add_child(_label("   " + category, 17, HEADER))
+					_body.add_child(_label("   " + Lang.t(category), 17, HEADER))
 			_body.add_child(_notification_row(n))
 	if not any:
 		_body.add_child(_label("No notifications yet.", 20, DIM))
@@ -986,6 +998,7 @@ func _row(cols: Array, cells: Array, index: int, background := Color(-1, 0, 0)) 
 
 func _num(value: int, colour: Color) -> Label:
 	var label := _label(str(value), 17, colour)
+	label.text_direction = Control.TEXT_DIRECTION_LTR
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	return label
 

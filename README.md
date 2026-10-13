@@ -94,19 +94,23 @@ the app's own storage on the Quest.
 complete each is), using Unciv's own translation files by Unciv's translators. The game's side is translated: messages
 and popups, notifications, descriptions, the Civilopedia and tutorials, quests, victory texts, and the names of units,
 buildings, techs, nations and cities - plus those of our buttons that use Unciv's own words. Chinese, Japanese, Korean
-and other scripts show with the computer's or headset's own fonts. Our own menus, hints and instructions are still
-English.
+and other scripts use system font fallbacks. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese
+and Swedish cover the frontend menus, city and
+empire boards, diplomacy, religion, map replay, controller hints, built-in lists and tutorial instructions.
+Select **Arabic / العربية** or **Hebrew / עברית** for a right-to-left interface. Both now include draft Unciv
+game-content catalogs: built-in object names, promotions and shared effect descriptions. Unfinished entries still
+fall back to English. See [content translation coverage](client/translations/CONTENT.md). Bundled Noto fonts cover
+Latin, Arabic and Hebrew on Windows and Quest.
+The VR keyboard includes accents for each supported Latin-script language and Arabic/Hebrew layouts with a Latin switch. These passes are ready
+for wording and headset layout review.
 
-**Later**, to go all the way:
-- **Our own text**: about 1,100 strings of the client's own (settings, board titles, VR hints, controller labels,
-  task-card instructions) wrapped for Godot's translation system, with a translation file per language in
-  `client/translations/` - reusing Unciv's wording wherever ours matches, the rest translated (a machine-translated
-  first draft, checked by someone who speaks the language).
+**Next**, to go all the way:
+- **More frontend languages**: review the existing catalogs, then add languages in `client/translations/`. Other languages still
+  use Unciv's translations where available and English for the remaining frontend wording.
 - **Layout**: longer languages (German, Russian...) overflow some buttons and cards; Godot's pseudo-localization
   finds those spots and any text still untranslated.
-- **Fonts and scripts**: bundling open fonts (Noto) for headsets without them, and checking right-to-left languages
-  (Arabic, Hebrew).
-- **Typing**: the on-screen keyboard is English-only; other layouts for naming cities, units and saves.
+- **Fonts and scripts**: extend bundled font coverage to more scripts and review RTL layouts on the headset.
+- **Typing**: further keyboard layouts for naming cities, units and saves.
 
 ## Not there yet
 Unciv mods, world wrap and music; multiplayer is left out on purpose. On the Quest,

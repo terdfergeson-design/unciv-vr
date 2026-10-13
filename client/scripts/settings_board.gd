@@ -15,6 +15,8 @@ extends PanelContainer
 
 signal chosen(kind: String, value: String)
 
+const Lang := preload("res://scripts/lang.gd")
+
 const DataPaths := preload("res://scripts/data_paths.gd")
 const Icons := preload("res://scripts/icons.gd")
 const Tileset := preload("res://scripts/tileset.gd")
@@ -244,8 +246,8 @@ func _look_page() -> void:
 	_choice("background", "Background", "The world around the table: sky, light and scenery.", _folder_options("Backgrounds", "background.json"))
 	_choice("table", "Table", "What the map lies on. In VR its column stretches to the height you set.", _folder_options("Tables", "table.json"))
 	var moved := bool(info.get("table_moved", false))
-	var spot_row := _row("Where the table stands", "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
-		+ ("Remembered for this background." if not moved else "It's been moved here; Back to the middle puts it where the background starts it."), null)
+	var spot_row := _row("Where the table stands", Lang.t("Move the table anywhere in the background's scenery - handy in big ones like a converted map. ")
+		+ Lang.t("Remembered for this background." if not moved else "It's been moved here; Back to the middle puts it where the background starts it."), null)
 	var spot_buttons := HBoxContainer.new()
 	spot_buttons.add_theme_constant_override("separation", 8)
 	spot_buttons.add_child(_button("Move the table...", func() -> void: chosen.emit("place_table", ""), Color(0.22, 0.32, 0.42), 18))
@@ -269,12 +271,12 @@ func _look_page() -> void:
 
 
 func _gameplay_page() -> void:
-	_header("Language", "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English.")
+	_header("Language", "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English.")
 	var languages: Array = []
 	for language: Dictionary in info.get("languages", []):
 		var percent := int(language.get("percent", 0))
 		languages.append([str(language.get("name", "")), str(language.get("label", "")), "",
-			"" if percent >= 100 else "%d%% translated" % percent])
+			Lang.t("Interface translated; game content falls back to English.") if language.get("frontend_only", false) else ("" if percent >= 100 else Lang.format("%d%% translated", percent))])
 	if languages.is_empty():
 		languages.append(["English", "English", "", ""])
 	_choice("language", "Language", "Text Unciv has no translation for stays in English.", languages)
@@ -283,7 +285,7 @@ func _gameplay_page() -> void:
 		_setting_toggle(option)
 	var log_turns: Array = []
 	for n in range(3, 16):
-		log_turns.append([str(n), "%d turns" % n, "", ""])
+		log_turns.append([str(n), Lang.format("%d turns", n), "", ""])
 	_choice("notificationsLogMaxTurns", "Notification log keeps", "How many turns of messages the overview's Notifications tab keeps.", log_turns)
 	_header("Tutorials", "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try.")
 	_toggle_row("Show tutorials", "The tutorial messages and the task card. Every tutorial is in the Civilopedia too.",
@@ -307,7 +309,7 @@ func _sound_page() -> void:
 	_choice("soundVolume", "Sound effects", "Buttons, moves, battles and the rest. In VR they come from where they happen on the table.", _volume_options())
 	_choice("ambienceVolume", "City ambience", "The city noise that loops while you are in a city - Unciv has one for every era.", _volume_options())
 	var found: int = (Sounds.available() as Array).size()
-	_header("", "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's." % found if found > 0
+	_header("", Lang.format("%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's.", found) if found > 0
 		else "No sounds found. They live in Unciv's android/assets/sounds, next to this folder.")
 
 
@@ -316,13 +318,12 @@ func _panels_page() -> void:
 	var panels: Array = info.get("panels", [])
 	var builtin := panels.filter(func(p: Dictionary) -> bool: return p.get("builtin", false))
 	var mods := panels.filter(func(p: Dictionary) -> bool: return not p.get("builtin", false))
-	_header("Panels", "Boards with a list on them, built from what the game knows. In VR they stand around the table "
-		+ "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side.")
+	_header("Panels", Lang.t("Boards with a list on them, built from what the game knows. In VR they stand around the table ")
+		+ Lang.t("(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."))
 	for panel: Dictionary in builtin:
 		_panel_row(panel)
 	var home := str(info.get("saves_folder", "")).get_base_dir()
-	_header("Your own and mods'", "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s." %
-		(home.path_join("Panels") if home != "" else "~/.unciv-vr/Panels"))
+	_header("Your own and mods'", Lang.format("A panel is a folder with a panel.json - see panels/README.md. Put yours in %s.", (home.path_join("Panels") if home != "" else "~/.unciv-vr/Panels")))
 	if mods.is_empty():
 		_body.add_child(_label("None yet.", 17, DIM))
 	for panel: Dictionary in mods:
@@ -335,9 +336,9 @@ func _panels_page() -> void:
 
 func _panel_row(panel: Dictionary) -> void:
 	var folder := str(panel["folder"])
-	var about := str(panel.get("description", ""))
+	var about := Lang.t(str(panel.get("description", "")))
 	if str(panel.get("author", "")) != "":
-		about += ("  " if about != "" else "") + "(by %s)" % panel["author"]
+		about += ("  " if about != "" else "") + Lang.format("(by %s)", panel["author"])
 	_toggle_row(str(panel.get("name", folder)), about, bool(panel.get("shown", false)),
 		func() -> void: chosen.emit("panel_toggle", folder))
 
@@ -386,7 +387,7 @@ func _game_page() -> void:
 	_header("Saves", "")
 	var autosave: Array = []
 	for n: int in AUTOSAVE_TURNS:
-		autosave.append([str(n), "Every turn" if n == 1 else "Every %d turns" % n, "", ""])
+		autosave.append([str(n), "Every turn" if n == 1 else Lang.format("Every %d turns", n), "", ""])
 	_choice("turnsBetweenAutosaves", "Autosave", "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it).", autosave)
 	_info_row("Save folder", str(info.get("saves_folder", "~/.unciv-vr/SaveFiles")))
 
@@ -394,21 +395,21 @@ func _game_page() -> void:
 func _about_page() -> void:
 	_header("Unciv VR", "A virtual-reality table for Unciv, the open-source remake of Civilization V.")
 	_info_row("Unciv", str(info.get("unciv_version", "not connected")))
-	_info_row("Bridge protocol", "v%s (this client expects v%s)" % [info.get("protocol", "?"), info.get("client_protocol", "?")])
+	_info_row("Bridge protocol", Lang.format("v%s (this client expects v%s)", [info.get("protocol", "?"), info.get("client_protocol", "?")]))
 	var game: Dictionary = info.get("game", {})
 	if not game.is_empty():
 		_info_row("This game", _game_line(game))
 		if not (game.get("mods", []) as Array).is_empty():
-			_info_row("Mods", ", ".join(game["mods"]))
+			_info_row("Mods", Lang.join(", ", game["mods"]))
 	_header("Your own tilesets, backgrounds and tables", "Put their folders here; they show up in Look.")
 	var home := DataPaths.home_dir()
 	for kind: String in ["Tilesets", "Backgrounds", "Tables"]:
 		_info_row(kind, home.replace("\\", "/").path_join(".unciv-vr").path_join(kind))
 	_info_row("Settings file", ProjectSettings.globalize_path("user://settings.cfg"))
 	_header("Licence and credits", "")
-	_paragraph("Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors " +
-		"under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background " +
-		"and table models are Unciv VR's own.")
+	_paragraph(Lang.t("Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors ") +
+		Lang.t("under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background ") +
+		Lang.t("and table models are Unciv VR's own."))
 
 
 ## "Aztecs, turn 4 - Civ V - Gods & Kings, Prince, Standard speed, Small map"
@@ -418,10 +419,10 @@ func _game_line(game: Dictionary) -> String:
 		if str(game.get(key, "")) != "":
 			bits.append(str(game[key]))
 	if str(game.get("speed", "")) != "":
-		bits.append("%s speed" % game["speed"])
+		bits.append(Lang.format("%s speed", game["speed"]))
 	if str(game.get("mapSize", "")) != "":
-		bits.append("%s map" % game["mapSize"])
-	return "%s, turn %s" % [game.get("civ", "?"), game.get("turn", "?")] + ("  -  " + ", ".join(bits) if not bits.is_empty() else "")
+		bits.append(Lang.format("%s map", game["mapSize"]))
+	return Lang.format("%s, turn %s", [game.get("civ", "?"), game.get("turn", "?")]) + ("  -  " + Lang.join(", ", bits) if not bits.is_empty() else "")
 
 
 # region option lists -------------------------------------------------------------------------
@@ -459,7 +460,7 @@ func _add_folders(out: Array, dir_path: String, json_name: String, built_in: boo
 				continue
 		var author := str(json.get("author", ""))
 		# Say where yours come from, so a folder some other tool is working in doesn't look like part of the game
-		var by := ("by " + author if author != "" else "") + ("" if built_in else ("  -  from %s" % dir_path.path_join(sub)))
+		var by := (Lang.t("by ") + author if author != "" else "") + ("" if built_in else (Lang.format("  -  from %s", dir_path.path_join(sub))))
 		out.append([sub, str(json.get("name", sub)), str(json.get("description", "")), by.strip_edges()])
 
 
@@ -569,15 +570,15 @@ func _choice(key: String, title: String, description: String, options: Array) ->
 		if str(option[0]).to_lower() == current.to_lower():
 			current_option = option
 	var open := _open_choice == key
-	var caption := (str(current_option[1]) if not current_option.is_empty() else current) + ("   ▲" if open else "   ▼")
+	var caption := (Lang.t(str(current_option[1])) if not current_option.is_empty() else Lang.t(current)) + ("   ▲" if open else "   ▼")
 	var button := _button(caption, func() -> void:
 		_open_choice = "" if _open_choice == key else key
 		_rebuild(true), SELECTED if open else Color(0.18, 0.26, 0.38), 19)
 	button.clip_text = true
 	var extra := ""
 	if not current_option.is_empty() and (str(current_option[2]) != "" or str(current_option[3]) != ""):
-		extra = "\n" + str(current_option[2]) + (("  -  " if str(current_option[2]) != "" else "") + str(current_option[3]) if str(current_option[3]) != "" else "")
-	var outer := _row(title, description + extra, button)
+		extra = "\n" + Lang.t(str(current_option[2])) + (("  -  " if str(current_option[2]) != "" else "") + str(current_option[3]) if str(current_option[3]) != "" else "")
+	var outer := _row(title, Lang.t(description) + extra, button)
 	if not open:
 		return
 	var list := VBoxContainer.new()
@@ -586,9 +587,9 @@ func _choice(key: String, title: String, description: String, options: Array) ->
 	for option: Array in options:
 		var value := str(option[0])
 		var chosen_now := value.to_lower() == current.to_lower()
-		var text := ("✓  " if chosen_now else "     ") + str(option[1])
+		var text := ("✓  " if chosen_now else "     ") + Lang.t(str(option[1]))
 		if str(option[2]) != "":
-			text += "  -  " + str(option[2])
+			text += "  -  " + Lang.t(str(option[2]))
 		if str(option[3]) != "":
 			text += "  (" + str(option[3]) + ")"
 		var pick := _button(text, func() -> void:

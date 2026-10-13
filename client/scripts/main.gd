@@ -13,6 +13,7 @@ extends Node3D
 ## Command-line options (after "--"):  --new-game  --civ=Rome  --map-size=Small  --ai=3
 ##   --load=C:/path/to/save  --port=8765  --no-launch (never start a bridge)
 ##   --smoke-test (scripted run that exits; for testing)  --screenshot=file.png
+##   --language=German (temporary language override, not saved)
 ##   --autoplay (a whole game played by Unciv's AI through the client, then a report: see autoplay.gd)
 ##
 ## Desktop: left-click select / move / attack (red rings) / open a city; the card on the right,
@@ -55,7 +56,7 @@ const TASK_PIXELS := Vector2i(520, 420)          # the task card sits at the top
 const TASK_METRES := Vector2(0.44, 0.3554)
 const OVERVIEW_METRES := Vector2(1.6, 0.9778)   # same aspect ratio as OverviewBoard.SIZE
 const SETTINGS_METRES := Vector2(1.3, 0.833)    # same aspect ratio as SettingsBoard.SIZE
-const KEYBOARD_METRES := Vector2(0.34, 0.1507)   # same aspect ratio as Keyboard.SIZE
+const KEYBOARD_METRES := Vector2(0.34, 0.1739)   # same aspect ratio as Keyboard.SIZE
 const CITY_BOARD_METRES := Vector2(0.7, 1.0013)   # same aspect ratio as CityBoard.SIZE
 const BIG_SCREEN_METRES := Vector2(2.0, 0.875)
 const INFO_PANEL_PIXELS := Vector2i(420, 640)
@@ -210,6 +211,7 @@ var _hud_label: Label
 var _hud_label_3d: Label3D
 var _status_text := "Connecting..."
 var _hover_text := ""
+var _hover_is_attack := false
 
 # desktop camera
 var _camera: Camera3D
@@ -298,6 +300,10 @@ func _ready() -> void:
 	if unpack_problem != "":
 		push_error("Game data: " + unpack_problem)
 	_load_settings()
+	_language_before_override = str(settings.get("language", "English"))
+	if options.has("language"):
+		settings["language"] = str(options["language"])
+	Lang.apply(str(settings["language"]), {}, Lang.frontend_tag(str(settings["language"])))
 	if options.has("background"):   # dev aid for screenshots; not saved
 		settings["background"] = options["background"]
 	sounds = Sounds.new()
@@ -380,7 +386,7 @@ func _ready() -> void:
 	bridge.connected.connect(_on_bridge_connected)
 	bridge.disconnected.connect(func() -> void: _set_status("Lost connection to the bridge - retrying..."))
 	bridge.connect_to_bridge()
-	_set_status("Looking for the bridge on 127.0.0.1:%d..." % bridge.port)
+	_set_status(Lang.format("Looking for the bridge on 127.0.0.1:%d...", bridge.port))
 	if not options.has("no-launch"):
 		get_tree().create_timer(LAUNCH_GRACE_SECONDS).timeout.connect(_maybe_launch_bridge)
 
@@ -393,7 +399,7 @@ func _maybe_launch_bridge() -> void:
 	if bridge.is_bridge_connected() or (_launched_bridge and OS.is_process_running(launcher.pid)):
 		return
 	if not launcher.launch(bridge.port):
-		_set_status("Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run" % launcher.error)
+		_set_status(Lang.format("Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run", launcher.error))
 		return
 	_launched_bridge = true
 	_set_status("Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)")
@@ -403,7 +409,7 @@ func _maybe_launch_bridge() -> void:
 			break
 		if not OS.is_process_running(launcher.pid):
 			_launched_bridge = false
-			_set_status("The bridge stopped before it was ready. From %s:\n%s" % [launcher.log_path, launcher.log_tail()])
+			_set_status(Lang.format("The bridge stopped before it was ready. From %s:\n%s", [launcher.log_path, launcher.log_tail()]))
 			return
 
 
@@ -418,7 +424,7 @@ func _start_android_bridge() -> void:
 	var plugin: Object = Engine.get_singleton("UncivBridge")
 	var started: bool = plugin.call("startBridge", DataPaths.unciv_android_dir().path_join("assets"), DataPaths.home_dir(), bridge.port)
 	if not started:
-		_set_status("The Unciv engine couldn't start: %s" % plugin.call("lastError"))
+		_set_status(Lang.format("The Unciv engine couldn't start: %s", plugin.call("lastError")))
 		return
 	_launched_bridge = true
 	# Say what the engine is doing, and if it stops, why (there's no console to look at in the headset)
@@ -427,15 +433,15 @@ func _start_android_bridge() -> void:
 		if not bool(plugin.call("isRunning")):
 			var error := str(plugin.call("lastError"))
 			push_error("Unciv's engine stopped: " + error)
-			_set_status("Unciv's engine stopped:\n%s" % error)
+			_set_status(Lang.format("Unciv's engine stopped:\n%s", error))
 			return
-		_set_status("Starting Unciv's engine: %s... (%d s)" % [plugin.call("stage"), (Time.get_ticks_msec() - started_at) / 1000])
+		_set_status(Lang.format("Starting Unciv's engine: %s... (%d s)", [plugin.call("stage"), (Time.get_ticks_msec() - started_at) / 1000]))
 		await get_tree().create_timer(1.0).timeout
 
 
 ## Stops an out-of-date bridge we found already running and starts a fresh one from the current code.
 func _replace_old_bridge(protocol: int, game_running: bool) -> void:
-	_set_status("An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..." % protocol)
+	_set_status(Lang.format("An older Unciv bridge (protocol v%d) was still running - restarting it with the current code...", protocol))
 	if game_running:   # keep the game it was running: it's what "Continue" offers next
 		await bridge.request("saveGame", {"name": "Autosave"})
 	bridge.send_shutdown()
@@ -495,7 +501,7 @@ func _on_bridge_connected() -> void:
 		return
 	var ping := await bridge.request("ping")
 	if not ping.ok:
-		_set_status("Bridge error: %s" % ping.error)
+		_set_status(Lang.format("Bridge error: %s", ping.error))
 		return
 	var protocol := int(ping.result.get("protocol", 0))
 	if protocol != BRIDGE_PROTOCOL:
@@ -506,9 +512,9 @@ func _on_bridge_connected() -> void:
 			_replaced_old_bridge = true
 			await _replace_old_bridge(protocol, bool(ping.result.get("gameRunning", false)))
 			return
-		_set_status("Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work." % [protocol, BRIDGE_PROTOCOL])
+		_set_status(Lang.format("Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work.", [protocol, BRIDGE_PROTOCOL]))
 		await get_tree().create_timer(3.0).timeout
-	_set_status("Connected to Unciv %s" % ping.result.uncivVersion)
+	_set_status(Lang.format("Connected to Unciv %s", ping.result.uncivVersion))
 	_uncivVersion = str(ping.result.uncivVersion)
 	_bridge_protocol = protocol
 	await _send_bridge_settings()   # the language first, so the main menu comes up in it
@@ -520,7 +526,7 @@ func _on_bridge_connected() -> void:
 			load_path = ProjectSettings.globalize_path(load_path)
 		var loaded := await bridge.request("loadGame", {"path": load_path, "remember": false})
 		if not loaded.ok:
-			_set_status("Couldn't load the save: %s" % loaded.error)
+			_set_status(Lang.format("Couldn't load the save: %s", loaded.error))
 			return
 		await _enter_game()
 	elif options.has("new-game") or options.has("smoke-test") or options.has("autoplay"):
@@ -544,6 +550,9 @@ func _on_bridge_connected() -> void:
 
 	if options.has("smoke-test"):
 		await _run_smoke_test()
+	if options.has("translation-check"):
+		await load("res://tools/check_translation_ui.gd").new().run(self)
+		return
 	if options.has("autoplay"):   # a whole game played by Unciv's AI, through the client: see autoplay.gd
 		var autoplay: Node = load("res://scripts/autoplay.gd").new(self)
 		add_child(autoplay)
@@ -689,7 +698,7 @@ func _start_new_game(params: Dictionary) -> bool:
 	_show_lobby_status("Starting a new game...")
 	var started := await bridge.request("newGame", params)
 	if not started.ok:
-		_set_status("Couldn't start a game: %s" % started.error)
+		_set_status(Lang.format("Couldn't start a game: %s", started.error))
 		if _in_lobby:
 			_show_lobby_card("lobby")
 		return false
@@ -736,12 +745,12 @@ func open_lobby() -> void:
 	for save: Dictionary in _saves:
 		if save.get("autosave", false):
 			autosave = save["name"]
-			autosave_text = "saved " + ActionMenu.local_time_text(float(save.get("modified", 0)))
+			autosave_text = Lang.t("saved ") + ActionMenu.local_time_text(float(save.get("modified", 0)))
 			break
 	var running: bool = ping.ok and ping.result.get("gameRunning", false) and _initialized and not state.is_empty()
 	_lobby_info = {
 		"running": running,
-		"running_text": "%s, turn %d" % [state.get("playerCiv", "?"), int(state.get("turn", 0))] if running else "",
+		"running_text": Lang.format("%s, turn %d", [state.get("playerCiv", "?"), int(state.get("turn", 0))]) if running else "",
 		"autosave": autosave,
 		"autosave_text": autosave_text,
 		"quick_text": _describe_setup(_setup),
@@ -756,10 +765,10 @@ func open_lobby() -> void:
 func _describe_setup(setup: Dictionary) -> String:
 	if setup.is_empty():
 		return ""
-	return "%s on a %s %s map, %s, %d AI, %d city-states" % [
+	return Lang.format("%s on a %s %s map, %s, %d AI, %d city-states", [
 		"A random civilization" if setup.get("civ", "Random") == "Random" else str(setup["civ"]),
 		setup.get("mapSize", "?"), setup.get("mapType", ""), setup.get("difficulty", "?"),
-		int(setup.get("aiPlayers", 0)), int(setup.get("cityStates", 0))]
+		int(setup.get("aiPlayers", 0)), int(setup.get("cityStates", 0))])
 
 
 ## Shows one of the main-menu cards: "lobby", "setup" or "saves" (over the table in VR, the side card on desktop).
@@ -792,10 +801,10 @@ func _on_lobby_choice(kind: String, value: String) -> void:
 		"lobby_resume":
 			await _enter_game()
 		"lobby_continue", "load_save":
-			_show_lobby_status("Loading %s..." % value)
+			_show_lobby_status(Lang.format("Loading %s...", value))
 			var loaded := await bridge.request("loadGame", {"name": value})
 			if not loaded.ok:
-				_set_status("Couldn't load %s: %s" % [value, loaded.error])
+				_set_status(Lang.format("Couldn't load %s: %s", [value, loaded.error]))
 				_show_lobby_card("lobby")
 				return
 			await _enter_game()
@@ -851,7 +860,7 @@ func _on_lobby_choice(kind: String, value: String) -> void:
 func _load_setup_options() -> void:
 	var reply := await bridge.request("listOptions", {"ruleset": str(_setup.get("ruleset", ""))})
 	if not reply.ok:
-		_set_status("Couldn't read those rules: %s" % reply.error)
+		_set_status(Lang.format("Couldn't read those rules: %s", reply.error))
 		return
 	_setup_options = reply.result
 	var nations: Array = _setup_options.get("nations", []).map(func(n: Dictionary) -> String: return str(n["name"]))
@@ -896,7 +905,7 @@ func refresh() -> void:
 		params["since"] = _state_revision
 	var reply := await bridge.request("getState", params)
 	if not reply.ok:
-		_set_status("getState failed: %s" % reply.error)
+		_set_status(Lang.format("getState failed: %s", reply.error))
 		return
 	var new_state: Dictionary = reply.result
 	if new_state.get("full", true):
@@ -1295,7 +1304,7 @@ func _begin_map_replay(turn: int) -> void:
 			_map_replay_slider.min_value = start
 			_map_replay_slider.max_value = finish
 			_map_replay_slider.set_value_no_signal(_map_replay_turn)
-			_map_replay_label.text = "Turn %d / %d" % [_map_replay_turn, end_turn]
+			_map_replay_label.text = Lang.format("Turn %d / %d", [_map_replay_turn, end_turn])
 			_update_map_replay_button()
 
 
@@ -1344,7 +1353,7 @@ func _play_map_replay() -> void:
 		hex_map.show_replay_turn(_map_replay_data, _map_replay_turn)
 		if _map_replay_hud != null:
 			_map_replay_slider.set_value_no_signal(_map_replay_turn)
-			_map_replay_label.text = "Turn %d / %d" % [_map_replay_turn, end_turn]
+			_map_replay_label.text = Lang.format("Turn %d / %d", [_map_replay_turn, end_turn])
 	_map_replay_runner_active = false
 
 
@@ -1430,7 +1439,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 				_set_status(reply.error)
 				return
 			sounds.play(Sounds.CHOIR)
-			_set_status("%s: %s" % [reply.result.get("displayName", "Your religion"), ", ".join(big_screen.religion_picks)])
+			_set_status(Lang.format("%s: %s", [reply.result.get("displayName", "Your religion"), Lang.join(", ", big_screen.religion_picks)]))
 			big_screen._religion = {}
 			big_screen.set_religion(reply.result)
 			await refresh()
@@ -1476,7 +1485,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 				_set_status(reply.error)
 				return
 			sounds.play(Sounds.PAPER)
-			_set_status("Researching %s." % reply.result.get("current", value))
+			_set_status(Lang.format("Researching %s.", reply.result.get("current", value)))
 			big_screen.set_techs(reply.result)
 			await refresh()
 		"policy_select":
@@ -1490,7 +1499,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 				_set_status(reply.error)
 				return
 			sounds.play(Sounds.POLICY)
-			_set_status("Adopted %s." % value)
+			_set_status(Lang.format("Adopted %s.", value))
 			big_screen.set_policies(reply.result)
 			await refresh()
 		"war_arm":
@@ -1504,7 +1513,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			if not reply.ok:
 				_set_status(reply.error)
 				return
-			_set_status("You declared war on %s!" % value)
+			_set_status(Lang.format("You declared war on %s!", value))
 			big_screen.set_diplomacy(reply.result)
 			await refresh()
 		"trade_open":
@@ -1649,7 +1658,7 @@ func toggle_overlay(id: String) -> void:
 	hex_map.set_overlay_flags(overlays)
 	var names := {"movement": "Unit movements", "yields": "Tile yields", "worked": "Worked tiles",
 		"resources": "Resources and improvements", "improvements": "Improvement pictures", "unit_icons": "Unit icons"}
-	_set_status("%s: %s" % [names.get(id, id), "on" if overlays[id] else "off"])
+	_set_status(Lang.format("%s: %s", [names.get(id, id), "on" if overlays[id] else "off"]))
 	if id == "yields" and overlays[id]:
 		_refresh_yields()
 
@@ -1794,7 +1803,7 @@ func click_tile(key: Vector2i) -> void:
 		await _select_unit(int(pick["id"]))
 		if hint:
 			_move_hint_shown = true
-			_set_status("Hold %s on a tile to move a unit onto it." % ("the trigger" if _xr_mode else "the mouse button"))
+			_set_status(Lang.format("Hold %s on a tile to move a unit onto it.", ("the trigger" if _xr_mode else "the mouse button")))
 		return
 
 	# With a unit selected, the first click on a tile aims there (path, turns or expected damage) and a
@@ -1825,8 +1834,8 @@ func _aim_at(key: Vector2i, forced := false) -> void:
 	_forced_aim = HexMap.NO_TILE
 	if hex_map.is_target(key):
 		var t := _target_at(key)
-		hex_map.set_aim(key, [], "Attack %s\ndeal ~%d, take ~%d\nclick again to attack" % [t.get("name", "?"),
-			int(t.get("expectedDamageToDefender", 0)), int(t.get("expectedDamageToAttacker", 0))], AIM_ATTACK_COLOR)
+		hex_map.set_aim(key, [], Lang.format("Attack %s\ndeal ~%d, take ~%d\nclick again to attack", [t.get("name", "?"),
+			int(t.get("expectedDamageToDefender", 0)), int(t.get("expectedDamageToAttacker", 0))]), AIM_ATTACK_COLOR)
 		return
 	busy = true
 	var reply := await bridge.request("previewMove", {"unitId": int(selected_unit["id"]), "x": key.x, "y": key.y})
@@ -1837,28 +1846,28 @@ func _aim_at(key: Vector2i, forced := false) -> void:
 	var result: Dictionary = reply.result
 	# Your own units on the tile: moving in shares it (Unciv allows a civilian and a military unit together,
 	# more in a city), and when it doesn't, swapping places is usually what you meant
-	var sharing := ", ".join(_own_units_at(key).map(func(u: Dictionary) -> String: return str(u.get("name", "a unit"))))
+	var sharing := Lang.join(", ", _own_units_at(key).map(func(u: Dictionary) -> String: return str(u.get("name", "a unit"))))
 	# canStay false with a unit of yours there: the tile is full, so the unit could only pass through it
 	# (a path to a tile held by someone else may still be worth taking - it can clear before you arrive)
 	var full: bool = sharing != "" and not bool(result.get("canStay", true))
 	if not result.get("canReach", false) or full:
 		var blocked := "Can't get there"
 		if sharing != "":
-			blocked = "No room on this tile\n%s %s already there" % [sharing,
-				"is" if _own_units_at(key).size() == 1 else "are"]
+			blocked = Lang.format("No room on this tile\n%s %s already there", [sharing,
+				"is" if _own_units_at(key).size() == 1 else "are"])
 			if _can_swap_with(key):
-				blocked += "\nSwap places on the card"
+				blocked += Lang.t("\nSwap places on the card")
 		hex_map.set_aim(key, [], blocked, AIM_BLOCKED_COLOR)
 		return
 	var stops: Array[Vector2i] = []
 	for s: Dictionary in result.get("stops", []):
 		stops.append(Vector2i(int(s["x"]), int(s["y"])))
 	var turns := int(result.get("turns", 1))
-	var text := "Move here" if turns <= 1 else "Move here: %d turns" % turns
+	var text := "Move here" if turns <= 1 else Lang.format("Move here: %d turns", turns)
 	if sharing != "":
-		text += "\nsharing the tile with %s" % sharing
+		text += Lang.format("\nsharing the tile with %s", sharing)
 	_forced_aim = key if forced else HexMap.NO_TILE
-	hex_map.set_aim(key, stops, text + "\nclick again to go", AIM_MOVE_COLOR)
+	hex_map.set_aim(key, stops, text + Lang.t("\nclick again to go"), AIM_MOVE_COLOR)
 
 
 ## True when the selected unit's "Swap places" action offers [param key] (its occupant swaps with it).
@@ -1878,7 +1887,7 @@ func move_selected_to(key: Vector2i) -> void:
 		return
 	sounds.play_at(Sounds.WHOOSH, _tile_sound_position(key))
 	if reply.result.get("queued", false):
-		_set_status("%s is on its way - it keeps going next turn." % selected_unit["name"])
+		_set_status(Lang.format("%s is on its way - it keeps going next turn.", selected_unit["name"]))
 	await refresh()
 	if not selected_unit.is_empty() and float(selected_unit.get("movement", 0)) <= 0.0:
 		await _after_order()
@@ -1906,14 +1915,14 @@ func attack(key: Vector2i) -> void:
 	if not r.get("attacked", false):
 		_set_status(r.get("message", "No attack happened."))
 	else:
-		var text := "%s attacked %s: dealt %d damage, took %d." % [selected_unit["name"], r["defender"],
-			int(r["damageToDefender"]), int(r["damageToAttacker"])]
+		var text := Lang.format("%s attacked %s: dealt %d damage, took %d.", [selected_unit["name"], r["defender"],
+			int(r["damageToDefender"]), int(r["damageToAttacker"])])
 		if r.get("cityCaptured", false):
-			text += "  City captured!"
+			text += Lang.t("  City captured!")
 		elif r.get("defenderDefeated", false):
-			text += "  %s destroyed!" % r["defender"]
+			text += Lang.format("  %s destroyed!", r["defender"])
 		if not r.get("attackerAlive", true):
-			text += "  Your %s was lost." % selected_unit["name"]
+			text += Lang.format("  Your %s was lost.", selected_unit["name"])
 			_deselect()
 		_set_status(text)
 	await refresh()
@@ -1934,7 +1943,7 @@ func build_improvement(improvement: String) -> void:
 	if r.get("improvementInProgress") == null:
 		_set_status("Improvement order cancelled.")
 	else:
-		_set_status("%s: building %s (%d turns)." % [selected_unit["name"], r["improvementInProgress"], int(r["turnsLeft"])])
+		_set_status(Lang.format("%s: building %s (%d turns).", [selected_unit["name"], r["improvementInProgress"], int(r["turnsLeft"])]))
 	await refresh()
 	await _after_order()
 
@@ -2015,7 +2024,7 @@ func _smoke_city_view(city_name: String) -> void:
 	print("SMOKE: city view %s: shown=%s, ambience %s, minimap hidden=%s, %d tiles (%s), focus %s, free %d, stats %s" % [city_name, _city_view,
 		data.get("ambience", "-"),
 		not minimap.visible, data.get("tiles", []).size(),
-		", ".join(data.get("tiles", []).map(func(t: Dictionary) -> String: return str(t["state"])).reduce(
+		Lang.join(", ", data.get("tiles", []).map(func(t: Dictionary) -> String: return str(t["state"])).reduce(
 			func(acc: Array, v: String) -> Array: return acc if v in acc else acc + [v], [])),
 		data.get("focus"), int(data.get("freePopulation", -1)), data.get("stats", {})])
 	var worked: Array = data.get("tiles", []).filter(func(t: Dictionary) -> bool: return t["state"] == "worked")
@@ -2046,7 +2055,7 @@ func _smoke_city_view(city_name: String) -> void:
 		print("SMOKE: description of %s: %s" % [buildable[0]["name"], city_prod_board.construction_description.left(70).replace("\n", " / ")])
 	var buyable: Array = city_view_data.get("tiles", []).filter(func(t: Dictionary) -> bool: return t["state"] == "buyable")
 	print("SMOKE: %d buyable tiles, first costs %s" % [buyable.size(), buyable[0].get("buyCost") if not buyable.is_empty() else "-"])
-	print("SMOKE: specialists %s, great people %s, buildings %s" % [city_view_data.get("specialists", []).map(func(x: Dictionary) -> String: return "%s %d/%d" % [x["name"], int(x["assigned"]), int(x["max"])]),
+	print("SMOKE: specialists %s, great people %s, buildings %s" % [city_view_data.get("specialists", []).map(func(x: Dictionary) -> String: return Lang.format("%s %d/%d", [x["name"], int(x["assigned"]), int(x["max"])])),
 		city_view_data.get("greatPeople", []).map(func(x: Dictionary) -> String: return x["name"]),
 		city_view_data.get("buildingDetails", []).map(func(x: Dictionary) -> String: return x["name"])])
 	# Rename through the keyboard (typed a key at a time, as the laser would), then put the old name back
@@ -2200,10 +2209,10 @@ func rename_city() -> void:
 	if city_view_data.is_empty():
 		return
 	var old_name := str(city_view_data["name"])
-	open_keyboard("Rename %s" % old_name, old_name, func(text: String) -> void:
+	open_keyboard(Lang.format("Rename %s", old_name), old_name, func(text: String) -> void:
 		if text == "" or text == old_name:
 			return
-		if await _city_request("renameCity", {"newName": text}, "%s is now called %s." % [old_name, text]):
+		if await _city_request("renameCity", {"newName": text}, Lang.format("%s is now called %s.", [old_name, text])):
 			await _refresh_city_view())
 
 
@@ -2213,12 +2222,12 @@ func rename_unit(unit_id: int) -> void:
 		_set_status(reply.error)
 		return
 	var unit: Dictionary = reply.result
-	open_keyboard("Name your %s (empty: no name)" % unit.get("name", "unit"), str(unit.get("instanceName", "")), func(text: String) -> void:
+	open_keyboard(Lang.format("Name your %s (empty: no name)", unit.get("name", "unit")), str(unit.get("instanceName", "")), func(text: String) -> void:
 		var renamed := await bridge.request("renameUnit", {"unitId": unit_id, "newName": text})
 		if not renamed.ok:
 			_set_status(renamed.error)
 			return
-		_set_status("Renamed to %s." % text if text != "" else "Name removed.")
+		_set_status(Lang.format("Renamed to %s.", text) if text != "" else "Name removed.")
 		if not selected_unit.is_empty() and int(selected_unit["id"]) == unit_id:
 			await _select_unit(unit_id, false)
 		await _refresh_overview())
@@ -2294,7 +2303,7 @@ func _on_overview_chosen(kind: String, value: String) -> void:
 			if not reply.ok:
 				_set_status(reply.error)
 			else:
-				_set_status("%s: on the way." % parts[0] if kind == "ov_spy_move" else "%s: coup orders given." % parts[0])
+				_set_status(Lang.format("%s: on the way.", parts[0]) if kind == "ov_spy_move" else Lang.format("%s: coup orders given.", parts[0]))
 				overview_board.selected_spy = ""
 			await _refresh_overview()
 			await refresh()
@@ -2322,7 +2331,7 @@ func _on_overview_chosen(kind: String, value: String) -> void:
 			await _select_unit(int(value))
 			if not selected_unit.is_empty():
 				_look_at_tile(_selected_key())
-				_set_status("Selected %s." % selected_unit.get("name", "the unit"))
+				_set_status(Lang.format("Selected %s.", selected_unit.get("name", "the unit")))
 		"ov_promote":
 			await _select_unit(int(value))
 			if not selected_unit.is_empty():
@@ -2336,7 +2345,7 @@ func _on_overview_chosen(kind: String, value: String) -> void:
 			if not reply.ok:
 				_set_status(reply.error)
 				return
-			_set_status("Upgraded to %s." % parts[1])
+			_set_status(Lang.format("Upgraded to %s.", parts[1]))
 			await refresh()
 			overview_board.set_data(reply.result, int(state.get("player", {}).get("gold", 0)))
 		"ov_gold_science":
@@ -2442,7 +2451,7 @@ func enter_city_view(city_name: String) -> void:
 	_show_city_view(reply.result, true)
 	# Unciv plays the era's city ambience while you're in a city; in VR it comes from the table
 	sounds.ambience(str(reply.result.get("ambience", "")), table.global_position)
-	_set_status("City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map." % city_name)
+	_set_status(Lang.format("City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map.", city_name))
 
 
 ## Shows a getCity result on the table and both boards. [param recentre]: move the map window onto it.
@@ -2508,11 +2517,11 @@ func _needs_place_tile(construction: String, method: String, params: Dictionary,
 		for t: Dictionary in option.get("placeTiles", []):
 			tiles.append(Vector2i(int(t["x"]), int(t["y"])))
 		if tiles.is_empty():
-			_set_status("There's nowhere in %s to put the %s." % [city_view_data.get("name", "the city"), option.get("improvement", "improvement")])
+			_set_status(Lang.format("There's nowhere in %s to put the %s.", [city_view_data.get("name", "the city"), option.get("improvement", "improvement")]))
 			return true
 		_city_place = {"method": method, "params": params, "tiles": tiles, "name": construction}
 		hex_map.set_selection(Vector2i(int(city_view_data["x"]), int(city_view_data["y"])), [], tiles)
-		_set_status("Pick the tile for the %s (red rings), or Esc / B to cancel." % option.get("improvement", construction))
+		_set_status(Lang.format("Pick the tile for the %s (red rings), or Esc / B to cancel.", option.get("improvement", construction)))
 		return true
 	return false
 
@@ -2535,7 +2544,7 @@ func city_view_click(key: Vector2i) -> void:
 		var params: Dictionary = (place["params"] as Dictionary).duplicate()
 		params["tileX"] = key.x
 		params["tileY"] = key.y
-		if await _city_request(place["method"], params, "%s: the improvement goes there." % place["name"]):
+		if await _city_request(place["method"], params, Lang.format("%s: the improvement goes there.", place["name"])):
 			city_prod_board.select_construction("", -1, "")
 			await _refresh_city_view()
 		return
@@ -2554,7 +2563,7 @@ func city_view_click(key: Vector2i) -> void:
 		if _city_tile_armed == key:
 			_city_tile_armed = Vector2i(999999, 999999)
 			hex_map.clear_aim()
-			await _city_request("cityTile", {"tileX": key.x, "tileY": key.y, "action": "buy"}, "Bought the tile for %d gold." % int(tile.get("buyCost", 0)))
+			await _city_request("cityTile", {"tileX": key.x, "tileY": key.y, "action": "buy"}, Lang.format("Bought the tile for %d gold.", int(tile.get("buyCost", 0))))
 			await refresh()   # the border moved
 			_show_city_view(city_view_data)
 		else:
@@ -2657,12 +2666,12 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 		"city_build_now":
 			if _needs_place_tile(value, "setProduction", {"construction": value, "mode": "now"}, -1):
 				return
-			await _city_request("setProduction", {"construction": value, "mode": "now"}, "%s will build %s next." % [city_view_data.get("name", ""), value])
+			await _city_request("setProduction", {"construction": value, "mode": "now"}, Lang.format("%s will build %s next.", [city_view_data.get("name", ""), value]))
 			sounds.play(_construction_sound(value))
 		"city_queue":
 			if _needs_place_tile(value, "setProduction", {"construction": value, "mode": "queue"}, -1):
 				return
-			await _city_request("setProduction", {"construction": value, "mode": "queue"}, "%s added to the queue." % value)
+			await _city_request("setProduction", {"construction": value, "mode": "queue"}, Lang.format("%s added to the queue.", value))
 			sounds.play(_construction_sound(value))
 		"city_move":
 			var index := int(parts[0])
@@ -2675,12 +2684,12 @@ func _on_city_board_chosen(kind: String, value: String) -> void:
 			if _needs_place_tile(parts[0], "buyConstruction", {"construction": parts[0], "stat": parts[1], "queueIndex": int(parts[2])}, int(parts[2])):
 				return
 			if await _city_request("buyConstruction", {"construction": parts[0], "stat": parts[1], "queueIndex": int(parts[2])},
-					"Bought %s." % parts[0]):
+					Lang.format("Bought %s.", parts[0])):
 				sounds.play(Sounds.CHOIR if parts[1] == "Faith" else Sounds.COIN)
 				city_prod_board.select_construction("", -1, "")
 				await _refresh_city_view()
 		"city_sell":
-			if await _city_request("sellBuilding", {"building": value}, "Sold the %s." % value):
+			if await _city_request("sellBuilding", {"building": value}, Lang.format("Sold the %s.", value)):
 				sounds.play(Sounds.COIN)
 				city_prod_board.select_construction("", -1, "")
 				await _refresh_city_view()
@@ -2760,10 +2769,10 @@ func city_command(kind: String, value: String) -> void:
 	selected_city = reply.result
 	var city_sound := _construction_sound(value)
 	match kind:
-		"produce": _set_status("%s will build %s next." % [selected_city["name"], value])
-		"queue": _set_status("%s added to %s's queue." % [value, selected_city["name"]])
+		"produce": _set_status(Lang.format("%s will build %s next.", [selected_city["name"], value]))
+		"queue": _set_status(Lang.format("%s added to %s's queue.", [value, selected_city["name"]]))
 		"buy":
-			_set_status("Bought %s in %s." % [value, selected_city["name"]])
+			_set_status(Lang.format("Bought %s in %s.", [value, selected_city["name"]]))
 			city_sound = Sounds.COIN   # bought with gold, so Unciv's coin whatever it was
 		"unqueue": city_sound = Sounds.CLICK
 	var city := selected_city
@@ -2840,7 +2849,7 @@ func promote(promotion: String) -> void:
 		_set_status(reply.error)
 		return
 	sounds.play_at(Sounds.PROMOTE, _tile_sound_position(_selected_key()))
-	_set_status("%s is now %s." % [selected_unit["name"], promotion])
+	_set_status(Lang.format("%s is now %s.", [selected_unit["name"], promotion]))
 	selected_unit = _with_move_action(reply.result)
 	if selected_unit.get("canPromote", false):
 		open_promotions()   # enough XP for another one
@@ -2857,7 +2866,7 @@ func set_research(tech: String) -> void:
 		_set_status(reply.error)
 		return
 	sounds.play(Sounds.PAPER)
-	_set_status("Researching %s." % reply.result.get("current", tech))
+	_set_status(Lang.format("Researching %s.", reply.result.get("current", tech)))
 	await refresh()
 	if _xr_mode:
 		_popup_kind = "research"
@@ -2961,7 +2970,7 @@ func unit_action(value: String) -> void:
 	if type == "ShowUnitDestination" and action.has("destination"):
 		var where := Vector2i(int(action["destination"]["x"]), int(action["destination"]["y"]))
 		_look_at_tile(where)
-		hex_map.set_aim(where, [], "%s is heading here" % selected_unit.get("name", "The unit"), AIM_MOVE_COLOR)
+		hex_map.set_aim(where, [], Lang.format("%s is heading here", selected_unit.get("name", "The unit")), AIM_MOVE_COLOR)
 		return
 	if action.get("target", "") == "tile":
 		_start_unit_pick(action)
@@ -2986,7 +2995,7 @@ func _finish_unit_action(reply: Dictionary, action: Dictionary) -> void:
 	if not reply.result.get("done", true):
 		_set_status(str(reply.result.get("confirm", "Are you sure?")))
 		return
-	_set_status("%s: %s" % [selected_unit.get("name", "Unit"), _clean_title(str(action.get("label", action.get("title", action.get("type", "done")))))])
+	_set_status(Lang.format("%s: %s", [selected_unit.get("name", "Unit"), _clean_title(str(action.get("label", action.get("title", action.get("type", "done")))))]))
 	if not reply.result.get("unitStillExists", true):
 		_deselect()
 	await refresh()
@@ -3054,8 +3063,8 @@ func _start_unit_pick(action: Dictionary) -> void:
 		"any": not action.has("targets"), "text": title}
 	hex_map.clear_aim()
 	hex_map.set_selection(_selected_key(), [], targets)
-	_set_pick_text("%s: click a %stile" % [title, "highlighted " if not targets.is_empty() else ""])
-	_set_status("%s - click the tile on the map (or Cancel on the card)." % title)
+	_set_pick_text(Lang.format("%s: click a %stile", [title, "highlighted " if not targets.is_empty() else ""]))
+	_set_status(Lang.format("%s - click the tile on the map (or Cancel on the card).", title))
 
 
 ## "Move here" on the unit card: where it can get this turn is ringed, but any tile will do (a far one
@@ -3070,7 +3079,7 @@ func _start_move_pick() -> void:
 	hex_map.clear_aim()
 	hex_map.set_selection(_selected_key(), reachable, [])
 	_set_pick_text("Move here: click a tile")
-	_set_status("Move %s - click a tile on the map (or Cancel on the card)." % selected_unit.get("name", "the unit"))
+	_set_status(Lang.format("Move %s - click a tile on the map (or Cancel on the card).", selected_unit.get("name", "the unit")))
 
 
 ## The city's guns: pick one of the enemies in range.
@@ -3081,14 +3090,14 @@ func _start_bombard_pick() -> void:
 	for t: Dictionary in selected_city.get("bombardTargets", []):
 		targets.append(Vector2i(int(t["x"]), int(t["y"])))
 	if targets.is_empty():
-		_set_status("No enemies in range of %s." % selected_city.get("name", "the city"))
+		_set_status(Lang.format("No enemies in range of %s.", selected_city.get("name", "the city")))
 		return
 	_pick = {"kind": "bombard", "city": str(selected_city["name"]), "targets": targets, "any": false,
 		"key": Vector2i(int(selected_city["x"]), int(selected_city["y"]))}
 	hex_map.clear_aim()
 	hex_map.set_selection(_pick["key"], [], targets)
 	_close_popup()
-	_set_status("Bombard from %s: click a red-ringed enemy (click the city to cancel)." % selected_city["name"])
+	_set_status(Lang.format("Bombard from %s: click a red-ringed enemy (click the city to cancel).", selected_city["name"]))
 
 
 func _set_pick_text(text: String) -> void:
@@ -3149,8 +3158,8 @@ func _pick_tile(key: Vector2i) -> void:
 				_set_status(reply.error)
 			else:
 				var r: Dictionary = reply.result
-				_set_status("%s bombarded %s: %d damage%s." % [pick["city"], r.get("defender", "?"), int(r.get("damageToDefender", 0)),
-					"  Destroyed!" if r.get("defenderDefeated", false) else ""])
+				_set_status(Lang.format("%s bombarded %s: %d damage%s.", [pick["city"], r.get("defender", "?"), int(r.get("damageToDefender", 0)),
+					"  Destroyed!" if r.get("defenderDefeated", false) else ""]))
 			hex_map.clear_selection()
 			await refresh()
 
@@ -3190,13 +3199,13 @@ func end_turn() -> void:
 		return
 	var result: Dictionary = reply.result
 	sounds.play(Sounds.TURN)
-	var lines: Array[String] = ["Turn %d" % int(result["turn"])]
+	var lines: Array[String] = [Lang.format("Turn %d", int(result["turn"]))]
 	if result.get("gameOver", false):
-		lines.append("GAME OVER - %s wins (%s victory)" % [result.get("winner", "?"), result.get("victoryType", "?")])
+		lines.append(Lang.format("GAME OVER - %s wins (%s victory)", [result.get("winner", "?"), result.get("victoryType", "?")]))
 	var notes: Array = result.get("notifications", [])
 	for i in mini(notes.size(), 5):
 		lines.append("- " + str(notes[i]["text"]))
-	_set_status("\n".join(lines))
+	_set_status(Lang.join("\n", lines))
 	var events: Array = result.get("events", [])
 	var playback := str(settings.get("playback", "normal"))
 	if playback != "off" and not events.is_empty():
@@ -3437,7 +3446,7 @@ func choose_great_person(unit_name: String) -> void:
 		return
 	_close_alert_card()
 	sounds.play(Sounds.CHOIR)
-	_set_status("A %s has been born!" % unit_name)
+	_set_status(Lang.format("A %s has been born!", unit_name))
 	await refresh()
 	for u: Dictionary in state.get("units", []):
 		if u["name"] == unit_name:
@@ -3464,7 +3473,7 @@ func cast_vote(civ_name: String) -> void:
 		return
 	_close_alert_card()
 	sounds.play(Sounds.CHIMES)
-	_set_status("You voted for %s." % civ_name if civ_name != "" else "You abstained.")
+	_set_status(Lang.format("You voted for %s.", civ_name) if civ_name != "" else "You abstained.")
 	await refresh()
 
 
@@ -3778,7 +3787,7 @@ func _run_smoke_test() -> void:
 			var key := Vector2i(int(t["x"]), int(t["y"]))
 			if key == from or _own_units_at(key).is_empty():
 				continue
-			var occupants := ", ".join(_own_units_at(key).map(func(o: Dictionary) -> String: return str(o["name"])))
+			var occupants := Lang.join(", ", _own_units_at(key).map(func(o: Dictionary) -> String: return str(o["name"])))
 			await click_tile(key)
 			var selected_other := int(selected_unit.get("id", 0)) != mover_id
 			await _select_unit(mover_id)
@@ -3923,7 +3932,7 @@ func _run_smoke_test() -> void:
 					continue
 				var v: Variant = ov_reply.result[key]
 				summary.append("%s=%s" % [key, str(v.size()) if v is Array or v is Dictionary else str(v)])
-			print("SMOKE: overview %s: %s" % [t[0], ", ".join(summary)])
+			print("SMOKE: overview %s: %s" % [t[0], Lang.join(", ", summary)])
 		else:
 			print("SMOKE: overview %s FAILED: %s" % [t[0], ov_reply.error])
 	_set_overview_visible(_xr_mode)
@@ -4057,7 +4066,7 @@ func _run_smoke_test() -> void:
 # region HUD ------------------------------------------------------------------------------
 
 func _set_status(text: String) -> void:
-	_status_text = text
+	_status_text = Lang.t(text)
 	print(text)
 	_update_hud()
 
@@ -4066,25 +4075,25 @@ func _update_hud() -> void:
 	var lines: Array[String] = []
 	if info_panel != null and not _in_lobby:
 		# The info panel shows your civ's numbers and the pointed-at tile; the HUD keeps attacks and messages
-		if _hover_text.begins_with("ATTACK"):
+		if _hover_is_attack:
 			lines.append(_hover_text)
 		lines.append(_status_text)
-		_set_hud_text("\n".join(lines))
+		_set_hud_text(Lang.join("\n", lines))
 		return
 	if not state.is_empty():
 		var p: Dictionary = state.get("player", {})
 		var year := int(state.get("year", 0))
-		var year_text := "%d BC" % -year if year < 0 else "%d AD" % year
-		lines.append("%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d" % [
+		var year_text := Lang.format("%d BC", -year) if year < 0 else Lang.format("%d AD", year)
+		lines.append(Lang.format("%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d", [
 			state.get("playerCiv", "?"), int(state.get("turn", 0)), year_text,
-			int(p.get("gold", 0)), int(p.get("goldPerTurn", 0)), int(p.get("science", 0)), int(p.get("happiness", 0))])
+			int(p.get("gold", 0)), int(p.get("goldPerTurn", 0)), int(p.get("science", 0)), int(p.get("happiness", 0))]))
 		if p.get("currentTech") != null:
-			lines.append("Researching: %s" % p["currentTech"])
+			lines.append(Lang.format("Researching: %s", p["currentTech"]))
 	if _hover_text != "":
 		lines.append(_hover_text)
 	lines.append("")
 	lines.append(_status_text)
-	_set_hud_text("\n".join(lines))
+	_set_hud_text(Lang.join("\n", lines))
 
 
 func _set_hud_text(text: String) -> void:
@@ -4211,10 +4220,13 @@ func _load_settings() -> void:
 		settings[key] = config.get_value("settings", key, settings[key])
 
 
+var _language_before_override := "English"
+
+
 func _save_settings() -> void:
 	var config := ConfigFile.new()
 	for key in settings.keys():
-		config.set_value("settings", key, settings[key])
+		config.set_value("settings", key, _language_before_override if key == "language" and options.has("language") else settings[key])
 	config.save(SETTINGS_PATH)
 
 
@@ -4225,12 +4237,21 @@ func _send_bridge_settings() -> void:
 		params[key] = bool(settings.get(key, false))
 	for key: String in INT_SETTINGS:
 		params[key] = int(settings.get(key, 1))
-	params["language"] = str(settings.get("language", "English"))
+	# The frontend can support languages absent from this version of Unciv.
+	var first_language := _languages.is_empty()
+	if _languages.is_empty():
+		await _load_languages()
+	var wanted := str(settings.get("language", "English"))
+	params["language"] = wanted
+	for item: Dictionary in _languages:
+		if item.get("name") == wanted and item.get("frontend_only", false):
+			params["language"] = "English"
+			break
 	var reply := await bridge.request("setSettings", params)
 	if not reply.ok:
 		push_warning("setSettings failed: %s" % reply.error)
 		return
-	if _languages.is_empty() or Lang.language != str(reply.result.get("language", "English")):
+	if first_language or Lang.language != wanted:
 		await _apply_language()
 
 
@@ -4239,15 +4260,31 @@ var _languages: Array = []
 
 
 ## Takes on the bridge's language: Unciv's translations of names and words for this side (see lang.gd).
-func _apply_language() -> void:
+func _load_languages() -> void:
 	var listed := await bridge.request("getLanguages")
 	if listed.ok:
 		_languages = listed.result.get("languages", [])
+		for name: String in Lang.FRONTEND_LANGUAGES:
+			var found := false
+			for item: Dictionary in _languages:
+				if item.get("name") == name:
+					item["label"] = Lang.FRONTEND_LANGUAGES[name]["label"]
+					found = true
+					break
+			if not found:
+				_languages.append({"name": name, "label": Lang.FRONTEND_LANGUAGES[name]["label"],
+					"tag": Lang.frontend_tag(name), "frontend_only": true})
+
+
+func _apply_language() -> void:
+	if _languages.is_empty():
+		await _load_languages()
 	var reply := await bridge.request("getTranslations")
 	if not reply.ok:
 		push_warning("getTranslations failed: %s" % reply.error)
 		return
-	Lang.apply(str(reply.result.get("language", "English")), reply.result.get("entries", {}), str(reply.result.get("tag", "en")))
+	var wanted := str(settings.get("language", "English"))
+	Lang.apply(wanted, reply.result.get("entries", {}), Lang.frontend_tag(wanted, str(reply.result.get("tag", "en"))))
 
 
 ## Unciv options with a number (sent with setSettings too)
@@ -4261,6 +4298,8 @@ const BRIDGE_SETTINGS := ["showTutorials", "checkForDueUnits", "autoUnitCycle", 
 
 
 func change_setting(key: String, value: String) -> void:
+	if key == "language":
+		options.erase("language")   # an explicit choice replaces the temporary development override
 	if key == "setting_toggle":
 		settings[value] = not bool(settings.get(value, false))
 		_save_settings()
@@ -4300,18 +4339,28 @@ func change_setting(key: String, value: String) -> void:
 			await _send_bridge_settings()
 		"language":
 			await _send_bridge_settings()
+			_status_text = ""
+			_pedia_ruleset = ""   # fetch translated Civilopedia content again on its next opening
+			if task_card != null:
+				task_card.task = {}
 			if not _in_lobby and not state.is_empty():
+				_state_revision = -1
 				await refresh()   # the messages, popups and cards come again in the new language
+				if _city_view:
+					await _refresh_city_view()
+			else:
+				await open_lobby()
+			_update_button_labels()
 	_refresh_settings()   # so the new choice shows
 
 
 ## Saves the running game in the bridge's save folder, under a name you type ("<civ> - turn <n>" to start with).
 func save_game() -> void:
-	var default_name := "%s - turn %d" % [state.get("playerCiv", "Game"), int(state.get("turn", 0))]
+	var default_name := Lang.format("%s - turn %d", [state.get("playerCiv", "Game"), int(state.get("turn", 0))])
 	open_keyboard("Save game as", default_name, func(text: String) -> void:
 		var save_name := text if text != "" else default_name
 		var reply := await bridge.request("saveGame", {"name": save_name})
-		_set_status("Saved as \"%s\"." % save_name if reply.ok else "Couldn't save: %s" % reply.error))
+		_set_status(Lang.format("Saved as \"%s\".", save_name) if reply.ok else Lang.format("Couldn't save: %s", reply.error)))
 
 
 func open_settings() -> void:
@@ -4401,7 +4450,7 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 			_refresh_settings()
 		"reset_tutorials":
 			var reply := await bridge.request("setSettings", {"resetTutorials": true})
-			_set_status("The tutorials will show again from the start." if reply.ok else "Couldn't reset the tutorials: %s" % reply.error)
+			_set_status("The tutorials will show again from the start." if reply.ok else Lang.format("Couldn't reset the tutorials: %s", reply.error))
 			_task_hidden = ""
 			if not _in_lobby and not state.is_empty():
 				await refresh()
@@ -4736,7 +4785,7 @@ func _setup_civilopedia() -> void:
 	civilopedia_board.fetch = func(target: String) -> Dictionary:
 		var reply := await bridge.request("getCivilopediaEntry", {"link": target})
 		if not reply.ok:
-			_set_status("Civilopedia: %s" % reply.error)
+			_set_status(Lang.format("Civilopedia: %s", reply.error))
 			return {}
 		return reply.result
 	civilopedia_board.chosen.connect(_on_pedia_chosen)
@@ -4789,7 +4838,7 @@ func open_civilopedia(target := "") -> void:
 	if _pedia_ruleset != wanted or not civilopedia_board.has_categories():
 		var reply := await bridge.request("getCivilopedia")
 		if not reply.ok:
-			_set_status("Couldn't open the Civilopedia: %s" % reply.error)
+			_set_status(Lang.format("Couldn't open the Civilopedia: %s", reply.error))
 			return
 		civilopedia_board.set_categories(reply.result)
 		civilopedia_board.history.clear()
@@ -4820,7 +4869,7 @@ func _on_pedia_chosen(kind: String, value: String) -> void:
 			close_civilopedia()
 		"external":
 			OS.shell_open(value)
-			_set_status("Opened %s in your browser." % value)
+			_set_status(Lang.format("Opened %s in your browser.", value))
 
 
 ## The tutorial task card: left of the overview in VR (grabbed by its top strip), bottom-middle on the desktop.
@@ -4896,7 +4945,7 @@ func _tutorial_request(method: String, params: Dictionary) -> void:
 		return
 	var reply := await bridge.request(method, params)
 	if not reply.ok:
-		push_warning("%s: %s" % [method, reply.error])
+		push_warning(Lang.format("%s: %s", [method, reply.error]))
 		return
 	var status: Dictionary = reply.result
 	if status.has("alerts"):
@@ -4942,8 +4991,8 @@ func start_placing_table() -> void:
 	close_settings()
 	_close_popup()
 	_placing_table = true
-	_set_status("Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done." % [
-		"pull the trigger" if _xr_mode else "click", "The right stick" if _xr_mode else "Q / E", "Press A or B" if _xr_mode else "Esc"])
+	_set_status(Lang.format("Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done.", [
+		"pull the trigger" if _xr_mode else "click", "The right stick" if _xr_mode else "Q / E", "Press A or B" if _xr_mode else "Esc"]))
 
 
 func stop_placing_table() -> void:
@@ -5440,6 +5489,7 @@ func _pick_mouse(screen_position: Vector2) -> Variant:
 
 func _update_hover(key: Variant) -> void:
 	if key == null:
+		_hover_is_attack = false
 		hex_map.set_hover(Vector2i(999999, 999999))
 		if _hover_text != "":
 			_hover_text = ""
@@ -5449,11 +5499,12 @@ func _update_hover(key: Variant) -> void:
 	_show_tile_info(key)
 	var text := hex_map.describe_tile(key)
 	var target := _target_at(key)
+	_hover_is_attack = not target.is_empty()
 	if not target.is_empty():
-		text = "ATTACK %s (%s, %d/%d HP)" % [target.get("name", "?"), target.get("civ", "?"),
-			int(target.get("health", 0)), int(target.get("maxHealth", 100))]
+		text = Lang.format("ATTACK %s (%s, %d/%d HP)", [target.get("name", "?"), target.get("civ", "?"),
+			int(target.get("health", 0)), int(target.get("maxHealth", 100))])
 		if target.has("expectedDamageToDefender"):
-			text += "\n  expected: deal %d, take %d" % [int(target["expectedDamageToDefender"]), int(target["expectedDamageToAttacker"])]
+			text += Lang.format("\n  expected: deal %d, take %d", [int(target["expectedDamageToDefender"]), int(target["expectedDamageToAttacker"])])
 	if text != _hover_text:
 		_hover_text = text
 		_update_hud()

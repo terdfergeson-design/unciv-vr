@@ -7,6 +7,8 @@ extends PanelContainer
 ## and whatever tile you're pointing at (terrain, yields, resource, owner, units, defence), colour-coded
 ## like Unciv's top bar and tile info. Stands next to the overview in VR; bottom-left on the desktop.
 
+const Lang := preload("res://scripts/lang.gd")
+
 const WIDTH := 420
 const Icons := preload("res://scripts/icons.gd")
 
@@ -76,7 +78,7 @@ func show_civ(state: Dictionary, civ_colors: Dictionary) -> void:
 	var p: Dictionary = state.get("player", {})
 	var civ: String = state.get("playerCiv", "?")
 	var year := int(state.get("year", 0))
-	_civ_header.text = "%s   Turn %d  (%s)" % [civ, int(state.get("turn", 0)), "%d BC" % -year if year < 0 else "%d AD" % year]
+	_civ_header.text = Lang.format("%s   Turn %d  (%s)", [civ, int(state.get("turn", 0)), Lang.format("%d BC", -year) if year < 0 else Lang.format("%d AD", year)])
 	_civ_header.add_theme_color_override("font_color", _civ_color(civ, "outer").lightened(0.2))
 	_civ_badge.texture = null
 	for entry: Dictionary in state.get("civs", []):
@@ -102,7 +104,7 @@ func show_civ(state: Dictionary, civ_colors: Dictionary) -> void:
 	_chip(_civ_stats, "Pop", POPULATION, str(population))
 
 	var tech: Variant = p.get("currentTech")
-	_research.text = "Researching %s" % tech if tech != null else "Not researching anything - pick a tech!"
+	_research.text = Lang.format("Researching %s", tech) if tech != null else "Not researching anything - pick a tech!"
 	_research.add_theme_color_override("font_color", SCIENCE if tech != null else UNHAPPY)
 	_refit()
 
@@ -129,7 +131,7 @@ func show_tile(tile: Dictionary, attack: Dictionary = {}) -> void:
 	var names: Array[String] = [str(tile.get("base", "?"))]
 	for feature: String in tile.get("features", []):
 		names.append(feature)
-	_tile_title.text = ", ".join(names)
+	_tile_title.text = Lang.join(", ", names)
 	_tile_title.add_theme_color_override("font_color", TEXT)
 
 	var yields: Dictionary = tile.get("yields", {})
@@ -140,12 +142,12 @@ func show_tile(tile: Dictionary, attack: Dictionary = {}) -> void:
 			_chip(_tile_yields, spec[1], spec[2], str(snappedf(amount, 0.1)).trim_suffix(".0"))
 
 	if tile.has("wonder"):
-		_line("Natural wonder: %s" % tile["wonder"], GOLD)
+		_line(Lang.format("Natural wonder: %s", tile["wonder"]), GOLD)
 	if tile.has("resource"):
-		_line("Resource: %s" % tile["resource"], Color(0.95, 0.85, 0.5),
+		_line(Lang.format("Resource: %s", tile["resource"]), Color(0.95, 0.85, 0.5),
 			Icons.badge("resource", str(tile["resource"]), Color(0.3, 0.45, 0.3)))
 	if tile.has("improvement"):
-		_line("Improvement: %s%s" % [tile["improvement"], " (pillaged)" if tile.get("pillaged", false) else ""], TEXT,
+		_line(Lang.format("Improvement: %s%s", [tile["improvement"], " (pillaged)" if tile.get("pillaged", false) else ""]), TEXT,
 			Icons.badge("improvement", str(tile["improvement"]), Color(0.22, 0.25, 0.32)))
 	if str(tile.get("road", "None")) != "None":
 		_line(str(tile["road"]), DIM)
@@ -153,30 +155,30 @@ func show_tile(tile: Dictionary, attack: Dictionary = {}) -> void:
 		_line("River", Color(0.5, 0.75, 1.0))
 	if tile.has("city"):
 		var city: Dictionary = tile["city"]
-		_line("City of %s  (population %d)" % [city.get("name", "?"), int(city.get("population", 0))],
+		_line(Lang.format("City of %s  (population %d)", [city.get("name", "?"), int(city.get("population", 0))]),
 			_civ_color(str(city.get("civ", "")), "outer").lightened(0.3))
 	if tile.has("owner"):
 		var owner: String = tile["owner"]
-		var text := "%s territory" % owner
+		var text := Lang.format("%s territory", owner)
 		if tile.has("workedBy"):
-			text += ", worked by %s" % tile["workedBy"]
+			text += Lang.format(", worked by %s", tile["workedBy"])
 		_line(text, _civ_color(owner, "outer").lightened(0.3))
 	for unit: Dictionary in tile.get("units", []):
 		var health := int(unit.get("health", 100))
 		var colours: Dictionary = _civ_colors.get(str(unit.get("civ", "")), {})
-		_line("%s  -  %s%s" % [unit.get("name", "?"), unit.get("civ", "?"), "  (%d HP)" % health if health < 100 else ""],
+		_line(Lang.format("%s  -  %s%s", [unit.get("name", "?"), unit.get("civ", "?"), Lang.format("  (%d HP)", health) if health < 100 else ""]),
 			_civ_color(str(unit.get("civ", "")), "outer").lightened(0.3),
 			Icons.badge("unit", str(unit.get("name", "")), colours.get("inner", Color(0.2, 0.2, 0.2)), colours.get("outer", Color.WHITE)))
 	var defense := int(tile.get("defenseBonus", 0))
 	if defense != 0:
-		_line("%+d%% to unit defence" % defense, HAPPY if defense > 0 else UNHAPPY)
+		_line(Lang.format("%+d%% to unit defence", defense), HAPPY if defense > 0 else UNHAPPY)
 	if tile.get("impassable", false):
 		_line("Impassable", UNHAPPY)
 	if not tile.get("visible", false):
 		_line("Not currently in sight - last seen like this", DIM)
 	if not attack.is_empty():
-		_line("Attack %s: deal ~%d, take ~%d" % [attack.get("name", "?"), int(attack.get("expectedDamageToDefender", 0)),
-			int(attack.get("expectedDamageToAttacker", 0))], UNHAPPY)
+		_line(Lang.format("Attack %s: deal ~%d, take ~%d", [attack.get("name", "?"), int(attack.get("expectedDamageToDefender", 0)),
+			int(attack.get("expectedDamageToAttacker", 0))]), UNHAPPY)
 	_refit()
 
 
@@ -212,6 +214,7 @@ func _chip(parent: Container, symbol: String, color: Color, value: String) -> vo
 		picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		row.add_child(picture)
 		var amount := Label.new()
+		amount.text_direction = Control.TEXT_DIRECTION_LTR
 		amount.text = value
 		amount.add_theme_font_size_override("font_size", 20)
 		amount.add_theme_color_override("font_color", color.lightened(0.25))
@@ -233,6 +236,7 @@ func _chip(parent: Container, symbol: String, color: Color, value: String) -> vo
 	badge.add_child(mark)
 	row.add_child(badge)
 	var number := Label.new()
+	number.text_direction = Control.TEXT_DIRECTION_LTR
 	number.text = value
 	number.add_theme_font_size_override("font_size", 20)
 	number.add_theme_color_override("font_color", color.lightened(0.25))

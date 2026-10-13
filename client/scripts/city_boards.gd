@@ -13,6 +13,8 @@ extends PanelContainer
 ## Emits chosen(kind, value) - see main.gd _on_city_board_chosen for the list.
 signal chosen(kind: String, value: String)
 
+const Lang := preload("res://scripts/lang.gd")
+
 const Icons := preload("res://scripts/icons.gd")
 
 const SIZE := Vector2(720, 1030)
@@ -89,7 +91,7 @@ func _ready() -> void:
 	head.add_child(_title)
 	if mode == "info":
 		_rename_button = _button("Rename", func() -> void: chosen.emit("city_rename", ""), BUTTON, 18)
-		_rename_button.custom_minimum_size = Vector2(96, 44)
+		_rename_button.custom_minimum_size = Vector2(142, 44)
 		head.add_child(_rename_button)
 		for b: Array in [["<", "city_prev"], [">", "city_next"]]:
 			var kind: String = b[1]
@@ -97,7 +99,7 @@ func _ready() -> void:
 			button.custom_minimum_size = Vector2(48, 44)
 			head.add_child(button)
 	var exit := _button("Exit city", func() -> void: chosen.emit("city_exit", ""), Color(0.45, 0.25, 0.18), 20)
-	exit.custom_minimum_size = Vector2(130, 44)
+	exit.custom_minimum_size = Vector2(186, 44)
 	head.add_child(exit)
 	_subtitle = Label.new()
 	_subtitle.add_theme_font_size_override("font_size", 17)
@@ -196,15 +198,15 @@ func _rebuild_footer() -> void:
 
 func _build_info() -> void:
 	var pop := int(city.get("population", 0))
-	_title.text = "%s%s  (%d)" % ["* " if city.get("isCapital", false) else "", city.get("name", "?"), pop]
+	_title.text = Lang.format("%s%s  (%d)", ["* " if city.get("isCapital", false) else "", city.get("name", "?"), pop])
 	var bits: Array[String] = []
-	bits.append("Health %d/%d" % [int(city.get("health", 0)), int(city.get("maxHealth", 0))])
-	bits.append("Defence %d" % int(city.get("defense", 0)))
+	bits.append(Lang.format("Health %d/%d", [int(city.get("health", 0)), int(city.get("maxHealth", 0))]))
+	bits.append(Lang.format("Defence %d", int(city.get("defense", 0))))
 	if city.get("isPuppet", false):
 		bits.append("Puppet")
 	if city.get("isBeingRazed", false):
 		bits.append("BEING RAZED")
-	_subtitle.text = "   ".join(bits)
+	_subtitle.text = Lang.join("   ", bits)
 	var can_change: bool = city.get("canChange", true)
 	_rename_button.disabled = not can_change or city.get("isPuppet", false)
 
@@ -229,40 +231,40 @@ func _build_info() -> void:
 
 	# Growth, borders and the rest of Unciv's lines under the stats
 	var free_pop := int(city.get("freePopulation", 0))
-	var unassigned := _button("Unassigned citizens: %d/%d%s" % [free_pop, pop, "   (click: let the city place them)" if free_pop > 0 else ""],
+	var unassigned := _button(Lang.format("Unassigned citizens: %d/%d%s", [free_pop, pop, "   (click: let the city place them)" if free_pop > 0 else ""]),
 		func() -> void: chosen.emit("city_reassign", ""), Color(0.25, 0.3, 0.22) if free_pop > 0 else BUTTON, 18)
 	unassigned.disabled = not can_change
 	_list.add_child(unassigned)
-	var food_text := "(%d/%d food)" % [int(city.get("foodStored", 0)), int(city.get("foodToGrow", 0))]
+	var food_text := Lang.format("(%d/%d food)", [int(city.get("foodStored", 0)), int(city.get("foodToGrow", 0))])
 	match str(city.get("growthStatus", "")):
 		"starving":
-			_line("Starving: loses a citizen in %d turns %s" % [int(city.get("turnsToStarvation", 0)), food_text], BAD)
+			_line(Lang.format("Starving: loses a citizen in %d turns %s", [int(city.get("turnsToStarvation", 0)), food_text]), BAD)
 		"foodToProduction":
 			_line("Food goes into production while this unit is built", STAT_COLORS["production"])
 		"growing":
-			_line("New citizen in %d turns %s" % [int(city.get("turnsToGrowth", 0)), food_text], STAT_COLORS["food"])
+			_line(Lang.format("New citizen in %d turns %s", [int(city.get("turnsToGrowth", 0)), food_text]), STAT_COLORS["food"])
 		_:
-			_line("Not growing %s" % food_text, DIM)
+			_line(Lang.format("Not growing %s", food_text), DIM)
 	var expansion: Dictionary = city.get("expansion", {})
 	if not expansion.is_empty():
-		var culture := "(%d/%d culture)" % [int(expansion.get("cultureStored", 0)), int(expansion.get("cultureToNextTile", 0))]
+		var culture := Lang.format("(%d/%d culture)", [int(expansion.get("cultureStored", 0)), int(expansion.get("cultureToNextTile", 0))])
 		if int(expansion.get("turns", -1)) > 0:
-			_line("Borders grow in %d turns %s" % [int(expansion["turns"]), culture], STAT_COLORS["culture"])
+			_line(Lang.format("Borders grow in %d turns %s", [int(expansion["turns"]), culture]), STAT_COLORS["culture"])
 		else:
-			_line("Borders have stopped growing" + (" " + culture if expansion.get("canExpand", false) else ""), DIM)
+			_line(Lang.t("Borders have stopped growing") + (" " + culture if expansion.get("canExpand", false) else ""), DIM)
 	if city.has("resistanceTurns"):
-		_line("In resistance for another %d turns" % int(city["resistanceTurns"]), BAD)
+		_line(Lang.format("In resistance for another %d turns", int(city["resistanceTurns"])), BAD)
 	if city.has("wltkTurns"):
-		_line("We Love The King Day for another %d turns" % int(city["wltkTurns"]), GOOD)
+		_line(Lang.format("We Love The King Day for another %d turns", int(city["wltkTurns"])), GOOD)
 	elif city.has("demandedResource"):
-		_line_icon("Demanding %s (We Love The King Day if you get it)" % city["demandedResource"], Color(1.0, 0.6, 0.45),
+		_line_icon(Lang.format("Demanding %s (We Love The King Day if you get it)", city["demandedResource"]), Color(1.0, 0.6, 0.45),
 			Icons.badge("resource", str(city["demandedResource"]), Color(0.3, 0.3, 0.38)))
 	var resources: Array = city.get("resources", [])
 	if not resources.is_empty():
 		var flow := HFlowContainer.new()
 		flow.add_theme_constant_override("h_separation", 10)
 		for r: Dictionary in resources:
-			flow.add_child(_icon_text(Icons.badge("resource", str(r["name"]), Color(0.3, 0.3, 0.38)), "%s %d" % [r["name"], int(r["amount"])], TEXT, false))
+			flow.add_child(_icon_text(Icons.badge("resource", str(r["name"]), Color(0.3, 0.3, 0.38)), Lang.format("%s %d", [r["name"], int(r["amount"])]), TEXT, false))
 		_list.add_child(flow)
 	if city.get("canAnnex", false):
 		_list.add_child(_button("Annex city (stop it being a puppet)", func() -> void: chosen.emit("city_annex", ""), Color(0.25, 0.4, 0.25), 18))
@@ -270,7 +272,7 @@ func _build_info() -> void:
 		_list.add_child(_button("Stop razing city", func() -> void: chosen.emit("city_raze", "false"), Color(0.25, 0.4, 0.25), 18))
 	elif city.get("canRaze", false):
 		if armed == "raze":
-			_list.add_child(_button("Click again to RAZE %s (it burns down a citizen a turn)" % city.get("name", ""),
+			_list.add_child(_button(Lang.format("Click again to RAZE %s (it burns down a citizen a turn)", city.get("name", "")),
 				func() -> void: chosen.emit("city_raze", "true"), Color(0.7, 0.15, 0.12), 17))
 		else:
 			_list.add_child(_button("Raze city", func() -> void: chosen.emit("city_arm", "raze"), Color(0.42, 0.16, 0.14), 18))
@@ -299,7 +301,7 @@ func _build_citizens(can_change: bool, focus: String) -> void:
 	reset.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(reset)
 	var avoid: bool = city.get("avoidGrowth", false)
-	var avoid_button := _button(("[x] " if avoid else "[  ] ") + "Avoid growth", func() -> void: chosen.emit("city_avoid_growth", "false" if avoid else "true"),
+	var avoid_button := _button(("[x] " if avoid else "[  ] ") + Lang.t("Avoid growth"), func() -> void: chosen.emit("city_avoid_growth", "false" if avoid else "true"),
 		SELECTED if avoid else BUTTON, 17)
 	avoid_button.disabled = not can_change
 	avoid_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -365,7 +367,7 @@ func _build_specialists(can_change: bool) -> void:
 		plus.custom_minimum_size = Vector2(42, 40)
 		plus.disabled = not can_change or assigned >= most or free_pop <= 0
 		row.add_child(plus)
-		var label := _plain_label("%s %d/%d" % [name, assigned, most], 17, colour.lightened(0.2))
+		var label := _plain_label(Lang.format("%s %d/%d", [name, assigned, most]), 17, colour.lightened(0.2))
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(label)
 		row.add_child(_stat_icons(s.get("stats", {}), 22))
@@ -383,7 +385,7 @@ func _build_great_people() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 8)
 		row.add_child(_icon_rect(Icons.badge("unit", str(p["name"]), Color(0.45, 0.35, 0.1)), 34))
-		var label := _plain_label("%s (+%d)" % [p["name"], int(p.get("perTurn", 0))], 17, HEADER)
+		var label := _plain_label(Lang.format("%s (+%d)", [p["name"], int(p.get("perTurn", 0))]), 17, HEADER)
 		label.custom_minimum_size = Vector2(250, 0)
 		row.add_child(label)
 		var bar := _progress_bar(float(current) / needed, Color(0.95, 0.6, 0.15), "%d/%d" % [current, needed])
@@ -398,11 +400,11 @@ func _build_religion() -> void:
 		return
 	_header("Religion")
 	if religion.has("majority"):
-		_line("Majority religion: %s" % religion["majority"], TEXT)
+		_line(Lang.format("Majority religion: %s", religion["majority"]), TEXT)
 	if religion.has("holyCityOf"):
 		_line(("Former holy city of %s" if religion.get("holyCityBlocked", false) else "Holy city of %s") % religion["holyCityOf"], HEADER)
 	for f: Dictionary in religion.get("followers", []):
-		_line("%s: %d followers, pressure %+d" % [f["name"], int(f.get("followers", 0)), int(f.get("pressure", 0))], DIM)
+		_line(Lang.format("%s: %d followers, pressure %+d", [f["name"], int(f.get("followers", 0)), int(f.get("pressure", 0))]), DIM)
 
 
 func _build_buildings() -> void:
@@ -440,23 +442,23 @@ func _specialist_color(name: String) -> Color:
 func _build_tile_footer() -> void:
 	var tile := _city_tile(selected_tile)
 	if tile.is_empty():
-		_footer_line("Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, " +
-			"and tiles with a price can be bought (click twice).", DIM)
+		_footer_line(Lang.t("Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, ") +
+			Lang.t("and tiles with a price can be bought (click twice)."), DIM)
 		return
 	var names: Array[String] = []
 	if tile_info.has("base"):
 		names.append(str(tile_info["base"]))
 		for f: String in tile_info.get("features", []):
 			names.append(f)
-	var title := ", ".join(names) if not names.is_empty() else "Tile"
+	var title := Lang.join(", ", names) if not names.is_empty() else "Tile"
 	var state := str(tile.get("state", ""))
 	var state_text: String = {"center": "city centre", "worked": "worked", "locked": "worked (locked)", "notWorked": "not worked",
 		"providesYield": "gives its yield without a citizen", "noYield": "gives nothing", "blockaded": "blockaded by an enemy",
-		"otherCity": "worked by %s" % tile.get("workedBy", "another city"), "outOfRange": "too far to work",
+		"otherCity": Lang.format("worked by %s", tile.get("workedBy", "another city")), "outOfRange": "too far to work",
 		"buyable": "can be bought", "foreign": "not yours"}.get(state, state)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
-	var label := _plain_label("%s - %s" % [title, state_text], 19, TEXT)
+	var label := _plain_label(Lang.format("%s - %s", [title, state_text]), 19, TEXT)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	row.add_child(label)
@@ -464,13 +466,13 @@ func _build_tile_footer() -> void:
 	_footer.add_child(row)
 	var extras: Array[String] = []
 	if tile_info.has("resource"):
-		extras.append("Resource: %s" % tile_info["resource"])
+		extras.append(Lang.format("Resource: %s", tile_info["resource"]))
 	if tile_info.has("improvement"):
-		extras.append("Improvement: %s" % tile_info["improvement"])
+		extras.append(Lang.format("Improvement: %s", tile_info["improvement"]))
 	if tile.has("owner"):
-		extras.append("Owned by %s" % tile["owner"])
+		extras.append(Lang.format("Owned by %s", tile["owner"]))
 	if not extras.is_empty():
-		_footer_line("   ".join(extras), DIM)
+		_footer_line(Lang.join("   ", extras), DIM)
 	var key := "%d,%d" % [selected_tile.x, selected_tile.y]
 	var buttons := HBoxContainer.new()
 	buttons.add_theme_constant_override("separation", 6)
@@ -488,9 +490,9 @@ func _build_tile_footer() -> void:
 	if tile.has("buyCost"):
 		var cost := int(tile["buyCost"])
 		if armed == "tile:" + key:
-			buttons.add_child(_button("Click again: buy for %d gold" % cost, func() -> void: chosen.emit("city_tile", key + "|buy"), Color(0.6, 0.48, 0.1), 17))
+			buttons.add_child(_button(Lang.format("Click again: buy for %d gold", cost), func() -> void: chosen.emit("city_tile", key + "|buy"), Color(0.6, 0.48, 0.1), 17))
 		else:
-			var buy := _button("Buy for %d gold (you have %d)" % [cost, gold], func() -> void: chosen.emit("city_arm", "tile:" + key), Color(0.45, 0.38, 0.12), 17)
+			var buy := _button(Lang.format("Buy for %d gold (you have %d)", [cost, gold]), func() -> void: chosen.emit("city_arm", "tile:" + key), Color(0.45, 0.38, 0.12), 17)
 			buy.disabled = not tile.get("canAfford", false)
 			buttons.add_child(buy)
 	for child in buttons.get_children():
@@ -515,7 +517,7 @@ func _city_tile(key: Vector2i) -> Dictionary:
 
 func _build_production() -> void:
 	_title.text = "Production"
-	_subtitle.text = "Gold %d   Faith %d   Production %+d a turn" % [gold, faith, roundi(float(city.get("stats", city.get("yields", {})).get("production", 0.0)))]
+	_subtitle.text = Lang.format("Gold %d   Faith %d   Production %+d a turn", [gold, faith, roundi(float(city.get("stats", city.get("yields", {})).get("production", 0.0)))])
 	var can_change: bool = city.get("canChange", true)
 	var queue: Array = city.get("queue", [])
 
@@ -531,7 +533,7 @@ func _build_production() -> void:
 		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var turns := int(entry.get("turns", -1))
-		column.add_child(_plain_label("%d. %s%s" % [index + 1, name, ("   %d turns" % turns) if turns >= 0 else ""], 18 if index == 0 else 17, TEXT))
+		column.add_child(_plain_label(Lang.format("%d. %s%s", [index + 1, name, (Lang.format("   %d turns", turns)) if turns >= 0 else ""]), 18 if index == 0 else 17, TEXT))
 		if index == 0 and entry.has("cost"):
 			var cost := maxi(1, int(entry["cost"]))
 			column.add_child(_progress_bar(float(entry.get("progress", 0)) / cost, STAT_COLORS["production"],
@@ -563,7 +565,7 @@ func _build_production() -> void:
 			var inner: HBoxContainer = row.get_child(0)
 			inner.add_child(_icon_rect(Icons.construction(name), 32, Color.WHITE if available else Color(0.6, 0.6, 0.6)))
 			var turns := int(option.get("turns", -1))
-			var text := name + (("   %d turns" % turns) if turns >= 0 and available else "")
+			var text := Lang.t(name) + ((Lang.format("   %d turns", turns)) if turns >= 0 and available else "")
 			if not available and not option.get("why", []).is_empty():
 				text += "   (" + _plain(str(option["why"][0])) + ")"
 			var label := _plain_label(text, 17, TEXT if available else DIM)
@@ -597,14 +599,14 @@ func _build_construction_footer() -> void:
 	var top := HBoxContainer.new()
 	top.add_theme_constant_override("separation", 10)
 	top.add_child(_icon_rect(Icons.construction(name), 56))
-	var title_text := name
+	var title_text := Lang.t(name)
 	var info: Dictionary = queue_entry if not queue_entry.is_empty() else option
 	if info.has("cost"):
-		title_text += "   %d production" % int(info["cost"])
+		title_text += Lang.format("   %d production", int(info["cost"]))
 	if int(info.get("turns", -1)) >= 0:
-		title_text += ", %d turns" % int(info["turns"])
+		title_text += Lang.format(", %d turns", int(info["turns"]))
 	if not built.is_empty():
-		title_text += "   (built)"
+		title_text += Lang.t("   (built)")
 	var title := _plain_label(title_text, 21, HEADER)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -621,9 +623,9 @@ func _build_construction_footer() -> void:
 	description.text = _plain(construction_description) if construction_description != "" else "..."
 	_footer.add_child(description)
 	if option.get("needsTile", false):
-		var place := "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy." % option.get("improvement", "improvement")
+		var place := Lang.format("Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy.", option.get("improvement", "improvement"))
 		if queue_entry.has("tile"):
-			place = "Its %s goes on the ringed tile picked when it was queued." % option.get("improvement", "improvement")
+			place = Lang.format("Its %s goes on the ringed tile picked when it was queued.", option.get("improvement", "improvement"))
 		_footer.add_child(_plain_label(place, 16, DIM))
 
 	var can_change: bool = city.get("canChange", true)
@@ -646,9 +648,9 @@ func _build_construction_footer() -> void:
 		var key := "buy:%s|%s|%d" % [name, stat, selected_queue_index]
 		var button: Button
 		if armed == key:
-			button = _button("Click again: buy for %d %s" % [cost, stat], func() -> void: chosen.emit("city_buy", key.substr(4)), Color(0.6, 0.48, 0.1), 18)
+			button = _button(Lang.format("Click again: buy for %d %s", [cost, stat]), func() -> void: chosen.emit("city_buy", key.substr(4)), Color(0.6, 0.48, 0.1), 18)
 		else:
-			var text := "Buy for %d %s" % [cost, stat] + (" (you have %d)" % have if have >= 0 else "")
+			var text := Lang.format("Buy for %d %s", [cost, stat]) + (Lang.format(" (you have %d)", have) if have >= 0 else "")
 			button = _button(text, func() -> void: chosen.emit("city_arm", key), Color(0.45, 0.38, 0.12), 18)
 			button.disabled = not buy.get("allowed", false)
 			if buy.get("blockedByUnit", false):
@@ -658,9 +660,9 @@ func _build_construction_footer() -> void:
 	if built.has("sellGold"):
 		var sell_key := "sell:" + name
 		if armed == sell_key:
-			buttons.add_child(_button("Click again: sell for %d gold" % int(built["sellGold"]), func() -> void: chosen.emit("city_sell", name), Color(0.7, 0.2, 0.15), 18))
+			buttons.add_child(_button(Lang.format("Click again: sell for %d gold", int(built["sellGold"])), func() -> void: chosen.emit("city_sell", name), Color(0.7, 0.2, 0.15), 18))
 		else:
-			var sell := _button("Sell for %d gold" % int(built["sellGold"]), func() -> void: chosen.emit("city_arm", sell_key), Color(0.42, 0.18, 0.15), 18)
+			var sell := _button(Lang.format("Sell for %d gold", int(built["sellGold"])), func() -> void: chosen.emit("city_arm", sell_key), Color(0.42, 0.18, 0.15), 18)
 			sell.disabled = not built.get("canSell", false)
 			buttons.add_child(sell)
 	# In a wrapping row a button is only as wide as its minimum size, which clipped text would make zero
@@ -771,7 +773,9 @@ func _stat_icons(stats: Dictionary, side: float) -> HBoxContainer:
 		if value == 0:
 			continue
 		row.add_child(_icon_rect(Icons.get_icon("stat", stat.capitalize()), side))
-		row.add_child(_plain_label(str(value), int(side * 0.75), STAT_COLORS[stat].lightened(0.2)))
+		var amount := _plain_label(str(value), int(side * 0.75), STAT_COLORS[stat].lightened(0.2))
+		amount.text_direction = Control.TEXT_DIRECTION_LTR
+		row.add_child(amount)
 	return row
 
 
@@ -785,7 +789,9 @@ func _stat_button(stat: String, value: String, highlighted: bool) -> Button:
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.position = Vector2(6, 6)
 	row.add_child(_icon_rect(Icons.get_icon("stat", stat.capitalize()), 34))
-	row.add_child(_plain_label(value, 20, STAT_COLORS[stat].lightened(0.25)))
+	var amount := _plain_label(value, 20, STAT_COLORS[stat].lightened(0.25))
+	amount.text_direction = Control.TEXT_DIRECTION_LTR
+	row.add_child(amount)
 	button.add_child(row)
 	return button
 
@@ -836,6 +842,7 @@ func _progress_bar(fraction: float, colour: Color, text: String) -> Control:
 func _button(text: String, on_press: Callable, color: Color, font_size := 17) -> Button:
 	var button := Button.new()
 	button.text = _plain(text)
+	button.tooltip_text = _plain(text)
 	button.focus_mode = Control.FOCUS_NONE
 	button.add_theme_font_size_override("font_size", font_size)
 	button.add_theme_color_override("font_color", TEXT)

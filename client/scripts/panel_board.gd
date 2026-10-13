@@ -12,6 +12,7 @@ extends PanelContainer
 signal clicked(action: Dictionary)
 
 const Panels := preload("res://scripts/panels.gd")
+var _grab_caption: Label
 const Icons := preload("res://scripts/icons.gd")
 
 const GRAB_HEIGHT := 26.0
@@ -64,7 +65,8 @@ func _ready() -> void:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 4)
 	add_child(box)
-	var grab := _label("=====   %s   =====" % spec.get("name", "Panel"), 13, DIM)
+	var grab := _label("=====   %s   =====" % tr(str(spec.get("name", "Panel"))), 13, DIM)
+	_grab_caption = grab
 	grab.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	grab.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	grab.custom_minimum_size = Vector2(0, GRAB_HEIGHT)
@@ -128,7 +130,8 @@ func show_rows(rows: Array, selected: Dictionary) -> void:
 		_list.remove_child(child)
 		child.queue_free()
 	var count := rows.filter(func(r: Dictionary) -> bool: return not r.has("_group")).size()
-	_title.text = Panels.fill(str(spec.get("title", spec.get("name", ""))), {}, {"count": count})
+	_title.text = Panels.display(str(spec.get("title", spec.get("name", ""))), {}, {"count": count})
+	_grab_caption.text = "=====   %s   =====" % tr(str(spec.get("name", "Panel")))
 	if count == 0:
 		var empty := _label(str(spec.get("empty", "Nothing to show.")), 16, DIM)
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -193,11 +196,11 @@ func _make_row(row: Dictionary, highlighted: bool) -> Control:
 	words.add_theme_constant_override("separation", 0)
 	words.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	line.add_child(words)
-	var text := _label(Panels.fill(str(look.get("text", "{name}")), row), 17, TEXT)
+	var text := _label(Panels.display(str(look.get("text", "{name}")), row), 17, TEXT)
 	text.clip_text = true
 	text.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	words.add_child(text)
-	var detail := Panels.fill(str(look.get("detail", "")), row)
+	var detail := Panels.display(str(look.get("detail", "")), row)
 	if detail != "":
 		var under := _label(detail, 13, DIM)
 		under.clip_text = true
@@ -206,7 +209,7 @@ func _make_row(row: Dictionary, highlighted: bool) -> Control:
 	var bar := _bar(look.get("bar"), row)
 	if bar != null:
 		words.add_child(bar)
-	var right := Panels.fill(str(look.get("right", "")), row)
+	var right := Panels.display(str(look.get("right", "")), row)
 	if right != "":
 		var side := _label(right, 15, DIM)
 		side.size_flags_vertical = Control.SIZE_SHRINK_CENTER

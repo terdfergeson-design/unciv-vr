@@ -27,6 +27,8 @@ signal chosen(kind: String, value: String)
 ## Emitted after the card's contents change, so whoever places it can re-fit it.
 signal layout_changed
 
+const Lang := preload("res://scripts/lang.gd")
+
 const WIDTH := 380
 const Icons := preload("res://scripts/icons.gd")
 const LIST_HEIGHT := 360
@@ -151,7 +153,7 @@ func show_unit(unit: Dictionary) -> void:
 			["moving", "On its way"], ["embarked", "Embarked"]]:
 		if unit.get(flag[0], false):
 			facts.append(flag[1])
-	_info.text = "   ".join(facts)
+	_info.text = Lang.join("   ", facts)
 	if compact:
 		_add_close()
 
@@ -222,11 +224,11 @@ func show_unit(unit: Dictionary) -> void:
 	var work: Dictionary = unit.get("tileWork", {})
 	if work.get("inProgress") != null:
 		_list.add_child(_icon_row(Icons.badge("improvement", str(work["inProgress"]), Color(0.25, 0.4, 0.25)),
-			"Building %s" % work["inProgress"], "%d turns left" % int(work.get("turnsLeft", 0)), Color(0.18, 0.28, 0.18), Callable(), 30))
+			Lang.format("Building %s", work["inProgress"]), Lang.format("%d turns left", int(work.get("turnsLeft", 0))), Color(0.18, 0.28, 0.18), Callable(), 30))
 	var targets: Array = unit.get("targets", [])
 	if not targets.is_empty():
 		var warn := Label.new()
-		warn.text = "%d enemy target%s in reach (red rings): click one to aim" % [targets.size(), "s" if targets.size() > 1 else ""]
+		warn.text = Lang.format("Enemy targets in reach (red rings): %d. Click one to aim.", targets.size())
 		warn.add_theme_font_size_override("font_size", 15)
 		warn.add_theme_color_override("font_color", Color(1.0, 0.45, 0.4))
 		warn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -247,6 +249,7 @@ func show_unit(unit: Dictionary) -> void:
 			var raw_title := str(action.get("title", type))
 			# Shown: the bridge's label, in the chosen language (the title stays English: it's what picks the action)
 			var title: String = _plain(str(action.get("label", raw_title)).replace("{", "").replace("}", ""))   # Unciv templates like "{Found city}"
+			title = Lang.t(title)   # translate client-added actions before appending the target prompt
 			var active: bool = action.get("current", false)
 			var colour := Color(0.24, 0.36, 0.55) if active else Color(0.2, 0.22, 0.3)
 			if type == "FoundCity":
@@ -280,7 +283,7 @@ func show_unit(unit: Dictionary) -> void:
 		_list.add_child(grid)
 		if armed_text != "":
 			var warn := Label.new()
-			warn.text = armed_text + "  (click the red button again)"
+			warn.text = armed_text + Lang.t("  (click the red button again)")
 			warn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			warn.add_theme_font_size_override("font_size", 15)
 			warn.add_theme_color_override("font_color", Color(1.0, 0.6, 0.45))
@@ -294,7 +297,7 @@ func show_unit(unit: Dictionary) -> void:
 			var turns := int(imp.get("turns", 0))
 			var cancel := imp_name.begins_with("Cancel")
 			var texture: Texture2D = Icons.action("Stop") if cancel else Icons.badge("improvement", imp_name, Color(0.25, 0.4, 0.25))
-			_list.add_child(_icon_row(texture, imp_name, ("%d turns" % turns) if turns > 0 else "",
+			_list.add_child(_icon_row(texture, imp_name, (Lang.format("%d turns", turns)) if turns > 0 else "",
 				Color(0.4, 0.2, 0.15) if cancel else Color(0.17, 0.28, 0.17), func() -> void: chosen.emit("improvement", imp_name), 30))
 	_end()
 
@@ -315,6 +318,7 @@ func _value_chip(icon_name: String, value: String, colour: Color) -> Control:
 	row.add_child(_icon(Icons.get_icon("stat", icon_name), 24))
 	var label := Label.new()
 	label.text = value
+	label.text_direction = Control.TEXT_DIRECTION_LTR   # numeric stat, including its sign
 	label.add_theme_font_size_override("font_size", 18)
 	label.add_theme_color_override("font_color", colour)
 	row.add_child(label)
@@ -353,17 +357,17 @@ func show_city(city: Dictionary, gold: int) -> void:
 	if not _begin():
 		return
 	var pop := int(city.get("population", 0))
-	_title.text = "%s%s" % ["* " if city.get("isCapital", false) else "", city.get("name", "?")]
+	_title.text = Lang.format("%s%s", ["* " if city.get("isCapital", false) else "", city.get("name", "?")])
 	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
-	var facts: Array[String] = ["Population %d" % pop]
+	var facts: Array[String] = [Lang.format("Population %d", pop)]
 	if city.has("defense"):
-		facts.append("Defence %d" % int(city["defense"]))
-	facts.append("Health %d/%d" % [int(city.get("health", 0)), int(city.get("maxHealth", 0))])
+		facts.append(Lang.format("Defence %d", int(city["defense"])))
+	facts.append(Lang.format("Health %d/%d", [int(city.get("health", 0)), int(city.get("maxHealth", 0))]))
 	if int(city.get("freePopulation", 0)) > 0:
-		facts.append("%d idle citizen%s" % [int(city["freePopulation"]), "s" if int(city["freePopulation"]) > 1 else ""])
+		facts.append(Lang.format("Idle citizens: %d", int(city["freePopulation"])))
 	if city.get("isPuppet", false):
 		facts.append("Puppet")
-	_info.text = "   ".join(facts)
+	_info.text = Lang.join("   ", facts)
 
 	# The city's yields, in Unciv's colours and symbols
 	var stats: Dictionary = city.get("stats", city.get("yields", {}))
@@ -384,10 +388,10 @@ func show_city(city: Dictionary, gold: int) -> void:
 	var growth_colour: Color = STAT_COLORS["food"]
 	match str(city.get("growthStatus", "growing" if city.get("turnsToGrowth") != null else "stopped")):
 		"starving":
-			growth_text = "Starving! %d turns" % int(city.get("turnsToStarvation", 0))
+			growth_text = Lang.format("Starving! %d turns", int(city.get("turnsToStarvation", 0)))
 			growth_colour = Color(1.0, 0.35, 0.3)
 		"growing":
-			growth_text = "Grows in %d turns" % int(city.get("turnsToGrowth", 0))
+			growth_text = Lang.format("Grows in %d turns", int(city.get("turnsToGrowth", 0)))
 		"foodToProduction":
 			growth_text = "Food -> production"
 		_:
@@ -399,7 +403,7 @@ func show_city(city: Dictionary, gold: int) -> void:
 		var needed := maxi(1, int(expansion.get("cultureToNextTile", 1)))
 		var turns := int(expansion.get("turns", -1))
 		_list.add_child(_bar_row("culture", float(expansion.get("cultureStored", 0)) / needed, STAT_COLORS["culture"],
-			"%d/%d" % [int(expansion.get("cultureStored", 0)), needed], ("Border in %d turns" % turns) if turns > 0 else "Borders stopped"))
+			"%d/%d" % [int(expansion.get("cultureStored", 0)), needed], (Lang.format("Border in %d turns", turns)) if turns > 0 else "Borders stopped"))
 
 	if compact:
 		_add_close()
@@ -410,8 +414,8 @@ func show_city(city: Dictionary, gold: int) -> void:
 	_list.add_child(view)
 	if city.get("canBombard", false) and not city.get("bombardTargets", []).is_empty():
 		var shots: Array = city["bombardTargets"]
-		var bombard := _make_button("Bombard  -  %d enem%s in range (strength %d)" % [shots.size(), "y" if shots.size() == 1 else "ies",
-			int(city.get("rangedStrength", 0))], func() -> void: chosen.emit("bombard", city_name), Color(0.55, 0.2, 0.15))
+		var bombard := _make_button(Lang.format("Bombard – enemies in range: %d (strength %d)", [shots.size(),
+			int(city.get("rangedStrength", 0))]), func() -> void: chosen.emit("bombard", city_name), Color(0.55, 0.2, 0.15))
 		bombard.icon = Icons.get_icon("stat", "RangedStrength")
 		bombard.add_theme_constant_override("icon_max_width", 24)
 		_list.add_child(bombard)
@@ -425,7 +429,7 @@ func show_city(city: Dictionary, gold: int) -> void:
 		var index := int(entry["index"])
 		var name: String = entry["name"]
 		var turns := int(entry.get("turns", -1))
-		var row := _icon_row(Icons.construction(name), name, ("%d turns" % turns) if turns >= 0 else "",
+		var row := _icon_row(Icons.construction(name), name, (Lang.format("%d turns", turns)) if turns >= 0 else "",
 			Color(0.32, 0.26, 0.1) if index == 0 else Color(0.22, 0.2, 0.12), Callable(), 42 if index == 0 else 30)
 		if index == 0 and entry.has("cost"):
 			var column: VBoxContainer = row.get_child(0).get_child(1)
@@ -450,7 +454,7 @@ func show_city(city: Dictionary, gold: int) -> void:
 		for option: Dictionary in of_kind:
 			var option_name: String = option["name"]
 			var turns := int(option.get("turns", -1))
-			var row := _icon_row(Icons.construction(option_name), option_name, ("%d turns" % turns) if turns >= 0 else "",
+			var row := _icon_row(Icons.construction(option_name), option_name, (Lang.format("%d turns", turns)) if turns >= 0 else "",
 				Color(0.15, 0.17, 0.23), func() -> void: chosen.emit("queue", option_name), 30)   # to the end of the queue
 			if option.get("canBuy", false):
 				var buy := _make_button("%d" % int(option["goldCost"]), func() -> void: chosen.emit("buy", option_name), Color(0.5, 0.4, 0.08))
@@ -459,7 +463,7 @@ func show_city(city: Dictionary, gold: int) -> void:
 				buy.custom_minimum_size = Vector2(74, 34)
 				buy.size_flags_horizontal = Control.SIZE_SHRINK_END
 				buy.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-				buy.tooltip_text = "Buy now for %d gold (you have %d)" % [int(option["goldCost"]), gold]
+				buy.tooltip_text = Lang.format("Buy now for %d gold (you have %d)", [int(option["goldCost"]), gold])
 				row.get_child(0).add_child(buy)
 			_list.add_child(row)
 	if not compact:
@@ -598,10 +602,10 @@ func _icon_row(texture: Texture2D, text: String, right: String, colour: Color, o
 func show_promotions(unit: Dictionary) -> void:
 	if not _begin():
 		return
-	_title.text = "Promote %s" % unit.get("name", "?")
+	_title.text = Lang.format("Promote %s", unit.get("name", "?"))
 	var owned: Array = unit.get("promotions", [])
-	_info.text = "XP %d/%d. Pick one promotion.%s" % [int(unit.get("xp", 0)), int(unit.get("xpForNextPromotion", 0)),
-		("\nHas: " + ", ".join(owned)) if not owned.is_empty() else ""]
+	_info.text = Lang.format("XP %d/%d. Pick one promotion.%s", [int(unit.get("xp", 0)), int(unit.get("xpForNextPromotion", 0)),
+		("\nHas: " + Lang.join(", ", owned)) if not owned.is_empty() else ""])
 	if compact:
 		_add_close()
 	var choices: Array = unit.get("promotionChoices", [])
@@ -631,12 +635,12 @@ func show_alert(alert: Dictionary, waiting := 0) -> void:
 	_title.add_theme_color_override("font_color", Color(0.98, 0.85, 0.45))
 	var lines: Array[String] = []
 	if alert.get("type", "") == "Tutorial":   # one of Unciv's tutorials, a step at a time
-		lines.append("Tutorial" + ("  -  %d of %d" % [int(alert["step"]), int(alert["steps"])] if int(alert.get("steps", 1)) > 1 else ""))
+		lines.append(Lang.t("Tutorial") + (Lang.format("  -  %d of %d", [int(alert["step"]), int(alert["steps"])]) if int(alert.get("steps", 1)) > 1 else ""))
 	if alert.has("leader"):
 		lines.append(str(alert["leader"]) if not alert.get("isCityState", false) else str(alert.get("civ", "")))   # e.g. "Boudicca of Celts"
 	if waiting > 0:
-		lines.append("%d more message%s after this one" % [waiting, "s" if waiting > 1 else ""])
-	_info.text = "\n".join(lines)
+		lines.append(Lang.format("More messages after this one: %d", waiting))
+	_info.text = Lang.join("\n", lines)
 	if alert.has("nation"):
 		var head := HBoxContainer.new()
 		head.add_theme_constant_override("separation", 10)
@@ -662,7 +666,7 @@ func show_alert(alert: Dictionary, waiting := 0) -> void:
 			_list.add_child(_icon(icon, 72))
 	# A trade offer: what each side gives
 	if alert.has("theyGive"):
-		_add_header("%s gives:" % alert.get("civ", "They"))
+		_add_header(Lang.format("%s gives:", alert.get("civ", "They")))
 		for offer: Dictionary in alert["theyGive"]:
 			_add_note(_offer_text(offer))
 		_add_header("You give:")
@@ -673,8 +677,8 @@ func show_alert(alert: Dictionary, waiting := 0) -> void:
 		for civ: Dictionary in alert["votes"].get("civs", []):
 			var text := str(civ["name"])
 			if civ.get("isMajor", false):
-				text = "%d votes  %s" % [int(civ.get("votesReceived", 0)), text]
-			text += "  -  " + ("abstained" if civ.get("abstained", false) else "voted for %s" % civ.get("votedFor", "?"))
+				text = Lang.format("%d votes  %s", [int(civ.get("votesReceived", 0)), text])
+			text += "  -  " + ("abstained" if civ.get("abstained", false) else Lang.format("voted for %s", civ.get("votedFor", "?")))
 			_add_note(text)
 	_list.add_child(HSeparator.new())
 	var key := str(alert.get("key", ""))
@@ -700,11 +704,11 @@ func show_alert(alert: Dictionary, waiting := 0) -> void:
 
 
 static func _offer_text(offer: Dictionary) -> String:
-	var text := _plain(str(offer.get("label", offer.get("name", "?"))))
+	var text := Lang.t(_plain(str(offer.get("label", offer.get("name", "?")))))
 	if offer.get("countable", false) and int(offer.get("amount", 0)) > 1:
 		text = "%d %s" % [int(offer["amount"]), text]
 	if int(offer.get("duration", -1)) > 0:
-		text += " (%d turns)" % int(offer["duration"])
+		text += Lang.format(" (%d turns)", int(offer["duration"]))
 	return text
 
 
@@ -713,7 +717,7 @@ func show_great_people(data: Dictionary) -> void:
 	if not _begin():
 		return
 	_title.text = "Choose a free great person"
-	_info.text = "You have %d free great person%s to pick." % [int(data.get("free", 0)), "" if int(data.get("free", 0)) == 1 else "s"]
+	_info.text = Lang.format("Free great people to choose: %d.", int(data.get("free", 0)))
 	for choice: Dictionary in data.get("choices", []):
 		var unit_name: String = choice["name"]
 		var button := _make_button(unit_name, func() -> void: chosen.emit("great_person", unit_name),
@@ -737,7 +741,7 @@ func show_vote(data: Dictionary) -> void:
 	_info.text = "Choose who should become the world leader and win a Diplomatic Victory!"
 	for civ: Dictionary in data.get("civs", []):
 		var civ_name: String = civ["name"]
-		var button := _make_button("Vote for %s" % civ_name, func() -> void: chosen.emit("vote", civ_name), Color(0.2, 0.3, 0.45))
+		var button := _make_button(Lang.format("Vote for %s", civ_name), func() -> void: chosen.emit("vote", civ_name), Color(0.2, 0.3, 0.45))
 		var badge := Icons.civ_badge(civ_info.get(civ_name, {"nation": civ.get("nation", civ_name)}))
 		if badge != null:
 			button.icon = badge
@@ -759,11 +763,11 @@ func show_research(techs: Dictionary) -> void:
 	if current == null:
 		lines.append("Nothing being researched - pick a tech!")
 	else:
-		lines.append("Researching %s" % current)
+		lines.append(Lang.format("Researching %s", current))
 	if int(techs.get("freeTechs", 0)) > 0:
-		lines.append("You have %d free tech(s) to pick - choose a highlighted one." % int(techs["freeTechs"]))
-	lines.append("Science %+d per turn. Picking a later tech queues its prerequisites." % int(techs.get("sciencePerTurn", 0)))
-	_info.text = "\n".join(lines)
+		lines.append(Lang.format("Free technologies to choose: %d. Pick a highlighted one.", int(techs["freeTechs"])))
+	lines.append(Lang.format("Science %+d per turn. Picking a later tech queues its prerequisites.", int(techs.get("sciencePerTurn", 0))))
+	_info.text = Lang.join("\n", lines)
 	if compact:
 		_add_close()
 
@@ -778,9 +782,9 @@ func show_research(techs: Dictionary) -> void:
 			era = tech["era"]
 			_add_header(era)
 		var tech_name: String = tech["name"]
-		var text := tech_name
+		var text := Lang.t(tech_name)
 		if tech.has("turns"):
-			text += "  (%s turns)" % tech["turns"]
+			text += Lang.format("  (%s turns)", tech["turns"])
 		var queue_index := int(tech.get("queueIndex", -1))
 		var color := Color(0.2, 0.22, 0.28)
 		if queue_index == 0:
@@ -788,7 +792,7 @@ func show_research(techs: Dictionary) -> void:
 			text = "> " + text
 		elif queue_index > 0:
 			color = Color(0.18, 0.3, 0.42)
-			text = "%d. %s" % [queue_index + 1, text]
+			text = Lang.format("%d. %s", [queue_index + 1, text])
 		elif tech.get("researchable", false):
 			color = Color(0.22, 0.32, 0.25)
 		_list.add_child(_make_button(text, func() -> void: chosen.emit("research", tech_name), color))
@@ -811,11 +815,11 @@ func show_lobby(info: Dictionary) -> void:
 		return
 	_info.text = "Pick up where you left off, or start a new game."
 	if info.get("running", false):
-		_list.add_child(_make_button("Resume  -  " + str(info.get("running_text", "")), func() -> void: chosen.emit("lobby_resume", ""),
+		_list.add_child(_make_button(Lang.t("Resume") + "  -  " + str(info.get("running_text", "")), func() -> void: chosen.emit("lobby_resume", ""),
 			Color(0.2, 0.42, 0.25)))
 	elif str(info.get("autosave", "")) != "":
 		var save_name: String = info["autosave"]
-		_list.add_child(_make_button("Continue  -  " + str(info.get("autosave_text", "")), func() -> void: chosen.emit("lobby_continue", save_name),
+		_list.add_child(_make_button(Lang.t("Continue") + "  -  " + str(info.get("autosave_text", "")), func() -> void: chosen.emit("lobby_continue", save_name),
 			Color(0.2, 0.42, 0.25)))
 	_list.add_child(_make_button("Quick start", func() -> void: chosen.emit("lobby_quick", ""), Color(0.55, 0.35, 0.1)))
 	_add_note(str(info.get("quick_text", "")))
@@ -844,8 +848,8 @@ func show_setup(setup: Dictionary, options: Dictionary, tab: String) -> void:
 	_list.add_child(tabs)
 
 	var civ: String = str(setup.get("civ", "Random"))
-	_info.text = "%s  -  %s %s map, %s, %d AI, %d city-states" % [civ, setup.get("mapSize", "?"), setup.get("mapType", ""),
-		setup.get("difficulty", "?"), int(setup.get("aiPlayers", 0)), int(setup.get("cityStates", 0))]
+	_info.text = Lang.format("%s  -  %s %s map, %s, %d AI, %d city-states", [civ, setup.get("mapSize", "?"), setup.get("mapType", ""),
+		setup.get("difficulty", "?"), int(setup.get("aiPlayers", 0)), int(setup.get("cityStates", 0))])
 
 	match tab:
 		"you":
@@ -855,19 +859,19 @@ func show_setup(setup: Dictionary, options: Dictionary, tab: String) -> void:
 				if n["name"] == civ:
 					picked = n
 			if not picked.is_empty():
-				_add_header("%s, led by %s" % [picked["name"], picked.get("leader", "?")])
-				_add_note("%s: %s" % [picked.get("uniqueName", ""), picked.get("uniqueText", "")])
+				_add_header(Lang.format("%s, led by %s", [picked["name"], picked.get("leader", "?")]))
+				_add_note(Lang.format("%s: %s", [picked.get("uniqueName", ""), picked.get("uniqueText", "")]))
 			else:
 				_add_note("Random: you'll find out who you are when the game starts.")
 			_add_header("Your civilization")
-			_list.add_child(_make_button(("> " if civ == "Random" else "") + "Random", func() -> void: chosen.emit("setup_set", "civ|Random"),
+			_list.add_child(_make_button(("> " if civ == "Random" else "") + Lang.t("Random"), func() -> void: chosen.emit("setup_set", "civ|Random"),
 				Color(0.2, 0.4, 0.6) if civ == "Random" else Color(0.2, 0.22, 0.28)))
 			for n: Dictionary in nations:
 				var nation_name: String = n["name"]
 				var color := Color.html(str(n.get("innerColor", "333333ff"))).darkened(0.35)
 				if nation_name == civ:
 					color = Color(0.2, 0.4, 0.6)
-				var nation_button := _make_button(("> " if nation_name == civ else "") + "%s  (%s)" % [nation_name, n.get("leader", "")],
+				var nation_button := _make_button(("> " if nation_name == civ else "") + Lang.format("%s  (%s)", [nation_name, n.get("leader", "")]),
 					func() -> void: chosen.emit("setup_set", "civ|" + nation_name), color)
 				nation_button.icon = Icons.civ_badge(n)   # Unciv's nation symbol, in its colours
 				nation_button.add_theme_constant_override("icon_max_width", 30)
@@ -893,7 +897,7 @@ func show_setup(setup: Dictionary, options: Dictionary, tab: String) -> void:
 			var victories: Array = setup.get("victoryTypes", [])
 			for v: String in options.get("victoryTypes", []):
 				var on := victories.is_empty() or v in victories
-				_list.add_child(_make_button(("[x] " if on else "[  ] ") + v, func() -> void: chosen.emit("setup_toggle", "victory|" + v),
+				_list.add_child(_make_button(("[x] " if on else "[  ] ") + Lang.t(v), func() -> void: chosen.emit("setup_toggle", "victory|" + v),
 					Color(0.2, 0.36, 0.3) if on else Color(0.2, 0.22, 0.28)))
 			_add_header("Options")
 			_add_toggle("No barbarians", "noBarbarians", setup)
@@ -924,7 +928,7 @@ func show_saves(saves: Array) -> void:
 	for save: Dictionary in saves:
 		var save_name: String = save["name"]
 		var when := local_time_text(float(save.get("modified", 0)))
-		_list.add_child(_make_button("%s   (%s)" % [save_name, when], func() -> void: chosen.emit("load_save", save_name),
+		_list.add_child(_make_button(Lang.format("%s   (%s)", [save_name, when]), func() -> void: chosen.emit("load_save", save_name),
 			Color(0.2, 0.36, 0.3) if save.get("autosave", false) else Color(0.2, 0.22, 0.28)))
 	_end()
 
@@ -954,12 +958,12 @@ func _add_choices(title: String, key: String, values: Array, setup: Dictionary) 
 
 func _add_toggle(title: String, key: String, setup: Dictionary) -> void:
 	var on: bool = setup.get(key, false)
-	_list.add_child(_make_button(("[x] " if on else "[  ] ") + title, func() -> void: chosen.emit("setup_toggle", key),
+	_list.add_child(_make_button(("[x] " if on else "[  ] ") + Lang.t(title), func() -> void: chosen.emit("setup_toggle", key),
 		Color(0.2, 0.36, 0.3) if on else Color(0.2, 0.22, 0.28)))
 
 
 func _add_stepper(title: String, key: String, setup: Dictionary) -> void:
-	_list.add_child(_make_row("%s: %d" % [title, int(setup.get(key, 0))], Color(0.2, 0.22, 0.28), [
+	_list.add_child(_make_row(Lang.format("%s: %d", [title, int(setup.get(key, 0))]), Color(0.2, 0.22, 0.28), [
 		["-", func() -> void: chosen.emit("setup_step", key + "|-1"), Color(0.3, 0.25, 0.25)],
 		["+", func() -> void: chosen.emit("setup_step", key + "|1"), Color(0.25, 0.3, 0.25)]]))
 

@@ -8,6 +8,8 @@ extends Node3D
 ## Works in "map units": a hex has circumradius 1, like Unciv's world coordinates.
 ## Scale this node to fit the table (see main.gd).
 
+const Lang := preload("res://scripts/lang.gd")
+
 const SQRT3 := 1.7320508
 signal view_rebuilt   # the drawn tiles changed (the yields overlay re-asks the bridge then)
 const Icons := preload("res://scripts/icons.gd")
@@ -727,7 +729,7 @@ func _build_cities() -> void:
 			marker.position = Vector3(0, 0.2, 0)
 			node.add_child(marker)
 			continue
-		var label := _make_label("%s  %d" % [city["name"], int(city["population"])], 72)
+		var label := _make_label("%s  %d" % [Lang.t(str(city["name"])), int(city["population"])], 72)
 		label.position = Vector3(0, 1.0, 0)
 		label.outline_size = 14
 		label.modulate = outer.lightened(0.3)
@@ -1354,23 +1356,23 @@ func describe_tile(key: Vector2i) -> String:
 	if tile.is_empty():
 		return ""
 	if not tile.get("explored", false):
-		return "Unexplored (%d, %d)" % [key.x, key.y]
+		return Lang.format("Unexplored (%d, %d)", [key.x, key.y])
 	var parts: Array[String] = [tile.get("base", "?")]
 	for f: String in tile.get("features", []):
 		parts.append(f)
 	if tile.has("wonder"):
 		parts.append(tile["wonder"])
 	if tile.has("resource"):
-		parts.append("[%s]" % tile["resource"])
+		parts.append("[%s]" % Lang.t(str(tile["resource"])))
 	if tile.has("improvement"):
 		parts.append(tile["improvement"])
-	var text := ", ".join(parts)
+	var text := Lang.join(", ", parts)
 	if tile.has("owner"):
-		text += " - %s territory" % tile["owner"]
+		text += Lang.format(" - %s territory", tile["owner"])
 	if tile.has("city"):
-		text += " - city of %s" % tile["city"]["name"]
+		text += Lang.format(" - city of %s", tile["city"]["name"])
 	for unit: Dictionary in tile.get("units", []):
-		text += "\n  %s (%s, %d HP)" % [unit["name"], unit["civ"], int(unit["health"])]
+		text += Lang.format("\n  %s (%s, %d HP)", [unit["name"], unit["civ"], int(unit["health"])])
 	return text
 
 
