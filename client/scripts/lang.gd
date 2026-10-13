@@ -24,6 +24,12 @@ const FRONTEND_LANGUAGES := {
 	"Italian": {"tag": "it", "label": "Italiano"},
 	"Brazilian_Portuguese": {"tag": "pt_BR", "label": "Português (Brasil)"},
 	"Swedish": {"tag": "sv", "label": "Svenska"},
+	"Portuguese": {"tag": "pt_PT", "label": "Português (Portugal)"},
+	"Dutch": {"tag": "nl", "label": "Nederlands"},
+	"Polish": {"tag": "pl", "label": "Polski"},
+	"Turkish": {"tag": "tr", "label": "Türkçe"},
+	"Indonesian": {"tag": "id", "label": "Bahasa Indonesia"},
+	"Japanese": {"tag": "ja", "label": "日本語"},
 }
 
 

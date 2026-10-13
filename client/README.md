@@ -42,13 +42,16 @@ Settings > Gameplay > **Language** plays the game in any of the ~50 languages Un
 it into (each with how complete its translation is). It uses Unciv's own translation files: the game engine writes
 its messages, popups, descriptions, notifications, quests and victory texts in that language, and the names of units,
 buildings, techs, nations, cities and the rest - and those of our buttons that use Unciv's own words ("Next turn",
-"Found city") - show in it too. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese and Swedish
+"Found city") - show in it too. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese, Swedish,
+European Portuguese, Dutch, Polish, Turkish, Indonesian and Japanese
 translate the frontend menus, boards, built-in lists,
 controller hints, tutorial instructions and map replay. Select **Arabic / العربية** or **Hebrew / עברית** for RTL.
 Arabic and Hebrew also have draft game-content catalogs for built-in names, promotions and shared effects.
 Unfinished entries remain English; see [coverage and review notes](translations/CONTENT.md).
 The VR keyboard includes accents for each supported Latin-script language plus Arabic/Hebrew layouts
-with a Latin switch. Bundled Noto fonts cover these scripts on Windows and Quest; other scripts use system fallbacks.
+with a Latin switch. Japanese adds hiragana/katakana keys with voiced marks and small kana, plus a Latin switch;
+kanji conversion is not implemented. Bundled Noto fonts cover these scripts, including Japanese kanji, on Windows
+and Quest; other scripts use system fallbacks.
 These frontend translations are ready for wording and headset layout review.
 
 ## Controls

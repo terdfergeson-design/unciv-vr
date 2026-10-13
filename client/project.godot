@@ -42,7 +42,7 @@ anti_aliasing/quality/msaa_3d=2
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://translations/de.po", "res://translations/ar.po", "res://translations/he.po", "res://translations/es.po", "res://translations/fr.po", "res://translations/it.po", "res://translations/pt_BR.po", "res://translations/sv.po")
+locale/translations=PackedStringArray("res://translations/de.po", "res://translations/ar.po", "res://translations/he.po", "res://translations/es.po", "res://translations/fr.po", "res://translations/it.po", "res://translations/pt_BR.po", "res://translations/sv.po", "res://translations/pt_PT.po", "res://translations/nl.po", "res://translations/pl.po", "res://translations/tr.po", "res://translations/id.po", "res://translations/ja.po")
 
 [xr]
 

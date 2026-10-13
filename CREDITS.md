@@ -77,6 +77,10 @@ The frontend bundles **Noto Sans**, **Noto Sans Arabic** and **Noto Sans Hebrew*
 under the SIL Open Font License 1.1. Original fonts and the license are in `client/fonts/`; the license is
 included in exported game packs. See [Noto's font collection](https://github.com/notofonts/noto-fonts).
 
+Japanese text uses **Noto Sans CJK JP Regular** from the
+[Noto CJK project](https://github.com/notofonts/noto-cjk), under the SIL Open Font License 1.1.
+The unmodified font and its `OFL-CJK.txt` license are bundled in `client/fonts/` and both exports.
+
 - **Screenshots and videos** show Unciv's icons, and videos have its sounds. Credit them as "Icons and sounds
   from Unciv (see Unciv's docs/Credits.md), licensed CC BY / CC BY-SA / CC0 by their authors".
 - **The Quest app** bundles Unciv's images and sounds (they can't be read from an Unciv checkout on the headset).

@@ -1,6 +1,6 @@
 # Frontend translations
 
-The client uses Godot gettext catalogs. All eight catalogs cover frontend menus, settings, city management,
+The client uses Godot gettext catalogs. All fourteen catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
 options, controller hints, tutorials and status messages. Each has 1,036 messages, ready for wording review.
 
@@ -14,13 +14,25 @@ options, controller hints, tutorials and status messages. Each has 1,036 message
 | Italian | `it.po` | Italiano |
 | Brazilian Portuguese | `pt_BR.po` | Português (Brasil) |
 | Swedish | `sv.po` | Svenska |
+| European Portuguese | `pt_PT.po` | Português (Portugal) |
+| Dutch | `nl.po` | Nederlands |
+| Polish | `pl.po` | Polski |
+| Turkish | `tr.po` | Türkçe |
+| Indonesian | `id.po` | Bahasa Indonesia |
+| Japanese | `ja.po` | 日本語 |
 
-The five new Latin-script catalogs reuse exact matching translations from this checkout's Unciv catalogs;
+The Latin-script catalogs reuse matching translations from this checkout's Unciv catalogs;
 the remaining entries are AI-assisted drafts. Each has all 1,036 entries filled. Native-speaker and in-game
 layout review remain pending beyond the spot checks below.
-Their engine catalogs are already listed as 99% complete in this Unciv checkout.
+The latest five drafts use existing engine catalogs listed as Portuguese 95%, Dutch 97%, Polish 98%,
+Turkish 97% and Indonesian 99% in this checkout. European Portuguese adapts the Brazilian draft with
+European wording and native engine terms; its separate `pt_PT` catalog does not replace `pt_BR`.
 
-Choose **Settings > Gameplay > Language**. German and the five new languages use Unciv's existing game-content
+Japanese also reuses Unciv's existing terms and game-content catalog (96% in this checkout), with draft
+VR-specific wording. It bundles the full Noto Sans CJK JP font for kana, kanji and punctuation on both platforms.
+Japanese still needs native-speaker and in-game visual review.
+
+Choose **Settings > Gameplay > Language**. The Latin-script languages and Japanese use Unciv's existing game-content
 catalogs as well. Arabic and Hebrew
 now load draft native Unciv catalogs through the bridge; blank entries still fall back to English. See
 [content coverage and upstream review notes](CONTENT.md). Picker percentages describe Unciv's content catalog,
@@ -56,8 +68,16 @@ World coordinates, controller handedness, map geometry and physical keyboard key
 
 The VR keyboard offers Arabic/Hebrew keys plus a Latin switch. Its LineEdit displays the native bidirectional caret;
 text remains in logical order for saving. The Latin keyboard's accent row follows the selected language,
-including Spanish ñ, French ligatures, Italian accents, Portuguese ç/ã/õ, and Swedish å/ä/ö.
+including Spanish ñ, French ligatures, Italian accents, Portuguese ç/ã/õ, Swedish å/ä/ö,
+Dutch diacritics, Polish ąćęłńóśźż and Turkish çğıöşü. Turkish Shift uses i/İ and ı/I correctly.
+Indonesian uses the base Latin rows without an extra accent row.
+Japanese offers hiragana, small kana, punctuation and a hiragana/katakana toggle. The ゛ and ゜ keys modify
+the previous kana as a single composed character; use the Latin toggle for numbers and Latin names.
+There is no kanji conversion or Japanese IME integration in the VR keyboard; existing kanji names remain readable.
 German letters remain the default accent row.
+
+The five latest catalogs (European Portuguese, Dutch, Polish, Turkish and Indonesian) have not yet had
+a Godot visual or native-speaker review. The earlier spot-check results below do not cover them.
 
 ## Checks and visual review
 

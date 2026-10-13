@@ -94,14 +94,15 @@ the app's own storage on the Quest.
 complete each is), using Unciv's own translation files by Unciv's translators. The game's side is translated: messages
 and popups, notifications, descriptions, the Civilopedia and tutorials, quests, victory texts, and the names of units,
 buildings, techs, nations and cities - plus those of our buttons that use Unciv's own words. Chinese, Japanese, Korean
-and other scripts use system font fallbacks. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese
-and Swedish cover the frontend menus, city and
+and other scripts use system font fallbacks. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese,
+Swedish, European Portuguese, Dutch, Polish, Turkish, Indonesian and Japanese cover the frontend menus, city and
 empire boards, diplomacy, religion, map replay, controller hints, built-in lists and tutorial instructions.
 Select **Arabic / العربية** or **Hebrew / עברית** for a right-to-left interface. Both now include draft Unciv
 game-content catalogs: built-in object names, promotions and shared effect descriptions. Unfinished entries still
 fall back to English. See [content translation coverage](client/translations/CONTENT.md). Bundled Noto fonts cover
-Latin, Arabic and Hebrew on Windows and Quest.
-The VR keyboard includes accents for each supported Latin-script language and Arabic/Hebrew layouts with a Latin switch. These passes are ready
+Latin, Arabic, Hebrew and Japanese on Windows and Quest.
+The VR keyboard includes accents for each supported Latin-script language, Arabic/Hebrew layouts and Japanese
+hiragana/katakana input with a Latin switch (no kanji conversion). These passes are ready
 for wording and headset layout review.
 
 **Next**, to go all the way:

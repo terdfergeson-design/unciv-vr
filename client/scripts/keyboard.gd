@@ -20,9 +20,16 @@ const ACCENT_KEYS := {
 	"Italian": "àèéìíîòóùú",
 	"Brazilian_Portuguese": "áàâãéêíóôõúüç",
 	"Swedish": "åäöé",
+	"Portuguese": "áàâãéêíóôõúüç",
+	"Dutch": "áàéèëïíóöüç",
+	"Polish": "ąćęłńóśźż",
+	"Turkish": "çğıöşü",
+	"Indonesian": "",
+	"Japanese": "",
 }
 const ARABIC_ROWS := ["1234567890", "ضصثقفغعهخحجد", "شسيبلاتنمكط", "ئءؤرىةوزظ", "أإآذَُِّْ؟،.-"]
 const HEBREW_ROWS := ["1234567890", "קראטוןםפ", "שדגכעיחלךף", "זסבהנמצתץ", "'\"-.,?!"]
+const JAPANESE_ROWS := ["あいうえおかきくけこ", "さしすせそたちつてと", "なにぬねのはひふへほ", "まみむめもやゆよらりるれろ", "わをんー、。ゃゅょっぁぃぅぇぉゎ゛゜"]
 const Lang := preload("res://scripts/lang.gd")
 const TEXT := Color(0.92, 0.94, 0.97)
 const DIM := Color(0.66, 0.7, 0.78)
@@ -105,7 +112,7 @@ func _ready() -> void:
 	bottom.add_child(_key("< Del", _backspace, Color(0.4, 0.22, 0.18), Vector2(110, 50)))
 	bottom.add_child(_key("Clear", func() -> void:
 		text = ""
-		shift = true
+		shift = not (Lang.language == "Japanese" and not _latin)
 		_refresh(), Color(0.32, 0.24, 0.2), Vector2(90, 50)))
 	bottom.add_child(_key("Cancel", func() -> void: cancelled.emit(), Color(0.3, 0.3, 0.32), Vector2(100, 50)))
 	bottom.add_child(_key("OK", func() -> void: submitted.emit(text.strip_edges()), Color(0.2, 0.45, 0.25), Vector2(110, 50)))
@@ -119,16 +126,19 @@ func _build_keys() -> void:
 	for child: Node in _rows_box.get_children():
 		_rows_box.remove_child(child)
 		child.queue_free()
-	var native := Lang.language in ["Arabic", "Hebrew"]
+	var native := Lang.language in ["Arabic", "Hebrew", "Japanese"]
 	_layout_key.visible = native
-	_layout_key.text = ("Arabic keyboard" if Lang.language == "Arabic" else "Hebrew keyboard") if _latin else "Latin keyboard"
+	var native_label: String = {"Arabic": "Arabic keyboard", "Hebrew": "Hebrew keyboard", "Japanese": "かな"}.get(Lang.language, "Latin keyboard")
+	_layout_key.text = native_label if _latin else "Latin keyboard"
 	var rows: Array = ROWS.duplicate()
 	if ACCENT_KEYS.has(Lang.language):
 		rows[rows.size() - 1] = ACCENT_KEYS[Lang.language]
 	if native and not _latin:
-		rows = ARABIC_ROWS if Lang.language == "Arabic" else HEBREW_ROWS
-	_shift_key.disabled = native and not _latin
+		rows = {"Arabic": ARABIC_ROWS, "Hebrew": HEBREW_ROWS, "Japanese": JAPANESE_ROWS}[Lang.language]
+	_shift_key.disabled = Lang.language in ["Arabic", "Hebrew"] and not _latin
 	for row: String in rows:
+		if row.is_empty():
+			continue
 		var line := HBoxContainer.new()
 		# Physical key order stays stable; the entry field shapes RTL text itself.
 		line.layout_direction = Control.LAYOUT_DIRECTION_LTR
@@ -139,7 +149,7 @@ func _build_keys() -> void:
 			var width := minf(78, (SIZE.x - 30 - 5 * (row.length() - 1)) / row.length())
 			var key := _key(character, func() -> void: _type(character), KEY, Vector2(width, 50))
 			key.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-			if character != character.to_upper():
+			if character != character.to_upper() or (Lang.language == "Japanese" and not _latin):
 				key.set_meta("character", character)
 				_letter_keys.append(key)
 			line.add_child(key)
@@ -154,7 +164,7 @@ func open(title: String, initial: String) -> void:
 		_build_keys()
 	_title.text = title
 	text = initial.left(MAX_LENGTH)
-	shift = text.is_empty()
+	shift = text.is_empty() and not (Lang.language == "Japanese" and not _latin)
 	_refresh()
 
 
@@ -180,9 +190,13 @@ func handle_key(event: InputEventKey) -> bool:
 
 
 func _type(character: String) -> void:
+	if Lang.language == "Japanese" and not _latin and character in ["゛", "゜"]:
+		_apply_kana_mark(character)
+		_refresh()
+		return
 	if text.length() >= MAX_LENGTH:
 		return
-	text += ("ẞ" if character == "ß" else character.to_upper()) if shift else character
+	text += _uppercase(character) if shift else character
 	if shift and character != character.to_upper():
 		shift = false   # one-shot, like a phone keyboard
 	elif character == " " and text.strip_edges().is_empty():
@@ -193,17 +207,64 @@ func _type(character: String) -> void:
 func _backspace() -> void:
 	text = text.left(maxi(0, text.length() - 1))
 	if text.is_empty():
-		shift = true
+		shift = not (Lang.language == "Japanese" and not _latin)
 	_refresh()
 
 
 func _refresh() -> void:
+	_shift_key.text = ("ひらがな" if shift else "カタカナ") if Lang.language == "Japanese" and not _latin else "Shift"
 	for key: Button in _letter_keys:
 		var character: String = key.get_meta("character")
-		key.text = ("ẞ" if character == "ß" else character.to_upper()) if shift else character
+		key.text = _uppercase(character) if shift else character
 	_restyle(_shift_key, Color(0.25, 0.45, 0.7) if shift else KEY)
 	_field.text = text
 	_field.caret_column = text.length()
+
+
+func _uppercase(character: String) -> String:
+	if Lang.language == "Japanese" and not _latin and character.length() == 1:
+		var code := character.unicode_at(0)
+		if code >= 0x3041 and code <= 0x3096:
+			return String.chr(code + 0x60) # Hiragana -> katakana; punctuation stays unchanged.
+	if Lang.language == "Turkish":
+		if character == "i":
+			return "İ"
+		if character == "ı":
+			return "I"
+	return "ẞ" if character == "ß" else character.to_upper()
+
+
+## Modify the previous kana in place; store a composed character so one backspace removes it.
+func _apply_kana_mark(mark: String) -> void:
+	if text.is_empty():
+		return
+	var code := text.unicode_at(text.length() - 1)
+	var katakana := code >= 0x30A1 and code <= 0x30F6
+	var last := String.chr(code - 0x60 if katakana else code)
+	var bases := "うかきくけこさしすせそたちつてとはひふへほ"
+	var voiced := "ゔがぎぐげござじずぜぞだぢづでどばびぶべぼ"
+	var semi := "ぱぴぷぺぽ"
+	var replacement := ""
+	if mark == "゛":
+		var at := bases.find(last)
+		if at >= 0:
+			replacement = voiced[at]
+		elif voiced.contains(last):
+			replacement = bases[voiced.find(last)]
+		elif semi.contains(last):
+			replacement = "ばびぶべぼ"[semi.find(last)]
+	else:
+		var at := "はひふへほ".find(last)
+		if at >= 0:
+			replacement = semi[at]
+		elif "ばびぶべぼ".contains(last):
+			replacement = semi["ばびぶべぼ".find(last)]
+		elif semi.contains(last):
+			replacement = "はひふへほ"[semi.find(last)]
+	if not replacement.is_empty():
+		if katakana:
+			replacement = String.chr(replacement.unicode_at(0) + 0x60)
+		text = text.left(text.length() - 1) + replacement
 
 
 func _key(label: String, on_press: Callable, colour: Color, key_size: Vector2) -> Button:

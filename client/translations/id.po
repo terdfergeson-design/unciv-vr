@@ -1,0 +1,3118 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv; new translations are AI-assisted.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: id\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Map replay"
+msgstr "Putar ulang peta"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Tampilan diperjauh agar seluruh peta terlihat. Kepemilikan wilayah dan lokasi kota diperbarui saat giliran diputar."
+
+msgid "Start replay"
+msgstr "Mulai putar ulang"
+
+msgid "Return to game"
+msgstr "Kembali ke permainan"
+
+msgid "Turn %d of %d"
+msgstr "Giliran %d dari %d"
+
+msgid "Close replay"
+msgstr "Tutup putar ulang"
+
+msgid "Turn %d / %d"
+msgstr "Giliran %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Disimpan di PC ini antar sesi"
+
+msgid "Move the table..."
+msgstr "Pindahkan meja..."
+
+msgid "Back to the middle"
+msgstr "Kembali ke tengah"
+
+msgid "Your controllers"
+msgstr "Kontroler Anda"
+
+msgid "Show button labels"
+msgstr "Tampilkan label tombol"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Label di samping setiap kontroler menunjukkan fungsi tombol saat ini."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Pemicu kanan mengeklik saat dilepas, jadi menahannya untuk memperbesar tidak mengeklik apa pun."
+
+msgid "Look"
+msgstr "Tampilan"
+
+msgid "Gameplay"
+msgstr "Permainan"
+
+msgid "Automation"
+msgstr "Otomatisasi"
+
+msgid "Sound"
+msgstr "Suara"
+
+msgid "Panels"
+msgstr "Panel"
+
+msgid "Controls"
+msgstr "Kontrol"
+
+msgid "Game and saves"
+msgstr "Permainan dan simpanan"
+
+msgid "About"
+msgstr "Tentang"
+
+msgid "Settings"
+msgstr "Pengaturan"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Around the table"
+msgstr "Sekitar meja"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Siapa pun dapat menambahkan folder latar dan meja: lihat backgrounds/README.md dan tables/README.md."
+
+msgid "Background"
+msgstr "Latar"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Dunia di sekitar meja: langit, cahaya, dan pemandangan."
+
+msgid "Table"
+msgstr "Meja"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Tempat peta diletakkan. Dalam VR, kaki meja memanjang sesuai ketinggian yang dipilih."
+
+msgid "Where the table stands"
+msgstr "Posisi meja"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Pindahkan meja ke mana saja dalam latar, berguna untuk latar besar seperti peta hasil konversi. Posisi diingat untuk latar ini."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Pindahkan meja ke mana saja dalam latar, berguna untuk latar besar. Meja telah dipindahkan ke sini; Kembali ke tengah mengembalikannya ke posisi awal."
+
+msgid "Remembered for this background."
+msgstr "Diingat untuk latar ini."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Dipindahkan ke sini; Kembali ke tengah mengembalikan posisi awal."
+
+msgid "The map"
+msgstr "Peta"
+
+msgid "Tiles"
+msgstr "Ubin"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Tampilan medan, keajaiban, sumber daya, dan peningkatan. Set petak bekerja seperti di Unciv: lihat tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Heksagon berwarna polos"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Heksagon datar dengan warna medan Unciv, tanpa model."
+
+msgid "Units"
+msgstr "Unit"
+
+msgid "Same as the tiles"
+msgstr "Sama dengan petak"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Model unit dari set petak di atas; model yang tidak tersedia memakai set cadangan."
+
+msgid "No models"
+msgstr "Tanpa model"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Keping bulat dengan ikon unit Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Tampilan unit (Unitset Unciv): set petak dengan model di pieces/Units dapat menyediakannya."
+
+msgid "Visual hints"
+msgstr "Petunjuk visual"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Lapisan peta Unciv; tombol bulat di samping ringkasan juga dapat mengaktifkannya."
+
+msgid "Show unit movement arrows"
+msgstr "Tampilkan panah pergerakan unit"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Gerakan terakhir unit dan siapa menyerang siapa."
+
+msgid "Show tile yields"
+msgstr "Tampilkan penghasilan ubin"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Makanan, produksi, emas... di setiap petak."
+
+msgid "Show worked tiles"
+msgstr "Tampilkan ubin yang dikerjakan"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Petak yang dikerjakan penduduk kota Anda."
+
+msgid "Show resources and improvements"
+msgstr "Tampilkan sumber daya dan peningkatan"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Simbol sumber daya dan peningkatan pada petak."
+
+msgid "Show improvement pictures"
+msgstr "Tampilkan model peningkatan"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Model pertanian, tambang, jalan, dan lainnya."
+
+msgid "Show unit icons"
+msgstr "Tampilkan ikon unit"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "Ikon kecil Unciv di atas setiap model unit."
+
+msgid "Language"
+msgstr "Bahasa"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Terjemahan Unciv mencakup pesan, nama, dan deskripsi permainan. Menu kami masih dalam bahasa Inggris."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Teks yang belum diterjemahkan Unciv tetap dalam bahasa Inggris."
+
+msgid "Turns"
+msgstr "Giliran"
+
+msgid "Check for idle units"
+msgstr "Cek unit yang menganggur"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Akhiri giliran terlebih dahulu memilih setiap unit yang belum mendapat perintah."
+
+msgid "Auto unit cycle"
+msgstr "Pergantian unit otomatis"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Setelah memberi perintah, unit berikutnya yang menunggu perintah dipilih."
+
+msgid "Cycle idle units by distance"
+msgstr "Urutkan unit menganggur berdasarkan jarak"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Unit berikut/sebelumnya memilih yang terdekat alih-alih urutan tetap."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Minta konfirmasi sebelum mengakhiri giliran"
+
+msgid "End turn needs a second press."
+msgstr "Akhiri giliran perlu ditekan dua kali."
+
+msgid "Order trade offers by amount"
+msgstr "Susun penawaran dagang berdasarkan jumlah"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "Penawaran terbesar ditampilkan pertama di meja perdagangan."
+
+msgid "Show suggested city locations"
+msgstr "Tampilkan saran lokasi kota"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Saat pemukim dipilih, tiga lokasi kota terbaik di dekatnya menurut Unciv ditandai."
+
+msgid "Tutorials"
+msgstr "Tutorial"
+
+msgid "Show tutorials"
+msgstr "Tampilkan tutorial"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Pesan tutorial dan kartu tugas. Semua tutorial juga ada di Civilopedia."
+
+msgid "Reset tutorials"
+msgstr "Atur ulang tutorial"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Tampilkan kembali semua tutorial dan tugas seperti pemain baru."
+
+msgid "Other players"
+msgstr "Pemain lain"
+
+msgid "Other players' turns"
+msgstr "Giliran pemain lain"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Yang terlihat dari giliran pemain lain setelah giliran Anda."
+
+msgid "Show the moves and battles I can see"
+msgstr "Tampilkan gerakan dan pertempuran yang terlihat"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Diputar berurutan; tampilan bergeser ke pertempuran."
+
+msgid "Show them, fast"
+msgstr "Tampilkan dengan cepat"
+
+msgid "The same, at two and a half times the speed."
+msgstr "Sama, tetapi dua setengah kali lebih cepat."
+
+msgid "Don't show them"
+msgstr "Jangan tampilkan"
+
+msgid "The map just updates."
+msgstr "Peta langsung diperbarui."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Opsi Unciv untuk unit dan kota otomatis."
+
+msgid "Automated and exploring units move"
+msgstr "Gerakan unit otomatis dan penjelajah"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Kapan unit otomatis, penjelajah, dan unit dengan gerakan beberapa giliran bergerak."
+
+msgid "When I end my turn"
+msgstr "Saat mengakhiri giliran saya"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Penjelajah, pekerja otomatis, dan unit dalam perjalanan panjang bergerak saat giliran diakhiri."
+
+msgid "At the start of my turn"
+msgstr "Di awal giliran saya"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Mereka bergerak di awal giliran (opsi gerakan unit otomatis Unciv)."
+
+msgid "Auto-assign city production"
+msgstr "Otomatis menugaskan produksi kota"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Kota memilih sendiri pembangunan berikutnya setelah selesai."
+
+msgid "Auto-build roads"
+msgstr "Otomatis bangun jalan"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Pekerja otomatis membangun jalan antarkota Anda."
+
+msgid "Automated workers replace improvements"
+msgstr "Perbolehkan pekerja yang diotomatisasi mengganti peningkatan"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Pekerja otomatis boleh mengganti peningkatan dengan yang lebih baik."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Cegah pekerja otomatis menghapus vegetasi"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Pekerja otomatis membiarkan hutan, hutan lebat, dan rawa."
+
+msgid "Automated units can upgrade"
+msgstr "Unit yang diotomatisasi dapat meningkatkan diri"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Unit militer otomatis meningkatkan diri saat dana cukup."
+
+msgid "Automated units choose promotions"
+msgstr "Unit yang diotomatisasi memilih promosi"
+
+msgid "Automated units pick their own promotions."
+msgstr "Unit otomatis memilih promosinya sendiri."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "Kota otomatis membombardir di akhir giliran"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Kota yang masih bisa menembak menyerang musuh dalam jangkauan saat giliran diakhiri."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Tetapkan spesialis otomatis di kota baru"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Kota baru menempatkan penduduk ke slot spesialis secara otomatis."
+
+msgid "Sound effects"
+msgstr "Efek suara"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Tombol, gerakan, pertempuran, dan lainnya. Dalam VR, suara berasal dari lokasi kejadian di meja."
+
+msgid "City ambience"
+msgstr "Suara kota"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Suara berulang saat berada di kota; Unciv menyediakan suara untuk tiap era."
+
+msgid "Your own and mods'"
+msgstr "Milik Anda dan mod"
+
+msgid "None yet."
+msgstr "Belum ada."
+
+msgid "Put the panels back"
+msgstr "Atur ulang panel"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Setiap panel kembali ke posisi dalam panel.json."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "Dalam VR, kontroler ditampilkan oleh perangkat lunak headset (SteamVR mendukungnya; yang lain memakai model sederhana)."
+
+msgid "Boards"
+msgstr "Papan"
+
+msgid "Put the boards back"
+msgstr "Atur ulang papan"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Ringkasan, info, layar besar, papan kota, ringkasan imperium, dan papan ini kembali ke posisi awal."
+
+msgid "This game"
+msgstr "Permainan ini"
+
+msgid "Save game"
+msgstr "Simpan permainan"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Simpan dengan nama yang diketik ke folder simpanan bridge."
+
+msgid "Save..."
+msgstr "Simpan..."
+
+msgid "Main menu"
+msgstr "Menu utama"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Kembali ke menu utama; permainan tetap berjalan. Lanjutkan membawa Anda kembali."
+
+msgid "Saves"
+msgstr "Simpanan"
+
+msgid "Autosave"
+msgstr "Simpan otomatis"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Seberapa sering permainan disimpan sebagai Autosave (Lanjutkan di menu utama memuatnya)."
+
+msgid "Save folder"
+msgstr "Folder simpanan"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Meja realitas virtual untuk Unciv, adaptasi sumber terbuka Civilization V."
+
+msgid "Bridge protocol"
+msgstr "Protokol bridge"
+
+msgid "Mods"
+msgstr "Mod"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Set petak, latar, dan meja Anda"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Letakkan foldernya di sini; akan muncul di Tampilan."
+
+msgid "Settings file"
+msgstr "Berkas pengaturan"
+
+msgid "Licence and credits"
+msgstr "Lisensi dan kredit"
+
+msgid "Desktop"
+msgstr "Desktop"
+
+msgid "Off"
+msgstr "Nonaktif"
+
+msgid "On"
+msgstr "Aktif"
+
+msgid "End turn"
+msgstr "Akhiri giliran"
+
+msgid "< Prev"
+msgstr "< Sebelumnya"
+
+msgid "Idle unit"
+msgstr "Unit menganggur"
+
+msgid "Next >"
+msgstr "Berikutnya >"
+
+msgid "Research"
+msgstr "Riset"
+
+msgid "Recenter table"
+msgstr "Pusatkan meja"
+
+msgid "No unit selected"
+msgstr "Tidak ada unit dipilih"
+
+msgid "Point at a unit or city to select it."
+msgstr "Arahkan ke unit atau kota untuk memilihnya."
+
+msgid "Fortified"
+msgstr "Dibentengi"
+
+msgid "Sleeping"
+msgstr "Tidur"
+
+msgid "Automated"
+msgstr "Otomatis"
+
+msgid "On its way"
+msgstr "Dalam perjalanan"
+
+msgid "Embarked"
+msgstr "Berlayar"
+
+msgid "Strength"
+msgstr "Kekuatan"
+
+msgid "RangedStrength"
+msgstr "Kekuatan jarak jauh"
+
+msgid "Range"
+msgstr "Jarak"
+
+msgid "Movement"
+msgstr "Pergerakan"
+
+msgid "Rename"
+msgstr "Namakan ulang"
+
+msgid "Cancel"
+msgstr "Batalkan"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Melewati giliran ini (pilih Lewati lagi untuk memberi perintah)."
+
+msgid "Health"
+msgstr "Kesehatan"
+
+msgid "XP"
+msgstr "XP"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Promosi! Pilih promosi"
+
+msgid "Promote"
+msgstr "Promosikan"
+
+msgid "Building %s"
+msgstr "Membangun %s"
+
+msgid "%d turns left"
+msgstr "Sisa %d giliran"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d musuh dalam jangkauan (lingkaran merah): klik untuk membidik"
+
+msgid "Actions"
+msgstr "Tindakan"
+
+msgid "Pillage"
+msgstr "Jarah"
+
+msgid "Sure? Click again"
+msgstr "Yakin? Klik lagi"
+
+msgid "click the red button again"
+msgstr "klik tombol merah lagi"
+
+msgid "Build here"
+msgstr "Bangun di sini"
+
+msgid "Stop"
+msgstr "Hentikan"
+
+msgid "%d turns"
+msgstr "%d giliran"
+
+msgid "Population %d"
+msgstr "Populasi %d"
+
+msgid "Defense %d"
+msgstr "Pertahanan %d"
+
+msgid "Health %d/%d"
+msgstr "Kesehatan %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d penduduk menganggur"
+
+msgid "Puppet"
+msgstr "Jadikan Boneka"
+
+msgid "Starving! %d turns"
+msgstr "Kelaparan! %d giliran"
+
+msgid "Grows in %d turns"
+msgstr "Tumbuh dalam %d giliran"
+
+msgid "Food -> production"
+msgstr "Makanan -> produksi"
+
+msgid "Not growing"
+msgstr "Tidak tumbuh"
+
+msgid "Border in %d turns"
+msgstr "Perbatasan dalam %d giliran"
+
+msgid "Borders stopped"
+msgstr "Perluasan perbatasan berhenti"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Tampilan kota - petak, penduduk, antrean, pembelian"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Kota ini sedang diratakan dan menyusut tiap giliran hingga lenyap. Hentikan di tampilan kota."
+
+msgid "Producing"
+msgstr "Sedang diproduksi"
+
+msgid "Producing nothing - pick something below"
+msgstr "Tidak memproduksi apa pun - pilih di bawah"
+
+msgid "Buildings"
+msgstr "Bangunan"
+
+msgid "Wonders"
+msgstr "Keajaiban Dunia"
+
+msgid "Other"
+msgstr "Lainnya"
+
+msgid "Gold"
+msgstr "Emas"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Beli sekarang seharga %d emas (Anda punya %d)"
+
+msgid "Promote %s"
+msgstr "Promosikan %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Pilih satu promosi.%s"
+
+msgid "Has: %s"
+msgstr "Memiliki: %s"
+
+msgid "No promotion available right now."
+msgstr "Belum ada promosi tersedia."
+
+msgid "Tutorial"
+msgstr "Tutorial"
+
+msgid "%d of %d"
+msgstr "%d dari %d"
+
+msgid "%d more messages after this one"
+msgstr "%d pesan lagi setelah ini"
+
+msgid "%s gives:"
+msgstr "%s memberi:"
+
+msgid "They"
+msgstr "Mereka"
+
+msgid "You give:"
+msgstr "Anda memberi:"
+
+msgid "%d votes  %s"
+msgstr "%d suara  %s"
+
+msgid "voted for %s"
+msgstr "memilih %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Tutorial dapat dinonaktifkan di Pengaturan > Permainan. Semuanya juga ada di Civilopedia."
+
+msgid " (%d turns)"
+msgstr " (%d giliran)"
+
+msgid "Choose a free great person"
+msgstr "Pilihlah orang besar gratis"
+
+msgid "You have %d free great people to pick."
+msgstr "Anda dapat memilih %d tokoh besar gratis."
+
+msgid "Vote for world leader"
+msgstr "Pilih pemimpin dunia"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Pilih seseorang untuk menjadi pemimpin dunia dan memenangkan Kemenangan Diplomatik!"
+
+msgid "Vote for %s"
+msgstr "Pilih %s"
+
+msgid "Abstain"
+msgstr "Abstain"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Tidak ada riset - pilih teknologi!"
+
+msgid "Researching %s"
+msgstr "Meneliti %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Anda dapat memilih %d teknologi gratis - pilih yang disorot."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Ilmu %+d per giliran. Memilih teknologi lanjutan mengantrekan prasyaratnya."
+
+msgid "%s turns"
+msgstr "%s giliran"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Lanjutkan permainan terakhir atau mulai permainan baru."
+
+msgid "Resume"
+msgstr "Lanjutkan"
+
+msgid "Continue"
+msgstr "Lanjut"
+
+msgid "Quick start"
+msgstr "Mulai cepat"
+
+msgid "New game..."
+msgstr "Permainan baru..."
+
+msgid "Load game..."
+msgstr "Muat permainan..."
+
+msgid "Civilopedia"
+msgstr "Civilopedia"
+
+msgid "Quit"
+msgstr "Keluar"
+
+msgid "New game"
+msgstr "Permainan baru"
+
+msgid "You"
+msgstr "Kamu"
+
+msgid "World"
+msgstr "Dunia"
+
+msgid "Rules"
+msgstr "Aturan"
+
+msgid "Random"
+msgstr "Acak"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - peta %s %s, %s, %d AI, %d negara-kota"
+
+msgid "%s, led by %s"
+msgstr "%s, dipimpin oleh %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Acak: identitas Anda diketahui saat permainan dimulai."
+
+msgid "Your civilization"
+msgstr "Peradaban Anda"
+
+msgid "Map size"
+msgstr "Ukuran peta"
+
+msgid "Map type"
+msgstr "Jenis peta"
+
+msgid "Shape"
+msgstr "Bentuk"
+
+msgid "Resources"
+msgstr "Sumber daya"
+
+msgid "Options"
+msgstr "Opsi"
+
+msgid "No ancient ruins"
+msgstr "Tanpa reruntuhan kuno"
+
+msgid "No natural wonders"
+msgstr "Tanpa keajaiban alam"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Peta besar bergeser di bawah meja: tahan tombol genggam lalu seret, atau gunakan ringkasan di sisi jauh."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings menambahkan agama, spionase, peradaban, unit, dan bangunan."
+
+msgid "Difficulty"
+msgstr "Kesulitan"
+
+msgid "Game speed"
+msgstr "Kecepatan permainan"
+
+msgid "Starting era"
+msgstr "Era awal"
+
+msgid "AI players"
+msgstr "Pemain AI"
+
+msgid "City-states"
+msgstr "Negara-kota"
+
+msgid "Victory types (none picked = all)"
+msgstr "Jenis kemenangan (kosong = semua)"
+
+msgid "No barbarians"
+msgstr "Tanpa barbar"
+
+msgid "Raging barbarians"
+msgstr "Barbar mengamuk"
+
+msgid "One-city challenge"
+msgstr "Tantangan satu kota"
+
+msgid "No city razing"
+msgstr "Tanpa perataan kota"
+
+msgid "Nuclear weapons"
+msgstr "Senjata nuklir"
+
+msgid "Espionage"
+msgstr "Spionase"
+
+msgid "< Back"
+msgstr "< Kembali"
+
+msgid "Start game"
+msgstr "Mulai permainan"
+
+msgid "Load game"
+msgstr "Muat permainan"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Simpanan di folder Unciv VR, terbaru dahulu."
+
+msgid "Backgrounds"
+msgstr "Latar"
+
+msgid "Mountains"
+msgstr "Pegunungan"
+
+msgid "Scenery"
+msgstr "Pemandangan"
+
+msgid "Technologies"
+msgstr "Teknologi"
+
+msgid "Policies"
+msgstr "Kebijakan"
+
+msgid "Diplomacy"
+msgstr "Diplomasi"
+
+msgid "Religion"
+msgstr "Agama"
+
+msgid "Victory"
+msgstr "Kemenangan"
+
+msgid "Declare war"
+msgstr "Nyatakan perang"
+
+msgid "Score"
+msgstr "Skor"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Belum ada riwayat - grafik terisi seiring giliran."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "=====   tahan pemicu di sini lalu seret untuk memindahkan layar   ====="
+
+msgid "Pause"
+msgstr "Jeda"
+
+msgid "Play"
+msgstr "Putar"
+
+msgid "Loading the technology tree..."
+msgstr "Memuat pohon teknologi..."
+
+msgid "Pick something to research!"
+msgstr "Pilih riset!"
+
+msgid "Science %+d per turn"
+msgstr "Ilmu %+d per giliran"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Klik teknologi untuk melihat efek dan yang dapat dibangun. Ikon kecil menunjukkan yang dibukanya."
+
+msgid "needs science"
+msgstr "perlu ilmu"
+
+msgid "researching now, "
+msgstr "sedang diteliti, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s   (%s, %d ilmu)"
+
+msgid "Loading policies..."
+msgstr "Memuat kebijakan..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Budaya %d / %d  (%+d per giliran)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Anda dapat mengadopsi kebijakan!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Klik simbol untuk melihat kebijakan. Buka cabangnya (simbol besar) sebelum mengadopsi kebijakan di dalamnya."
+
+msgid "ready to adopt"
+msgstr "siap diadopsi"
+
+msgid "needs more culture"
+msgstr "perlu lebih banyak budaya"
+
+msgid "not available yet"
+msgstr "belum tersedia"
+
+msgid "(no special effects)"
+msgstr "(tanpa efek khusus)"
+
+msgid "Adopt"
+msgstr "Terapkan"
+
+msgid "Your score: %d"
+msgstr "Skor Anda: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Anda belum bertemu siapa pun. Jelajahi untuk menemukan peradaban dan negara-kota."
+
+msgid "Loading..."
+msgstr "Memuat..."
+
+msgid "   (city-state)"
+msgstr "   (negara-kota)"
+
+msgid "Destroyed"
+msgstr "Hancur"
+
+msgid "AT WAR"
+msgstr "BERPERANG"
+
+msgid "At peace"
+msgstr "Damai"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (perjanjian: %d giliran lagi)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - pengaruh %d%s"
+
+msgid "   allied with %s"
+msgstr "   sekutu %s"
+
+msgid "Feels %s about you%s"
+msgstr "Sikap terhadap Anda: %s%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Skor %d    Kota %d"
+
+msgid "Diplomacy..."
+msgstr "Diplomasi..."
+
+msgid "Trade"
+msgstr "Berdagang"
+
+msgid "Offer peace"
+msgstr "Tawarkan perdamaian"
+
+msgid "Click again to declare war on %s"
+msgstr "Klik lagi untuk menyatakan perang kepada %s"
+
+msgid "< All civilizations"
+msgstr "< Semua peradaban"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (belum bisa berunding damai selama %d giliran)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Jenis: %s    Kepribadian: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Hubungan kita: %s (pengaruh %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Sekutu: %s dengan %d pengaruh"
+
+msgid "Protected by: "
+msgstr "Dilindungi oleh: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Hubungan berubah dalam %d giliran"
+
+msgid "Resources: "
+msgstr "Sumber daya: "
+
+msgid "When Friends:"
+msgstr "Saat Berteman:"
+
+msgid "When Allies:"
+msgstr "Saat Bersekutu:"
+
+msgid "You have a declaration of friendship."
+msgstr "Anda memiliki deklarasi persahabatan."
+
+msgid "You have denounced them."
+msgstr "Anda telah mengecam mereka."
+
+msgid "Go to on map"
+msgstr "Pergi ke sana di peta"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Hadiahkan %d emas (+%d pengaruh)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Bangun %s di %s (200 emas)"
+
+msgid "Revoke protection"
+msgstr "Cabut perlindungan"
+
+msgid "Click again: revoke protection?"
+msgstr "Klik lagi: cabut perlindungan?"
+
+msgid "Pledge to protect"
+msgstr "Bersumpah untuk melindungi"
+
+msgid "Click again: declare protection?"
+msgstr "Klik lagi: nyatakan perlindungan?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Ambil %d emas (-15 pengaruh)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Ambil pekerja (-50 pengaruh)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Pernikahan diplomatik (%d emas)"
+
+msgid "Click again: they join your empire"
+msgstr "Klik lagi: mereka bergabung dengan imperium Anda"
+
+msgid "Negotiate peace"
+msgstr "Rundingkan perdamaian"
+
+msgid "Click again: make peace?"
+msgstr "Klik lagi: berdamai?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Persahabatan ditawarkan - menunggu jawaban"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Tawarkan deklarasi persahabatan (30 giliran)"
+
+msgid "Denounce (30 turns)"
+msgstr "Kecam (30 giliran)"
+
+msgid "Click again: denounce %s?"
+msgstr "Klik lagi: kecam %s?"
+
+msgid "Click again to declare war"
+msgstr "Klik lagi untuk menyatakan perang"
+
+msgid "Demands:"
+msgstr "Tuntutan:"
+
+msgid "  (asked)"
+msgstr "  (diminta)"
+
+msgid "  (they agreed)"
+msgstr "  (mereka setuju)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Kesediaan membayar upeti (minimal 0 untuk emas; minimal 30 dan kota ukuran 4 untuk pekerja):"
+
+msgid "  (+%d influence)"
+msgstr "  (+%d pengaruh)"
+
+msgid "  %d turns remaining"
+msgstr "  tersisa %d giliran"
+
+msgid "Unforgivable"
+msgstr "Tak Termaafkan"
+
+msgid "Enemy"
+msgstr "Musuh"
+
+msgid "Afraid"
+msgstr "Takut"
+
+msgid "Competitor"
+msgstr "Saingan"
+
+msgid "Favorable"
+msgstr "Disenangi"
+
+msgid "Friend"
+msgstr "Teman"
+
+msgid "Ally"
+msgstr "Sekutu"
+
+msgid "Pantheon"
+msgstr "Panteon"
+
+msgid "Founder"
+msgstr "Pendiri"
+
+msgid "Follower"
+msgstr "Pengikut"
+
+msgid "Enhancer"
+msgstr "Penguat"
+
+msgid "Any"
+msgstr "Apa Saja"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Pilih %d kepercayaan lagi%s"
+
+msgid "so far: %s"
+msgstr "sejauh ini: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Sekarang pilih simbol agama Anda di atas."
+
+msgid "Follow this pantheon"
+msgstr "Ikuti panteon ini"
+
+msgid "Found %s"
+msgstr "Dirikan %s"
+
+msgid "Enhance %s"
+msgstr "Kembangkan %s"
+
+msgid "Reform"
+msgstr "Reformasi"
+
+msgid "Confirm"
+msgstr "Konfirmasi"
+
+msgid "Religion is off in this game."
+msgstr "Agama dinonaktifkan dalam permainan ini."
+
+msgid "Choose a pantheon belief"
+msgstr "Pilih kepercayaan panteon"
+
+msgid "Found your religion"
+msgstr "Dirikan agama Anda"
+
+msgid "Enhance your religion"
+msgstr "Kembangkan agama Anda"
+
+msgid "Reform your religion"
+msgstr "Reformasi agama Anda"
+
+msgid "No religion yet"
+msgstr "Belum ada agama"
+
+msgid "Your beliefs"
+msgstr "Kepercayaan Anda"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Belum ada pilihan. Kumpulkan iman untuk panteon; Nabi Besar mendirikan dan kemudian mengembangkan agama di salah satu kota Anda."
+
+msgid "Symbol:"
+msgstr "Simbol:"
+
+msgid "Name: %s"
+msgstr "Nama: %s"
+
+msgid "(pick a symbol)"
+msgstr "(pilih simbol)"
+
+msgid "Rename..."
+msgstr "Ganti nama..."
+
+msgid "Choose any belief!"
+msgstr "Pilihlah kepercayaan apa saja!"
+
+msgid "Choose a %s belief!"
+msgstr "Pilih kepercayaan %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (dimiliki agama lain)"
+
+msgid "  (you have it)"
+msgstr "  (Anda memilikinya)"
+
+msgid "  (not available)"
+msgstr "  (tidak tersedia)"
+
+msgid "  (picked for another slot)"
+msgstr "  (dipilih untuk slot lain)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Giliran %d   kecepatan %s   %s%s"
+
+msgid "max %d turns"
+msgstr "maksimal %d giliran"
+
+msgid "You have won a %s Victory!"
+msgstr "Anda meraih kemenangan %s!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s meraih kemenangan %s!"
+
+msgid "You have been defeated."
+msgstr "Anda telah dikalahkan."
+
+msgid "One more turn...!"
+msgstr "Satu giliran lagi...!"
+
+msgid "Main menu (start a new game)"
+msgstr "Menu utama (mulai permainan baru)"
+
+msgid "Our status"
+msgstr "Status kita"
+
+msgid "Global status"
+msgstr "Status global"
+
+msgid "Rankings"
+msgstr "Peringkat"
+
+msgid "Charts"
+msgstr "Grafik"
+
+msgid "Demographics"
+msgstr "Demografi"
+
+msgid "%s Victory"
+msgstr "Kemenangan %s"
+
+msgid "[done] "
+msgstr "[selesai] "
+
+msgid "Rank"
+msgstr "Peringkat"
+
+msgid "Value"
+msgstr "Nilai"
+
+msgid "Best"
+msgstr "Terbaik"
+
+msgid "Average / Worst"
+msgstr "Rata-rata / Terburuk"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Berdagang dengan %s     Emas Anda %d, mereka %d"
+
+msgid "You can offer"
+msgstr "Anda dapat menawarkan"
+
+msgid "You give"
+msgstr "Anda memberi"
+
+msgid "You get"
+msgstr "Anda mendapat"
+
+msgid "They can offer"
+msgstr "Mereka dapat menawarkan"
+
+msgid "Clear"
+msgstr "Hapus"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Klik item di kolom luar untuk menaruhnya di meja; klik lagi untuk menghapusnya."
+
+msgid "%s would accept this."
+msgstr "%s akan menerima ini."
+
+msgid "%s wants more for this%s."
+msgstr "%s menginginkan lebih untuk ini%s."
+
+msgid "about %d gold's worth"
+msgstr "senilai sekitar %d emas"
+
+msgid "Propose deal"
+msgstr "Ajukan kesepakatan"
+
+msgid "  %d turns"
+msgstr "  %d giliran"
+
+msgid "Gold_Per_Turn"
+msgstr "Emas per giliran"
+
+msgid "Not connected to the bridge"
+msgstr "Tidak terhubung ke bridge"
+
+msgid "Bridge disconnected"
+msgstr "Bridge terputus"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Bridge Unciv bawaan tidak lengkap. Instal ulang berkas permainan."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Repositori Unciv dengan bridge tidak ditemukan di %s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Java 17 atau lebih baru tidak ditemukan (Unciv perlu JDK 21). Instal dan atur JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "Tidak dapat menulis %s"
+
+msgid "Couldn't start Gradle"
+msgstr "Tidak dapat memulai Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Tidak dapat memulai bridge Unciv bawaan"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "=====   tahan pemicu di sini lalu seret untuk memindahkan   ====="
+
+msgid "Exit city"
+msgstr "Keluar kota"
+
+msgid "City"
+msgstr "Kota"
+
+msgid "BEING RAZED"
+msgstr "SEDANG DIRATAKAN"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Penduduk belum ditugaskan: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "klik: biarkan kota menugaskan"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d makanan)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Kelaparan: kehilangan penduduk dalam %d giliran %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Makanan menjadi produksi selama unit ini dibangun"
+
+msgid "New citizen in %d turns %s"
+msgstr "Penduduk baru dalam %d giliran %s"
+
+msgid "Not growing %s"
+msgstr "Tidak tumbuh %s"
+
+msgid "(%d/%d culture)"
+msgstr "(%d/%d budaya)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Perbatasan meluas dalam %d giliran %s"
+
+msgid "Borders have stopped growing"
+msgstr "Perbatasan berhenti meluas"
+
+msgid "In resistance for another %d turns"
+msgstr "Perlawanan selama %d giliran lagi"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "Hari Cinta Raja selama %d giliran lagi"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Meminta %s (Hari Cinta Raja jika diperoleh)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Aneksasi kota (akhiri status boneka)"
+
+msgid "Stop razing city"
+msgstr "Berhenti meruntuhkan kota"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Klik lagi untuk MERATAKAN %s (kehilangan satu penduduk tiap giliran)"
+
+msgid "Raze city"
+msgstr "Runtuhkan kota"
+
+msgid "Citizen management"
+msgstr "Pengelolaan penduduk"
+
+msgid "Reset citizens"
+msgstr "Atur ulang penduduk"
+
+msgid "Avoid growth"
+msgstr "Hindari pertumbuhan"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Fokus penduduk (petak yang diprioritaskan kota):"
+
+msgid "Specialists"
+msgstr "Spesialis"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Spesialis manual (klik untuk otomatis)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Spesialis otomatis (klik untuk manual)"
+
+msgid "Specialist"
+msgstr "Spesialis"
+
+msgid "Great people"
+msgstr "Tokoh besar"
+
+msgid "Majority religion: %s"
+msgstr "Agama mayoritas: %s"
+
+msgid "Former holy city of %s"
+msgstr "Bekas kota suci %s"
+
+msgid "Holy city of %s"
+msgstr "Kota suci %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d pengikut, tekanan %+d"
+
+msgid "Specialist buildings"
+msgstr "Bangunan spesialis"
+
+msgid "  (free)"
+msgstr "  (gratis)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Klik petak: petak yang dikerjakan dihentikan, penduduk bebas mengerjakan petak kosong, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "dan petak berharga dapat dibeli (klik dua kali)."
+
+msgid "Tile"
+msgstr "Ubin"
+
+msgid "city centre"
+msgstr "pusat kota"
+
+msgid "worked (locked)"
+msgstr "dikerjakan (dikunci)"
+
+msgid "not worked"
+msgstr "tidak dikerjakan"
+
+msgid "gives its yield without a citizen"
+msgstr "memberi hasil tanpa penduduk"
+
+msgid "gives nothing"
+msgstr "tidak memberi hasil"
+
+msgid "blockaded by an enemy"
+msgstr "diblokade musuh"
+
+msgid "worked by %s"
+msgstr "dikerjakan oleh %s"
+
+msgid "another city"
+msgstr "kota lain"
+
+msgid "too far to work"
+msgstr "terlalu jauh untuk dikerjakan"
+
+msgid "can be bought"
+msgstr "dapat dibeli"
+
+msgid "not yours"
+msgstr "bukan milik Anda"
+
+msgid "Resource: %s"
+msgstr "Sumber daya: %s"
+
+msgid "Improvement: %s"
+msgstr "Peningkatan: %s"
+
+msgid "Owned by %s"
+msgstr "Milik %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Kunci (pertahankan penduduk di sini)"
+
+msgid "Stop working"
+msgstr "Berhenti mengerjakan"
+
+msgid "Unlock"
+msgstr "Buka"
+
+msgid "Work this tile"
+msgstr "Kerjakan petak ini"
+
+msgid "Work and lock"
+msgstr "Kerjakan dan kunci"
+
+msgid "Click again: buy for %d gold"
+msgstr "Klik lagi: beli seharga %d emas"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Beli seharga %d emas (Anda punya %d)"
+
+msgid "Production"
+msgstr "Produksi"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Emas %d   Iman %d   Produksi %+d per giliran"
+
+msgid "Being built"
+msgstr "Sedang dibangun"
+
+msgid "Nothing being built - pick something below"
+msgstr "Tidak ada pembangunan - pilih di bawah"
+
+msgid "   %d turns"
+msgstr "   %d giliran"
+
+msgid "Hide what can't be built yet"
+msgstr "Sembunyikan yang belum bisa dibangun"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Tampilkan yang belum bisa dibangun (dan alasannya)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Klik untuk melihat efek, lalu bangun sekarang, tambahkan ke antrean, atau beli."
+
+msgid "   %d production"
+msgstr "   %d produksi"
+
+msgid ", %d turns"
+msgstr ", %d giliran"
+
+msgid "   (built)"
+msgstr "   (dibangun)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "%s ditempatkan di petak yang dipilih setelah Bangun sekarang / Tambahkan ke antrean / Beli."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "%s ditempatkan pada petak berlingkar yang dipilih saat diantrekan."
+
+msgid "Build now"
+msgstr "Bangun sekarang"
+
+msgid "Add to queue"
+msgstr "Tambahkan ke antrean"
+
+msgid "Click again: buy for %d %s"
+msgstr "Klik lagi: beli seharga %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Beli seharga %d %s"
+
+msgid "you have %d"
+msgstr "Anda punya %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Beli: keluarkan unit dari kota dahulu"
+
+msgid "Click again: sell for %d gold"
+msgstr "Klik lagi: jual seharga %d emas"
+
+msgid "Sell for %d gold"
+msgstr "Jual seharga %d emas"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Civilopedia - tahan pemicu di sini lalu seret   ====="
+
+msgid "<  Back"
+msgstr "<  Kembali"
+
+msgid "This entry couldn't be loaded."
+msgstr "Entri ini tidak dapat dimuat."
+
+msgid "Building"
+msgstr "Bangunan"
+
+msgid "Wonder"
+msgstr "Keajaiban Dunia"
+
+msgid "Unit"
+msgstr "Unit"
+
+msgid "Resource"
+msgstr "SumberDaya"
+
+msgid "Improvement"
+msgstr "Peningkatan"
+
+msgid "Tile Improvements"
+msgstr "Peningkatan Ubin"
+
+msgid "Technology"
+msgstr "Teknologi"
+
+msgid "Promotion"
+msgstr "Promosi"
+
+msgid "Promotions"
+msgstr "Promosi"
+
+msgid "Policy"
+msgstr "Kebijakan"
+
+msgid "Belief"
+msgstr "Kepercayaan"
+
+msgid "Religions and Beliefs"
+msgstr "Agama dan Kepercayaan"
+
+msgid "Nation"
+msgstr "Bangsa"
+
+msgid "Nations"
+msgstr "Bangsa"
+
+msgid "Terrain"
+msgstr "Medan"
+
+msgid "Terrains"
+msgstr "Medan"
+
+msgid "Unit types"
+msgstr "Jenis unit"
+
+msgid "Unit Names"
+msgstr "Nama unit"
+
+msgid "Victory Types"
+msgstr "Jenis Kemenangan"
+
+msgid "Thumbstick"
+msgstr "Stik analog"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Trigger"
+msgstr "Pemicu"
+
+msgid "Grip"
+msgstr "Genggam"
+
+msgid "Trackpad"
+msgstr "Panel sentuh"
+
+msgid "Button 1"
+msgstr "Tombol 1"
+
+msgid "Button 2"
+msgstr "Tombol 2"
+
+msgid "Cities"
+msgstr "Kota"
+
+msgid "None"
+msgstr "Tidak ada"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Belum dijelajahi (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - wilayah %s"
+
+msgid " - city of %s"
+msgstr " - kota %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Otomatisasi"
+
+msgid "Sleep"
+msgstr "Tidur"
+
+msgid "Fortify"
+msgstr "Bertahan"
+
+msgid "Guard"
+msgstr "Kawal"
+
+msgid "Explore"
+msgstr "Jelajah"
+
+msgid "Upgrade"
+msgstr "Tingkatkan"
+
+msgid "Transform"
+msgstr "Ubah"
+
+msgid "Repair"
+msgstr "Perbaiki"
+
+msgid "Skip"
+msgstr "Lewati"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s   Giliran %d  (%s)"
+
+msgid "%d BC"
+msgstr "%d SM"
+
+msgid "%d AD"
+msgstr "%d M"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Tidak ada riset - pilih teknologi!"
+
+msgid "Point at a tile"
+msgstr "Arahkan ke petak"
+
+msgid "Unexplored"
+msgstr "Belum dijelajahi"
+
+msgid "Send a unit to find out what's here."
+msgstr "Kirim unit untuk mengetahui isi tempat ini."
+
+msgid "Natural wonder: %s"
+msgstr "Keajaiban alam: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Peningkatan: %s%s"
+
+msgid "River"
+msgstr "Sungai"
+
+msgid "City of %s  (population %d)"
+msgstr "Kota %s (populasi %d)"
+
+msgid "%s territory"
+msgstr "Wilayah %s"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% pertahanan unit"
+
+msgid "Impassable"
+msgstr "Tidak Dapat Dilewati"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Tidak terlihat sekarang - terakhir terlihat seperti ini"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Serang %s: beri ~%d, terima ~%d"
+
+msgid "Science"
+msgstr "Ilmu"
+
+msgid "Happiness"
+msgstr "Kebahagiaan"
+
+msgid "Malcontent"
+msgstr "Tidak puas"
+
+msgid "Culture"
+msgstr "Budaya"
+
+msgid "Faith"
+msgstr "Iman"
+
+msgid "Population"
+msgstr "Populasi"
+
+msgid "Food"
+msgstr "Makanan"
+
+msgid "Shift"
+msgstr "Shift"
+
+msgid "Space"
+msgstr "Spasi"
+
+msgid "< Del"
+msgstr "< Hapus"
+
+msgid "Recenter"
+msgstr "Pusatkan"
+
+msgid "Move a unit!"
+msgstr "Gerakkan unit!"
+
+msgid "hold to move onto a tile"
+msgstr "tahan untuk bergerak ke petak"
+
+msgid "Connecting..."
+msgstr "Menghubungkan..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Koneksi bridge terputus - mencoba lagi..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Mencari bridge di 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Tidak dapat memulai bridge: %s\nJalankan manual:  gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Memulai bridge Unciv... (dibangun ulang jika kode berubah; dapat memakan waktu)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Bridge berhenti sebelum siap. Dari %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Mesin Unciv tidak ada dalam aplikasi ini (plugin UncivBridge tidak disertakan dalam ekspor)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Mesin Unciv tidak dapat dimulai: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Mesin Unciv berhenti:\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Memulai mesin Unciv: %s... (%d dtk)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Bridge Unciv lama (protokol v%d) masih berjalan - memulai ulang dengan kode terbaru..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Bridge lama tidak dapat dihentikan; tetap digunakan. Beberapa fungsi mungkin tidak bekerja."
+
+msgid "Reconnected to the bridge."
+msgstr "Terhubung kembali ke bridge."
+
+msgid "Bridge error: %s"
+msgstr "Kesalahan bridge: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Peringatan: bridge memakai protokol v%d, klien mengharapkan v%d. Perbarui kedua repositori bersama; beberapa fungsi mungkin tidak bekerja."
+
+msgid "Connected to Unciv %s"
+msgstr "Terhubung ke Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "Tidak dapat memuat simpanan: %s"
+
+msgid "Your move."
+msgstr "Giliran Anda."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Memulai permainan baru... (peta besar memerlukan waktu lebih lama)"
+
+msgid "Starting a new game..."
+msgstr "Memulai permainan baru..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Tidak dapat memulai permainan: %s"
+
+msgid "saved "
+msgstr "disimpan "
+
+msgid "%s, turn %d"
+msgstr "%s, giliran %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Menu utama: arahkan ke kartu di atas meja."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s di peta %s %s, %s, %d AI, %d negara-kota"
+
+msgid "A random civilization"
+msgstr "Peradaban acak"
+
+msgid "Loading %s..."
+msgstr "Memuat %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Tidak dapat memuat %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Tidak dapat membaca aturan: %s"
+
+msgid "getState failed: %s"
+msgstr "getState gagal: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Ringkasan, papan info, layar besar, dan panel kembali ke posisi semula."
+
+msgid "Name your religion"
+msgstr "Beri nama agama Anda"
+
+msgid "Your religion"
+msgstr "Agama Anda"
+
+msgid "Researching %s."
+msgstr "Meneliti %s."
+
+msgid "Adopted %s."
+msgstr "Mengadopsi %s."
+
+msgid "You declared war on %s!"
+msgstr "Anda menyatakan perang kepada %s!"
+
+msgid "Unit movements"
+msgstr "Gerakan unit"
+
+msgid "Tile yields"
+msgstr "Penghasilan ubin"
+
+msgid "Worked tiles"
+msgstr "Petak dikerjakan"
+
+msgid "Resources and improvements"
+msgstr "Sumber daya dan peningkatan"
+
+msgid "Improvement pictures"
+msgstr "Gambar peningkatan"
+
+msgid "Unit icons"
+msgstr "Ikon unit"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Tahan %s pada petak untuk memindahkan unit ke sana."
+
+msgid "the trigger"
+msgstr "pemicu"
+
+msgid "the mouse button"
+msgstr "tombol tetikus"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Serang %s\nberi ~%d, terima ~%d\nklik lagi untuk menyerang"
+
+msgid "a unit"
+msgstr "unit"
+
+msgid "Can't get there"
+msgstr "Tidak bisa ke sana"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "Petak ini penuh\n%s %s sudah ada di sana"
+
+msgid "\nSwap places on the card"
+msgstr "\nTukar posisi melalui kartu"
+
+msgid "Move here"
+msgstr "Pindah ke sini"
+
+msgid "Move here: %d turns"
+msgstr "Pindah ke sini: %d giliran"
+
+msgid "\nsharing the tile with %s"
+msgstr "\nberbagi petak dengan %s"
+
+msgid "\nclick again to go"
+msgstr "\nklik lagi untuk bergerak"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s sedang menuju tujuan - berlanjut giliran berikutnya."
+
+msgid "No attack happened."
+msgstr "Tidak terjadi serangan."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s menyerang %s: memberi %d kerusakan, menerima %d."
+
+msgid "  City captured!"
+msgstr "  Kota direbut!"
+
+msgid "  %s destroyed!"
+msgstr "  %s hancur!"
+
+msgid "  Your %s was lost."
+msgstr "  %s Anda hilang."
+
+msgid "Improvement order cancelled."
+msgstr "Perintah peningkatan dibatalkan."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: membangun %s (%d giliran)."
+
+msgid "Rename %s"
+msgstr "Ganti nama %s"
+
+msgid "%s is now called %s."
+msgstr "%s kini bernama %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Beri nama %s (kosong: tanpa nama)"
+
+msgid "Renamed to %s."
+msgstr "Nama diubah menjadi %s."
+
+msgid "Name removed."
+msgstr "Nama dihapus."
+
+msgid "%s: on the way."
+msgstr "%s: dalam perjalanan."
+
+msgid "%s: coup orders given."
+msgstr "%s: perintah kudeta diberikan."
+
+msgid "See your stats breakdown"
+msgstr "Lihat rincian statistik"
+
+msgid "Selected %s."
+msgstr "%s dipilih."
+
+msgid "the unit"
+msgstr "unit"
+
+msgid "Upgraded to %s."
+msgstr "Ditingkatkan menjadi %s."
+
+msgid "Enter city screen"
+msgstr "Buka layar kota"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Tampilan kota: %s. Klik petak untuk mengerjakannya; Keluar kota (atau B / Esc) kembali ke peta."
+
+msgid "Back to the map."
+msgstr "Kembali ke peta."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "Di %s tidak ada tempat untuk %s."
+
+msgid "the city"
+msgstr "kota"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Pilih petak untuk %s (lingkaran merah), atau Esc / B untuk batal."
+
+msgid "Cancelled."
+msgstr "Dibatalkan."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Pilih petak berlingkar (Esc / B membatalkan)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: peningkatan ditempatkan di sana."
+
+msgid "Bought the tile for %d gold."
+msgstr "Petak dibeli seharga %d emas."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Beli seharga %d emas\nklik lagi untuk membeli"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Harga %d emas\n(emas tidak cukup)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Penduduk ditugaskan ulang (kunci dihapus)."
+
+msgid "Annexed."
+msgstr "Dianeksasi."
+
+msgid "%s will build %s next."
+msgstr "%s akan membangun %s berikutnya."
+
+msgid "%s added to the queue."
+msgstr "%s ditambahkan ke antrean."
+
+msgid "Bought %s."
+msgstr "%s dibeli."
+
+msgid "Sold the %s."
+msgstr "%s dijual."
+
+msgid "%s added to %s's queue."
+msgstr "%s ditambahkan ke antrean %s."
+
+msgid "Bought %s in %s."
+msgstr "%s dibeli di %s."
+
+msgid "Experience"
+msgstr "Pengalaman"
+
+msgid "%s is now %s."
+msgstr "%s kini %s."
+
+msgid "Pick something to research."
+msgstr "Pilih sesuatu untuk diteliti."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Anda dapat mengadopsi kebijakan baru - lihat tab Kebijakan di layar besar."
+
+msgid "%s is heading here"
+msgstr "%s menuju ke sini"
+
+msgid "The unit"
+msgstr "Unit"
+
+msgid "Are you sure?"
+msgstr "Anda yakin?"
+
+msgid "Click again to confirm."
+msgstr "Klik lagi untuk konfirmasi."
+
+msgid "%s: click a %stile"
+msgstr "%s: klik petak %s"
+
+msgid "highlighted "
+msgstr "yang disorot "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s - klik petak di peta (atau Batal pada kartu)."
+
+msgid "Move here: click a tile"
+msgstr "Pindah ke sini: klik petak"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Pindahkan %s - klik petak di peta (atau Batal pada kartu)."
+
+msgid "No enemies in range of %s."
+msgstr "Tidak ada musuh dalam jangkauan %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombardir dari %s: klik musuh berlingkar merah (klik kota untuk batal)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Pilih petak yang disorot (atau Batal)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s membombardir %s: %d kerusakan%s."
+
+msgid "Destroyed!"
+msgstr "Hancur!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Akhiri giliran? Tekan Akhiri giliran lagi untuk konfirmasi."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Mengakhiri giliran - pemain AI bergerak..."
+
+msgid "Turn %d"
+msgstr "Giliran %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "PERMAINAN SELESAI - %s menang (kemenangan %s)"
+
+msgid "A %s has been born!"
+msgstr "%s telah lahir!"
+
+msgid "You voted for %s."
+msgstr "Anda memilih %s."
+
+msgid "You abstained."
+msgstr "Anda abstain."
+
+msgid "ATTACK"
+msgstr "SERANG"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Giliran %d (%s)   Emas %d (%+d)   Ilmu %+d   Kebahagiaan %d"
+
+msgid "Researching: %s"
+msgstr "Riset: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - giliran %d"
+
+msgid "Game"
+msgstr "Permainan"
+
+msgid "Save game as"
+msgstr "Simpan permainan sebagai"
+
+msgid "Saved as \"%s\"."
+msgstr "Disimpan sebagai \"%s\"."
+
+msgid "Couldn't save: %s"
+msgstr "Tidak dapat menyimpan: %s"
+
+msgid "Open the options table"
+msgstr "Buka meja opsi"
+
+msgid "The tutorials will show again from the start."
+msgstr "Tutorial akan ditampilkan lagi dari awal."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Tidak dapat mengatur ulang tutorial: %s"
+
+msgid "The panels are back where they started."
+msgstr "Panel kembali ke posisi awal."
+
+msgid "The table is back in the middle of the background."
+msgstr "Meja kembali ke tengah latar."
+
+msgid "Civilopedia: %s"
+msgstr "Civilopedia: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Tidak dapat membuka Civilopedia: %s"
+
+msgid "Opened %s in your browser."
+msgstr "%s dibuka di peramban Anda."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Tugas tutorial disembunyikan - tugas berikutnya akan muncul saat tersedia."
+
+msgid "Move the table"
+msgstr "Pindahkan meja"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Memindahkan meja: arahkan ke tempat lalu %s untuk meletakkannya. %s memutarnya. %s setelah selesai."
+
+msgid "pull the trigger"
+msgstr "tekan pemicu"
+
+msgid "The right stick"
+msgstr "Stik kanan"
+
+msgid "Press A or B"
+msgstr "Tekan A atau B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Meja tetap di sini - Pengaturan > Tampilan > Kembali ke tengah mengembalikannya."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Itu bukan bagian pemandangan - arahkan ke tanah."
+
+msgid "put the table here"
+msgstr "letakkan meja di sini"
+
+msgid "turn the scenery"
+msgstr "putar pemandangan"
+
+msgid "done moving the table"
+msgstr "selesai memindahkan meja"
+
+msgid "point, click (hold: aim)"
+msgstr "arahkan, klik (tahan: bidik)"
+
+msgid "Found city"
+msgstr "Dirikan kota"
+
+msgid "Cancel typing"
+msgstr "Batalkan pengetikan"
+
+msgid "Leave the city"
+msgstr "Keluar kota"
+
+msgid "table height"
+msgstr "ketinggian meja"
+
+msgid "slide the map"
+msgstr "geser peta"
+
+msgid "turn / size the table"
+msgstr "putar / ubah ukuran meja"
+
+msgid "Next unit"
+msgstr "Unit selanjutnya"
+
+msgid "Previous unit"
+msgstr "Unit sebelumnya"
+
+msgid "zoom the map"
+msgstr "perbesar peta"
+
+msgid "table height, click: recenter"
+msgstr "ketinggian meja, klik: pusatkan"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Sesuatu belum selesai - lanjutkan. Jika berulang, alasannya ada di log."
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "SERANG %s (%s, %d/%d HP)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  perkiraan: beri %d, terima %d"
+
+msgid "Luxury"
+msgstr "Mewah"
+
+msgid "Strategic"
+msgstr "Strategis"
+
+msgid "Unit icons over the unit models"
+msgstr "Ikon unit di atas model"
+
+msgid "Overview: point and click to go there"
+msgstr "Ringkasan: arahkan dan klik untuk ke sana"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (klik untuk %s)"
+
+msgid "Overview"
+msgstr "Gambaran Umum"
+
+msgid "Stats"
+msgstr "Statistik"
+
+msgid "Trades"
+msgstr "Perdagangan"
+
+msgid "Politics"
+msgstr "Politik"
+
+msgid "Notifications"
+msgstr "Notifikasi"
+
+msgid "Spy"
+msgstr "Mata-mata"
+
+msgid "War"
+msgstr "Perang"
+
+msgid "DefensivePact"
+msgstr "Pakta pertahanan"
+
+msgid "Neutral"
+msgstr "Netral"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Ringkasan imperium - tahan pemicu di sini lalu seret   ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Belum ada mata-mata - mereka datang bersama era baru."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Mata-mata (pilih satu, lalu tujuannya)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s  (peringkat %d)  -  %s  -  %s%s"
+
+msgid "Call off the coup"
+msgstr "Batalkan kudeta"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Klik lagi: lakukan kudeta (peluang %d%%)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Lakukan kudeta (peluang %d%%)"
+
+msgid "Where to"
+msgstr "Tujuan"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Persembunyian (panggil pulang %s)"
+
+msgid "   spies: "
+msgstr "   mata-mata: "
+
+msgid "Click again (%s)"
+msgstr "Klik lagi (%s)"
+
+msgid "You have no cities yet."
+msgstr "Anda belum memiliki kota."
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "Defence"
+msgstr "Pertahanan"
+
+msgid "Open the city view"
+msgstr "Buka tampilan kota"
+
+msgid "Resistance"
+msgstr "Perlawanan"
+
+msgid "%d t"
+msgstr "%d g"
+
+msgid "Demanding %s"
+msgstr "Meminta %s"
+
+msgid " (holy)"
+msgstr " (suci)"
+
+msgid "Total %d"
+msgstr "Total %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Ubah emas menjadi ilmu: %d%%"
+
+msgid "Great person points"
+msgstr "Poin orang besar"
+
+msgid "Points"
+msgstr "Poin"
+
+msgid "Per turn"
+msgstr "Per giliran"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Pending trades"
+msgstr "Perdagangan yang akan datang"
+
+msgid "Current trades"
+msgstr "Perdagangan saat ini"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Tidak ada perdagangan aktif. Buat melalui tab Diplomasi di layar besar."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Pasokan unit: %d dari %d terpakai (dasar %d, kota %d, populasi %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Defisit %d: %d%% produksi di tiap kota. Tingkatkan pasokan atau bubarkan unit."
+
+msgid "Doing"
+msgstr "Kegiatan"
+
+msgid "Closest city"
+msgstr "Kota terdekat"
+
+msgid "Click again: %d gold"
+msgstr "Klik lagi: %d emas"
+
+msgid "%s %dg"
+msgstr "%s %d e"
+
+msgid "Show global politics"
+msgstr "Tampilkan politik global"
+
+msgid "Show diagram"
+msgstr "Tampilkan diagram"
+
+msgid "Hide city-states"
+msgstr "Sembunyikan negara-kota"
+
+msgid "Include city-states"
+msgstr "Sertakan negara-kota"
+
+msgid "   %s civilizations in the game"
+msgstr "   %s peradaban dalam permainan"
+
+msgid "Score %d"
+msgstr "Skor %d"
+
+msgid "Defeated"
+msgstr "Dikalahkan"
+
+msgid "At war with %s"
+msgstr "Berperang dengan %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Pakta pertahanan dengan %s (%d giliran)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Berteman dengan %s (%d giliran)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Mengecam %s (%d giliran)"
+
+msgid "Allied with %s"
+msgstr "Sekutu %s"
+
+msgid "Relations"
+msgstr "Hubungan"
+
+msgid "Defensive pact"
+msgstr "Pakta pertahanan"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Anda belum memiliki sumber daya mewah atau strategis."
+
+msgid "Unimproved"
+msgstr "Belum ditingkatkan"
+
+msgid "Trade offer"
+msgstr "Tawaran perdagangan"
+
+msgid "Stockpile"
+msgstr "Persediaan"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Belum ditingkatkan: petak di wilayah Anda atau negara-kota sekutu dengan sumber daya ini tetapi tanpa peningkatan yang dibutuhkan.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: kota yang merayakan atau meminta sumber daya ini untuk Hari Cinta Raja."
+
+msgid "Religions to be founded: %s"
+msgstr "Agama yang masih dapat didirikan: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Iman minimum untuk %s berikutnya: %d"
+
+msgid "Great Prophet"
+msgstr "Nabi Besar"
+
+msgid "Religious status: %s"
+msgstr "Status agama: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Belum ada agama atau panteon didirikan."
+
+msgid "%s name:"
+msgstr "Nama %s:"
+
+msgid "Founding civ:"
+msgstr "Peradaban pendiri:"
+
+msgid "Holy city:"
+msgstr "Kota suci:"
+
+msgid "Cities following this religion:"
+msgstr "Kota-kota yang memeluk agama ini: "
+
+msgid "Followers of this religion:"
+msgstr "Pemeluk agama ini:"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Location"
+msgstr "Lokasi"
+
+msgid "Unknown"
+msgstr "Tidak diketahui"
+
+msgid "Owned"
+msgstr "Dimiliki"
+
+msgid "Known"
+msgstr "Diketahui"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s   Giliran %d   %s"
+
+msgid "Current turn  |"
+msgstr "Giliran saat ini  |"
+
+msgid "General"
+msgstr "Jenderal"
+
+msgid "No notifications yet."
+msgstr "Belum ada notifikasi."
+
+msgid "Tech"
+msgstr "Teknologi"
+
+msgid "Panel"
+msgstr "Panel"
+
+msgid "Nothing to show."
+msgstr "Tidak ada yang ditampilkan."
+
+msgid "Select a unit"
+msgstr "Pilih unit"
+
+msgid "Left-click it"
+msgstr "Klik kiri"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Arahkan + pemicu kanan: kartu muncul di atasnya"
+
+msgid "Move / attack"
+msgstr "Bergerak / menyerang"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Klik petak untuk membidik, klik lagi untuk bergerak"
+
+msgid "The same with the laser"
+msgstr "Sama dengan laser"
+
+msgid "Open a city"
+msgstr "Buka kota"
+
+msgid "Click it"
+msgstr "Klik"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Arahkan + pemicu kanan: kartu melayang di atas kota"
+
+msgid "Scroll a card"
+msgstr "Gulir kartu"
+
+msgid "Mouse wheel"
+msgstr "Roda tetikus"
+
+msgid "Point at it + right stick"
+msgstr "Arahkan + stik kanan"
+
+msgid "Move the view"
+msgstr "Pindahkan tampilan"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Seret kanan memutar, roda memperbesar, WASD / seret tengah menggeser"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Genggam + stik: kiri/kanan memutar meja, atas/bawah mengubah ukuran"
+
+msgid "Table height"
+msgstr "Ketinggian meja"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Salah satu stik atas/bawah (kanan saat tidak menunjuk kartu)"
+
+msgid "Zoom the map"
+msgstr "Perbesar peta"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - atau Ctrl + roda"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Tahan pemicu + stik tangan yang sama atas/bawah"
+
+msgid "Slide the map"
+msgstr "Geser peta"
+
+msgid "WASD, or click the overview"
+msgstr "WASD atau klik ringkasan"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Tahan genggam dan seret; atau arahkan ke ringkasan + pemicu"
+
+msgid "Move a board"
+msgstr "Pindahkan papan"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Tahan pemicu pada bilah atas (atau papan info) lalu gerakkan"
+
+msgid "A, or the End turn button on the table"
+msgstr "A atau tombol Akhiri giliran di meja"
+
+msgid "Found a city"
+msgstr "Dirikan kota"
+
+msgid "Next / previous unit"
+msgstr "Unit berikutnya / sebelumnya"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Tombol Unit menganggur di meja"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Pohon teknologi, kebijakan, diplomasi"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Kartu pergelangan atau tombol di papan"
+
+msgid "Empire overview"
+msgstr "Ringkasan imperium"
+
+msgid "Always up, off to your right"
+msgstr "Selalu terbuka di kanan Anda"
+
+msgid "The Settings button on the table"
+msgstr "Tombol Pengaturan di meja"
+
+msgid "The Civilopedia button on the table"
+msgstr "Tombol Civilopedia di meja"
+
+msgid "Close / deselect"
+msgstr "Tutup / batal pilih"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B menutup papan ketik dan tampilan kota"
+
+msgid "Recenter the table"
+msgstr "Pusatkan meja"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Tekan stik kiri atau tombol Pusatkan"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Pengaturan - tahan pemicu di sini lalu seret   ====="
+
+msgid "Tables"
+msgstr "Meja"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Pindahkan meja ke mana saja dalam latar, berguna untuk latar besar seperti peta hasil konversi. "
+
+msgid "%d%% translated"
+msgstr "%d%% diterjemahkan"
+
+msgid "Notification log keeps"
+msgstr "Riwayat notifikasi menyimpan"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Berapa giliran pesan disimpan tab Notifikasi."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Tutorial Unciv: pesan saat ada hal baru dan kartu tugas untuk langkah berikutnya."
+
+msgid "Reset"
+msgstr "Atur ulang"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Efek suara Unciv dibaca dari folder Unciv di sebelah ini. Letakkan berkas sendiri dengan nama sama di ~/.unciv-vr/Sounds untuk menggantinya."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d suara ditemukan. Suara serangan tiap unit berasal dari aturan, seperti Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Tidak ada suara ditemukan. Lokasinya di android/assets/sounds milik Unciv, di sebelah folder ini."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Papan daftar dari data permainan. Dalam VR, papan berada di sekitar meja "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(tahan pemicu pada bilah atas untuk memindahkan); di desktop, berada di sisi kiri."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Panel adalah folder dengan panel.json - lihat panels/README.md. Letakkan milik Anda di %s."
+
+msgid "Put them back"
+msgstr "Kembalikan posisi"
+
+msgid "(by %s)"
+msgstr "(oleh %s)"
+
+msgid "Every turn"
+msgstr "Setiap giliran"
+
+msgid "Every %d turns"
+msgstr "Setiap %d giliran"
+
+msgid "not connected"
+msgstr "tidak terhubung"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (klien mengharapkan v%s)"
+
+msgid "Tilesets"
+msgstr "Set petak"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR memakai Mozilla Public License 2.0, seperti Unciv. Ikon berasal dari Unciv, dibuat banyak penulis, "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "dengan lisensi CC BY / CC BY-SA / CC0 (lihat CREDITS.md dan docs/Credits.md Unciv). Model petak, unit, latar "
+
+msgid "and table models are Unciv VR's own."
+msgstr "dan meja adalah karya Unciv VR sendiri."
+
+msgid "%s speed"
+msgstr "Kecepatan %s"
+
+msgid "%s map"
+msgstr "Peta %s"
+
+msgid "%s, turn %s"
+msgstr "%s, giliran %s"
+
+msgid "by "
+msgstr "oleh "
+
+msgid "  -  from %s"
+msgstr "  -  dari %s"
+
+msgid "Move unit"
+msgstr "Gerakkan unit"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Arahkan ke unit Anda dan tekan pemicu, lalu arahkan ke petak dan tekan dua kali: untuk membidik lalu bergerak."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Klik unit Anda, lalu klik petak dua kali: untuk membidik lalu bergerak."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Pilih pemukim dan tekan Dirikan kota pada kartunya (atau B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Pilih pemukim dan tekan Dirikan kota pada kartunya (atau F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Arahkan ke kota Anda dan tekan pemicu, lalu tekan Tampilan kota pada kartunya."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Klik kota Anda, lalu tekan Tampilan kota pada kartunya."
+
+msgid "Pick technology"
+msgstr "Pilih teknologi"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Buka pohon teknologi dari kartu pergelangan dan pilih riset."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Buka pohon teknologi (T) dan pilih riset."
+
+msgid "Pick construction"
+msgstr "Pilih konstruksi"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Buka kota Anda dan pilih pembangunan dari kartunya."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Klik kota Anda dan pilih pembangunan dari kartunya."
+
+msgid "Pass a turn"
+msgstr "Lewati giliran"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Beri perintah pada unit, lalu tekan Akhiri giliran di meja (atau A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Beri perintah pada unit, lalu tekan Akhiri giliran (atau Spasi)."
+
+msgid "Reassign worked tiles"
+msgstr "Atur ulang petak dikerjakan"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Dalam tampilan kota, arahkan ke petak dan tekan pemicu untuk mulai atau berhenti mengerjakannya."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "Dalam tampilan kota, klik petak untuk mulai atau berhenti mengerjakannya."
+
+msgid "Press Settings on the table."
+msgstr "Tekan Pengaturan di meja."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Tekan Pengaturan di meja (atau O)."
+
+msgid "Construct an improvement"
+msgstr "Bangun peningkatan"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Buat pekerja, pindahkan ke dataran atau padang rumput, tekan Bangun peningkatan dan pilih Pertanian. Biarkan hingga selesai."
+
+msgid "Move an air unit"
+msgstr "Pindahkan unit udara"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Pilih unit udara dan pindahkan ke kota Anda lainnya dalam jangkauan."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Lihat ringkasan imperium di kanan dan buka tab Statistik."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Buka ringkasan imperium (E) dan tab Statistik."
+
+msgid "Tutorial task"
+msgstr "Tugas tutorial"
+
+msgid "Hide"
+msgstr "Sembunyikan"
+
+msgid "Defence %d"
+msgstr "Pertahanan %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% pertahanan unit"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (dijarah)"
+
+msgid ", worked by %s"
+msgstr ", dikerjakan oleh %s"
+
+msgid "  (click the red button again)"
+msgstr "  (klik tombol merah lagi)"
+
+msgid "  -  %d of %d"
+msgstr "  -  %d dari %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s giliran)"
+
+msgid "     Science %+d per turn"
+msgstr "     Ilmu %+d per giliran"
+
+msgid "  (city-state)"
+msgstr "  (negara-kota)"
+
+msgid "   max %d turns"
+msgstr "   maksimal %d giliran"
+
+msgid " (about %d gold's worth)"
+msgstr " (senilai sekitar %d emas)"
+
+msgid " (you have %d)"
+msgstr " (Anda punya %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (sejauh ini: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (usang)"
+
+msgid " (obsolete)"
+msgstr " (usang)"
+
+msgid "abstained"
+msgstr "abstain"
+
+msgid "researched"
+msgstr "diteliti"
+
+msgid "adopted"
+msgstr "diadopsi"
+
+msgid "gold"
+msgstr "emas"
+
+msgid "faith"
+msgstr "iman"
+
+msgid "  - complete!"
+msgstr "  - selesai!"
+
+msgid "complete"
+msgstr "selesai"
+
+msgid "worked"
+msgstr "dikerjakan"
+
+msgid "on"
+msgstr "aktif"
+
+msgid "off"
+msgstr "nonaktif"
+
+msgid "click"
+msgstr "klik"
+
+msgid "improvement"
+msgstr "peningkatan"
+
+msgid "done"
+msgstr "selesai"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Musuh dalam jangkauan (lingkaran merah): %d. Klik untuk membidik."
+
+msgid "Idle citizens: %d"
+msgstr "Penduduk menganggur: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombardir - musuh dalam jangkauan: %d (kekuatan %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Pesan berikutnya: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Tokoh besar gratis yang dapat dipilih: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Teknologi gratis yang dapat dipilih: %d. Pilih yang disorot."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Kepercayaan yang masih harus dipilih: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv menyediakan pesan, nama, dan deskripsi permainan. Beberapa bahasa juga menerjemahkan antarmuka Unciv VR. Terjemahan yang belum ada tetap dalam bahasa Inggris."
+
+msgid "Units ({count})"
+msgstr "Unit ({count})"
+
+msgid "Cities ({count})"
+msgstr "Kota ({count})"
+
+msgid "Military"
+msgstr "Militer"
+
+msgid "Military ({count})"
+msgstr "Militer ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Peringkat ({count})"
+
+msgid "Waiting for orders"
+msgstr "Menunggu perintah"
+
+msgid "  -  promotion ready"
+msgstr "  - promosi tersedia"
+
+msgid "  (capital)"
+msgstr "  (ibu kota)"
+
+msgid "  (puppet)"
+msgstr "  (boneka)"
+
+msgid "  (razing)"
+msgstr "  (diratakan)"
+
+msgid "Nothing to build"
+msgstr "Tidak ada pembangunan"
+
+msgid "turn"
+msgstr "giliran"
+
+msgid "turns"
+msgstr "giliran"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - Era {era}"
+
+msgid "{score} pts"
+msgstr "{score} poin"
+
+msgid "No units yet."
+msgstr "Belum ada unit."
+
+msgid "No cities yet."
+msgstr "Belum ada kota."
+
+msgid "No military units yet."
+msgstr "Belum ada unit militer."
+
+msgid "No civilizations met yet."
+msgstr "Belum bertemu peradaban lain."
+
+msgid "No wonders to show yet."
+msgstr "Belum ada keajaiban untuk ditampilkan."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Semua unit dan kegiatannya, yang menunggu perintah dahulu. Klik untuk memilih."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Semua kota, ibu kota dahulu, dengan ukuran dan produksinya. Klik untuk membuka kartu."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Semua unit militer dengan tindakan, gerakan, dan kesehatan. Klik untuk memilih."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Peringkat peradaban yang dikenal berdasarkan skor total."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Ringkasan keajaiban Unciv per era: selesai, sedang dibangun, atau belum dibangun. Klik yang selesai untuk melihatnya."
+
+msgid "In the Hall of the Mountain King"
+msgstr "Di Balairung Raja Gunung"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Balairung bawah tanah Raja Troll di pegunungan Dovre, diterangi perapian dan urat magma berpijar"
+
+msgid "Mountains and clouds"
+msgstr "Gunung dan awan"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Padang rumput dikelilingi puncak low-poly, pepohonan, dan awan bergerak"
+
+msgid "Floating in space"
+msgstr "Melayang di angkasa"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Meja melayang di antara bintang dekat planet bercincin"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Ruangan gelap sederhana"
+
+msgid "Webb Deep Field"
+msgstr "Medan Dalam Webb"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Meja melayang di ruang angkasa dalam, dikelilingi Medan Dalam Pertama Teleskop James Webb"
+
+msgid "Ornate oak"
+msgstr "Ek berornamen"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Ek dengan tatahan kenari dan holly, tepi ukiran tali, dan alas berkaki melengkung"
+
+msgid "Plain wood"
+msgstr "Kayu sederhana"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Papan kayu gelap bundar di atas tiang meruncing"
+
+msgid "Low poly"
+msgstr "Low poly"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Medan low-poly dengan satu warna polos per bidang"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Antarmuka diterjemahkan; konten permainan memakai bahasa Inggris."
+
+msgid "Turns: %s"
+msgstr "Giliran: %s"
+
+msgid "Latin keyboard"
+msgstr "Papan ketik Latin"
+
+msgid "Arabic keyboard"
+msgstr "Papan ketik Arab"
+
+msgid "Hebrew keyboard"
+msgstr "Papan ketik Ibrani"
+
+msgid "OK"
+msgstr "OKE"
+
+msgid "Default"
+msgstr "Bawaan"
+
+msgid "Manual"
+msgstr "Manual"
+

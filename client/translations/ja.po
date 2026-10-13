@@ -1,0 +1,3118 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv; new translations are AI-assisted.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Map replay"
+msgstr "マップのリプレイ"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "マップ全体が見えるように縮小します。ターンの再生に合わせて領土と都市の位置が更新されます。"
+
+msgid "Start replay"
+msgstr "リプレイ開始"
+
+msgid "Return to game"
+msgstr "ゲームに戻る"
+
+msgid "Turn %d of %d"
+msgstr "ターン %d / %d"
+
+msgid "Close replay"
+msgstr "リプレイを閉じる"
+
+msgid "Turn %d / %d"
+msgstr "ターン %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "このPCに保存され、次回も使われます"
+
+msgid "Move the table..."
+msgstr "テーブルを移動…"
+
+msgid "Back to the middle"
+msgstr "中央に戻す"
+
+msgid "Your controllers"
+msgstr "コントローラー"
+
+msgid "Show button labels"
+msgstr "ボタンの説明を表示"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "各コントローラーの横に、ボタンの現在の機能を示すラベルを表示します。"
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "右トリガーは離したときにクリックします。押し続けてズームしても、何かをクリックすることはありません。"
+
+msgid "Look"
+msgstr "外観"
+
+msgid "Gameplay"
+msgstr "一般"
+
+msgid "Automation"
+msgstr "自動化"
+
+msgid "Sound"
+msgstr "サウンド"
+
+msgid "Panels"
+msgstr "パネル"
+
+msgid "Controls"
+msgstr "操作"
+
+msgid "Game and saves"
+msgstr "ゲームとセーブ"
+
+msgid "About"
+msgstr "Uncivについて"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Around the table"
+msgstr "テーブルの周囲"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "背景やテーブルはフォルダーを追加して拡張できます。backgrounds/README.md と tables/README.md を参照してください。"
+
+msgid "Background"
+msgstr "背景"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "テーブルの周囲の空、光、風景です。"
+
+msgid "Table"
+msgstr "テーブル"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "マップを載せる台です。VRでは脚が指定した高さに伸びます。"
+
+msgid "Where the table stands"
+msgstr "テーブルの位置"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "背景内の好きな場所にテーブルを移動できます。変換したマップなどの広い背景で便利です。位置は背景ごとに記憶されます。"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "背景内の好きな場所にテーブルを移動できます。広い背景で便利です。現在は移動済みです。「中央に戻す」で背景の初期位置に戻ります。"
+
+msgid "Remembered for this background."
+msgstr "この背景用に位置を記憶します。"
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "ここに移動済みです。「中央に戻す」で背景の初期位置に戻ります。"
+
+msgid "The map"
+msgstr "マップ"
+
+msgid "Tiles"
+msgstr "タイル"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "地形、遺産、資源、施設の見た目です。タイルセットはUncivと同じ仕組みです。tilesets/README.md を参照してください。"
+
+msgid "Plain coloured hexes"
+msgstr "単色の六角形"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Uncivの地形色を使った平らな六角形です。モデルは使いません。"
+
+msgid "Units"
+msgstr "ユニット"
+
+msgid "Same as the tiles"
+msgstr "タイルと同じ"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "上のタイルセットに付属するユニットモデルを使います。不足分は代替セットから補います。"
+
+msgid "No models"
+msgstr "モデルなし"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Uncivのユニットアイコンを使った丸い駒です。"
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "ユニットの見た目（UncivのUnitset）です。pieces/Units にモデルを持つタイルセットを使えます。"
+
+msgid "Visual hints"
+msgstr "視覚的な補助表示"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Uncivのマップ表示です。概要の横にある丸いボタンでも切り替えられます。"
+
+msgid "Show unit movement arrows"
+msgstr "ユニットの動きを矢印で表示"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "ユニットの移動先と、誰が誰を攻撃したかを示します。"
+
+msgid "Show tile yields"
+msgstr "タイルの産出量を表示"
+
+msgid "Food, production, gold... on every tile."
+msgstr "各タイルの食料、生産力、ゴールドなどを表示します。"
+
+msgid "Show worked tiles"
+msgstr "市民の配置を表示"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "都市の市民が働いているタイルを表示します。"
+
+msgid "Show resources and improvements"
+msgstr "資源とタイル整備を表示"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "タイルに資源と施設のアイコンを表示します。"
+
+msgid "Show improvement pictures"
+msgstr "施設のモデルを表示"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "農場、鉱山、道路などをモデルで表示します。"
+
+msgid "Show unit icons"
+msgstr "ユニットアイコンを表示"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "各ユニットモデルの上に小さなUncivアイコンを表示します。"
+
+msgid "Language"
+msgstr "言語"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "ゲームのメッセージ、名前、説明にはUncivの翻訳を使います。このフロントエンド独自のメニューはまだ英語です。"
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Uncivに翻訳がない文章は英語で表示されます。"
+
+msgid "Turns"
+msgstr "ターン"
+
+msgid "Check for idle units"
+msgstr "動かないユニットの確認"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "「ターン終了」を押すと、まず命令を受けていない各ユニットを選択します。"
+
+msgid "Auto unit cycle"
+msgstr "ユニットを自動で切り替える"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "ユニットに命令を出すと、次の命令待ちユニットを選択します。"
+
+msgid "Cycle idle units by distance"
+msgstr "待機ユニットを距離順に選択"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "次／前のユニットを選ぶ際、固定順ではなく近くのユニットに移ります。"
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "ターン終了時に確認する"
+
+msgid "End turn needs a second press."
+msgstr "ターンを終えるには、もう一度押す必要があります。"
+
+msgid "Order trade offers by amount"
+msgstr "取引オファーを金額で注文"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "交易のテーブルで、大きな取引を先に表示します。"
+
+msgid "Show suggested city locations"
+msgstr "都市建設の推奨地点を表示"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "開拓者を選ぶと、Uncivが推奨する近くの都市建設地点を3か所表示します。"
+
+msgid "Tutorials"
+msgstr "チュートリアル"
+
+msgid "Show tutorials"
+msgstr "チュートリアルを表示"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "チュートリアルのメッセージとタスクカードです。各チュートリアルはシヴィロペディアにもあります。"
+
+msgid "Reset tutorials"
+msgstr "チュートリアルの進捗をリセット"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "初めて遊ぶときのように、すべてのチュートリアルとタスクを再表示します。"
+
+msgid "Other players"
+msgstr "他のプレイヤー"
+
+msgid "Other players' turns"
+msgstr "他のプレイヤーのターン"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "自分のターンを終えた後に、他のプレイヤーの行動をどのように表示するかを選びます。"
+
+msgid "Show the moves and battles I can see"
+msgstr "見えている移動と戦闘を表示"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "順番に再生します。戦闘が起きる場所へ視点が移動します。"
+
+msgid "Show them, fast"
+msgstr "高速で表示"
+
+msgid "The same, at two and a half times the speed."
+msgstr "同じ内容を2.5倍速で表示します。"
+
+msgid "Don't show them"
+msgstr "表示しない"
+
+msgid "The map just updates."
+msgstr "マップだけを更新します。"
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "自動化されたユニットと都市に関するUncivの設定です。"
+
+msgid "Automated and exploring units move"
+msgstr "自動化・探索中のユニットの移動時期"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "自動化、探索、複数ターンの移動を行うユニットが動くタイミングです。"
+
+msgid "When I end my turn"
+msgstr "自分のターン終了時"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "探索、自動化された労働者、長距離移動中のユニットはターン終了時に動きます。"
+
+msgid "At the start of my turn"
+msgstr "自分のターン開始時"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "自分のターン開始時に動きます（Uncivの自動化ユニットの移動設定）。"
+
+msgid "Auto-assign city production"
+msgstr "都市生産の自動割り当て"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "生産を完了した都市が、次の生産物を自動で選びます。"
+
+msgid "Auto-build roads"
+msgstr "道の自動建設"
+
+msgid "Automated workers build roads between your cities."
+msgstr "自動化された労働者が都市間に道路を建設します。"
+
+msgid "Automated workers replace improvements"
+msgstr "自動化労働者がタイル整備を置き換える"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "自動化された労働者が施設をより良いものに置き換えられます。"
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "自動化された労働者による植生の除去を禁止"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "自動化された労働者は森林、ジャングル、湿原を除去しません。"
+
+msgid "Automated units can upgrade"
+msgstr "自動化ユニットがアップグレードできる"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "自動化された軍事ユニットは、資金があれば自動でアップグレードします。"
+
+msgid "Automated units choose promotions"
+msgstr "自動化ユニットが昇進を選択する"
+
+msgid "Automated units pick their own promotions."
+msgstr "自動化されたユニットが昇進を自分で選びます。"
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "ターン終了時都市が自動で砲撃する"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "まだ攻撃できる都市は、ターン終了時に射程内の敵を攻撃します。"
+
+msgid "Auto-assign specialists in new cities"
+msgstr "新しい都市に専門家を自動配置"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "新しい都市が市民を専門家スロットに自動で配置します。"
+
+msgid "Sound effects"
+msgstr "効果音"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "ボタン、移動、戦闘などの音です。VRではテーブル上の出来事が起きた場所から聞こえます。"
+
+msgid "City ambience"
+msgstr "都市の環境音"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "都市画面で繰り返し流れる音です。Uncivには時代ごとの環境音があります。"
+
+msgid "Your own and mods'"
+msgstr "追加したものとMOD"
+
+msgid "None yet."
+msgstr "まだありません。"
+
+msgid "Put the panels back"
+msgstr "パネルの位置を戻す"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "各パネルを panel.json で指定された位置に戻します。"
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "VRではヘッドセットのランタイムが描画するコントローラーを表示します。SteamVRは対応しています。非対応の場合は簡易モデルを使います。"
+
+msgid "Boards"
+msgstr "ボード"
+
+msgid "Put the boards back"
+msgstr "ボードの位置を戻す"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "概要、情報、大画面、都市、帝国概要、この設定ボードを初期位置に戻します。"
+
+msgid "This game"
+msgstr "このゲーム"
+
+msgid "Save game"
+msgstr "セーブ"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "入力した名前でブリッジのセーブフォルダーに保存します。"
+
+msgid "Save..."
+msgstr "保存…"
+
+msgid "Main menu"
+msgstr "メインメニュー"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "メインメニューに戻ります。ゲームは開いたままで、「再開」で戻れます。"
+
+msgid "Saves"
+msgstr "セーブデータ"
+
+msgid "Autosave"
+msgstr "自動保存"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "「Autosave」として保存する間隔です。メインメニューの「続ける」で読み込めます。"
+
+msgid "Save folder"
+msgstr "セーブフォルダー"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Civilization Vをオープンソースで再現したUncivを、VRのテーブルで遊ぶフロントエンドです。"
+
+msgid "Bridge protocol"
+msgstr "ブリッジのプロトコル"
+
+msgid "Mods"
+msgstr "MOD"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "自作のタイルセット、背景、テーブル"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "フォルダーをここに置くと、「外観」に表示されます。"
+
+msgid "Settings file"
+msgstr "設定ファイル"
+
+msgid "Licence and credits"
+msgstr "ライセンスとクレジット"
+
+msgid "Desktop"
+msgstr "デスクトップ"
+
+msgid "Off"
+msgstr "オフ"
+
+msgid "On"
+msgstr "オン"
+
+msgid "End turn"
+msgstr "ターン終了"
+
+msgid "< Prev"
+msgstr "< 前"
+
+msgid "Idle unit"
+msgstr "待機ユニット"
+
+msgid "Next >"
+msgstr "次 >"
+
+msgid "Research"
+msgstr "研究"
+
+msgid "Recenter table"
+msgstr "テーブルを中央に戻す"
+
+msgid "No unit selected"
+msgstr "ユニット未選択"
+
+msgid "Point at a unit or city to select it."
+msgstr "ユニットや都市を指して選択してください。"
+
+msgid "Fortified"
+msgstr "防御中"
+
+msgid "Sleeping"
+msgstr "休眠中"
+
+msgid "Automated"
+msgstr "自動行動中"
+
+msgid "On its way"
+msgstr "移動中"
+
+msgid "Embarked"
+msgstr "乗船中"
+
+msgid "Strength"
+msgstr "戦闘力"
+
+msgid "RangedStrength"
+msgstr "遠隔攻撃力"
+
+msgid "Range"
+msgstr "範囲"
+
+msgid "Movement"
+msgstr "移動"
+
+msgid "Rename"
+msgstr "改名"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "このターンは待機します（再度「スキップ」で命令できます）。"
+
+msgid "Health"
+msgstr "HP"
+
+msgid "XP"
+msgstr "経験値"
+
+msgid "Promote!  Choose a promotion"
+msgstr "昇進可能！昇進を選択"
+
+msgid "Promote"
+msgstr "昇進"
+
+msgid "Building %s"
+msgstr "%sを建設中"
+
+msgid "%d turns left"
+msgstr "残り%dターン"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "射程内の敵：%d（赤い輪）。クリックして狙ってください"
+
+msgid "Actions"
+msgstr "行動"
+
+msgid "Pillage"
+msgstr "略奪"
+
+msgid "Sure? Click again"
+msgstr "実行しますか？再クリック"
+
+msgid "click the red button again"
+msgstr "赤いボタンをもう一度クリック"
+
+msgid "Build here"
+msgstr "ここに建設"
+
+msgid "Stop"
+msgstr "中止"
+
+msgid "%d turns"
+msgstr "%dターン"
+
+msgid "Population %d"
+msgstr "人口 %d"
+
+msgid "Defense %d"
+msgstr "防御力 %d"
+
+msgid "Health %d/%d"
+msgstr "体力 %d/%d"
+
+msgid "%d idle citizens"
+msgstr "未配置の市民：%d"
+
+msgid "Puppet"
+msgstr "傀儡化"
+
+msgid "Starving! %d turns"
+msgstr "飢餓！%dターン"
+
+msgid "Grows in %d turns"
+msgstr "%dターン後に成長"
+
+msgid "Food -> production"
+msgstr "食料 → 生産力"
+
+msgid "Not growing"
+msgstr "成長停止中"
+
+msgid "Border in %d turns"
+msgstr "%dターン後に国境拡大"
+
+msgid "Borders stopped"
+msgstr "国境拡大停止中"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "都市画面 — タイル、市民、生産キュー、購入"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "この都市は破壊中です。毎ターン人口が減り、最後には消滅します。都市画面で破壊を中止できます。"
+
+msgid "Producing"
+msgstr "生産中"
+
+msgid "Producing nothing - pick something below"
+msgstr "生産物なし — 下から選択してください"
+
+msgid "Buildings"
+msgstr "建物"
+
+msgid "Wonders"
+msgstr "遺産"
+
+msgid "Other"
+msgstr "その他"
+
+msgid "Gold"
+msgstr "ゴールド"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "%dゴールドで購入（所持：%d）"
+
+msgid "Promote %s"
+msgstr "%sを昇進"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "経験値 %d/%d。昇進を1つ選択してください。%s"
+
+msgid "Has: %s"
+msgstr "取得済み：%s"
+
+msgid "No promotion available right now."
+msgstr "現在選べる昇進はありません。"
+
+msgid "Tutorial"
+msgstr "チュートリアル"
+
+msgid "%d of %d"
+msgstr "%d / %d"
+
+msgid "%d more messages after this one"
+msgstr "この後のメッセージ：%d件"
+
+msgid "%s gives:"
+msgstr "%sから："
+
+msgid "They"
+msgstr "相手"
+
+msgid "You give:"
+msgstr "こちらから："
+
+msgid "%d votes  %s"
+msgstr "%d票  %s"
+
+msgid "voted for %s"
+msgstr "%sに投票"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "チュートリアルは「設定 > 一般」で無効にできます。すべてシヴィロペディアにもあります。"
+
+msgid " (%d turns)"
+msgstr " （%dターン）"
+
+msgid "Choose a free great person"
+msgstr "無償でもらう偉人を選択"
+
+msgid "You have %d free great people to pick."
+msgstr "無料の偉人を%d人選べます。"
+
+msgid "Vote for world leader"
+msgstr "世界の指導者に投票"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "誰が世界のリーダーにふさわしく外交的に勝利するべきなのかを選択"
+
+msgid "Vote for %s"
+msgstr "%sに投票"
+
+msgid "Abstain"
+msgstr "棄権する"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "研究していません — 技術を選択！"
+
+msgid "Researching %s"
+msgstr "%sを研究中"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "無料の技術を%d個選べます。強調表示された技術を選んでください。"
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "科学力 毎ターン%+d。先の技術を選ぶと、前提技術がキューに追加されます。"
+
+msgid "%s turns"
+msgstr "%sターン"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "前回のゲームを続けるか、新しいゲームを始めます。"
+
+msgid "Resume"
+msgstr "再開"
+
+msgid "Continue"
+msgstr "続ける"
+
+msgid "Quick start"
+msgstr "クイックスタート"
+
+msgid "New game..."
+msgstr "新しいゲーム…"
+
+msgid "Load game..."
+msgstr "ゲームをロード…"
+
+msgid "Civilopedia"
+msgstr "シヴィロペディア"
+
+msgid "Quit"
+msgstr "終了"
+
+msgid "New game"
+msgstr "新しいゲーム"
+
+msgid "You"
+msgstr "あなた"
+
+msgid "World"
+msgstr "世界"
+
+msgid "Rules"
+msgstr "ルール"
+
+msgid "Random"
+msgstr "ランダム"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s — %s %sマップ、%s、AI %d、都市国家 %d"
+
+msgid "%s, led by %s"
+msgstr "%s、指導者：%s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "ランダム：ゲーム開始時に文明が決まります。"
+
+msgid "Your civilization"
+msgstr "自分の文明"
+
+msgid "Map size"
+msgstr "マップサイズ"
+
+msgid "Map type"
+msgstr "マップの種類"
+
+msgid "Shape"
+msgstr "形状"
+
+msgid "Resources"
+msgstr "資源"
+
+msgid "Options"
+msgstr "設定"
+
+msgid "No ancient ruins"
+msgstr "古代遺跡なし"
+
+msgid "No natural wonders"
+msgstr "自然遺産なし"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "大きなマップはテーブルの下をスライドします。グリップを押してドラッグするか、奥側の概要を使ってください。"
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kingsでは宗教、諜報活動、文明、ユニット、建造物が追加されます。"
+
+msgid "Difficulty"
+msgstr "難易度"
+
+msgid "Game speed"
+msgstr "ゲーム速度"
+
+msgid "Starting era"
+msgstr "開始時代"
+
+msgid "AI players"
+msgstr "AIプレイヤー"
+
+msgid "City-states"
+msgstr "都市国家"
+
+msgid "Victory types (none picked = all)"
+msgstr "勝利条件（未選択ならすべて）"
+
+msgid "No barbarians"
+msgstr "蛮族なし"
+
+msgid "Raging barbarians"
+msgstr "凶暴な蛮族"
+
+msgid "One-city challenge"
+msgstr "1都市チャレンジ"
+
+msgid "No city razing"
+msgstr "都市の破壊なし"
+
+msgid "Nuclear weapons"
+msgstr "核兵器"
+
+msgid "Espionage"
+msgstr "諜報"
+
+msgid "< Back"
+msgstr "< 戻る"
+
+msgid "Start game"
+msgstr "ゲーム開始"
+
+msgid "Load game"
+msgstr "ロード"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Unciv VRフォルダーのセーブデータです。新しい順に表示します。"
+
+msgid "Backgrounds"
+msgstr "背景"
+
+msgid "Mountains"
+msgstr "山々"
+
+msgid "Scenery"
+msgstr "風景"
+
+msgid "Technologies"
+msgstr "テクノロジー"
+
+msgid "Policies"
+msgstr "社会制度"
+
+msgid "Diplomacy"
+msgstr "外交"
+
+msgid "Religion"
+msgstr "宗教"
+
+msgid "Victory"
+msgstr "勝利"
+
+msgid "Declare war"
+msgstr "宣戦布告"
+
+msgid "Score"
+msgstr "スコア"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "まだ履歴がありません。ターンが進むとグラフが作られます。"
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "=====   ここでトリガーを押してドラッグすると画面を移動できます   ====="
+
+msgid "Pause"
+msgstr "一時停止"
+
+msgid "Play"
+msgstr "再生"
+
+msgid "Loading the technology tree..."
+msgstr "技術ツリーを読み込み中…"
+
+msgid "Pick something to research!"
+msgstr "研究する技術を選択！"
+
+msgid "Science %+d per turn"
+msgstr "科学力 毎ターン%+d"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "技術をクリックすると効果や解禁される生産物が表示されます。技術の下の小さなアイコンは解禁内容です。"
+
+msgid "needs science"
+msgstr "科学力が必要"
+
+msgid "researching now, "
+msgstr "現在研究中、"
+
+msgid "%s   (%s, %d science)"
+msgstr "%s （%s、科学力 %d）"
+
+msgid "Loading policies..."
+msgstr "社会制度を読み込み中…"
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "文化力 %d / %d （毎ターン%+d）%s"
+
+msgid "You can adopt a policy!"
+msgstr "社会制度を採用できます！"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "アイコンをクリックすると社会制度を確認できます。まず分野の大きなアイコンで解禁し、その中の制度を採用してください。"
+
+msgid "ready to adopt"
+msgstr "採用可能"
+
+msgid "needs more culture"
+msgstr "文化力が不足"
+
+msgid "not available yet"
+msgstr "まだ利用できません"
+
+msgid "(no special effects)"
+msgstr "（特殊効果なし）"
+
+msgid "Adopt"
+msgstr "採用"
+
+msgid "Your score: %d"
+msgstr "自分のスコア：%d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "まだ誰とも出会っていません。探索して他の文明や都市国家を見つけてください。"
+
+msgid "Loading..."
+msgstr "ロード中..."
+
+msgid "   (city-state)"
+msgstr " （都市国家）"
+
+msgid "Destroyed"
+msgstr "滅亡"
+
+msgid "AT WAR"
+msgstr "戦争中"
+
+msgid "At peace"
+msgstr "和平中"
+
+msgid "  (treaty: %d more turns)"
+msgstr " （条約：残り%dターン）"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s、%s — 影響力 %d%s"
+
+msgid "   allied with %s"
+msgstr " %sと同盟"
+
+msgid "Feels %s about you%s"
+msgstr "こちらへの態度：%s%s"
+
+msgid "Score %d    Cities %d"
+msgstr "スコア %d    都市 %d"
+
+msgid "Diplomacy..."
+msgstr "外交…"
+
+msgid "Trade"
+msgstr "取引"
+
+msgid "Offer peace"
+msgstr "和平を提案"
+
+msgid "Click again to declare war on %s"
+msgstr "もう一度クリックすると%sに宣戦布告"
+
+msgid "< All civilizations"
+msgstr "< すべての文明"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr " （あと%dターンは和平交渉不可）"
+
+msgid "Type: %s    Personality: %s"
+msgstr "種類：%s    性格：%s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "関係：%s（影響力 %d）"
+
+msgid "Ally: %s with %d influence"
+msgstr "同盟国：%s、影響力 %d"
+
+msgid "Protected by: "
+msgstr "保護国："
+
+msgid "Relationship changes in another %d turns"
+msgstr "あと%dターンで関係が変化"
+
+msgid "Resources: "
+msgstr "資源："
+
+msgid "When Friends:"
+msgstr "友好国になった場合:"
+
+msgid "When Allies:"
+msgstr "同盟国になった場合:"
+
+msgid "You have a declaration of friendship."
+msgstr "友好宣言を結んでいます。"
+
+msgid "You have denounced them."
+msgstr "この文明を非難しています。"
+
+msgid "Go to on map"
+msgstr "マップに移動"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "%dゴールドを贈る（影響力+%d）"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "%sを%sに建設（200ゴールド）"
+
+msgid "Revoke protection"
+msgstr "保護を撤回"
+
+msgid "Click again: revoke protection?"
+msgstr "再クリック：保護を撤回しますか？"
+
+msgid "Pledge to protect"
+msgstr "保護を誓約"
+
+msgid "Click again: declare protection?"
+msgstr "再クリック：保護を宣言しますか？"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "%dゴールドを要求（影響力-15）"
+
+msgid "Take worker (-50 influence)"
+msgstr "労働者を要求（影響力-50）"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "政略結婚（%dゴールド）"
+
+msgid "Click again: they join your empire"
+msgstr "再クリック：自国に併合します"
+
+msgid "Negotiate peace"
+msgstr "和平を交渉"
+
+msgid "Click again: make peace?"
+msgstr "再クリック：和平を結びますか？"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "友好宣言を提案済み — 返答待ち"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "友好宣言を提案（30ターン）"
+
+msgid "Denounce (30 turns)"
+msgstr "非難（30ターン）"
+
+msgid "Click again: denounce %s?"
+msgstr "再クリック：%sを非難しますか？"
+
+msgid "Click again to declare war"
+msgstr "再クリックで宣戦布告"
+
+msgid "Demands:"
+msgstr "要求："
+
+msgid "  (asked)"
+msgstr " （要求済み）"
+
+msgid "  (they agreed)"
+msgstr " （承諾済み）"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "貢ぎ物への応諾度（ゴールドは0以上、労働者は30以上かつ人口4以上の都市が必要）："
+
+msgid "  (+%d influence)"
+msgstr " （影響力+%d）"
+
+msgid "  %d turns remaining"
+msgstr " 残り%dターン"
+
+msgid "Unforgivable"
+msgstr "宿敵"
+
+msgid "Enemy"
+msgstr "敵対"
+
+msgid "Afraid"
+msgstr "恐れている"
+
+msgid "Competitor"
+msgstr "競争相手"
+
+msgid "Favorable"
+msgstr "好ましい"
+
+msgid "Friend"
+msgstr "友好"
+
+msgid "Ally"
+msgstr "同盟"
+
+msgid "Pantheon"
+msgstr "パンテオン"
+
+msgid "Founder"
+msgstr "創始者"
+
+msgid "Follower"
+msgstr "信徒"
+
+msgid "Enhancer"
+msgstr "強化者"
+
+msgid "Any"
+msgstr "任意の"
+
+msgid "Pick %d more beliefs%s"
+msgstr "信仰をあと%d個選択%s"
+
+msgid "so far: %s"
+msgstr "選択済み：%s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "上から宗教のシンボルを選択してください。"
+
+msgid "Follow this pantheon"
+msgstr "このパンテオンを信仰"
+
+msgid "Found %s"
+msgstr "%sを創始"
+
+msgid "Enhance %s"
+msgstr "%sを強化"
+
+msgid "Reform"
+msgstr "改革"
+
+msgid "Confirm"
+msgstr "決定"
+
+msgid "Religion is off in this game."
+msgstr "このゲームでは宗教が無効です。"
+
+msgid "Choose a pantheon belief"
+msgstr "パンテオンの信仰を選択"
+
+msgid "Found your religion"
+msgstr "宗教を創始"
+
+msgid "Enhance your religion"
+msgstr "宗教を強化"
+
+msgid "Reform your religion"
+msgstr "宗教を改革"
+
+msgid "No religion yet"
+msgstr "宗教なし"
+
+msgid "Your beliefs"
+msgstr "自分の信仰"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "現在選べるものはありません。信仰力を集めてパンテオンを創始しましょう。大預言者は自分の都市で宗教を創始し、後で強化できます。"
+
+msgid "Symbol:"
+msgstr "シンボル："
+
+msgid "Name: %s"
+msgstr "名前：%s"
+
+msgid "(pick a symbol)"
+msgstr "（シンボルを選択）"
+
+msgid "Rename..."
+msgstr "名前を変更…"
+
+msgid "Choose any belief!"
+msgstr "いずれかの信念を選択してください"
+
+msgid "Choose a %s belief!"
+msgstr "%sの信仰を選択！"
+
+msgid "  (another religion has it)"
+msgstr " （他の宗教が取得済み）"
+
+msgid "  (you have it)"
+msgstr " （取得済み）"
+
+msgid "  (not available)"
+msgstr " （利用不可）"
+
+msgid "  (picked for another slot)"
+msgstr " （別の枠で選択済み）"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "ターン %d   速度 %s   %s%s"
+
+msgid "max %d turns"
+msgstr "最大%dターン"
+
+msgid "You have won a %s Victory!"
+msgstr "%s勝利を達成しました！"
+
+msgid "%s has won a %s Victory!"
+msgstr "%sが%s勝利を達成しました！"
+
+msgid "You have been defeated."
+msgstr "敗北しました。"
+
+msgid "One more turn...!"
+msgstr "あと1ターンだけ！"
+
+msgid "Main menu (start a new game)"
+msgstr "メインメニュー（新しいゲーム）"
+
+msgid "Our status"
+msgstr "文明のステータス"
+
+msgid "Global status"
+msgstr "グローバルステータス"
+
+msgid "Rankings"
+msgstr "ランキング"
+
+msgid "Charts"
+msgstr "チャート"
+
+msgid "Demographics"
+msgstr "デモグラフィック"
+
+msgid "%s Victory"
+msgstr "%s勝利"
+
+msgid "[done] "
+msgstr "[完了] "
+
+msgid "Rank"
+msgstr "ランキング"
+
+msgid "Value"
+msgstr "価値"
+
+msgid "Best"
+msgstr "最高"
+
+msgid "Average / Worst"
+msgstr "平均 / 最下位"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "%sと交易    自分のゴールド %d、相手 %d"
+
+msgid "You can offer"
+msgstr "こちらが提供可能"
+
+msgid "You give"
+msgstr "こちらが渡すもの"
+
+msgid "You get"
+msgstr "こちらが受け取るもの"
+
+msgid "They can offer"
+msgstr "相手が提供可能"
+
+msgid "Clear"
+msgstr "クリア"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "外側の列の項目をクリックするとテーブルに載せます。もう一度クリックすると取り除きます。"
+
+msgid "%s would accept this."
+msgstr "%sはこの条件を受け入れます。"
+
+msgid "%s wants more for this%s."
+msgstr "%sはもっと多くの対価を求めています%s。"
+
+msgid "about %d gold's worth"
+msgstr "約%dゴールド相当"
+
+msgid "Propose deal"
+msgstr "取引を提案"
+
+msgid "  %d turns"
+msgstr " %dターン"
+
+msgid "Gold_Per_Turn"
+msgstr "毎ターンのゴールド"
+
+msgid "Not connected to the bridge"
+msgstr "ブリッジに接続していません"
+
+msgid "Bridge disconnected"
+msgstr "ブリッジとの接続が切れました"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "同梱のUncivブリッジが不完全です。ゲームファイルを再インストールしてください。"
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "%sにブリッジを含むUncivリポジトリが見つかりません"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Java 17以降が見つかりません（UncivにはJDK 21が必要です）。インストールしてJAVA_HOMEを設定してください。"
+
+msgid "Couldn't write %s"
+msgstr "%sを書き込めませんでした"
+
+msgid "Couldn't start Gradle"
+msgstr "Gradleを起動できませんでした"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "同梱のUncivブリッジを起動できませんでした"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "=====   ここでトリガーを押してドラッグすると移動できます   ====="
+
+msgid "Exit city"
+msgstr "都市を閉じる"
+
+msgid "City"
+msgstr "都市"
+
+msgid "BEING RAZED"
+msgstr "破壊中"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "未配置の市民：%d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "クリック：都市に配置を任せる"
+
+msgid "(%d/%d food)"
+msgstr "（食料 %d/%d）"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "飢餓：%dターン後に市民が減少 %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "このユニットの生産中は食料が生産力になります"
+
+msgid "New citizen in %d turns %s"
+msgstr "%dターン後に市民が増加 %s"
+
+msgid "Not growing %s"
+msgstr "成長停止中 %s"
+
+msgid "(%d/%d culture)"
+msgstr "（文化力 %d/%d）"
+
+msgid "Borders grow in %d turns %s"
+msgstr "%dターン後に国境が拡大 %s"
+
+msgid "Borders have stopped growing"
+msgstr "国境の拡大が停止しています"
+
+msgid "In resistance for another %d turns"
+msgstr "抵抗はあと%dターン"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "国王感謝祭はあと%dターン"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "%sを要求中（入手すると国王感謝祭）"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "都市を併合（傀儡状態を解除）"
+
+msgid "Stop razing city"
+msgstr "焼却をやめる"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "再クリックで%sを破壊（毎ターン市民が1人減少）"
+
+msgid "Raze city"
+msgstr "都市を焼却"
+
+msgid "Citizen management"
+msgstr "市民の管理"
+
+msgid "Reset citizens"
+msgstr "市民を再配置"
+
+msgid "Avoid growth"
+msgstr "成長を抑制"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "市民の優先事項（都市が優先して働くタイル）："
+
+msgid "Specialists"
+msgstr "専門家"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "専門家は手動配置（クリックで自動）"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "専門家は自動配置（クリックで手動）"
+
+msgid "Specialist"
+msgstr "専門家"
+
+msgid "Great people"
+msgstr "偉人"
+
+msgid "Majority religion: %s"
+msgstr "主流宗教：%s"
+
+msgid "Former holy city of %s"
+msgstr "かつての%sの聖都"
+
+msgid "Holy city of %s"
+msgstr "%sの聖都"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s：信徒 %d、圧力 %+d"
+
+msgid "Specialist buildings"
+msgstr "専門家を配置できる建造物"
+
+msgid "  (free)"
+msgstr " （無料）"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "タイルをクリックすると、働いている市民を外したり、空いている市民を配置したりできます。"
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "価格が表示されたタイルは購入できます（2回クリック）。"
+
+msgid "Tile"
+msgstr "タイル"
+
+msgid "city centre"
+msgstr "都市の中心"
+
+msgid "worked (locked)"
+msgstr "市民配置済み（固定）"
+
+msgid "not worked"
+msgstr "市民未配置"
+
+msgid "gives its yield without a citizen"
+msgstr "市民なしで産出"
+
+msgid "gives nothing"
+msgstr "産出なし"
+
+msgid "blockaded by an enemy"
+msgstr "敵に封鎖されている"
+
+msgid "worked by %s"
+msgstr "%sの市民が配置済み"
+
+msgid "another city"
+msgstr "別の都市"
+
+msgid "too far to work"
+msgstr "遠すぎて配置不可"
+
+msgid "can be bought"
+msgstr "購入可能"
+
+msgid "not yours"
+msgstr "自国領ではない"
+
+msgid "Resource: %s"
+msgstr "資源：%s"
+
+msgid "Improvement: %s"
+msgstr "施設：%s"
+
+msgid "Owned by %s"
+msgstr "所有者：%s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "固定（市民をここに留める）"
+
+msgid "Stop working"
+msgstr "市民を外す"
+
+msgid "Unlock"
+msgstr "アンロック"
+
+msgid "Work this tile"
+msgstr "このタイルに市民を配置"
+
+msgid "Work and lock"
+msgstr "配置して固定"
+
+msgid "Click again: buy for %d gold"
+msgstr "再クリック：%dゴールドで購入"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "%dゴールドで購入（所持：%d）"
+
+msgid "Production"
+msgstr "生産力"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "ゴールド %d   信仰力 %d   毎ターンの生産力 %+d"
+
+msgid "Being built"
+msgstr "生産中"
+
+msgid "Nothing being built - pick something below"
+msgstr "生産していません — 下から選択"
+
+msgid "   %d turns"
+msgstr " %dターン"
+
+msgid "Hide what can't be built yet"
+msgstr "まだ生産できないものを隠す"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "まだ生産できないものと理由を表示"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "項目をクリックして効果を確認し、今すぐ生産、キューに追加、または購入を選んでください。"
+
+msgid "   %d production"
+msgstr " 生産力 %d"
+
+msgid ", %d turns"
+msgstr "、%dターン"
+
+msgid "   (built)"
+msgstr " （建設済み）"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "%sは「今すぐ生産／キューに追加／購入」の後で選ぶタイルに配置されます。"
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "%sはキュー追加時に選んだ、輪で囲まれたタイルに配置されます。"
+
+msgid "Build now"
+msgstr "今すぐ生産"
+
+msgid "Add to queue"
+msgstr "生産キューに追加"
+
+msgid "Click again: buy for %d %s"
+msgstr "再クリック：%d %sで購入"
+
+msgid "Buy for %d %s"
+msgstr "%d %sで購入"
+
+msgid "you have %d"
+msgstr "所持：%d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "購入：先に都市からユニットを移動してください"
+
+msgid "Click again: sell for %d gold"
+msgstr "再クリック：%dゴールドで売却"
+
+msgid "Sell for %d gold"
+msgstr "%dゴールドで売却"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "=====   シヴィロペディア — ここでトリガーを押してドラッグすると移動できます   ====="
+
+msgid "<  Back"
+msgstr "< 戻る"
+
+msgid "This entry couldn't be loaded."
+msgstr "この項目を読み込めませんでした。"
+
+msgid "Building"
+msgstr "建物"
+
+msgid "Wonder"
+msgstr "遺産"
+
+msgid "Unit"
+msgstr "ユニット"
+
+msgid "Resource"
+msgstr "資源"
+
+msgid "Improvement"
+msgstr "タイル整備"
+
+msgid "Tile Improvements"
+msgstr "タイルの整備"
+
+msgid "Technology"
+msgstr "技術"
+
+msgid "Promotion"
+msgstr "昇進"
+
+msgid "Promotions"
+msgstr "昇進"
+
+msgid "Policy"
+msgstr "社会制度"
+
+msgid "Belief"
+msgstr "信仰"
+
+msgid "Religions and Beliefs"
+msgstr "宗教と信仰"
+
+msgid "Nation"
+msgstr "国家"
+
+msgid "Nations"
+msgstr "文明"
+
+msgid "Terrain"
+msgstr "地形"
+
+msgid "Terrains"
+msgstr "地形"
+
+msgid "Unit types"
+msgstr "ユニットタイプ"
+
+msgid "Unit Names"
+msgstr "ユニット名"
+
+msgid "Victory Types"
+msgstr "勝利条件の種類"
+
+msgid "Thumbstick"
+msgstr "スティック"
+
+msgid "Menu"
+msgstr "メニュー"
+
+msgid "Trigger"
+msgstr "トリガー"
+
+msgid "Grip"
+msgstr "グリップ"
+
+msgid "Trackpad"
+msgstr "トラックパッド"
+
+msgid "Button 1"
+msgstr "ボタン1"
+
+msgid "Button 2"
+msgstr "ボタン2"
+
+msgid "Cities"
+msgstr "都市"
+
+msgid "None"
+msgstr "なし"
+
+msgid "Unexplored (%d, %d)"
+msgstr "未探索（%d, %d）"
+
+msgid " - %s territory"
+msgstr " — %sの領土"
+
+msgid " - city of %s"
+msgstr " — 都市%s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s（%s、体力 %d）"
+
+msgid "Automate"
+msgstr "自動化"
+
+msgid "Sleep"
+msgstr "休憩"
+
+msgid "Fortify"
+msgstr "防衛"
+
+msgid "Guard"
+msgstr "警戒"
+
+msgid "Explore"
+msgstr "探索"
+
+msgid "Upgrade"
+msgstr "アップグレード"
+
+msgid "Transform"
+msgstr "転換"
+
+msgid "Repair"
+msgstr "修復"
+
+msgid "Skip"
+msgstr "スキップ"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s   ターン %d（%s）"
+
+msgid "%d BC"
+msgstr "紀元前%d年"
+
+msgid "%d AD"
+msgstr "西暦%d年"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "研究していません — 技術を選択！"
+
+msgid "Point at a tile"
+msgstr "タイルを指してください"
+
+msgid "Unexplored"
+msgstr "未探索"
+
+msgid "Send a unit to find out what's here."
+msgstr "ユニットを送って探索してください。"
+
+msgid "Natural wonder: %s"
+msgstr "自然遺産：%s"
+
+msgid "Improvement: %s%s"
+msgstr "施設：%s%s"
+
+msgid "River"
+msgstr "川"
+
+msgid "City of %s  (population %d)"
+msgstr "都市%s（人口 %d）"
+
+msgid "%s territory"
+msgstr "%sの領土"
+
+msgid "%d HP"
+msgstr "体力 %d"
+
+msgid "%+d%% to unit defense"
+msgstr "ユニットの防御力 %+d%%"
+
+msgid "Impassable"
+msgstr "進行不可"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "現在は視界外 — 最後に確認した状態"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "%sを攻撃：与える損害 約%d、受ける損害 約%d"
+
+msgid "Science"
+msgstr "科学力"
+
+msgid "Happiness"
+msgstr "幸福度"
+
+msgid "Malcontent"
+msgstr "不満"
+
+msgid "Culture"
+msgstr "文化力"
+
+msgid "Faith"
+msgstr "信仰力"
+
+msgid "Population"
+msgstr "人口"
+
+msgid "Food"
+msgstr "食料"
+
+msgid "Shift"
+msgstr "シフト"
+
+msgid "Space"
+msgstr "スペース"
+
+msgid "< Del"
+msgstr "< 削除"
+
+msgid "Recenter"
+msgstr "中央に戻す"
+
+msgid "Move a unit!"
+msgstr "ユニットを動かそう！"
+
+msgid "hold to move onto a tile"
+msgstr "長押しでタイルに移動"
+
+msgid "Connecting..."
+msgstr "接続中…"
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "ブリッジとの接続が切れました — 再試行中…"
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "127.0.0.1:%dのブリッジを探しています…"
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "ブリッジを起動できませんでした：%s\n手動で起動してください：gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Uncivブリッジを起動中…（コードが変更されている場合は再ビルドするため、時間がかかることがあります）"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "ブリッジが起動完了前に停止しました。%sの内容：\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "このアプリにUncivエンジンがありません（エクスポートにUncivBridgeプラグインが含まれていません）。"
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Uncivエンジンを起動できませんでした：%s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Uncivエンジンが停止しました：\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Uncivエンジンを起動中：%s…（%d秒）"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "古いUncivブリッジ（プロトコルv%d）が動作していました。現在のコードで再起動中…"
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "古いブリッジを停止できませんでした。そのまま使用します。一部の機能が動作しない可能性があります。"
+
+msgid "Reconnected to the bridge."
+msgstr "ブリッジに再接続しました。"
+
+msgid "Bridge error: %s"
+msgstr "ブリッジのエラー：%s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "警告：ブリッジはプロトコルv%dですが、クライアントはv%dを必要とします。両方のリポジトリを一緒に更新してください。一部の機能が動作しない可能性があります。"
+
+msgid "Connected to Unciv %s"
+msgstr "Unciv %sに接続しました"
+
+msgid "Couldn't load the save: %s"
+msgstr "セーブを読み込めませんでした：%s"
+
+msgid "Your move."
+msgstr "あなたの番です。"
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "新しいゲームを開始中…（大きなマップは少し時間がかかります）"
+
+msgid "Starting a new game..."
+msgstr "新しいゲームを開始中…"
+
+msgid "Couldn't start a game: %s"
+msgstr "ゲームを開始できませんでした：%s"
+
+msgid "saved "
+msgstr "保存済み "
+
+msgid "%s, turn %d"
+msgstr "%s、ターン %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "メインメニュー：テーブル上のカードを指してください。"
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s、%s %sマップ、%s、AI %d、都市国家 %d"
+
+msgid "A random civilization"
+msgstr "ランダムな文明"
+
+msgid "Loading %s..."
+msgstr "%sを読み込み中…"
+
+msgid "Couldn't load %s: %s"
+msgstr "%sを読み込めませんでした：%s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "ルールを読み込めませんでした：%s"
+
+msgid "getState failed: %s"
+msgstr "getStateに失敗しました：%s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "概要、情報、大画面、パネルを通常の位置に戻しました。"
+
+msgid "Name your religion"
+msgstr "宗教の名前を入力"
+
+msgid "Your religion"
+msgstr "自分の宗教"
+
+msgid "Researching %s."
+msgstr "%sを研究中。"
+
+msgid "Adopted %s."
+msgstr "%sを採用しました。"
+
+msgid "You declared war on %s!"
+msgstr "%sに宣戦布告しました！"
+
+msgid "Unit movements"
+msgstr "ユニットの移動"
+
+msgid "Tile yields"
+msgstr "収穫量"
+
+msgid "Worked tiles"
+msgstr "市民を配置したタイル"
+
+msgid "Resources and improvements"
+msgstr "資源と施設"
+
+msgid "Improvement pictures"
+msgstr "施設の画像"
+
+msgid "Unit icons"
+msgstr "ユニットアイコン"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "タイル上で%sを長押しするとユニットが移動します。"
+
+msgid "the trigger"
+msgstr "トリガー"
+
+msgid "the mouse button"
+msgstr "マウスボタン"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "%sを攻撃\n与える損害 約%d、受ける損害 約%d\nもう一度クリックで攻撃"
+
+msgid "a unit"
+msgstr "ユニット"
+
+msgid "Can't get there"
+msgstr "到達できません"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "このタイルに空きがありません\n%s %sがすでにいます"
+
+msgid "\nSwap places on the card"
+msgstr "\nカードで位置を交換できます"
+
+msgid "Move here"
+msgstr "ここへ移動"
+
+msgid "Move here: %d turns"
+msgstr "ここへ移動：%dターン"
+
+msgid "\nsharing the tile with %s"
+msgstr "\n%sとタイルを共有"
+
+msgid "\nclick again to go"
+msgstr "\nもう一度クリックで移動"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%sは移動中です。次のターンも移動を続けます。"
+
+msgid "No attack happened."
+msgstr "攻撃は行われませんでした。"
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%sが%sを攻撃：与えた損害 %d、受けた損害 %d。"
+
+msgid "  City captured!"
+msgstr " 都市を占領！"
+
+msgid "  %s destroyed!"
+msgstr " %sを撃破！"
+
+msgid "  Your %s was lost."
+msgstr " 自軍の%sを失いました。"
+
+msgid "Improvement order cancelled."
+msgstr "整備の命令を取り消しました。"
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s：%sを建設中（%dターン）。"
+
+msgid "Rename %s"
+msgstr "%sの名前を変更"
+
+msgid "%s is now called %s."
+msgstr "%sの名前を%sに変更しました。"
+
+msgid "Name your %s (empty: no name)"
+msgstr "%sの名前（空欄で名前を削除）"
+
+msgid "Renamed to %s."
+msgstr "%sに名前を変更しました。"
+
+msgid "Name removed."
+msgstr "名前を削除しました。"
+
+msgid "%s: on the way."
+msgstr "%s：移動中。"
+
+msgid "%s: coup orders given."
+msgstr "%s：クーデターを命令しました。"
+
+msgid "See your stats breakdown"
+msgstr "統計の内訳を確認"
+
+msgid "Selected %s."
+msgstr "%sを選択しました。"
+
+msgid "the unit"
+msgstr "ユニット"
+
+msgid "Upgraded to %s."
+msgstr "%sにアップグレードしました。"
+
+msgid "Enter city screen"
+msgstr "都市画面を開く"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "都市画面：%s。タイルをクリックすると市民を配置できます。「都市を閉じる」（またはB / Esc）でマップに戻ります。"
+
+msgid "Back to the map."
+msgstr "マップに戻りました。"
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "%sには%sを配置できる場所がありません。"
+
+msgid "the city"
+msgstr "都市"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "%sを配置するタイル（赤い輪）を選んでください。Esc / Bでキャンセルできます。"
+
+msgid "Cancelled."
+msgstr "キャンセルしました。"
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "輪で囲まれたタイルを選んでください（Esc / Bでキャンセル）。"
+
+msgid "%s: the improvement goes there."
+msgstr "%s：施設をそこに配置します。"
+
+msgid "Bought the tile for %d gold."
+msgstr "%dゴールドでタイルを購入しました。"
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "%dゴールドで購入\nもう一度クリックで購入"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "費用 %dゴールド\n（ゴールド不足）"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "市民を再配置しました（固定を解除）。"
+
+msgid "Annexed."
+msgstr "併合しました。"
+
+msgid "%s will build %s next."
+msgstr "%sは次に%sを生産します。"
+
+msgid "%s added to the queue."
+msgstr "%sをキューに追加しました。"
+
+msgid "Bought %s."
+msgstr "%sを購入しました。"
+
+msgid "Sold the %s."
+msgstr "%sを売却しました。"
+
+msgid "%s added to %s's queue."
+msgstr "%sを%sのキューに追加しました。"
+
+msgid "Bought %s in %s."
+msgstr "%sを%sで購入しました。"
+
+msgid "Experience"
+msgstr "経験値"
+
+msgid "%s is now %s."
+msgstr "%sは%sになりました。"
+
+msgid "Pick something to research."
+msgstr "研究する技術を選択してください。"
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "新しい社会制度を採用できます。大画面の「社会制度」タブを開いてください。"
+
+msgid "%s is heading here"
+msgstr "%sがここへ向かっています"
+
+msgid "The unit"
+msgstr "ユニット"
+
+msgid "Are you sure?"
+msgstr "よろしいですか？"
+
+msgid "Click again to confirm."
+msgstr "もう一度クリックして確定してください。"
+
+msgid "%s: click a %stile"
+msgstr "%s：%sタイルをクリック"
+
+msgid "highlighted "
+msgstr "強調表示された"
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s — マップのタイルをクリック（カードの「キャンセル」で中止）。"
+
+msgid "Move here: click a tile"
+msgstr "ここへ移動：タイルをクリック"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "%sを移動 — マップのタイルをクリック（カードの「キャンセル」で中止）。"
+
+msgid "No enemies in range of %s."
+msgstr "%sの射程内に敵がいません。"
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "%sから砲撃：赤い輪の敵をクリック（都市をクリックするとキャンセル）。"
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "強調表示されたタイルを選ぶか、キャンセルしてください。"
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%sが%sを砲撃：損害 %d%s。"
+
+msgid "Destroyed!"
+msgstr "撃破！"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "ターンを終了しますか？もう一度「ターン終了」を押してください。"
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "ターン終了中 — AIプレイヤーが行動しています…"
+
+msgid "Turn %d"
+msgstr "ターン %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "ゲーム終了 — %sの勝利（%s勝利）"
+
+msgid "A %s has been born!"
+msgstr "%sが誕生しました！"
+
+msgid "You voted for %s."
+msgstr "%sに投票しました。"
+
+msgid "You abstained."
+msgstr "棄権しました。"
+
+msgid "ATTACK"
+msgstr "攻撃"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s — ターン %d（%s） ゴールド %d（%+d） 科学力 %+d 幸福度 %d"
+
+msgid "Researching: %s"
+msgstr "研究中：%s"
+
+msgid "%s - turn %d"
+msgstr "%s — ターン %d"
+
+msgid "Game"
+msgstr "ゲーム"
+
+msgid "Save game as"
+msgstr "名前を付けて保存"
+
+msgid "Saved as \"%s\"."
+msgstr "「%s」として保存しました。"
+
+msgid "Couldn't save: %s"
+msgstr "保存できませんでした：%s"
+
+msgid "Open the options table"
+msgstr "設定テーブルを開く"
+
+msgid "The tutorials will show again from the start."
+msgstr "チュートリアルを最初から再表示します。"
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "チュートリアルをリセットできませんでした：%s"
+
+msgid "The panels are back where they started."
+msgstr "パネルを初期位置に戻しました。"
+
+msgid "The table is back in the middle of the background."
+msgstr "テーブルを背景の中央に戻しました。"
+
+msgid "Civilopedia: %s"
+msgstr "シヴィロペディア：%s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "シヴィロペディアを開けませんでした：%s"
+
+msgid "Opened %s in your browser."
+msgstr "%sをブラウザーで開きました。"
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "チュートリアルのタスクを隠しました。次のタスクは発生時に表示されます。"
+
+msgid "Move the table"
+msgstr "テーブルを移動"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "テーブル移動：風景の中の場所を指して%sと配置します。%sで回転します。終わったら%s。"
+
+msgid "pull the trigger"
+msgstr "トリガーを引く"
+
+msgid "The right stick"
+msgstr "右スティック"
+
+msgid "Press A or B"
+msgstr "AまたはBを押す"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "テーブルをここに置きます。「設定 > 外観 > 中央に戻す」で元の位置に戻せます。"
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "そこには配置できません。地面を指してください。"
+
+msgid "put the table here"
+msgstr "ここにテーブルを置く"
+
+msgid "turn the scenery"
+msgstr "風景を回転"
+
+msgid "done moving the table"
+msgstr "テーブル移動を終了"
+
+msgid "point, click (hold: aim)"
+msgstr "指してクリック（長押し：狙う）"
+
+msgid "Found city"
+msgstr "都市を建設"
+
+msgid "Cancel typing"
+msgstr "入力をキャンセル"
+
+msgid "Leave the city"
+msgstr "都市を閉じる"
+
+msgid "table height"
+msgstr "テーブルの高さ"
+
+msgid "slide the map"
+msgstr "マップをスライド"
+
+msgid "turn / size the table"
+msgstr "テーブルの回転／拡大縮小"
+
+msgid "Next unit"
+msgstr "次のユニット"
+
+msgid "Previous unit"
+msgstr "前のユニット"
+
+msgid "zoom the map"
+msgstr "マップをズーム"
+
+msgid "table height, click: recenter"
+msgstr "テーブルの高さ、押し込み：中央へ"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "処理が完了しませんでした。そのまま続けられます。繰り返す場合はログに原因が記録されています。"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "%sを攻撃（%s、体力 %d/%d）"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  予測：与える損害 %d、受ける損害 %d"
+
+msgid "Luxury"
+msgstr "高級"
+
+msgid "Strategic"
+msgstr "戦略"
+
+msgid "Unit icons over the unit models"
+msgstr "ユニットモデルの上のアイコン"
+
+msgid "Overview: point and click to go there"
+msgstr "概要：指してクリックするとその場所へ移動"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s：%s（クリックで%s）"
+
+msgid "Overview"
+msgstr "概要"
+
+msgid "Stats"
+msgstr "統計"
+
+msgid "Trades"
+msgstr "取引"
+
+msgid "Politics"
+msgstr "政治"
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Spy"
+msgstr "スパイ"
+
+msgid "War"
+msgstr "戦争"
+
+msgid "DefensivePact"
+msgstr "防衛協定"
+
+msgid "Neutral"
+msgstr "中立"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "=====   帝国概要 — ここでトリガーを押してドラッグすると移動できます   ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "まだスパイがいません。新しい時代に入ると獲得できます。"
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "スパイ（選択してから派遣先を選ぶ）"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s（ランク%d）— %s — %s%s"
+
+msgid "Call off the coup"
+msgstr "クーデターを中止"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "再クリック：クーデター実行（成功率%d%%）"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "クーデター実行（成功率%d%%）"
+
+msgid "Where to"
+msgstr "派遣先"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "スパイの隠れ家（%sを帰還させる）"
+
+msgid "   spies: "
+msgstr " スパイ："
+
+msgid "Click again (%s)"
+msgstr "もう一度クリック（%s）"
+
+msgid "You have no cities yet."
+msgstr "まだ都市がありません。"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Defence"
+msgstr "防御力"
+
+msgid "Open the city view"
+msgstr "都市画面を開く"
+
+msgid "Resistance"
+msgstr "抵抗"
+
+msgid "%d t"
+msgstr "%dターン"
+
+msgid "Demanding %s"
+msgstr "%sを要求中"
+
+msgid " (holy)"
+msgstr " （聖都）"
+
+msgid "Total %d"
+msgstr "合計 %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "ゴールドを科学力に変換：%d%%"
+
+msgid "Great person points"
+msgstr "偉人ポイント"
+
+msgid "Points"
+msgstr "ポイント"
+
+msgid "Per turn"
+msgstr "毎ターン"
+
+msgid "Total"
+msgstr "合計"
+
+msgid "Pending trades"
+msgstr "承認待ちの取引"
+
+msgid "Current trades"
+msgstr "現在進行中の取引"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "進行中の交易はありません。大画面の「外交」タブから取引を始めてください。"
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "ユニット供給：%d / %d使用中（基本 %d、都市 %d、人口 %d）"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "供給不足 %d：各都市の生産力 %d%%。供給を増やすかユニットを解散してください。"
+
+msgid "Doing"
+msgstr "行動"
+
+msgid "Closest city"
+msgstr "最も近い都市"
+
+msgid "Click again: %d gold"
+msgstr "再クリック：%dゴールド"
+
+msgid "%s %dg"
+msgstr "%s %dG"
+
+msgid "Show global politics"
+msgstr "全体の政治を表示"
+
+msgid "Show diagram"
+msgstr "関係図を表示"
+
+msgid "Hide city-states"
+msgstr "都市国家を隠す"
+
+msgid "Include city-states"
+msgstr "都市国家を含める"
+
+msgid "   %s civilizations in the game"
+msgstr " ゲーム内の文明数：%s"
+
+msgid "Score %d"
+msgstr "スコア %d"
+
+msgid "Defeated"
+msgstr "敗北"
+
+msgid "At war with %s"
+msgstr "%sと戦争中"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "%sと防衛協定（%dターン）"
+
+msgid "Friends with %s (%d turns)"
+msgstr "%sと友好宣言（%dターン）"
+
+msgid "Denounced %s (%d turns)"
+msgstr "%sを非難（%dターン）"
+
+msgid "Allied with %s"
+msgstr "%sと同盟"
+
+msgid "Relations"
+msgstr "関係"
+
+msgid "Defensive pact"
+msgstr "防衛協定"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "まだ高級資源や戦略資源を持っていません。"
+
+msgid "Unimproved"
+msgstr "未整備"
+
+msgid "Trade offer"
+msgstr "取引申し込み"
+
+msgid "Stockpile"
+msgstr "備蓄"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "未整備：自国または同盟都市国家の領土内で、この資源があるのに利用する施設がないタイルです。"
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "国王感謝祭+/-：祭りを開催中の都市／開催のためにこの資源を要求している都市です。"
+
+msgid "Religions to be founded: %s"
+msgstr "創始可能な宗教：%s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "次の%sに必要な最低信仰力：%d"
+
+msgid "Great Prophet"
+msgstr "大預言者"
+
+msgid "Religious status: %s"
+msgstr "宗教の状態：%s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "まだ宗教もパンテオンも創始されていません。"
+
+msgid "%s name:"
+msgstr "%sの名前："
+
+msgid "Founding civ:"
+msgstr "創始した文明："
+
+msgid "Holy city:"
+msgstr "聖都："
+
+msgid "Cities following this religion:"
+msgstr "この宗教が主流の都市"
+
+msgid "Followers of this religion:"
+msgstr "この宗教の信徒数"
+
+msgid "Status"
+msgstr "状況"
+
+msgid "Location"
+msgstr "位置"
+
+msgid "Unknown"
+msgstr "不明"
+
+msgid "Owned"
+msgstr "所有済み"
+
+msgid "Known"
+msgstr "把握済み"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s   ターン %d   %s"
+
+msgid "Current turn  |"
+msgstr "現在のターン  |"
+
+msgid "General"
+msgstr "将軍"
+
+msgid "No notifications yet."
+msgstr "まだ通知はありません。"
+
+msgid "Tech"
+msgstr "テクノロジー"
+
+msgid "Panel"
+msgstr "パネル"
+
+msgid "Nothing to show."
+msgstr "表示するものがありません。"
+
+msgid "Select a unit"
+msgstr "ユニットを選択"
+
+msgid "Left-click it"
+msgstr "左クリック"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "指して右トリガー：ユニットの上にカードを表示"
+
+msgid "Move / attack"
+msgstr "移動／攻撃"
+
+msgid "Click a tile to aim, again to go"
+msgstr "タイルをクリックして狙い、再クリックで実行"
+
+msgid "The same with the laser"
+msgstr "レーザーでも同じ操作"
+
+msgid "Open a city"
+msgstr "都市を開く"
+
+msgid "Click it"
+msgstr "クリック"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "指して右トリガー：都市の上にカードを表示"
+
+msgid "Scroll a card"
+msgstr "カードをスクロール"
+
+msgid "Mouse wheel"
+msgstr "マウスホイール"
+
+msgid "Point at it + right stick"
+msgstr "指して右スティック"
+
+msgid "Move the view"
+msgstr "視点を動かす"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "右ドラッグで回転、ホイールでズーム、WASD／中ドラッグで平行移動"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "グリップ＋スティック：左右で回転、上下で拡大縮小"
+
+msgid "Table height"
+msgstr "テーブルの高さ"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "どちらかのスティックを上下（右はカードを指していないとき）"
+
+msgid "Zoom the map"
+msgstr "マップをズーム"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - またはCtrl＋ホイール"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "トリガーを押しながら同じ手のスティックを上下"
+
+msgid "Slide the map"
+msgstr "マップをスライド"
+
+msgid "WASD, or click the overview"
+msgstr "WASD、または概要をクリック"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "グリップを押してドラッグ、または概要を指してトリガー"
+
+msgid "Move a board"
+msgstr "ボードを移動"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "上端の帯（情報ボードでは本体）でトリガーを押したまま移動"
+
+msgid "A, or the End turn button on the table"
+msgstr "A、またはテーブルの「ターン終了」ボタン"
+
+msgid "Found a city"
+msgstr "都市を建設"
+
+msgid "Next / previous unit"
+msgstr "次／前のユニット"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "テーブルの「待機ユニット」ボタン"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "技術ツリー、社会制度、外交"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "手首のカード、またはボードのボタン"
+
+msgid "Empire overview"
+msgstr "帝国概要"
+
+msgid "Always up, off to your right"
+msgstr "右側に常時表示"
+
+msgid "The Settings button on the table"
+msgstr "テーブルの「設定」ボタン"
+
+msgid "The Civilopedia button on the table"
+msgstr "テーブルの「シヴィロペディア」ボタン"
+
+msgid "Close / deselect"
+msgstr "閉じる／選択解除"
+
+msgid "B closes the keyboard and the city view"
+msgstr "Bでキーボードや都市画面を閉じる"
+
+msgid "Recenter the table"
+msgstr "テーブルを中央に戻す"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "左スティックの押し込み、または中央に戻すボタン"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "=====   設定 — ここでトリガーを押してドラッグすると移動できます   ====="
+
+msgid "Tables"
+msgstr "テーブル"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "背景内の好きな場所にテーブルを移動できます。変換したマップなどの広い背景で便利です。"
+
+msgid "%d%% translated"
+msgstr "翻訳率%d%%"
+
+msgid "Notification log keeps"
+msgstr "通知履歴の保持期間"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "概要の「通知」タブに保存するメッセージのターン数です。"
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Uncivのチュートリアル：新しい出来事の説明と、次に試すことを示すタスクカードです。"
+
+msgid "Reset"
+msgstr "リセット"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Uncivの効果音です。実行時に隣のUncivフォルダーから読み込みます。~/.unciv-vr/Sounds に同名の音声ファイルを置くと置き換えられます。"
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d個の音声が見つかりました。各ユニットの攻撃音はUncivと同様にルールセットで決まります。"
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "音声が見つかりません。隣のUncivフォルダーの android/assets/sounds にあります。"
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "ゲームの情報から作る一覧ボードです。VRではテーブルの周りに配置されます。"
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "上端の帯でトリガーを押すと移動できます。デスクトップでは左側に表示されます。"
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "パネルは panel.json を含むフォルダーです。panels/README.md を参照してください。自作のものは%sに置いてください。"
+
+msgid "Put them back"
+msgstr "位置を戻す"
+
+msgid "(by %s)"
+msgstr "（作者：%s）"
+
+msgid "Every turn"
+msgstr "毎ターン"
+
+msgid "Every %d turns"
+msgstr "%dターンごと"
+
+msgid "not connected"
+msgstr "未接続"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s（このクライアントはv%sが必要）"
+
+msgid "Tilesets"
+msgstr "タイルセット"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VRはUncivと同じMozilla Public License 2.0で公開されています。アイコンは多くの作者が制作したUncivのもので、"
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "CC BY / CC BY-SA / CC0に基づきます（CREDITS.md とUncivの docs/Credits.md を参照）。タイル、ユニット、背景、"
+
+msgid "and table models are Unciv VR's own."
+msgstr "テーブルのモデルはUnciv VR独自のものです。"
+
+msgid "%s speed"
+msgstr "速度：%s"
+
+msgid "%s map"
+msgstr "%sマップ"
+
+msgid "%s, turn %s"
+msgstr "%s、ターン %s"
+
+msgid "by "
+msgstr "作者："
+
+msgid "  -  from %s"
+msgstr " — 提供：%s"
+
+msgid "Move unit"
+msgstr "ユニットを移動"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "自分のユニットを指してトリガーを引き、次にタイルを指して2回引いてください。1回目で狙い、2回目で移動します。"
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "自分のユニットをクリックし、次にタイルを2回クリックしてください。1回目で狙い、2回目で移動します。"
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "開拓者を選び、カードの「都市を建設」（またはB）を押してください。"
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "開拓者を選び、カードの「都市を建設」（またはF）を押してください。"
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "自分の都市を指してトリガーを引き、カードの「都市画面」を押してください。"
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "自分の都市をクリックし、カードの「都市画面」を押してください。"
+
+msgid "Pick technology"
+msgstr "技術を選択"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "手首のカードから技術ツリーを開き、研究する技術を選んでください。"
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "技術ツリー（T）を開き、研究する技術を選んでください。"
+
+msgid "Pick construction"
+msgstr "生産するものを選択"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "自分の都市を開き、カードから生産物を選んでください。"
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "自分の都市をクリックし、カードから生産物を選んでください。"
+
+msgid "Pass a turn"
+msgstr "ターンを進める"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "ユニットに命令を出し、テーブルの「ターン終了」（またはA）を押してください。"
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "ユニットに命令を出し、「ターン終了」（またはスペース）を押してください。"
+
+msgid "Reassign worked tiles"
+msgstr "市民を配置するタイルを変更"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "都市画面でタイルを指してトリガーを引くと、市民を配置または解除できます。"
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "都市画面でタイルをクリックすると、市民を配置または解除できます。"
+
+msgid "Press Settings on the table."
+msgstr "テーブルの「設定」を押してください。"
+
+msgid "Press Settings on the table (or O)."
+msgstr "テーブルの「設定」（またはO）を押してください。"
+
+msgid "Construct an improvement"
+msgstr "タイルの整備"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "労働者を生産して平原か草原に移動し、カードの「タイルの整備」から農場を選んでください。完成するまでその場に置きます。"
+
+msgid "Move an air unit"
+msgstr "航空ユニットを移動"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "航空ユニットを選び、航続距離内の別の自分の都市へ移動してください。"
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "右側の帝国概要に向き、「統計」タブを開いてください。"
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "帝国概要（E）の「統計」タブを開いてください。"
+
+msgid "Tutorial task"
+msgstr "チュートリアルのタスク"
+
+msgid "Hide"
+msgstr "非表示"
+
+msgid "Defence %d"
+msgstr "防御力 %d"
+
+msgid "%+d%% to unit defence"
+msgstr "ユニットの防御力 %+d%%"
+
+msgid "  (%d HP)"
+msgstr " （体力 %d）"
+
+msgid " (pillaged)"
+msgstr " （略奪済み）"
+
+msgid ", worked by %s"
+msgstr "、%sの市民が配置済み"
+
+msgid "  (click the red button again)"
+msgstr " （赤いボタンをもう一度クリック）"
+
+msgid "  -  %d of %d"
+msgstr " — %d / %d"
+
+msgid "  (%s turns)"
+msgstr " （%sターン）"
+
+msgid "     Science %+d per turn"
+msgstr "   科学力 毎ターン%+d"
+
+msgid "  (city-state)"
+msgstr " （都市国家）"
+
+msgid "   max %d turns"
+msgstr " 最大%dターン"
+
+msgid " (about %d gold's worth)"
+msgstr " （約%dゴールド相当）"
+
+msgid " (you have %d)"
+msgstr " （所持：%d）"
+
+msgid "  (so far: %s)"
+msgstr " （選択済み：%s）"
+
+msgid "  (obsolete)"
+msgstr " （旧式）"
+
+msgid " (obsolete)"
+msgstr " （旧式）"
+
+msgid "abstained"
+msgstr "棄権"
+
+msgid "researched"
+msgstr "研究済み"
+
+msgid "adopted"
+msgstr "採用済み"
+
+msgid "gold"
+msgstr "ゴールド"
+
+msgid "faith"
+msgstr "信仰力"
+
+msgid "  - complete!"
+msgstr " — 完了！"
+
+msgid "complete"
+msgstr "完了"
+
+msgid "worked"
+msgstr "割り当てられている"
+
+msgid "on"
+msgstr "オン"
+
+msgid "off"
+msgstr "オフ"
+
+msgid "click"
+msgstr "クリック"
+
+msgid "improvement"
+msgstr "施設"
+
+msgid "done"
+msgstr "完了"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "射程内の敵（赤い輪）：%d。クリックして狙ってください。"
+
+msgid "Idle citizens: %d"
+msgstr "未配置の市民：%d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "砲撃 — 射程内の敵：%d（戦闘力 %d）"
+
+msgid "More messages after this one: %d"
+msgstr "この後のメッセージ：%d件"
+
+msgid "Free great people to choose: %d."
+msgstr "選択可能な無料の偉人：%d人。"
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "選択可能な無料の技術：%d個。強調表示された技術を選んでください。"
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "未選択の信仰：%d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "ゲームのメッセージ、名前、説明にはUncivの翻訳を使います。一部の言語ではUnciv VRの画面も翻訳されています。未翻訳の文章は英語で表示されます。"
+
+msgid "Units ({count})"
+msgstr "ユニット（{count}）"
+
+msgid "Cities ({count})"
+msgstr "都市（{count}）"
+
+msgid "Military"
+msgstr "軍事"
+
+msgid "Military ({count})"
+msgstr "軍事（{count}）"
+
+msgid "Rankings ({count})"
+msgstr "ランキング（{count}）"
+
+msgid "Waiting for orders"
+msgstr "命令待ち"
+
+msgid "  -  promotion ready"
+msgstr " — 昇進可能"
+
+msgid "  (capital)"
+msgstr " （首都）"
+
+msgid "  (puppet)"
+msgstr " （傀儡）"
+
+msgid "  (razing)"
+msgstr " （破壊中）"
+
+msgid "Nothing to build"
+msgstr "生産物なし"
+
+msgid "turn"
+msgstr "ターン"
+
+msgid "turns"
+msgstr "ターン"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} — {era}"
+
+msgid "{score} pts"
+msgstr "{score}点"
+
+msgid "No units yet."
+msgstr "まだユニットがいません。"
+
+msgid "No cities yet."
+msgstr "まだ都市がありません。"
+
+msgid "No military units yet."
+msgstr "まだ軍事ユニットがいません。"
+
+msgid "No civilizations met yet."
+msgstr "まだ文明に出会っていません。"
+
+msgid "No wonders to show yet."
+msgstr "表示できる遺産はまだありません。"
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "全ユニットと行動を表示します。命令待ちのユニットが先頭です。クリックすると選択できます。"
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "全都市の人口と生産物を表示します。首都が先頭です。クリックするとカードを開きます。"
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "全軍事ユニットの行動、移動力、体力を表示します。クリックすると選択できます。"
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "既知の文明を合計スコア順に表示します。"
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Uncivの遺産一覧です。時代ごとに建設済み、建設中、未建設を表示します。建設済みの遺産をクリックするとその場所を見られます。"
+
+msgid "In the Hall of the Mountain King"
+msgstr "山の魔王の宮殿にて"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "ドヴレ山地の地下深くにあるトロール王の玉座の間。かがり火と輝くマグマが照らします"
+
+msgid "Mountains and clouds"
+msgstr "山と雲"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "ローポリの山々に囲まれた草地。木々が生え、雲が流れます"
+
+msgid "Floating in space"
+msgstr "宇宙に浮かぶ"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "環のある惑星のそばで、星々の間にテーブルが浮かびます"
+
+msgid "Studio"
+msgstr "スタジオ"
+
+msgid "A plain, dark room"
+msgstr "シンプルな暗い部屋"
+
+msgid "Webb Deep Field"
+msgstr "ウェッブのディープフィールド"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "ジェイムズ・ウェッブ宇宙望遠鏡の最初のディープフィールド画像に囲まれ、深宇宙にテーブルが浮かびます"
+
+msgid "Ornate oak"
+msgstr "装飾付きオーク"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "クルミとヒイラギの象嵌、縄模様の縁、渦巻き状の脚を持つオークのテーブル"
+
+msgid "Plain wood"
+msgstr "シンプルな木製"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "先細りの柱に載った、暗い木製の丸い天板"
+
+msgid "Low poly"
+msgstr "ローポリ"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "各面を単色で塗った、角張ったローポリ地形"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "画面は翻訳済みですが、ゲーム内容は英語で表示されます。"
+
+msgid "Turns: %s"
+msgstr "ターン数：%s"
+
+msgid "Latin keyboard"
+msgstr "英字キーボード"
+
+msgid "Arabic keyboard"
+msgstr "アラビア語キーボード"
+
+msgid "Hebrew keyboard"
+msgstr "ヘブライ語キーボード"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "デフォルト"
+
+msgid "Manual"
+msgstr "手動"
+
