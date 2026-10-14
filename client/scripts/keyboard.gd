@@ -36,15 +36,27 @@ const ACCENT_KEYS := {
 	"Galician": "áéíóúüñ",
 	"Norwegian": "æøåé",
 	"Esperanto": "ĉĝĥĵŝŭ",
+	"Simplified_Chinese": "",
+	"Traditional_Chinese": "",
+	"Vietnamese": "ăâđêôơư´`̉~̣",
+	"Toki_Pona": "",
+	"Maltese": "ċġħżàèìòù",
+	"Korean": "",
 }
 const ARABIC_ROWS := ["1234567890", "ضصثقفغعهخحجد", "شسيبلاتنمكط", "ئءؤرىةوزظ", "أإآذَُِّْ؟،.-"]
 const HEBREW_ROWS := ["1234567890", "קראטוןםפ", "שדגכעיחלךף", "זסבהנמצתץ", "'\"-.,?!"]
 const JAPANESE_ROWS := ["あいうえおかきくけこ", "さしすせそたちつてと", "なにぬねのはひふへほ", "まみむめもやゆよらりるれろ", "わをんー、。ゃゅょっぁぃぅぇぉゎ゛゜"]
 const RUSSIAN_ROWS := ["1234567890", "йцукенгшщзхъ", "фывапролджэ", "ячсмитьбю", "ё-.,?!"]
 const UKRAINIAN_ROWS := ["1234567890", "йцукенгшщзхї", "фівапролджє", "ячсмитьбю", "ґ’'-.,?!"]
+const KOREAN_ROWS := ["1234567890", "ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ", "ㅁㄴㅇㄹㅎㅗㅓㅏㅣ", "ㅋㅌㅊㅍㅠㅜㅡ", "-.,?!"]
+const KoreanInput := preload("res://scripts/korean_input.gd")
+const VI_MARKS := {"´": 1, "`": 2, "̉": 3, "~": 4, "̣": 5}
+const VI_LABELS := {"´": "◌́", "`": "◌̀", "̉": "◌̉", "~": "◌̃", "̣": "◌̣"}
+const VI_VOWELS := ["aáàảãạ", "ăắằẳẵặ", "âấầẩẫậ", "eéèẻẽẹ", "êếềểễệ", "iíìỉĩị", "oóòỏõọ", "ôốồổỗộ", "ơớờởỡợ", "uúùủũụ", "ưứừửữự", "yýỳỷỹỵ"]
 const NATIVE_ROWS := {
 	"Arabic": ARABIC_ROWS, "Hebrew": HEBREW_ROWS, "Japanese": JAPANESE_ROWS,
 	"Russian": RUSSIAN_ROWS, "Ukrainian": UKRAINIAN_ROWS,
+	"Korean": KOREAN_ROWS,
 }
 const Lang := preload("res://scripts/lang.gd")
 const TEXT := Color(0.92, 0.94, 0.97)
@@ -61,6 +73,9 @@ var _latin := false
 var _keyboard_language := ""
 var _letter_keys: Array[Button] = []
 var _shift_key: Button
+var _korean_prefix := ""
+var _korean_buffer := ""
+var _korean_history: Array[String] = []
 
 
 func _ready() -> void:
@@ -84,7 +99,10 @@ func _ready() -> void:
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	heading.add_child(_title)
 	_layout_key = _key("Latin keyboard", func() -> void:
+		_commit_korean()
 		_latin = not _latin
+		if Lang.language == "Korean":
+			shift = false
 		_build_keys()
 		_refresh(), KEY, Vector2(200, 28))
 	heading.add_child(_layout_key)
@@ -128,7 +146,8 @@ func _ready() -> void:
 	bottom.add_child(_key("< Del", _backspace, Color(0.4, 0.22, 0.18), Vector2(110, 50)))
 	bottom.add_child(_key("Clear", func() -> void:
 		text = ""
-		shift = not (Lang.language == "Japanese" and not _latin)
+		_commit_korean()
+		shift = not (Lang.language in ["Japanese", "Korean"] and not _latin)
 		_refresh(), Color(0.32, 0.24, 0.2), Vector2(90, 50)))
 	bottom.add_child(_key("Cancel", func() -> void: cancelled.emit(), Color(0.3, 0.3, 0.32), Vector2(100, 50)))
 	bottom.add_child(_key("OK", func() -> void: submitted.emit(text.strip_edges()), Color(0.2, 0.45, 0.25), Vector2(110, 50)))
@@ -144,7 +163,7 @@ func _build_keys() -> void:
 		child.queue_free()
 	var native := NATIVE_ROWS.has(Lang.language)
 	_layout_key.visible = native
-	var native_label: String = {"Arabic": "Arabic keyboard", "Hebrew": "Hebrew keyboard", "Japanese": "かな", "Russian": "АБВ", "Ukrainian": "АБВ"}.get(Lang.language, "Latin keyboard")
+	var native_label: String = {"Arabic": "Arabic keyboard", "Hebrew": "Hebrew keyboard", "Japanese": "かな", "Russian": "АБВ", "Ukrainian": "АБВ", "Korean": "한글"}.get(Lang.language, "Latin keyboard")
 	_layout_key.text = native_label if _latin else "Latin keyboard"
 	var rows: Array = ROWS.duplicate()
 	if ACCENT_KEYS.has(Lang.language):
@@ -165,7 +184,9 @@ func _build_keys() -> void:
 			var width := minf(78, (SIZE.x - 30 - 5 * (row.length() - 1)) / row.length())
 			var key := _key(character, func() -> void: _type(character), KEY, Vector2(width, 50))
 			key.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-			if character != character.to_upper() or (Lang.language == "Japanese" and not _latin):
+			if Lang.language == "Vietnamese" and VI_LABELS.has(character):
+				key.text = VI_LABELS[character]
+			if character != character.to_upper() or (Lang.language in ["Japanese", "Korean"] and not _latin):
 				key.set_meta("character", character)
 				_letter_keys.append(key)
 			line.add_child(key)
@@ -174,13 +195,14 @@ func _build_keys() -> void:
 
 ## Starts typing: [param title] above the field, [param initial] already in it.
 func open(title: String, initial: String) -> void:
+	_commit_korean()
 	if _keyboard_language != Lang.language:
 		_keyboard_language = Lang.language
 		_latin = false
 		_build_keys()
 	_title.text = title
 	text = initial.left(MAX_LENGTH)
-	shift = text.is_empty() and not (Lang.language == "Japanese" and not _latin)
+	shift = text.is_empty() and not (Lang.language in ["Japanese", "Korean"] and not _latin)
 	_refresh()
 
 
@@ -197,6 +219,7 @@ func handle_key(event: InputEventKey) -> bool:
 			_backspace()
 		_:
 			if event.unicode >= 32 and text.length() < MAX_LENGTH:
+				_commit_korean()
 				text += char(event.unicode)
 				shift = false
 				_refresh()
@@ -206,6 +229,22 @@ func handle_key(event: InputEventKey) -> bool:
 
 
 func _type(character: String) -> void:
+	if Lang.language == "Vietnamese" and VI_MARKS.has(character):
+		_apply_vietnamese_mark(int(VI_MARKS[character]))
+		_refresh()
+		return
+	if Lang.language == "Korean" and not _latin and KoreanInput.is_jamo(character):
+		if _korean_history.is_empty():
+			_korean_prefix = text
+		var composed := KoreanInput.append(_korean_buffer, _uppercase(character) if shift else character)
+		if _korean_prefix.length() + composed.length() <= MAX_LENGTH:
+			_korean_history.append(_korean_buffer)
+			_korean_buffer = composed
+			text = _korean_prefix + _korean_buffer
+			shift = false
+		_refresh()
+		return
+	_commit_korean()
 	if Lang.language == "Japanese" and not _latin and character in ["゛", "゜"]:
 		_apply_kana_mark(character)
 		_refresh()
@@ -215,15 +254,20 @@ func _type(character: String) -> void:
 	text += _uppercase(character) if shift else character
 	if shift and character != character.to_upper():
 		shift = false   # one-shot, like a phone keyboard
-	elif character == " " and text.strip_edges().is_empty():
+	elif character == " " and text.strip_edges().is_empty() and not (Lang.language == "Korean" and not _latin):
 		shift = true
 	_refresh()
 
 
 func _backspace() -> void:
+	if Lang.language == "Korean" and not _korean_history.is_empty():
+		_korean_buffer = _korean_history.pop_back()
+		text = _korean_prefix + _korean_buffer
+		_refresh()
+		return
 	text = text.left(maxi(0, text.length() - 1))
 	if text.is_empty():
-		shift = not (Lang.language == "Japanese" and not _latin)
+		shift = not (Lang.language in ["Japanese", "Korean"] and not _latin)
 	_refresh()
 
 
@@ -238,6 +282,8 @@ func _refresh() -> void:
 
 
 func _uppercase(character: String) -> String:
+	if Lang.language == "Korean" and not _latin:
+		return str(KoreanInput.SHIFTED.get(character, character))
 	if Lang.language == "Japanese" and not _latin and character.length() == 1:
 		var code := character.unicode_at(0)
 		if code >= 0x3041 and code <= 0x3096:
@@ -248,6 +294,27 @@ func _uppercase(character: String) -> String:
 		if character == "ı":
 			return "I"
 	return "ẞ" if character == "ß" else character.to_upper()
+
+
+func _commit_korean() -> void:
+	_korean_prefix = ""
+	_korean_buffer = ""
+	_korean_history.clear()
+
+
+## Tone keys modify the immediately preceding vowel, keeping names in composed Unicode.
+func _apply_vietnamese_mark(tone: int) -> void:
+	if text.is_empty():
+		return
+	var previous := text.right(1)
+	for row: String in VI_VOWELS:
+		var current := row.find(previous.to_lower())
+		if current >= 0:
+			var replacement := row[0 if current == tone else tone]
+			if previous == previous.to_upper():
+				replacement = replacement.to_upper()
+			text = text.left(text.length() - 1) + replacement
+			return
 
 
 ## Modify the previous kana in place; store a composed character so one backspace removes it.

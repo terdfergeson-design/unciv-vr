@@ -1,0 +1,3119 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv.
+# New wording drafted with Google Translate and AI-assisted terminology edits.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: vi\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Map replay"
+msgstr "Phát lại bản đồ"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Bản đồ được thu nhỏ để hiển thị toàn bộ phạm vi của nó. Quyền sở hữu và vị trí thành phố cập nhật khi đến lượt chơi."
+
+msgid "Start replay"
+msgstr "Bắt đầu phát lại"
+
+msgid "Return to game"
+msgstr "Trở về trò chơi"
+
+msgid "Turn %d of %d"
+msgstr "Lượt %d trên %d"
+
+msgid "Close replay"
+msgstr "Đóng phát lại"
+
+msgid "Turn %d / %d"
+msgstr "Lượt %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Đã lưu trên PC này giữa các phiên"
+
+msgid "Move the table..."
+msgstr "Di chuyển bàn..."
+
+msgid "Back to the middle"
+msgstr "Trở về giữa"
+
+msgid "Your controllers"
+msgstr "Bộ điều khiển của bạn"
+
+msgid "Show button labels"
+msgstr "Hiển thị nhãn nút"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Các nhãn nổi bên cạnh mỗi bộ điều khiển cho biết các nút của nó hiện đang làm gì."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Trình kích hoạt bên phải sẽ nhấp chuột khi bạn thả nó ra, vì vậy việc giữ nó để thu phóng sẽ không nhấp vào bất cứ thứ gì."
+
+msgid "Look"
+msgstr "Giao diện"
+
+msgid "Gameplay"
+msgstr "Lối chơi"
+
+msgid "Automation"
+msgstr "Tự động"
+
+msgid "Sound"
+msgstr "Âm thanh"
+
+msgid "Panels"
+msgstr "Bảng"
+
+msgid "Controls"
+msgstr "Điều khiển"
+
+msgid "Game and saves"
+msgstr "Trò chơi và bản lưu"
+
+msgid "About"
+msgstr "Giới thiệu"
+
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "Around the table"
+msgstr "Xung quanh bàn"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Hình nền và bảng là các thư mục mà bất kỳ ai cũng có thể thêm: xem backgrounds/README.md và tables/README.md."
+
+msgid "Background"
+msgstr "Nền"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Thế giới xung quanh chiếc bàn: bầu trời, ánh sáng và phong cảnh."
+
+msgid "Table"
+msgstr "Bàn"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Bản đồ nằm ở đâu. Trong VR, cột của nó trải dài đến độ cao bạn đặt."
+
+msgid "Where the table stands"
+msgstr "Cái bàn đứng ở đâu"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Di chuyển bảng đến bất kỳ vị trí nào trong khung cảnh nền - tiện dụng ở những bảng lớn như bản đồ được chuyển đổi. Ghi nhớ cho nền này."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Di chuyển bảng đến bất kỳ vị trí nào trong khung cảnh nền - tiện dụng ở những bảng lớn như bản đồ được chuyển đổi. Nó đã được chuyển đến đây; Quay lại giữa đặt nó ở nơi nền bắt đầu."
+
+msgid "Remembered for this background."
+msgstr "Ghi nhớ cho nền này."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Nó đã được chuyển đến đây; Quay lại giữa đặt nó ở nơi nền bắt đầu."
+
+msgid "The map"
+msgstr "Bản đồ"
+
+msgid "Tiles"
+msgstr "Ô"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Địa hình, kỳ quan, tài nguyên và cải tiến trông như thế nào. Các ô xếp hoạt động giống như của Unciv: xem tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Hình lục giác màu trơn"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Các hình lục giác phẳng có màu địa hình của Unciv, không có mô hình."
+
+msgid "Units"
+msgstr "Đơn vị"
+
+msgid "Same as the tiles"
+msgstr "Tương tự như gạch"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Các mô hình đơn vị đi kèm với tập hợp ô ở trên (bộ dự phòng của ô sẽ lấp đầy mọi khoảng trống)."
+
+msgid "No models"
+msgstr "Không có mô hình"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Token tròn có biểu tượng đơn vị của Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Các đơn vị trông như thế nào (Unciv's Unitset): bất kỳ tập hợp nào có mẫu đơn vị (pieces/Units) đều có thể cung cấp chúng."
+
+msgid "Visual hints"
+msgstr "Gợi ý trực quan"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Lớp phủ bản đồ của Unciv; các nút tròn bên cạnh phần tổng quan cũng bật và tắt chúng."
+
+msgid "Show unit movement arrows"
+msgstr "Hiển thị các mũi tên di chuyển đơn vị"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Đơn vị vừa di chuyển đến đâu và ai tấn công ai."
+
+msgid "Show tile yields"
+msgstr "Hiển thị sản lượng ô"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Thực phẩm, sản xuất, vàng... trên từng viên gạch."
+
+msgid "Show worked tiles"
+msgstr "Hiện ô đã chỉ định"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Những viên gạch mà công dân thành phố của bạn làm việc."
+
+msgid "Show resources and improvements"
+msgstr "Hiện các tài nguyên và cải tiến"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Các biểu tượng tài nguyên và cải tiến trên các ô xếp."
+
+msgid "Show improvement pictures"
+msgstr "Hiển thị hình ảnh cải tiến"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Trang trại, hầm mỏ, đường sá và những thứ tương tự làm mô hình."
+
+msgid "Show unit icons"
+msgstr "Hiển thị biểu tượng đơn vị"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "Biểu tượng Unciv nhỏ phía trên mỗi mẫu đơn vị."
+
+msgid "Language"
+msgstr "Ngôn ngữ"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Bản dịch riêng của Unciv, do người dịch của Unciv thực hiện: thông điệp, tên và mô tả của trò chơi. Thực đơn riêng của chúng tôi vẫn bằng tiếng Anh."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Text Unciv không có bản dịch cho việc lưu trú bằng tiếng Anh."
+
+msgid "Turns"
+msgstr "Lượt"
+
+msgid "Check for idle units"
+msgstr "Kiểm tra các Đơn vị nhàn rỗi"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Lượt kết thúc đầu tiên sẽ đưa bạn đến từng đơn vị vẫn chưa có đơn hàng."
+
+msgid "Auto unit cycle"
+msgstr "Tự chuyển đơn vị"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Sau khi bạn ra lệnh cho một đơn vị, đơn vị tiếp theo đang chờ lệnh sẽ được chọn."
+
+msgid "Cycle idle units by distance"
+msgstr "Chuyển qua các đơn vị nhàn rỗi theo khoảng cách"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Đơn vị tiếp theo/trước đi đến đơn vị gần nhất thay vì theo một thứ tự cố định."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Yêu cầu xác nhận khi kết thúc lượt"
+
+msgid "End turn needs a second press."
+msgstr "Cuối lượt cần nhấn lần thứ hai."
+
+msgid "Order trade offers by amount"
+msgstr "Yêu cầu giao dịch theo số lượng"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "Trên bàn giao dịch, những lời đề nghị lớn nhất sẽ được ưu tiên trước."
+
+msgid "Show suggested city locations"
+msgstr "Hiển thị các vị trí thành phố được đề xuất"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Với một người định cư được chọn, ba địa điểm tốt nhất của Unciv gần thành phố mới sẽ được đánh dấu trên bản đồ."
+
+msgid "Tutorials"
+msgstr "Hướng dẫn"
+
+msgid "Show tutorials"
+msgstr "Hiện phần hướng dẫn"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Các tin nhắn hướng dẫn và thẻ nhiệm vụ. Mọi hướng dẫn đều có trong Civilopedia."
+
+msgid "Reset tutorials"
+msgstr "Đặt lại hướng dẫn"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Hiển thị lại mọi hướng dẫn và nhiệm vụ, như thể bạn là người mới."
+
+msgid "Other players"
+msgstr "Người chơi khác"
+
+msgid "Other players' turns"
+msgstr "Đến lượt người chơi khác"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Những gì bạn thấy về lượt của người chơi khác sau khi bạn kết thúc lượt của mình."
+
+msgid "Show the moves and battles I can see"
+msgstr "Hiển thị các bước di chuyển và trận chiến mà tôi có thể thấy"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Phát lại theo thứ tự; cái nhìn lướt qua để chiến đấu."
+
+msgid "Show them, fast"
+msgstr "Cho họ xem, nhanh lên"
+
+msgid "The same, at two and a half times the speed."
+msgstr "Tương tự, với tốc độ gấp hai lần rưỡi."
+
+msgid "Don't show them"
+msgstr "Đừng cho họ xem"
+
+msgid "The map just updates."
+msgstr "Bản đồ chỉ cập nhật."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Các lựa chọn riêng của Unciv cho các đơn vị và thành phố tự động."
+
+msgid "Automated and exploring units move"
+msgstr "Các đơn vị tự động và khám phá di chuyển"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Khi các đơn vị được tự động hóa, khám phá hoặc di chuyển nhiều lượt thực hiện các bước của mình."
+
+msgid "When I end my turn"
+msgstr "Khi tôi kết thúc lượt của mình"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Người thám hiểm, công nhân tự động và các đơn vị di chuyển dài sẽ đi khi bạn kết thúc lượt."
+
+msgid "At the start of my turn"
+msgstr "Khi bắt đầu lượt của tôi"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Chúng đi khi lượt của bạn bắt đầu (\"Các đơn vị tự động di chuyển khi bắt đầu lượt\" của Unciv)."
+
+msgid "Auto-assign city production"
+msgstr "Tự động chỉ định sản xuất cho thành phố"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Một thành phố hoàn thành việc xây dựng một cái gì đó sẽ tự chọn những gì sẽ xây dựng tiếp theo."
+
+msgid "Auto-build roads"
+msgstr "Tự động xây đường"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Công nhân tự động xây dựng đường giữa các thành phố của bạn."
+
+msgid "Automated workers replace improvements"
+msgstr "Công nhân tự động thay thế cải tiến"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Công nhân tự động có thể trao đổi một cải tiến để có một cải tiến tốt hơn."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Ngăn chặn công nhân tự động loại bỏ thảm thực vật"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Công nhân tự động rời khỏi rừng, rừng rậm và đầm lầy một mình."
+
+msgid "Automated units can upgrade"
+msgstr "Các đơn vị tự động có thể nâng cấp"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Các đơn vị quân đội tự động tự nâng cấp khi bạn có đủ khả năng."
+
+msgid "Automated units choose promotions"
+msgstr "Đơn vị tự động chọn thăng cấp"
+
+msgid "Automated units pick their own promotions."
+msgstr "Các đơn vị tự động chọn chương trình khuyến mãi của riêng họ."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "Các thành phố tự động bắn phá vào cuối lượt"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Các thành phố vẫn có thể bắn vào kẻ thù trong phạm vi khi bạn kết thúc lượt."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Tự động chỉ định chuyên gia tại các thành phố mới"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Các thành phố mới tự đưa công dân của mình vào các vị trí chuyên môn."
+
+msgid "Sound effects"
+msgstr "Hiệu ứng âm thanh"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Các nút, di chuyển, trận chiến và phần còn lại. Trong VR, chúng đến từ nơi chúng xảy ra trên bàn."
+
+msgid "City ambience"
+msgstr "Không khí thành phố"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Tiếng ồn của thành phố vang lên khi bạn ở trong thành phố - Unciv có một tiếng ồn cho mọi thời đại."
+
+msgid "Your own and mods'"
+msgstr "Của riêng bạn và mod'"
+
+msgid "None yet."
+msgstr "Chưa có."
+
+msgid "Put the panels back"
+msgstr "Đặt các tấm trở lại"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Mọi bảng điều khiển sẽ quay trở lại vị trí panel.json của nó."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "Trong VR, bạn sẽ thấy các bộ điều khiển bạn đang cầm khi thời gian chạy của tai nghe thu hút chúng (SteamVR có; các bộ điều khiển khác có chức năng thay thế đơn giản)."
+
+msgid "Boards"
+msgstr "bảng"
+
+msgid "Put the boards back"
+msgstr "Đặt các bảng trở lại"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Tổng quan, bảng thông tin, màn hình lớn, bảng thành phố, tổng quan về đế chế và bảng này quay trở lại nơi họ bắt đầu."
+
+msgid "This game"
+msgstr "Trò chơi này"
+
+msgid "Save game"
+msgstr "Lưu trò chơi"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Lưu nó dưới tên bạn nhập vào thư mục lưu của bridge."
+
+msgid "Save..."
+msgstr "Lưu..."
+
+msgid "Main menu"
+msgstr "Menu chính"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Quay lại menu chính; trò chơi tiếp tục chạy và Tiếp tục sẽ đưa bạn trở lại."
+
+msgid "Saves"
+msgstr "Lưu"
+
+msgid "Autosave"
+msgstr "Tự động lưu"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Tần suất trò chơi tự lưu dưới dạng \"Tự động lưu\" (Tiếp tục tải trò chơi trong menu chính)."
+
+msgid "Save folder"
+msgstr "Lưu thư mục"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Một bảng thực tế ảo dành cho Unciv, phiên bản làm lại mã nguồn mở của Civilization V."
+
+msgid "Bridge protocol"
+msgstr "Giao thức cầu nối"
+
+msgid "Mods"
+msgstr "Mod"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Các ô, hình nền và bảng của riêng bạn"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Đặt thư mục của họ ở đây; chúng xuất hiện trong Look."
+
+msgid "Settings file"
+msgstr "Tệp cài đặt"
+
+msgid "Licence and credits"
+msgstr "Giấy phép và tín dụng"
+
+msgid "Desktop"
+msgstr "Máy tính để bàn"
+
+msgid "Off"
+msgstr "Tắt"
+
+msgid "On"
+msgstr "Bật"
+
+msgid "End turn"
+msgstr "Kết thúc lượt"
+
+msgid "< Prev"
+msgstr "< Trước đó"
+
+msgid "Idle unit"
+msgstr "Đơn vị đang chờ"
+
+msgid "Next >"
+msgstr "Tiếp theo >"
+
+msgid "Research"
+msgstr "Nghiên cứu"
+
+msgid "Recenter table"
+msgstr "Bảng gần đây"
+
+msgid "No unit selected"
+msgstr "Không có đơn vị nào được chọn"
+
+msgid "Point at a unit or city to select it."
+msgstr "Chỉ vào một đơn vị hoặc thành phố để chọn nó."
+
+msgid "Fortified"
+msgstr "tăng cường"
+
+msgid "Sleeping"
+msgstr "đang ngủ"
+
+msgid "Automated"
+msgstr "tự động"
+
+msgid "On its way"
+msgstr "Trên đường đi"
+
+msgid "Embarked"
+msgstr "Xuống nước"
+
+msgid "Strength"
+msgstr "Sức mạnh"
+
+msgid "RangedStrength"
+msgstr "Sức mạnh tầm xa"
+
+msgid "Range"
+msgstr "Tầm xa"
+
+msgid "Movement"
+msgstr "Di chuyển"
+
+msgid "Rename"
+msgstr "Đổi tên"
+
+msgid "Cancel"
+msgstr "Hủy"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Bỏ qua lượt này (Bỏ qua lần nữa để ra lệnh)."
+
+msgid "Health"
+msgstr "Máu"
+
+msgid "XP"
+msgstr "Điểm Kinh nghiệm"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Quảng bá!  Chọn khuyến mãi"
+
+msgid "Promote"
+msgstr "Thăng cấp"
+
+msgid "Building %s"
+msgstr "Tòa nhà %s"
+
+msgid "%d turns left"
+msgstr "%d rẽ trái"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d mục tiêu của kẻ địch trong tầm tay (vòng màu đỏ): nhấp vào một mục tiêu để nhắm"
+
+msgid "Actions"
+msgstr "hành động"
+
+msgid "Pillage"
+msgstr "Cướp bóc"
+
+msgid "Sure? Click again"
+msgstr "Chắc chắn chứ? Bấm lại"
+
+msgid "click the red button again"
+msgstr "nhấp vào nút màu đỏ một lần nữa"
+
+msgid "Build here"
+msgstr "Xây dựng ở đây"
+
+msgid "Stop"
+msgstr "Dừng lại"
+
+msgid "%d turns"
+msgstr "%d lượt"
+
+msgid "Population %d"
+msgstr "Dân số %d"
+
+msgid "Defense %d"
+msgstr "Phòng thủ %d"
+
+msgid "Health %d/%d"
+msgstr "Sức khỏe %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d những công dân nhàn rỗi"
+
+msgid "Puppet"
+msgstr "Lập một Chính phủ Bù nhìn"
+
+msgid "Starving! %d turns"
+msgstr "Đói! %d lần lượt"
+
+msgid "Grows in %d turns"
+msgstr "Phát triển theo lượt %d"
+
+msgid "Food -> production"
+msgstr "Thực phẩm -> sản xuất"
+
+msgid "Not growing"
+msgstr "Không phát triển"
+
+msgid "Border in %d turns"
+msgstr "Đường viền ở lượt %d"
+
+msgid "Borders stopped"
+msgstr "Biên giới dừng lại"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Chế độ xem thành phố - gạch, công dân, xếp hàng, mua hàng"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Thành phố này đang bị san bằng - nó co lại mỗi lượt cho đến khi biến mất. Đừng san bằng nó trong khung cảnh thành phố."
+
+msgid "Producing"
+msgstr "sản xuất"
+
+msgid "Producing nothing - pick something below"
+msgstr "Không sản xuất gì - chọn thứ gì đó bên dưới"
+
+msgid "Buildings"
+msgstr "Công trình"
+
+msgid "Wonders"
+msgstr "Kì quan"
+
+msgid "Other"
+msgstr "Khác"
+
+msgid "Gold"
+msgstr "Vàng"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Mua ngay vàng %d (bạn có %d)"
+
+msgid "Promote %s"
+msgstr "Quảng bá %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Chọn một khuyến mãi.%s"
+
+msgid "Has: %s"
+msgstr "Có: %s"
+
+msgid "No promotion available right now."
+msgstr "Không có khuyến mãi có sẵn ngay bây giờ."
+
+msgid "Tutorial"
+msgstr "Hướng dẫn"
+
+msgid "%d of %d"
+msgstr "%d trên %d"
+
+msgid "%d more messages after this one"
+msgstr "%d thêm tin nhắn sau tin nhắn này"
+
+msgid "%s gives:"
+msgstr "%s mang lại:"
+
+msgid "They"
+msgstr "Họ"
+
+msgid "You give:"
+msgstr "Bạn cho:"
+
+msgid "%d votes  %s"
+msgstr "%d phiếu bầu %s"
+
+msgid "voted for %s"
+msgstr "đã bình chọn cho %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Có thể tắt hướng dẫn trong Cài đặt > Lối chơi. Tất cả cũng có trong Civilopedia."
+
+msgid " (%d turns)"
+msgstr " (%d lượt)"
+
+msgid "Choose a free great person"
+msgstr "Chọn một Vĩ Nhân miễn phí"
+
+msgid "You have %d free great people to pick."
+msgstr "Bạn có %d những người tuyệt vời miễn phí để chọn."
+
+msgid "Vote for world leader"
+msgstr "Bầu chọn nhà lãnh đạo thế giới"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Chọn ai sẽ trở thành nhà Lãnh đạo Thế giới và giành được Chiến thắng Ngoại giao!"
+
+msgid "Vote for %s"
+msgstr "Hãy bình chọn cho %s"
+
+msgid "Abstain"
+msgstr "Bỏ qua"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Không có gì đang được nghiên cứu - hãy chọn một công nghệ!"
+
+msgid "Researching %s"
+msgstr "Đang nghiên cứu %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Bạn có các công nghệ miễn phí %d để chọn - hãy chọn một công nghệ được đánh dấu."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Khoa học %+d mỗi lượt. Chọn một công nghệ sau này sẽ đáp ứng các điều kiện tiên quyết của nó."
+
+msgid "%s turns"
+msgstr "%s lượt"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Tiếp tục từ nơi bạn đã dừng lại hoặc bắt đầu một trò chơi mới."
+
+msgid "Resume"
+msgstr "Tiếp tục"
+
+msgid "Continue"
+msgstr "Tiếp tục"
+
+msgid "Quick start"
+msgstr "Bắt đầu nhanh"
+
+msgid "New game..."
+msgstr "Trò chơi mới..."
+
+msgid "Load game..."
+msgstr "Tải trò chơi..."
+
+msgid "Civilopedia"
+msgstr "Civilopedia"
+
+msgid "Quit"
+msgstr "Thoát"
+
+msgid "New game"
+msgstr "Trò chơi mới"
+
+msgid "You"
+msgstr "Bạn"
+
+msgid "World"
+msgstr "Thế giới"
+
+msgid "Rules"
+msgstr "Quy tắc"
+
+msgid "Random"
+msgstr "Ngẫu nhiên"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - %s Bản đồ %s, %s, %d AI, %d các thành phố"
+
+msgid "%s, led by %s"
+msgstr "%s, do %s lãnh đạo"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Ngẫu nhiên: bạn sẽ biết mình là ai khi trò chơi bắt đầu."
+
+msgid "Your civilization"
+msgstr "Nền văn minh của bạn"
+
+msgid "Map size"
+msgstr "Kích thước bản đồ"
+
+msgid "Map type"
+msgstr "Loại bản đồ"
+
+msgid "Shape"
+msgstr "hình dạng"
+
+msgid "Resources"
+msgstr "Tài nguyên"
+
+msgid "Options"
+msgstr "Cài đặt"
+
+msgid "No ancient ruins"
+msgstr "Không có tàn tích cổ xưa"
+
+msgid "No natural wonders"
+msgstr "Không có kỳ quan thiên nhiên"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Bản đồ lớn hơn trượt dưới bàn: giữ tay cầm và kéo hoặc sử dụng chế độ xem tổng quan ở cạnh xa."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings bổ sung thêm tôn giáo, hoạt động gián điệp, nhiều nền văn minh hơn, nhiều đơn vị và tòa nhà hơn."
+
+msgid "Difficulty"
+msgstr "Độ khó"
+
+msgid "Game speed"
+msgstr "Tốc độ trò chơi"
+
+msgid "Starting era"
+msgstr "kỷ nguyên bắt đầu"
+
+msgid "AI players"
+msgstr "người chơi AI"
+
+msgid "City-states"
+msgstr "thành phố-tiểu bang"
+
+msgid "Victory types (none picked = all)"
+msgstr "Các loại chiến thắng (không chọn = tất cả)"
+
+msgid "No barbarians"
+msgstr "Không có kẻ man rợ"
+
+msgid "Raging barbarians"
+msgstr "Những kẻ man rợ hoành hành"
+
+msgid "One-city challenge"
+msgstr "Thử thách một thành phố"
+
+msgid "No city razing"
+msgstr "Không san bằng thành phố"
+
+msgid "Nuclear weapons"
+msgstr "Vũ khí hạt nhân"
+
+msgid "Espionage"
+msgstr "Do thám"
+
+msgid "< Back"
+msgstr "< Quay lại"
+
+msgid "Start game"
+msgstr "Bắt đầu trò chơi"
+
+msgid "Load game"
+msgstr "Tải trò chơi"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Lưu vào thư mục Unciv VR của bạn, mới nhất trước tiên."
+
+msgid "Backgrounds"
+msgstr "Hình nền"
+
+msgid "Mountains"
+msgstr "Núi"
+
+msgid "Scenery"
+msgstr "phong cảnh"
+
+msgid "Technologies"
+msgstr "Công nghệ"
+
+msgid "Policies"
+msgstr "Chính sách"
+
+msgid "Diplomacy"
+msgstr "Ngoại giao"
+
+msgid "Religion"
+msgstr "Tôn giáo"
+
+msgid "Victory"
+msgstr "chiến thăng"
+
+msgid "Declare war"
+msgstr "Tuyên bố chiến tranh"
+
+msgid "Score"
+msgstr "Điểm"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Chưa có lịch sử nào - các biểu đồ sẽ được điền vào khi lần lượt trôi qua."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== giữ cò ở đây và kéo để di chuyển màn hình này ====="
+
+msgid "Pause"
+msgstr "Tạm dừng"
+
+msgid "Play"
+msgstr "Phát"
+
+msgid "Loading the technology tree..."
+msgstr "Đang tải cây công nghệ..."
+
+msgid "Pick something to research!"
+msgstr "Chọn một cái gì đó để nghiên cứu!"
+
+msgid "Science %+d per turn"
+msgstr "Khoa học %+d mỗi lượt"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Nhấp vào một công nghệ để xem nó làm gì và nó cho phép bạn xây dựng những gì. Các biểu tượng nhỏ bên dưới mỗi công nghệ là những gì nó mở khóa."
+
+msgid "needs science"
+msgstr "cần khoa học"
+
+msgid "researching now, "
+msgstr "hiện đang nghiên cứu, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d khoa học)"
+
+msgid "Loading policies..."
+msgstr "Đang tải chính sách..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Văn hóa %d / %d (%+d mỗi lượt)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Bạn có thể áp dụng một chính sách!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Nhấp vào biểu tượng để xem chính sách đó. Mở một chi nhánh (biểu tượng lớn của nó) trước khi áp dụng các chính sách trong đó."
+
+msgid "ready to adopt"
+msgstr "sẵn sàng chấp nhận"
+
+msgid "needs more culture"
+msgstr "cần thêm văn hóa"
+
+msgid "not available yet"
+msgstr "chưa có sẵn"
+
+msgid "(no special effects)"
+msgstr "(không có hiệu ứng đặc biệt)"
+
+msgid "Adopt"
+msgstr "Nhận một đề nghị"
+
+msgid "Your score: %d"
+msgstr "Điểm của bạn: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Bạn chưa gặp ai cả. Khám phá để tìm các nền văn minh và thành phố khác."
+
+msgid "Loading..."
+msgstr "Đang tải..."
+
+msgid "   (city-state)"
+msgstr "   (thành phố-tiểu bang)"
+
+msgid "Destroyed"
+msgstr "bị phá hủy"
+
+msgid "AT WAR"
+msgstr "TRONG CHIẾN TRANH"
+
+msgid "At peace"
+msgstr "Bình yên"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (hiệp ước: %d thêm lượt)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - ảnh hưởng %d%s"
+
+msgid "   allied with %s"
+msgstr "   liên minh với %s"
+
+msgid "Feels %s about you%s"
+msgstr "Cảm nhận %s về bạn%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Điểm %d Thành phố %d"
+
+msgid "Diplomacy..."
+msgstr "Ngoại giao..."
+
+msgid "Trade"
+msgstr "Giao dịch"
+
+msgid "Offer peace"
+msgstr "Cung cấp hòa bình"
+
+msgid "Click again to declare war on %s"
+msgstr "Nhấp lại để tuyên chiến với %s"
+
+msgid "< All civilizations"
+msgstr "< Tất cả các nền văn minh"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (không có đàm phán hòa bình cho %d thêm lượt)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Loại: %s Tính cách: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Mối quan hệ của chúng tôi: %s (ảnh hưởng đến %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Đồng minh: %s, ảnh hưởng %d"
+
+msgid "Protected by: "
+msgstr "Được bảo vệ bởi: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Mối quan hệ thay đổi trong một lượt %d khác"
+
+msgid "Resources: "
+msgstr "Tài nguyên: "
+
+msgid "When Friends:"
+msgstr "Khi là Bạn bè:"
+
+msgid "When Allies:"
+msgstr "Khi là Đồng minh:"
+
+msgid "You have a declaration of friendship."
+msgstr "Bạn có một tuyên bố về tình bạn."
+
+msgid "You have denounced them."
+msgstr "Bạn đã tố cáo họ."
+
+msgid "Go to on map"
+msgstr "Đi tới một điểm trên bản đồ"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Quà tặng vàng %d (+ảnh hưởng %d)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Xây %s tại %s (200 vàng)"
+
+msgid "Revoke protection"
+msgstr "Thu hồi bảo vệ"
+
+msgid "Click again: revoke protection?"
+msgstr "Bấm lại: thu hồi bảo vệ?"
+
+msgid "Pledge to protect"
+msgstr "Cam kết bảo vệ Thành bang"
+
+msgid "Click again: declare protection?"
+msgstr "Bấm lại: tuyên bố bảo vệ?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Lấy vàng %d (ảnh hưởng -15)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Lấy công nhân (ảnh hưởng -50)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Hôn nhân ngoại giao (vàng %d)"
+
+msgid "Click again: they join your empire"
+msgstr "Bấm lần nữa: họ gia nhập đế chế của bạn"
+
+msgid "Negotiate peace"
+msgstr "Đàm phán hòa bình"
+
+msgid "Click again: make peace?"
+msgstr "Bấm lại: làm hòa?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Tình bạn được trao tặng - chờ đợi câu trả lời của họ"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Đưa ra lời tuyên bố tình bạn (30 lượt)"
+
+msgid "Denounce (30 turns)"
+msgstr "Tố cáo (30 lượt)"
+
+msgid "Click again: denounce %s?"
+msgstr "Bấm lại: tố cáo %s?"
+
+msgid "Click again to declare war"
+msgstr "Nhấn lần nữa để tuyên chiến"
+
+msgid "Demands:"
+msgstr "Yêu cầu:"
+
+msgid "  (asked)"
+msgstr "  (đã hỏi)"
+
+msgid "  (they agreed)"
+msgstr "  (họ đã đồng ý)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Sẵn sàng cống nạp (ít nhất 0 để lấy vàng, ít nhất 30 và thành phố cỡ 4 cho một công nhân):"
+
+msgid "  (+%d influence)"
+msgstr "  (+Ảnh hưởng của %d)"
+
+msgid "  %d turns remaining"
+msgstr "  %d lượt còn lại"
+
+msgid "Unforgivable"
+msgstr "Không thể tha thứ"
+
+msgid "Enemy"
+msgstr "Kẻ địch"
+
+msgid "Afraid"
+msgstr "Sợ hãi"
+
+msgid "Competitor"
+msgstr "Đối thủ"
+
+msgid "Favorable"
+msgstr "Yêu thích"
+
+msgid "Friend"
+msgstr "Bạn bè"
+
+msgid "Ally"
+msgstr "Đồng minh"
+
+msgid "Pantheon"
+msgstr "Vị thần/văn hoá được tôn thờ"
+
+msgid "Founder"
+msgstr "Sự Sáng lập"
+
+msgid "Follower"
+msgstr "Sự Sùng đạo"
+
+msgid "Enhancer"
+msgstr "Sự Cải thiện Tôn giáo"
+
+msgid "Any"
+msgstr "Bất kỳ"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Chọn %d thêm niềm tin%s"
+
+msgid "so far: %s"
+msgstr "cho đến nay: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Bây giờ hãy chọn một biểu tượng cho tôn giáo của bạn (ở trên)."
+
+msgid "Follow this pantheon"
+msgstr "Theo dõi đền thờ này"
+
+msgid "Found %s"
+msgstr "Đã tìm thấy %s"
+
+msgid "Enhance %s"
+msgstr "Tăng cường %s"
+
+msgid "Reform"
+msgstr "Cải cách"
+
+msgid "Confirm"
+msgstr "Xác nhận"
+
+msgid "Religion is off in this game."
+msgstr "Tôn giáo bị loại bỏ trong trò chơi này."
+
+msgid "Choose a pantheon belief"
+msgstr "Chọn một tín ngưỡng đền thờ"
+
+msgid "Found your religion"
+msgstr "Tìm thấy tôn giáo của bạn"
+
+msgid "Enhance your religion"
+msgstr "Nâng cao tôn giáo của bạn"
+
+msgid "Reform your religion"
+msgstr "Cải cách tôn giáo của bạn"
+
+msgid "No religion yet"
+msgstr "Chưa có tôn giáo"
+
+msgid "Your beliefs"
+msgstr "Niềm tin của bạn"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Không có gì để lựa chọn ngay bây giờ. Kiếm đức tin để thành lập một đền thờ; một Nhà tiên tri vĩ đại sáng lập (và sau đó nâng cao) một tôn giáo ở một trong những thành phố của bạn."
+
+msgid "Symbol:"
+msgstr "Biểu tượng:"
+
+msgid "Name: %s"
+msgstr "Tên: %s"
+
+msgid "(pick a symbol)"
+msgstr "(chọn một biểu tượng)"
+
+msgid "Rename..."
+msgstr "Đổi tên..."
+
+msgid "Choose any belief!"
+msgstr "Chọn bất kì một Tín ngưỡng nào!"
+
+msgid "Choose a %s belief!"
+msgstr "Hãy chọn một niềm tin %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (tôn giáo khác có nó)"
+
+msgid "  (you have it)"
+msgstr "  (bạn có nó)"
+
+msgid "  (not available)"
+msgstr "  (không có sẵn)"
+
+msgid "  (picked for another slot)"
+msgstr "  (được chọn cho vị trí khác)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Xoay %d %s tốc độ %s%s"
+
+msgid "max %d turns"
+msgstr "tối đa %d lượt"
+
+msgid "You have won a %s Victory!"
+msgstr "Bạn đã giành được Chiến thắng %s!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s đã giành được Chiến thắng %s!"
+
+msgid "You have been defeated."
+msgstr "Bạn đã bị đánh bại."
+
+msgid "One more turn...!"
+msgstr "Một lượt nữa ...!"
+
+msgid "Main menu (start a new game)"
+msgstr "Menu chính (bắt đầu một trò chơi mới)"
+
+msgid "Our status"
+msgstr "Tình trạng của chúng tôi"
+
+msgid "Global status"
+msgstr "Tình trạng toàn cầu"
+
+msgid "Rankings"
+msgstr "Xếp hạng"
+
+msgid "Charts"
+msgstr "Biểu đồ"
+
+msgid "Demographics"
+msgstr "Dân số học"
+
+msgid "%s Victory"
+msgstr "%s Chiến thắng"
+
+msgid "[done] "
+msgstr "[xong] "
+
+msgid "Rank"
+msgstr "Xếp hạng"
+
+msgid "Value"
+msgstr "Giá trị"
+
+msgid "Best"
+msgstr "Tốt nhất"
+
+msgid "Average / Worst"
+msgstr "Trung bình / Tệ nhất"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Giao dịch với %s Vàng của bạn %d, của họ %d"
+
+msgid "You can offer"
+msgstr "Bạn có thể cung cấp"
+
+msgid "You give"
+msgstr "Bạn cho"
+
+msgid "You get"
+msgstr "Bạn nhận được"
+
+msgid "They can offer"
+msgstr "Họ có thể cung cấp"
+
+msgid "Clear"
+msgstr "Xóa hết"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Bấm vào các mục ở cột bên ngoài để đặt chúng lên bàn; bấm vào chúng một lần nữa để loại bỏ chúng."
+
+msgid "%s would accept this."
+msgstr "%s sẽ chấp nhận điều này."
+
+msgid "%s wants more for this%s."
+msgstr "%s muốn nhiều hơn nữa cho %s này."
+
+msgid "about %d gold's worth"
+msgstr "về giá trị của vàng %d"
+
+msgid "Propose deal"
+msgstr "Đề xuất thỏa thuận"
+
+msgid "  %d turns"
+msgstr "  %d lượt"
+
+msgid "Gold_Per_Turn"
+msgstr "Vàng mỗi lượt"
+
+msgid "Not connected to the bridge"
+msgstr "Không kết nối với cầu"
+
+msgid "Bridge disconnected"
+msgstr "Cầu bị ngắt kết nối"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Cây cầu Unciv đi kèm chưa hoàn thiện. Cài đặt lại các tập tin trò chơi."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Không thể tìm thấy repo Unciv với cây cầu tại %s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Không tìm thấy Java 17 hoặc mới hơn (Unciv cần JDK 21). Cài đặt nó và đặt JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "Không thể viết %s"
+
+msgid "Couldn't start Gradle"
+msgstr "Không thể khởi động Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Không thể khởi động cầu Unciv đi kèm"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== giữ cò ở đây và kéo để di chuyển ====="
+
+msgid "Exit city"
+msgstr "Đóng thành phố"
+
+msgid "City"
+msgstr "Thành phố"
+
+msgid "BEING RAZED"
+msgstr "Bị san bằng"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Công dân chưa được chỉ định: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "bấm vào: hãy để thành phố đặt chúng"
+
+msgid "(%d/%d food)"
+msgstr "(Thực phẩm %d/%d)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Đói: mất một công dân trong %d biến %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Thực phẩm đi vào sản xuất trong khi đơn vị này được xây dựng"
+
+msgid "New citizen in %d turns %s"
+msgstr "Công dân mới trong %d chuyển sang %s"
+
+msgid "Not growing %s"
+msgstr "Không phát triển %s"
+
+msgid "(%d/%d culture)"
+msgstr "(Văn hóa %d/%d)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Biên giới phát triển theo %d chuyển sang %s"
+
+msgid "Borders have stopped growing"
+msgstr "Biên giới đã ngừng phát triển"
+
+msgid "In resistance for another %d turns"
+msgstr "Để chống lại một lượt %d khác"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "Chúng tôi yêu Ngày của Vua cho một lượt %d khác"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Yêu cầu %s (Chúng tôi yêu Ngày của Vua nếu bạn nhận được nó)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Thành phố phụ (đừng coi nó là con rối)"
+
+msgid "Stop razing city"
+msgstr "Dừng san bằng thành phố"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Nhấp lại để RAZE %s (nó đốt cháy một công dân trong một lượt)"
+
+msgid "Raze city"
+msgstr "San bằng thành phố"
+
+msgid "Citizen management"
+msgstr "Quản lý công dân"
+
+msgid "Reset citizens"
+msgstr "Đặt lại công dân"
+
+msgid "Avoid growth"
+msgstr "Tránh tăng trưởng"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Trọng tâm công dân (loại gạch mà thành phố thích làm việc):"
+
+msgid "Specialists"
+msgstr "Các Chuyên gia"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Chuyên gia thủ công (bấm vào để tự động)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Chuyên gia tự động (bấm vào để xem hướng dẫn)"
+
+msgid "Specialist"
+msgstr "Chuyên gia"
+
+msgid "Great people"
+msgstr "Những người tuyệt vời"
+
+msgid "Majority religion: %s"
+msgstr "Tôn giáo đa số: %s"
+
+msgid "Former holy city of %s"
+msgstr "Thành phố thánh cũ của %s"
+
+msgid "Holy city of %s"
+msgstr "Thánh thành %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d người theo dõi, áp lực %+d"
+
+msgid "Specialist buildings"
+msgstr "Tòa nhà chuyên dụng"
+
+msgid "  (free)"
+msgstr "  (miễn phí)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Nhấp vào một ô trên bàn: các ô đã được xử lý sẽ ngừng hoạt động, các công dân tự do sẽ chuyển sang các ô chưa được xử lý, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "và gạch có giá có thể được mua (nhấp hai lần)."
+
+msgid "Tile"
+msgstr "Ô"
+
+msgid "city centre"
+msgstr "trung tâm thành phố"
+
+msgid "worked (locked)"
+msgstr "đã hoạt động (đã khóa)"
+
+msgid "not worked"
+msgstr "không hoạt động"
+
+msgid "gives its yield without a citizen"
+msgstr "mang lại sản lượng mà không có công dân"
+
+msgid "gives nothing"
+msgstr "không mang lại gì"
+
+msgid "blockaded by an enemy"
+msgstr "bị kẻ thù phong tỏa"
+
+msgid "worked by %s"
+msgstr "được thực hiện bởi %s"
+
+msgid "another city"
+msgstr "thành phố khác"
+
+msgid "too far to work"
+msgstr "quá xa để làm việc"
+
+msgid "can be bought"
+msgstr "có thể được mua"
+
+msgid "not yours"
+msgstr "không phải của bạn"
+
+msgid "Resource: %s"
+msgstr "Tài nguyên: %s"
+
+msgid "Improvement: %s"
+msgstr "Cải tiến: %s"
+
+msgid "Owned by %s"
+msgstr "Thuộc quyền sở hữu của %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Khóa (giữ một công dân ở đây)"
+
+msgid "Stop working"
+msgstr "Ngừng làm việc"
+
+msgid "Unlock"
+msgstr "Mở khóa"
+
+msgid "Work this tile"
+msgstr "Làm việc với ô này"
+
+msgid "Work and lock"
+msgstr "Làm việc và khóa"
+
+msgid "Click again: buy for %d gold"
+msgstr "Bấm lại: mua vàng %d"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Mua vàng %d (bạn có %d)"
+
+msgid "Production"
+msgstr "Sản xuất"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Vàng %d Niềm tin %d Sản xuất %+d một lượt"
+
+msgid "Being built"
+msgstr "Đang được xây dựng"
+
+msgid "Nothing being built - pick something below"
+msgstr "Không có gì đang được xây dựng - hãy chọn thứ gì đó bên dưới"
+
+msgid "   %d turns"
+msgstr "   %d lượt"
+
+msgid "Hide what can't be built yet"
+msgstr "Ẩn những gì chưa thể xây dựng được"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Hiển thị những gì chưa thể được xây dựng (và tại sao)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Nhấp vào thứ gì đó để xem nó hoạt động như thế nào, sau đó xây dựng nó ngay bây giờ, thêm nó vào hàng đợi hoặc mua nó."
+
+msgid "   %d production"
+msgstr "   Sản xuất %d"
+
+msgid ", %d turns"
+msgstr ", %d lượt"
+
+msgid "   (built)"
+msgstr "   (được xây dựng)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "%s của nó nằm trên ô bạn chọn trên bàn sau Xây dựng ngay / Thêm vào hàng đợi / Mua."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "%s của nó nằm trên ô hình tròn được chọn khi nó được xếp hàng."
+
+msgid "Build now"
+msgstr "Xây dựng ngay bây giờ"
+
+msgid "Add to queue"
+msgstr "Thêm vào hàng chờ"
+
+msgid "Click again: buy for %d %s"
+msgstr "Bấm lại: mua với giá %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Mua với giá %d %s"
+
+msgid "you have %d"
+msgstr "bạn có %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Mua: di chuyển căn ra khỏi thành phố trước"
+
+msgid "Click again: sell for %d gold"
+msgstr "Bấm lại: bán lấy vàng %d"
+
+msgid "Sell for %d gold"
+msgstr "Bán lấy vàng %d"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia - giữ cò ở đây và kéo để di chuyển ====="
+
+msgid "<  Back"
+msgstr "< Quay lại"
+
+msgid "This entry couldn't be loaded."
+msgstr "Không thể tải mục này."
+
+msgid "Building"
+msgstr "Công trình"
+
+msgid "Wonder"
+msgstr "Kì quan"
+
+msgid "Unit"
+msgstr "Đơn vị"
+
+msgid "Resource"
+msgstr "Nguồn lực"
+
+msgid "Improvement"
+msgstr "Cải tiến"
+
+msgid "Tile Improvements"
+msgstr "Cải thiện cho ô"
+
+msgid "Technology"
+msgstr "Công nghệ"
+
+msgid "Promotion"
+msgstr "Nâng cấp"
+
+msgid "Promotions"
+msgstr "Thăng cấp"
+
+msgid "Policy"
+msgstr "Chính sách"
+
+msgid "Belief"
+msgstr "niềm tin"
+
+msgid "Religions and Beliefs"
+msgstr "Tôn giáo và Tín ngưỡng"
+
+msgid "Nation"
+msgstr "Quốc gia"
+
+msgid "Nations"
+msgstr "Các quốc gia"
+
+msgid "Terrain"
+msgstr "Địa hình"
+
+msgid "Terrains"
+msgstr "Địa hình"
+
+msgid "Unit types"
+msgstr "Loại đơn vị"
+
+msgid "Unit Names"
+msgstr "Tên đơn vị"
+
+msgid "Victory Types"
+msgstr "Loại Chiến thắng"
+
+msgid "Thumbstick"
+msgstr "Cần điều khiển"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Trigger"
+msgstr "Cò"
+
+msgid "Grip"
+msgstr "Nút nắm"
+
+msgid "Trackpad"
+msgstr "Bàn di chuột"
+
+msgid "Button 1"
+msgstr "Nút 1"
+
+msgid "Button 2"
+msgstr "Nút 2"
+
+msgid "Cities"
+msgstr "Thành phố"
+
+msgid "None"
+msgstr "Không có"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Chưa được khám phá (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - Lãnh thổ %s"
+
+msgid " - city of %s"
+msgstr " - thành phố %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Tự động"
+
+msgid "Sleep"
+msgstr "Nghỉ"
+
+msgid "Fortify"
+msgstr "Phòng Thủ"
+
+msgid "Guard"
+msgstr "Canh Gác"
+
+msgid "Explore"
+msgstr "Thám hiểm"
+
+msgid "Upgrade"
+msgstr "Nâng cấp"
+
+msgid "Transform"
+msgstr "Biến đổi"
+
+msgid "Repair"
+msgstr "Sửa chữa"
+
+msgid "Skip"
+msgstr "Bỏ qua"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s Xoay %d (%s)"
+
+msgid "%d BC"
+msgstr "%d BC"
+
+msgid "%d AD"
+msgstr "%d QUẢNG CÁO"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Không nghiên cứu bất cứ điều gì - hãy chọn một công nghệ!"
+
+msgid "Point at a tile"
+msgstr "Chỉ vào một ô"
+
+msgid "Unexplored"
+msgstr "Chưa được khám phá"
+
+msgid "Send a unit to find out what's here."
+msgstr "Gửi một đơn vị để tìm hiểu những gì ở đây."
+
+msgid "Natural wonder: %s"
+msgstr "Kỳ quan thiên nhiên: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Cải tiến: %s%s"
+
+msgid "River"
+msgstr "Sông"
+
+msgid "City of %s  (population %d)"
+msgstr "Thành phố %s (dân số %d)"
+
+msgid "%s territory"
+msgstr "Lãnh thổ %s"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% để phòng thủ đơn vị"
+
+msgid "Impassable"
+msgstr "Không thể vượt qua"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Hiện không có mặt - nhìn thấy lần cuối như thế này"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Tấn công %s: gây ~%d, lấy ~%d"
+
+msgid "Science"
+msgstr "Khoa học"
+
+msgid "Happiness"
+msgstr "Hạnh phúc"
+
+msgid "Malcontent"
+msgstr "nội dung xấu"
+
+msgid "Culture"
+msgstr "Văn hóa"
+
+msgid "Faith"
+msgstr "Niềm tin"
+
+msgid "Population"
+msgstr "Dân số"
+
+msgid "Food"
+msgstr "Lương thực"
+
+msgid "Shift"
+msgstr "Chữ hoa"
+
+msgid "Space"
+msgstr "Dấu cách"
+
+msgid "< Del"
+msgstr "< Xóa"
+
+msgid "Recenter"
+msgstr "Căn giữa lại"
+
+msgid "Move a unit!"
+msgstr "Di chuyển đơn vị!"
+
+msgid "hold to move onto a tile"
+msgstr "giữ để di chuyển lên một ô"
+
+msgid "Connecting..."
+msgstr "Đang kết nối..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Mất kết nối với cầu - đang thử lại..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Đang tìm kiếm cây cầu trên 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Không thể khởi động cầu: %s\nBắt đầu bằng tay với: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Đang khởi động cầu Unciv... (xây dựng lại nếu mã của nó thay đổi - có thể mất một phút)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Cây cầu dừng lại trước khi nó sẵn sàng. Từ %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Công cụ Unciv không có trong ứng dụng này (plugin UncivBridge bị thiếu khi xuất)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Động cơ Unciv không thể khởi động: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Động cơ của Unciv đã dừng:\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Khởi động động cơ của Unciv: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Một cây cầu Unciv cũ hơn (giao thức v%d) vẫn đang chạy - khởi động lại nó bằng mã hiện tại..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Không thể dừng lại cây cầu cũ - hãy tiếp tục với nó. Một số thứ có thể không hoạt động."
+
+msgid "Reconnected to the bridge."
+msgstr "Đã kết nối lại với cầu."
+
+msgid "Bridge error: %s"
+msgstr "Lỗi cầu: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Cảnh báo: cây cầu nói giao thức v%d nhưng khách hàng này mong đợi v%d - cập nhật cả hai kho lưu trữ cùng nhau. Một số thứ có thể không hoạt động."
+
+msgid "Connected to Unciv %s"
+msgstr "Đã kết nối với Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "Không thể tải bản lưu: %s"
+
+msgid "Your move."
+msgstr "Di chuyển của bạn."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Bắt đầu một trò chơi mới... (bản đồ lớn hơn sẽ mất nhiều thời gian hơn)"
+
+msgid "Starting a new game..."
+msgstr "Bắt đầu một trò chơi mới..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Không thể bắt đầu trò chơi: %s"
+
+msgid "saved "
+msgstr "đã lưu "
+
+msgid "%s, turn %d"
+msgstr "%s, quay %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Menu chính: chỉ vào thẻ phía trên bàn."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s trên bản đồ %s %s, %s, %d AI, %d thành bang"
+
+msgid "A random civilization"
+msgstr "Một nền văn minh ngẫu nhiên"
+
+msgid "Loading %s..."
+msgstr "Đang tải %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Không thể tải %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Không thể đọc được những quy tắc đó: %s"
+
+msgid "getState failed: %s"
+msgstr "getState không thành công: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Phần tổng quan, bảng thông tin, màn hình lớn và các bảng điều khiển đã trở lại vị trí quen thuộc."
+
+msgid "Name your religion"
+msgstr "Đặt tên cho tôn giáo của bạn"
+
+msgid "Your religion"
+msgstr "Tôn giáo của bạn"
+
+msgid "Researching %s."
+msgstr "Đang nghiên cứu %s."
+
+msgid "Adopted %s."
+msgstr "Đã thông qua %s."
+
+msgid "You declared war on %s!"
+msgstr "Bạn đã tuyên chiến với %s!"
+
+msgid "Unit movements"
+msgstr "phong trào đơn vị"
+
+msgid "Tile yields"
+msgstr "Năng suất mỗi ô"
+
+msgid "Worked tiles"
+msgstr "Ô đang được khai thác"
+
+msgid "Resources and improvements"
+msgstr "Tài nguyên và cải tiến"
+
+msgid "Improvement pictures"
+msgstr "Hình ảnh cải tiến"
+
+msgid "Unit icons"
+msgstr "biểu tượng đơn vị"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Giữ %s trên ô để di chuyển một đơn vị lên đó."
+
+msgid "the trigger"
+msgstr "cò súng"
+
+msgid "the mouse button"
+msgstr "nút chuột"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Tấn công %s\ndeal ~%d, lấy ~%d\nnhấp lại để tấn công"
+
+msgid "a unit"
+msgstr "một đơn vị"
+
+msgid "Can't get there"
+msgstr "không thể đến đó"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "Không còn chỗ trên ô này\n%s %s đã có sẵn"
+
+msgid "\nSwap places on the card"
+msgstr "\nHoán đổi vị trí trên thẻ"
+
+msgid "Move here"
+msgstr "Di chuyển đến đây"
+
+msgid "Move here: %d turns"
+msgstr "Di chuyển tới đây: %d lượt"
+
+msgid "\nsharing the tile with %s"
+msgstr "\nchia sẻ ô với %s"
+
+msgid "\nclick again to go"
+msgstr "\nnhấp lần nữa để tiếp tục"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s đang trên đường đi - nó sẽ tiếp tục ở lượt tiếp theo."
+
+msgid "No attack happened."
+msgstr "Không có cuộc tấn công nào xảy ra."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s tấn công %s: gây sát thương %d, lấy %d."
+
+msgid "  City captured!"
+msgstr "  Thành phố bị bắt!"
+
+msgid "  %s destroyed!"
+msgstr "  %s đã bị phá hủy!"
+
+msgid "  Your %s was lost."
+msgstr "  %s của bạn đã bị mất."
+
+msgid "Improvement order cancelled."
+msgstr "Lệnh cải tiến bị hủy."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: xây dựng %s (%d lượt)."
+
+msgid "Rename %s"
+msgstr "Đổi tên %s"
+
+msgid "%s is now called %s."
+msgstr "%s hiện được gọi là %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Đặt tên cho %s của bạn (trống: không có tên)"
+
+msgid "Renamed to %s."
+msgstr "Đổi tên thành %s."
+
+msgid "Name removed."
+msgstr "Đã xóa tên."
+
+msgid "%s: on the way."
+msgstr "%s: đang trên đường tới."
+
+msgid "%s: coup orders given."
+msgstr "%s: lệnh đảo chính được đưa ra."
+
+msgid "See your stats breakdown"
+msgstr "Xem bảng phân tích số liệu thống kê của bạn"
+
+msgid "Selected %s."
+msgstr "Đã chọn %s."
+
+msgid "the unit"
+msgstr "đơn vị"
+
+msgid "Upgraded to %s."
+msgstr "Đã nâng cấp lên %s."
+
+msgid "Enter city screen"
+msgstr "Vào màn hình thành phố"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Nhìn ra thành phố: %s. Bấm vào các ô để làm việc với chúng; Thoát khỏi thành phố (hoặc B/Esc) quay lại bản đồ."
+
+msgid "Back to the map."
+msgstr "Quay lại bản đồ."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "Không có nơi nào trong %s để đặt %s."
+
+msgid "the city"
+msgstr "thành phố"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Chọn ô cho %s (vòng màu đỏ) hoặc Esc / B để hủy."
+
+msgid "Cancelled."
+msgstr "Đã hủy."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Chọn một trong các ô có hình chuông (Hủy Esc/B)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: sự cải tiến là ở đó."
+
+msgid "Bought the tile for %d gold."
+msgstr "Mua gạch lấy vàng %d."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Mua với giá %d vàng\nnhấp lại để mua"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Tiêu tốn %d gold\n(không đủ vàng)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Công dân được chỉ định lại (khóa đã được xóa)."
+
+msgid "Annexed."
+msgstr "Phụ lục."
+
+msgid "%s will build %s next."
+msgstr "%s sẽ xây dựng %s tiếp theo."
+
+msgid "%s added to the queue."
+msgstr "%s đã được thêm vào hàng đợi."
+
+msgid "Bought %s."
+msgstr "Đã mua %s."
+
+msgid "Sold the %s."
+msgstr "Đã bán %s."
+
+msgid "%s added to %s's queue."
+msgstr "%s đã được thêm vào hàng đợi của %s."
+
+msgid "Bought %s in %s."
+msgstr "Đã mua %s tại %s."
+
+msgid "Experience"
+msgstr "Điểm kinh nghiệm"
+
+msgid "%s is now %s."
+msgstr "%s hiện là %s."
+
+msgid "Pick something to research."
+msgstr "Chọn một cái gì đó để nghiên cứu."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Bạn có thể áp dụng chính sách mới - xem tab Chính sách trên màn hình lớn."
+
+msgid "%s is heading here"
+msgstr "%s đang hướng tới đây"
+
+msgid "The unit"
+msgstr "đơn vị"
+
+msgid "Are you sure?"
+msgstr "Bạn có chắc không?"
+
+msgid "Click again to confirm."
+msgstr "Bấm vào lần nữa để xác nhận."
+
+msgid "%s: click a %stile"
+msgstr "%s: nhấp vào ô %s"
+
+msgid "highlighted "
+msgstr "đánh dấu "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s - nhấp vào ô trên bản đồ (hoặc Hủy trên thẻ)."
+
+msgid "Move here: click a tile"
+msgstr "Di chuyển đến đây: nhấp vào một ô"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Di chuyển %s - nhấp vào ô trên bản đồ (hoặc Hủy trên thẻ)."
+
+msgid "No enemies in range of %s."
+msgstr "Không có kẻ địch trong phạm vi %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Ném bom từ %s: nhấp vào kẻ địch có vòng đỏ (nhấp vào thành phố để hủy)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Chọn một trong các ô được đánh dấu (hoặc Hủy)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bắn phá %s: %d sát thương%s."
+
+msgid "Destroyed!"
+msgstr "Bị phá hủy!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Kết thúc lượt đi? Nhấn End Turn lần nữa để xác nhận."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Lượt kết thúc - người chơi AI đang di chuyển..."
+
+msgid "Turn %d"
+msgstr "Lượt %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "TRÒ CHƠI KẾT THÚC - %s thắng (%s thắng)"
+
+msgid "A %s has been born!"
+msgstr "%s đã ra đời!"
+
+msgid "You voted for %s."
+msgstr "Bạn đã bình chọn cho %s."
+
+msgid "You abstained."
+msgstr "Bạn đã bỏ phiếu trắng."
+
+msgid "ATTACK"
+msgstr "TẤN CÔNG"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Biến %d (%s) Vàng %d (%+d) Khoa học %+d Hạnh phúc %d"
+
+msgid "Researching: %s"
+msgstr "Đang nghiên cứu: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - rẽ %d"
+
+msgid "Game"
+msgstr "trò chơi"
+
+msgid "Save game as"
+msgstr "Lưu trò chơi với tên"
+
+msgid "Saved as \"%s\"."
+msgstr "Được lưu dưới dạng \"%s\"."
+
+msgid "Couldn't save: %s"
+msgstr "Không thể lưu: %s"
+
+msgid "Open the options table"
+msgstr "Mở bảng tùy chọn"
+
+msgid "The tutorials will show again from the start."
+msgstr "Các hướng dẫn sẽ hiển thị lại từ đầu."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Không thể đặt lại hướng dẫn: %s"
+
+msgid "The panels are back where they started."
+msgstr "Các tấm đã trở lại nơi chúng bắt đầu."
+
+msgid "The table is back in the middle of the background."
+msgstr "Cái bàn trở lại giữa nền."
+
+msgid "Civilopedia: %s"
+msgstr "Civilopedia: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Không mở được Civilopedia: %s"
+
+msgid "Opened %s in your browser."
+msgstr "Đã mở %s trong trình duyệt của bạn."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Nhiệm vụ hướng dẫn bị ẩn - nhiệm vụ tiếp theo sẽ hiển thị khi nó xuất hiện."
+
+msgid "Move the table"
+msgstr "Di chuyển bàn"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Di chuyển bàn: chỉ vào một điểm trong khung cảnh và %s để đặt nó ở đó. %s biến nó. %s khi bạn hoàn tất."
+
+msgid "pull the trigger"
+msgstr "bóp cò"
+
+msgid "The right stick"
+msgstr "Cây gậy bên phải"
+
+msgid "Press A or B"
+msgstr "Nhấn A hoặc B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Bàn sẽ ở lại đây. Chọn Cài đặt > Giao diện > Trở về giữa để đưa bàn về vị trí ban đầu."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Đó không phải là trên phong cảnh - chỉ vào mặt đất ở đâu đó."
+
+msgid "put the table here"
+msgstr "đặt bàn ở đây"
+
+msgid "turn the scenery"
+msgstr "xoay chuyển khung cảnh"
+
+msgid "done moving the table"
+msgstr "đã di chuyển bàn xong"
+
+msgid "point, click (hold: aim)"
+msgstr "trỏ, bấm (giữ: nhắm)"
+
+msgid "Found city"
+msgstr "Lập thành phố"
+
+msgid "Cancel typing"
+msgstr "Hủy gõ"
+
+msgid "Leave the city"
+msgstr "Rời khỏi thành phố"
+
+msgid "table height"
+msgstr "chiều cao bàn"
+
+msgid "slide the map"
+msgstr "trượt bản đồ"
+
+msgid "turn / size the table"
+msgstr "xoay/kích thước bàn"
+
+msgid "Next unit"
+msgstr "Đơn vị kế tiếp"
+
+msgid "Previous unit"
+msgstr "Đơn vị trước"
+
+msgid "zoom the map"
+msgstr "phóng to bản đồ"
+
+msgid "table height, click: recenter"
+msgstr "chiều cao của bảng, nhấp vào: gần đây hơn"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Có điều gì đó chưa kết thúc - hãy tiếp tục. (Nếu tình trạng này tiếp tục xảy ra, nhật ký sẽ cho biết lý do.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "TẤN CÔNG %s (%s, %d/%d HP)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  dự kiến: giải quyết %d, lấy %d"
+
+msgid "Luxury"
+msgstr "sang trọng"
+
+msgid "Strategic"
+msgstr "Chiến lược"
+
+msgid "Unit icons over the unit models"
+msgstr "Biểu tượng đơn vị trên các mô hình đơn vị"
+
+msgid "Overview: point and click to go there"
+msgstr "Tổng quan: trỏ và nhấp để đến đó"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (click để chuyển %s)"
+
+msgid "Overview"
+msgstr "Tổng quan"
+
+msgid "Stats"
+msgstr "Chỉ số"
+
+msgid "Trades"
+msgstr "Giao dịch"
+
+msgid "Politics"
+msgstr "Chính trị"
+
+msgid "Notifications"
+msgstr "Thông báo"
+
+msgid "Spy"
+msgstr "Gián điệp"
+
+msgid "War"
+msgstr "Chiến tranh"
+
+msgid "DefensivePact"
+msgstr "Hiệp ước phòng thủ"
+
+msgid "Neutral"
+msgstr "Trung lập"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Tổng quan về đế chế - giữ cò ở đây và kéo để di chuyển ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Bạn chưa có gián điệp - họ đến với thời đại mới."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Điệp viên (chọn một cái rồi đi đâu)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (thứ hạng %d) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Hủy bỏ cuộc đảo chính"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Nhấp lại: thực hiện một cuộc đảo chính (cơ hội %d%%)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Thực hiện một cuộc đảo chính (cơ hội %d%%)"
+
+msgid "Where to"
+msgstr "Nơi để"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Nơi ẩn náu của gián điệp (mang %s về nhà)"
+
+msgid "   spies: "
+msgstr "   gián điệp: "
+
+msgid "Click again (%s)"
+msgstr "Nhấp lại (%s)"
+
+msgid "You have no cities yet."
+msgstr "Bạn chưa có thành phố nào."
+
+msgid "Name"
+msgstr "Tên"
+
+msgid "Defence"
+msgstr "Phòng thủ"
+
+msgid "Open the city view"
+msgstr "Mở tầm nhìn thành phố"
+
+msgid "Resistance"
+msgstr "Kháng chiến"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "Đòi hỏi %s"
+
+msgid " (holy)"
+msgstr " (thánh)"
+
+msgid "Total %d"
+msgstr "Tổng số %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Chuyển đổi vàng thành khoa học: %d%%"
+
+msgid "Great person points"
+msgstr "Điểm Vĩ nhân"
+
+msgid "Points"
+msgstr "Điểm"
+
+msgid "Per turn"
+msgstr "Mỗi lượt"
+
+msgid "Total"
+msgstr "Tổng cộng"
+
+msgid "Pending trades"
+msgstr "Các giao dịch đang chờ xử lý"
+
+msgid "Current trades"
+msgstr "Các giao dịch hiện tại"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Không có giao dịch nào đang diễn ra. Tạo một cái từ tab Ngoại giao của màn hình lớn."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Tiếp tế đơn vị: đã dùng %d / %d (cơ bản %d, thành phố %d, dân số %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Thiếu hụt %d: Sản xuất %d%% ở mọi thành phố. Tăng nguồn cung cấp hoặc giải tán các đơn vị của bạn."
+
+msgid "Doing"
+msgstr "Hành động hiện tại"
+
+msgid "Closest city"
+msgstr "Thành phố gần nhất"
+
+msgid "Click again: %d gold"
+msgstr "Bấm lại: %d vàng"
+
+msgid "%s %dg"
+msgstr "%s %dg"
+
+msgid "Show global politics"
+msgstr "Hiển thị chính trị toàn cầu"
+
+msgid "Show diagram"
+msgstr "Hiển thị sơ đồ"
+
+msgid "Hide city-states"
+msgstr "Ẩn thành phố"
+
+msgid "Include city-states"
+msgstr "Bao gồm các thành phố"
+
+msgid "   %s civilizations in the game"
+msgstr "   Nền văn minh %s trong trò chơi"
+
+msgid "Score %d"
+msgstr "Điểm %d"
+
+msgid "Defeated"
+msgstr "Bị đánh bại"
+
+msgid "At war with %s"
+msgstr "Đang có chiến tranh với %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Hiệp ước phòng thủ với %s (%d lượt)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Bạn bè với %s (%d lượt)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Bị tố cáo %s (%d lượt)"
+
+msgid "Allied with %s"
+msgstr "Liên minh với %s"
+
+msgid "Relations"
+msgstr "Mối quan hệ"
+
+msgid "Defensive pact"
+msgstr "Hiệp ước phòng thủ"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Bạn chưa có bất kỳ nguồn lực xa xỉ hoặc chiến lược nào."
+
+msgid "Unimproved"
+msgstr "Không được cải thiện"
+
+msgid "Trade offer"
+msgstr "Đề nghị giao dịch"
+
+msgid "Stockpile"
+msgstr "Dự trữ"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Chưa được cải thiện: các ô trên vùng đất của bạn (hoặc các quốc gia thành phố đồng minh) có tài nguyên này nhưng không có cải thiện để sử dụng nó.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: các thành phố kỷ niệm / yêu cầu điều đó cho Ngày We Love The King."
+
+msgid "Religions to be founded: %s"
+msgstr "Tôn giáo được thành lập: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Niềm tin tối thiểu cho %s tiếp theo: %d"
+
+msgid "Great Prophet"
+msgstr "Nhà Tiên tri Vĩ đại"
+
+msgid "Religious status: %s"
+msgstr "Tình trạng tôn giáo: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Chưa có tôn giáo hay đền thờ nào được thành lập."
+
+msgid "%s name:"
+msgstr "Tên %s:"
+
+msgid "Founding civ:"
+msgstr "Công dân sáng lập:"
+
+msgid "Holy city:"
+msgstr "Thánh thành:"
+
+msgid "Cities following this religion:"
+msgstr "Các thành phố theo tôn giáo này:"
+
+msgid "Followers of this religion:"
+msgstr "Những người theo tôn giáo này:"
+
+msgid "Status"
+msgstr "Trạng thái"
+
+msgid "Location"
+msgstr "Vị trí"
+
+msgid "Unknown"
+msgstr "Không xác định"
+
+msgid "Owned"
+msgstr "Sở hữu"
+
+msgid "Known"
+msgstr "Đã biết"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s Xoay %d %s"
+
+msgid "Current turn  |"
+msgstr "Lượt hiện tại |"
+
+msgid "General"
+msgstr "Tướng Quân"
+
+msgid "No notifications yet."
+msgstr "Chưa có thông báo nào."
+
+msgid "Tech"
+msgstr "Công nghệ"
+
+msgid "Panel"
+msgstr "bảng điều khiển"
+
+msgid "Nothing to show."
+msgstr "Không có gì để hiển thị."
+
+msgid "Select a unit"
+msgstr "Chọn một đơn vị"
+
+msgid "Left-click it"
+msgstr "Nhấp chuột trái vào nó"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Điểm + kích hoạt bên phải: thẻ của nó bật lên phía trên nó"
+
+msgid "Move / attack"
+msgstr "Di chuyển/tấn công"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Nhấp vào một ô để nhắm, một lần nữa để đi"
+
+msgid "The same with the laser"
+msgstr "Tương tự với tia laser"
+
+msgid "Open a city"
+msgstr "Mở một thành phố"
+
+msgid "Click it"
+msgstr "Bấm vào nó"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Điểm + kích hoạt bên phải: thẻ của nó nổi phía trên thành phố"
+
+msgid "Scroll a card"
+msgstr "Cuộn một thẻ"
+
+msgid "Mouse wheel"
+msgstr "Con lăn chuột"
+
+msgid "Point at it + right stick"
+msgstr "Chỉ vào nó + gậy bên phải"
+
+msgid "Move the view"
+msgstr "Di chuyển chế độ xem"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Quỹ đạo kéo phải, thu phóng bánh xe, WASD / chảo kéo giữa"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Tay cầm + gậy: trái/phải lật bàn, lên/xuống cân nó"
+
+msgid "Table height"
+msgstr "Chiều cao bàn"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Hoặc dán lên/xuống (cái bên phải khi không trỏ vào thẻ)"
+
+msgid "Zoom the map"
+msgstr "Thu phóng bản đồ"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - hoặc Ctrl + bánh xe"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Cầm cò + tay đó đưa lên/xuống"
+
+msgid "Slide the map"
+msgstr "Trượt bản đồ"
+
+msgid "WASD, or click the overview"
+msgstr "WASD hoặc nhấp vào tổng quan"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Giữ một tay cầm và kéo; hoặc chỉ vào phần tổng quan + kích hoạt"
+
+msgid "Move a board"
+msgstr "Di chuyển một bảng"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Giữ cò ở dải trên cùng của nó (hoặc trên bảng thông tin) và di chuyển"
+
+msgid "A, or the End turn button on the table"
+msgstr "A, hoặc nút End bật trên bàn"
+
+msgid "Found a city"
+msgstr "Tìm thấy một thành phố"
+
+msgid "Next / previous unit"
+msgstr "Đơn vị tiếp theo / trước đó"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Nút thiết bị nhàn rỗi trên bàn"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Cây công nghệ, chính sách, ngoại giao"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Thẻ đeo tay, hoặc các nút trên bảng"
+
+msgid "Empire overview"
+msgstr "Tổng quan về đế chế"
+
+msgid "Always up, off to your right"
+msgstr "Luôn luôn lên, lệch về bên phải của bạn"
+
+msgid "The Settings button on the table"
+msgstr "Nút Cài đặt trên bàn"
+
+msgid "The Civilopedia button on the table"
+msgstr "Nút Civilopedia trên bàn"
+
+msgid "Close / deselect"
+msgstr "Đóng/bỏ chọn"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B đóng bàn phím và ngắm cảnh thành phố"
+
+msgid "Recenter the table"
+msgstr "Gần lại bảng"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Nhấp chuột trái hoặc nút Gần đây"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Cài đặt - giữ cò ở đây và kéo để di chuyển ====="
+
+msgid "Tables"
+msgstr "Bàn"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Di chuyển bảng đến bất kỳ vị trí nào trong khung cảnh nền - tiện dụng ở những bảng lớn như bản đồ được chuyển đổi. "
+
+msgid "%d%% translated"
+msgstr "%d%% đã dịch"
+
+msgid "Notification log keeps"
+msgstr "Nhật ký thông báo lưu giữ"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Tab Thông báo của phần tổng quan lưu giữ bao nhiêu lượt tin nhắn."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Hướng dẫn của Unciv: một thông báo khi có điều gì đó mới xuất hiện và một thẻ nhiệm vụ với điều tiếp theo cần thử."
+
+msgid "Reset"
+msgstr "Cài lại"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Hiệu ứng âm thanh riêng của Unciv. Chúng được đọc từ thư mục Unciv bên cạnh thư mục này khi trò chơi chạy; đặt tên của riêng bạn vào ~/.unciv-vr/Sounds dưới cùng tên để thay thế chúng."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "Đã tìm thấy âm thanh %d. Âm thanh tấn công của mọi đơn vị đều đến từ bộ quy tắc, giống như của Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Không tìm thấy âm thanh nào. Họ sống trong android/assets/sounds của Unciv, bên cạnh thư mục này."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Các bảng có danh sách trên đó, được xây dựng từ những gì trò chơi biết. Trong VR họ đứng quanh bàn "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(giữ cò trên dải dọc theo phía trên để di chuyển); trên máy tính để bàn họ ngồi ở phía bên trái."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Bảng điều khiển là một thư mục có panel.json - xem panels/README.md. Đặt bảng của bạn vào %s."
+
+msgid "Put them back"
+msgstr "Đặt chúng trở lại"
+
+msgid "(by %s)"
+msgstr "(bởi %s)"
+
+msgid "Every turn"
+msgstr "Mỗi lượt"
+
+msgid "Every %d turns"
+msgstr "Mỗi lượt %d"
+
+msgid "not connected"
+msgstr "không được kết nối"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (khách hàng này mong đợi v%s)"
+
+msgid "Tilesets"
+msgstr "Bộ ô bản đồ"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR hoạt động theo Giấy phép Công cộng Mozilla 2.0, giống như Unciv. Các biểu tượng là của riêng Unciv, của nhiều tác giả "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "theo giấy phép CC BY / CC BY-SA / CC0 (xem CREDITS.md và docs/Credits.md của Unciv). Ngói, đơn vị, nền "
+
+msgid "and table models are Unciv VR's own."
+msgstr "và các mẫu bàn là của riêng Unciv VR."
+
+msgid "%s speed"
+msgstr "Tốc độ %s"
+
+msgid "%s map"
+msgstr "Bản đồ %s"
+
+msgid "%s, turn %s"
+msgstr "%s, quay %s"
+
+msgid "by "
+msgstr "bởi "
+
+msgid "  -  from %s"
+msgstr "  - từ %s"
+
+msgid "Move unit"
+msgstr "Di chuyển đơn vị"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Chỉ vào một trong các đơn vị của bạn và bóp cò, sau đó chỉ vào một ô và kéo hai lần: một lần để nhắm, một lần để đi."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Nhấp vào một trong các đơn vị của bạn, sau đó nhấp vào ô hai lần: một lần để nhắm, một lần để đi."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Chọn Người định cư và nhấn Thành phố đã tìm thấy trên thẻ của họ (hoặc B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Chọn Người định cư và nhấn Thành phố đã tìm thấy trên thẻ của họ (hoặc F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Chỉ vào một trong các thành phố của bạn và bóp cò, sau đó nhấn Chế độ xem thành phố trên thẻ của thành phố đó."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Bấm vào một trong các thành phố của bạn, sau đó nhấn Chế độ xem thành phố trên thẻ của thành phố đó."
+
+msgid "Pick technology"
+msgstr "Chọn công nghệ"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Mở cây công nghệ từ thẻ đeo tay của bạn và chọn thứ gì đó để nghiên cứu."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Mở cây công nghệ (T) và chọn thứ gì đó để nghiên cứu."
+
+msgid "Pick construction"
+msgstr "Chọn công trình"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Mở một trong các thành phố của bạn và chọn thứ gì đó để xây dựng từ thẻ của nó."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Nhấp vào một trong các thành phố của bạn và chọn thứ gì đó để xây dựng từ thẻ của nó."
+
+msgid "Pass a turn"
+msgstr "Vượt qua một lượt"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Ra lệnh cho các đơn vị của bạn, sau đó nhấn End bật bàn (hoặc A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Ra lệnh cho đơn vị của bạn, sau đó nhấn Kết thúc lượt (hoặc Dấu cách)."
+
+msgid "Reassign worked tiles"
+msgstr "Chỉ định lại các ô đã làm việc"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Trong chế độ xem của một thành phố, hãy trỏ vào một trong các ô của nó và bóp cò để kích hoạt hoặc ngừng hoạt động."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "Trong chế độ xem của thành phố, hãy nhấp vào một trong các ô của thành phố đó để hoạt động hoặc ngừng hoạt động."
+
+msgid "Press Settings on the table."
+msgstr "Nhấn Cài đặt trên bàn."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Nhấn Cài đặt trên bàn (hoặc O)."
+
+msgid "Construct an improvement"
+msgstr "Xây dựng một cải tiến"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Xây dựng Công nhân, di chuyển nó đến ô Đồng bằng hoặc Đồng cỏ, nhấn Xây dựng cải tiến trên thẻ của nó và chọn Trang trại. Để nó ở đó cho đến khi trang trại kết thúc."
+
+msgid "Move an air unit"
+msgstr "Di chuyển một đơn vị không khí"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Chọn một đơn vị không quân và di chuyển nó đến một thành phố khác trong phạm vi của bạn."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Tắt phần tổng quan về đế chế ở bên phải của bạn và mở tab Thống kê."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Mở tổng quan về đế chế (E) và tab Thống kê của nó."
+
+msgid "Tutorial task"
+msgstr "Nhiệm vụ hướng dẫn"
+
+msgid "Hide"
+msgstr "Ẩn"
+
+msgid "Defence %d"
+msgstr "Phòng thủ %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% để phòng thủ đơn vị"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (cướp bóc)"
+
+msgid ", worked by %s"
+msgstr ", được thực hiện bởi %s"
+
+msgid "  (click the red button again)"
+msgstr "  (nhấp vào nút màu đỏ một lần nữa)"
+
+msgid "  -  %d of %d"
+msgstr "  -  %d trên %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s lượt)"
+
+msgid "     Science %+d per turn"
+msgstr "     Khoa học %+d mỗi lượt"
+
+msgid "  (city-state)"
+msgstr "  (thành phố-tiểu bang)"
+
+msgid "   max %d turns"
+msgstr "   tối đa %d lượt"
+
+msgid " (about %d gold's worth)"
+msgstr " (khoảng giá trị vàng %d)"
+
+msgid " (you have %d)"
+msgstr " (bạn có %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (cho đến nay: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (lỗi thời)"
+
+msgid " (obsolete)"
+msgstr " (lỗi thời)"
+
+msgid "abstained"
+msgstr "kiêng"
+
+msgid "researched"
+msgstr "đã nghiên cứu"
+
+msgid "adopted"
+msgstr "được thông qua"
+
+msgid "gold"
+msgstr "vàng"
+
+msgid "faith"
+msgstr "đức tin"
+
+msgid "  - complete!"
+msgstr "  - hoàn thành!"
+
+msgid "complete"
+msgstr "hoàn thành"
+
+msgid "worked"
+msgstr "đã làm việc"
+
+msgid "on"
+msgstr "bật"
+
+msgid "off"
+msgstr "tắt"
+
+msgid "click"
+msgstr "bấm vào"
+
+msgid "improvement"
+msgstr "cải tiến"
+
+msgid "done"
+msgstr "xong"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Mục tiêu của kẻ thù trong tầm tay (vòng màu đỏ): %d. Bấm vào một cái để nhắm."
+
+msgid "Idle citizens: %d"
+msgstr "Công dân nhàn rỗi: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombard – kẻ địch trong phạm vi: %d (sức mạnh %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Các tin nhắn khác sau tin nhắn này: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Miễn phí những người tuyệt vời để lựa chọn: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Công nghệ miễn phí để lựa chọn: %d. Chọn một cái được đánh dấu."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Niềm tin vẫn còn để lựa chọn: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv cung cấp thông điệp, tên và mô tả của trò chơi. Một số ngôn ngữ cũng dịch giao diện Unciv VR. Thiếu bản dịch ở lại bằng tiếng Anh."
+
+msgid "Units ({count})"
+msgstr "Đơn vị ({count})"
+
+msgid "Cities ({count})"
+msgstr "Thành phố ({count})"
+
+msgid "Military"
+msgstr "Quân sự"
+
+msgid "Military ({count})"
+msgstr "Quân sự ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Xếp hạng ({count})"
+
+msgid "Waiting for orders"
+msgstr "Đang chờ lệnh"
+
+msgid "  -  promotion ready"
+msgstr "  - Khuyến mãi sẵn sàng"
+
+msgid "  (capital)"
+msgstr "  (vốn)"
+
+msgid "  (puppet)"
+msgstr "  (con rối)"
+
+msgid "  (razing)"
+msgstr "  (cào bằng)"
+
+msgid "Nothing to build"
+msgstr "Không có gì để xây dựng"
+
+msgid "turn"
+msgstr "lượt"
+
+msgid "turns"
+msgstr "lượt"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - Kỷ nguyên {era}"
+
+msgid "{score} pts"
+msgstr "{score} điểm"
+
+msgid "No units yet."
+msgstr "Chưa có đơn vị nào."
+
+msgid "No cities yet."
+msgstr "Chưa có thành phố nào."
+
+msgid "No military units yet."
+msgstr "Chưa có đơn vị quân đội nào"
+
+msgid "No civilizations met yet."
+msgstr "Chưa có nền văn minh nào gặp nhau."
+
+msgid "No wonders to show yet."
+msgstr "Chưa có điều kỳ diệu nào được thể hiện."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Mọi đơn vị bạn có, những đơn vị vẫn đang chờ đơn hàng trước, với những gì mỗi đơn vị đang làm. Bấm vào một để chọn nó."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Mỗi thành phố bạn có, thủ đô đầu tiên, mỗi thành phố đang xây dựng những gì và nó lớn như thế nào. Bấm vào một cái để mở thẻ của nó."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Mỗi đơn vị quân đội bạn có, với hành động, bước di chuyển và sức khỏe của nó. Bấm vào một để chọn nó."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Xếp hạng của tất cả các nền văn minh được biết đến theo tổng điểm."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Tổng quan về các kỳ quan của Unciv, theo thời đại: được xây dựng, đang được xây dựng hoặc vẫn đang xây dựng. Nhấp vào một cái được xây dựng để xem nó."
+
+msgid "In the Hall of the Mountain King"
+msgstr "Trong hội trường của Vua Núi"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Sảnh ngai dưới lòng đất của Vua Troll nằm sâu trong dãy núi Dovre, được thắp sáng bởi những lò lửa và những mạch magma rực sáng"
+
+msgid "Mountains and clouds"
+msgstr "Núi và mây"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Một đồng cỏ được bao quanh bởi những đỉnh núi thấp, có cây cối và những đám mây trôi"
+
+msgid "Floating in space"
+msgstr "Bay lơ lửng trong không gian"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Chiếc bàn lơ lửng giữa các vì sao, bởi một hành tinh có vành đai"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Một căn phòng tối tăm, đơn điệu"
+
+msgid "Webb Deep Field"
+msgstr "Trường sâu Webb"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Chiếc bàn lơ lửng trong không gian sâu thẳm, được bao quanh bởi Trường sâu đầu tiên của Kính viễn vọng Không gian James Webb"
+
+msgid "Ornate oak"
+msgstr "Cây sồi trang trí công phu"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Gỗ sồi với dây gỗ óc chó và nhựa ruồi, mép dây chạm khắc và bệ đỡ trên chân cuộn"
+
+msgid "Plain wood"
+msgstr "Gỗ trơn"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Một tấm gỗ tròn màu sẫm đặt trên một cột thuôn nhọn"
+
+msgid "Low poly"
+msgstr "Poly thấp"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Địa hình low-poly nhiều mặt, một màu phẳng cho mỗi mặt"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Giao diện được dịch; nội dung trò chơi quay trở lại tiếng Anh."
+
+msgid "Turns: %s"
+msgstr "Lượt: %s"
+
+msgid "Latin keyboard"
+msgstr "Bàn phím Latinh"
+
+msgid "Arabic keyboard"
+msgstr "Bàn phím tiếng Ả Rập"
+
+msgid "Hebrew keyboard"
+msgstr "Bàn phím tiếng Do Thái"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Mặc định"
+
+msgid "Manual"
+msgstr "Thủ công"
+

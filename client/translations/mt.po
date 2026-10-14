@@ -1,0 +1,3119 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv.
+# New wording drafted with Google Translate and AI-assisted terminology edits.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: mt\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n==0 || (n%100>=3 && n%100<=10) ? 2 : n%100>=11 && n%100<=19 ? 3 : 4);\n"
+
+msgid "Map replay"
+msgstr "Ripetizzjoni tal-mappa"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Il-mappa titnaqqas biex turi l-firxa sħiħa tagħha. Is-sjieda u l-postijiet tal-belt jaġġornaw hekk kif jilagħbu d-dawriet."
+
+msgid "Start replay"
+msgstr "Ibda r-ripetizzjoni"
+
+msgid "Return to game"
+msgstr "Erġa' lura għal-logħba"
+
+msgid "Turn %d of %d"
+msgstr "Dawra %d minn %d"
+
+msgid "Close replay"
+msgstr "Agħlaq ir-ripetizzjoni"
+
+msgid "Turn %d / %d"
+msgstr "Dawra %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Issejvjat fuq dan il-PC bejn is-sessjonijiet"
+
+msgid "Move the table..."
+msgstr "Ċaqlaq il-mejda..."
+
+msgid "Back to the middle"
+msgstr "Lura għan-nofs"
+
+msgid "Your controllers"
+msgstr "Il-kontrolluri tiegħek"
+
+msgid "Show button labels"
+msgstr "Uri t-tikketti tal-buttuni"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Tikketti f'wiċċ l-ilma ħdejn kull kontrollur li jgħidu x'jagħmlu l-buttuni tiegħu bħalissa."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Il-grillu t-tajjeb jikklikkja meta tħallih, għalhekk iżżommha biex iżumja ma tikklikkja xejn."
+
+msgid "Look"
+msgstr "Dehra"
+
+msgid "Gameplay"
+msgstr "Logħob"
+
+msgid "Automation"
+msgstr "Awtomazzjoni"
+
+msgid "Sound"
+msgstr "Ħsejjes"
+
+msgid "Panels"
+msgstr "Panewijiet"
+
+msgid "Controls"
+msgstr "Kontrolli"
+
+msgid "Game and saves"
+msgstr "Logħba u salvati"
+
+msgid "About"
+msgstr "Fuqna"
+
+msgid "Settings"
+msgstr "Issettjar"
+
+msgid "Close"
+msgstr "Agħlaq"
+
+msgid "Around the table"
+msgstr "Madwar il-mejda"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "L-isfond u t-tabelli huma folders li kulħadd jista’ jżid: ara backgrounds/README.md u tables/README.md."
+
+msgid "Background"
+msgstr "Sfond"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Id-dinja madwar il-mejda: sema, dawl u xenarju."
+
+msgid "Table"
+msgstr "Mejda"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Fuq liema tinsab il-mappa. Fil-VR il-kolonna tagħha tinfirex sal-għoli li ssettja."
+
+msgid "Where the table stands"
+msgstr "Fejn tinsab il-mejda"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Mexxi l-mejda kullimkien fix-xenarju tal-isfond - handy f'dawk kbar bħal mappa konvertita. Imfakkar għal dan l-isfond."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Mexxi l-mejda kullimkien fix-xenarju tal-isfond - handy f'dawk kbar bħal mappa konvertita. Ġie mċaqlaq hawn; Lura għan-nofs tpoġġiha fejn l-isfond jibda."
+
+msgid "Remembered for this background."
+msgstr "Imfakkar għal dan l-isfond."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Ġie mċaqlaq hawn; Lura għan-nofs tpoġġiha fejn l-isfond jibda."
+
+msgid "The map"
+msgstr "Il-mappa"
+
+msgid "Tiles"
+msgstr "Madumiet"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Kif jidher it-terren, il-wonders, ir-riżorsi u t-titjib. Tilesets jaħdmu bħal Unciv's: ara tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Hexes ikkuluriti sempliċi"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Hexes ċatti bil-kuluri tat-terren ta 'Unciv, l-ebda mudelli."
+
+msgid "Units"
+msgstr "Unitajiet"
+
+msgid "Same as the tiles"
+msgstr "L-istess bħall-madum"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Il-mudelli tal-unità li jiġu mal-tileset hawn fuq (is-sett fallback tal-madum jimla kwalunkwe vojt)."
+
+msgid "No models"
+msgstr "Ebda mudelli"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Tokens tondi bl-ikoni tal-unità tal-Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Kif jidhru l-unitajiet (Unciv's Unitset): kwalunkwe tileset b'mudelli ta 'unità (pieces/Units) jista' jfornihom."
+
+msgid "Visual hints"
+msgstr "Ħjiel viżwali"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Overlays tal-mapep tal-Unciv; il-buttuni tondi ħdejn il-ħarsa ġenerali jixgħelhom u jitfihom ukoll."
+
+msgid "Show unit movement arrows"
+msgstr "Uri l-vleġġeġ tal-movimenti tal-unità"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Fejn l-unitajiet għadhom kemm mxew u min attakka lil min."
+
+msgid "Show tile yields"
+msgstr "Uri l-ħsad tal-madumiet"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Ikel, produzzjoni, deheb... fuq kull maduma."
+
+msgid "Show worked tiles"
+msgstr "Uri madumiet mħaddma"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Liema madum jaħdmu ċ-ċittadini tal-bliet tiegħek."
+
+msgid "Show resources and improvements"
+msgstr "Uri riżorsi u titjiba"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Riżorsi u simboli ta 'titjib fuq il-madum."
+
+msgid "Show improvement pictures"
+msgstr "Uri stampi ta 'titjib"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Irziezet, minjieri, toroq u simili bħala mudelli."
+
+msgid "Show unit icons"
+msgstr "Uri ikoni tal-unità"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "L-ikona Unciv żgħira fuq kull mudell ta' unità."
+
+msgid "Language"
+msgstr "Lingwa"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Traduzzjonijiet ta' Unciv stess, mit-tradutturi ta' Unciv: messaġġi, ismijiet u deskrizzjonijiet tal-logħba. Il-menus tagħna stess għadhom bl-Ingliż."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Test Unciv m'għandha l-ebda traduzzjoni għal soġġorni bl-Ingliż."
+
+msgid "Turns"
+msgstr "Dawriet"
+
+msgid "Check for idle units"
+msgstr "Iċċekkja għal unitajiet wieqfa"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "End turn l-ewwel tieħdok għal kull unità li għad m'għandhiex ordnijiet."
+
+msgid "Auto unit cycle"
+msgstr "Agħżel l-unità li jmiss awtomatikament"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Wara li tagħti unità l-ordnijiet tagħha, tintgħażel l-unità li jmiss li qed tistenna l-ordnijiet."
+
+msgid "Cycle idle units by distance"
+msgstr "Ċiklu unitajiet idle skond id-distanza"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "L-unità li jmiss/qabel mur fl-eqreb unità aktar milli f'ordni fissa."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Itlob konferma meta tispiċċa d-dawran"
+
+msgid "End turn needs a second press."
+msgstr "End turn jeħtieġ it-tieni pressa."
+
+msgid "Order trade offers by amount"
+msgstr "Ordina l-offerti skont l-ammonti"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "Fuq il-mejda tal-kummerċ, l-akbar offerti jiġu l-ewwel."
+
+msgid "Show suggested city locations"
+msgstr "Uri l-postijiet tal-belt suġġeriti"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "B'settler magħżul, l-aħjar tliet postijiet ta' Unciv fil-qrib għal belt ġdida huma mmarkati fuq il-mappa."
+
+msgid "Tutorials"
+msgstr "Tutorjali"
+
+msgid "Show tutorials"
+msgstr "Uri t-tutorjali"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Il-messaġġi tutorja u l-karta tal-ħidma. Kull tutorja tinsab fiċ-Ċivilopedija wkoll."
+
+msgid "Reset tutorials"
+msgstr "Irrisettja t-tutorjali"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Uri kull tutorja u kompitu mill-ġdid, bħallikieku kont ġdid."
+
+msgid "Other players"
+msgstr "Plejers oħra"
+
+msgid "Other players' turns"
+msgstr "Dawriet ta’ plejers oħra"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Dak li tara mid-dawriet tal-plejers l-oħra wara li tispiċċa tiegħek."
+
+msgid "Show the moves and battles I can see"
+msgstr "Uri l-mossa u l-battalji li nista' nara"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Lagħbu lura fl-ordni; il-veduta glides għall-ġlied."
+
+msgid "Show them, fast"
+msgstr "Urihom, malajr"
+
+msgid "The same, at two and a half times the speed."
+msgstr "L-istess, b'darbtejn u nofs il-veloċità."
+
+msgid "Don't show them"
+msgstr "Ma juruhomx"
+
+msgid "The map just updates."
+msgstr "Il-mappa biss taġġorna."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "L-għażliet tal-Unciv stess għal unitajiet u bliet awtomatizzati."
+
+msgid "Automated and exploring units move"
+msgstr "L-unitajiet awtomatizzati u li jesploraw jimxu"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Meta l-unitajiet fuq l-awtomazzjoni, l-esplorazzjoni jew fuq movimenti b'ħafna dawriet jieħdu l-passi tagħhom."
+
+msgid "When I end my turn"
+msgstr "Meta nispiċċa min-naħa tiegħi"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Esploraturi, ħaddiema awtomatizzati u unitajiet fuq movimenti twal imorru hekk kif tispiċċa d-dawra."
+
+msgid "At the start of my turn"
+msgstr "Fil-bidu ta’ min-naħa tiegħi"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Huma jmorru hekk kif jibda min-naħa tiegħek (Unciv's \"L-unitajiet awtomatizzati jimxu fuq il-bidu tad-dawran\")."
+
+msgid "Auto-assign city production"
+msgstr "Assenja produzzjoni tal-belt awtomatikament"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Belt li tispiċċa tibni xi ħaġa tagħżel dak li tibni wara hi stess."
+
+msgid "Auto-build roads"
+msgstr "Ibni toroq awtomatikament"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Ħaddiema awtomatizzati jibnu toroq bejn l-ibliet tiegħek."
+
+msgid "Automated workers replace improvements"
+msgstr "Ħaddiema awtomatizzati jneħħu titjiba jekk diġà hemm waħda"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Ħaddiema awtomatizzati jistgħu jibdlu titjib għal wieħed aħjar."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Twaqqaf lill-ħaddiema awtomatizzati milli jneħħu l-veġetazzjoni"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Ħaddiema awtomatizzati jħallu l-foresti, il-ġungla u l-bassasijiet waħedhom."
+
+msgid "Automated units can upgrade"
+msgstr "Unitajiet awtomatizzati jistgħu jaġġornaw"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "L-unitajiet militari awtomatizzati jaġġornaw lilhom infushom meta tiflaħ."
+
+msgid "Automated units choose promotions"
+msgstr "Unitajiet awtomatizzati jistgħu jagħżlu promozzjoni"
+
+msgid "Automated units pick their own promotions."
+msgstr "Unitajiet awtomatizzati jagħżlu l-promozzjonijiet tagħhom stess."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "L-ibliet jibbumbardjaw awtomatikalment meta tlesti d-dawra tiegħek"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Bliet li xorta jistgħu jisparaw jisparaw fuq għedewwa fil-medda meta tispiċċa d-dawran."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Assenja awtomatikament speċjalisti fi bliet ġodda"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Bliet ġodda jpoġġu liċ-ċittadini tagħhom fi slots speċjalizzati huma stess."
+
+msgid "Sound effects"
+msgstr "Effetti tal-ħoss"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Buttuni, mossi, battalji u l-bqija. Fl-VR jiġu minn fejn jiġru fuq il-mejda."
+
+msgid "City ambience"
+msgstr "L-atmosfera tal-belt"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "L-istorbju tal-belt li jdur waqt li tkun f'belt - Unciv għandha waħda għal kull era."
+
+msgid "Your own and mods'"
+msgstr "Tiegħek u mods'"
+
+msgid "None yet."
+msgstr "Xejn għadu."
+
+msgid "Put the panels back"
+msgstr "Poġġi l-pannelli lura"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Kull panel imur lura fejn panel.json tiegħu jpoġġih."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "Fil-VR tara l-kontrolluri li qed iżżomm, hekk kif ir-runtime tal-headset tiegħek jiġbedhom (SteamVR jagħmel; oħrajn jiksbu stand-in sempliċi)."
+
+msgid "Boards"
+msgstr "Bordijiet"
+
+msgid "Put the boards back"
+msgstr "Poġġi l-bordijiet lura"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Il-ħarsa ġenerali, il-bord tal-informazzjoni, il-big screen, il-bordijiet tal-belt, il-ħarsa ġenerali tal-imperu u dan il-bord imorru lura fejn bdew."
+
+msgid "This game"
+msgstr "Din il-logħba"
+
+msgid "Save game"
+msgstr "Issejvja l-logħba"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Issejvjah taħt isem li ttajpja, fil-folder tal-salvataġġ tal-pont."
+
+msgid "Save..."
+msgstr "Salv..."
+
+msgid "Main menu"
+msgstr "Menù Principali"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Lura għall-menu prinċipali; il-logħba tibqa' taħdem u Resume ġġib lura."
+
+msgid "Saves"
+msgstr "Jiffranka"
+
+msgid "Autosave"
+msgstr "Salvataġġ awtomatiku"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Kemm-il darba l-logħba ssalva lilha nnifisha bħala \"Autosave\" (Kompli fil-menu prinċipali tgħabbiha)."
+
+msgid "Save folder"
+msgstr "Ħlief folder"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Tabella tar-realtà virtwali għal Unciv, ir-remake open-source ta’ Civilization V."
+
+msgid "Bridge protocol"
+msgstr "Protokoll tal-pont"
+
+msgid "Mods"
+msgstr "Mods"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Tilessets, sfondi u tabelli tiegħek stess"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Poġġi l-folders tagħhom hawn; jidhru f'Ħares."
+
+msgid "Settings file"
+msgstr "Fajl tas-settings"
+
+msgid "Licence and credits"
+msgstr "Liċenza u krediti"
+
+msgid "Desktop"
+msgstr "Desktop"
+
+msgid "Off"
+msgstr "Mitfi"
+
+msgid "On"
+msgstr "Mixgħul"
+
+msgid "End turn"
+msgstr "Temm id-dawra"
+
+msgid "< Prev"
+msgstr "< Qabel"
+
+msgid "Idle unit"
+msgstr "Unità inattiva"
+
+msgid "Next >"
+msgstr "Li jmiss>"
+
+msgid "Research"
+msgstr "Riċerka"
+
+msgid "Recenter table"
+msgstr "Recenter mejda"
+
+msgid "No unit selected"
+msgstr "Ebda unità magħżula"
+
+msgid "Point at a unit or city to select it."
+msgstr "Ippunta lejn unità jew belt biex tagħżelha."
+
+msgid "Fortified"
+msgstr "Imsaħħaħ"
+
+msgid "Sleeping"
+msgstr "Irqad"
+
+msgid "Automated"
+msgstr "Awtomatizzat"
+
+msgid "On its way"
+msgstr "Fi triqtu"
+
+msgid "Embarked"
+msgstr "Imbarkati"
+
+msgid "Strength"
+msgstr "Qawwa"
+
+msgid "RangedStrength"
+msgstr "Qawwa mill-bogħod"
+
+msgid "Range"
+msgstr "Raġġ"
+
+msgid "Movement"
+msgstr "Moviment"
+
+msgid "Rename"
+msgstr "Erġa' semmi"
+
+msgid "Cancel"
+msgstr "Ikkanċellaha"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Taqbeż din id-dawra (Aqbeż mill-ġdid biex tagħtiha l-ordnijiet)."
+
+msgid "Health"
+msgstr "Saħħa"
+
+msgid "XP"
+msgstr "XP"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Ippromwovi!  Agħżel promozzjoni"
+
+msgid "Promote"
+msgstr "Ippromwova"
+
+msgid "Building %s"
+msgstr "Bini %s"
+
+msgid "%d turns left"
+msgstr "%d idur lejn ix-xellug"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d miri tal-għadu fil-mira (ċrieki ħomor): ikklikkja waħda biex timmira"
+
+msgid "Actions"
+msgstr "Azzjonijiet"
+
+msgid "Pillage"
+msgstr "Xarrak"
+
+msgid "Sure? Click again"
+msgstr "Żgur? Ikklikkja mill-ġdid"
+
+msgid "click the red button again"
+msgstr "erġa kklikkja l-buttuna ħamra"
+
+msgid "Build here"
+msgstr "Ibni hawn"
+
+msgid "Stop"
+msgstr "Waqqaf"
+
+msgid "%d turns"
+msgstr "%d dawriet"
+
+msgid "Population %d"
+msgstr "Popolazzjoni %d"
+
+msgid "Defense %d"
+msgstr "Difiża %d"
+
+msgid "Health %d/%d"
+msgstr "Saħħa %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d ċittadini idle"
+
+msgid "Puppet"
+msgstr "Ġibhom puppazz"
+
+msgid "Starving! %d turns"
+msgstr "Imutu bil-ġuħ! %d dawriet"
+
+msgid "Grows in %d turns"
+msgstr "Tikber f'dawriet %d"
+
+msgid "Food -> production"
+msgstr "Ikel -> produzzjoni"
+
+msgid "Not growing"
+msgstr "Mhux qed jikber"
+
+msgid "Border in %d turns"
+msgstr "Il-fruntiera fi %d dawriet"
+
+msgid "Borders stopped"
+msgstr "Il-fruntieri waqfu"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Veduta tal-belt - madum, ċittadini, kju, xiri"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Din il-belt qed titneħħa – tiċkien kull dawra sakemm tispiċċa. Waqqaf razing fil-veduta tal-belt."
+
+msgid "Producing"
+msgstr "Produzzjoni"
+
+msgid "Producing nothing - pick something below"
+msgstr "Jipproduċu xejn - agħżel xi ħaġa hawn taħt"
+
+msgid "Buildings"
+msgstr "Bini"
+
+msgid "Wonders"
+msgstr "Meravilji"
+
+msgid "Other"
+msgstr "Oħra"
+
+msgid "Gold"
+msgstr "Deheb"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Ixtri issa għad-deheb %d (għandek %d)"
+
+msgid "Promote %s"
+msgstr "Ippromwovi %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Agħżel promozzjoni waħda.%s"
+
+msgid "Has: %s"
+msgstr "Għandu: %s"
+
+msgid "No promotion available right now."
+msgstr "L-ebda promozzjoni disponibbli bħalissa."
+
+msgid "Tutorial"
+msgstr "Tutorjal"
+
+msgid "%d of %d"
+msgstr "%d minn %d"
+
+msgid "%d more messages after this one"
+msgstr "%d aktar messaġġi wara dan"
+
+msgid "%s gives:"
+msgstr "%s jagħti:"
+
+msgid "They"
+msgstr "Huma"
+
+msgid "You give:"
+msgstr "Inti tagħti:"
+
+msgid "%d votes  %s"
+msgstr "%d jivvota %s"
+
+msgid "voted for %s"
+msgstr "ivvota għal %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Tista' titfi t-tutorjali f'Issettjar > Logħob. Issibhom kollha wkoll fiċ-Ċivilopedja."
+
+msgid " (%d turns)"
+msgstr " (%d dawriet)"
+
+msgid "Choose a free great person"
+msgstr "Agħżel Personaġġ Imlaħħaq b'xejn"
+
+msgid "You have %d free great people to pick."
+msgstr "Għandek %d nies kbar b'xejn biex tagħżel."
+
+msgid "Vote for world leader"
+msgstr "Ivvota għal mexxej dinji"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Agħżel xi ħadd biex isir il-mexxej tad-dinja u jġib Rebħa Diplomatika!"
+
+msgid "Vote for %s"
+msgstr "Ivvota għal %s"
+
+msgid "Abstain"
+msgstr "Astjeni"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Xejn qed jiġi riċerkat - agħżel teknoloġija!"
+
+msgid "Researching %s"
+msgstr "Ir-riċerka dwar %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Għandek %d teknoloġiji b'xejn biex tagħżel - agħżel waħda enfasizzata."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Xjenza %+d kull dawra. Picking ta 'teknoloġija aktar tard kjuwijiet prerekwiżiti tagħha."
+
+msgid "%s turns"
+msgstr "%s dawriet"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Aqbad fejn ħallejt, jew ibda logħba ġdida."
+
+msgid "Resume"
+msgstr "Kompli"
+
+msgid "Continue"
+msgstr "Kompli"
+
+msgid "Quick start"
+msgstr "Bidu malajr"
+
+msgid "New game..."
+msgstr "Logħba ġdida..."
+
+msgid "Load game..."
+msgstr "Logħba tat-tagħbija..."
+
+msgid "Civilopedia"
+msgstr "Ċivilopedja"
+
+msgid "Quit"
+msgstr "Oħroġ"
+
+msgid "New game"
+msgstr "Logħba ġdida"
+
+msgid "You"
+msgstr "Inti"
+
+msgid "World"
+msgstr "Dinjija"
+
+msgid "Rules"
+msgstr "Regoli"
+
+msgid "Random"
+msgstr "Każwali"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - %s %s mappa, %s, %d AI, %d bliet-stati"
+
+msgid "%s, led by %s"
+msgstr "%s, immexxija minn %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Bl-addoċċ: int ser issir taf min int meta tibda l-logħba."
+
+msgid "Your civilization"
+msgstr "Iċ-ċiviltà tiegħek"
+
+msgid "Map size"
+msgstr "Daqs tal-mappa"
+
+msgid "Map type"
+msgstr "Tip ta' mappa"
+
+msgid "Shape"
+msgstr "Forma"
+
+msgid "Resources"
+msgstr "Riżorsi"
+
+msgid "Options"
+msgstr "Għażliet"
+
+msgid "No ancient ruins"
+msgstr "Ebda ruins antiki"
+
+msgid "No natural wonders"
+msgstr "Ebda wonders naturali"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Mapep akbar jiżżerżqu taħt il-mejda: żomm qabda u drag, jew uża l-ħarsa ġenerali fit-tarf 'l bogħod."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings iżid reliġjon, spjunaġġ, aktar ċiviltajiet u aktar unitajiet u bini."
+
+msgid "Difficulty"
+msgstr "Diffikultà"
+
+msgid "Game speed"
+msgstr "Veloċità tal-logħba"
+
+msgid "Starting era"
+msgstr "Era tal-bidu"
+
+msgid "AI players"
+msgstr "Plejers tal-AI"
+
+msgid "City-states"
+msgstr "Belt-stati"
+
+msgid "Victory types (none picked = all)"
+msgstr "Tipi ta' rebħa (l-ebda waħda ma ntgħażel = kollha)"
+
+msgid "No barbarians"
+msgstr "Ebda barbarians"
+
+msgid "Raging barbarians"
+msgstr "Barbari qalila"
+
+msgid "One-city challenge"
+msgstr "Sfida ta' belt waħda"
+
+msgid "No city razing"
+msgstr "Ebda tħaffir tal-belt"
+
+msgid "Nuclear weapons"
+msgstr "Armi nukleari"
+
+msgid "Espionage"
+msgstr "Spjunaġġ"
+
+msgid "< Back"
+msgstr "< Lura"
+
+msgid "Start game"
+msgstr "Ibda logħba"
+
+msgid "Load game"
+msgstr "Illowdja logħba"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Issejvja fil-folder Unciv VR tiegħek, l-aktar ġdid l-ewwel."
+
+msgid "Backgrounds"
+msgstr "Sfondi"
+
+msgid "Mountains"
+msgstr "Muntanji"
+
+msgid "Scenery"
+msgstr "Xenarju"
+
+msgid "Technologies"
+msgstr "Teknoloġiji"
+
+msgid "Policies"
+msgstr "Politika"
+
+msgid "Diplomacy"
+msgstr "Diplomazija"
+
+msgid "Religion"
+msgstr "Reliġjon"
+
+msgid "Victory"
+msgstr "Rebħa"
+
+msgid "Declare war"
+msgstr "Iddikkjara Gwerra"
+
+msgid "Score"
+msgstr "Punteġġi"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Għadu l-ebda storja - iċ-ċarts jimlew hekk kif id-dawriet jgħaddu."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== żomm il-grillu hawn u drag biex iċċaqlaq dan l-iskrin ====="
+
+msgid "Pause"
+msgstr "Pawża"
+
+msgid "Play"
+msgstr "Ilgħab"
+
+msgid "Loading the technology tree..."
+msgstr "Tagħbija s-siġra tat-teknoloġija..."
+
+msgid "Pick something to research!"
+msgstr "Agħżel xi ħaġa għar-riċerka!"
+
+msgid "Science %+d per turn"
+msgstr "Xjenza %+d kull dawra"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Ikklikkja teknoloġija biex tara x'tagħmel u dak li tħallik tibni. L-ikoni żgħar taħt kull teknoloġija huma dak li tiftaħ."
+
+msgid "needs science"
+msgstr "jeħtieġ ix-xjenza"
+
+msgid "researching now, "
+msgstr "riċerka issa, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d xjenza)"
+
+msgid "Loading policies..."
+msgstr "Tagħbija l-politiki..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Kultura %d / %d (%+d kull dawra)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Tista' tadotta politika!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Ikklikkja simbolu biex tara dik il-politika. Iftaħ fergħa (is-simbolu kbir tagħha) qabel tadotta l-politiki fiha."
+
+msgid "ready to adopt"
+msgstr "lesta biex tadotta"
+
+msgid "needs more culture"
+msgstr "teħtieġ aktar kultura"
+
+msgid "not available yet"
+msgstr "għadu mhux disponibbli"
+
+msgid "(no special effects)"
+msgstr "(l-ebda effetti speċjali)"
+
+msgid "Adopt"
+msgstr "Addotta"
+
+msgid "Your score: %d"
+msgstr "Il-punteġġ tiegħek: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Għadek ma ltqajt ma' ħadd. Esplora biex issib ċiviltajiet u bliet-stati oħra."
+
+msgid "Loading..."
+msgstr "Qed jillowdja..."
+
+msgid "   (city-state)"
+msgstr "   (belt-stat)"
+
+msgid "Destroyed"
+msgstr "Meqruda"
+
+msgid "AT WAR"
+msgstr "FIL-GWERRA"
+
+msgid "At peace"
+msgstr "Fil-paċi"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (trattat: %d aktar dawriet)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - influwenza %d%s"
+
+msgid "   allied with %s"
+msgstr "   alleat ma %s"
+
+msgid "Feels %s about you%s"
+msgstr "Iħoss %s dwarek%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Score %d Bliet %d"
+
+msgid "Diplomacy..."
+msgstr "Diplomazija..."
+
+msgid "Trade"
+msgstr "Kummerċ"
+
+msgid "Offer peace"
+msgstr "Offerta l-paċi"
+
+msgid "Click again to declare war on %s"
+msgstr "Erġa' ikklikkja biex tiddikjara gwerra fuq %s"
+
+msgid "< All civilizations"
+msgstr "< Iċ-ċiviltajiet kollha"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (l-ebda taħdidiet ta' paċi għal %d aktar dawriet)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Tip: %s Personalità: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Ir-relazzjoni tagħna: %s (influwenza %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Alleat: %s b'influwenza ta' %d"
+
+msgid "Protected by: "
+msgstr "Protetti minn: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Bidliet fir-relazzjoni f'dawriet oħra %d"
+
+msgid "Resources: "
+msgstr "Riżorsi: "
+
+msgid "When Friends:"
+msgstr "Meta Ħbieb:"
+
+msgid "When Allies:"
+msgstr "Meta Alleati:"
+
+msgid "You have a declaration of friendship."
+msgstr "Għandek dikjarazzjoni ta' ħbiberija."
+
+msgid "You have denounced them."
+msgstr "Int iddenunzjathom."
+
+msgid "Go to on map"
+msgstr "Mur fuqhom fil-mappa"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Gift %d deheb (+%d influwenza)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Ibni %s fuq %s (200 deheb)"
+
+msgid "Revoke protection"
+msgstr "Revoka l-protezzjoni"
+
+msgid "Click again: revoke protection?"
+msgstr "Erġa' ikklikkja: tirrevoka l-protezzjoni?"
+
+msgid "Pledge to protect"
+msgstr "Wiegħed li ħa tipproteġihom"
+
+msgid "Click again: declare protection?"
+msgstr "Erġa' ikklikkja: tiddikjara protezzjoni?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Ħu %d deheb (-15 influwenza)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Ħu ħaddiem (-50 influwenza)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Żwieġ diplomatiku (%d deheb)"
+
+msgid "Click again: they join your empire"
+msgstr "Ikklikkja mill-ġdid: jissieħbu fl-imperu tiegħek"
+
+msgid "Negotiate peace"
+msgstr "Innegozja l-paċi"
+
+msgid "Click again: make peace?"
+msgstr "Erġa’ ikklikkja: tagħmel il-paċi?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Ħbiberija offruta - stennija għat-tweġiba tagħhom"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Offerta dikjarazzjoni ta’ ħbiberija (30 dawra)"
+
+msgid "Denounce (30 turns)"
+msgstr "Iddenunzja (30 dawra)"
+
+msgid "Click again: denounce %s?"
+msgstr "Erġa' ikklikkja: tiddenunzja %s?"
+
+msgid "Click again to declare war"
+msgstr "Erġa' ikklikkja biex tiddikjara l-gwerra"
+
+msgid "Demands:"
+msgstr "Domandi:"
+
+msgid "  (asked)"
+msgstr "  (mistoqsi)"
+
+msgid "  (they agreed)"
+msgstr "  (qablu)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Ir-rieda ta’ ġieħ (mill-inqas 0 biex tieħu deheb, mill-inqas 30 u belt ta’ daqs 4 għal ħaddiem):"
+
+msgid "  (+%d influence)"
+msgstr "  (+%d influwenza)"
+
+msgid "  %d turns remaining"
+msgstr "  %d dawriet fadal"
+
+msgid "Unforgivable"
+msgstr "Mhux l-aħjar..."
+
+msgid "Enemy"
+msgstr "Għadu"
+
+msgid "Afraid"
+msgstr "Mbeżża'"
+
+msgid "Competitor"
+msgstr "Avversarji"
+
+msgid "Favorable"
+msgstr "Favurabli"
+
+msgid "Friend"
+msgstr "Ħabib"
+
+msgid "Ally"
+msgstr "Alleat"
+
+msgid "Pantheon"
+msgstr "Panteon"
+
+msgid "Founder"
+msgstr "Ħallieq"
+
+msgid "Follower"
+msgstr "Segwaċi"
+
+msgid "Enhancer"
+msgstr "Imtejjeb"
+
+msgid "Any"
+msgstr "Li jkun"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Agħżel %d aktar twemmin%s"
+
+msgid "so far: %s"
+msgstr "s'issa: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Issa agħżel simbolu għar-reliġjon tiegħek (hawn fuq)."
+
+msgid "Follow this pantheon"
+msgstr "Segwi dan il-pantheon"
+
+msgid "Found %s"
+msgstr "Instab %s"
+
+msgid "Enhance %s"
+msgstr "Ittejjeb %s"
+
+msgid "Reform"
+msgstr "Riforma"
+
+msgid "Confirm"
+msgstr "Ikkonferma"
+
+msgid "Religion is off in this game."
+msgstr "Ir-reliġjon hija off f'din il-logħba."
+
+msgid "Choose a pantheon belief"
+msgstr "Agħżel twemmin pantheon"
+
+msgid "Found your religion"
+msgstr "Sibt ir-reliġjon tiegħek"
+
+msgid "Enhance your religion"
+msgstr "Ittejjeb ir-reliġjon tiegħek"
+
+msgid "Reform your religion"
+msgstr "Irriforma r-reliġjon tiegħek"
+
+msgid "No religion yet"
+msgstr "L-ebda reliġjon għadha"
+
+msgid "Your beliefs"
+msgstr "It-twemmin tiegħek"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Xejn x'jagħżel bħalissa. Aqla’ l-fidi biex waqqaf pantheon; Profeta Kbir iwaqqaf (u wara jsaħħaħ) reliġjon f’waħda mill-ibliet tiegħek."
+
+msgid "Symbol:"
+msgstr "Simbolu:"
+
+msgid "Name: %s"
+msgstr "Isem: %s"
+
+msgid "(pick a symbol)"
+msgstr "(agħżel simbolu)"
+
+msgid "Rename..."
+msgstr "Semmi mill-ġdid..."
+
+msgid "Choose any belief!"
+msgstr "Agħżel twemmin"
+
+msgid "Choose a %s belief!"
+msgstr "Agħżel twemmin %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (reliġjon oħra għandha)"
+
+msgid "  (you have it)"
+msgstr "  (għandek)"
+
+msgid "  (not available)"
+msgstr "  (mhux disponibbli)"
+
+msgid "  (picked for another slot)"
+msgstr "  (magħżel għal slot ieħor)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Dawwar %d %s veloċità %s%s"
+
+msgid "max %d turns"
+msgstr "max %d dawriet"
+
+msgid "You have won a %s Victory!"
+msgstr "Irbaħt %s Victory!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s rebaħ Rebħa %s!"
+
+msgid "You have been defeated."
+msgstr "Int ġejt megħlub."
+
+msgid "One more turn...!"
+msgstr "Dawra oħra...!"
+
+msgid "Main menu (start a new game)"
+msgstr "Menu prinċipali (ibda logħba ġdida)"
+
+msgid "Our status"
+msgstr "L-istatus tagħna"
+
+msgid "Global status"
+msgstr "Status Globali"
+
+msgid "Rankings"
+msgstr "Rankatura"
+
+msgid "Charts"
+msgstr "Graffiċi"
+
+msgid "Demographics"
+msgstr "Demografiki"
+
+msgid "%s Victory"
+msgstr "%s Rebha"
+
+msgid "[done] "
+msgstr "[magħmul] "
+
+msgid "Rank"
+msgstr "Ranka"
+
+msgid "Value"
+msgstr "Valur"
+
+msgid "Best"
+msgstr "L-aħjar"
+
+msgid "Average / Worst"
+msgstr "Medja / Agħar"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Innegozja ma' %s Id-deheb tiegħek %d, tagħhom %d"
+
+msgid "You can offer"
+msgstr "Tista 'toffri"
+
+msgid "You give"
+msgstr "Inti tagħti"
+
+msgid "You get"
+msgstr "Ikollok"
+
+msgid "They can offer"
+msgstr "Jistgħu joffru"
+
+msgid "Clear"
+msgstr "Ħassar kollox"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Ikklikkja l-oġġetti fuq il-kolonni ta 'barra biex tpoġġihom fuq il-mejda; ikklikkjahom mill-ġdid biex teħodhom."
+
+msgid "%s would accept this."
+msgstr "%s jaċċetta dan."
+
+msgid "%s wants more for this%s."
+msgstr "%s irid aktar għal dan%s."
+
+msgid "about %d gold's worth"
+msgstr "dwar il-valur tad-deheb %d"
+
+msgid "Propose deal"
+msgstr "Tipproponi ftehim"
+
+msgid "  %d turns"
+msgstr "  %d dawriet"
+
+msgid "Gold_Per_Turn"
+msgstr "Deheb kull dawra"
+
+msgid "Not connected to the bridge"
+msgstr "Mhux imqabbad mal-pont"
+
+msgid "Bridge disconnected"
+msgstr "Pont skonnettjat"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Il-pont Unciv bundled mhuwiex komplut. Erġa' installa l-fajls tal-logħob."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Ma tistax issib ir-repo Unciv bil-pont f'%s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Ma nstab l-ebda Java 17 jew aktar ġdid (Unciv jeħtieġ JDK 21). Installaha u issettja JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "Ma setgħetx tikteb %s"
+
+msgid "Couldn't start Gradle"
+msgstr "Ma setgħetx tibda Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Ma setgħetx tibda l-pont Unciv miġbur"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== żomm il-grillu hawn u drag biex timxi ====="
+
+msgid "Exit city"
+msgstr "Agħlaq il-belt"
+
+msgid "City"
+msgstr "Belt"
+
+msgid "BEING RAZED"
+msgstr "QIEGĦED RAZED"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Ċittadini mhux assenjati: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "ikklikkja: ħalli l-belt tpoġġihom"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d ikel)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Jiġu bil-ġuħ: jitlef ċittadin f'%d idur %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "L-ikel jidħol fil-produzzjoni waqt li tinbena din l-unità"
+
+msgid "New citizen in %d turns %s"
+msgstr "Ċittadin ġdid f'%d dawriet %s"
+
+msgid "Not growing %s"
+msgstr "Mhux qed jikber %s"
+
+msgid "(%d/%d culture)"
+msgstr "(kultura %d/%d)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Il-fruntieri jikbru f'%d dawriet %s"
+
+msgid "Borders have stopped growing"
+msgstr "Il-fruntieri waqfu jikbru"
+
+msgid "In resistance for another %d turns"
+msgstr "Fir-reżistenza għal dawriet oħra %d"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "We Love The King Day għal dawriet oħra %d"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Esiġenti %s (We Love The King Day jekk ikollok)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Belt anness (ma tibqax pupazz)"
+
+msgid "Stop razing city"
+msgstr "Ieqaf il-qrid tal-belt"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Erġa' kklikkja biex RAZE %s (taħraq ċittadin dawra)"
+
+msgid "Raze city"
+msgstr "Aħraq il-belt"
+
+msgid "Citizen management"
+msgstr "Ġestjoni taċ-ċittadini"
+
+msgid "Reset citizens"
+msgstr "Irrisettja ċ-ċittadini"
+
+msgid "Avoid growth"
+msgstr "Evita t-tkabbir"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Fokus taċ-ċittadini (liema madum il-belt tippreferi taħdem):"
+
+msgid "Specialists"
+msgstr "Speċjalisti"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Speċjalisti manwali (ikklikkja għal awtomatiku)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Speċjalisti awtomatiċi (ikklikkja għall-manwal)"
+
+msgid "Specialist"
+msgstr "Speċjalista"
+
+msgid "Great people"
+msgstr "Nies kbar"
+
+msgid "Majority religion: %s"
+msgstr "Reliġjon tal-maġġoranza: %s"
+
+msgid "Former holy city of %s"
+msgstr "Ex belt qaddisa ta %s"
+
+msgid "Holy city of %s"
+msgstr "Belt Qaddisa %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: segwaċi %d, pressjoni %+d"
+
+msgid "Specialist buildings"
+msgstr "Bini speċjalizzat"
+
+msgid "  (free)"
+msgstr "  (b'xejn)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Ikklikkja madum fuq il-mejda: madum maħdum ma jibqax jinħadem, iċ-ċittadini ħielsa jmorru għal dawk mhux maħduma, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "u madum bi prezz jista 'jinxtara (ikklikkja darbtejn)."
+
+msgid "Tile"
+msgstr "Maduma"
+
+msgid "city centre"
+msgstr "ċentru tal-belt"
+
+msgid "worked (locked)"
+msgstr "maħdum (imsakkar)"
+
+msgid "not worked"
+msgstr "mhux maħduma"
+
+msgid "gives its yield without a citizen"
+msgstr "jagħti r-rendiment tiegħu mingħajr ċittadin"
+
+msgid "gives nothing"
+msgstr "ma jagħti xejn"
+
+msgid "blockaded by an enemy"
+msgstr "imblukkat minn ghadu"
+
+msgid "worked by %s"
+msgstr "maħduma minn %s"
+
+msgid "another city"
+msgstr "belt oħra"
+
+msgid "too far to work"
+msgstr "wisq biex taħdem"
+
+msgid "can be bought"
+msgstr "jistgħu jinxtraw"
+
+msgid "not yours"
+msgstr "mhux tiegħek"
+
+msgid "Resource: %s"
+msgstr "Riżors: %s"
+
+msgid "Improvement: %s"
+msgstr "Titjib: %s"
+
+msgid "Owned by %s"
+msgstr "Proprjetà ta' %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Lock (żomm ċittadin hawn)"
+
+msgid "Stop working"
+msgstr "Tieqaf taħdem"
+
+msgid "Unlock"
+msgstr "Iftaħ"
+
+msgid "Work this tile"
+msgstr "Aħdem din il-maduma"
+
+msgid "Work and lock"
+msgstr "Xogħol u lock"
+
+msgid "Click again: buy for %d gold"
+msgstr "Ikklikkja mill-ġdid: tixtri għad-deheb %d"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Ixtri għal %d deheb (għandek %d)"
+
+msgid "Production"
+msgstr "Produzzjoni"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Deheb %d Fidi %d Produzzjoni %+d dawra"
+
+msgid "Being built"
+msgstr "Qed jinbnew"
+
+msgid "Nothing being built - pick something below"
+msgstr "Xejn qed jinbena - agħżel xi ħaġa hawn taħt"
+
+msgid "   %d turns"
+msgstr "   %d dawriet"
+
+msgid "Hide what can't be built yet"
+msgstr "Aħbi dak li għadu ma jistax jinbena"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Uri dak li għadu ma jistax jinbena (u għaliex)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Ikklikkja xi ħaġa biex tara x'tagħmel, imbagħad ibniha issa, żidha fil-kju, jew tixtriha."
+
+msgid "   %d production"
+msgstr "   %d produzzjoni"
+
+msgid ", %d turns"
+msgstr ", %d dawriet"
+
+msgid "   (built)"
+msgstr "   (mibnija)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "Il-%s tiegħu jmur fuq maduma li tagħżel fuq il-mejda wara Ibni issa / Żid mal-kju / Ixtri."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "%s tagħha tmur fuq il-maduma taċ-ċrieket miġbura meta kienet fil-kju."
+
+msgid "Build now"
+msgstr "Ibni issa"
+
+msgid "Add to queue"
+msgstr "Żid mal-kju"
+
+msgid "Click again: buy for %d %s"
+msgstr "Ikklikkja mill-ġdid: tixtri għal %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Ixtri għal %d %s"
+
+msgid "you have %d"
+msgstr "għandek %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Ixtri: ċċaqlaq l-unità 'l barra mill-belt l-ewwel"
+
+msgid "Click again: sell for %d gold"
+msgstr "Ikklikkja mill-ġdid: biegħ għal %d deheb"
+
+msgid "Sell for %d gold"
+msgstr "Biegħ għal %d deheb"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia - żomm il-grillu hawn u drag biex timxi ====="
+
+msgid "<  Back"
+msgstr "< Lura"
+
+msgid "This entry couldn't be loaded."
+msgstr "Din l-entrata ma setgħetx titgħabba."
+
+msgid "Building"
+msgstr "Binja"
+
+msgid "Wonder"
+msgstr "Meravilja"
+
+msgid "Unit"
+msgstr "Unità"
+
+msgid "Resource"
+msgstr "Riżors"
+
+msgid "Improvement"
+msgstr "titjiba"
+
+msgid "Tile Improvements"
+msgstr "Titjiba"
+
+msgid "Technology"
+msgstr "Teknoloġija"
+
+msgid "Promotion"
+msgstr "promozzjoni"
+
+msgid "Promotions"
+msgstr "Promozzjonijiet"
+
+msgid "Policy"
+msgstr "Politika"
+
+msgid "Belief"
+msgstr "Twemmin"
+
+msgid "Religions and Beliefs"
+msgstr "Reliġjonijiet u Twemmin"
+
+msgid "Nation"
+msgstr "Nazzjon"
+
+msgid "Nations"
+msgstr "Ġnus"
+
+msgid "Terrain"
+msgstr "Terren"
+
+msgid "Terrains"
+msgstr "Terren"
+
+msgid "Unit types"
+msgstr "Tipi tal-unitajiet"
+
+msgid "Unit Names"
+msgstr "Ismijiet tal-unitajiet"
+
+msgid "Victory Types"
+msgstr "Tipi ta' Rebħa"
+
+msgid "Thumbstick"
+msgstr "Joystick"
+
+msgid "Menu"
+msgstr "Menù"
+
+msgid "Trigger"
+msgstr "Grillu"
+
+msgid "Grip"
+msgstr "Buttuna tal-qabda"
+
+msgid "Trackpad"
+msgstr "Touchpad"
+
+msgid "Button 1"
+msgstr "Buttuna 1"
+
+msgid "Button 2"
+msgstr "Buttuna 2"
+
+msgid "Cities"
+msgstr "Bliet"
+
+msgid "None"
+msgstr "Xejn"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Mhux esplorat (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - %s territorju"
+
+msgid " - city of %s"
+msgstr " - belt ta' %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Awtomatizza"
+
+msgid "Sleep"
+msgstr "Raqqad"
+
+msgid "Fortify"
+msgstr "Saħħaħ"
+
+msgid "Guard"
+msgstr "Gwardjan"
+
+msgid "Explore"
+msgstr "Esplora"
+
+msgid "Upgrade"
+msgstr "Aġġorna"
+
+msgid "Transform"
+msgstr "Ittransforma"
+
+msgid "Repair"
+msgstr "Irrestawra"
+
+msgid "Skip"
+msgstr "Aqbeż"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s Dawwar %d (%s)"
+
+msgid "%d BC"
+msgstr "%d BC"
+
+msgid "%d AD"
+msgstr "%d AD"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Ma tirriċerka xejn - agħżel teknoloġija!"
+
+msgid "Point at a tile"
+msgstr "Ippunta lejn maduma"
+
+msgid "Unexplored"
+msgstr "Mhux esplorat"
+
+msgid "Send a unit to find out what's here."
+msgstr "Ibgħat unità biex issir taf x'hemm hawn."
+
+msgid "Natural wonder: %s"
+msgstr "Wonder naturali: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Titjib: %s%s"
+
+msgid "River"
+msgstr "Xmara"
+
+msgid "City of %s  (population %d)"
+msgstr "Belt ta' %s (popolazzjoni %d)"
+
+msgid "%s territory"
+msgstr "%s territorju"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% għad-difiża tal-unità"
+
+msgid "Impassable"
+msgstr "Inaċċessabli"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Bħalissa mhux fil-vista - l-aħħar dehru hekk"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Attakk %s: ittratta ~%d, ħu ~%d"
+
+msgid "Science"
+msgstr "Xjenza"
+
+msgid "Happiness"
+msgstr "Kuntentizza"
+
+msgid "Malcontent"
+msgstr "Kontenut ħażin"
+
+msgid "Culture"
+msgstr "Kultura"
+
+msgid "Faith"
+msgstr "Fidi"
+
+msgid "Population"
+msgstr "Popolazzjoni"
+
+msgid "Food"
+msgstr "Ikel"
+
+msgid "Shift"
+msgstr "Ittri kbar"
+
+msgid "Space"
+msgstr "Spazju"
+
+msgid "< Del"
+msgstr "< Ħassar"
+
+msgid "Recenter"
+msgstr "Erġa' ċċentra"
+
+msgid "Move a unit!"
+msgstr "Mexxi unità!"
+
+msgid "hold to move onto a tile"
+msgstr "żomm biex timxi fuq maduma"
+
+msgid "Connecting..."
+msgstr "Konnessjoni..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Tlift il-konnessjoni mal-pont - erġa' pprova..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Infittxu l-pont fuq 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Ma setgħetx tibda l-pont: %s\nIbda bl-idejn ma': gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Nibda l-pont Unciv... (jibni mill-ġdid jekk il-kodiċi tiegħu jinbidel - jista 'jieħu minuta)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Il-pont waqaf qabel ma kien lest. Minn %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Il-magna Unciv mhix f'din l-app (il-plugin UncivBridge huwa nieqes mill-esportazzjoni)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Il-magna Unciv ma setgħetx tibda: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Il-magna tal-Unciv waqfet:\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Tibda l-magna ta' Unciv: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Pont Unciv antik (protokoll v%d) kien għadu għaddej - jerġa' jibda bil-kodiċi attwali..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Ma setgħetx twaqqaf il-pont il-qadim - ikompli miegħu. Xi affarijiet jistgħu ma jaħdmux."
+
+msgid "Reconnected to the bridge."
+msgstr "Imqabbad mill-ġdid mal-pont."
+
+msgid "Bridge error: %s"
+msgstr "Żball tal-pont: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Twissija: il-pont jitkellem protokoll v%d iżda dan il-klijent jistenna v%d - aġġorna ż-żewġ repos flimkien. Xi affarijiet jistgħu ma jaħdmux."
+
+msgid "Connected to Unciv %s"
+msgstr "Konness ma' Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "Ma setgħetx tagħbija is-salvataġġ: %s"
+
+msgid "Your move."
+msgstr "Il-mossa tiegħek."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Nibdew logħba ġdida... (mapep akbar jieħdu ftit itwal)"
+
+msgid "Starting a new game..."
+msgstr "Nibdew logħba ġdida..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Ma setgħetx tibda logħba: %s"
+
+msgid "saved "
+msgstr "salvati "
+
+msgid "%s, turn %d"
+msgstr "%s, dawwar %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Menu prinċipali: ippunta lejn il-karta fuq il-mejda."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s fuq mappa %s %s, %s, %d AI, %d bliet-stati"
+
+msgid "A random civilization"
+msgstr "Ċiviltà każwali"
+
+msgid "Loading %s..."
+msgstr "Tagħbija %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Ma setgħetx tagħbija %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Ma setax jaqra dawk ir-regoli: %s"
+
+msgid "getState failed: %s"
+msgstr "getState falla: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Il-ħarsa ġenerali, il-bord tal-informazzjoni, il-big screen u l-pannelli reġgħu lura fil-postijiet tas-soltu tagħhom."
+
+msgid "Name your religion"
+msgstr "Semmi r-reliġjon tiegħek"
+
+msgid "Your religion"
+msgstr "Ir-reliġjon tiegħek"
+
+msgid "Researching %s."
+msgstr "Ir-riċerka dwar %s."
+
+msgid "Adopted %s."
+msgstr "Adottat %s."
+
+msgid "You declared war on %s!"
+msgstr "Int iddikjarajt gwerra fuq %s!"
+
+msgid "Unit movements"
+msgstr "Movimenti ta' unità"
+
+msgid "Tile yields"
+msgstr "Ħsad tal-madum"
+
+msgid "Worked tiles"
+msgstr "Madum maħdum"
+
+msgid "Resources and improvements"
+msgstr "Riżorsi u titjib"
+
+msgid "Improvement pictures"
+msgstr "Stampi ta 'titjib"
+
+msgid "Unit icons"
+msgstr "Ikoni tal-unità"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Żomm %s fuq maduma biex tmexxi unità fuqha."
+
+msgid "the trigger"
+msgstr "il-grillu"
+
+msgid "the mouse button"
+msgstr "il-buttuna tal-maws"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Attakkja %s\ndeal ~%d, ħu ~%d\nerġa ikklikkja biex tattakka"
+
+msgid "a unit"
+msgstr "unità"
+
+msgid "Can't get there"
+msgstr "Ma tistax tasal hemm"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "L-ebda kamra fuq din il-madum \n%s %s diġà hemm"
+
+msgid "\nSwap places on the card"
+msgstr "\nSwap postijiet fuq il-karta"
+
+msgid "Move here"
+msgstr "Imxi hawn"
+
+msgid "Move here: %d turns"
+msgstr "Nimxu hawn: %d dawriet"
+
+msgid "\nsharing the tile with %s"
+msgstr "\ntaqsam il-madum ma %s"
+
+msgid "\nclick again to go"
+msgstr "\nerġa ikklikkja biex tmur"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s jinsab fi triqtu - jibqa' għaddej li jmiss."
+
+msgid "No attack happened."
+msgstr "Ma ġara l-ebda attakk."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s attakkat %s: ħallas %d ħsara, ħa %d."
+
+msgid "  City captured!"
+msgstr "  Belt maqbuda!"
+
+msgid "  %s destroyed!"
+msgstr "  %s meqruda!"
+
+msgid "  Your %s was lost."
+msgstr "  %s tiegħek intilfet."
+
+msgid "Improvement order cancelled."
+msgstr "Ordni ta' titjib ikkanċellata."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: bini %s (%d dawriet)."
+
+msgid "Rename %s"
+msgstr "Semmi %s"
+
+msgid "%s is now called %s."
+msgstr "%s issa jissejjaħ %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Semmi %s tiegħek (vojta: l-ebda isem)"
+
+msgid "Renamed to %s."
+msgstr "Ismu mill-ġdid għal %s."
+
+msgid "Name removed."
+msgstr "Isem imneħħi."
+
+msgid "%s: on the way."
+msgstr "%s: fit-triq."
+
+msgid "%s: coup orders given."
+msgstr "%s: ordnijiet ta' kolp ta' stat mogħtija."
+
+msgid "See your stats breakdown"
+msgstr "Ara t-tqassim tal-istatistiċi tiegħek"
+
+msgid "Selected %s."
+msgstr "%s magħżul."
+
+msgid "the unit"
+msgstr "l-unità"
+
+msgid "Upgraded to %s."
+msgstr "Imtejjeb għal %s."
+
+msgid "Enter city screen"
+msgstr "Daħħal l-iskrin tal-belt"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Dehra tal-belt: %s. Ikklikkja madum biex taħdem minnhom; Il-belt tal-ħruġ (jew B / Esc) tmur lura għall-mappa."
+
+msgid "Back to the map."
+msgstr "Lura għall-mappa."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "M'hemm imkien f'%s biex tpoġġi l-%s."
+
+msgid "the city"
+msgstr "il-belt"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Agħżel il-maduma għall-%s (ċrieki ħomor), jew Esc / B biex tikkanċella."
+
+msgid "Cancelled."
+msgstr "Ikkanċellat."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Agħżel waħda mill-madum taċ-ċrieket (Esc / B tikkanċella)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: it-titjib imur hemm."
+
+msgid "Bought the tile for %d gold."
+msgstr "Xtara l-madum għad-deheb %d."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Ixtri għal %d gold\nikklikkja mill-ġdid biex tixtri"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Spejjeż %d deheb\n(mhux biżżejjed deheb)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Ċittadini assenjati mill-ġdid (serraturi mneħħija)."
+
+msgid "Annexed."
+msgstr "Anness."
+
+msgid "%s will build %s next."
+msgstr "%s se jibni %s li jmiss."
+
+msgid "%s added to the queue."
+msgstr "%s miżjud mal-kju."
+
+msgid "Bought %s."
+msgstr "Xtara %s."
+
+msgid "Sold the %s."
+msgstr "Mibjugħa l-%s."
+
+msgid "%s added to %s's queue."
+msgstr "%s miżjud mal-kju ta' %s."
+
+msgid "Bought %s in %s."
+msgstr "Inxtara %s f'%s."
+
+msgid "Experience"
+msgstr "L-Esperjenza"
+
+msgid "%s is now %s."
+msgstr "%s issa hija %s."
+
+msgid "Pick something to research."
+msgstr "Agħżel xi ħaġa għar-riċerka."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Tista' tadotta politika ġdida - ara t-tab Politiki fuq il-big screen."
+
+msgid "%s is heading here"
+msgstr "%s sejjer hawn"
+
+msgid "The unit"
+msgstr "L-unità"
+
+msgid "Are you sure?"
+msgstr "Int żgur?"
+
+msgid "Click again to confirm."
+msgstr "Erġa' ikklikkja biex tikkonferma."
+
+msgid "%s: click a %stile"
+msgstr "%s: ikklikkja %stile"
+
+msgid "highlighted "
+msgstr "enfasizzat "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s - ikklikkja l-maduma fuq il-mappa (jew Ikkanċella fuq il-karta)."
+
+msgid "Move here: click a tile"
+msgstr "Nimxu hawn: ikklikkja maduma"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Ċaqlaq %s - ikklikkja maduma fuq il-mappa (jew Ikkanċella fuq il-karta)."
+
+msgid "No enemies in range of %s."
+msgstr "L-ebda għedewwa fil-firxa ta '%s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombard minn %s: ikklikkja ghadu b'ċrieket aħmar (ikklikkja l-belt biex tikkanċella)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Agħżel waħda mill-madum enfasizzat (jew Ikkanċella)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bbumbardjati %s: %d ħsara%s."
+
+msgid "Destroyed!"
+msgstr "Meqruda!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Intemm id-dawra? Agħfas End turn mill-ġdid biex tikkonferma."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Tispiċċa dawra - il-plejers tal-AI qed jimxu..."
+
+msgid "Turn %d"
+msgstr "Dawra %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "GAME OVER - %s jirbaħ (%s rebħa)"
+
+msgid "A %s has been born!"
+msgstr "Twieled %s!"
+
+msgid "You voted for %s."
+msgstr "Ivvutajt għal %s."
+
+msgid "You abstained."
+msgstr "Inti astjenejt."
+
+msgid "ATTACK"
+msgstr "ATTAKK"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Dawwar %d (%s) Deheb %d (%+d) Xjenza %+d Ferħ %d"
+
+msgid "Researching: %s"
+msgstr "Ir-riċerka: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - dawwar %d"
+
+msgid "Game"
+msgstr "Logħba"
+
+msgid "Save game as"
+msgstr "Issejvja l-logħba bħala"
+
+msgid "Saved as \"%s\"."
+msgstr "Issejvjat bħala \"%s\"."
+
+msgid "Couldn't save: %s"
+msgstr "Ma setgħetx issalva: %s"
+
+msgid "Open the options table"
+msgstr "Iftaħ il-mejda tal-għażliet"
+
+msgid "The tutorials will show again from the start."
+msgstr "It-tutorials se juru mill-ġdid mill-bidu."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Ma setgħetx tirrisettja t-tutorials: %s"
+
+msgid "The panels are back where they started."
+msgstr "Il-pannelli huma lura fejn bdew."
+
+msgid "The table is back in the middle of the background."
+msgstr "Il-mejda hija lura fin-nofs tal-isfond."
+
+msgid "Civilopedia: %s"
+msgstr "Ċivilopedja: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Ma setgħetx tiftaħ iċ-Ċivilopedija: %s"
+
+msgid "Opened %s in your browser."
+msgstr "%s fetaħ fil-browser tiegħek."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Kompitu tutorjali moħbi - dak li jmiss se juri meta joħroġ."
+
+msgid "Move the table"
+msgstr "Mexxi l-mejda"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Iċċaqlaq il-mejda: ippunta f'post fix-xenarju u %s biex tpoġġiha hemm. %s idawwarha. %s meta tkun lest."
+
+msgid "pull the trigger"
+msgstr "iġbed il-grillu"
+
+msgid "The right stick"
+msgstr "Il-stick tal-lemin"
+
+msgid "Press A or B"
+msgstr "Agħfas A jew B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Il-mejda tibqa' hawn. Issettjar > Dehra > Lura għan-nofs terġa' tpoġġiha f'postha."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Dak mhux fuq ix-xenarju - ippunta lejn l-art x'imkien."
+
+msgid "put the table here"
+msgstr "poġġi t-mejda hawn"
+
+msgid "turn the scenery"
+msgstr "dawwar ix-xenarju"
+
+msgid "done moving the table"
+msgstr "lest iċċaqlaq il-mejda"
+
+msgid "point, click (hold: aim)"
+msgstr "punt, ikklikkja (żomm: mira)"
+
+msgid "Found city"
+msgstr "Oħloq belt"
+
+msgid "Cancel typing"
+msgstr "Ikkanċella l-ittajpjar"
+
+msgid "Leave the city"
+msgstr "Ħalli l-belt"
+
+msgid "table height"
+msgstr "għoli tal-mejda"
+
+msgid "slide the map"
+msgstr "slide il-mappa"
+
+msgid "turn / size the table"
+msgstr "dawwar / daqs il-mejda"
+
+msgid "Next unit"
+msgstr "Unità li jmiss"
+
+msgid "Previous unit"
+msgstr "Unità preċedenti"
+
+msgid "zoom the map"
+msgstr "zoom il-mappa"
+
+msgid "table height, click: recenter"
+msgstr "għoli tal-mejda, ikklikkja: recent"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Xi ħaġa ma spiċċatx - kompli. (Jekk jibqa’ jiġri, ir-reġistru jgħid għaliex.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "ATTAKK %s (%s, %d/%d HP)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  mistenni: ittratta %d, ħu %d"
+
+msgid "Luxury"
+msgstr "Lussu"
+
+msgid "Strategic"
+msgstr "Strateġiku"
+
+msgid "Unit icons over the unit models"
+msgstr "Ikoni tal-unità fuq il-mudelli tal-unità"
+
+msgid "Overview: point and click to go there"
+msgstr "Ħarsa ġenerali: ippunta u kklikkja biex tmur hemm"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (ikklikkja biex iddawwar %s)"
+
+msgid "Overview"
+msgstr "Ħarsa ġenerali"
+
+msgid "Stats"
+msgstr "Statistika"
+
+msgid "Trades"
+msgstr "Negozji"
+
+msgid "Politics"
+msgstr "Politiki"
+
+msgid "Notifications"
+msgstr "Notifiki"
+
+msgid "Spy"
+msgstr "Spjun"
+
+msgid "War"
+msgstr "Gwerra"
+
+msgid "DefensivePact"
+msgstr "Patt difensiv"
+
+msgid "Neutral"
+msgstr "Newtrali"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Ħarsa ġenerali tal-Imperu - żomm il-grillu hawn u drag biex timxi ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Għadek m'għandekx spiji - dawn jiġu b'eras ġodda."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Spies (agħżel waħda, imbagħad fejn tmur)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (rank %d) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Tneħħi l-kolp ta’ stat"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Erġa' ikklikkja: agħmel kolp ta' stat (%d%% ċans)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Stadju kolp ta' stat (%d%% ċans)"
+
+msgid "Where to"
+msgstr "Fejn"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Moħba tal-ispjuni (ġib lil %s id-dar)"
+
+msgid "   spies: "
+msgstr "   spiji: "
+
+msgid "Click again (%s)"
+msgstr "Erġa' ikklikkja (%s)"
+
+msgid "You have no cities yet."
+msgstr "Għadek m'għandekx bliet."
+
+msgid "Name"
+msgstr "Isem"
+
+msgid "Defence"
+msgstr "Difiża"
+
+msgid "Open the city view"
+msgstr "Iftaħ il-veduta tal-belt"
+
+msgid "Resistance"
+msgstr "Reżistenza"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "Eżiġenti %s"
+
+msgid " (holy)"
+msgstr " (qaddis)"
+
+msgid "Total %d"
+msgstr "%d totali"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Ikkonverti deheb għal xjenza: %d%%"
+
+msgid "Great person points"
+msgstr "Punti tal-Personaġġ Imlaħħaq"
+
+msgid "Points"
+msgstr "Punti"
+
+msgid "Per turn"
+msgstr "Kull dawra"
+
+msgid "Total"
+msgstr "Totali"
+
+msgid "Pending trades"
+msgstr "Negozji pendenti"
+
+msgid "Current trades"
+msgstr "Negozji kurrenti"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Ebda kummerċ għaddej. Agħmel waħda mit-tab tad-Diplomazija tal-big screen."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Provvista tal-unitajiet: %d minn %d użati (bażi %d, bliet %d, popolazzjoni %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Defiċit %d: %d%% produzzjoni f'kull belt. Żid il-provvista tiegħek jew ixxolji l-unitajiet."
+
+msgid "Doing"
+msgstr "Azzjoni attwali"
+
+msgid "Closest city"
+msgstr "L-eqreb belt"
+
+msgid "Click again: %d gold"
+msgstr "Ikklikkja mill-ġdid: %d deheb"
+
+msgid "%s %dg"
+msgstr "%s %dg"
+
+msgid "Show global politics"
+msgstr "Uri politiki globali"
+
+msgid "Show diagram"
+msgstr "Uri dijagramma"
+
+msgid "Hide city-states"
+msgstr "Aħbi l-ibliet-stati"
+
+msgid "Include city-states"
+msgstr "Inkludi bliet-stati"
+
+msgid "   %s civilizations in the game"
+msgstr "   %s ċiviltajiet fil-logħba"
+
+msgid "Score %d"
+msgstr "Punteġġ %d"
+
+msgid "Defeated"
+msgstr "Inqatel"
+
+msgid "At war with %s"
+msgstr "Fi gwerra ma %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Patt difensiv ma' %s (%d dawriet)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Ħbieb ma %s (%d dawriet)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Iddenunzjat %s (%d dawriet)"
+
+msgid "Allied with %s"
+msgstr "Alleat ma %s"
+
+msgid "Relations"
+msgstr "Relazzjonijiet"
+
+msgid "Defensive pact"
+msgstr "Patt difensiv"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Għadek m'għandekx lussu jew riżorsi strateġiċi."
+
+msgid "Unimproved"
+msgstr "Mhux Imtejba"
+
+msgid "Trade offer"
+msgstr "Offerta"
+
+msgid "Stockpile"
+msgstr "Ħażna"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Mhux imtejjeb: madum fl-art tiegħek (jew tal-bliet-stati alleati) b'din ir-riżors iżda l-ebda titjib biex tużaha.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: bliet li jiċċelebraw / jitolbuha għal We Love The King Day."
+
+msgid "Religions to be founded: %s"
+msgstr "Reliġjonijiet li għandhom jitwaqqfu: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Fidi minima għall-%s li jmiss: %d"
+
+msgid "Great Prophet"
+msgstr "Profeta Mlaħħqa"
+
+msgid "Religious status: %s"
+msgstr "Status reliġjuż: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "L-ebda reliġjonijiet jew panteons għadhom ma ġew imwaqqfa."
+
+msgid "%s name:"
+msgstr "%s isem:"
+
+msgid "Founding civ:"
+msgstr "Ċivili Fundaturi:"
+
+msgid "Holy city:"
+msgstr "belt qaddisa:"
+
+msgid "Cities following this religion:"
+msgstr "Bliet li jemmnu fir-reliġjon:"
+
+msgid "Followers of this religion:"
+msgstr "Segwaċi tar-reliġjon:"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Location"
+msgstr "Lok"
+
+msgid "Unknown"
+msgstr "Mhux magħrufa"
+
+msgid "Owned"
+msgstr "Meħuda"
+
+msgid "Known"
+msgstr "Magħrufa"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s Dawwar %d %s"
+
+msgid "Current turn  |"
+msgstr "Dawran kurrenti |"
+
+msgid "General"
+msgstr "Ġeneral"
+
+msgid "No notifications yet."
+msgstr "Għadu l-ebda notifika."
+
+msgid "Tech"
+msgstr "Teknoloġija"
+
+msgid "Panel"
+msgstr "Panel"
+
+msgid "Nothing to show."
+msgstr "Xejn x'juri."
+
+msgid "Select a unit"
+msgstr "Agħżel unità"
+
+msgid "Left-click it"
+msgstr "Ikklikkja fuq ix-xellug"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Punt + grillu tal-lemin: il-karta tagħha titfaċċa fuqha"
+
+msgid "Move / attack"
+msgstr "Nimxu / attakk"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Ikklikkja maduma biex timmira, għal darb'oħra biex tmur"
+
+msgid "The same with the laser"
+msgstr "L-istess mal-laser"
+
+msgid "Open a city"
+msgstr "Iftaħ belt"
+
+msgid "Click it"
+msgstr "Ikklikkjaha"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Punt + grillu tal-lemin: il-karta tagħha tgħolli fuq il-belt"
+
+msgid "Scroll a card"
+msgstr "Skrollja karta"
+
+msgid "Mouse wheel"
+msgstr "Rota tal-ġurdien"
+
+msgid "Point at it + right stick"
+msgstr "Ippunta lejha + stick tal-lemin"
+
+msgid "Move the view"
+msgstr "Mexxi l-veduta"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Orbiti tat-tkaxkir tal-lemin, zooms tar-roti, twaġen WASD / middle-drag"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Aqbad + stick: ix-xellug / il-lemin iddawwar il-mejda, 'l fuq / 'l isfel tiskaliha"
+
+msgid "Table height"
+msgstr "Għoli tal-mejda"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Jew waħħal 'il fuq /' l isfel (dik it-tajba meta ma tippontax lejn karta)"
+
+msgid "Zoom the map"
+msgstr "Żomm il-mappa"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - jew Ctrl + rota"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Żomm grillu + dik l-idejn 's stick 'il fuq /' l isfel"
+
+msgid "Slide the map"
+msgstr "Żerżaq il-mappa"
+
+msgid "WASD, or click the overview"
+msgstr "WASD, jew ikklikkja l-ħarsa ġenerali"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Żomm qabda u drag; jew ippunta lejn il-ħarsa ġenerali + grillu"
+
+msgid "Move a board"
+msgstr "Mexxi bord"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Żomm il-grillu fuq l-istrixxa ta 'fuq tagħha (jew fuq il-bord ta' informazzjoni) u ċċaqlaq"
+
+msgid "A, or the End turn button on the table"
+msgstr "A, jew il-buttuna Tmiem dawra fuq il-mejda"
+
+msgid "Found a city"
+msgstr "Sibt belt"
+
+msgid "Next / previous unit"
+msgstr "Unità li jmiss / preċedenti"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Il-buttuna tal-unità Idle fuq il-mejda"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Siġra tat-teknoloġija, politiki, diplomazija"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Il-karta tal-polz, jew il-buttuni fuq il-bordijiet"
+
+msgid "Empire overview"
+msgstr "Ħarsa ġenerali tal-Imperu"
+
+msgid "Always up, off to your right"
+msgstr "Dejjem fuq, fuq il-lemin tiegħek"
+
+msgid "The Settings button on the table"
+msgstr "Il-buttuna Settings fuq il-mejda"
+
+msgid "The Civilopedia button on the table"
+msgstr "Il-buttuna Civilopedia fuq il-mejda"
+
+msgid "Close / deselect"
+msgstr "Agħlaq / neħħi l-għażla"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B jagħlaq it-tastiera u l-veduta tal-belt"
+
+msgid "Recenter the table"
+msgstr "Iċċentra l-mejda mill-ġdid"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Ikklikkja stick xellug, jew il-buttuna Recenter"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Settings - żomm il-grillu hawn u drag biex timxi ====="
+
+msgid "Tables"
+msgstr "Mwejjed"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Mexxi l-mejda kullimkien fix-xenarju tal-isfond - handy f'dawk kbar bħal mappa konvertita. "
+
+msgid "%d%% translated"
+msgstr "%d%% tradott"
+
+msgid "Notification log keeps"
+msgstr "Il-log tan-notifika jżomm"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Kemm dawriet ta' messaġġi żżomm it-tab Notifiki tal-ħarsa ġenerali."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Tutorials ta 'Unciv: messaġġ meta toħroġ xi ħaġa ġdida, u karta tal-kompitu bil-ħaġa li jmiss biex tipprova."
+
+msgid "Reset"
+msgstr "Irrisettja"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Effetti tal-ħoss Unciv stess. Jinqraw mill-folder Unciv ħdejn dan meta l-logħba taħdem; poġġi tiegħek f'~/.unciv-vr/Sounds taħt l-istess ismijiet biex tissostitwihom."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d ħsejjes misjuba. Il-ħoss tal-attakk ta 'kull unità ġej mir-regoli, bħal ta' Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Ma nstab l-ebda ħsejjes. Jgħixu f'android/assets/sounds ta' Unciv, ħdejn dan il-folder."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Bordijiet b'lista fuqhom, mibnija minn dak li taf il-logħba. Fil-VR joqogħdu madwar il-mejda "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(żomm il-grillu fuq l-istrixxa tul in-naħa ta 'fuq biex timxi waħda); fuq id-desktop joqogħdu bilqiegħda fin-naħa tax-xellug."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Panel huwa folder b'panel.json - ara panels/README.md. Poġġi tiegħek f'%s."
+
+msgid "Put them back"
+msgstr "Poġġihom lura"
+
+msgid "(by %s)"
+msgstr "(minn %s)"
+
+msgid "Every turn"
+msgstr "Kull dawra"
+
+msgid "Every %d turns"
+msgstr "Kull %d dawriet"
+
+msgid "not connected"
+msgstr "mhux konnessi"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (dan il-klijent jistenna v%s)"
+
+msgid "Tilesets"
+msgstr "Settijiet tal-madum"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR huwa taħt il-Mozilla Public License 2.0, bħal Unciv. L-ikoni huma ta' Unciv stess, minn bosta awturi "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "taħt liċenzji CC BY / CC BY-SA / CC0 (ara CREDITS.md u docs/Credits.md ta’ Unciv). Il-madum, l-unità, l-isfond "
+
+msgid "and table models are Unciv VR's own."
+msgstr "u mudelli tal-mejda huma Unciv VR's stess."
+
+msgid "%s speed"
+msgstr "%s veloċità"
+
+msgid "%s map"
+msgstr "%s mappa"
+
+msgid "%s, turn %s"
+msgstr "%s, dawwar %s"
+
+msgid "by "
+msgstr "minn "
+
+msgid "  -  from %s"
+msgstr "  - minn %s"
+
+msgid "Move unit"
+msgstr "Mexxi l-unità"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Ippunta lejn waħda mill-unitajiet tiegħek u iġbed il-grillu, imbagħad ippunta lejn maduma u iġbed darbtejn: darba biex timmira, darba biex tmur."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Ikklikkja waħda mill-unitajiet tiegħek, imbagħad ikklikkja maduma darbtejn: darba biex timmira, darba biex tmur."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Agħżel is-Settler u agħfas il-belt misjuba fuq il-karta tagħha (jew B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Agħżel is-Settler u agħfas il-belt misjuba fuq il-karta tagħha (jew F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Ippunta lejn waħda mill-ibliet tiegħek u iġbed il-grillu, imbagħad agħfas City view fuq il-karta tagħha."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Ikklikkja waħda mill-ibliet tiegħek, imbagħad agħfas Belt view fuq il-karta tagħha."
+
+msgid "Pick technology"
+msgstr "Agħżel it-teknoloġija"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Iftaħ is-siġra tat-teknoloġija mill-karta tal-polz tiegħek u agħżel xi ħaġa għar-riċerka."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Iftaħ is-siġra tat-teknoloġija (T) u agħżel xi ħaġa għar-riċerka."
+
+msgid "Pick construction"
+msgstr "Agħżel kostruzzjoni"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Iftaħ waħda mill-ibliet tiegħek u agħżel xi ħaġa biex tibni mill-karta tagħha."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Ikklikkja waħda mill-ibliet tiegħek u agħżel xi ħaġa biex din tibni mill-karta tagħha."
+
+msgid "Pass a turn"
+msgstr "Għaddi dawra"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Agħti l-unitajiet tiegħek l-ordnijiet tagħhom, imbagħad agħfas End dawwar fuq il-mejda (jew A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Agħti lill-unitajiet tiegħek l-ordnijiet tagħhom, imbagħad agħfas End turn (jew Space)."
+
+msgid "Reassign worked tiles"
+msgstr "Assenja mill-ġdid madum maħdum"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Fil-fehma ta 'belt, ippunta lejn waħda mill-madum tagħha u iġbed il-grillu biex taħdemha, jew biex tieqaf taħdem."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "Fil-fehma ta' belt, ikklikkja waħda mill-madum tagħha biex taħdemha, jew biex tieqaf taħdem."
+
+msgid "Press Settings on the table."
+msgstr "Agħfas Settings fuq il-mejda."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Agħfas Settings fuq il-mejda (jew O)."
+
+msgid "Construct an improvement"
+msgstr "Ibni titjib"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Ibni Ħaddiem, ċċaqlaq għal madum tal-Pjanuri jew Grassland, agħfas Tibni titjib fuq il-karta tagħha u agħżel ir-Razzett. Ħallih hemm sakemm ir-razzett ikun lest."
+
+msgid "Move an air unit"
+msgstr "Mexxi unità tal-arja"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Agħżel unità tal-arja u ċċaqlaqha għal bliet oħra fil-medda tiegħek."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Dawwar il-ħarsa ġenerali tal-imperu fuq il-lemin tiegħek u iftaħ it-tab Stats tagħha."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Iftaħ il-ħarsa ġenerali tal-imperu (E) u t-tab Stats tagħha."
+
+msgid "Tutorial task"
+msgstr "Kompitu tutorja"
+
+msgid "Hide"
+msgstr "Aħbi"
+
+msgid "Defence %d"
+msgstr "Difiża %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% għad-difiża tal-unità"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (sqerda)"
+
+msgid ", worked by %s"
+msgstr ", maħduma minn %s"
+
+msgid "  (click the red button again)"
+msgstr "  (ikklikkja mill-ġdid il-buttuna ħamra)"
+
+msgid "  -  %d of %d"
+msgstr "  -  %d minn %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s dawriet)"
+
+msgid "     Science %+d per turn"
+msgstr "     Xjenza %+d kull dawra"
+
+msgid "  (city-state)"
+msgstr "  (belt-stat)"
+
+msgid "   max %d turns"
+msgstr "   max %d dawriet"
+
+msgid " (about %d gold's worth)"
+msgstr " (dwar il-valur tad-deheb %d)"
+
+msgid " (you have %d)"
+msgstr " (għandek %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (s'issa: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (obsolet)"
+
+msgid " (obsolete)"
+msgstr " (obsolet)"
+
+msgid "abstained"
+msgstr "astjena"
+
+msgid "researched"
+msgstr "riċerkati"
+
+msgid "adopted"
+msgstr "adottata"
+
+msgid "gold"
+msgstr "deheb"
+
+msgid "faith"
+msgstr "fidi"
+
+msgid "  - complete!"
+msgstr "  - kompluta!"
+
+msgid "complete"
+msgstr "kompluta"
+
+msgid "worked"
+msgstr "imħaddma"
+
+msgid "on"
+msgstr "mixgħul"
+
+msgid "off"
+msgstr "mitfi"
+
+msgid "click"
+msgstr "ikklikkja"
+
+msgid "improvement"
+msgstr "titjib"
+
+msgid "done"
+msgstr "sar"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Miri ta' l-għadu li jilħqu (ċrieki ħomor): %d. Ikklikkja waħda biex timmira."
+
+msgid "Idle citizens: %d"
+msgstr "Ċittadini inattivi: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombard – għedewwa fil-medda: %d (qawwa %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Aktar messaġġi wara dan: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Nies kbar b'xejn li jagħżlu: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Teknoloġiji ħielsa li jagħżlu: %d. Agħżel waħda enfasizzata."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "It-twemmin għad irid jagħżel: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv jipprovdi l-messaġġi, l-ismijiet u d-deskrizzjonijiet tal-logħba. Xi lingwi jittraduċu wkoll l-interface Unciv VR. It-traduzzjonijiet neqsin jibqgħu bl-Ingliż."
+
+msgid "Units ({count})"
+msgstr "Unitajiet ({count})"
+
+msgid "Cities ({count})"
+msgstr "Bliet ({count})"
+
+msgid "Military"
+msgstr "Militar"
+
+msgid "Military ({count})"
+msgstr "Militar ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Rankatura ({count})"
+
+msgid "Waiting for orders"
+msgstr "Qed tistenna ordnijiet"
+
+msgid "  -  promotion ready"
+msgstr "  - promozzjoni lesta"
+
+msgid "  (capital)"
+msgstr "  (kapitali)"
+
+msgid "  (puppet)"
+msgstr "  (pupazz)"
+
+msgid "  (razing)"
+msgstr "  (tħaffir)"
+
+msgid "Nothing to build"
+msgstr "Xejn x'jibni"
+
+msgid "turn"
+msgstr "dawra"
+
+msgid "turns"
+msgstr "dawriet"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - {era} Era"
+
+msgid "{score} pts"
+msgstr "{score} punti"
+
+msgid "No units yet."
+msgstr "S'issa l-ebda unità."
+
+msgid "No cities yet."
+msgstr "Għadu l-ebda bliet."
+
+msgid "No military units yet."
+msgstr "L-ebda unità militari għadha."
+
+msgid "No civilizations met yet."
+msgstr "L-ebda ċiviltà ma ltaqgħet għadha."
+
+msgid "No wonders to show yet."
+msgstr "Mhux ta' b'xejn li s'issa turi."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Kull unità li għandek, dawk li għadhom qed jistennew l-ordnijiet l-ewwel, b’dak li qed jagħmel kull wieħed. Ikklikkja waħda biex tagħżelha."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Kull belt li għandek, l-ewwel il-kapitali, b’dak li qed tibni kull waħda u kemm hi kbira. Ikklikkja waħda biex tiftaħ il-karta tagħha."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Kull unità militari li għandek, bl-azzjoni, iċ-ċaqliq u s-saħħa tagħha. Ikklikkja waħda biex tagħżelha."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Klassifiki taċ-ċiviltajiet magħrufa kollha bil-punti totali."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Ħarsa ġenerali tal-għaġeb ta’ Unciv, skont l-era: liema huma mibnija, qed jinbnew jew għadhom iridu jinbnew. Ikklikkja waħda mibnija biex tħares lejha."
+
+msgid "In the Hall of the Mountain King"
+msgstr "Fis-Sala tar-Re tal-Muntanji"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Is-sala tat-tron ta’ taħt l-art tar-Re Troll fil-fond tal-muntanji Dovre, imdawwal minn brażiri tan-nar u vini tal-magma li jleqqu"
+
+msgid "Mountains and clouds"
+msgstr "Muntanji u sħab"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Mergħa mdawra minn qċaċet low-poly, b'siġar u sħab li jġorru"
+
+msgid "Floating in space"
+msgstr "F'wiċċ l-ilma fl-ispazju"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Il-mejda sufruni fost l-istilel, minn pjaneta ċrieki"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Kamra sempliċi u mudlama"
+
+msgid "Webb Deep Field"
+msgstr "Qasam Fond tal-Webb"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Il-mejda tgħaddi f'wiċċ l-ilma fl-ispazju profond, imdawra mill-Ewwel Qasam Fond tal-James Webb Space Telescope"
+
+msgid "Ornate oak"
+msgstr "Ballut Jeronimo"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Ballut bi spag tal-ġewż u holly, tarf tal-ħabel minqux, u pedestall fuq saqajn tal-iscroll"
+
+msgid "Plain wood"
+msgstr "Injam sempliċi"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Ċangatura tonda ta 'l-injam skur fuq kolonna tapering"
+
+msgid "Low poly"
+msgstr "Poly baxx"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Terren b'faċċata low-poly, kulur wieħed ċatt għal kull wiċċ"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Interface tradott; il-kontenut tal-logħob jaqa' lura għall-Ingliż."
+
+msgid "Turns: %s"
+msgstr "Dawriet: %s"
+
+msgid "Latin keyboard"
+msgstr "Tastiera Latina"
+
+msgid "Arabic keyboard"
+msgstr "Tastiera Għarbija"
+
+msgid "Hebrew keyboard"
+msgstr "Tastiera Ebrajka"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Predefinit"
+
+msgid "Manual"
+msgstr "Manwali"
+

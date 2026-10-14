@@ -1,6 +1,6 @@
 # Frontend translations
 
-The client uses Godot gettext catalogs. All twenty-four catalogs cover frontend menus, settings, city management,
+The client uses Godot gettext catalogs. All thirty catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
 options, controller hints, tutorials and status messages. Each has 1,036 messages, ready for wording review.
 
@@ -30,6 +30,12 @@ options, controller hints, tutorials and status messages. Each has 1,036 message
 | Galician | `gl.po` | Galego |
 | Norwegian | `nb.po` | Norsk |
 | Esperanto | `eo.po` | Esperanto |
+| Simplified Chinese | `zh_CN.po` | 简体中文 |
+| Traditional Chinese | `zh_TW.po` | 繁體中文 |
+| Vietnamese | `vi.po` | Tiếng Việt |
+| Toki Pona | `tok.po` | toki pona |
+| Maltese | `mt.po` | Malti |
+| Korean | `ko.po` | 한국어 |
 
 The first fourteen catalogs reuse matching translations from this checkout's Unciv catalogs;
 the remaining entries are AI-assisted drafts. Each has all 1,036 entries filled. Native-speaker and in-game
@@ -61,6 +67,36 @@ inherited Unciv wording can include Nynorsk forms.
 
 These ten languages have not yet had a Godot visual check, Quest check or native-speaker review.
 In particular, long explanations, grammatical agreement around numbers and controller instructions need review.
+
+### Six more languages with substantial existing content coverage
+
+Simplified Chinese, Traditional Chinese, Vietnamese, Toki Pona, Maltese and Korean each add 1,036 frontend
+entries. They reuse matching Unciv terminology. Toki Pona's new wording is an AI-assisted draft using Latin
+spelling; the other five use Google Translate drafts with AI-assisted corrections. Multi-argument messages
+were reviewed for placeholder order and rephrased when necessary, since Godot's `%` arguments are positional.
+These are filled catalogs, not native-speaker-approved translations. No engine content files were changed.
+
+The existing content percentages in this checkout are Simplified Chinese 99%, Traditional Chinese 98%,
+Vietnamese 99%, Toki Pona 98%, Maltese 97% and Korean 93%. The language picker continues to report content
+coverage, not frontend coverage. Simplified and Traditional Chinese use separate regional catalogs;
+locale names are normalized before merging so these catalogs stay distinct.
+
+The existing full Noto Sans CJK font supplies Chinese and Korean glyphs as well as Japanese. No new font
+binaries were added. The six catalogs and their keyboard changes have not yet had Godot runtime, visual,
+Quest or native-speaker review. Long Toki Pona labels and CJK regional forms especially need visual review.
+
+#### Input for these six languages
+
+- **Korean:** a two-set Hangul layout, Shift for tense consonants and shifted vowels, compound vowels and
+  final consonants, syllable composition, and a Latin switch. Backspace undoes composing keystrokes;
+  committed names are kept separate from new composition. Hanja conversion and OS IME integration are not included.
+- **Vietnamese:** ăâđêôơư and five tone keys. Type the vowel, then its tone, then any following consonant.
+  A tone replaces the preceding vowel with a composed Unicode character and preserves its case.
+  Press the same tone again to remove it. This is direct accent entry, not Telex or VNI.
+- **Maltese:** ċġħż and accented vowels, with uppercase support.
+- **Chinese:** names already containing Chinese characters remain readable. The VR keyboard currently
+  enters Latin names; Pinyin/Zhuyin candidate selection and Chinese OS IME input are not implemented.
+- **Toki Pona:** base Latin keys; no sitelen pona font or input system.
 
 Choose **Settings > Gameplay > Language**. The Latin-script languages, Russian, Ukrainian and Japanese use Unciv's existing game-content
 catalogs as well. Arabic and Hebrew

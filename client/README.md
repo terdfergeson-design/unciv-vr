@@ -44,7 +44,8 @@ its messages, popups, descriptions, notifications, quests and victory texts in t
 buildings, techs, nations, cities and the rest - and those of our buttons that use Unciv's own words ("Next turn",
 "Found city") - show in it too. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese, Swedish,
 European Portuguese, Dutch, Polish, Turkish, Indonesian, Japanese, Russian, Ukrainian, Czech, Hungarian,
-Romanian, Croatian, Catalan, Galician, Norwegian and Esperanto have draft translations of the frontend menus, boards, built-in lists,
+Romanian, Croatian, Catalan, Galician, Norwegian, Esperanto, Simplified Chinese, Traditional Chinese,
+Vietnamese, Toki Pona, Maltese and Korean have draft translations of the frontend menus, boards, built-in lists,
 controller hints, tutorial instructions and map replay. Select **Arabic / العربية** or **Hebrew / עברית** for RTL.
 Arabic and Hebrew also have draft game-content catalogs for built-in names, promotions and shared effects.
 Unfinished entries remain English; see [coverage and review notes](translations/CONTENT.md).
@@ -53,7 +54,11 @@ with a Latin switch. Japanese adds hiragana/katakana keys with voiced marks and 
 kanji conversion is not implemented. Bundled Noto fonts cover these scripts, including Japanese kanji, on Windows
 and Quest; other scripts use system fallbacks.
 These frontend translations are ready for wording and headset layout review.
-The latest ten catalogs reuse Unciv terms and machine-translated drafts with terminology edits;
+Korean has a two-set Hangul keyboard with syllable composition and keystroke backspace. Vietnamese has
+vowel variants and tone keys: type a vowel, then its tone, before the following consonant. Maltese adds ċġħż.
+Chinese currently offers Latin-name entry, without Pinyin/Zhuyin character conversion or OS IME integration.
+Existing Chinese names display normally. Toki Pona uses Latin spelling.
+The latest catalogs reuse Unciv terms and translation drafts with terminology edits;
 native-speaker and in-game review are pending. See [the translation guide](translations/README.md).
 
 ## Controls

@@ -40,6 +40,12 @@ const FRONTEND_LANGUAGES := {
 	"Galician": {"tag": "gl", "label": "Galego"},
 	"Norwegian": {"tag": "nb", "label": "Norsk"},
 	"Esperanto": {"tag": "eo", "label": "Esperanto"},
+	"Simplified_Chinese": {"tag": "zh_CN", "label": "简体中文"},
+	"Traditional_Chinese": {"tag": "zh_TW", "label": "繁體中文"},
+	"Vietnamese": {"tag": "vi", "label": "Tiếng Việt"},
+	"Toki_Pona": {"tag": "tok", "label": "toki pona"},
+	"Maltese": {"tag": "mt", "label": "Malti"},
+	"Korean": {"tag": "ko", "label": "한국어"},
 }
 
 
@@ -63,7 +69,7 @@ static func apply(new_language: String, entries: Dictionary, tag: String) -> voi
 	if _translation != null:
 		TranslationServer.remove_translation(_translation)
 		_translation = null
-	var locale := tag.replace("-", "_")
+	var locale := TranslationServer.standardize_locale(tag.replace("-", "_"))
 	if locale.get_slice("_", 0) == "en":
 		TranslationServer.set_locale("en")
 		return
@@ -79,7 +85,7 @@ static func apply(new_language: String, entries: Dictionary, tag: String) -> voi
 		# Only the merged catalog should participate in lookup. Otherwise Godot can
 		# fall back to another region's registered catalog for missing messages.
 		TranslationServer.remove_translation(frontend)
-		var frontend_locale := frontend.get_locale().replace("-", "_")
+		var frontend_locale := TranslationServer.standardize_locale(frontend.get_locale().replace("-", "_"))
 		# Regional catalogs apply only to that region; a generic catalog can serve any region.
 		# In particular, Brazilian Portuguese must not replace European Portuguese wording.
 		if frontend_locale == locale or (not frontend_locale.contains("_") and frontend_locale == locale.get_slice("_", 0)):

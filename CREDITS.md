@@ -77,7 +77,7 @@ The frontend bundles **Noto Sans**, **Noto Sans Arabic** and **Noto Sans Hebrew*
 under the SIL Open Font License 1.1. Original fonts and the license are in `client/fonts/`; the license is
 included in exported game packs. See [Noto's font collection](https://github.com/notofonts/noto-fonts).
 
-Japanese text uses **Noto Sans CJK JP Regular** from the
+Japanese, Chinese and Korean text use **Noto Sans CJK JP Regular** from the
 [Noto CJK project](https://github.com/notofonts/noto-cjk), under the SIL Open Font License 1.1.
 The unmodified font and its `OFL-CJK.txt` license are bundled in `client/fonts/` and both exports.
 
