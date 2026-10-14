@@ -1,6 +1,6 @@
 # Frontend translations
 
-The client uses Godot gettext catalogs. All fourteen catalogs cover frontend menus, settings, city management,
+The client uses Godot gettext catalogs. All twenty-four catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
 options, controller hints, tutorials and status messages. Each has 1,036 messages, ready for wording review.
 
@@ -20,8 +20,18 @@ options, controller hints, tutorials and status messages. Each has 1,036 message
 | Turkish | `tr.po` | Türkçe |
 | Indonesian | `id.po` | Bahasa Indonesia |
 | Japanese | `ja.po` | 日本語 |
+| Russian | `ru.po` | Русский |
+| Ukrainian | `uk.po` | Українська |
+| Czech | `cs.po` | Čeština |
+| Hungarian | `hu.po` | Magyar |
+| Romanian | `ro.po` | Română |
+| Croatian | `hr.po` | Hrvatski |
+| Catalan | `ca.po` | Català |
+| Galician | `gl.po` | Galego |
+| Norwegian | `nb.po` | Norsk |
+| Esperanto | `eo.po` | Esperanto |
 
-The Latin-script catalogs reuse matching translations from this checkout's Unciv catalogs;
+The first fourteen catalogs reuse matching translations from this checkout's Unciv catalogs;
 the remaining entries are AI-assisted drafts. Each has all 1,036 entries filled. Native-speaker and in-game
 layout review remain pending beyond the spot checks below.
 The latest five drafts use existing engine catalogs listed as Portuguese 95%, Dutch 97%, Polish 98%,
@@ -30,9 +40,29 @@ European wording and native engine terms; its separate `pt_PT` catalog does not 
 
 Japanese also reuses Unciv's existing terms and game-content catalog (96% in this checkout), with draft
 VR-specific wording. It bundles the full Noto Sans CJK JP font for kana, kanji and punctuation on both platforms.
-Japanese still needs native-speaker and in-game visual review.
+Japanese had a desktop spot check of settings, kana input, city production and research on 2026-10-13.
+No missing glyphs or major layout issues were observed there; some compact city controls had tight labels.
+Native-speaker and Quest review remain pending.
 
-Choose **Settings > Gameplay > Language**. The Latin-script languages and Japanese use Unciv's existing game-content
+### Ten additional language drafts
+
+Russian, Ukrainian, Czech, Hungarian, Romanian, Croatian, Catalan, Galician, Norwegian and Esperanto each
+have all 1,036 frontend entries filled. Matching terms come from the existing Unciv catalogs. Other text was
+drafted with Google Translate, followed by AI-assisted corrections to recurring gameplay terms, counters,
+keyboard labels and menu wording. These are draft translations, not native-speaker-approved translations.
+Formatting arguments and template fields are preserved; the canonical editable files are the `.po` catalogs.
+No additional engine translations were added in this pass.
+
+The game-content percentages in this checkout are Russian 99%, Ukrainian 97%, Czech 80%, Hungarian 99%,
+Romanian 75%, Croatian 95%, Catalan 99%, Galician 99%, Norwegian 75% and Esperanto 98%.
+Those percentages describe Unciv content, not the filled frontend entries. Missing game content still falls back
+to English. Norwegian uses Godot's Bokmål locale `nb` while retaining the engine language name `Norwegian`;
+inherited Unciv wording can include Nynorsk forms.
+
+These ten languages have not yet had a Godot visual check, Quest check or native-speaker review.
+In particular, long explanations, grammatical agreement around numbers and controller instructions need review.
+
+Choose **Settings > Gameplay > Language**. The Latin-script languages, Russian, Ukrainian and Japanese use Unciv's existing game-content
 catalogs as well. Arabic and Hebrew
 now load draft native Unciv catalogs through the bridge; blank entries still fall back to English. See
 [content coverage and upstream review notes](CONTENT.md). Picker percentages describe Unciv's content catalog,
@@ -66,7 +96,7 @@ Custom tree and politics diagrams retain their shared coordinate system for node
 reapplies stored child positions after entering the scene tree, since detached controls may compute mirrored offsets.
 World coordinates, controller handedness, map geometry and physical keyboard key order do not mirror.
 
-The VR keyboard offers Arabic/Hebrew keys plus a Latin switch. Its LineEdit displays the native bidirectional caret;
+The VR keyboard offers Arabic/Hebrew and Russian/Ukrainian keys plus a Latin switch. Its LineEdit displays the native bidirectional caret;
 text remains in logical order for saving. The Latin keyboard's accent row follows the selected language,
 including Spanish ñ, French ligatures, Italian accents, Portuguese ç/ã/õ, Swedish å/ä/ö,
 Dutch diacritics, Polish ąćęłńóśźż and Turkish çğıöşü. Turkish Shift uses i/İ and ı/I correctly.
@@ -75,6 +105,10 @@ Japanese offers hiragana, small kana, punctuation and a hiragana/katakana toggle
 the previous kana as a single composed character; use the Latin toggle for numbers and Latin names.
 There is no kanji conversion or Japanese IME integration in the VR keyboard; existing kanji names remain readable.
 German letters remain the default accent row.
+Russian includes ё and Ukrainian includes ґ, є, і, ї and apostrophes. Both use the existing one-shot Shift
+behavior. The additional Latin rows cover Czech áčďéěíňóřšťúůýž, Hungarian áéíóöőúüű,
+Romanian ăâîșț (comma-below forms), Croatian čćđšž, Catalan àçèéíïòóúü·,
+Galician áéíóúüñ, Norwegian æøåé and Esperanto ĉĝĥĵŝŭ.
 
 The five latest catalogs (European Portuguese, Dutch, Polish, Turkish and Indonesian) have not yet had
 a Godot visual or native-speaker review. The earlier spot-check results below do not cover them.

@@ -1,0 +1,3119 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv. Remaining text drafted with Google Translate,
+# with AI-assisted terminology edits; this is not a reviewed upstream translation.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: hu\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Map replay"
+msgstr "Térkép visszajátszása"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "A térkép teljes egészében látható. A területek tulajdonosai és a városok helyei a körök visszajátszása során változnak."
+
+msgid "Start replay"
+msgstr "Visszajátszás indítása"
+
+msgid "Return to game"
+msgstr "Vissza a játékhoz"
+
+msgid "Turn %d of %d"
+msgstr "%d. kör, összesen %d"
+
+msgid "Close replay"
+msgstr "Visszajátszás bezárása"
+
+msgid "Turn %d / %d"
+msgstr "%d. kör / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Mentve erre a számítógépre a munkamenetek között"
+
+msgid "Move the table..."
+msgstr "Mozgassa az asztalt..."
+
+msgid "Back to the middle"
+msgstr "Vissza középre"
+
+msgid "Your controllers"
+msgstr "A vezérlőid"
+
+msgid "Show button labels"
+msgstr "Gombcímkék megjelenítése"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Az egyes vezérlők mellett lebegő címkék jelzik, hogy éppen mit csinálnak a gombjai."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "A jobb oldali kioldó kattan, amikor elengedi, így a nagyításhoz tartva nem kattint semmire."
+
+msgid "Look"
+msgstr "Megjelenés"
+
+msgid "Gameplay"
+msgstr "Játékmenet"
+
+msgid "Automation"
+msgstr "Önállósítás"
+
+msgid "Sound"
+msgstr "Hang"
+
+msgid "Panels"
+msgstr "Panelek"
+
+msgid "Controls"
+msgstr "Irányítás"
+
+msgid "Game and saves"
+msgstr "Játék és mentések"
+
+msgid "About"
+msgstr "Névjegy"
+
+msgid "Settings"
+msgstr "Beállítások"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Around the table"
+msgstr "Az asztal körül"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "A hátterek és a asztalok olyan mappák, amelyeket bárki hozzáadhat: lásd: backgrounds/README.md és tables/README.md."
+
+msgid "Background"
+msgstr "Háttér"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Az asztal körüli világ: ég, fény és táj."
+
+msgid "Table"
+msgstr "Asztal"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Amin a térkép áll. VR-ben az oszlop az Ön által beállított magasságig nyúlik."
+
+msgid "Where the table stands"
+msgstr "Ahol az asztal áll"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Vigye át az asztalt bárhová a háttérben – praktikus a nagy asztaloknál, mint egy átalakított térkép. Emlékeztek erre a háttérre."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Vigye át az asztalt bárhová a háttérben – praktikus a nagy asztaloknál, mint egy átalakított térkép. Ide költöztették; Vissza a közepére oda helyezi, ahol a háttér kezdi."
+
+msgid "Remembered for this background."
+msgstr "Emlékeztek erre a háttérre."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Ide költöztették; Vissza a közepére oda helyezi, ahol a háttér kezdi."
+
+msgid "The map"
+msgstr "A térkép"
+
+msgid "Tiles"
+msgstr "Mezők"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Hogyan néz ki a terep, a csodák, az erőforrások és a fejlesztések. A mezők úgy működnek, mint az Unciv: lásd: tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Sima színű hatszögletű"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Lapos hatlapú Unciv terepszínekben, modell nélkül."
+
+msgid "Units"
+msgstr "Egység"
+
+msgid "Same as the tiles"
+msgstr "A mezőkével azonos"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "A fenti lapkakészlethez tartozó egységmodellek (a lapkák tartalékkészlete kitölti a hiányosságokat)."
+
+msgid "No models"
+msgstr "Nincsenek modellek"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Kerek jelzők Unciv egység ikonjaival."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Hogyan néznek ki az egységek (Unciv's Unitset): bármely egységmodellel rendelkező lapkakészlet (pieces/Units) elláthatja őket."
+
+msgid "Visual hints"
+msgstr "Vizuális tippek"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Unciv térképfedői; az áttekintés melletti kerek gombok is be- és kikapcsolják őket."
+
+msgid "Show unit movement arrows"
+msgstr "Egységmozgatási nyilak megjelenítése"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Hol mozdultak meg az egységek, és ki támadt meg kit."
+
+msgid "Show tile yields"
+msgstr "Mező termelésének megjelenítése"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Élelmiszer, termelés, arany... minden csempén."
+
+msgid "Show worked tiles"
+msgstr "Megmunkált mezők megjelenítése"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Melyik lapkát dolgozzák városai polgárai."
+
+msgid "Show resources and improvements"
+msgstr "Nyersanyagok és területfejlesztések megjelenítése"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Erőforrás- és fejlesztési szimbólumok a mezőkön."
+
+msgid "Show improvement pictures"
+msgstr "Javító képek megjelenítése"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Farmok, bányák, utak és hasonlók modellként."
+
+msgid "Show unit icons"
+msgstr "Egység ikonok megjelenítése"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "A kis Unciv ikon minden egységmodell felett."
+
+msgid "Language"
+msgstr "Nyelv"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Az Unciv saját fordításai, az Unciv fordítói által: a játék üzenetei, nevei és leírásai. Saját menüink továbbra is angol nyelvűek."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Az Unciv szövegnek nincs angol nyelvű fordítása."
+
+msgid "Turns"
+msgstr "Körök"
+
+msgid "Check for idle units"
+msgstr "Tétlen egységek ellenőrzése"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Az utolsó kör először minden olyan egységhez visz, amelynek még nincs parancsa."
+
+msgid "Auto unit cycle"
+msgstr "Következő egység automatikus kijelölése"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Miután adott egy egységnek a parancsait, a következő egység kerül kiválasztásra, amely a megbízásokra vár."
+
+msgid "Cycle idle units by distance"
+msgstr "Tétlen egységek körbejárása távolság szerint"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "A következő/előző egység a legközelebbi egységre ugorjon, nem pedig rögzített sorrendben."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Kérjen megerősítést a forduló végén"
+
+msgid "End turn needs a second press."
+msgstr "A forduló végén egy második megnyomásra van szükség."
+
+msgid "Order trade offers by amount"
+msgstr "Kereskedelmi ajánlatok mennyiség szerinti rendezése"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "A kereskedési asztalon a legnagyobb ajánlatok állnak az első helyen."
+
+msgid "Show suggested city locations"
+msgstr "Javasolt városi helyek megjelenítése"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Egy telepes kiválasztása után Unciv három legjobb helye egy új város számára a közelben megjelenik a térképen."
+
+msgid "Tutorials"
+msgstr "Oktatóanyagok"
+
+msgid "Show tutorials"
+msgstr "Oktatóanyagok megjelenítése"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Az oktatóanyag üzenetei és a feladatkártya. Minden oktatóanyag megtalálható a Civilpédiában is."
+
+msgid "Reset tutorials"
+msgstr "Oktatóanyagok újraindítása"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Mutasson minden oktatóanyagot és feladatot újra, mintha új lennél."
+
+msgid "Other players"
+msgstr "Más játékosok"
+
+msgid "Other players' turns"
+msgstr "Más játékosok körei"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Amit a többi játékos köréből lát, miután befejezte a sajátját."
+
+msgid "Show the moves and battles I can see"
+msgstr "Mutasd meg, milyen mozdulatokat és csatákat látok"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Lejátszott sorrendben; a kilátás harcokra siklik."
+
+msgid "Show them, fast"
+msgstr "Mutasd meg nekik, gyorsan"
+
+msgid "The same, at two and a half times the speed."
+msgstr "Ugyanaz, két és félszeres sebességgel."
+
+msgid "Don't show them"
+msgstr "Ne mutasd meg nekik"
+
+msgid "The map just updates."
+msgstr "A térkép csak frissül."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Az Unciv saját lehetőségei az automatizált egységekhez és városokhoz."
+
+msgid "Automated and exploring units move"
+msgstr "Az automatizált és feltáró egységek mozognak"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Amikor az automatizáláson, a feltáráson vagy a többfordulatú egységek megteszik a lépéseiket."
+
+msgid "When I end my turn"
+msgstr "Amikor befejezem a soromat"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "A felfedezők, az automatizált munkások és a hosszú mozgású egységek a kör végén haladnak."
+
+msgid "At the start of my turn"
+msgstr "A köröm elején"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Úgy mennek, ahogy a köröd elkezdődik (az Unciv „Automated units on turn start”)."
+
+msgid "Auto-assign city production"
+msgstr "Város termelésének automatikus kiosztása"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Az a város, amelyik befejezi az építkezést, maga választja ki, mit építsen ezután."
+
+msgid "Auto-build roads"
+msgstr "Utak automatikus építése"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Automatizált munkások építenek utakat a városok között."
+
+msgid "Automated workers replace improvements"
+msgstr "Az önállósított munkások átépíthetik a területfejlesztéseket"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Az automatizált dolgozók egy fejlesztést jobbra cserélhetnek."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Ne távolítsa el az automatizált dolgozókat a növényzetről"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Az automatizált munkások magukra hagyják az erdőket, dzsungeleket és mocsarakat."
+
+msgid "Automated units can upgrade"
+msgstr "Az önállósított egységek korszerűsíthetik magukat"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Az automatizált katonai egységek akkor fejlesztik magukat, amikor megengedhetik maguknak."
+
+msgid "Automated units choose promotions"
+msgstr "Az önállósított egységek kiválaszthatják az előléptetéseiket"
+
+msgid "Automated units pick their own promotions."
+msgstr "Az automatizált egységek maguk választják ki az akcióikat."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "A városok bombázzák le az ellenséget maguktól a kör végén"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Azok a városok, amelyek még tüzelhetnek, a kör végén lőnek a hatótávolságon belüli ellenségekre."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Szakértők automatikus hozzárendelése az új városokban"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Az új városok maguk helyezik polgáraikat speciális helyekre."
+
+msgid "Sound effects"
+msgstr "Hangeffektusok"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Gombok, mozdulatok, csaták és a többi. A VR-ben onnan jönnek, ahol az asztalon történnek."
+
+msgid "City ambience"
+msgstr "Városi hangulat"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "A város zaja, ami a városban tartózkodik – az Unciv minden korszakhoz kínál egyet."
+
+msgid "Your own and mods'"
+msgstr "Saját és modok"
+
+msgid "None yet."
+msgstr "Még nincs."
+
+msgid "Put the panels back"
+msgstr "Helyezze vissza a paneleket"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Minden panel visszatér oda, ahová a panel.json helyezi."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "VR-ben láthatja a kezében lévő vezérlőket, ahogy a headset futásideje lehívja őket (a SteamVR igen; mások sima stand-in-t kapnak)."
+
+msgid "Boards"
+msgstr "Deszkák"
+
+msgid "Put the boards back"
+msgstr "Helyezze vissza a táblákat"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Az áttekintés, az információs tábla, a nagy képernyő, a várostáblák, a birodalom áttekintése és ez a tábla visszanyúlik oda, ahol elkezdték."
+
+msgid "This game"
+msgstr "Ez a játék"
+
+msgid "Save game"
+msgstr "Játék mentése"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Elmenti az Ön által beírt néven a híd mentési mappájába."
+
+msgid "Save..."
+msgstr "Mentés..."
+
+msgid "Main menu"
+msgstr "Főmenü"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Vissza a főmenübe; a játék folyamatosan fut, és a Folytatás visszahozza Önt."
+
+msgid "Saves"
+msgstr "Menti"
+
+msgid "Autosave"
+msgstr "Automatikus mentés"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Milyen gyakran menti el magát a játék \"Autosave\" néven (a főmenü Folytatása betölti)."
+
+msgid "Save folder"
+msgstr "Mappa mentése"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Virtuális valóság asztal az Unciv számára, a Civilization V nyílt forráskódú remake-jéhez."
+
+msgid "Bridge protocol"
+msgstr "Bridge protokoll"
+
+msgid "Mods"
+msgstr "Modok"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Saját csempekészletek, hátterek és asztalok"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Tedd ide a mappáikat; megjelennek a Lookban."
+
+msgid "Settings file"
+msgstr "Beállítások fájl"
+
+msgid "Licence and credits"
+msgstr "Licenc és kreditek"
+
+msgid "Desktop"
+msgstr "Asztali"
+
+msgid "Off"
+msgstr "Ki"
+
+msgid "On"
+msgstr "Be"
+
+msgid "End turn"
+msgstr "Kör vége"
+
+msgid "< Prev"
+msgstr "< Előző"
+
+msgid "Idle unit"
+msgstr "Tétlen egység"
+
+msgid "Next >"
+msgstr "Következő >"
+
+msgid "Research"
+msgstr "Kutatás"
+
+msgid "Recenter table"
+msgstr "Újabb asztal"
+
+msgid "No unit selected"
+msgstr "Nincs egység kiválasztva"
+
+msgid "Point at a unit or city to select it."
+msgstr "Mutasson egy egységet vagy várost a kiválasztásához."
+
+msgid "Fortified"
+msgstr "Megerősített"
+
+msgid "Sleeping"
+msgstr "Alvás"
+
+msgid "Automated"
+msgstr "Automatizált"
+
+msgid "On its way"
+msgstr "Úton"
+
+msgid "Embarked"
+msgstr "Hajóra szállt"
+
+msgid "Strength"
+msgstr "Harci erő"
+
+msgid "RangedStrength"
+msgstr "Távolsági erő"
+
+msgid "Range"
+msgstr "Hatótávolság"
+
+msgid "Movement"
+msgstr "Lépések"
+
+msgid "Rename"
+msgstr "Átnevezés"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Ennek a körnek a kihagyása (Újra ugorva parancsot adjon neki)."
+
+msgid "Health"
+msgstr "Életerő"
+
+msgid "XP"
+msgstr "TP"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Népszerűsíts!  Válasszon promóciót"
+
+msgid "Promote"
+msgstr "Előléptetés"
+
+msgid "Building %s"
+msgstr "%s épület"
+
+msgid "%d turns left"
+msgstr "Még %d kör"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d Elérhető ellenséges célpontok (piros gyűrűk): kattintson az egyikre a célzáshoz"
+
+msgid "Actions"
+msgstr "Akciók"
+
+msgid "Pillage"
+msgstr "Fosztogatás"
+
+msgid "Sure? Click again"
+msgstr "Persze? Kattintson újra"
+
+msgid "click the red button again"
+msgstr "kattintson ismét a piros gombra"
+
+msgid "Build here"
+msgstr "Építs ide"
+
+msgid "Stop"
+msgstr "Állj"
+
+msgid "%d turns"
+msgstr "%d kör"
+
+msgid "Population %d"
+msgstr "Népesség %d"
+
+msgid "Defense %d"
+msgstr "Védelem %d"
+
+msgid "Health %d/%d"
+msgstr "Egészségügyi %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d tétlen polgárok"
+
+msgid "Puppet"
+msgstr "Bábvárossá tevés"
+
+msgid "Starving! %d turns"
+msgstr "Éhezés! %d kör"
+
+msgid "Grows in %d turns"
+msgstr "Növekedés: %d kör"
+
+msgid "Food -> production"
+msgstr "Élelmiszer -> termelés"
+
+msgid "Not growing"
+msgstr "Nem növekszik"
+
+msgid "Border in %d turns"
+msgstr "Határbővülés: %d kör"
+
+msgid "Borders stopped"
+msgstr "A határok megálltak"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Városkép - mező, polgárok, sor, vásárlás"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Ezt a várost lerombolják – minden kanyarban zsugorodik, amíg el nem tűnik. Hagyd abba a rombolást a városra nézve."
+
+msgid "Producing"
+msgstr "Előállítás"
+
+msgid "Producing nothing - pick something below"
+msgstr "Nem termel semmit – válasszon valamit lent"
+
+msgid "Buildings"
+msgstr "Épületek"
+
+msgid "Wonders"
+msgstr "Csodák"
+
+msgid "Other"
+msgstr "Egyéb"
+
+msgid "Gold"
+msgstr "Arany"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Vásároljon most %d aranyért (van %d)"
+
+msgid "Promote %s"
+msgstr "A %s népszerűsítése"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Válasszon egy promóciót.%s"
+
+msgid "Has: %s"
+msgstr "Van: %s"
+
+msgid "No promotion available right now."
+msgstr "Jelenleg nem érhető el promóció."
+
+msgid "Tutorial"
+msgstr "Oktatóanyag"
+
+msgid "%d of %d"
+msgstr "%d/%d"
+
+msgid "%d more messages after this one"
+msgstr "%d további üzenetek ezek után"
+
+msgid "%s gives:"
+msgstr "A %s a következőket adja:"
+
+msgid "They"
+msgstr "Ők"
+
+msgid "You give:"
+msgstr "Te adod:"
+
+msgid "%d votes  %s"
+msgstr "%d szavazat %s"
+
+msgid "voted for %s"
+msgstr "a %s-ra szavazott"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Az oktatóanyagok a Beállítások > Játékmenet menüben kikapcsolhatók. Mindegyik megtalálható a Civilopédiában is."
+
+msgid " (%d turns)"
+msgstr " (%d kör)"
+
+msgid "Choose a free great person"
+msgstr "Válassz egy híres embert ajándékba"
+
+msgid "You have %d free great people to pick."
+msgstr "%d ingyenes nagyszerű embereket választhat."
+
+msgid "Vote for world leader"
+msgstr "Szavazz a világelsőre"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Válassz, ki legyen a világ vezetője, aki kiérdemli a diplomáciai győzelmet!"
+
+msgid "Vote for %s"
+msgstr "Szavazz a %s-ra"
+
+msgid "Abstain"
+msgstr "Tartózkodás"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Semmit sem kutatnak – válassz egy technológiát!"
+
+msgid "Researching %s"
+msgstr "%s kutatása"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "A %d ingyenes technológiák közül választhat – válasszon egy kiemeltet."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Tudomány %+d fordulónként. Egy későbbi technológia kiválasztása sorba állítja annak előfeltételeit."
+
+msgid "%s turns"
+msgstr "%s kör"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Folytasd ott, ahol abbahagytad, vagy kezdj új játékot."
+
+msgid "Resume"
+msgstr "Folytatás"
+
+msgid "Continue"
+msgstr "Folytatás"
+
+msgid "Quick start"
+msgstr "Gyors kezdés"
+
+msgid "New game..."
+msgstr "Új játék..."
+
+msgid "Load game..."
+msgstr "Játék betöltése..."
+
+msgid "Civilopedia"
+msgstr "Civilopédia"
+
+msgid "Quit"
+msgstr "Kilépés"
+
+msgid "New game"
+msgstr "Új játék"
+
+msgid "You"
+msgstr "Te"
+
+msgid "World"
+msgstr "Világ"
+
+msgid "Rules"
+msgstr "Szabályok"
+
+msgid "Random"
+msgstr "Sorsolt"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - %s %s térkép, %s, %d AI, %d városállamok"
+
+msgid "%s, led by %s"
+msgstr "%s, %s vezetésével"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Véletlenszerű: a játék kezdetekor megtudod, ki vagy."
+
+msgid "Your civilization"
+msgstr "A te civilizációd"
+
+msgid "Map size"
+msgstr "Térkép mérete"
+
+msgid "Map type"
+msgstr "Térkép típusa"
+
+msgid "Shape"
+msgstr "Alakzat"
+
+msgid "Resources"
+msgstr "Nyersanyagok"
+
+msgid "Options"
+msgstr "Beállítások"
+
+msgid "No ancient ruins"
+msgstr "Nincsenek ősi romok"
+
+msgid "No natural wonders"
+msgstr "Nincsenek természeti csodák"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "A nagyobb térképek az asztal alá csúsznak: tartsa megfogva és húzza, vagy használja a túlsó szélen található áttekintést."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "A Gods & Kings hozzáadja a vallást, a kémkedést, több civilizációt és több egységet és épületet."
+
+msgid "Difficulty"
+msgstr "Nehézségi szint"
+
+msgid "Game speed"
+msgstr "A játék sebessége"
+
+msgid "Starting era"
+msgstr "Kezdő korszak"
+
+msgid "AI players"
+msgstr "AI játékosok"
+
+msgid "City-states"
+msgstr "Városállamok"
+
+msgid "Victory types (none picked = all)"
+msgstr "Győzelmi típusok (egyik sem választott = mind)"
+
+msgid "No barbarians"
+msgstr "Nincsenek barbárok"
+
+msgid "Raging barbarians"
+msgstr "Dühöngő barbárok"
+
+msgid "One-city challenge"
+msgstr "Egy város kihívás"
+
+msgid "No city razing"
+msgstr "Nincs városbontás"
+
+msgid "Nuclear weapons"
+msgstr "Atomfegyverek"
+
+msgid "Espionage"
+msgstr "Kémkedés"
+
+msgid "< Back"
+msgstr "< Vissza"
+
+msgid "Start game"
+msgstr "Indítsa el a játékot"
+
+msgid "Load game"
+msgstr "Játék betöltése"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Elmenti az Unciv VR mappájába, a legújabbat először."
+
+msgid "Backgrounds"
+msgstr "Hátterek"
+
+msgid "Mountains"
+msgstr "Hegyek"
+
+msgid "Scenery"
+msgstr "Tájkép"
+
+msgid "Technologies"
+msgstr "Technológiák"
+
+msgid "Policies"
+msgstr "Politikai berendezkedések"
+
+msgid "Diplomacy"
+msgstr "Diplomácia"
+
+msgid "Religion"
+msgstr "Vallás"
+
+msgid "Victory"
+msgstr "Győzelem"
+
+msgid "Declare war"
+msgstr "Hadüzenet"
+
+msgid "Score"
+msgstr "Eredmény"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Még nincs előzmény – a grafikonok folyamatosan bővülnek."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== tartsa itt a ravaszt, és húzza a képernyőt ====="
+
+msgid "Pause"
+msgstr "Szünet"
+
+msgid "Play"
+msgstr "Lejátszás"
+
+msgid "Loading the technology tree..."
+msgstr "A technológiai fa betöltése..."
+
+msgid "Pick something to research!"
+msgstr "Válassz valamit a kutatáshoz!"
+
+msgid "Science %+d per turn"
+msgstr "Tudomány: %+d körönként"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Kattintson egy technológiára, hogy megtudja, mit csinál, és mit tesz lehetővé. Az egyes technológiák alatt található kis ikonok nyitják meg a zárolást."
+
+msgid "needs science"
+msgstr "tudományra van szüksége"
+
+msgid "researching now, "
+msgstr "most kutat, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d tudomány)"
+
+msgid "Loading policies..."
+msgstr "Szabályzat betöltése..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Kultúra %d / %d  (%+d körönként)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Elfogadhat egy házirendet!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Kattintson egy szimbólumra az irányelv megtekintéséhez. Nyisson meg egy fiókot (annak nagy szimbólumát), mielőtt elfogadná a benne lévő irányelveket."
+
+msgid "ready to adopt"
+msgstr "örökbefogadásra készen"
+
+msgid "needs more culture"
+msgstr "több kultúra kell"
+
+msgid "not available yet"
+msgstr "még nem elérhető"
+
+msgid "(no special effects)"
+msgstr "(nincs speciális effektus)"
+
+msgid "Adopt"
+msgstr "Törvénybe iktatás"
+
+msgid "Your score: %d"
+msgstr "Az Ön pontszáma: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Még nem találkoztál senkivel. Fedezzen fel más civilizációkat és városállamokat."
+
+msgid "Loading..."
+msgstr "Betöltés…"
+
+msgid "   (city-state)"
+msgstr "   (város-állam)"
+
+msgid "Destroyed"
+msgstr "Megsemmisült"
+
+msgid "AT WAR"
+msgstr "HÁBORÚBAN"
+
+msgid "At peace"
+msgstr "Békében"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (szerződés: %d több fordulat)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - befolyásolja a %d%s"
+
+msgid "   allied with %s"
+msgstr "   szövetséges a %s-val"
+
+msgid "Feels %s about you%s"
+msgstr "%s érzés veled kapcsolatban%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Pontszám %d Városok %d"
+
+msgid "Diplomacy..."
+msgstr "Diplomácia..."
+
+msgid "Trade"
+msgstr "Kereskedelem"
+
+msgid "Offer peace"
+msgstr "Nyújtson békét"
+
+msgid "Click again to declare war on %s"
+msgstr "Kattintson újra, hogy háborút üzenjen a %s-nak"
+
+msgid "< All civilizations"
+msgstr "< Minden civilizáció"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (nincs béketárgyalások a %d további fordulóira)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Típus: %s Személyiség: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Kapcsolatunk: %s (befolyásolja %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Szövetséges: %s %d befolyással"
+
+msgid "Protected by: "
+msgstr "Védett: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "A kapcsolat %d kör múlva változik"
+
+msgid "Resources: "
+msgstr "Források: "
+
+msgid "When Friends:"
+msgstr "Barátság esetén:"
+
+msgid "When Allies:"
+msgstr "Szövetség esetén:"
+
+msgid "You have a declaration of friendship."
+msgstr "Van egy baráti nyilatkozatod."
+
+msgid "You have denounced them."
+msgstr "Feljelentette őket."
+
+msgid "Go to on map"
+msgstr "Megnézem térképen"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Ajándék %d arany (+%d hatás)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Építsd %s %s-ra (200 arany)"
+
+msgid "Revoke protection"
+msgstr "Védelem visszavonása"
+
+msgid "Click again: revoke protection?"
+msgstr "Kattintson újra: visszavonja a védelmet?"
+
+msgid "Pledge to protect"
+msgstr "Védelembe vétel"
+
+msgid "Click again: declare protection?"
+msgstr "Kattintson újra: kijelenti a védelmet?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Vegyünk %d aranyat (-15 befolyás)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Munkás felvétele (-50 befolyással)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Diplomáciai házasság (%d arany)"
+
+msgid "Click again: they join your empire"
+msgstr "Kattints újra: csatlakoznak a birodalmadhoz"
+
+msgid "Negotiate peace"
+msgstr "Tárgyalni a békét"
+
+msgid "Click again: make peace?"
+msgstr "Kattints újra: békét kötni?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Felajánlott barátság – várja válaszukat"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Barátságnyilatkozat felajánlása (30 kör)"
+
+msgid "Denounce (30 turns)"
+msgstr "Felmondás (30 fordulat)"
+
+msgid "Click again: denounce %s?"
+msgstr "Kattintson újra: feljelenti a %s-t?"
+
+msgid "Click again to declare war"
+msgstr "Kattintson újra a háború kihirdetéséhez"
+
+msgid "Demands:"
+msgstr "Igények:"
+
+msgid "  (asked)"
+msgstr "  (kérdezte)"
+
+msgid "  (they agreed)"
+msgstr "  (megegyeztek)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Tiszteletbeli hajlandóság (legalább 0 arany átvételére, legalább 30 és 4-es méretű város egy dolgozónál):"
+
+msgid "  (+%d influence)"
+msgstr "  (+%d hatás)"
+
+msgid "  %d turns remaining"
+msgstr "  %d kör van hátra"
+
+msgid "Unforgivable"
+msgstr "Megbocsáthatatlan"
+
+msgid "Enemy"
+msgstr "Ellenség"
+
+msgid "Afraid"
+msgstr "Megfélemlített"
+
+msgid "Competitor"
+msgstr "Vetélytárs"
+
+msgid "Favorable"
+msgstr "Támogató"
+
+msgid "Friend"
+msgstr "Barát"
+
+msgid "Ally"
+msgstr "Szövetséges"
+
+msgid "Pantheon"
+msgstr "Panteon"
+
+msgid "Founder"
+msgstr "Alapító"
+
+msgid "Follower"
+msgstr "Követő"
+
+msgid "Enhancer"
+msgstr "Bővítő"
+
+msgid "Any"
+msgstr "Bármelyik"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Válassza a %d további hiedelmeket%s"
+
+msgid "so far: %s"
+msgstr "eddig: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Most válassz egy szimbólumot a vallásodhoz (fent)."
+
+msgid "Follow this pantheon"
+msgstr "Kövesd ezt a panteont"
+
+msgid "Found %s"
+msgstr "Talált %s"
+
+msgid "Enhance %s"
+msgstr "A %s javítása"
+
+msgid "Reform"
+msgstr "Reform"
+
+msgid "Confirm"
+msgstr "Erősítse meg"
+
+msgid "Religion is off in this game."
+msgstr "A vallás ki van zárva ebben a játékban."
+
+msgid "Choose a pantheon belief"
+msgstr "Válassz egy panteon hitet"
+
+msgid "Found your religion"
+msgstr "Megtaláltad a vallásod"
+
+msgid "Enhance your religion"
+msgstr "Erősítsd a vallásodat"
+
+msgid "Reform your religion"
+msgstr "Reformálja meg a vallását"
+
+msgid "No religion yet"
+msgstr "Még nincs vallás"
+
+msgid "Your beliefs"
+msgstr "A te hiedelmeid"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Jelenleg nincs mit választani. Szerezzen hitet egy panteon alapításához; egy Nagy Próféta vallást alapít (és később megerősít) az egyik városodban."
+
+msgid "Symbol:"
+msgstr "Szimbólum:"
+
+msgid "Name: %s"
+msgstr "Név: %s"
+
+msgid "(pick a symbol)"
+msgstr "(válassz egy szimbólumot)"
+
+msgid "Rename..."
+msgstr "Átnevezés..."
+
+msgid "Choose any belief!"
+msgstr "Válassz bármilyen vallási tant!"
+
+msgid "Choose a %s belief!"
+msgstr "Válassz egy %s hitet!"
+
+msgid "  (another religion has it)"
+msgstr "  (más vallásnak is van ilyen)"
+
+msgid "  (you have it)"
+msgstr "  (neked van)"
+
+msgid "  (not available)"
+msgstr "  (nem elérhető)"
+
+msgid "  (picked for another slot)"
+msgstr "  (más helyhez választottam)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Forgatás %d %s sebesség %s%s"
+
+msgid "max %d turns"
+msgstr "max. %d kör"
+
+msgid "You have won a %s Victory!"
+msgstr "Ön megnyerte a %s győzelmet!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s nyert egy %s győzelmet!"
+
+msgid "You have been defeated."
+msgstr "Önt legyőzték."
+
+msgid "One more turn...!"
+msgstr "Csak még egy kör…!"
+
+msgid "Main menu (start a new game)"
+msgstr "Főmenü (új játék indítása)"
+
+msgid "Our status"
+msgstr "Állapotunk"
+
+msgid "Global status"
+msgstr "Globális állapot"
+
+msgid "Rankings"
+msgstr "Ranglista"
+
+msgid "Charts"
+msgstr "Diagramok"
+
+msgid "Demographics"
+msgstr "Népességadatok"
+
+msgid "%s Victory"
+msgstr "%s Győzelem"
+
+msgid "[done] "
+msgstr "[kész] "
+
+msgid "Rank"
+msgstr "Helyezés"
+
+msgid "Value"
+msgstr "Érték"
+
+msgid "Best"
+msgstr "Legjobb"
+
+msgid "Average / Worst"
+msgstr "Átlagos / legrosszabb"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Kereskedés a %s-val az Ön aranya %d, az övék %d"
+
+msgid "You can offer"
+msgstr "Tudod ajánlani"
+
+msgid "You give"
+msgstr "Te adsz"
+
+msgid "You get"
+msgstr "Megkapod"
+
+msgid "They can offer"
+msgstr "Ők tudnak ajánlani"
+
+msgid "Clear"
+msgstr "Törlés"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Kattintson a külső oszlopokon lévő elemekre, hogy az asztalra helyezze őket; kattintson rájuk ismét, hogy eltávolítsa őket."
+
+msgid "%s would accept this."
+msgstr "A %s ezt elfogadná."
+
+msgid "%s wants more for this%s."
+msgstr "%s többet szeretne ehhez%s."
+
+msgid "about %d gold's worth"
+msgstr "a %d arany értékéről"
+
+msgid "Propose deal"
+msgstr "Ajánljon üzletet"
+
+msgid "  %d turns"
+msgstr "  %d kör"
+
+msgid "Gold_Per_Turn"
+msgstr "Arany körönként"
+
+msgid "Not connected to the bridge"
+msgstr "Nincs összekötve a híddal"
+
+msgid "Bridge disconnected"
+msgstr "A híd megszakadt"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "A kötegelt Unciv híd hiányos. Telepítse újra a játék fájljait."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Nem találom az Unciv repót a %s híddal"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Nem található Java 17 vagy újabb (az Uncivnek JDK 21-re van szüksége). Telepítse és állítsa be a JAVA_HOME-ot."
+
+msgid "Couldn't write %s"
+msgstr "A %s nem írható be"
+
+msgid "Couldn't start Gradle"
+msgstr "Nem sikerült elindítani a Gradle-t"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Nem sikerült elindítani a mellékelt Unciv hidat"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== tartsa itt a ravaszt, és húzza a mozgatáshoz ====="
+
+msgid "Exit city"
+msgstr "Város bezárása"
+
+msgid "City"
+msgstr "Város"
+
+msgid "BEING RAZED"
+msgstr "LEHÁRÍTVA"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Nem hozzárendelt állampolgárok: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "kattintson: hagyja, hogy a város helyezze el őket"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d élelmiszer)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Éheznek: elveszít egy állampolgárt a %d %s fordulatban"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Az egység építése közben az élelmiszerek gyártásba kerülnek"
+
+msgid "New citizen in %d turns %s"
+msgstr "Új állampolgár a %d-ban %s lesz"
+
+msgid "Not growing %s"
+msgstr "Nem növekszik %s"
+
+msgid "(%d/%d culture)"
+msgstr "(%d/%d kultúra)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "A szegélyek %d %s fordulatokban nőnek"
+
+msgid "Borders have stopped growing"
+msgstr "A határok megálltak"
+
+msgid "In resistance for another %d turns"
+msgstr "Ellenállás még %d körig"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "A király ünnepe még %d körig"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Igényes %s (szeretjük a király napját, ha megkapja)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Mellékváros (ne legyen már báb)"
+
+msgid "Stop razing city"
+msgstr "Város elbontásának leállítása"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Kattintson újra a RAZE %s-hoz (egy körön belül leéget egy polgárt)"
+
+msgid "Raze city"
+msgstr "Város elbontása"
+
+msgid "Citizen management"
+msgstr "Polgári menedzsment"
+
+msgid "Reset citizens"
+msgstr "Állítsa vissza az állampolgárokat"
+
+msgid "Avoid growth"
+msgstr "Kerülje a növekedést"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Polgárok prioritása (mely mezőket munkálja meg a város):"
+
+msgid "Specialists"
+msgstr "Szakértők"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Kézi szakemberek (kattintson az automatikusért)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Automatikus szakemberek (kattintson a kézikönyvért)"
+
+msgid "Specialist"
+msgstr "Szakember"
+
+msgid "Great people"
+msgstr "Nagyszerű emberek"
+
+msgid "Majority religion: %s"
+msgstr "Többségi vallás: %s"
+
+msgid "Former holy city of %s"
+msgstr "%s egykori szent városa"
+
+msgid "Holy city of %s"
+msgstr "%s szent városa"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d követők, nyomás %+d"
+
+msgid "Specialist buildings"
+msgstr "Speciális épületek"
+
+msgid "  (free)"
+msgstr "  (ingyenes)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Kattints egy lapkára az asztalon: a megmunkált lapkákat leállítják, a szabad polgárok a megmunkálatlanokhoz mennek, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "árú mező pedig megvásárolható (kattintson kétszer)."
+
+msgid "Tile"
+msgstr "Mező"
+
+msgid "city centre"
+msgstr "városközpont"
+
+msgid "worked (locked)"
+msgstr "dolgozott (zárva)"
+
+msgid "not worked"
+msgstr "nem működött"
+
+msgid "gives its yield without a citizen"
+msgstr "állampolgár nélkül adja a hozamát"
+
+msgid "gives nothing"
+msgstr "nem ad semmit"
+
+msgid "blockaded by an enemy"
+msgstr "blokád alá helyezte az ellenség"
+
+msgid "worked by %s"
+msgstr "dolgozta %s"
+
+msgid "another city"
+msgstr "egy másik város"
+
+msgid "too far to work"
+msgstr "túl messze van a munkához"
+
+msgid "can be bought"
+msgstr "megvásárolható"
+
+msgid "not yours"
+msgstr "nem a tiéd"
+
+msgid "Resource: %s"
+msgstr "Forrás: %s"
+
+msgid "Improvement: %s"
+msgstr "Fejlesztés: %s"
+
+msgid "Owned by %s"
+msgstr "A %s tulajdona"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Zár (tartson itt állampolgárt)"
+
+msgid "Stop working"
+msgstr "Hagyja abba a munkát"
+
+msgid "Unlock"
+msgstr "Feloldás"
+
+msgid "Work this tile"
+msgstr "Dolgozd fel ezt a mezőt"
+
+msgid "Work and lock"
+msgstr "Munka és zár"
+
+msgid "Click again: buy for %d gold"
+msgstr "Kattintson újra: vásároljon %d aranyért"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Vásároljon %d aranyért (van %d)"
+
+msgid "Production"
+msgstr "Termelés"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Arany %d   Hit %d   Termelés %+d körönként"
+
+msgid "Being built"
+msgstr "Építés alatt"
+
+msgid "Nothing being built - pick something below"
+msgstr "Semmi sem épül – válasszon valamit lent"
+
+msgid "   %d turns"
+msgstr "   %d kör"
+
+msgid "Hide what can't be built yet"
+msgstr "Rejtsd el, amit még nem lehet megépíteni"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Mutasd meg, mit nem lehet még megépíteni (és miért)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Kattintson valamire, hogy megnézze, mit csinál, majd készítse el most, adja hozzá a sorhoz, vagy vásárolja meg."
+
+msgid "   %d production"
+msgstr "   %d gyártás"
+
+msgid ", %d turns"
+msgstr ", %d kör"
+
+msgid "   (built)"
+msgstr "   (épült)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "A %s egy olyan lapkára kerül, amelyet az asztalról választ ki az Építés most / Hozzáadás a sorhoz / Vásárlás után."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "A %s a sorban álláskor kiválasztott gyűrűs lapkára kerül."
+
+msgid "Build now"
+msgstr "Építsd meg most"
+
+msgid "Add to queue"
+msgstr "Hozzáadás a várólistához"
+
+msgid "Click again: buy for %d %s"
+msgstr "Kattintson újra: vásárolja meg a %d %s terméket"
+
+msgid "Buy for %d %s"
+msgstr "Vásárolja meg a %d %s típust"
+
+msgid "you have %d"
+msgstr "%d-ja van"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Vásárlás: először vigye ki az egységet a városból"
+
+msgid "Click again: sell for %d gold"
+msgstr "Kattintson újra: adjon el %d aranyért"
+
+msgid "Sell for %d gold"
+msgstr "%d aranyért eladó"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia - tartsa lenyomva a ravaszt itt, és húzza a mozgatáshoz ====="
+
+msgid "<  Back"
+msgstr "< Vissza"
+
+msgid "This entry couldn't be loaded."
+msgstr "Ez a bejegyzés nem tölthető be."
+
+msgid "Building"
+msgstr "Épület"
+
+msgid "Wonder"
+msgstr "Csoda"
+
+msgid "Unit"
+msgstr "Egység"
+
+msgid "Resource"
+msgstr "Nyersanyag"
+
+msgid "Improvement"
+msgstr "Területfejlesztés"
+
+msgid "Tile Improvements"
+msgstr "Területfejlesztések"
+
+msgid "Technology"
+msgstr "Technológia"
+
+msgid "Promotion"
+msgstr "Előléptetés"
+
+msgid "Promotions"
+msgstr "Előléptetések"
+
+msgid "Policy"
+msgstr "Politikai berendezkedés"
+
+msgid "Belief"
+msgstr "Hit"
+
+msgid "Religions and Beliefs"
+msgstr "Vallások és tanok"
+
+msgid "Nation"
+msgstr "Nemzet"
+
+msgid "Nations"
+msgstr "Nemzetek"
+
+msgid "Terrain"
+msgstr "Felszínforma"
+
+msgid "Terrains"
+msgstr "Felszínformák"
+
+msgid "Unit types"
+msgstr "Egységtípusok"
+
+msgid "Unit Names"
+msgstr "Egységnevek"
+
+msgid "Victory Types"
+msgstr "Győzelmi lehetőségek"
+
+msgid "Thumbstick"
+msgstr "Kar"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "Trigger"
+msgstr "Ravasz"
+
+msgid "Grip"
+msgstr "Markolatgomb"
+
+msgid "Trackpad"
+msgstr "Érintőpad"
+
+msgid "Button 1"
+msgstr "1. gomb"
+
+msgid "Button 2"
+msgstr "2. gomb"
+
+msgid "Cities"
+msgstr "Városok"
+
+msgid "None"
+msgstr "Nincs"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Feltáratlan (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - %s terület"
+
+msgid " - city of %s"
+msgstr " - %s város"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Önállósítás"
+
+msgid "Sleep"
+msgstr "Alvás"
+
+msgid "Fortify"
+msgstr "Védekezőállás"
+
+msgid "Guard"
+msgstr "Őrködés"
+
+msgid "Explore"
+msgstr "Felfedezés"
+
+msgid "Upgrade"
+msgstr "Korszerűsítés"
+
+msgid "Transform"
+msgstr "Átalakítás"
+
+msgid "Repair"
+msgstr "Javítás"
+
+msgid "Skip"
+msgstr "Kihagyás"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s Forgassa el %d (%s)"
+
+msgid "%d BC"
+msgstr "%d Kr.e"
+
+msgid "%d AD"
+msgstr "%d AD"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Nem kutat semmit – válasszon egy technikát!"
+
+msgid "Point at a tile"
+msgstr "Mutasson egy csempére"
+
+msgid "Unexplored"
+msgstr "Feltáratlan"
+
+msgid "Send a unit to find out what's here."
+msgstr "Küldjön egy egységet, hogy megtudja, mi van itt."
+
+msgid "Natural wonder: %s"
+msgstr "Természeti csoda: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Továbbfejlesztés: %s%s"
+
+msgid "River"
+msgstr "Folyó"
+
+msgid "City of %s  (population %d)"
+msgstr "%s város (lakosság %d)"
+
+msgid "%s territory"
+msgstr "%s terület"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% az egységvédelemhez"
+
+msgid "Impassable"
+msgstr "Járhatatlan"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Jelenleg nem látható – utoljára láttam így"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Támadás %s: üzlet ~%d, ~%d"
+
+msgid "Science"
+msgstr "Tudomány"
+
+msgid "Happiness"
+msgstr "Boldogság"
+
+msgid "Malcontent"
+msgstr "Rosszullét"
+
+msgid "Culture"
+msgstr "Kultúra"
+
+msgid "Faith"
+msgstr "Hit"
+
+msgid "Population"
+msgstr "Lakosság"
+
+msgid "Food"
+msgstr "Élelem"
+
+msgid "Shift"
+msgstr "Nagybetű"
+
+msgid "Space"
+msgstr "Szóköz"
+
+msgid "< Del"
+msgstr "< Töröl"
+
+msgid "Recenter"
+msgstr "Középre"
+
+msgid "Move a unit!"
+msgstr "Mozgass egy egységet!"
+
+msgid "hold to move onto a tile"
+msgstr "tartsa lenyomva a lapkára lépéshez"
+
+msgid "Connecting..."
+msgstr "Csatlakozás..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Megszakadt a kapcsolat a híddal – újrapróbálkozás..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "A hidat keresem a 127.0.0.1-en:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Nem sikerült elindítani a hidat: %s\nIndítsa el kézzel a következővel: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Az Unciv híd indítása... (újjáépítésre kerül, ha a kódja megváltozott - egy percig is eltarthat)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "A híd megállt, mielőtt elkészült volna. %s: \n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Az Unciv motor nincs ebben az alkalmazásban (az UncivBridge beépülő modul hiányzik az exportálásból)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Az Unciv motor nem tudott elindulni: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Az Unciv motorja leállt:\n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Az Unciv motorjának indítása: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Egy régebbi Unciv híd (v%d protokoll) még futott - újraindítás az aktuális kóddal..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Nem tudtam megállítani a régi hidat - folytatni vele. Előfordulhat, hogy bizonyos dolgok nem működnek."
+
+msgid "Reconnected to the bridge."
+msgstr "Újra csatlakoztatva a hídhoz."
+
+msgid "Bridge error: %s"
+msgstr "Hídhiba: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Figyelmeztetés: a híd a v%d protokollt beszéli, de ez az ügyfél a v%d protokollt várja – frissítse együtt a két repót. Előfordulhat, hogy bizonyos dolgok nem működnek."
+
+msgid "Connected to Unciv %s"
+msgstr "Csatlakoztatva az Unciv %s-hoz"
+
+msgid "Couldn't load the save: %s"
+msgstr "Nem sikerült betölteni a mentést: %s"
+
+msgid "Your move."
+msgstr "A te lépésed."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Új játék indítása... (nagyobb térképek kicsit tovább tartanak)"
+
+msgid "Starting a new game..."
+msgstr "Új játék indítása..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Nem sikerült elindítani a játékot: %s"
+
+msgid "saved "
+msgstr "mentve "
+
+msgid "%s, turn %d"
+msgstr "%s, kör %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Főmenü: mutasson az asztal feletti kártyára."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s %s %s térképen, %s, %d AI, %d városállamok"
+
+msgid "A random civilization"
+msgstr "Véletlen civilizáció"
+
+msgid "Loading %s..."
+msgstr "%s betöltése..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Nem sikerült betölteni a %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Nem sikerült elolvasni ezeket a szabályokat: %s"
+
+msgid "getState failed: %s"
+msgstr "getState sikertelen: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Az áttekintés, az információs tábla, a nagy képernyő és a panelek visszatértek a megszokott helyükre."
+
+msgid "Name your religion"
+msgstr "Nevezze meg a vallását"
+
+msgid "Your religion"
+msgstr "A te vallásod"
+
+msgid "Researching %s."
+msgstr "%s kutatása."
+
+msgid "Adopted %s."
+msgstr "Elfogadva %s."
+
+msgid "You declared war on %s!"
+msgstr "Ön hadat üzent a %s-nak!"
+
+msgid "Unit movements"
+msgstr "Az egység mozgásai"
+
+msgid "Tile yields"
+msgstr "Mezők termelése"
+
+msgid "Worked tiles"
+msgstr "Megmunkált mezők"
+
+msgid "Resources and improvements"
+msgstr "Erőforrások és fejlesztések"
+
+msgid "Improvement pictures"
+msgstr "Javító képek"
+
+msgid "Unit icons"
+msgstr "egység ikonok"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Tartsa a %s-t egy lapkán, hogy egy egységet helyezzen rá."
+
+msgid "the trigger"
+msgstr "a kiváltó"
+
+msgid "the mouse button"
+msgstr "az egérgombot"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Támadás %s\nalkalmazz ~%d, vegyél ~%d\nKattintson ismét a támadáshoz"
+
+msgid "a unit"
+msgstr "egy egység"
+
+msgid "Can't get there"
+msgstr "Nem lehet odajutni"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "Nincs hely ezen a csempén\n%s %s már ott van"
+
+msgid "\nSwap places on the card"
+msgstr "\nCserélj helyet a kártyán"
+
+msgid "Move here"
+msgstr "Költözz ide"
+
+msgid "Move here: %d turns"
+msgstr "Mozgás ide: %d kör"
+
+msgid "\nsharing the tile with %s"
+msgstr "\nA mező megosztása a %s-val"
+
+msgid "\nclick again to go"
+msgstr "\nKattintson újra a folytatáshoz"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "A %s úton van – a következő kanyarban folytatja."
+
+msgid "No attack happened."
+msgstr "Nem történt támadás."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s támadta a %s-t: %d sebzést okozott, %d-t szerzett."
+
+msgid "  City captured!"
+msgstr "  Elfoglalták a várost!"
+
+msgid "  %s destroyed!"
+msgstr "  %s megsemmisült!"
+
+msgid "  Your %s was lost."
+msgstr "  %s-ja elveszett."
+
+msgid "Improvement order cancelled."
+msgstr "A fejlesztési megbízás törölve."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: %s épület (%d fordul)."
+
+msgid "Rename %s"
+msgstr "Nevezze át a %s-t"
+
+msgid "%s is now called %s."
+msgstr "A %s neve mostantól %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Nevezze el a %s-t (üres: nincs név)"
+
+msgid "Renamed to %s."
+msgstr "Átnevezve %s-ra."
+
+msgid "Name removed."
+msgstr "Név eltávolítva."
+
+msgid "%s: on the way."
+msgstr "%s: úton."
+
+msgid "%s: coup orders given."
+msgstr "%s: puccsparancsot adtak ki."
+
+msgid "See your stats breakdown"
+msgstr "Tekintse meg a statisztikák lebontását"
+
+msgid "Selected %s."
+msgstr "Kiválasztott %s."
+
+msgid "the unit"
+msgstr "az egységet"
+
+msgid "Upgraded to %s."
+msgstr "Frissítve %s-ra."
+
+msgid "Enter city screen"
+msgstr "Lépjen be a város képernyőjére"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Városra néző: %s. Kattintson a csempékre a munkához; Kilépés a városból (vagy B / Esc) visszatér a térképre."
+
+msgid "Back to the map."
+msgstr "Vissza a térképhez."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "A %s-ban nincs hová tenni a %s-t."
+
+msgid "the city"
+msgstr "a város"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Válassza ki a %s mezőt (piros gyűrűk), vagy az Esc / B gombbal törölje."
+
+msgid "Cancelled."
+msgstr "Törölve."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Válassz egyet a gyűrűs lapkák közül (az Esc / B visszavonja)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: a javulás ott van."
+
+msgid "Bought the tile for %d gold."
+msgstr "A mezőt %d aranyért vettem."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Vásároljon %d aranyért\nKattintson újra a vásárláshoz"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Költségek: %d arany\n (nincs elég arany)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Állampolgárok átcsoportosítása (zárak feloldása)."
+
+msgid "Annexed."
+msgstr "Mellékelve."
+
+msgid "%s will build %s next."
+msgstr "A %s legközelebb a %s-t fogja megépíteni."
+
+msgid "%s added to the queue."
+msgstr "%s hozzáadva a várólistához."
+
+msgid "Bought %s."
+msgstr "Vettem %s."
+
+msgid "Sold the %s."
+msgstr "Eladtuk a %s-t."
+
+msgid "%s added to %s's queue."
+msgstr "%s hozzáadva a %s sorához."
+
+msgid "Bought %s in %s."
+msgstr "%s-t vásároltam a %s-ban."
+
+msgid "Experience"
+msgstr "Tapasztalat"
+
+msgid "%s is now %s."
+msgstr "A %s mostantól %s."
+
+msgid "Pick something to research."
+msgstr "Válassz valamit a kutatáshoz."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Elfogadhat egy új szabályzatot – tekintse meg az Irányelvek lapot a nagy képernyőn."
+
+msgid "%s is heading here"
+msgstr "A %s ide tart"
+
+msgid "The unit"
+msgstr "Az egység"
+
+msgid "Are you sure?"
+msgstr "Biztos vagy benne?"
+
+msgid "Click again to confirm."
+msgstr "Kattintson ismét a megerősítéshez."
+
+msgid "%s: click a %stile"
+msgstr "%s: kattintson egy %slapra"
+
+msgid "highlighted "
+msgstr "kiemelt "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s – kattintson a csempére a térképen (vagy a Mégse gombra a kártyán)."
+
+msgid "Move here: click a tile"
+msgstr "Áthelyezés ide: kattintson egy csempére"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Mozgassa a %s-t – kattintson egy lapkára a térképen (vagy a kártyán a Mégse gombra)."
+
+msgid "No enemies in range of %s."
+msgstr "Nincsenek ellenségek a %s hatótávolságában."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombázás a %s-ból: kattintson egy piros gyűrűs ellenségre (kattintson a városra a törléshez)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Válasszon egyet a kiemelt mezők közül (vagy Mégse)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bombázott %s: %d sérülés%s."
+
+msgid "Destroyed!"
+msgstr "Megsemmisült!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Vége a kanyarnak? Nyomja meg ismét a Forgatás vége gombot a megerősítéshez."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Vége a körnek – az AI játékosok mozognak..."
+
+msgid "Turn %d"
+msgstr "Kör %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "A JÁTÉK VÉGE – %s nyer (%s győzelem)"
+
+msgid "A %s has been born!"
+msgstr "Megszületett egy %s!"
+
+msgid "You voted for %s."
+msgstr "Ön a %s-ra szavazott."
+
+msgid "You abstained."
+msgstr "Ön tartózkodott."
+
+msgid "ATTACK"
+msgstr "TÁMADÁS"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Forgassa %d (%s) Arany %d (%+d) Tudomány %+d Boldogság %d"
+
+msgid "Researching: %s"
+msgstr "Kutatás: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - kör %d"
+
+msgid "Game"
+msgstr "Játék"
+
+msgid "Save game as"
+msgstr "Játék mentése másként"
+
+msgid "Saved as \"%s\"."
+msgstr "\"%s\" néven mentve."
+
+msgid "Couldn't save: %s"
+msgstr "Nem sikerült menteni: %s"
+
+msgid "Open the options table"
+msgstr "Nyissa meg az opciók táblázatát"
+
+msgid "The tutorials will show again from the start."
+msgstr "Az oktatóanyagok a kezdetektől újra megjelennek."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Nem sikerült visszaállítani az oktatóanyagokat: %s"
+
+msgid "The panels are back where they started."
+msgstr "A panelek visszakerültek oda, ahonnan indultak."
+
+msgid "The table is back in the middle of the background."
+msgstr "Az asztal visszakerült a háttér közepére."
+
+msgid "Civilopedia: %s"
+msgstr "Civilopédia: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Nem sikerült megnyitni a Civilpédiát: %s"
+
+msgid "Opened %s in your browser."
+msgstr "Megnyitotta a %s-t a böngészőjében."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Oktatói feladat elrejtve – a következő megjelenik, amikor megjelenik."
+
+msgid "Move the table"
+msgstr "Mozgassa az asztalt"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Az asztal mozgatása: mutasson egy helyet a tájban, és tegye oda %s-val. A %s megfordítja. %s, ha végzett."
+
+msgid "pull the trigger"
+msgstr "húzza meg a ravaszt"
+
+msgid "The right stick"
+msgstr "A megfelelő bot"
+
+msgid "Press A or B"
+msgstr "Nyomja meg az A vagy B gombot"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Az asztal itt marad. A Beállítások > Megjelenés > Vissza középre lehetőség visszaállítja a helyét."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Ez nem a tájon van – mutasson valahol a földre."
+
+msgid "put the table here"
+msgstr "tedd ide az asztalt"
+
+msgid "turn the scenery"
+msgstr "fordítsa meg a tájat"
+
+msgid "done moving the table"
+msgstr "kész az asztal mozgatása"
+
+msgid "point, click (hold: aim)"
+msgstr "mutasson, kattintson (tartsa: cél)"
+
+msgid "Found city"
+msgstr "Város alapítása"
+
+msgid "Cancel typing"
+msgstr "Törölje a gépelést"
+
+msgid "Leave the city"
+msgstr "Hagyd el a várost"
+
+msgid "table height"
+msgstr "asztal magassága"
+
+msgid "slide the map"
+msgstr "csúsztassa a térképet"
+
+msgid "turn / size the table"
+msgstr "fordítsa meg / méretezze meg az asztalt"
+
+msgid "Next unit"
+msgstr "Következő egység"
+
+msgid "Previous unit"
+msgstr "Előző egység"
+
+msgid "zoom the map"
+msgstr "nagyítsa ki a térképet"
+
+msgid "table height, click: recenter"
+msgstr "asztal magassága, kattintson: újabb"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Valami nem ért véget – folytasd. (Ha ez továbbra is megtörténik, a naplóban szerepel, hogy miért.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "TÁMADÁS: %s (%s, %d/%d életerő)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  várható: üzlet %d, %d"
+
+msgid "Luxury"
+msgstr "Luxus"
+
+msgid "Strategic"
+msgstr "Stratégiai"
+
+msgid "Unit icons over the unit models"
+msgstr "Egység ikonok az egységmodellek felett"
+
+msgid "Overview: point and click to go there"
+msgstr "Áttekintés: mutasson rá, és kattintson rá, hogy oda lépjen"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (kattintson a %s elforgatásához)"
+
+msgid "Overview"
+msgstr "Áttekintés"
+
+msgid "Stats"
+msgstr "Pontok"
+
+msgid "Trades"
+msgstr "Kereskedelem"
+
+msgid "Politics"
+msgstr "Politika"
+
+msgid "Notifications"
+msgstr "Értesítések"
+
+msgid "Spy"
+msgstr "Kém"
+
+msgid "War"
+msgstr "Háború"
+
+msgid "DefensivePact"
+msgstr "Védelmi egyezmény"
+
+msgid "Neutral"
+msgstr "Semleges"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Birodalom áttekintése - tartsa lenyomva a ravaszt itt, és húzza a mozgatáshoz ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Még nincsenek kémed – új korszakokkal jönnek."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Kémek (válassz egyet, aztán hova kerül)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (%d rang) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Szüntesd meg a puccsot"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Kattintson újra: hajtson végre puccsot (%d%% esély)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Szervezzen puccsot (%d%% esély)"
+
+msgid "Where to"
+msgstr "Hová"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Kémbúvóhely (hozza haza a %s-t)"
+
+msgid "   spies: "
+msgstr "   kémek: "
+
+msgid "Click again (%s)"
+msgstr "Kattintson újra (%s)"
+
+msgid "You have no cities yet."
+msgstr "Még nincsenek városai."
+
+msgid "Name"
+msgstr "Név"
+
+msgid "Defence"
+msgstr "Védekezés"
+
+msgid "Open the city view"
+msgstr "Nyissa meg a városi nézetet"
+
+msgid "Resistance"
+msgstr "Ellenállás"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "Igényes %s"
+
+msgid " (holy)"
+msgstr " (szent)"
+
+msgid "Total %d"
+msgstr "Összesen %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Alakítsa át az aranyat tudománygá: %d%%"
+
+msgid "Great person points"
+msgstr "Híresember-pontok"
+
+msgid "Points"
+msgstr "Pontok"
+
+msgid "Per turn"
+msgstr "Körönként"
+
+msgid "Total"
+msgstr "Összesen"
+
+msgid "Pending trades"
+msgstr "Függőben lévő ajánlatok"
+
+msgid "Current trades"
+msgstr "Le nem járt ajánlatok"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Nem folyik kereskedés. Készítsen egyet a nagy képernyő Diplomácia lapjáról."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Egységellátás: %d/%d használt (bázis %d, városok %d, lakosság %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Hiány %d: %d%% termelés minden városban. Növelje a készletet vagy bontsa szét az egységeket."
+
+msgid "Doing"
+msgstr "Tevékenység"
+
+msgid "Closest city"
+msgstr "Legközelebbi város"
+
+msgid "Click again: %d gold"
+msgstr "Kattintson újra: %d arany"
+
+msgid "%s %dg"
+msgstr "%s %dg"
+
+msgid "Show global politics"
+msgstr "Globális politika megjelenítése"
+
+msgid "Show diagram"
+msgstr "Diagram megjelenítése"
+
+msgid "Hide city-states"
+msgstr "Városállamok elrejtése"
+
+msgid "Include city-states"
+msgstr "Tartalmazza a városállamokat"
+
+msgid "   %s civilizations in the game"
+msgstr "   %s civilizációk a játékban"
+
+msgid "Score %d"
+msgstr "Pontszám %d"
+
+msgid "Defeated"
+msgstr "Legyőzött"
+
+msgid "At war with %s"
+msgstr "Háborúban áll a %s-val"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Védelmi paktum a %s-val (%d fordulatok)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Barátok %s-val (%d körök)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Elítélve %s (%d fordulat)"
+
+msgid "Allied with %s"
+msgstr "A %s-val szövetséges"
+
+msgid "Relations"
+msgstr "Kapcsolatok"
+
+msgid "Defensive pact"
+msgstr "Védelmi paktum"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Még nincs luxus vagy stratégiai erőforrása."
+
+msgid "Unimproved"
+msgstr "Területfejlesztés nélküli"
+
+msgid "Trade offer"
+msgstr "Kereskedelmi ajánlat"
+
+msgid "Stockpile"
+msgstr "Készlet"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Nem javítva: a saját (vagy a szövetséges városállamok) földjén ez az erőforrás, de nincs fejlesztés a használatához.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: a városok, amelyek ezt ünneplik/követelik a We Love The King Day alkalmából."
+
+msgid "Religions to be founded: %s"
+msgstr "Alapítandó vallások: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Minimális hit a következő %s-hoz: %d"
+
+msgid "Great Prophet"
+msgstr "Híres próféta"
+
+msgid "Religious status: %s"
+msgstr "Vallási státusz: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Még nem alapítottak vallást vagy panteont."
+
+msgid "%s name:"
+msgstr "%s név:"
+
+msgid "Founding civ:"
+msgstr "A civil alapító:"
+
+msgid "Holy city:"
+msgstr "Szent város:"
+
+msgid "Cities following this religion:"
+msgstr "Városok, amelyek ezt a vallást követik:"
+
+msgid "Followers of this religion:"
+msgstr "Ennek a vallásnak a követői:"
+
+msgid "Status"
+msgstr "Állapot"
+
+msgid "Location"
+msgstr "Helyszín"
+
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+msgid "Owned"
+msgstr "Saját"
+
+msgid "Known"
+msgstr "Ismert"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s Forgassa el a %d %s"
+
+msgid "Current turn  |"
+msgstr "Kör  |"
+
+msgid "General"
+msgstr "Tábornok"
+
+msgid "No notifications yet."
+msgstr "Még nincsenek értesítések."
+
+msgid "Tech"
+msgstr "Technológia"
+
+msgid "Panel"
+msgstr "Panel"
+
+msgid "Nothing to show."
+msgstr "Nincs mit mutatni."
+
+msgid "Select a unit"
+msgstr "Válasszon egy egységet"
+
+msgid "Left-click it"
+msgstr "Kattintson a bal gombbal"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Pont + jobb trigger: a kártyája felugrik felette"
+
+msgid "Move / attack"
+msgstr "Mozgás / támadás"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Kattints egy lapkára a célzáshoz, majd ismét az induláshoz"
+
+msgid "The same with the laser"
+msgstr "Ugyanez a lézerrel"
+
+msgid "Open a city"
+msgstr "Nyiss meg egy várost"
+
+msgid "Click it"
+msgstr "Kattintson rá"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Pont + jobb trigger: kártyája a város felett lebeg"
+
+msgid "Scroll a card"
+msgstr "Görgessen egy kártyát"
+
+msgid "Mouse wheel"
+msgstr "Egérkerék"
+
+msgid "Point at it + right stick"
+msgstr "Mutass rá + jobb bot"
+
+msgid "Move the view"
+msgstr "Mozgassa a nézetet"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Jobbra húzó pályák, kerék zoom, WASD / középső húzás"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Markolat + bot: balra/jobbra forgatja az asztalt, fel/le skálázza"
+
+msgid "Table height"
+msgstr "Asztal magassága"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Vagy csúsztassa fel / le (a jobb oldali, ha nem a kártyára mutat)"
+
+msgid "Zoom the map"
+msgstr "Nagyítsa ki a térképet"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - vagy Ctrl + kerék"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Tartsa lenyomva a ravaszt + a kéz botja fel/le"
+
+msgid "Slide the map"
+msgstr "Csúsztassa el a térképet"
+
+msgid "WASD, or click the overview"
+msgstr "WASD, vagy kattintson az áttekintésre"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Fogja meg a fogást és húzza; vagy mutasson az áttekintésre + trigger"
+
+msgid "Move a board"
+msgstr "Mozgass egy táblát"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Tartsa a ravaszt a felső szalagján (vagy az információs táblán), és mozgassa"
+
+msgid "A, or the End turn button on the table"
+msgstr "A, vagy a Befejezés gomb az asztalon"
+
+msgid "Found a city"
+msgstr "Talált egy várost"
+
+msgid "Next / previous unit"
+msgstr "Következő / előző egység"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Az üresjárati egység gombja az asztalon"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Technikai fa, politika, diplomácia"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "A csuklókártya, vagy a gombok a táblákon"
+
+msgid "Empire overview"
+msgstr "Birodalom áttekintése"
+
+msgid "Always up, off to your right"
+msgstr "Mindig fent, jobbra"
+
+msgid "The Settings button on the table"
+msgstr "A Beállítások gomb az asztalon"
+
+msgid "The Civilopedia button on the table"
+msgstr "A Civilopedia gomb az asztalon"
+
+msgid "Close / deselect"
+msgstr "Bezárás / kijelölés törlése"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B bezárja a billentyűzetet és a városnézetet"
+
+msgid "Recenter the table"
+msgstr "Nyissa meg újra a asztalt"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Kattintson a bal oldali karral, vagy a Recenter gombra"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Beállítások - tartsa lenyomva a ravaszt itt, és húzza a mozgatáshoz ====="
+
+msgid "Tables"
+msgstr "Asztalok"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Vigye át az asztalt bárhová a háttérben – praktikus a nagy asztaloknál, mint egy átalakított térkép. "
+
+msgid "%d%% translated"
+msgstr "%d%% lefordítva"
+
+msgid "Notification log keeps"
+msgstr "Értesítési naplót vezet"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Az áttekintés Értesítések lapja hány üzenetfordulatot tárol."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Az Unciv oktatóanyagai: üzenet, ha valami új jön, és egy feladatkártya a következő kipróbálandó dologgal."
+
+msgid "Reset"
+msgstr "Visszaállítás"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Az Unciv saját hangeffektusai. A játék futása közben a mellette lévő Unciv mappából kerülnek kiolvasásra; a ~/.unciv-vr/Sounds-ba írja be a sajátját ugyanazon neveken, hogy lecserélje őket."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d hangok találhatók. Minden egység támadóhangja a szabályrendszerből származik, akárcsak az Unciv-é."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Nem található hang. Az Unciv android/assets/sounds-jában laknak, e mappa mellett."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Táblák listával, amelyek abból épülnek fel, amit a játék tud. A VR-ben az asztal körül állnak "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(tartsa a ravaszt a szalag tetején, hogy elmozdítsa az egyiket); az asztalon a bal oldalon ülnek le."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "A panel egy mappa panel.json-val – lásd: panels/README.md. Helyezze a sajátját a %s-ba."
+
+msgid "Put them back"
+msgstr "Tedd vissza őket"
+
+msgid "(by %s)"
+msgstr "(%s)"
+
+msgid "Every turn"
+msgstr "Minden körben"
+
+msgid "Every %d turns"
+msgstr "%d körönként"
+
+msgid "not connected"
+msgstr "nincs csatlakoztatva"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (ez az ügyfél a v%s-t várja)"
+
+msgid "Tilesets"
+msgstr "Mezőkészletek"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Az Unciv VR a Mozilla Public License 2.0 alá tartozik, akárcsak az Unciv. Az ikonok az Unciv sajátjai, sok szerzőtől "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "CC BY / CC BY-SA / CC0 licencek alatt (lásd CREDITS.md és Unciv docs/Credits.md). A mező, egység, háttér "
+
+msgid "and table models are Unciv VR's own."
+msgstr "és az asztali modellek az Unciv VR sajátjai."
+
+msgid "%s speed"
+msgstr "%s sebesség"
+
+msgid "%s map"
+msgstr "%s térkép"
+
+msgid "%s, turn %s"
+msgstr "%s, kör %s"
+
+msgid "by "
+msgstr "által "
+
+msgid "  -  from %s"
+msgstr "  - %s-tól"
+
+msgid "Move unit"
+msgstr "Egység mozgatása"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Mutass az egyik egységedre, és húzd meg a ravaszt, majd mutass egy lapkára, és kétszer húzd meg: egyszer a célhoz, egyszer az induláshoz."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Kattints az egyik egységedre, majd kétszer kattints egy lapkára: egyszer a célhoz, egyszer az induláshoz."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Válassza ki a Telepítőt, és nyomja meg a Talált várost a kártyáján (vagy B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Válassza ki a Telepítőt, és nyomja meg a Talált várost a kártyáján (vagy F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Mutasson az egyik városra, és húzza meg a ravaszt, majd nyomja meg a City view gombot a kártyáján."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Kattintson az egyik városra, majd a kártyáján nyomja meg a Városnézet gombot."
+
+msgid "Pick technology"
+msgstr "Válassz technológiát"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Nyissa ki a technológiai fát a csuklókártyájáról, és válasszon valamit a kutatáshoz."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Nyissa meg a technológiai fát (T), és válasszon valamit a kutatáshoz."
+
+msgid "Pick construction"
+msgstr "Válassz termelési feladatot"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Nyisd meg az egyik városodat, és válassz neki valamit, amit a kártyájáról építhetsz."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Kattints az egyik városodra, és válassz valamit, amit a kártyájáról építhetsz neki."
+
+msgid "Pass a turn"
+msgstr "Adjon át egy kanyart"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Adja meg az egységeinek a parancsot, majd nyomja meg az End gombot, és kapcsolja be az asztalt (vagy A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Adj parancsot egységeidnek, majd nyomd meg a kör vége (vagy szóköz) gombot."
+
+msgid "Reassign worked tiles"
+msgstr "Rendelje újra a megmunkált mezőket"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Egy város szemszögéből mutasson rá az egyik lapkára, és húzza meg a ravaszt, hogy működtesse vagy leállítsa a működést."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "Egy város nézetében kattintson az egyik csempére a munkavégzéshez vagy a munka leállításához."
+
+msgid "Press Settings on the table."
+msgstr "Nyomja meg a Beállítások gombot az asztalon."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Nyomja meg a Beállítások gombot az asztalon (vagy az O-n)."
+
+msgid "Construct an improvement"
+msgstr "Javítás létrehozása"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Építs egy munkást, helyezd át egy síkság vagy füves lapkára, nyomd meg a Javítás létrehozása gombot a kártyáján, és válaszd ki a Farmot. Hagyja ott, amíg a farm be nem fejeződik."
+
+msgid "Move an air unit"
+msgstr "Mozgassa meg a levegőegységet"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Válasszon ki egy légi egységet, és helyezze át a hatótávolságon belüli másik városba."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Kapcsolja ki a birodalom áttekintését a jobb oldalon, és nyissa meg a Statisztika fület."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Nyissa meg a birodalom áttekintését (E) és annak Statisztika lapját."
+
+msgid "Tutorial task"
+msgstr "Oktatói feladat"
+
+msgid "Hide"
+msgstr "Elrejtés"
+
+msgid "Defence %d"
+msgstr "Védelem %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% az egységvédelemhez"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (kifosztott)"
+
+msgid ", worked by %s"
+msgstr ", dolgozta %s"
+
+msgid "  (click the red button again)"
+msgstr "  (kattints újra a piros gombra)"
+
+msgid "  -  %d of %d"
+msgstr "  - %d/%d"
+
+msgid "  (%s turns)"
+msgstr "  (%s kör)"
+
+msgid "     Science %+d per turn"
+msgstr "     Tudomány: %+d körönként"
+
+msgid "  (city-state)"
+msgstr "  (város-állam)"
+
+msgid "   max %d turns"
+msgstr "   max. %d kör"
+
+msgid " (about %d gold's worth)"
+msgstr " (kb. %d arany értékű)"
+
+msgid " (you have %d)"
+msgstr " (%d-ja van)"
+
+msgid "  (so far: %s)"
+msgstr "  (eddig: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (elavult)"
+
+msgid " (obsolete)"
+msgstr " (elavult)"
+
+msgid "abstained"
+msgstr "tartózkodott"
+
+msgid "researched"
+msgstr "kutatott"
+
+msgid "adopted"
+msgstr "örökbe fogadtak"
+
+msgid "gold"
+msgstr "arany"
+
+msgid "faith"
+msgstr "hit"
+
+msgid "  - complete!"
+msgstr "  - teljes!"
+
+msgid "complete"
+msgstr "teljes"
+
+msgid "worked"
+msgstr "megművelt"
+
+msgid "on"
+msgstr "be"
+
+msgid "off"
+msgstr "kikapcsolva"
+
+msgid "click"
+msgstr "kattintson"
+
+msgid "improvement"
+msgstr "javítása"
+
+msgid "done"
+msgstr "kész"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Elérhető ellenséges célpontok (piros gyűrűk): %d. Kattintson az egyikre a célzáshoz."
+
+msgid "Idle citizens: %d"
+msgstr "Tétlen polgárok: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombard – ellenségek a hatótávolságon belül: %d (erősség: %d)"
+
+msgid "More messages after this one: %d"
+msgstr "További üzenetek ezt követően: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Ingyen választható nagy emberek: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Választható ingyenes technológiák: %d. Válasszon egy kiemeltet."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Választandó hiedelmek: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Az Unciv biztosítja a játék üzeneteit, neveit és leírásait. Egyes nyelvek az Unciv VR felületét is lefordítják. A hiányzó fordítások angolul maradnak."
+
+msgid "Units ({count})"
+msgstr "Egységek ({count})"
+
+msgid "Cities ({count})"
+msgstr "Városok ({count})"
+
+msgid "Military"
+msgstr "Hadsereg"
+
+msgid "Military ({count})"
+msgstr "Hadsereg ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Ranglista ({count})"
+
+msgid "Waiting for orders"
+msgstr "Parancsra vár"
+
+msgid "  -  promotion ready"
+msgstr "  - promóció kész"
+
+msgid "  (capital)"
+msgstr "  (tőke)"
+
+msgid "  (puppet)"
+msgstr "  (báb)"
+
+msgid "  (razing)"
+msgstr "  (leromboló)"
+
+msgid "Nothing to build"
+msgstr "Nincs mit építeni"
+
+msgid "turn"
+msgstr "kör"
+
+msgid "turns"
+msgstr "körök"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - {era} Era"
+
+msgid "{score} pts"
+msgstr "{score} pont"
+
+msgid "No units yet."
+msgstr "Még nincsenek egységek."
+
+msgid "No cities yet."
+msgstr "Még nincsenek városok."
+
+msgid "No military units yet."
+msgstr "Még nincsenek katonai egységek."
+
+msgid "No civilizations met yet."
+msgstr "Még nem találkozott civilizáció."
+
+msgid "No wonders to show yet."
+msgstr "Még nem kell csodát mutatni."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Minden egység, amelyik van, azok, amelyek még mindig várnak a parancsokra először, azzal, hogy mit csinálnak. Kattintson az egyikre a kiválasztásához."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Minden városban van, először a fővárossal, azzal, hogy mindegyik mit épít és mekkora. Kattintson az egyikre a kártya megnyitásához."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Minden katonai egységed, akcióival, mozgásaival és egészségével együtt. Kattintson az egyikre a kiválasztásához."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Az összes ismert civilizáció rangsora összpontszám szerint."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Az Unciv csodáinak áttekintése korszakonként: melyek épülnek, épülnek vagy még készülnek. Kattintson egy építettre a megtekintéséhez."
+
+msgid "In the Hall of the Mountain King"
+msgstr "A Hegykirály termében"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "A Troll Király földalatti trónterme a Dovre-hegység mélyén, tűzforralókkal és izzó magma erekkel megvilágítva"
+
+msgid "Mountains and clouds"
+msgstr "Hegyek és felhők"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Alacsony policsúcsokkal övezett rét, fákkal és sodródó felhőkkel"
+
+msgid "Floating in space"
+msgstr "Lebegés az űrben"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Az asztal a csillagok között lebeg, egy gyűrűs bolygó mellett"
+
+msgid "Studio"
+msgstr "Stúdió"
+
+msgid "A plain, dark room"
+msgstr "Egy sima, sötét szoba"
+
+msgid "Webb Deep Field"
+msgstr "Webb Deep Field"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Az asztal a mélyűrben lebeg, körülvéve a James Webb űrteleszkóp első mélymezőjével"
+
+msgid "Ornate oak"
+msgstr "Díszes tölgy"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Tölgy dió- és magyalfüzérrel, faragott kötéléllel és talapzattal a tekercs lábakon"
+
+msgid "Plain wood"
+msgstr "Sima fa"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Kúpos oszlopon kerek sötét falap"
+
+msgid "Low poly"
+msgstr "Alacsony poli"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Csiszolt alacsony poliszintű terep, egy lapos szín arconként"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "A felület le van fordítva; a játék tartalma angolul jelenik meg."
+
+msgid "Turns: %s"
+msgstr "Körök: %s"
+
+msgid "Latin keyboard"
+msgstr "Latin billentyűzet"
+
+msgid "Arabic keyboard"
+msgstr "Arab billentyűzet"
+
+msgid "Hebrew keyboard"
+msgstr "Héber billentyűzet"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Alapérték"
+
+msgid "Manual"
+msgstr "Kézi"
+

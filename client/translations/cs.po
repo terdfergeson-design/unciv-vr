@@ -1,0 +1,3119 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv. Remaining text drafted with Google Translate,
+# with AI-assisted terminology edits; this is not a reviewed upstream translation.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: cs\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+
+msgid "Map replay"
+msgstr "Záznam mapy"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Mapa je oddálena, aby byla vidět celá. Vlastnictví území a polohy měst se mění při přehrávání tahů."
+
+msgid "Start replay"
+msgstr "Přehrát záznam"
+
+msgid "Return to game"
+msgstr "Zpět do hry"
+
+msgid "Turn %d of %d"
+msgstr "Tah %d z %d"
+
+msgid "Close replay"
+msgstr "Zavřít záznam"
+
+msgid "Turn %d / %d"
+msgstr "Tah %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Uloženo na tomto PC mezi relacemi"
+
+msgid "Move the table..."
+msgstr "Posuňte stůl..."
+
+msgid "Back to the middle"
+msgstr "Zpět doprostřed"
+
+msgid "Your controllers"
+msgstr "Vaše ovladače"
+
+msgid "Show button labels"
+msgstr "Zobrazit popisky tlačítek"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Plovoucí štítky vedle každého ovladače uvádějí, co jeho tlačítka právě dělají."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Pravá spoušť cvakne, když ji pustíte, takže její přidržením pro přiblížení nekliknete na nic."
+
+msgid "Look"
+msgstr "Vzhled"
+
+msgid "Gameplay"
+msgstr "Hra"
+
+msgid "Automation"
+msgstr "Automatizace"
+
+msgid "Sound"
+msgstr "Zvuk"
+
+msgid "Panels"
+msgstr "Panely"
+
+msgid "Controls"
+msgstr "Ovládání"
+
+msgid "Game and saves"
+msgstr "Hra a uložené hry"
+
+msgid "About"
+msgstr "O hře"
+
+msgid "Settings"
+msgstr "Nastavení"
+
+msgid "Close"
+msgstr "Zavřít"
+
+msgid "Around the table"
+msgstr "Kolem stolu"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Pozadí a tabulky jsou složky, které může přidat kdokoli: viz backgrounds/README.md a tables/README.md."
+
+msgid "Background"
+msgstr "Pozadí"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Svět kolem stolu: nebe, světlo a scenérie."
+
+msgid "Table"
+msgstr "Stůl"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Na čem leží mapa. Ve VR se jeho sloupec natáhne do vámi nastavené výšky."
+
+msgid "Where the table stands"
+msgstr "Kde stojí stůl"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Přesuňte stůl kamkoli na pozadí - užitečné ve velkých, jako je převedená mapa. Pamatováno pro toto pozadí."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Přesuňte stůl kamkoli na pozadí - užitečné ve velkých, jako je převedená mapa. Bylo to přesunuto sem; Zpět doprostřed jej umístí tam, kde začíná pozadí."
+
+msgid "Remembered for this background."
+msgstr "Pamatováno pro toto pozadí."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Bylo to přesunuto sem; Zpět doprostřed jej umístí tam, kde začíná pozadí."
+
+msgid "The map"
+msgstr "Mapa"
+
+msgid "Tiles"
+msgstr "Políčka"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Jak vypadá terén, zázraky, zdroje a vylepšení. Dlaždice fungují jako Unciv: viz tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Obyčejné barevné hexy"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Ploché hexy v barvách terénu Unciv, žádné modely."
+
+msgid "Units"
+msgstr "Jednotky"
+
+msgid "Same as the tiles"
+msgstr "Ze sady políček"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Modely jednotek, které se dodávají se sadou dlaždic výše (záložní sada dlaždic vyplní všechny mezery)."
+
+msgid "No models"
+msgstr "Žádné modely"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Kulaté žetony s ikonami jednotek Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Jak jednotky vypadají (Unciv's Unitset): může je dodat jakákoliv sada dlaždic s modely jednotek (pieces/Units)."
+
+msgid "Visual hints"
+msgstr "Vizuální rady"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "překryvy map Unciv; kulatá tlačítka vedle přehledu je také zapínají a vypínají."
+
+msgid "Show unit movement arrows"
+msgstr "Zobrazit šipky pohybu"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Kam se právě přesunuly jednotky a kdo na koho zaútočil."
+
+msgid "Show tile yields"
+msgstr "Zobrazit výnos políček"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Jídlo, výroba, zlato... na každé dlaždici."
+
+msgid "Show worked tiles"
+msgstr "Zobrazit využívaná políčka"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Které dlaždice fungují občanům vašeho města."
+
+msgid "Show resources and improvements"
+msgstr "Zobrazit suroviny a vylepšení"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Symboly zdrojů a vylepšení na dlaždicích."
+
+msgid "Show improvement pictures"
+msgstr "Ukaž obrázky zlepšení"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Farmy, doly, silnice a podobně jako modely."
+
+msgid "Show unit icons"
+msgstr "Zobrazit ikony jednotek"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "Malá ikona Unciv nad každým modelem jednotky."
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Vlastní překlady Unciv od překladatelů Unciv: zprávy, názvy a popisy hry. Naše vlastní menu jsou stále v angličtině."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Text Unciv nemá překlad pro pobyty v angličtině."
+
+msgid "Turns"
+msgstr "Tahy"
+
+msgid "Check for idle units"
+msgstr "Kontrolovat nečinné jednotky"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Koncové kolo vás nejprve zavede ke každé jednotce, která ještě nemá žádné rozkazy."
+
+msgid "Auto unit cycle"
+msgstr "Automatický výběr další jednotky"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Poté, co dáte jednotce její rozkazy, je vybrána další jednotka čekající na rozkazy."
+
+msgid "Cycle idle units by distance"
+msgstr "Cyklujte jednotky nečinnosti podle vzdálenosti"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Další / předchozí jednotka přejde na nejbližší jednotku, nikoli v pevném pořadí."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Požádejte o potvrzení při ukončení tahu"
+
+msgid "End turn needs a second press."
+msgstr "Koncová otáčka vyžaduje druhé stisknutí."
+
+msgid "Order trade offers by amount"
+msgstr "Řadit obchodní nabídky dle množství"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "Na obchodním stole jsou největší nabídky na prvním místě."
+
+msgid "Show suggested city locations"
+msgstr "Zobrazit navrhovaná místa města"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "S vybraným osadníkem jsou na mapě vyznačena tři nejlepší místa Unciv v okolí pro nové město."
+
+msgid "Tutorials"
+msgstr "Návody"
+
+msgid "Show tutorials"
+msgstr "Zobrazit tutoriály"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Výukové zprávy a karta úkolu. Každý tutoriál je také v Civilopedii."
+
+msgid "Reset tutorials"
+msgstr "Restartovat tutoriály"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Ukažte znovu každý tutoriál a úkol, jako byste byli noví."
+
+msgid "Other players"
+msgstr "Ostatní hráči"
+
+msgid "Other players' turns"
+msgstr "Tahy ostatních hráčů"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Co vidíte na tazích ostatních hráčů poté, co ukončíte svůj."
+
+msgid "Show the moves and battles I can see"
+msgstr "Ukaž pohyby a bitvy, které vidím"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Přehráno v pořadí; pohled klouže do bojů."
+
+msgid "Show them, fast"
+msgstr "Ukaž jim to, rychle"
+
+msgid "The same, at two and a half times the speed."
+msgstr "To samé, ve dvouapůlnásobné rychlosti."
+
+msgid "Don't show them"
+msgstr "Neukazuj je"
+
+msgid "The map just updates."
+msgstr "Mapa se jen aktualizuje."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Vlastní možnosti Unciv pro automatizované jednotky a města."
+
+msgid "Automated and exploring units move"
+msgstr "Automatizované a průzkumné jednotky se pohybují"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Když jednotky na automatizaci, průzkumu nebo na víceotáčkových tahech podniknou kroky."
+
+msgid "When I end my turn"
+msgstr "Když skončím svůj tah"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Průzkumníci, automatizovaní pracovníci a jednotky na dlouhých tahech jdou na konci kola."
+
+msgid "At the start of my turn"
+msgstr "Na začátku mého tahu"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Jdou na začátku vašeho tahu (Uncivův \"Automatické jednotky se pohybují na začátku tahu\")."
+
+msgid "Auto-assign city production"
+msgstr "Automatické přiřazení produkce ve městě"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Město, které něco staví, si samo vybírá, co postaví."
+
+msgid "Auto-build roads"
+msgstr "Automatická výstavba cest"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Automatizovaní pracovníci staví silnice mezi vašimi městy."
+
+msgid "Automated workers replace improvements"
+msgstr "Automatizovaní dělníci předělávají vylepšení"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Automatizovaní pracovníci mohou vyměnit vylepšení za lepší."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Zabraňte automatickým pracovníkům v odstraňování vegetace"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Automatizovaní pracovníci opouštějí lesy, džungle a bažiny na pokoji."
+
+msgid "Automated units can upgrade"
+msgstr "Automatizované jednotky se mohou vylepšovat"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Automatizované vojenské jednotky se samy upgradují, když si to můžete dovolit."
+
+msgid "Automated units choose promotions"
+msgstr "Automatizované jednotky si mohou vybírat vylepšení"
+
+msgid "Automated units pick their own promotions."
+msgstr "Automatizované jednotky si vybírají vlastní povýšení."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "Města automaticky bombardují na konci tahu"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Města, která mohou stále střílet na nepřátele v dosahu, když tah ukončíte."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Automaticky přidělovat specialisty v nových městech"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Nová města sama umisťují své občany do specializovaných slotů."
+
+msgid "Sound effects"
+msgstr "Zvukové efekty"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Tlačítka, pohyby, bitvy a ostatní. Ve VR pocházejí z místa, kde se odehrávají na stole."
+
+msgid "City ambience"
+msgstr "Prostředí města"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Hluk města, který se opakuje, když jste ve městě - Unciv má jeden pro každou éru."
+
+msgid "Your own and mods'"
+msgstr "Vaše vlastní a mody'"
+
+msgid "None yet."
+msgstr "Zatím žádné."
+
+msgid "Put the panels back"
+msgstr "Vraťte panely zpět"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Každý panel se vrátí tam, kde jej umístil jeho panel.json."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "Ve VR vidíte ovladače, které držíte, tak, jak je kreslí runtime vaší náhlavní soupravy (SteamVR ano; ostatní mají prostý záskok)."
+
+msgid "Boards"
+msgstr "Desky"
+
+msgid "Put the boards back"
+msgstr "Vložte desky zpět"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Přehled, informační tabule, velká obrazovka, městské tabule, přehled říše a tato tabule se vrací tam, kde začaly."
+
+msgid "This game"
+msgstr "Tato hra"
+
+msgid "Save game"
+msgstr "Uložit hru"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Uloží jej pod jménem, které zadáte, do složky uložení mostu."
+
+msgid "Save..."
+msgstr "Uložit..."
+
+msgid "Main menu"
+msgstr "Hlavní nabídka"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Zpět do hlavní nabídky; hra stále běží a Resume vás vrátí zpět."
+
+msgid "Saves"
+msgstr "Uloží"
+
+msgid "Autosave"
+msgstr "Automatické ukládání"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Jak často se hra sama ukládá jako \"Autosave\" (načte ji Pokračovat v hlavní nabídce)."
+
+msgid "Save folder"
+msgstr "Uložit složku"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Tabulka virtuální reality pro Unciv, open-source remake Civilizace V."
+
+msgid "Bridge protocol"
+msgstr "Protokol mostu"
+
+msgid "Mods"
+msgstr "Mody"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Vaše vlastní sady dlaždic, pozadí a tabulky"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Umístěte jejich složky sem; objevují se v Look."
+
+msgid "Settings file"
+msgstr "Soubor nastavení"
+
+msgid "Licence and credits"
+msgstr "Licence a kredity"
+
+msgid "Desktop"
+msgstr "Desktop"
+
+msgid "Off"
+msgstr "Vypnuto"
+
+msgid "On"
+msgstr "Zapnuto"
+
+msgid "End turn"
+msgstr "Ukončit tah"
+
+msgid "< Prev"
+msgstr "< Předchozí"
+
+msgid "Idle unit"
+msgstr "Nečinná jednotka"
+
+msgid "Next >"
+msgstr "Další >"
+
+msgid "Research"
+msgstr "Výzkum"
+
+msgid "Recenter table"
+msgstr "Středový stůl"
+
+msgid "No unit selected"
+msgstr "Nebyla vybrána žádná jednotka"
+
+msgid "Point at a unit or city to select it."
+msgstr "Namiřte na jednotku nebo město a vyberte je."
+
+msgid "Fortified"
+msgstr "Opevněný"
+
+msgid "Sleeping"
+msgstr "Spaní"
+
+msgid "Automated"
+msgstr "Automatizované"
+
+msgid "On its way"
+msgstr "Na cestě"
+
+msgid "Embarked"
+msgstr "Naloděné"
+
+msgid "Strength"
+msgstr "Síla"
+
+msgid "RangedStrength"
+msgstr "Síla útoku na dálku"
+
+msgid "Range"
+msgstr "Vzdálenost"
+
+msgid "Movement"
+msgstr "Pohyb"
+
+msgid "Rename"
+msgstr "Přejmenovat"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Přeskočení tohoto tahu (Přeskočte znovu, abyste mu dali rozkazy)."
+
+msgid "Health"
+msgstr "Zdraví"
+
+msgid "XP"
+msgstr "Zkušenosti"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Propagujte!  Vyberte propagaci"
+
+msgid "Promote"
+msgstr "Povýšit"
+
+msgid "Building %s"
+msgstr "Budova %s"
+
+msgid "%d turns left"
+msgstr "Zbývá %d tahů"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d nepřátelské cíle v dosahu (červené kroužky): kliknutím na jeden zamiřte"
+
+msgid "Actions"
+msgstr "Akce"
+
+msgid "Pillage"
+msgstr "Drancovat"
+
+msgid "Sure? Click again"
+msgstr "Jistě? Klikněte znovu"
+
+msgid "click the red button again"
+msgstr "znovu klikněte na červené tlačítko"
+
+msgid "Build here"
+msgstr "Stavte zde"
+
+msgid "Stop"
+msgstr "Přestaň"
+
+msgid "%d turns"
+msgstr "%d tahů"
+
+msgid "Population %d"
+msgstr "Populace %d"
+
+msgid "Defense %d"
+msgstr "Obrana %d"
+
+msgid "Health %d/%d"
+msgstr "Zdraví %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d nečinní občané"
+
+msgid "Puppet"
+msgstr "Loutková vláda"
+
+msgid "Starving! %d turns"
+msgstr "Hladovění! %d tahů"
+
+msgid "Grows in %d turns"
+msgstr "Růst za %d tahů"
+
+msgid "Food -> production"
+msgstr "Jídlo -> výroba"
+
+msgid "Not growing"
+msgstr "Neroste"
+
+msgid "Border in %d turns"
+msgstr "Rozšíření hranic za %d tahů"
+
+msgid "Borders stopped"
+msgstr "Hranice se zastavily"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Pohled na město - dlaždice, občané, fronta, nákup"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Toto město je srovnáno se zemí – každé kolo se zmenšuje, dokud nezmizí. Přestaňte to bourat ve výhledu na město."
+
+msgid "Producing"
+msgstr "Výroba"
+
+msgid "Producing nothing - pick something below"
+msgstr "Neprodukovat nic – vyberte si něco níže"
+
+msgid "Buildings"
+msgstr "Budovy"
+
+msgid "Wonders"
+msgstr "Divy"
+
+msgid "Other"
+msgstr "Ostatní"
+
+msgid "Gold"
+msgstr "Zlato"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Kupte nyní za zlato %d (máte %d)"
+
+msgid "Promote %s"
+msgstr "Propagujte %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Vyberte jednu propagaci.%s"
+
+msgid "Has: %s"
+msgstr "Má: %s"
+
+msgid "No promotion available right now."
+msgstr "Momentálně není k dispozici žádná akce."
+
+msgid "Tutorial"
+msgstr "Tutoriál"
+
+msgid "%d of %d"
+msgstr "%d z %d"
+
+msgid "%d more messages after this one"
+msgstr "%d další zprávy po této"
+
+msgid "%s gives:"
+msgstr "%s dává:"
+
+msgid "They"
+msgstr "Oni"
+
+msgid "You give:"
+msgstr "Dáte:"
+
+msgid "%d votes  %s"
+msgstr "%d hlasy %s"
+
+msgid "voted for %s"
+msgstr "hlasoval pro %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Návody lze vypnout v Nastavení > Hra. Najdete je také v Civilopedii."
+
+msgid " (%d turns)"
+msgstr " (%d tahů)"
+
+msgid "Choose a free great person"
+msgstr "Vyberte velkou osobnost zdarma"
+
+msgid "You have %d free great people to pick."
+msgstr "Na výběr máte skvělé lidi %d zdarma."
+
+msgid "Vote for world leader"
+msgstr "Hlasujte pro světového lídra"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Zvolte, kdo by měl být světovým vůdcem a diplomaticky zvítězit!"
+
+msgid "Vote for %s"
+msgstr "Hlasujte pro %s"
+
+msgid "Abstain"
+msgstr "zdržet se hlasování"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Nic se nezkoumá – vyberte si techniku!"
+
+msgid "Researching %s"
+msgstr "Zkoumání %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Můžete si vybrat bezplatné technologie %d – vyberte zvýrazněnou."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Věda %+d za kolo. Výběr pozdější technologie představuje její předpoklady."
+
+msgid "%s turns"
+msgstr "%s tahů"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Pokračujte tam, kde jste skončili, nebo začněte novou hru."
+
+msgid "Resume"
+msgstr "Pokračovat"
+
+msgid "Continue"
+msgstr "Pokračovat"
+
+msgid "Quick start"
+msgstr "Rychlý start"
+
+msgid "New game..."
+msgstr "Nová hra..."
+
+msgid "Load game..."
+msgstr "Načíst hru..."
+
+msgid "Civilopedia"
+msgstr "Civilopedie"
+
+msgid "Quit"
+msgstr "Konec"
+
+msgid "New game"
+msgstr "Nová hra"
+
+msgid "You"
+msgstr "Vy"
+
+msgid "World"
+msgstr "svět"
+
+msgid "Rules"
+msgstr "Pravidla"
+
+msgid "Random"
+msgstr "Náhodně"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s – %s %s mapa, %s, %d AI, %d městské státy"
+
+msgid "%s, led by %s"
+msgstr "%s v čele s %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Náhodné: kdo jste, zjistíte, když hra začne."
+
+msgid "Your civilization"
+msgstr "Vaše civilizace"
+
+msgid "Map size"
+msgstr "Velikost mapy"
+
+msgid "Map type"
+msgstr "Typ mapy"
+
+msgid "Shape"
+msgstr "Tvar"
+
+msgid "Resources"
+msgstr "Suroviny"
+
+msgid "Options"
+msgstr "Nastavení"
+
+msgid "No ancient ruins"
+msgstr "Žádné starověké ruiny"
+
+msgid "No natural wonders"
+msgstr "Žádné přírodní zázraky"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Větší mapy se zasouvají pod stůl: držte je a táhněte, nebo použijte přehled na vzdálenějším okraji."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings přidává náboženství, špionáž, více civilizací a více jednotek a budov."
+
+msgid "Difficulty"
+msgstr "Obtížnost"
+
+msgid "Game speed"
+msgstr "Rychlost hry"
+
+msgid "Starting era"
+msgstr "Počáteční éra"
+
+msgid "AI players"
+msgstr "AI hráči"
+
+msgid "City-states"
+msgstr "Městské státy"
+
+msgid "Victory types (none picked = all)"
+msgstr "Druhy vítězství (žádný nevybrán = všechny)"
+
+msgid "No barbarians"
+msgstr "Žádní barbaři"
+
+msgid "Raging barbarians"
+msgstr "Zuřící barbaři"
+
+msgid "One-city challenge"
+msgstr "Výzva jednoho města"
+
+msgid "No city razing"
+msgstr "Žádné bourání města"
+
+msgid "Nuclear weapons"
+msgstr "Jaderné zbraně"
+
+msgid "Espionage"
+msgstr "špionáž"
+
+msgid "< Back"
+msgstr "< Zpět"
+
+msgid "Start game"
+msgstr "Spustit hru"
+
+msgid "Load game"
+msgstr "Načíst hru"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Uloží do vaší složky Unciv VR, od nejnovějšího."
+
+msgid "Backgrounds"
+msgstr "Pozadí"
+
+msgid "Mountains"
+msgstr "hory"
+
+msgid "Scenery"
+msgstr "Krajina"
+
+msgid "Technologies"
+msgstr "Technologie"
+
+msgid "Policies"
+msgstr "Politiky"
+
+msgid "Diplomacy"
+msgstr "Diplomacie"
+
+msgid "Religion"
+msgstr "Náboženství"
+
+msgid "Victory"
+msgstr "Vítězství"
+
+msgid "Declare war"
+msgstr "Vyhlásit válku"
+
+msgid "Score"
+msgstr "Skóre"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Zatím žádná historie – grafy se plní tak, jak jdou zatáčky."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== Podržte spoušť zde a tažením posuňte tuto obrazovku ====="
+
+msgid "Pause"
+msgstr "Pauza"
+
+msgid "Play"
+msgstr "Přehrát"
+
+msgid "Loading the technology tree..."
+msgstr "Načítání technologického stromu..."
+
+msgid "Pick something to research!"
+msgstr "Vyberte si něco ke zkoumání!"
+
+msgid "Science %+d per turn"
+msgstr "Věda: %+d za tah"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Kliknutím na technologii zobrazíte, co dělá a co vám umožňuje stavět. Malé ikony pod každou technologií odemykají."
+
+msgid "needs science"
+msgstr "potřebuje vědu"
+
+msgid "researching now, "
+msgstr "nyní zkoumám, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d věda)"
+
+msgid "Loading policies..."
+msgstr "Načítání zásad..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Kultura %d / %d  (%+d za tah)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Můžete přijmout politiku!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Kliknutím na symbol zobrazíte tuto zásadu. Před přijetím zásad v ní otevřete pobočku (její velký symbol)."
+
+msgid "ready to adopt"
+msgstr "připraven k adopci"
+
+msgid "needs more culture"
+msgstr "potřebuje více kultury"
+
+msgid "not available yet"
+msgstr "zatím není k dispozici"
+
+msgid "(no special effects)"
+msgstr "(žádné speciální efekty)"
+
+msgid "Adopt"
+msgstr "Osvojit"
+
+msgid "Your score: %d"
+msgstr "Vaše skóre: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Ještě jsi nikoho nepotkal. Prozkoumejte a najděte další civilizace a městské státy."
+
+msgid "Loading..."
+msgstr "Nahrávám..."
+
+msgid "   (city-state)"
+msgstr "   (městský stát)"
+
+msgid "Destroyed"
+msgstr "Zničeno"
+
+msgid "AT WAR"
+msgstr "VE VÁLCE"
+
+msgid "At peace"
+msgstr "V míru"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (smlouva: %d více otáček)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - vliv %d%s"
+
+msgid "   allied with %s"
+msgstr "   ve spojení s %s"
+
+msgid "Feels %s about you%s"
+msgstr "Cítí se k vám %s%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Skóre %d Města %d"
+
+msgid "Diplomacy..."
+msgstr "Diplomacie..."
+
+msgid "Trade"
+msgstr "Obchodovat"
+
+msgid "Offer peace"
+msgstr "Nabídněte mír"
+
+msgid "Click again to declare war on %s"
+msgstr "Dalším kliknutím vyhlásíte válku %s"
+
+msgid "< All civilizations"
+msgstr "< Všechny civilizace"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (žádné mírové rozhovory pro další tahy %d)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Typ: %s Osobnost: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Náš vztah: %s (vliv %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Spojenec: %s s vlivem %d"
+
+msgid "Protected by: "
+msgstr "Chráněno: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Vztahy se změní za %d tahů"
+
+msgid "Resources: "
+msgstr "zdroje: "
+
+msgid "When Friends:"
+msgstr "Při přátelství:"
+
+msgid "When Allies:"
+msgstr "Při alianci:"
+
+msgid "You have a declaration of friendship."
+msgstr "Máte prohlášení o přátelství."
+
+msgid "You have denounced them."
+msgstr "Odsoudil jste je."
+
+msgid "Go to on map"
+msgstr "Ukázat na mapě"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Dárek %d zlato (+ vliv %d)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Sestavte %s na %s (200 zlatých)"
+
+msgid "Revoke protection"
+msgstr "Zrušte ochranu"
+
+msgid "Click again: revoke protection?"
+msgstr "Klikněte znovu: zrušit ochranu?"
+
+msgid "Pledge to protect"
+msgstr "Slíbit ochranu"
+
+msgid "Click again: declare protection?"
+msgstr "Klikněte znovu: vyhlásit ochranu?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Vezměte si zlato %d (-15 vliv)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Vezměte pracovníka (vliv -50)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Diplomatický sňatek (%d zlato)"
+
+msgid "Click again: they join your empire"
+msgstr "Klikněte znovu: připojí se k vaší říši"
+
+msgid "Negotiate peace"
+msgstr "Vyjednat mír"
+
+msgid "Click again: make peace?"
+msgstr "Klikněte znovu: uzavřít mír?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Přátelství nabízené - čekání na jejich odpověď"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Nabídka prohlášení o přátelství (30 otočení)"
+
+msgid "Denounce (30 turns)"
+msgstr "Vypovědět (30 kol)"
+
+msgid "Click again: denounce %s?"
+msgstr "Klikněte znovu: vypovědět %s?"
+
+msgid "Click again to declare war"
+msgstr "Dalším kliknutím vyhlásíte válku"
+
+msgid "Demands:"
+msgstr "Požadavky:"
+
+msgid "  (asked)"
+msgstr "  (zeptán)"
+
+msgid "  (they agreed)"
+msgstr "  (souhlasili)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Ochota hold (alespoň 0 vzít si zlato, minimálně 30 a město velikosti 4 pro dělníka):"
+
+msgid "  (+%d influence)"
+msgstr "  (+ vliv %d)"
+
+msgid "  %d turns remaining"
+msgstr "  Zbývající otáčky %d"
+
+msgid "Unforgivable"
+msgstr "Nenávist"
+
+msgid "Enemy"
+msgstr "Nepřátelství"
+
+msgid "Afraid"
+msgstr "Strach"
+
+msgid "Competitor"
+msgstr "Negativní"
+
+msgid "Favorable"
+msgstr "Pozitivní"
+
+msgid "Friend"
+msgstr "Přátelství"
+
+msgid "Ally"
+msgstr "Aliance"
+
+msgid "Pantheon"
+msgstr "Panteon"
+
+msgid "Founder"
+msgstr "Zakladatel"
+
+msgid "Follower"
+msgstr "Stoupenec"
+
+msgid "Enhancer"
+msgstr "Vylepšující"
+
+msgid "Any"
+msgstr "Libovolné"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Vyberte %d více přesvědčení%s"
+
+msgid "so far: %s"
+msgstr "zatím: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Nyní vyberte symbol pro své náboženství (výše)."
+
+msgid "Follow this pantheon"
+msgstr "Sledujte tento panteon"
+
+msgid "Found %s"
+msgstr "Nalezeno %s"
+
+msgid "Enhance %s"
+msgstr "Vylepšete %s"
+
+msgid "Reform"
+msgstr "reforma"
+
+msgid "Confirm"
+msgstr "Potvrďte"
+
+msgid "Religion is off in this game."
+msgstr "Náboženství je v této hře pryč."
+
+msgid "Choose a pantheon belief"
+msgstr "Vyberte si víru panteonu"
+
+msgid "Found your religion"
+msgstr "Našel své náboženství"
+
+msgid "Enhance your religion"
+msgstr "Vylepšete své náboženství"
+
+msgid "Reform your religion"
+msgstr "Reformujte své náboženství"
+
+msgid "No religion yet"
+msgstr "Zatím žádné náboženství"
+
+msgid "Your beliefs"
+msgstr "Vaše přesvědčení"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Momentálně není na výběr. Získejte víru v založení panteonu; Velký prorok založí (a později vylepší) náboženství v jednom z vašich měst."
+
+msgid "Symbol:"
+msgstr "Symbol:"
+
+msgid "Name: %s"
+msgstr "Název: %s"
+
+msgid "(pick a symbol)"
+msgstr "(vyberte si symbol)"
+
+msgid "Rename..."
+msgstr "Přejmenovat..."
+
+msgid "Choose any belief!"
+msgstr "Zvolit libovolné přesvědčení!"
+
+msgid "Choose a %s belief!"
+msgstr "Vyberte si víru %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (má to jiné náboženství)"
+
+msgid "  (you have it)"
+msgstr "  (máš to)"
+
+msgid "  (not available)"
+msgstr "  (není k dispozici)"
+
+msgid "  (picked for another slot)"
+msgstr "  (vybráno pro jiný slot)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Otáčejte %d %s rychlost %s%s"
+
+msgid "max %d turns"
+msgstr "max. %d tahů"
+
+msgid "You have won a %s Victory!"
+msgstr "Vyhráli jste vítězství %s!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s vyhrál %s vítězství!"
+
+msgid "You have been defeated."
+msgstr "Byli jste poraženi."
+
+msgid "One more turn...!"
+msgstr "Ještě jedno kolo...!"
+
+msgid "Main menu (start a new game)"
+msgstr "Hlavní menu (spustit novou hru)"
+
+msgid "Our status"
+msgstr "Naše vyhlídky"
+
+msgid "Global status"
+msgstr "Globální situace"
+
+msgid "Rankings"
+msgstr "Pořadí"
+
+msgid "Charts"
+msgstr "Grafy"
+
+msgid "Demographics"
+msgstr "Demografie"
+
+msgid "%s Victory"
+msgstr "Vítězství %s"
+
+msgid "[done] "
+msgstr "[hotovo] "
+
+msgid "Rank"
+msgstr "Pořadí"
+
+msgid "Value"
+msgstr "Hodnota"
+
+msgid "Best"
+msgstr "Nejlepší"
+
+msgid "Average / Worst"
+msgstr "Průměrná / nejhorší"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Obchodování s %s Vaše zlato %d, jejich %d"
+
+msgid "You can offer"
+msgstr "Můžete nabídnout"
+
+msgid "You give"
+msgstr "Dáš"
+
+msgid "You get"
+msgstr "dostaneš"
+
+msgid "They can offer"
+msgstr "Mohou nabídnout"
+
+msgid "Clear"
+msgstr "Vymazat"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Kliknutím na položky na vnějších sloupcích je umístíte na stůl; klikněte na ně znovu, abyste je sundali."
+
+msgid "%s would accept this."
+msgstr "%s by to přijal."
+
+msgid "%s wants more for this%s."
+msgstr "%s za to chce víc%s."
+
+msgid "about %d gold's worth"
+msgstr "o hodnotě zlata %d"
+
+msgid "Propose deal"
+msgstr "Navrhněte dohodu"
+
+msgid "  %d turns"
+msgstr "  %d tahů"
+
+msgid "Gold_Per_Turn"
+msgstr "Zlato za tah"
+
+msgid "Not connected to the bridge"
+msgstr "Není připojen k mostu"
+
+msgid "Bridge disconnected"
+msgstr "Most odpojen"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Přiložený most Unciv je neúplný. Znovu nainstalujte herní soubory."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Nelze najít repo Unciv s mostem na %s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Nebyla nalezena žádná Java 17 nebo novější (Unciv potřebuje JDK 21). Nainstalujte jej a nastavte JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "Nelze zapsat %s"
+
+msgid "Couldn't start Gradle"
+msgstr "Gradle se nepodařilo spustit"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Přiložený most Unciv se nepodařilo spustit"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== zde podržte spoušť a přetažením se přesuňte ====="
+
+msgid "Exit city"
+msgstr "Zavřít město"
+
+msgid "City"
+msgstr "město"
+
+msgid "BEING RAZED"
+msgstr "BÝT VYBRÁNĚN"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Nepřiřazení občané: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "klikněte: ať je umístí město"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d jídlo)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Hladovění: ztratí občana v %d změní %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Potraviny jdou do výroby, zatímco je tato jednotka postavena"
+
+msgid "New citizen in %d turns %s"
+msgstr "Nový občan v %d se změní na %s"
+
+msgid "Not growing %s"
+msgstr "Neroste %s"
+
+msgid "(%d/%d culture)"
+msgstr "(kultura %d/%d)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Hranice rostou v %d otočí %s"
+
+msgid "Borders have stopped growing"
+msgstr "Hranice přestaly růst"
+
+msgid "In resistance for another %d turns"
+msgstr "Odpor ještě %d tahů"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "Den lásky ke králi: ještě %d tahů"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Náročné %s (We Love The King Day, pokud to pochopíte)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Přístavní město (přestaň to být loutka)"
+
+msgid "Stop razing city"
+msgstr "Ukončit vyhlazování města"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Klikněte znovu pro RAZE %s (spálí jednoho občana)"
+
+msgid "Raze city"
+msgstr "Srovnat město se zemí"
+
+msgid "Citizen management"
+msgstr "Řízení občanů"
+
+msgid "Reset citizens"
+msgstr "Resetovat občany"
+
+msgid "Avoid growth"
+msgstr "Vyvarujte se růstu"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Zaměření občanů (která políčka má město obdělávat):"
+
+msgid "Specialists"
+msgstr "Specialisté"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Manuální specialisté (klikněte pro automatické)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Automatičtí specialisté (klikněte pro manuál)"
+
+msgid "Specialist"
+msgstr "Specialista"
+
+msgid "Great people"
+msgstr "Skvělí lidé"
+
+msgid "Majority religion: %s"
+msgstr "Většinové náboženství: %s"
+
+msgid "Former holy city of %s"
+msgstr "Bývalé svaté město %s"
+
+msgid "Holy city of %s"
+msgstr "Svaté město %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d kladičky, tlak %+d"
+
+msgid "Specialist buildings"
+msgstr "Specializované stavby"
+
+msgid "  (free)"
+msgstr "  (zdarma)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Klikněte na dlaždici na stole: opracované dlaždice se přestanou opracovávat, svobodní občané přejdou k nepracovaným, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "a dlaždice s cenou lze koupit (klikněte dvakrát)."
+
+msgid "Tile"
+msgstr "Políčko"
+
+msgid "city centre"
+msgstr "centrum města"
+
+msgid "worked (locked)"
+msgstr "pracoval (zamčený)"
+
+msgid "not worked"
+msgstr "nefungovalo"
+
+msgid "gives its yield without a citizen"
+msgstr "dává svůj výnos bez občana"
+
+msgid "gives nothing"
+msgstr "nedává nic"
+
+msgid "blockaded by an enemy"
+msgstr "blokován nepřítelem"
+
+msgid "worked by %s"
+msgstr "pracoval %s"
+
+msgid "another city"
+msgstr "jiné město"
+
+msgid "too far to work"
+msgstr "příliš daleko do práce"
+
+msgid "can be bought"
+msgstr "lze koupit"
+
+msgid "not yours"
+msgstr "ne tvoje"
+
+msgid "Resource: %s"
+msgstr "Zdroj: %s"
+
+msgid "Improvement: %s"
+msgstr "Vylepšení: %s"
+
+msgid "Owned by %s"
+msgstr "Vlastněno %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Zámek (zde si ponechte občanku)"
+
+msgid "Stop working"
+msgstr "Přestaňte pracovat"
+
+msgid "Unlock"
+msgstr "Odemknout"
+
+msgid "Work this tile"
+msgstr "Zpracuj tuto dlaždici"
+
+msgid "Work and lock"
+msgstr "Pracujte a zamykejte"
+
+msgid "Click again: buy for %d gold"
+msgstr "Klikněte znovu: kupte za zlato %d"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Koupit za zlato %d (máte %d)"
+
+msgid "Production"
+msgstr "Produkce"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Zlato %d   Víra %d   Produkce %+d za tah"
+
+msgid "Being built"
+msgstr "Budování"
+
+msgid "Nothing being built - pick something below"
+msgstr "Nic se nestaví - vyberte si něco níže"
+
+msgid "   %d turns"
+msgstr "   %d tahů"
+
+msgid "Hide what can't be built yet"
+msgstr "Schovejte, co ještě nelze postavit"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Ukaž, co se ještě nedá postavit (a proč)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Klikněte na něco, abyste viděli, co to dělá, a poté to vytvořte, přidejte do fronty nebo si to kupte."
+
+msgid "   %d production"
+msgstr "   Výroba %d"
+
+msgid ", %d turns"
+msgstr ", %d tahů"
+
+msgid "   (built)"
+msgstr "   (postaveno)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "Jeho %s jde na dlaždici, kterou vyberete na stůl po sestavení nyní / přidání do fronty / nákupu."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "Jeho %s jde na kroužkovou destičku vybranou, když byla zařazena do fronty."
+
+msgid "Build now"
+msgstr "Stavte nyní"
+
+msgid "Add to queue"
+msgstr "Přidat do fronty"
+
+msgid "Click again: buy for %d %s"
+msgstr "Klikněte znovu: koupit za %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Koupit za %d %s"
+
+msgid "you have %d"
+msgstr "máte %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Koupit: nejprve přesuňte jednotku z města"
+
+msgid "Click again: sell for %d gold"
+msgstr "Klikněte znovu: prodej za zlato %d"
+
+msgid "Sell for %d gold"
+msgstr "Prodám za zlato %d"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia – zde podržte spoušť a tažením se pohybujte ====="
+
+msgid "<  Back"
+msgstr "< Zpět"
+
+msgid "This entry couldn't be loaded."
+msgstr "Tento záznam se nepodařilo načíst."
+
+msgid "Building"
+msgstr "Budování"
+
+msgid "Wonder"
+msgstr "Div"
+
+msgid "Unit"
+msgstr "Jednotka"
+
+msgid "Resource"
+msgstr "Zdroj"
+
+msgid "Improvement"
+msgstr "Zlepšení"
+
+msgid "Tile Improvements"
+msgstr "Vylepšení políček"
+
+msgid "Technology"
+msgstr "Technologie"
+
+msgid "Promotion"
+msgstr "Propagace"
+
+msgid "Promotions"
+msgstr "Povýšení"
+
+msgid "Policy"
+msgstr "Zásady"
+
+msgid "Belief"
+msgstr "Víra"
+
+msgid "Religions and Beliefs"
+msgstr "Náboženství a přesvědčení"
+
+msgid "Nation"
+msgstr "národ"
+
+msgid "Nations"
+msgstr "Národy"
+
+msgid "Terrain"
+msgstr "Terén"
+
+msgid "Terrains"
+msgstr "Druhy terénu"
+
+msgid "Unit types"
+msgstr "Typy jednotek"
+
+msgid "Unit Names"
+msgstr "Názvy jednotek"
+
+msgid "Victory Types"
+msgstr "Druhy vítězství"
+
+msgid "Thumbstick"
+msgstr "Páčka"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Trigger"
+msgstr "Spoušť"
+
+msgid "Grip"
+msgstr "Úchop"
+
+msgid "Trackpad"
+msgstr "Touchpad"
+
+msgid "Button 1"
+msgstr "Tlačítko 1"
+
+msgid "Button 2"
+msgstr "Tlačítko 2"
+
+msgid "Cities"
+msgstr "Města"
+
+msgid "None"
+msgstr "Žádné"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Neprozkoumané (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - území %s"
+
+msgid " - city of %s"
+msgstr " - město %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Automatizovat"
+
+msgid "Sleep"
+msgstr "Spát"
+
+msgid "Fortify"
+msgstr "Opevnit se"
+
+msgid "Guard"
+msgstr "Hlídat"
+
+msgid "Explore"
+msgstr "Prozkoumat"
+
+msgid "Upgrade"
+msgstr "Vylepšení"
+
+msgid "Transform"
+msgstr "Transformace"
+
+msgid "Repair"
+msgstr "Oprava"
+
+msgid "Skip"
+msgstr "Přeskočit"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s Turn %d (%s)"
+
+msgid "%d BC"
+msgstr "%d BC"
+
+msgid "%d AD"
+msgstr "%d AD"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Nic nezkoumáte – vyberte si techniku!"
+
+msgid "Point at a tile"
+msgstr "Ukažte na dlaždici"
+
+msgid "Unexplored"
+msgstr "Neprozkoumané"
+
+msgid "Send a unit to find out what's here."
+msgstr "Pošlete jednotku, aby zjistila, co je tady."
+
+msgid "Natural wonder: %s"
+msgstr "Přírodní zázrak: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Vylepšení: %s%s"
+
+msgid "River"
+msgstr "Řeka"
+
+msgid "City of %s  (population %d)"
+msgstr "Město %s (populace %d)"
+
+msgid "%s territory"
+msgstr "Území %s"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% na obranu jednotky"
+
+msgid "Impassable"
+msgstr "Nepřístupné"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Momentálně není v dohledu – naposledy takto viděno"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Zaútočte %s: rozdejte ~%d, vezměte ~%d"
+
+msgid "Science"
+msgstr "Výzkum"
+
+msgid "Happiness"
+msgstr "Spokojenost"
+
+msgid "Malcontent"
+msgstr "Nespokojenost"
+
+msgid "Culture"
+msgstr "Kultura"
+
+msgid "Faith"
+msgstr "Víra"
+
+msgid "Population"
+msgstr "Populace"
+
+msgid "Food"
+msgstr "Jídlo"
+
+msgid "Shift"
+msgstr "Velká"
+
+msgid "Space"
+msgstr "Mezerník"
+
+msgid "< Del"
+msgstr "< Smazat"
+
+msgid "Recenter"
+msgstr "Vystředit"
+
+msgid "Move a unit!"
+msgstr "Přesuňte jednotku!"
+
+msgid "hold to move onto a tile"
+msgstr "podržením se přesunete na dlaždici"
+
+msgid "Connecting..."
+msgstr "Připojování..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Ztratilo se spojení s mostem – opakuji pokus..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Hledáte most na 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Most nelze spustit: %s\nSpusťte jej ručně pomocí: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Spouštění mostu Unciv... (obnoví se, pokud se změní jeho kód - může to chvíli trvat)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Most se zastavil dříve, než byl připraven. Od %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Unciv engine v této aplikaci není (v exportu chybí plugin UncivBridge)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Motor Unciv nemohl nastartovat: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Uncivův motor se zastavil: \n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Startování motoru Unciv: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Stále běžel starší most Unciv (protokol v%d) - restartujte jej s aktuálním kódem..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Nepodařilo se zastavit starý most - pokračovat v něm. Některé věci nemusí fungovat."
+
+msgid "Reconnected to the bridge."
+msgstr "Znovu připojen k mostu."
+
+msgid "Bridge error: %s"
+msgstr "Chyba mostu: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Upozornění: Bridge mluví protokolem v%d, ale tento klient očekává v%d - aktualizujte obě úložiště společně. Některé věci nemusí fungovat."
+
+msgid "Connected to Unciv %s"
+msgstr "Připojeno k Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "Nepodařilo se načíst uložení: %s"
+
+msgid "Your move."
+msgstr "Váš pohyb."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Spouštění nové hry... (větší mapy trvají trochu déle)"
+
+msgid "Starting a new game..."
+msgstr "Spouštění nové hry..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Hru nelze spustit: %s"
+
+msgid "saved "
+msgstr "uloženo "
+
+msgid "%s, turn %d"
+msgstr "%s, tah %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Hlavní nabídka: ukažte na kartu nad stolem."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s na mapě %s %s, %s, %d AI, %d městské státy"
+
+msgid "A random civilization"
+msgstr "Náhodná civilizace"
+
+msgid "Loading %s..."
+msgstr "Načítání %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Nelze načíst %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Tato pravidla nelze přečíst: %s"
+
+msgid "getState failed: %s"
+msgstr "getState se nezdařilo: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Přehled, informační tabule, velká obrazovka a panely jsou zpět na svých obvyklých místech."
+
+msgid "Name your religion"
+msgstr "Pojmenujte své náboženství"
+
+msgid "Your religion"
+msgstr "Vaše náboženství"
+
+msgid "Researching %s."
+msgstr "Zkoumání %s."
+
+msgid "Adopted %s."
+msgstr "Přijato %s."
+
+msgid "You declared war on %s!"
+msgstr "Vyhlásili jste válku %s!"
+
+msgid "Unit movements"
+msgstr "Pohyby jednotek"
+
+msgid "Tile yields"
+msgstr "Výnosy z políček"
+
+msgid "Worked tiles"
+msgstr "Obdělávaná políčka"
+
+msgid "Resources and improvements"
+msgstr "Zdroje a vylepšení"
+
+msgid "Improvement pictures"
+msgstr "Obrázky vylepšení"
+
+msgid "Unit icons"
+msgstr "Ikony jednotek"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Podržte %s na destičce, abyste na ni přesunuli jednotku."
+
+msgid "the trigger"
+msgstr "spoušť"
+
+msgid "the mouse button"
+msgstr "tlačítko myši"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Útok %s\ndeal ~%d, vezměte ~%d\n dalším kliknutím zaútočíte"
+
+msgid "a unit"
+msgstr "jednotka"
+
+msgid "Can't get there"
+msgstr "Nelze se tam dostat"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "Na této dlaždici není místo\n%s %s už tam není"
+
+msgid "\nSwap places on the card"
+msgstr "\nVyměňte místa na kartě"
+
+msgid "Move here"
+msgstr "Přesuňte se sem"
+
+msgid "Move here: %d turns"
+msgstr "Přesun sem: %d tahů"
+
+msgid "\nsharing the tile with %s"
+msgstr "\nSdílení dlaždice s %s"
+
+msgid "\nclick again to go"
+msgstr "\ndalším kliknutím přejdete"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s je na cestě – pokračuje v další zatáčce."
+
+msgid "No attack happened."
+msgstr "K žádnému útoku nedošlo."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s zaútočil na %s: udělil poškození %d, utrpěl %d."
+
+msgid "  City captured!"
+msgstr "  Město dobyto!"
+
+msgid "  %s destroyed!"
+msgstr "  %s zničeno!"
+
+msgid "  Your %s was lost."
+msgstr "  Váš %s byl ztracen."
+
+msgid "Improvement order cancelled."
+msgstr "Objednávka na vylepšení byla zrušena."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: budova %s (otáčky %d)."
+
+msgid "Rename %s"
+msgstr "Přejmenujte %s"
+
+msgid "%s is now called %s."
+msgstr "%s se nyní nazývá %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Pojmenujte svůj %s (prázdné: žádné jméno)"
+
+msgid "Renamed to %s."
+msgstr "Přejmenováno na %s."
+
+msgid "Name removed."
+msgstr "Jméno odstraněno."
+
+msgid "%s: on the way."
+msgstr "%s: na cestě."
+
+msgid "%s: coup orders given."
+msgstr "%s: vydané příkazy k převratu."
+
+msgid "See your stats breakdown"
+msgstr "Podívejte se na rozpis svých statistik"
+
+msgid "Selected %s."
+msgstr "Vybráno %s."
+
+msgid "the unit"
+msgstr "jednotka"
+
+msgid "Upgraded to %s."
+msgstr "Upgradováno na %s."
+
+msgid "Enter city screen"
+msgstr "Vstupte na obrazovku města"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Pohled na město: %s. Klikněte na dlaždice a zpracujte je; Exit city (nebo B / Esc) se vrátí na mapu."
+
+msgid "Back to the map."
+msgstr "Zpět na mapu."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "V %s není kam umístit %s."
+
+msgid "the city"
+msgstr "město"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Vyberte dlaždici pro %s (červené kroužky) nebo Esc / B pro zrušení."
+
+msgid "Cancelled."
+msgstr "Zrušeno."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Vyberte jednu z kroužků (Esc / B zruší)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: zlepšení jde tam."
+
+msgid "Bought the tile for %d gold."
+msgstr "Koupil jsem dlaždici za zlato %d."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Koupit za zlato %d\n pro nákup znovu klikněte"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Náklady %d zlato\n (nedostatek zlata)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Občané přeřazeni (zámky vyčištěny)."
+
+msgid "Annexed."
+msgstr "Připojeno."
+
+msgid "%s will build %s next."
+msgstr "Jako další vytvoří %s %s."
+
+msgid "%s added to the queue."
+msgstr "%s přidán do fronty."
+
+msgid "Bought %s."
+msgstr "Zakoupeno %s."
+
+msgid "Sold the %s."
+msgstr "Prodal %s."
+
+msgid "%s added to %s's queue."
+msgstr "%s přidán do fronty %s."
+
+msgid "Bought %s in %s."
+msgstr "Zakoupeno %s v %s."
+
+msgid "Experience"
+msgstr "Zkušenosti"
+
+msgid "%s is now %s."
+msgstr "%s je nyní %s."
+
+msgid "Pick something to research."
+msgstr "Vyberte si něco ke zkoumání."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Můžete přijmout novou zásadu – viz záložka Zásady na velké obrazovce."
+
+msgid "%s is heading here"
+msgstr "Sem míří %s"
+
+msgid "The unit"
+msgstr "Jednotka"
+
+msgid "Are you sure?"
+msgstr "jsi si jistý?"
+
+msgid "Click again to confirm."
+msgstr "Opětovným kliknutím potvrďte."
+
+msgid "%s: click a %stile"
+msgstr "%s: klikněte na dlaždici %s"
+
+msgid "highlighted "
+msgstr "zvýrazněno "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s - klikněte na dlaždici na mapě (nebo Zrušit na kartě)."
+
+msgid "Move here: click a tile"
+msgstr "Přesunout sem: klikněte na dlaždici"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Pohyb %s – klikněte na dlaždici na mapě (nebo na kartu Zrušit)."
+
+msgid "No enemies in range of %s."
+msgstr "Žádní nepřátelé v dosahu %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombardujte z %s: klikněte na nepřítele s červeným prstenem (kliknutím na město zrušte)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Vyberte jednu ze zvýrazněných dlaždic (nebo Zrušit)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bombardováno %s: %d poškození%s."
+
+msgid "Destroyed!"
+msgstr "Zničeno!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Ukončit zatáčku? Opětovným stisknutím End turn pro potvrzení."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Končící kolo – AI hráči se pohybují..."
+
+msgid "Turn %d"
+msgstr "Tah %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "HRA UKONČENA – %s vyhrává (%s vítězství)"
+
+msgid "A %s has been born!"
+msgstr "Zrodil se %s!"
+
+msgid "You voted for %s."
+msgstr "Hlasovali jste pro %s."
+
+msgid "You abstained."
+msgstr "Zdržel jste se hlasování."
+
+msgid "ATTACK"
+msgstr "ÚTOK"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s – Turn %d (%s) Zlatá %d (%+d) Věda %+d Štěstí %d"
+
+msgid "Researching: %s"
+msgstr "Výzkum: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - tah %d"
+
+msgid "Game"
+msgstr "Hra"
+
+msgid "Save game as"
+msgstr "Uložit hru jako"
+
+msgid "Saved as \"%s\"."
+msgstr "Uloženo jako \"%s\"."
+
+msgid "Couldn't save: %s"
+msgstr "Nelze uložit: %s"
+
+msgid "Open the options table"
+msgstr "Otevřete tabulku možností"
+
+msgid "The tutorials will show again from the start."
+msgstr "Tutoriály se zobrazí znovu od začátku."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Výukové programy nelze resetovat: %s"
+
+msgid "The panels are back where they started."
+msgstr "Panely jsou zpět tam, kde začaly."
+
+msgid "The table is back in the middle of the background."
+msgstr "Stůl je zpět uprostřed pozadí."
+
+msgid "Civilopedia: %s"
+msgstr "Civilopedie: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Nelze otevřít Civilopedia: %s"
+
+msgid "Opened %s in your browser."
+msgstr "Otevřeno %s ve vašem prohlížeči."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Výukový úkol skrytý – další se zobrazí, až přijde."
+
+msgid "Move the table"
+msgstr "Posuňte stůl"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Přesunutí stolu: namiřte na místo ve scenérii a %s jej tam umístěte. %s to otočí. %s, až budete hotovi."
+
+msgid "pull the trigger"
+msgstr "stisknout spoušť"
+
+msgid "The right stick"
+msgstr "Správná hůl"
+
+msgid "Press A or B"
+msgstr "Stiskněte A nebo B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Stůl zůstane zde. Nastavení > Vzhled > Zpět doprostřed jej vrátí na původní místo."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "To není na scenérii - zamiřte někam na zem."
+
+msgid "put the table here"
+msgstr "dej sem stůl"
+
+msgid "turn the scenery"
+msgstr "otočit scenérii"
+
+msgid "done moving the table"
+msgstr "hotovo přesunutí stolu"
+
+msgid "point, click (hold: aim)"
+msgstr "namířit, kliknout (podržet: zamířit)"
+
+msgid "Found city"
+msgstr "Založit město"
+
+msgid "Cancel typing"
+msgstr "Zrušit psaní"
+
+msgid "Leave the city"
+msgstr "Opusťte město"
+
+msgid "table height"
+msgstr "výška stolu"
+
+msgid "slide the map"
+msgstr "posuňte mapu"
+
+msgid "turn / size the table"
+msgstr "otočit / upravit velikost stolu"
+
+msgid "Next unit"
+msgstr "Další jednotka"
+
+msgid "Previous unit"
+msgstr "Předchozí jednotka"
+
+msgid "zoom the map"
+msgstr "přiblížit mapu"
+
+msgid "table height, click: recenter"
+msgstr "výška stolu, kliknutí: centrovat"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Něco nedokončilo - pokračujte. (Pokud se to opakuje, protokol říká proč.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "ZAÚTOČIT NA %s (%s, %d/%d zdraví)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  Očekává se \n: dohoda %d, vezměte %d"
+
+msgid "Luxury"
+msgstr "Luxus"
+
+msgid "Strategic"
+msgstr "Strategické"
+
+msgid "Unit icons over the unit models"
+msgstr "Ikony jednotek nad modely jednotek"
+
+msgid "Overview: point and click to go there"
+msgstr "Přehled: ukažte a klikněte tam"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (kliknutím otočíte %s)"
+
+msgid "Overview"
+msgstr "Přehled"
+
+msgid "Stats"
+msgstr "Statistiky"
+
+msgid "Trades"
+msgstr "Obchodní dohody"
+
+msgid "Politics"
+msgstr "Politika"
+
+msgid "Notifications"
+msgstr "Oznámení"
+
+msgid "Spy"
+msgstr "Špeh"
+
+msgid "War"
+msgstr "Válka"
+
+msgid "DefensivePact"
+msgstr "Obranný pakt"
+
+msgid "Neutral"
+msgstr "Neutrální"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Přehled impéria – zde podržte spoušť a tažením se pohybujete ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Zatím nemáte žádné špiony – přicházejí s novými epochami."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Špióni (vyberte si jednoho a pak kam to jde)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (hodnost %d) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Odvolat převrat"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Klikněte znovu: uspořádejte převrat (šance %d%%)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Uspořádejte převrat (šance %d%%)"
+
+msgid "Where to"
+msgstr "kam"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Špionážní úkryt (přineste %s domů)"
+
+msgid "   spies: "
+msgstr "   špióni: "
+
+msgid "Click again (%s)"
+msgstr "Klikněte znovu (%s)"
+
+msgid "You have no cities yet."
+msgstr "Zatím nemáte žádná města."
+
+msgid "Name"
+msgstr "Jméno"
+
+msgid "Defence"
+msgstr "Obrana"
+
+msgid "Open the city view"
+msgstr "Otevřete pohled na město"
+
+msgid "Resistance"
+msgstr "Odpor"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "Náročné %s"
+
+msgid " (holy)"
+msgstr " (svatý)"
+
+msgid "Total %d"
+msgstr "Celkem %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Převeďte zlato na vědu: %d%%"
+
+msgid "Great person points"
+msgstr "Body velké osobnosti"
+
+msgid "Points"
+msgstr "Body"
+
+msgid "Per turn"
+msgstr "Za tah"
+
+msgid "Total"
+msgstr "Celkem"
+
+msgid "Pending trades"
+msgstr "Obchodní smlouvy čekající na vyřízení"
+
+msgid "Current trades"
+msgstr "Probíhající obchodní smlouvy"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Žádné obchody neprobíhají. Vytvořte si ho na kartě Diplomacie na velké obrazovce."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Napájení jednotky: %d použitého %d (základ %d, města %d, populace %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Deficit %d: %d%% produkce v každém městě. Zvyšte své zásobovací nebo rozpouštěcí jednotky."
+
+msgid "Doing"
+msgstr "Činnost"
+
+msgid "Closest city"
+msgstr "Nejbližší město"
+
+msgid "Click again: %d gold"
+msgstr "Klikněte znovu: %d zlato"
+
+msgid "%s %dg"
+msgstr "%s %dg"
+
+msgid "Show global politics"
+msgstr "Zobrazit globální politiku"
+
+msgid "Show diagram"
+msgstr "Zobrazit diagram"
+
+msgid "Hide city-states"
+msgstr "Skrýt městské státy"
+
+msgid "Include city-states"
+msgstr "Zahrnout městské státy"
+
+msgid "   %s civilizations in the game"
+msgstr "   %s civilizace ve hře"
+
+msgid "Score %d"
+msgstr "Skóre %d"
+
+msgid "Defeated"
+msgstr "Poražený(á)"
+
+msgid "At war with %s"
+msgstr "Ve válce s %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Obranný pakt s %s (otáčení %d)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Přátelé s %s (otáčky %d)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Odmítnuto %s (otáčky %d)"
+
+msgid "Allied with %s"
+msgstr "Spojenec s %s"
+
+msgid "Relations"
+msgstr "Vztahy"
+
+msgid "Defensive pact"
+msgstr "Obranný pakt"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Ještě nemáte žádné luxusní ani strategické zdroje."
+
+msgid "Unimproved"
+msgstr "Nevylepšené"
+
+msgid "Trade offer"
+msgstr "Obchodní nabídka"
+
+msgid "Stockpile"
+msgstr "Zásoby"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Bez vylepšení: dlaždice ve vaší zemi (nebo přidružených městských státech) s tímto zdrojem, ale žádné vylepšení pro jeho použití.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: města, která to slaví/požadují v rámci We Love The King Day."
+
+msgid "Religions to be founded: %s"
+msgstr "Náboženství, která mají být založena: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Minimální víra pro příští %s: %d"
+
+msgid "Great Prophet"
+msgstr "Velký prorok"
+
+msgid "Religious status: %s"
+msgstr "Náboženský stav: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Dosud nebyla založena žádná náboženství ani panteony."
+
+msgid "%s name:"
+msgstr "Název %s:"
+
+msgid "Founding civ:"
+msgstr "Založení civilního:"
+
+msgid "Holy city:"
+msgstr "Svaté město:"
+
+msgid "Cities following this religion:"
+msgstr "Města následující toto náboženství:"
+
+msgid "Followers of this religion:"
+msgstr "Stoupenci tohoto náboženství:"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "Location"
+msgstr "Pozice"
+
+msgid "Unknown"
+msgstr "Neznámo"
+
+msgid "Owned"
+msgstr "Vlastněno"
+
+msgid "Known"
+msgstr "Známo"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%sQ%s Otočte %d %s"
+
+msgid "Current turn  |"
+msgstr "Tah  |"
+
+msgid "General"
+msgstr "Generál"
+
+msgid "No notifications yet."
+msgstr "Zatím žádná upozornění."
+
+msgid "Tech"
+msgstr "Technologie"
+
+msgid "Panel"
+msgstr "Panel"
+
+msgid "Nothing to show."
+msgstr "Nic k zobrazení."
+
+msgid "Select a unit"
+msgstr "Vyberte jednotku"
+
+msgid "Left-click it"
+msgstr "Klikněte na něj levým tlačítkem"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Bod + pravá spoušť: její karta se vysune nad ní"
+
+msgid "Move / attack"
+msgstr "Pohyb / útok"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Kliknutím na dlaždici zamíříte a znovu jdete"
+
+msgid "The same with the laser"
+msgstr "To samé s laserem"
+
+msgid "Open a city"
+msgstr "Otevřete město"
+
+msgid "Click it"
+msgstr "Klikněte na něj"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Bod + pravá spoušť: její karta se vznáší nad městem"
+
+msgid "Scroll a card"
+msgstr "Posuňte kartu"
+
+msgid "Mouse wheel"
+msgstr "Kolečko myši"
+
+msgid "Point at it + right stick"
+msgstr "Zamiřte na něj + pravá páka"
+
+msgid "Move the view"
+msgstr "Posuňte zobrazení"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Orbity pravého tažení, zoomy koleček, WASD / středové tažení"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Grip + hůl: doleva/doprava otáčí stolem, nahoru/dolů jej zmenšuje"
+
+msgid "Table height"
+msgstr "Výška stolu"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Buď se přilepte nahoru/dolů (pravý, když nemíříte na kartu)"
+
+msgid "Zoom the map"
+msgstr "Přibližte mapu"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - nebo Ctrl + kolečko"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Držte spoušť + ta ruka je nahoře/dole"
+
+msgid "Slide the map"
+msgstr "Posuňte mapu"
+
+msgid "WASD, or click the overview"
+msgstr "WASD, nebo klikněte na přehled"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Držte úchop a táhněte; nebo ukažte na přehled + spoušť"
+
+msgid "Move a board"
+msgstr "Přesuňte desku"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Podržte spoušť na jejím horním proužku (nebo na informační tabuli) a pohybujte se"
+
+msgid "A, or the End turn button on the table"
+msgstr "A nebo tlačítko End turn na stole"
+
+msgid "Found a city"
+msgstr "Našel město"
+
+msgid "Next / previous unit"
+msgstr "Další / předchozí jednotka"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Tlačítko Nečinná jednotka na stole"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Technologický strom, politika, diplomacie"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Karta na zápěstí nebo tlačítka na deskách"
+
+msgid "Empire overview"
+msgstr "Přehled impéria"
+
+msgid "Always up, off to your right"
+msgstr "Vždy nahoře, po vaší pravici"
+
+msgid "The Settings button on the table"
+msgstr "Tlačítko Nastavení na stole"
+
+msgid "The Civilopedia button on the table"
+msgstr "Tlačítko Civilopedia na stole"
+
+msgid "Close / deselect"
+msgstr "Zavřít / zrušit výběr"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B zavře klávesnici a zobrazení města"
+
+msgid "Recenter the table"
+msgstr "Znovu vycentrujte stůl"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Klikněte levou páčkou nebo tlačítko Recenter"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Nastavení – zde podržte spoušť a přetažením se přesunete ====="
+
+msgid "Tables"
+msgstr "Tabulky"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Přesuňte stůl kamkoli na pozadí - užitečné ve velkých, jako je převedená mapa. "
+
+msgid "%d%% translated"
+msgstr "Přeloženo %d%%"
+
+msgid "Notification log keeps"
+msgstr "Uchovává se protokol upozornění"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Počet otočení zpráv na kartě Oznámení v přehledu."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Návody Unciv: zpráva, když se objeví něco nového, a karta úkolu s další věcí, kterou můžete vyzkoušet."
+
+msgid "Reset"
+msgstr "Restartovat"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Vlastní zvukové efekty Unciv. Jsou čteny ze složky Unciv vedle této, když hra běží; vložte své vlastní do ~/.unciv-vr/Sounds pod stejnými názvy, abyste je nahradili."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "Byly nalezeny zvuky %d. Útočný zvuk každé jednotky vychází ze sady pravidel, jako je zvuk Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Nebyly nalezeny žádné zvuky. Žijí v Unciv's android/assets/sounds, vedle této složky."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Desky se seznamem na nich sestavené z toho, co hra zná. Ve VR stojí kolem stolu "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(podržte spoušť na proužku podél horní části, abyste jeden posunuli); na ploše se posadí na levou stranu."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Panel je složka s panel.json – viz panels/README.md. Vložte svůj do %s."
+
+msgid "Put them back"
+msgstr "Dejte je zpět"
+
+msgid "(by %s)"
+msgstr "(od %s)"
+
+msgid "Every turn"
+msgstr "Každý tah"
+
+msgid "Every %d turns"
+msgstr "Každých %d tahů"
+
+msgid "not connected"
+msgstr "není připojen"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (tento klient očekává v%s)"
+
+msgid "Tilesets"
+msgstr "Sady políček"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR je pod licencí Mozilla Public License 2.0, stejně jako Unciv. Ikony jsou vlastní Unciv, od mnoha autorů "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "pod licencemi CC BY / CC BY-SA / CC0 (viz CREDITS.md a Unciv docs/Credits.md). Dlaždice, jednotka, pozadí "
+
+msgid "and table models are Unciv VR's own."
+msgstr "a stolní modely jsou vlastní Unciv VR."
+
+msgid "%s speed"
+msgstr "Rychlost %s"
+
+msgid "%s map"
+msgstr "Mapa %s"
+
+msgid "%s, turn %s"
+msgstr "%s, tah %s"
+
+msgid "by "
+msgstr "podle "
+
+msgid "  -  from %s"
+msgstr "  - od %s"
+
+msgid "Move unit"
+msgstr "Pohnout jednotkou"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Zamiřte na jednu ze svých jednotek a stiskněte spoušť, pak zamiřte na destičku a zatáhněte dvakrát: jednou zamířit, jednou jít."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Klikněte na jednu ze svých jednotek a poté dvakrát klikněte na dlaždici: jednou zamířit, jednou jít."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Vyberte Osadníka a stiskněte Nalezené město na jeho kartě (nebo B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Vyberte osadníka a stiskněte Found city na jeho kartě (nebo F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Namiřte na jedno ze svých měst a stiskněte spoušť, poté stiskněte City view na jeho kartě."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Klikněte na jedno ze svých měst a poté na jeho kartě stiskněte Zobrazení města."
+
+msgid "Pick technology"
+msgstr "Vyberte technologii"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Otevřete technický strom ze své karty na zápěstí a vyberte si něco, co chcete prozkoumat."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Otevřete technický strom (T) a vyberte něco, co chcete prozkoumat."
+
+msgid "Pick construction"
+msgstr "Vybrat produkci"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Otevřete jedno ze svých měst a z jeho karty vyberte něco, co pro něj postavíte."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Klikněte na jedno ze svých měst a z jeho karty vyberte něco, co pro něj postavíte."
+
+msgid "Pass a turn"
+msgstr "Projeďte zatáčku"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Dejte svým jednotkám jejich rozkazy a poté stiskněte Konec a zapněte stůl (nebo A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Dejte svým jednotkám jejich rozkazy a poté stiskněte End turn (nebo Space)."
+
+msgid "Reassign worked tiles"
+msgstr "Znovu přiřaďte opracované dlaždice"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "V pohledu na město namiřte na jednu z jejích destiček a stiskněte spoušť, abyste ji zpracovali, nebo přestali pracovat."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "V zobrazení města klikněte na jednu z jeho dlaždic, abyste na něm pracovali, nebo na něm přestali pracovat."
+
+msgid "Press Settings on the table."
+msgstr "Stiskněte Nastavení na stole."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Stiskněte Nastavení na stole (nebo O)."
+
+msgid "Construct an improvement"
+msgstr "Vytvořte vylepšení"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Postavte dělníka, přesuňte ho na destičku Plains nebo Lussland, stiskněte Construct vylepšení na jeho kartě a vyberte Farmu. Nechte to tam, dokud nebude farma hotová."
+
+msgid "Move an air unit"
+msgstr "Přesuňte vzduchovou jednotku"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Vyberte leteckou jednotku a přesuňte ji do jiného z vašich měst v dosahu."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Vpravo se otočte na přehled impéria a otevřete jeho kartu Statistiky."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Otevřete přehled impéria (E) a jeho kartu Statistiky."
+
+msgid "Tutorial task"
+msgstr "Výukový úkol"
+
+msgid "Hide"
+msgstr "Schovat"
+
+msgid "Defence %d"
+msgstr "Obrana %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% na obranu jednotky"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (vydrancováno)"
+
+msgid ", worked by %s"
+msgstr ", pracoval %s"
+
+msgid "  (click the red button again)"
+msgstr "  (znovu klikněte na červené tlačítko)"
+
+msgid "  -  %d of %d"
+msgstr "  - %d z %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s tahů)"
+
+msgid "     Science %+d per turn"
+msgstr "     Věda: %+d za tah"
+
+msgid "  (city-state)"
+msgstr "  (městský stát)"
+
+msgid "   max %d turns"
+msgstr "   max. %d tahů"
+
+msgid " (about %d gold's worth)"
+msgstr " (asi hodnota zlata %d)"
+
+msgid " (you have %d)"
+msgstr " (máte %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (zatím: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (zastaralé)"
+
+msgid " (obsolete)"
+msgstr " (zastaralé)"
+
+msgid "abstained"
+msgstr "zdržel se hlasování"
+
+msgid "researched"
+msgstr "zkoumal"
+
+msgid "adopted"
+msgstr "adoptoval"
+
+msgid "gold"
+msgstr "zlato"
+
+msgid "faith"
+msgstr "víra"
+
+msgid "  - complete!"
+msgstr "  - kompletní!"
+
+msgid "complete"
+msgstr "kompletní"
+
+msgid "worked"
+msgstr "pracoval"
+
+msgid "on"
+msgstr "na"
+
+msgid "off"
+msgstr "vypnuto"
+
+msgid "click"
+msgstr "klikněte"
+
+msgid "improvement"
+msgstr "zlepšení"
+
+msgid "done"
+msgstr "hotovo"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Nepřátelské cíle v dosahu (červené kroužky): %d. Kliknutím na jednu zamiřte."
+
+msgid "Idle citizens: %d"
+msgstr "Nečinní občané: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombard – nepřátelé v dosahu: %d (síla %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Další zprávy po této: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Velké osobnosti zdarma k výběru: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Volné technologie na výběr: %d. Vyberte zvýrazněnou."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Stále si můžete vybrat: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv dodává zprávy, jména a popisy hry. Některé jazyky také překládají rozhraní Unciv VR. Chybějící překlady zůstávají v angličtině."
+
+msgid "Units ({count})"
+msgstr "Jednotky ({count})"
+
+msgid "Cities ({count})"
+msgstr "Města ({count})"
+
+msgid "Military"
+msgstr "Vojsko"
+
+msgid "Military ({count})"
+msgstr "Vojsko ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Pořadí ({count})"
+
+msgid "Waiting for orders"
+msgstr "Čeká na rozkazy"
+
+msgid "  -  promotion ready"
+msgstr "  - povýšení připraveno"
+
+msgid "  (capital)"
+msgstr "  (kapitál)"
+
+msgid "  (puppet)"
+msgstr "  (loutka)"
+
+msgid "  (razing)"
+msgstr "  (hoření)"
+
+msgid "Nothing to build"
+msgstr "Není co stavět"
+
+msgid "turn"
+msgstr "tah"
+
+msgid "turns"
+msgstr "tahy"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} – {era} éra"
+
+msgid "{score} pts"
+msgstr "{score} bodů"
+
+msgid "No units yet."
+msgstr "Zatím žádné jednotky."
+
+msgid "No cities yet."
+msgstr "Zatím žádná města."
+
+msgid "No military units yet."
+msgstr "Zatím žádné vojenské jednotky."
+
+msgid "No civilizations met yet."
+msgstr "Dosud se nepotkaly žádné civilizace."
+
+msgid "No wonders to show yet."
+msgstr "Zatím se není čemu divit."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Každá jednotka, kterou máte, ty, které stále čekají na rozkazy jako první, s tím, co každá dělá. Kliknutím na jednu ji vyberete."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Každé vaše město, hlavní město, s tím, co staví a jak je velké. Kliknutím na jednu kartu otevřete."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Každá vojenská jednotka, kterou máte, se svou akcí, pohybem a zdravím. Kliknutím na jednu ji vyberete."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Hodnocení všech známých civilizací podle celkového počtu bodů."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Přehled divů Unciv podle období: které se staví, staví nebo se teprve budují. Klikněte na postavený a podívejte se na něj."
+
+msgid "In the Hall of the Mountain King"
+msgstr "V sále Krále Hor"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Podzemní trůnní sál Krále trolů hluboko v pohoří Dovre, osvětlený ohnivými košíčky a žhnoucími žilami magmatu"
+
+msgid "Mountains and clouds"
+msgstr "Hory a mraky"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Louka obklopená nízkými vrcholy se stromy a plovoucími mraky"
+
+msgid "Floating in space"
+msgstr "Plovoucí v prostoru"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Stůl se vznáší mezi hvězdami, kolem planety s prstenci"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Prostý, tmavý pokoj"
+
+msgid "Webb Deep Field"
+msgstr "Webb Deep Field"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Stůl se vznáší v hlubokém vesmíru, obklopený Prvním hlubokým polem vesmírného dalekohledu Jamese Webba"
+
+msgid "Ornate oak"
+msgstr "Zdobený dub"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Dub s výpletem z ořechu a cesmíny, vyřezávaným okrajem provazu a podstavcem na svitkových nožičkách"
+
+msgid "Plain wood"
+msgstr "Obyčejné dřevo"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Kruhová tmavá dřevěná deska na zužujícím se sloupu"
+
+msgid "Low poly"
+msgstr "Nízké poly"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Tvářený terén s nízkými poly, jedna plochá barva na obličej"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Rozhraní je přeloženo; herní obsah se zobrazuje anglicky."
+
+msgid "Turns: %s"
+msgstr "Tahy: %s"
+
+msgid "Latin keyboard"
+msgstr "Latinka"
+
+msgid "Arabic keyboard"
+msgstr "Arabská klávesnice"
+
+msgid "Hebrew keyboard"
+msgstr "Hebrejská klávesnice"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Výchozí"
+
+msgid "Manual"
+msgstr "Ručně"
+

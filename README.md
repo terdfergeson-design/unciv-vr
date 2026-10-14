@@ -93,17 +93,21 @@ the app's own storage on the Quest.
 **Now:** Settings > Gameplay > Language offers every language Unciv has a translation for (about 50, with how
 complete each is), using Unciv's own translation files by Unciv's translators. The game's side is translated: messages
 and popups, notifications, descriptions, the Civilopedia and tutorials, quests, victory texts, and the names of units,
-buildings, techs, nations and cities - plus those of our buttons that use Unciv's own words. Chinese, Japanese, Korean
-and other scripts use system font fallbacks. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese,
-Swedish, European Portuguese, Dutch, Polish, Turkish, Indonesian and Japanese cover the frontend menus, city and
+buildings, techs, nations and cities - plus those of our buttons that use Unciv's own words.
+German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese, Swedish, European Portuguese, Dutch,
+Polish, Turkish, Indonesian, Japanese, Russian, Ukrainian, Czech, Hungarian, Romanian, Croatian, Catalan,
+Galician, Norwegian and Esperanto have draft translations covering the frontend menus, city and
 empire boards, diplomacy, religion, map replay, controller hints, built-in lists and tutorial instructions.
 Select **Arabic / العربية** or **Hebrew / עברית** for a right-to-left interface. Both now include draft Unciv
 game-content catalogs: built-in object names, promotions and shared effect descriptions. Unfinished entries still
 fall back to English. See [content translation coverage](client/translations/CONTENT.md). Bundled Noto fonts cover
-Latin, Arabic, Hebrew and Japanese on Windows and Quest.
-The VR keyboard includes accents for each supported Latin-script language, Arabic/Hebrew layouts and Japanese
+Latin, Cyrillic, Arabic, Hebrew and Japanese on Windows and Quest. Other scripts may use system font fallbacks.
+The VR keyboard includes accents for each supported Latin-script language, Arabic/Hebrew and Russian/Ukrainian layouts, and Japanese
 hiragana/katakana input with a Latin switch (no kanji conversion). These passes are ready
 for wording and headset layout review.
+The latest ten catalogs reuse Unciv terms and contain machine-translated drafts with terminology edits;
+they have not yet had native-speaker or in-game visual review. Details and content coverage are in
+[the translation guide](client/translations/README.md).
 
 **Next**, to go all the way:
 - **More frontend languages**: review the existing catalogs, then add languages in `client/translations/`. Other languages still

@@ -30,6 +30,16 @@ const FRONTEND_LANGUAGES := {
 	"Turkish": {"tag": "tr", "label": "Türkçe"},
 	"Indonesian": {"tag": "id", "label": "Bahasa Indonesia"},
 	"Japanese": {"tag": "ja", "label": "日本語"},
+	"Russian": {"tag": "ru", "label": "Русский"},
+	"Ukrainian": {"tag": "uk", "label": "Українська"},
+	"Czech": {"tag": "cs", "label": "Čeština"},
+	"Hungarian": {"tag": "hu", "label": "Magyar"},
+	"Romanian": {"tag": "ro", "label": "Română"},
+	"Croatian": {"tag": "hr", "label": "Hrvatski"},
+	"Catalan": {"tag": "ca", "label": "Català"},
+	"Galician": {"tag": "gl", "label": "Galego"},
+	"Norwegian": {"tag": "nb", "label": "Norsk"},
+	"Esperanto": {"tag": "eo", "label": "Esperanto"},
 }
 
 

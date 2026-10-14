@@ -26,10 +26,26 @@ const ACCENT_KEYS := {
 	"Turkish": "çğıöşü",
 	"Indonesian": "",
 	"Japanese": "",
+	"Russian": "",
+	"Ukrainian": "",
+	"Czech": "áčďéěíňóřšťúůýž",
+	"Hungarian": "áéíóöőúüű",
+	"Romanian": "ăâîșț",
+	"Croatian": "čćđšž",
+	"Catalan": "àçèéíïòóúü·",
+	"Galician": "áéíóúüñ",
+	"Norwegian": "æøåé",
+	"Esperanto": "ĉĝĥĵŝŭ",
 }
 const ARABIC_ROWS := ["1234567890", "ضصثقفغعهخحجد", "شسيبلاتنمكط", "ئءؤرىةوزظ", "أإآذَُِّْ؟،.-"]
 const HEBREW_ROWS := ["1234567890", "קראטוןםפ", "שדגכעיחלךף", "זסבהנמצתץ", "'\"-.,?!"]
 const JAPANESE_ROWS := ["あいうえおかきくけこ", "さしすせそたちつてと", "なにぬねのはひふへほ", "まみむめもやゆよらりるれろ", "わをんー、。ゃゅょっぁぃぅぇぉゎ゛゜"]
+const RUSSIAN_ROWS := ["1234567890", "йцукенгшщзхъ", "фывапролджэ", "ячсмитьбю", "ё-.,?!"]
+const UKRAINIAN_ROWS := ["1234567890", "йцукенгшщзхї", "фівапролджє", "ячсмитьбю", "ґ’'-.,?!"]
+const NATIVE_ROWS := {
+	"Arabic": ARABIC_ROWS, "Hebrew": HEBREW_ROWS, "Japanese": JAPANESE_ROWS,
+	"Russian": RUSSIAN_ROWS, "Ukrainian": UKRAINIAN_ROWS,
+}
 const Lang := preload("res://scripts/lang.gd")
 const TEXT := Color(0.92, 0.94, 0.97)
 const DIM := Color(0.66, 0.7, 0.78)
@@ -126,15 +142,15 @@ func _build_keys() -> void:
 	for child: Node in _rows_box.get_children():
 		_rows_box.remove_child(child)
 		child.queue_free()
-	var native := Lang.language in ["Arabic", "Hebrew", "Japanese"]
+	var native := NATIVE_ROWS.has(Lang.language)
 	_layout_key.visible = native
-	var native_label: String = {"Arabic": "Arabic keyboard", "Hebrew": "Hebrew keyboard", "Japanese": "かな"}.get(Lang.language, "Latin keyboard")
+	var native_label: String = {"Arabic": "Arabic keyboard", "Hebrew": "Hebrew keyboard", "Japanese": "かな", "Russian": "АБВ", "Ukrainian": "АБВ"}.get(Lang.language, "Latin keyboard")
 	_layout_key.text = native_label if _latin else "Latin keyboard"
 	var rows: Array = ROWS.duplicate()
 	if ACCENT_KEYS.has(Lang.language):
 		rows[rows.size() - 1] = ACCENT_KEYS[Lang.language]
 	if native and not _latin:
-		rows = {"Arabic": ARABIC_ROWS, "Hebrew": HEBREW_ROWS, "Japanese": JAPANESE_ROWS}[Lang.language]
+		rows = NATIVE_ROWS[Lang.language]
 	_shift_key.disabled = Lang.language in ["Arabic", "Hebrew"] and not _latin
 	for row: String in rows:
 		if row.is_empty():

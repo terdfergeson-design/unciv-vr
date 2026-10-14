@@ -1,0 +1,3119 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv. Remaining text drafted with Google Translate,
+# with AI-assisted terminology edits; this is not a reviewed upstream translation.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: uk\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+msgid "Map replay"
+msgstr "Повтор мапи"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Мапу віддалено, щоб її було видно повністю. Власники територій і розташування міст змінюються під час відтворення ходів."
+
+msgid "Start replay"
+msgstr "Почати повтор"
+
+msgid "Return to game"
+msgstr "Повернутися до гри"
+
+msgid "Turn %d of %d"
+msgstr "Хід %d із %d"
+
+msgid "Close replay"
+msgstr "Закрити повтор"
+
+msgid "Turn %d / %d"
+msgstr "Хід %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Зберігається на цьому ПК між сеансами"
+
+msgid "Move the table..."
+msgstr "Перемістіть стіл..."
+
+msgid "Back to the middle"
+msgstr "Повернути в центр"
+
+msgid "Your controllers"
+msgstr "Ваші контролери"
+
+msgid "Show button labels"
+msgstr "Показати написи кнопок"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Плаваючі мітки біля кожного контролера з інформацією про те, що зараз роблять його кнопки."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Правий курок клацає, коли ви його відпускаєте, тому, утримуючи його для збільшення, нічого не клацає."
+
+msgid "Look"
+msgstr "Вигляд"
+
+msgid "Gameplay"
+msgstr "Ігролад"
+
+msgid "Automation"
+msgstr "Автоматизація"
+
+msgid "Sound"
+msgstr "Звук"
+
+msgid "Panels"
+msgstr "Панелі"
+
+msgid "Controls"
+msgstr "Керування"
+
+msgid "Game and saves"
+msgstr "Гра та збереження"
+
+msgid "About"
+msgstr "Про гру"
+
+msgid "Settings"
+msgstr "Налаштування"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "Around the table"
+msgstr "Навколо столу"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Фони та таблиці – це папки, які може додати кожен: див. backgrounds/README.md і tables/README.md."
+
+msgid "Background"
+msgstr "Фон"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "Світ навколо столу: небо, світло і декорації."
+
+msgid "Table"
+msgstr "Стіл"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "На чому лежить карта. У VR його стовпець розтягується на висоту, яку ви встановили."
+
+msgid "Where the table stands"
+msgstr "Де стіл стоїть"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Перемістіть стіл у будь-яке місце фонового пейзажу – зручно у великих, як-от перетворена карта. Запам'ятався на цьому тлі."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Перемістіть стіл у будь-яке місце фонового пейзажу – зручно у великих, як-от перетворена карта. Його перенесли сюди; Назад до середини розміщує його там, де починається фон."
+
+msgid "Remembered for this background."
+msgstr "Запам'ятався на цьому тлі."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Його перенесли сюди; Назад до середини розміщує його там, де починається фон."
+
+msgid "The map"
+msgstr "Карта"
+
+msgid "Tiles"
+msgstr "Клітинки"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Як виглядає місцевість, чудеса, ресурси та поліпшення. Tilesets працюють як Unciv: див. tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Прості кольорові шестигранники"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Плоскі гекси в кольорах місцевості Unciv, без моделей."
+
+msgid "Units"
+msgstr "Підрозділи"
+
+msgid "Same as the tiles"
+msgstr "Із набору клітинок"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Моделі юнітів, які постачаються з наведеним вище набором клітинок (запасний набір клітинок заповнює будь-які прогалини)."
+
+msgid "No models"
+msgstr "Немає моделей"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Круглі жетони зі значками підрозділів Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Як виглядають юніти (Unciv's Unitset): будь-який набір фішок із моделями юнітів (pieces/Units) може надати їх."
+
+msgid "Visual hints"
+msgstr "Візуальні підказки"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Накладення карти Unciv; круглі кнопки поруч із оглядом також вмикають і вимикають їх."
+
+msgid "Show unit movement arrows"
+msgstr "Показувати стрілки переміщень підрозділів"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "Куди щойно рухалися підрозділи і хто на кого напав."
+
+msgid "Show tile yields"
+msgstr "Показувати іконки прибутку від клітинок"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Їжа, виробництво, золото... на кожній клітинці."
+
+msgid "Show worked tiles"
+msgstr "Показувати іконки на оброблюваних клітинках"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "На яких клітинках працюють жителі ваших міст."
+
+msgid "Show resources and improvements"
+msgstr "Показувати іконки ресурсів і покращень в клітинках"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Символи ресурсів і покращень на клітинках."
+
+msgid "Show improvement pictures"
+msgstr "Покажіть зображення покращень"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Ферми, шахти, дороги тощо як моделі."
+
+msgid "Show unit icons"
+msgstr "Показувати значки юнітів"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "Маленький значок Unciv над кожною моделлю юніти."
+
+msgid "Language"
+msgstr "Мова"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Власні переклади Unciv, зроблені перекладачами Unciv: повідомлення, назви та описи гри. Наше меню все ще англійською мовою."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Text Unciv не має перекладу для перебування англійською мовою."
+
+msgid "Turns"
+msgstr "Ходи"
+
+msgid "Check for idle units"
+msgstr "Перевіряти незайняті підрозділи"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Перший кінцевий хід приведе вас до кожного підрозділу, який ще не має наказів."
+
+msgid "Auto unit cycle"
+msgstr "Автовибір наступного юніта"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Після того як ви віддасте підрозділу накази, вибирається наступний підрозділ, який очікує наказів."
+
+msgid "Cycle idle units by distance"
+msgstr "Цикл холостих юнітів за відстанню"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Наступний/попередній блок переходить до найближчого блоку, а не у фіксованому порядку."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Запитуйте підтвердження, коли закінчуєте хід"
+
+msgid "End turn needs a second press."
+msgstr "Кінцевий поворот потребує другого натискання."
+
+msgid "Order trade offers by amount"
+msgstr "Сортувати торгові пропозиції за кількістю"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "На торговому столі найбільші пропозиції стоять на першому місці."
+
+msgid "Show suggested city locations"
+msgstr "Показати запропоновані місця розташування міста"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Після вибору поселенця три найкращі місця Unciv поблизу для нового міста позначаються на карті."
+
+msgid "Tutorials"
+msgstr "Навчальні посібники"
+
+msgid "Show tutorials"
+msgstr "Показувати підказки"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Повідомлення підручника та картка із завданням. Кожен підручник також є в Civilopedia."
+
+msgid "Reset tutorials"
+msgstr "Скинути підказки"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Показуйте кожен підручник і завдання знову, ніби ви новачок."
+
+msgid "Other players"
+msgstr "Інші гравці"
+
+msgid "Other players' turns"
+msgstr "Хіди інших гравців"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Те, що ви бачите про хід інших гравців після завершення свого."
+
+msgid "Show the moves and battles I can see"
+msgstr "Покажи рухи та битви, які я бачу"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Відтворено по порядку; погляд ковзає до бійки."
+
+msgid "Show them, fast"
+msgstr "Покажіть їм, швидко"
+
+msgid "The same, at two and a half times the speed."
+msgstr "Те саме, у два з половиною рази більшою швидкістю."
+
+msgid "Don't show them"
+msgstr "Не показуй їх"
+
+msgid "The map just updates."
+msgstr "Карта просто оновлюється."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Власні параметри Unciv для автоматизованих підрозділів і міст."
+
+msgid "Automated and exploring units move"
+msgstr "Автоматизовані та дослідницькі юніти рухаються"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Коли підрозділи на автоматизації, дослідженні або на багатоходових рухах роблять свої кроки."
+
+msgid "When I end my turn"
+msgstr "Коли я закінчу свою чергу"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Дослідники, автоматизовані працівники та підрозділи на довгих ходах йдуть, коли ви закінчуєте хід."
+
+msgid "At the start of my turn"
+msgstr "На початку моєї черги"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Вони йдуть, коли починається ваш хід (Unciv \"Автоматизовані підрозділи рухаються на початку ходу\")."
+
+msgid "Auto-assign city production"
+msgstr "Автоматично обирати виробництво у містах"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Місто, яке закінчує будівництво, само обирає, що будувати далі."
+
+msgid "Auto-build roads"
+msgstr "Автоматично будувати дороги"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Автоматизовані працівники будують дороги між вашими містами."
+
+msgid "Automated workers replace improvements"
+msgstr "Автоматизовані працівники замінюють покращення"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Автоматизовані працівники можуть замінити покращення на краще."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Не дозволяйте автоматизованим працівникам видаляти рослинність"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Автоматизовані працівники залишають у спокої ліси, джунглі та болота."
+
+msgid "Automated units can upgrade"
+msgstr "Автоматизовані підрозділи можуть покращуватись"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Автоматизовані військові частини модернізуються, коли ви можете собі це дозволити."
+
+msgid "Automated units choose promotions"
+msgstr "Автоматизовані підрозділи самі обирають підвищення"
+
+msgid "Automated units pick their own promotions."
+msgstr "Автоматизовані підрозділи вибирають власні акції."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "Міста автоматично обстрілюють ворога в кінці ходу"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Міста, які все ще можуть стріляти по ворогам у радіусі, коли ви закінчите хід."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Автоматичне призначення спеціалістів у нові міста"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Нові міста самі розміщують своїх громадян на місцях спеціалістів."
+
+msgid "Sound effects"
+msgstr "звукові ефекти"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Кнопки, ходи, битви та інше. У VR вони походять з того місця, де трапляються на столі."
+
+msgid "City ambience"
+msgstr "Міська атмосфера"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Міський шум, який лунає, поки ви перебуваєте в місті – Unciv має один для кожної епохи."
+
+msgid "Your own and mods'"
+msgstr "Ваші власні та моди"
+
+msgid "None yet."
+msgstr "Поки немає."
+
+msgid "Put the panels back"
+msgstr "Поставте панелі назад"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Кожна панель повертається туди, куди її поставив panel.json."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "У VR ви бачите контролери, які тримаєте в руках, як їх малює середовище виконання вашої гарнітури (SteamVR бачить; інші отримують звичайний запасний)."
+
+msgid "Boards"
+msgstr "Дошки"
+
+msgid "Put the boards back"
+msgstr "Поставте дошки назад"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Огляд, інформаційна дошка, великий екран, дошки міст, огляд імперії та ця дошка повертаються з того самого початку."
+
+msgid "This game"
+msgstr "Ця гра"
+
+msgid "Save game"
+msgstr "Зберегти гру"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Зберігає його під іменем, яке ви вводите, у папці збереження мосту."
+
+msgid "Save..."
+msgstr "зберегти..."
+
+msgid "Main menu"
+msgstr "Головне меню"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Повернення до головного меню; гра продовжує працювати, а Resume повертає вас назад."
+
+msgid "Saves"
+msgstr "Зберігає"
+
+msgid "Autosave"
+msgstr "Автозбереження"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Як часто гра зберігається як \"Автозбереження\" (Продовжити в головному меню завантажує її)."
+
+msgid "Save folder"
+msgstr "Зберегти папку"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Таблиця віртуальної реальності для Unciv, римейку Civilization V з відкритим кодом."
+
+msgid "Bridge protocol"
+msgstr "Протокол мосту"
+
+msgid "Mods"
+msgstr "Модифікації"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Ваші власні тайлсети, фони та таблиці"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Розмістіть їх папки тут; вони з’являються в Look."
+
+msgid "Settings file"
+msgstr "Файл налаштувань"
+
+msgid "Licence and credits"
+msgstr "Ліцензія та кредити"
+
+msgid "Desktop"
+msgstr "Робочий стіл"
+
+msgid "Off"
+msgstr "Вимкнено"
+
+msgid "On"
+msgstr "Увімкнено"
+
+msgid "End turn"
+msgstr "Завершити хід"
+
+msgid "< Prev"
+msgstr "< Попередня"
+
+msgid "Idle unit"
+msgstr "Юніт без наказу"
+
+msgid "Next >"
+msgstr "Далі >"
+
+msgid "Research"
+msgstr "Дослідити"
+
+msgid "Recenter table"
+msgstr "Повторно відцентрувати таблицю"
+
+msgid "No unit selected"
+msgstr "Юніт не вибрана"
+
+msgid "Point at a unit or city to select it."
+msgstr "Наведіть курсор на юніт або місто, щоб вибрати їх."
+
+msgid "Fortified"
+msgstr "Укріплений"
+
+msgid "Sleeping"
+msgstr "спить"
+
+msgid "Automated"
+msgstr "Автоматизований"
+
+msgid "On its way"
+msgstr "На шляху"
+
+msgid "Embarked"
+msgstr "Спущений на воду"
+
+msgid "Strength"
+msgstr "Сила"
+
+msgid "RangedStrength"
+msgstr "Сила дальнього бою"
+
+msgid "Range"
+msgstr "Дальність"
+
+msgid "Movement"
+msgstr "Переміщення"
+
+msgid "Rename"
+msgstr "Перейменувати"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Пропуск цього ходу (пропустіть ще раз, щоб віддати йому накази)."
+
+msgid "Health"
+msgstr "Здоровʼя"
+
+msgid "XP"
+msgstr "Досвід"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Просувати!  Виберіть акцію"
+
+msgid "Promote"
+msgstr "Підвищити"
+
+msgid "Building %s"
+msgstr "Будівля %s"
+
+msgid "%d turns left"
+msgstr "Залишилося: %d ход."
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d Ворожі цілі в межах досяжності (червоні кільця): клацніть одну, щоб прицілитися"
+
+msgid "Actions"
+msgstr "Дії"
+
+msgid "Pillage"
+msgstr "Пограбувати"
+
+msgid "Sure? Click again"
+msgstr "Зрозуміло? Натисніть знову"
+
+msgid "click the red button again"
+msgstr "знову натисніть червону кнопку"
+
+msgid "Build here"
+msgstr "Будуйте тут"
+
+msgid "Stop"
+msgstr "Стоп"
+
+msgid "%d turns"
+msgstr "%d ход."
+
+msgid "Population %d"
+msgstr "Населення %d"
+
+msgid "Defense %d"
+msgstr "Захист %d"
+
+msgid "Health %d/%d"
+msgstr "Здоров'я %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d непрацюючі громадяни"
+
+msgid "Puppet"
+msgstr "Маріонетка"
+
+msgid "Starving! %d turns"
+msgstr "Голод! %d ход."
+
+msgid "Grows in %d turns"
+msgstr "Зростання через %d ход."
+
+msgid "Food -> production"
+msgstr "Харчування -> виробництво"
+
+msgid "Not growing"
+msgstr "Не росте"
+
+msgid "Border in %d turns"
+msgstr "Розширення кордонів через %d ход."
+
+msgid "Borders stopped"
+msgstr "Кордони зупинилися"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Вид на місто - клітинка, громадяни, черга, купівля"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Це місто руйнується - воно зменшується з кожним ходом, поки не зникне. Перестаньте знищувати його у вигляді міста."
+
+msgid "Producing"
+msgstr "Виробництво"
+
+msgid "Producing nothing - pick something below"
+msgstr "Нічого не виробляє – виберіть щось нижче"
+
+msgid "Buildings"
+msgstr "Споруди"
+
+msgid "Wonders"
+msgstr "Дива"
+
+msgid "Other"
+msgstr "Інше"
+
+msgid "Gold"
+msgstr "Золото"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Купуйте зараз за %d золото (у вас є %d)"
+
+msgid "Promote %s"
+msgstr "Просувати %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Виберіть одну акцію.%s"
+
+msgid "Has: %s"
+msgstr "Має: %s"
+
+msgid "No promotion available right now."
+msgstr "Зараз немає доступних акцій."
+
+msgid "Tutorial"
+msgstr "Навчання"
+
+msgid "%d of %d"
+msgstr "%d з %d"
+
+msgid "%d more messages after this one"
+msgstr "%d більше повідомлень після цього"
+
+msgid "%s gives:"
+msgstr "%s дає:"
+
+msgid "They"
+msgstr "Вони"
+
+msgid "You give:"
+msgstr "Ви даєте:"
+
+msgid "%d votes  %s"
+msgstr "%d голосує за %s"
+
+msgid "voted for %s"
+msgstr "проголосував за %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Навчання можна вимкнути в меню «Налаштування > Ігролад». Усі уроки також доступні в Цивілопедії."
+
+msgid " (%d turns)"
+msgstr " (%d ход.)"
+
+msgid "Choose a free great person"
+msgstr "Оберіть безкоштовну видатну особу"
+
+msgid "You have %d free great people to pick."
+msgstr "Ви можете вибрати %d безкоштовних чудових людей."
+
+msgid "Vote for world leader"
+msgstr "Голосуйте за світового лідера"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Оберіть, хто повинен стати світовим лідером та здобути Дипломатичну перемогу!"
+
+msgid "Vote for %s"
+msgstr "Голосуйте за %s"
+
+msgid "Abstain"
+msgstr "Утриматись"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "Нічого не досліджено - вибирайте техніку!"
+
+msgid "Researching %s"
+msgstr "Дослідження %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "У вас є %d безкоштовні технології на вибір – виберіть виділену."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Наука %+d за хід. Вибір пізнішої технології ставить у чергу її передумови."
+
+msgid "%s turns"
+msgstr "%s ход."
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Продовжте з того місця, де зупинилися, або почніть нову гру."
+
+msgid "Resume"
+msgstr "Продовжити"
+
+msgid "Continue"
+msgstr "Продовжити"
+
+msgid "Quick start"
+msgstr "Швидкий старт"
+
+msgid "New game..."
+msgstr "Нова гра..."
+
+msgid "Load game..."
+msgstr "Завантажити гру..."
+
+msgid "Civilopedia"
+msgstr "Цивілопедія"
+
+msgid "Quit"
+msgstr "Вийти"
+
+msgid "New game"
+msgstr "Нова гра"
+
+msgid "You"
+msgstr "Ви"
+
+msgid "World"
+msgstr "Світові"
+
+msgid "Rules"
+msgstr "правила"
+
+msgid "Random"
+msgstr "Випадково"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - %s %s карта, %s, %d AI, %d міста-держави"
+
+msgid "%s, led by %s"
+msgstr "%s на чолі з %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Випадкове: ви дізнаєтеся, хто ви, коли почнеться гра."
+
+msgid "Your civilization"
+msgstr "Ваша цивілізація"
+
+msgid "Map size"
+msgstr "Розмір карти"
+
+msgid "Map type"
+msgstr "Тип карти"
+
+msgid "Shape"
+msgstr "Форма"
+
+msgid "Resources"
+msgstr "Ресурси"
+
+msgid "Options"
+msgstr "Налаштування"
+
+msgid "No ancient ruins"
+msgstr "Жодних старовинних руїн"
+
+msgid "No natural wonders"
+msgstr "Ніяких природних чудес"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Більші карти ковзають під столом: тримайте рукоятку та перетягуйте або використовуйте огляд на дальньому краю."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings додає релігію, шпигунство, більше цивілізацій і більше юнітів і будівель."
+
+msgid "Difficulty"
+msgstr "Складність"
+
+msgid "Game speed"
+msgstr "Швидкість гри"
+
+msgid "Starting era"
+msgstr "Початкова ера"
+
+msgid "AI players"
+msgstr "ШІ гравці"
+
+msgid "City-states"
+msgstr "Міста-держави"
+
+msgid "Victory types (none picked = all)"
+msgstr "Типи перемог (жоден не обраний = усі)"
+
+msgid "No barbarians"
+msgstr "Без варварів"
+
+msgid "Raging barbarians"
+msgstr "Розлючені варвари"
+
+msgid "One-city challenge"
+msgstr "Завдання одного міста"
+
+msgid "No city razing"
+msgstr "Жодного знищення міста"
+
+msgid "Nuclear weapons"
+msgstr "Ядерна зброя"
+
+msgid "Espionage"
+msgstr "Шпигунство"
+
+msgid "< Back"
+msgstr "< Назад"
+
+msgid "Start game"
+msgstr "Почати гру"
+
+msgid "Load game"
+msgstr "Завантажити гру"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Зберігає у папці Unciv VR, спочатку найновіші."
+
+msgid "Backgrounds"
+msgstr "Фони"
+
+msgid "Mountains"
+msgstr "Гори"
+
+msgid "Scenery"
+msgstr "декорації"
+
+msgid "Technologies"
+msgstr "Технології"
+
+msgid "Policies"
+msgstr "Політики"
+
+msgid "Diplomacy"
+msgstr "Дипломатія"
+
+msgid "Religion"
+msgstr "Релігія"
+
+msgid "Victory"
+msgstr "Перемога"
+
+msgid "Declare war"
+msgstr "Оголосити війну"
+
+msgid "Score"
+msgstr "Рахунок"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Історії ще немає - діаграми заповнюються по ходу."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== утримуйте кнопку тут і перетягніть, щоб перемістити цей екран ====="
+
+msgid "Pause"
+msgstr "Пауза"
+
+msgid "Play"
+msgstr "Відтворити"
+
+msgid "Loading the technology tree..."
+msgstr "Завантаження дерева технологій..."
+
+msgid "Pick something to research!"
+msgstr "Виберіть щось для дослідження!"
+
+msgid "Science %+d per turn"
+msgstr "Наука: %+d за хід"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Клацніть технологію, щоб побачити, що вона робить і що дозволяє створювати. Маленькі піктограми під кожною технікою відкривають її."
+
+msgid "needs science"
+msgstr "потребує науки"
+
+msgid "researching now, "
+msgstr "досліджую зараз, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d наука)"
+
+msgid "Loading policies..."
+msgstr "Завантаження правил..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Культура %d / %d  (%+d за хід)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Ви можете прийняти політику!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Натисніть символ, щоб побачити цю політику. Відкрийте гілку (її великий символ), перш ніж прийняти політику в ній."
+
+msgid "ready to adopt"
+msgstr "готовий прийняти"
+
+msgid "needs more culture"
+msgstr "потрібно більше культури"
+
+msgid "not available yet"
+msgstr "ще не доступний"
+
+msgid "(no special effects)"
+msgstr "(без спецефектів)"
+
+msgid "Adopt"
+msgstr "Прийняти"
+
+msgid "Your score: %d"
+msgstr "Ваш рахунок: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Ви ще ні з ким не зустрічалися. Досліджуйте, щоб знайти інші цивілізації та міста-держави."
+
+msgid "Loading..."
+msgstr "Завантаження..."
+
+msgid "   (city-state)"
+msgstr "   (місто-держава)"
+
+msgid "Destroyed"
+msgstr "Зруйновано"
+
+msgid "AT WAR"
+msgstr "НА ВІЙНІ"
+
+msgid "At peace"
+msgstr "У мирі"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (договір: %d більше ходів)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - вплив %d%s"
+
+msgid "   allied with %s"
+msgstr "   в союзі з %s"
+
+msgid "Feels %s about you%s"
+msgstr "Почуття %s про вас%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Оцінка %d Міста %d"
+
+msgid "Diplomacy..."
+msgstr "Дипломатія..."
+
+msgid "Trade"
+msgstr "Торгівля"
+
+msgid "Offer peace"
+msgstr "Запропонуйте спокій"
+
+msgid "Click again to declare war on %s"
+msgstr "Натисніть ще раз, щоб оголосити війну %s"
+
+msgid "< All civilizations"
+msgstr "< Усі цивілізації"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (ніяких мирних переговорів для %d більше ходів)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Тип: %s Особистість: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "Наші стосунки: %s (вплив %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Союзник: %s з впливом %d"
+
+msgid "Protected by: "
+msgstr "Захищено: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Відносини зміняться через %d ход."
+
+msgid "Resources: "
+msgstr "Ресурси: "
+
+msgid "When Friends:"
+msgstr "Друзям:"
+
+msgid "When Allies:"
+msgstr "Союзникам:"
+
+msgid "You have a declaration of friendship."
+msgstr "Ви маєте декларацію про дружбу."
+
+msgid "You have denounced them."
+msgstr "Ви їх засудили."
+
+msgid "Go to on map"
+msgstr "Знайти на мапі"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Подарункове золото %d (+вплив %d)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Збірка %s на %s (200 золота)"
+
+msgid "Revoke protection"
+msgstr "Зняти захист"
+
+msgid "Click again: revoke protection?"
+msgstr "Натисніть знову: скасувати захист?"
+
+msgid "Pledge to protect"
+msgstr "Пообіцяти захист"
+
+msgid "Click again: declare protection?"
+msgstr "Натисніть ще раз: оголосити захист?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Візьміть %d золото (-15 впливу)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Візьміть робочого (-50 впливу)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Дипломатичний шлюб (%d золото)"
+
+msgid "Click again: they join your empire"
+msgstr "Натисніть ще раз: вони приєднаються до вашої імперії"
+
+msgid "Negotiate peace"
+msgstr "Домовитися про мир"
+
+msgid "Click again: make peace?"
+msgstr "Натисніть знову: помиритися?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Дружбу запропонував - чекаю їх відповіді"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Запропонуйте освідчення в дружбі (30 ходів)"
+
+msgid "Denounce (30 turns)"
+msgstr "Денонсувати (30 ходів)"
+
+msgid "Click again: denounce %s?"
+msgstr "Натисніть ще раз: засудити %s?"
+
+msgid "Click again to declare war"
+msgstr "Натисніть ще раз, щоб оголосити війну"
+
+msgid "Demands:"
+msgstr "Вимоги:"
+
+msgid "  (asked)"
+msgstr "  (питав)"
+
+msgid "  (they agreed)"
+msgstr "  (вони погодилися)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Готовність данини (принаймні 0 для отримання золота, принаймні 30 і розмір міста 4 для робітника):"
+
+msgid "  (+%d influence)"
+msgstr "  (+%d вплив)"
+
+msgid "  %d turns remaining"
+msgstr "  Залишилося обертів %d"
+
+msgid "Unforgivable"
+msgstr "Непробачні"
+
+msgid "Enemy"
+msgstr "Ворожі"
+
+msgid "Afraid"
+msgstr "Бояться нас"
+
+msgid "Competitor"
+msgstr "Конкурентні"
+
+msgid "Favorable"
+msgstr "Вигідні"
+
+msgid "Friend"
+msgstr "Дружні"
+
+msgid "Ally"
+msgstr "Союзні"
+
+msgid "Pantheon"
+msgstr "Пантеон"
+
+msgid "Founder"
+msgstr "Засновник"
+
+msgid "Follower"
+msgstr "Послідовник"
+
+msgid "Enhancer"
+msgstr "Посилювач"
+
+msgid "Any"
+msgstr "Будь-який"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Виберіть %d більше вірувань%s"
+
+msgid "so far: %s"
+msgstr "поки що: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Тепер виберіть символ для вашої релігії (вище)."
+
+msgid "Follow this pantheon"
+msgstr "Дотримуйтесь цього пантеону"
+
+msgid "Found %s"
+msgstr "Знайдено %s"
+
+msgid "Enhance %s"
+msgstr "Покращення %s"
+
+msgid "Reform"
+msgstr "реформа"
+
+msgid "Confirm"
+msgstr "Підтвердити"
+
+msgid "Religion is off in this game."
+msgstr "У цій грі релігія виключена."
+
+msgid "Choose a pantheon belief"
+msgstr "Виберіть вірування пантеону"
+
+msgid "Found your religion"
+msgstr "Знайшов свою релігію"
+
+msgid "Enhance your religion"
+msgstr "Підвищуйте свою релігію"
+
+msgid "Reform your religion"
+msgstr "Реформуйте свою релігію"
+
+msgid "No religion yet"
+msgstr "Релігії ще немає"
+
+msgid "Your beliefs"
+msgstr "Ваші переконання"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Зараз нічого вибирати. Заслужити віру, щоб заснувати пантеон; Великий Пророк засновує (і пізніше посилює) релігію в одному з ваших міст."
+
+msgid "Symbol:"
+msgstr "Символ:"
+
+msgid "Name: %s"
+msgstr "Ім'я: %s"
+
+msgid "(pick a symbol)"
+msgstr "(вибери символ)"
+
+msgid "Rename..."
+msgstr "Перейменувати..."
+
+msgid "Choose any belief!"
+msgstr "Оберіть будь-які догми!"
+
+msgid "Choose a %s belief!"
+msgstr "Виберіть віру %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (це є в іншій релігії)"
+
+msgid "  (you have it)"
+msgstr "  (у вас є)"
+
+msgid "  (not available)"
+msgstr "  (не доступний)"
+
+msgid "  (picked for another slot)"
+msgstr "  (обрано для іншого слота)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Швидкість повороту %d %s %s%s"
+
+msgid "max %d turns"
+msgstr "max. %d ход."
+
+msgid "You have won a %s Victory!"
+msgstr "Ви здобули %s перемогу!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s здобув перемогу %s!"
+
+msgid "You have been defeated."
+msgstr "Ви зазнали поразки."
+
+msgid "One more turn...!"
+msgstr "Ще один хід...!"
+
+msgid "Main menu (start a new game)"
+msgstr "Головне меню (почати нову гру)"
+
+msgid "Our status"
+msgstr "Наш статус"
+
+msgid "Global status"
+msgstr "Глобальний статус"
+
+msgid "Rankings"
+msgstr "Рейтинг"
+
+msgid "Charts"
+msgstr "Графіки"
+
+msgid "Demographics"
+msgstr "Демографічний рейтинг"
+
+msgid "%s Victory"
+msgstr "%s Перемога"
+
+msgid "[done] "
+msgstr "[зроблено] "
+
+msgid "Rank"
+msgstr "Місце"
+
+msgid "Value"
+msgstr "Значення"
+
+msgid "Best"
+msgstr "Найкраще"
+
+msgid "Average / Worst"
+msgstr "Середній / Найгірший"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Торгівля з %s. Ваше золото %d, їх %d"
+
+msgid "You can offer"
+msgstr "Ви можете запропонувати"
+
+msgid "You give"
+msgstr "Ви даєте"
+
+msgid "You get"
+msgstr "Ви отримуєте"
+
+msgid "They can offer"
+msgstr "Вони можуть запропонувати"
+
+msgid "Clear"
+msgstr "Очистити"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Натисніть предмети на зовнішніх колонках, щоб помістити їх на стіл; натисніть їх ще раз, щоб зняти їх."
+
+msgid "%s would accept this."
+msgstr "%s прийме це."
+
+msgid "%s wants more for this%s."
+msgstr "%s хоче більше для цього%s."
+
+msgid "about %d gold's worth"
+msgstr "близько %d золота"
+
+msgid "Propose deal"
+msgstr "Запропонуйте угоду"
+
+msgid "  %d turns"
+msgstr "  %d ход."
+
+msgid "Gold_Per_Turn"
+msgstr "Золото за хід"
+
+msgid "Not connected to the bridge"
+msgstr "Не підключений до мосту"
+
+msgid "Bridge disconnected"
+msgstr "Міст відключений"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Об'єднаний міст Унців є незавершеним. Перевстановіть файли гри."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Не вдається знайти репо Unciv із мостом у %s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Не знайдено Java 17 або новішої версії (Unciv потребує JDK 21). Встановіть його та встановіть JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "Не вдалося написати %s"
+
+msgid "Couldn't start Gradle"
+msgstr "Не вдалося запустити Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Не вдалося запустити комплектний міст Unciv"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== утримуйте курок тут і перетягуйте, щоб рухатися ====="
+
+msgid "Exit city"
+msgstr "Закрити місто"
+
+msgid "City"
+msgstr "Місто"
+
+msgid "BEING RAZED"
+msgstr "БУТИ ЗНИЩЕНИМ"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Непризначені громадяни: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "натисніть: нехай місто їх розмістить"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d їжа)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Голодує: втрачає громадянина в %d перетворюється на %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Їжа йде у виробництво, поки цей агрегат будується"
+
+msgid "New citizen in %d turns %s"
+msgstr "Новий громадянин у %d стає %s"
+
+msgid "Not growing %s"
+msgstr "Не зростає %s"
+
+msgid "(%d/%d culture)"
+msgstr "(культура %d/%d)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Межі ростуть у %d обертів %s"
+
+msgid "Borders have stopped growing"
+msgstr "Кордони перестали рости"
+
+msgid "In resistance for another %d turns"
+msgstr "Опір: ще %d ход."
+
+msgid "We Love The King Day for another %d turns"
+msgstr "День любові до правителя: ще %d ход."
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Вимогливий %s (Ми любимо День Короля, якщо ви його розумієте)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Додаткове місто (перестаньте бути маріонеткою)"
+
+msgid "Stop razing city"
+msgstr "Зупинити руйнування міста"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Натисніть ще раз, щоб RAZE %s (це спалює громадянина за хід)"
+
+msgid "Raze city"
+msgstr "Зруйнувати місто"
+
+msgid "Citizen management"
+msgstr "Громадянський менеджмент"
+
+msgid "Reset citizens"
+msgstr "Скинути громадян"
+
+msgid "Avoid growth"
+msgstr "Уникайте зростання"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Пріоритет містян (які клітинки обробляти):"
+
+msgid "Specialists"
+msgstr "Спеціалісти"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Ручні спеціалісти (натисніть для автоматичного)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Автоматичні спеціалісти (натисніть для інструкції)"
+
+msgid "Specialist"
+msgstr "Спеціаліст"
+
+msgid "Great people"
+msgstr "Великі люди"
+
+msgid "Majority religion: %s"
+msgstr "Релігія більшості: %s"
+
+msgid "Former holy city of %s"
+msgstr "Колишнє священне місто %s"
+
+msgid "Holy city of %s"
+msgstr "Священне місто %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d послідовники, тиск %+d"
+
+msgid "Specialist buildings"
+msgstr "Спеціальні будівлі"
+
+msgid "  (free)"
+msgstr "  (безкоштовно)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Натисніть клітинку на столі: оброблені клітинки перестають бути обробленими, вільні громадяни переходять до необроблених, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "і клітинки з ціною можна купити (натисніть двічі)."
+
+msgid "Tile"
+msgstr "Клітинка"
+
+msgid "city centre"
+msgstr "центр міста"
+
+msgid "worked (locked)"
+msgstr "працював (заблоковано)"
+
+msgid "not worked"
+msgstr "не спрацювало"
+
+msgid "gives its yield without a citizen"
+msgstr "дає свій дохід без громадянства"
+
+msgid "gives nothing"
+msgstr "нічого не дає"
+
+msgid "blockaded by an enemy"
+msgstr "заблокований ворогом"
+
+msgid "worked by %s"
+msgstr "працював %s"
+
+msgid "another city"
+msgstr "інше місто"
+
+msgid "too far to work"
+msgstr "надто далеко до роботи"
+
+msgid "can be bought"
+msgstr "можна купити"
+
+msgid "not yours"
+msgstr "не твій"
+
+msgid "Resource: %s"
+msgstr "Ресурс: %s"
+
+msgid "Improvement: %s"
+msgstr "Покращення: %s"
+
+msgid "Owned by %s"
+msgstr "Належить %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Замок (тримайте громадянина тут)"
+
+msgid "Stop working"
+msgstr "Перестати працювати"
+
+msgid "Unlock"
+msgstr "Розблокувати"
+
+msgid "Work this tile"
+msgstr "Обробіть цю клітинку"
+
+msgid "Work and lock"
+msgstr "Робота і замок"
+
+msgid "Click again: buy for %d gold"
+msgstr "Натисніть ще раз: купити за %d золото"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Купуйте за %d золото (у вас %d)"
+
+msgid "Production"
+msgstr "Виробництво"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Золото %d   Віра %d   Виробництво %+d за хід"
+
+msgid "Being built"
+msgstr "Будується"
+
+msgid "Nothing being built - pick something below"
+msgstr "Нічого не будується - виберіть щось нижче"
+
+msgid "   %d turns"
+msgstr "   %d ход."
+
+msgid "Hide what can't be built yet"
+msgstr "Приховати те, що ще не можна побудувати"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Покажіть, що ще не можна побудувати (і чому)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Клацніть щось, щоб побачити, що це робить, а потім створіть це зараз, додайте до черги або купіть."
+
+msgid "   %d production"
+msgstr "   Виробництво %d"
+
+msgid ", %d turns"
+msgstr ", %d ход."
+
+msgid "   (built)"
+msgstr "   (побудований)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "Його %s потрапляє на клітинку, яку ви вибираєте на столі після того, як побудувати зараз / додати в чергу / купити."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "Його %s потрапляє на кільцеву клітинку, вибрану під час черги."
+
+msgid "Build now"
+msgstr "Будуйте зараз"
+
+msgid "Add to queue"
+msgstr "Додати до черги"
+
+msgid "Click again: buy for %d %s"
+msgstr "Натисніть ще раз: купити за %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Купити за %d %s"
+
+msgid "you have %d"
+msgstr "у вас є %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Придбати: спочатку вивезти загін за місто"
+
+msgid "Click again: sell for %d gold"
+msgstr "Клацніть ще раз: продайте за %d золото"
+
+msgid "Sell for %d gold"
+msgstr "Продати за %d золото"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia - утримуйте курок тут і перетягуйте, щоб рухатися ====="
+
+msgid "<  Back"
+msgstr "< Назад"
+
+msgid "This entry couldn't be loaded."
+msgstr "Не вдалося завантажити цей запис."
+
+msgid "Building"
+msgstr "Споруда"
+
+msgid "Wonder"
+msgstr "Диво"
+
+msgid "Unit"
+msgstr "Підрозділ"
+
+msgid "Resource"
+msgstr "Ресурс"
+
+msgid "Improvement"
+msgstr "Покращення"
+
+msgid "Tile Improvements"
+msgstr "Покращення клітинок"
+
+msgid "Technology"
+msgstr "технології"
+
+msgid "Promotion"
+msgstr "Підвищення"
+
+msgid "Promotions"
+msgstr "Підвищення"
+
+msgid "Policy"
+msgstr "Політика"
+
+msgid "Belief"
+msgstr "Віра"
+
+msgid "Religions and Beliefs"
+msgstr "Релігії та догми"
+
+msgid "Nation"
+msgstr "Нація"
+
+msgid "Nations"
+msgstr "Нації"
+
+msgid "Terrain"
+msgstr "Місцевість"
+
+msgid "Terrains"
+msgstr "Місцевість"
+
+msgid "Unit types"
+msgstr "Типи підрозділів"
+
+msgid "Unit Names"
+msgstr "Назви підрозділів"
+
+msgid "Victory Types"
+msgstr "Види перемоги"
+
+msgid "Thumbstick"
+msgstr "Стік"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Trigger"
+msgstr "Курок"
+
+msgid "Grip"
+msgstr "Кнопка хвату"
+
+msgid "Trackpad"
+msgstr "Тачпад"
+
+msgid "Button 1"
+msgstr "Кнопка 1"
+
+msgid "Button 2"
+msgstr "Кнопка 2"
+
+msgid "Cities"
+msgstr "Міста"
+
+msgid "None"
+msgstr "Немає"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Невивчений (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - Територія %s"
+
+msgid " - city of %s"
+msgstr " - місто %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Автоматизувати"
+
+msgid "Sleep"
+msgstr "Спати"
+
+msgid "Fortify"
+msgstr "Укріпити"
+
+msgid "Guard"
+msgstr "Охорона"
+
+msgid "Explore"
+msgstr "Розвідувати"
+
+msgid "Upgrade"
+msgstr "Удосконалення"
+
+msgid "Transform"
+msgstr "Змінити"
+
+msgid "Repair"
+msgstr "Полагодити"
+
+msgid "Skip"
+msgstr "Пропустити"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s Турн %d (%s)"
+
+msgid "%d BC"
+msgstr "%d до н.е"
+
+msgid "%d AD"
+msgstr "%d AD"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "Нічого не досліджуючи - вибирайте техніку!"
+
+msgid "Point at a tile"
+msgstr "Наведіть на клітинку"
+
+msgid "Unexplored"
+msgstr "Невивчений"
+
+msgid "Send a unit to find out what's here."
+msgstr "Надішліть підрозділ, щоб дізнатися, що тут."
+
+msgid "Natural wonder: %s"
+msgstr "Диво природи: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Покращення: %s%s"
+
+msgid "River"
+msgstr "Річкові"
+
+msgid "City of %s  (population %d)"
+msgstr "Місто %s (населення %d)"
+
+msgid "%s territory"
+msgstr "Територія %s"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% до захисту підрозділу"
+
+msgid "Impassable"
+msgstr "Непрохідна місцевість"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Наразі не видно - востаннє бачили так"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Атакуйте %s: роздайте ~%d, візьміть ~%d"
+
+msgid "Science"
+msgstr "Наука"
+
+msgid "Happiness"
+msgstr "Щастя"
+
+msgid "Malcontent"
+msgstr "Невдоволення"
+
+msgid "Culture"
+msgstr "Культура"
+
+msgid "Faith"
+msgstr "Віра"
+
+msgid "Population"
+msgstr "Населення"
+
+msgid "Food"
+msgstr "Їжа"
+
+msgid "Shift"
+msgstr "Регістр"
+
+msgid "Space"
+msgstr "Пробіл"
+
+msgid "< Del"
+msgstr "< Видалити"
+
+msgid "Recenter"
+msgstr "Центрувати"
+
+msgid "Move a unit!"
+msgstr "Перемістіть підрозділ!"
+
+msgid "hold to move onto a tile"
+msgstr "утримуйте, щоб перейти на клітинку"
+
+msgid "Connecting..."
+msgstr "Підключення..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Втрачено з’єднання з мостом – повторна спроба..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Шукаємо міст на 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Не вдалося запустити міст: %s\nЗапустіть його вручну за допомогою: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Запуск мосту Unciv... (перебудовується, якщо його код змінився - може зайняти хвилину)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Міст зупинився, не встигнувши бути готовим. Від %s: \n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Механізм Unciv відсутній у цій програмі (в експорті відсутній плагін UncivBridge)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Не вдалося запустити двигун Unciv: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Двигун Unciv зупинився: \n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Запуск двигуна Unciv: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Старіший міст Unciv (протокол v%d) все ще працював - перезапустив його з поточним кодом..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Не зміг зупинити старий міст – продовжувати його. Деякі речі можуть не працювати."
+
+msgid "Reconnected to the bridge."
+msgstr "Знову підключили до мосту."
+
+msgid "Bridge error: %s"
+msgstr "Помилка мосту: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Попередження: міст використовує протокол v%d, але цей клієнт очікує v%d - оновіть обидва репозиторії разом. Деякі речі можуть не працювати."
+
+msgid "Connected to Unciv %s"
+msgstr "Підключено до Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "Не вдалося завантажити збереження: %s"
+
+msgid "Your move."
+msgstr "Ваш хід."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Початок нової гри... (більші карти займають трохи більше часу)"
+
+msgid "Starting a new game..."
+msgstr "Початок нової гри..."
+
+msgid "Couldn't start a game: %s"
+msgstr "Не вдалося запустити гру: %s"
+
+msgid "saved "
+msgstr "збережено "
+
+msgid "%s, turn %d"
+msgstr "%s, хід %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Головне меню: наведіть на карту над столом."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s на карті %s %s, %s, %d AI, %d міста-держави"
+
+msgid "A random civilization"
+msgstr "Випадкова цивілізація"
+
+msgid "Loading %s..."
+msgstr "Завантаження %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "Не вдалося завантажити %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "Не вдалося прочитати ці правила: %s"
+
+msgid "getState failed: %s"
+msgstr "Помилка getState: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Огляд, інформаційне табло, великий екран і панелі повернулися на свої звичні місця."
+
+msgid "Name your religion"
+msgstr "Назвіть свою релігію"
+
+msgid "Your religion"
+msgstr "Ваша релігія"
+
+msgid "Researching %s."
+msgstr "Дослідження %s."
+
+msgid "Adopted %s."
+msgstr "Прийняв %s."
+
+msgid "You declared war on %s!"
+msgstr "Ви оголосили війну %s!"
+
+msgid "Unit movements"
+msgstr "Рухи юнітів"
+
+msgid "Tile yields"
+msgstr "Клітинки"
+
+msgid "Worked tiles"
+msgstr "Оброблювані клітинки"
+
+msgid "Resources and improvements"
+msgstr "Ресурси та вдосконалення"
+
+msgid "Improvement pictures"
+msgstr "Картинки покращення"
+
+msgid "Unit icons"
+msgstr "Значки юнітів"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Тримайте %s на клітинці, щоб перемістити на неї юніт."
+
+msgid "the trigger"
+msgstr "тригер"
+
+msgid "the mouse button"
+msgstr "кнопку миші"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Атакуй %s\nроздай ~%d, візьми ~%d\nклацніть знову, щоб атакувати"
+
+msgid "a unit"
+msgstr "юніт"
+
+msgid "Can't get there"
+msgstr "Не можу туди потрапити"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "На цій клітинці вже немає місця\n%s %s"
+
+msgid "\nSwap places on the card"
+msgstr "\nПоміняйтеся місцями на картці"
+
+msgid "Move here"
+msgstr "Переїзд сюди"
+
+msgid "Move here: %d turns"
+msgstr "Рух сюди: %d ход."
+
+msgid "\nsharing the tile with %s"
+msgstr "\nділиться плиткою з %s"
+
+msgid "\nclick again to go"
+msgstr "\nклацніть ще раз, щоб піти"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s уже в дорозі – він продовжує рух наступного ходу."
+
+msgid "No attack happened."
+msgstr "Нападу не було."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s атакував %s: завдав шкоди %d, отримав %d."
+
+msgid "  City captured!"
+msgstr "  Місто захоплено!"
+
+msgid "  %s destroyed!"
+msgstr "  %s знищено!"
+
+msgid "  Your %s was lost."
+msgstr "  Ваш %s було втрачено."
+
+msgid "Improvement order cancelled."
+msgstr "Замовлення на покращення скасовано."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: будівництво %s (черги %d)."
+
+msgid "Rename %s"
+msgstr "Перейменувати %s"
+
+msgid "%s is now called %s."
+msgstr "%s тепер називається %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Назвіть свій %s (пусто: немає імені)"
+
+msgid "Renamed to %s."
+msgstr "Перейменовано на %s."
+
+msgid "Name removed."
+msgstr "Ім'я видалено."
+
+msgid "%s: on the way."
+msgstr "%s: в дорозі."
+
+msgid "%s: coup orders given."
+msgstr "%s: віддано накази про переворот."
+
+msgid "See your stats breakdown"
+msgstr "Перегляньте розбивку статистики"
+
+msgid "Selected %s."
+msgstr "Вибрано %s."
+
+msgid "the unit"
+msgstr "юніт"
+
+msgid "Upgraded to %s."
+msgstr "Оновлено до %s."
+
+msgid "Enter city screen"
+msgstr "Перейдіть на екран міста"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Вид на місто: %s. Натисніть клітинки, щоб працювати з ними; Вихід з міста (або B / Esc) повертає на карту."
+
+msgid "Back to the map."
+msgstr "Назад до карти."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "У %s немає місця, щоб поставити %s."
+
+msgid "the city"
+msgstr "місто"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Виберіть клітинку для %s (червоні кільця) або Esc / B, щоб скасувати."
+
+msgid "Cancelled."
+msgstr "Скасовано."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Виберіть одну з кільцевих клітинок (Esc / B скасовує)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: покращення відбувається там."
+
+msgid "Bought the tile for %d gold."
+msgstr "Купив клітинку за золото %d."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Купити за %d золото\nнатисніть ще раз, щоб купити"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Вартість %d золота\n (недостатньо золота)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Перепризначення громадян (знято блокування)."
+
+msgid "Annexed."
+msgstr "Додається."
+
+msgid "%s will build %s next."
+msgstr "Наступним %s побудує %s."
+
+msgid "%s added to the queue."
+msgstr "%s додано до черги."
+
+msgid "Bought %s."
+msgstr "Купив %s."
+
+msgid "Sold the %s."
+msgstr "Продав %s."
+
+msgid "%s added to %s's queue."
+msgstr "%s додано до черги %s."
+
+msgid "Bought %s in %s."
+msgstr "Купив %s у %s."
+
+msgid "Experience"
+msgstr "Досвід"
+
+msgid "%s is now %s."
+msgstr "%s тепер %s."
+
+msgid "Pick something to research."
+msgstr "Виберіть щось для дослідження."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Ви можете прийняти нову політику - перегляньте вкладку «Політики» на великому екрані."
+
+msgid "%s is heading here"
+msgstr "%s прямує сюди"
+
+msgid "The unit"
+msgstr "Юніт"
+
+msgid "Are you sure?"
+msgstr "Ви впевнені?"
+
+msgid "Click again to confirm."
+msgstr "Натисніть ще раз для підтвердження."
+
+msgid "%s: click a %stile"
+msgstr "%s: клацніть плитку %s"
+
+msgid "highlighted "
+msgstr "виділено "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s - натисніть клітинку на карті (або Скасувати на картці)."
+
+msgid "Move here: click a tile"
+msgstr "Перейти сюди: клацніть клітинку"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Перемістіть %s - натисніть клітинку на карті (або Скасувати на картці)."
+
+msgid "No enemies in range of %s."
+msgstr "Немає ворогів у радіусі %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Бомбардуйте з %s: клацніть ворога з червоним кільцем (клацніть місто, щоб скасувати)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Виберіть одну з виділених клітинок (або «Скасувати»)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s бомбардували %s: %d пошкодження%s."
+
+msgid "Destroyed!"
+msgstr "Знищено!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Завершити чергу? Щоб підтвердити, знову натисніть Завершити поворот."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Кінцевий хід - гравці ШІ рухаються..."
+
+msgid "Turn %d"
+msgstr "Хід %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "ГРУ ЗАВЕРШЕНО - перемога %s (перемога %s)"
+
+msgid "A %s has been born!"
+msgstr "%s народився!"
+
+msgid "You voted for %s."
+msgstr "Ви проголосували за %s."
+
+msgid "You abstained."
+msgstr "Ви утрималися."
+
+msgid "ATTACK"
+msgstr "АТАКА"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Турн %d (%s) Золото %d (%+d) Наука %+d Щастя %d"
+
+msgid "Researching: %s"
+msgstr "Дослідження: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - хід %d"
+
+msgid "Game"
+msgstr "Гра"
+
+msgid "Save game as"
+msgstr "Зберегти гру як"
+
+msgid "Saved as \"%s\"."
+msgstr "Збережено як \"%s\"."
+
+msgid "Couldn't save: %s"
+msgstr "Не вдалося зберегти: %s"
+
+msgid "Open the options table"
+msgstr "Відкрийте таблицю параметрів"
+
+msgid "The tutorials will show again from the start."
+msgstr "Навчальні посібники відображатимуться знову з самого початку."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Не вдалося скинути підручники: %s"
+
+msgid "The panels are back where they started."
+msgstr "Панелі повернулися там, де вони почали."
+
+msgid "The table is back in the middle of the background."
+msgstr "Стіл повернувся посередині фону."
+
+msgid "Civilopedia: %s"
+msgstr "Цивілопедія: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Не вдалося відкрити Цивілопедію: %s"
+
+msgid "Opened %s in your browser."
+msgstr "Відкрито %s у вашому браузері."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Навчальне завдання приховано – наступне з’явиться, коли воно з’явиться."
+
+msgid "Move the table"
+msgstr "Перемістіть стіл"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Переміщення столу: вкажіть на місце в декораціях і %s, щоб поставити його туди. %s повертає його. %s, коли ви закінчите."
+
+msgid "pull the trigger"
+msgstr "натиснути на курок"
+
+msgid "The right stick"
+msgstr "Права палиця"
+
+msgid "Press A or B"
+msgstr "Натисніть A або B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Стіл залишається тут. «Налаштування > Вигляд > Повернути в центр» повертає його на початкове місце."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Це не на декораціях - кудись наведіть на землю."
+
+msgid "put the table here"
+msgstr "поставити стіл тут"
+
+msgid "turn the scenery"
+msgstr "перевернути декорації"
+
+msgid "done moving the table"
+msgstr "завершено переміщення столу"
+
+msgid "point, click (hold: aim)"
+msgstr "навести, клацнути (утримувати: прицілитися)"
+
+msgid "Found city"
+msgstr "Заснувати місто"
+
+msgid "Cancel typing"
+msgstr "Скасувати введення"
+
+msgid "Leave the city"
+msgstr "Залиште місто"
+
+msgid "table height"
+msgstr "висота столу"
+
+msgid "slide the map"
+msgstr "проведіть по карті"
+
+msgid "turn / size the table"
+msgstr "повернути / розмірити стіл"
+
+msgid "Next unit"
+msgstr "Наступний підрозділ"
+
+msgid "Previous unit"
+msgstr "Попередній блок"
+
+msgid "zoom the map"
+msgstr "збільшити карту"
+
+msgid "table height, click: recenter"
+msgstr "висота таблиці, натисніть: відцентрувати"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Щось не доробив - продовжуй. (Якщо це відбувається й далі, у журналі буде вказано, чому.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "АТАКУВАТИ %s (%s, %d/%d ОЗ)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  Очікується \n: роздача %d, візьміть %d"
+
+msgid "Luxury"
+msgstr "Розкіш"
+
+msgid "Strategic"
+msgstr "Стратегічний"
+
+msgid "Unit icons over the unit models"
+msgstr "Піктограми юнітів над моделями юнітів"
+
+msgid "Overview: point and click to go there"
+msgstr "Огляд: наведіть курсор і натисніть, щоб перейти туди"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (клацніть, щоб повернути %s)"
+
+msgid "Overview"
+msgstr "Огляд"
+
+msgid "Stats"
+msgstr "Статистика"
+
+msgid "Trades"
+msgstr "Угоди"
+
+msgid "Politics"
+msgstr "Політика"
+
+msgid "Notifications"
+msgstr "Сповіщення"
+
+msgid "Spy"
+msgstr "Шпигун"
+
+msgid "War"
+msgstr "Війна"
+
+msgid "DefensivePact"
+msgstr "Оборонний пакт"
+
+msgid "Neutral"
+msgstr "Нейтральні"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Огляд імперії - утримуйте курок тут і перетягуйте, щоб рухатися ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "У вас ще немає шпигунів - вони приходять з новими ерами."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Шпигуни (виберіть один, потім куди він іде)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (ранг %d) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Скасуйте переворот"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Клацніть ще раз: влаштуйте переворот (%d%% шанс)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Здійснити переворот (%d%% шанс)"
+
+msgid "Where to"
+msgstr "Куди"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Схованка шпигуна (принесіть %s додому)"
+
+msgid "   spies: "
+msgstr "   шпигуни: "
+
+msgid "Click again (%s)"
+msgstr "Натисніть знову (%s)"
+
+msgid "You have no cities yet."
+msgstr "У вас ще немає міст."
+
+msgid "Name"
+msgstr "Назва"
+
+msgid "Defence"
+msgstr "Захист"
+
+msgid "Open the city view"
+msgstr "Відкрийте вид на місто"
+
+msgid "Resistance"
+msgstr "опір"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "Вимогливий %s"
+
+msgid " (holy)"
+msgstr " (святий)"
+
+msgid "Total %d"
+msgstr "Усього %d"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Перетворення золота на науку: %d%%"
+
+msgid "Great person points"
+msgstr "Видатні особи"
+
+msgid "Points"
+msgstr "Очки"
+
+msgid "Per turn"
+msgstr "За хід"
+
+msgid "Total"
+msgstr "Разом"
+
+msgid "Pending trades"
+msgstr "Очікують підтвердження"
+
+msgid "Current trades"
+msgstr "Актуальні угоди"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Торги не відбуваються. Зробіть його на вкладці «Дипломатія» на великому екрані."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Постачання юнітів: використано %d з %d (база %d, міста %d, населення %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Дефіцит %d: %d%% виробництва в кожному місті. Збільште запаси або розформуйте підрозділи."
+
+msgid "Doing"
+msgstr "Дія"
+
+msgid "Closest city"
+msgstr "Найближче місто"
+
+msgid "Click again: %d gold"
+msgstr "Натисніть знову: %d золото"
+
+msgid "%s %dg"
+msgstr "%s %dg"
+
+msgid "Show global politics"
+msgstr "Міжнародна політика"
+
+msgid "Show diagram"
+msgstr "Показати діаграму"
+
+msgid "Hide city-states"
+msgstr "Сховати міста-держави"
+
+msgid "Include city-states"
+msgstr "Включати міста-держави"
+
+msgid "   %s civilizations in the game"
+msgstr "   %s цивілізації в грі"
+
+msgid "Score %d"
+msgstr "Оцінка %d"
+
+msgid "Defeated"
+msgstr "Переможено"
+
+msgid "At war with %s"
+msgstr "Воює з %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Оборонна угода з %s (черги %d)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Друзі з %s (черги %d)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "Засуджено %s (черги %d)"
+
+msgid "Allied with %s"
+msgstr "У союзі з %s"
+
+msgid "Relations"
+msgstr "Відносини"
+
+msgid "Defensive pact"
+msgstr "Оборонний пакт"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "У вас ще немає предметів розкоші чи стратегічних ресурсів."
+
+msgid "Unimproved"
+msgstr "Без покращень"
+
+msgid "Trade offer"
+msgstr "Торгова пропозиція"
+
+msgid "Stockpile"
+msgstr "Запас"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Непокращено: клітинки на вашій (або союзних містах-державах) землі з цим ресурсом, але без покращень для його використання.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: міста, які святкують / вимагають цього до We Love The King Day."
+
+msgid "Religions to be founded: %s"
+msgstr "Релігії, які будуть засновані: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Мінімальна віра в наступний %s: %d"
+
+msgid "Great Prophet"
+msgstr "Видатний пророк"
+
+msgid "Religious status: %s"
+msgstr "Релігійний статус: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Жодних релігій чи пантеонів ще не було засновано."
+
+msgid "%s name:"
+msgstr "Ім'я %s:"
+
+msgid "Founding civ:"
+msgstr "Цивільний засновник:"
+
+msgid "Holy city:"
+msgstr "Священне місто:"
+
+msgid "Cities following this religion:"
+msgstr "Міста, що сповідують цю релігію:"
+
+msgid "Followers of this religion:"
+msgstr "Послідовники цієї релігії:"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Location"
+msgstr "Розташування"
+
+msgid "Unknown"
+msgstr "Невідомо"
+
+msgid "Owned"
+msgstr "Ваше"
+
+msgid "Known"
+msgstr "Відомо"
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s Поворот %d %s"
+
+msgid "Current turn  |"
+msgstr "Хід  |"
+
+msgid "General"
+msgstr "Генерал"
+
+msgid "No notifications yet."
+msgstr "Ще немає сповіщень."
+
+msgid "Tech"
+msgstr "Технологія"
+
+msgid "Panel"
+msgstr "Панель"
+
+msgid "Nothing to show."
+msgstr "Нічого показати."
+
+msgid "Select a unit"
+msgstr "Виберіть юніт"
+
+msgid "Left-click it"
+msgstr "Клацніть його лівою кнопкою миші"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Точка + правий тригер: його карта вискакує над ним"
+
+msgid "Move / attack"
+msgstr "Рух / атака"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Клацніть клітинку, щоб прицілитися, ще раз, щоб піти"
+
+msgid "The same with the laser"
+msgstr "Те саме з лазером"
+
+msgid "Open a city"
+msgstr "Відкрийте місто"
+
+msgid "Click it"
+msgstr "Клацніть його"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Точка + правий тригер: його карта плаває над містом"
+
+msgid "Scroll a card"
+msgstr "Прокрутіть картку"
+
+msgid "Mouse wheel"
+msgstr "Колесо миші"
+
+msgid "Point at it + right stick"
+msgstr "Покажіть на ньому + правий джойстик"
+
+msgid "Move the view"
+msgstr "Перемістіть вид"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Орбіти перетягування правою кнопкою миші, масштабування коліщатками, панорамування WASD / середнім перетягуванням"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Хват + палиця: вліво/вправо повертає стіл, вгору/вниз масштабує його"
+
+msgid "Table height"
+msgstr "Висота столу"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Або стик вгору / вниз (правий, коли не вказує на картку)"
+
+msgid "Zoom the map"
+msgstr "Збільште карту"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - або Ctrl + колесо"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Тримайте спусковий гачок + палиця цієї руки вгору/вниз"
+
+msgid "Slide the map"
+msgstr "Посуньте карту"
+
+msgid "WASD, or click the overview"
+msgstr "WASD або натисніть огляд"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Тримайте хватку і перетягуйте; або наведіть на огляд + тригер"
+
+msgid "Move a board"
+msgstr "Перемістіть дошку"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Утримуйте спусковий гачок на верхній смузі (або на інформаційному табло) і рухайтеся"
+
+msgid "A, or the End turn button on the table"
+msgstr "A або кнопку «Кінець повороту» на столі"
+
+msgid "Found a city"
+msgstr "Знайшов місто"
+
+msgid "Next / previous unit"
+msgstr "Наступний / попередній блок"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "Кнопка Idle unit на столі"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Дерево технологій, політики, дипломатія"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Картка на зап'ясті або кнопки на дошках"
+
+msgid "Empire overview"
+msgstr "Огляд імперії"
+
+msgid "Always up, off to your right"
+msgstr "Завжди вгору, справа від вас"
+
+msgid "The Settings button on the table"
+msgstr "Кнопка Налаштування на столі"
+
+msgid "The Civilopedia button on the table"
+msgstr "Кнопка Цивілопедія на столі"
+
+msgid "Close / deselect"
+msgstr "Закрити / скасувати вибір"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B закриває клавіатуру та перегляд міста"
+
+msgid "Recenter the table"
+msgstr "Відцентруйте таблицю"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Клацніть лівою джойстиком або кнопку Recentre"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Налаштування - утримуйте кнопку тут і перетягуйте, щоб перемістити ====="
+
+msgid "Tables"
+msgstr "Таблиці"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Перемістіть стіл у будь-яке місце фонового пейзажу – зручно у великих, як-от перетворена карта. "
+
+msgid "%d%% translated"
+msgstr "%d%% перекладено"
+
+msgid "Notification log keeps"
+msgstr "Веде журнал повідомлень"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Скільки розворотів повідомлень зберігає вкладка «Сповіщення» огляду."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Підручники Unciv: повідомлення, коли з’являється щось нове, і картка із завданням із наступним завданням."
+
+msgid "Reset"
+msgstr "Скинути"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Власні звукові ефекти Unciv. Вони зчитуються з папки Unciv поруч із цією під час запуску гри; помістіть свої власні в ~/.unciv-vr/Sounds під тими ж назвами, щоб замінити їх."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "Знайдено звуки %d. Звук атаки кожного підрозділу походить із набору правил, як у Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Звуків не знайдено. Вони живуть у android/assets/sounds Unciv, поруч із цією папкою."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Дошки зі списком на них, створені з того, що знає гра. У VR вони стоять навколо столу "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(утримуйте спусковий гачок на смузі вздовж верху, щоб перемістити один); на робочому столі сідають лівою стороною."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Панель – це папка з panel.json - див. panels/README.md. Помістіть свою в %s."
+
+msgid "Put them back"
+msgstr "Поставте їх назад"
+
+msgid "(by %s)"
+msgstr "(від %s)"
+
+msgid "Every turn"
+msgstr "Щоходу"
+
+msgid "Every %d turns"
+msgstr "Кожні %d ход."
+
+msgid "not connected"
+msgstr "не підключено"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (цей клієнт очікує v%s)"
+
+msgid "Tilesets"
+msgstr "Набори клітинок"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR знаходиться під ліцензією Mozilla Public License 2.0, як і Unciv. Ікони унцівські, багатьох авторів "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "за ліцензіями CC BY / CC BY-SA / CC0 (див. CREDITS.md і docs/Credits.md Unciv). Клітинка, блок, фон "
+
+msgid "and table models are Unciv VR's own."
+msgstr "а настільні моделі належать Unciv VR."
+
+msgid "%s speed"
+msgstr "%s швидкість"
+
+msgid "%s map"
+msgstr "Карта %s"
+
+msgid "%s, turn %s"
+msgstr "%s, хід %s"
+
+msgid "by "
+msgstr "за "
+
+msgid "  -  from %s"
+msgstr "  - від %s"
+
+msgid "Move unit"
+msgstr "Перемістити підрозділ"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Наведіть на одну зі своїх юнітів і натисніть на курок, потім наведіть на клітинку та потягніть двічі: один раз, щоб прицілитися, один раз, щоб піти."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Клацніть одну зі своїх юнітів, потім двічі клацніть клітинку: один раз, щоб прицілитися, один раз, щоб піти."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Виберіть Поселенця та натисніть Знайдене місто на його картці (або B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Виберіть Поселенця та натисніть Знайдене місто на його картці (або F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Наведіть курсор на одне зі своїх міст і натисніть на курок, а потім натисніть City View на його картці."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Клацніть одне зі своїх міст, а потім натисніть City View на його картці."
+
+msgid "Pick technology"
+msgstr "Підберіть технологію"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Відкрийте дерево технологій зі своєї наручної картки та виберіть щось для дослідження."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Відкрийте дерево технологій (T) і виберіть щось для дослідження."
+
+msgid "Pick construction"
+msgstr "Обрати споруду"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Відкрийте одне зі своїх міст і виберіть із його картки щось для будівництва."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Клацніть одне зі своїх міст і виберіть із його картки щось для будівництва."
+
+msgid "Pass a turn"
+msgstr "Пройти поворот"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Віддайте своїм підрозділам накази, а потім натисніть «Кінець», увімкніть стіл (або A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Віддайте своїм підрозділам накази, а потім натисніть «Закінчити хід» (або «Пробіл»)."
+
+msgid "Reassign worked tiles"
+msgstr "Перепризначити оброблені клітинки"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "У виді міста наведіть на одну з його клітинок і натисніть на курок, щоб спрацювати з ним або припинити його роботу."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "У поданні міста клацніть одну з його клітинок, щоб працювати з ним або припинити його роботу."
+
+msgid "Press Settings on the table."
+msgstr "Натисніть Налаштування на столі."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Натисніть Налаштування на столі (або O)."
+
+msgid "Construct an improvement"
+msgstr "Побудувати поліпшення"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Побудуйте робітника, перемістіть його на клітинку Рівнини або пасовища, натисніть «Побудувати покращення» на його картці та виберіть ферму. Залиште його там, поки ферма не закінчиться."
+
+msgid "Move an air unit"
+msgstr "Перемістіть повітряний блок"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Виберіть повітряну юніт та перемістіть її в інше з ваших міст у зоні дії."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Поверніться до огляду імперії праворуч і відкрийте вкладку «Статистика»."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Відкрийте огляд імперії (E) і вкладку «Статистика»."
+
+msgid "Tutorial task"
+msgstr "Навчальне завдання"
+
+msgid "Hide"
+msgstr "Сховати"
+
+msgid "Defence %d"
+msgstr "Захист %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% до захисту підрозділу"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (пограбований)"
+
+msgid ", worked by %s"
+msgstr ", працював %s"
+
+msgid "  (click the red button again)"
+msgstr "  (натисніть червону кнопку ще раз)"
+
+msgid "  -  %d of %d"
+msgstr "  - %d з %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s ход.)"
+
+msgid "     Science %+d per turn"
+msgstr "     Наука: %+d за хід"
+
+msgid "  (city-state)"
+msgstr "  (місто-держава)"
+
+msgid "   max %d turns"
+msgstr "   max. %d ход."
+
+msgid " (about %d gold's worth)"
+msgstr " (приблизно %d золота)"
+
+msgid " (you have %d)"
+msgstr " (у вас %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (поки що: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (застаріле)"
+
+msgid " (obsolete)"
+msgstr " (застаріле)"
+
+msgid "abstained"
+msgstr "утримався"
+
+msgid "researched"
+msgstr "досліджено"
+
+msgid "adopted"
+msgstr "усиновлений"
+
+msgid "gold"
+msgstr "золото"
+
+msgid "faith"
+msgstr "віра"
+
+msgid "  - complete!"
+msgstr "  - повний!"
+
+msgid "complete"
+msgstr "повний"
+
+msgid "worked"
+msgstr "робоча"
+
+msgid "on"
+msgstr "на"
+
+msgid "off"
+msgstr "вимкнено"
+
+msgid "click"
+msgstr "натисніть"
+
+msgid "improvement"
+msgstr "поліпшення"
+
+msgid "done"
+msgstr "зроблено"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Ворожі цілі в межах досяжності (червоні кільця): %d. Натисніть один, щоб прицілитися."
+
+msgid "Idle citizens: %d"
+msgstr "Бездіяльні громадяни: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombard – вороги в зоні дії: %d (сила %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Більше повідомлень після цього: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Безкоштовних великих людей на вибір: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Безкоштовні технології на вибір: %d. Виберіть виділений."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Вірування ще потрібно вибрати: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv надає повідомлення, назви та описи гри. Деякі мови також перекладають інтерфейс Unciv VR. Відсутні переклади залишаються англійською мовою."
+
+msgid "Units ({count})"
+msgstr "Юніти ({count})"
+
+msgid "Cities ({count})"
+msgstr "Міста ({count})"
+
+msgid "Military"
+msgstr "Військо"
+
+msgid "Military ({count})"
+msgstr "Військо ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Рейтинг ({count})"
+
+msgid "Waiting for orders"
+msgstr "Очікує наказів"
+
+msgid "  -  promotion ready"
+msgstr "  - акція готова"
+
+msgid "  (capital)"
+msgstr "  (капітал)"
+
+msgid "  (puppet)"
+msgstr "  (лялька)"
+
+msgid "  (razing)"
+msgstr "  (розтирання)"
+
+msgid "Nothing to build"
+msgstr "Нічого будувати"
+
+msgid "turn"
+msgstr "хід"
+
+msgid "turns"
+msgstr "ходи"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - {era} Ера"
+
+msgid "{score} pts"
+msgstr "{score} оч"
+
+msgid "No units yet."
+msgstr "Юнітів ще немає."
+
+msgid "No cities yet."
+msgstr "Міст ще немає."
+
+msgid "No military units yet."
+msgstr "Військових юнітів ще немає."
+
+msgid "No civilizations met yet."
+msgstr "Жодна цивілізація ще не зустрілася."
+
+msgid "No wonders to show yet."
+msgstr "Див, щоб показати ще немає."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Кожна ваша юніт, ті, які все ще чекають наказів першими, з тим, що кожна з них робить. Натисніть один, щоб вибрати його."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Кожне місто, яке у вас є, перш за все столиця, з тим, що кожне з них будує і наскільки воно велике. Натисніть один, щоб відкрити його картку."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Кожна військова юніт, яка у вас є, з її діями, рухами та здоров’ям. Натисніть один, щоб вибрати його."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Рейтинги всіх відомих цивілізацій за загальною кількістю балів."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Огляд чудес Unciv за епохами: які побудовані, будуються чи ще будуються. Клацніть вбудований, щоб подивитися на нього."
+
+msgid "In the Hall of the Mountain King"
+msgstr "У залі Гірського короля"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Підземний тронний зал Короля тролів у глибині гір Довре, освітлений жаровнями та сяючими жилами магми"
+
+msgid "Mountains and clouds"
+msgstr "Гори і хмари"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Луг, оточений низькополігональними вершинами, з деревами та дрейфуючими хмарами"
+
+msgid "Floating in space"
+msgstr "Плавання в просторі"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Стіл плаває серед зірок біля планети з кільцями"
+
+msgid "Studio"
+msgstr "Студія"
+
+msgid "A plain, dark room"
+msgstr "Звичайна темна кімната"
+
+msgid "Webb Deep Field"
+msgstr "Webb Deep Field"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Стіл плаває в глибокому космосі в оточенні першого глибокого поля космічного телескопа Джеймса Вебба"
+
+msgid "Ornate oak"
+msgstr "Ошатний дуб"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Дуб з волоським горіхом і падубом, різьблений край мотузки та постамент на обертових ніжках"
+
+msgid "Plain wood"
+msgstr "Звичайна деревина"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Кругла темна дерев’яна плита на звуженій колоні"
+
+msgid "Low poly"
+msgstr "Низький полі"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Гранований низькополігональний рельєф, один плоский колір на обличчя"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Інтерфейс перекладено; вміст гри відображається англійською."
+
+msgid "Turns: %s"
+msgstr "Ходи: %s"
+
+msgid "Latin keyboard"
+msgstr "Латиниця"
+
+msgid "Arabic keyboard"
+msgstr "Арабська клавіатура"
+
+msgid "Hebrew keyboard"
+msgstr "Івритська клавіатура"
+
+msgid "OK"
+msgstr "Зберегти"
+
+msgid "Default"
+msgstr "Типово"
+
+msgid "Manual"
+msgstr "Вручну"
+

@@ -1,0 +1,3119 @@
+# Unciv VR frontend translation draft; native-speaker review pending.
+# Shared wording reused from Unciv. Remaining text drafted with Google Translate,
+# with AI-assisted terminology edits; this is not a reviewed upstream translation.
+# Licensed under MPL-2.0, like the project.
+msgid ""
+msgstr ""
+"Language: ca\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Map replay"
+msgstr "Reproducció del mapa"
+
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "El mapa s'allunya per mostrar-lo sencer. La propietat dels territoris i les ubicacions de les ciutats s'actualitzen mentre es reprodueixen els torns."
+
+msgid "Start replay"
+msgstr "Inicia la reproducció"
+
+msgid "Return to game"
+msgstr "Torna al joc"
+
+msgid "Turn %d of %d"
+msgstr "Torn %d de %d"
+
+msgid "Close replay"
+msgstr "Tanca la reproducció"
+
+msgid "Turn %d / %d"
+msgstr "Torn %d / %d"
+
+msgid "Saved on this PC between sessions"
+msgstr "Desat en aquest ordinador entre sessions"
+
+msgid "Move the table..."
+msgstr "Mou la taula..."
+
+msgid "Back to the middle"
+msgstr "Torna al centre"
+
+msgid "Your controllers"
+msgstr "Els teus controladors"
+
+msgid "Show button labels"
+msgstr "Mostra les etiquetes dels botons"
+
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Etiquetes flotants al costat de cada controlador que diuen què fan els seus botons ara mateix."
+
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "El disparador dret fa clic quan el deixes anar, de manera que mantenir-lo premut per fer zoom no fa clic en res."
+
+msgid "Look"
+msgstr "Aspecte"
+
+msgid "Gameplay"
+msgstr "Joc"
+
+msgid "Automation"
+msgstr "Automatització"
+
+msgid "Sound"
+msgstr "So"
+
+msgid "Panels"
+msgstr "Panells"
+
+msgid "Controls"
+msgstr "Controls"
+
+msgid "Game and saves"
+msgstr "Joc i partides desades"
+
+msgid "About"
+msgstr "Quant a"
+
+msgid "Settings"
+msgstr "Configuració"
+
+msgid "Close"
+msgstr "Tanca"
+
+msgid "Around the table"
+msgstr "Al voltant de la taula"
+
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Els fons i les taules són carpetes que tothom pot afegir: vegeu backgrounds/README.md i tables/README.md."
+
+msgid "Background"
+msgstr "Fons"
+
+msgid "The world around the table: sky, light and scenery."
+msgstr "El món al voltant de la taula: cel, llum i paisatge."
+
+msgid "Table"
+msgstr "Taula"
+
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "En què rau el mapa. A la realitat virtual, la seva columna s'estén a l'alçada que definiu."
+
+msgid "Where the table stands"
+msgstr "On està la taula"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Mou la taula a qualsevol lloc del paisatge del fons, pràctic en grans com un mapa convertit. Recordat per aquest fons."
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Mou la taula a qualsevol lloc del paisatge del fons, pràctic en grans com un mapa convertit. S'ha traslladat aquí; Tornar al mig el posa on el fons l'inicia."
+
+msgid "Remembered for this background."
+msgstr "Recordat per aquest fons."
+
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "S'ha traslladat aquí; Tornar al mig el posa on el fons l'inicia."
+
+msgid "The map"
+msgstr "El mapa"
+
+msgid "Tiles"
+msgstr "Caselles"
+
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Com es veuen el terreny, les meravelles, els recursos i les millores. Els conjunts de quadres funcionen com els d'Unciv: vegeu tilesets/README.md."
+
+msgid "Plain coloured hexes"
+msgstr "Hexagones de colors llisos"
+
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Hexagons plans amb els colors del terreny d'Unciv, sense models."
+
+msgid "Units"
+msgstr "Unitats"
+
+msgid "Same as the tiles"
+msgstr "Del conjunt de caselles"
+
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Els models d'unitats que vénen amb el conjunt de fitxes de dalt (el conjunt de reposicions de les fitxes omple els buits)."
+
+msgid "No models"
+msgstr "Sense models"
+
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Fitxes rodones amb icones d'unitat d'Unciv."
+
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Com es veuen les unitats (Unciv's Unitsset): qualsevol conjunt de fitxes amb models d'unitats (pieces/Units) les pot subministrar."
+
+msgid "Visual hints"
+msgstr "Pistes visuals"
+
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Superposicions de mapes d'Unciv; els botons rodons que hi ha al costat de la visió general també els activen i desactiven."
+
+msgid "Show unit movement arrows"
+msgstr "Mostra fletxes de moviment d’unitats"
+
+msgid "Where units have just moved and who attacked whom."
+msgstr "On s'acaben de moure les unitats i qui va atacar a qui."
+
+msgid "Show tile yields"
+msgstr "Mostra el rendiment de les caselles"
+
+msgid "Food, production, gold... on every tile."
+msgstr "Menjar, producció, or... a cada rajola."
+
+msgid "Show worked tiles"
+msgstr "Mostra les caselles treballades"
+
+msgid "Which tiles your cities' citizens work."
+msgstr "Quins rajoles treballen els ciutadans de les vostres ciutats."
+
+msgid "Show resources and improvements"
+msgstr "Mostra els recursos i millores"
+
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Símbols de recursos i millora a les fitxes."
+
+msgid "Show improvement pictures"
+msgstr "Mostra imatges de millora"
+
+msgid "Farms, mines, roads and the like as models."
+msgstr "Granges, mines, carreteres i similars com a models."
+
+msgid "Show unit icons"
+msgstr "Mostra les icones de les unitats"
+
+msgid "The small Unciv icon above each unit model."
+msgstr "La petita icona Unciv a sobre de cada model d'unitat."
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Traduccions pròpies d'Unciv, dels traductors d'Unciv: missatges, noms i descripcions del joc. Els nostres propis menús segueixen en anglès."
+
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Text Unciv no té traducció per a estades en anglès."
+
+msgid "Turns"
+msgstr "Torns"
+
+msgid "Check for idle units"
+msgstr "Comprova les unitats aturades"
+
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "El torn final et porta primer a totes les unitats que encara no tenen ordres."
+
+msgid "Auto unit cycle"
+msgstr "Selecció automàtica de la següent unitat"
+
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Després de donar les seves ordres a una unitat, se selecciona la següent unitat a l'espera d'ordres."
+
+msgid "Cycle idle units by distance"
+msgstr "Ordre de commutació entre unitats aturades per distància"
+
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "La unitat següent/anterior aneu a la unitat més propera en lloc d'un ordre fix."
+
+msgid "Ask for confirmation when ending the turn"
+msgstr "Demana confirmació en acabar el torn"
+
+msgid "End turn needs a second press."
+msgstr "El gir final necessita una segona premsa."
+
+msgid "Order trade offers by amount"
+msgstr "Ordena les ofertes comercials per quantitat"
+
+msgid "On the trade table, the biggest offers come first."
+msgstr "A la taula de comerç, les ofertes més grans passen primer."
+
+msgid "Show suggested city locations"
+msgstr "Mostra les ubicacions suggerides de la ciutat"
+
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Amb un colon seleccionat, els tres millors llocs d'Unciv propers per a una ciutat nova estan marcats al mapa."
+
+msgid "Tutorials"
+msgstr "Tutorials"
+
+msgid "Show tutorials"
+msgstr "Mostra els tutorials"
+
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Els missatges tutorials i la targeta de tasques. Tots els tutorials també es troben a la Civilopedia."
+
+msgid "Reset tutorials"
+msgstr "Restableix els tutorials"
+
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Mostra cada tutorial i tasca de nou, com si fossis nou."
+
+msgid "Other players"
+msgstr "Altres jugadors"
+
+msgid "Other players' turns"
+msgstr "Torns dels altres jugadors"
+
+msgid "What you see of the other players' turns after you end yours."
+msgstr "El que veus dels torns dels altres jugadors després d'acabar el teu."
+
+msgid "Show the moves and battles I can see"
+msgstr "Mostra els moviments i les batalles que puc veure"
+
+msgid "Played back in order; the view glides to fights."
+msgstr "Es reprodueix en ordre; la vista planeja a baralles."
+
+msgid "Show them, fast"
+msgstr "Mostra'ls, ràpid"
+
+msgid "The same, at two and a half times the speed."
+msgstr "El mateix, a dues vegades i mitja la velocitat."
+
+msgid "Don't show them"
+msgstr "No els mostris"
+
+msgid "The map just updates."
+msgstr "El mapa només s'actualitza."
+
+msgid "Unciv's own options for automated units and cities."
+msgstr "Opcions pròpies d'Unciv per a unitats i ciutats automatitzades."
+
+msgid "Automated and exploring units move"
+msgstr "Es mouen unitats automatitzades i exploradores"
+
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Quan les unitats d'automatització, exploració o moviments de diverses voltes fan els seus passos."
+
+msgid "When I end my turn"
+msgstr "Quan acabi el meu torn"
+
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Els exploradors, els treballadors automatitzats i les unitats en moviments llargs van mentre acabes el torn."
+
+msgid "At the start of my turn"
+msgstr "A l'inici del meu torn"
+
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Van quan comença el teu torn (les \"Unitats automatitzades es mouen a l'inici del torn\") d'Unciv."
+
+msgid "Auto-assign city production"
+msgstr "Assigna automàticament la producció de les ciutats"
+
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Una ciutat que acaba de construir alguna cosa tria què construir a continuació."
+
+msgid "Auto-build roads"
+msgstr "Construeix carreteres automàticament"
+
+msgid "Automated workers build roads between your cities."
+msgstr "Els treballadors automatitzats construeixen carreteres entre les vostres ciutats."
+
+msgid "Automated workers replace improvements"
+msgstr "Els treballadors automatitzats reemplacen les millores"
+
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Els treballadors automatitzats poden canviar una millora per una de millor."
+
+msgid "Stop automated workers from removing vegetation"
+msgstr "Impedir que els treballadors automatitzats eliminin la vegetació"
+
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Els treballadors automatitzats deixen els boscos, les selves i els aiguamolls sols."
+
+msgid "Automated units can upgrade"
+msgstr "Les unitats automatitzades es poden millorar"
+
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Les unitats militars automatitzades s'actualitzen a si mateixes quan us ho podeu permetre."
+
+msgid "Automated units choose promotions"
+msgstr "Les unitats ascendeixen automàticament"
+
+msgid "Automated units pick their own promotions."
+msgstr "Les unitats automatitzades trien les seves pròpies promocions."
+
+msgid "Cities auto-bombard at end of turn"
+msgstr "Al final del torn, les ciutats bombardegen automàticament"
+
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Les ciutats que encara poden disparar disparan contra els enemics a l'abast quan acabes el torn."
+
+msgid "Auto-assign specialists in new cities"
+msgstr "Assigna especialistes automàticament a les ciutats noves"
+
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Les noves ciutats posen els seus ciutadans en espais especialitzats."
+
+msgid "Sound effects"
+msgstr "Efectes de so"
+
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Botons, moviments, batalles i la resta. En VR venen d'on passen sobre la taula."
+
+msgid "City ambience"
+msgstr "Ambient de ciutat"
+
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "El soroll de la ciutat que fa un bucle mentre esteu a una ciutat: Unciv en té un per a cada època."
+
+msgid "Your own and mods'"
+msgstr "Els teus i els mods"
+
+msgid "None yet."
+msgstr "Cap encara."
+
+msgid "Put the panels back"
+msgstr "Torneu a posar els panells"
+
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Cada panell torna a on el posa el seu panel.json."
+
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "A VR, veieu els controladors que teniu, ja que el temps d'execució dels vostres auriculars els dibuixa (SteamVR ho fa; altres obtenen un substitut senzill)."
+
+msgid "Boards"
+msgstr "Taulers"
+
+msgid "Put the boards back"
+msgstr "Torneu a posar les taules"
+
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "La visió general, el tauler d'informació, la pantalla gran, els taulers de la ciutat, la visió general de l'imperi i aquest tauler tornen on van començar."
+
+msgid "This game"
+msgstr "Aquest joc"
+
+msgid "Save game"
+msgstr "Desa la partida"
+
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "El desa amb un nom que escriviu, a la carpeta de desar del pont."
+
+msgid "Save..."
+msgstr "Desa..."
+
+msgid "Main menu"
+msgstr "Menú principal"
+
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Tornar al menú principal; el joc continua funcionant i Resume et porta de tornada."
+
+msgid "Saves"
+msgstr "Desa"
+
+msgid "Autosave"
+msgstr "Desat automàticament"
+
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Amb quina freqüència es desa el joc com a \"Desat automàtic\" (Continua al menú principal el carrega)."
+
+msgid "Save folder"
+msgstr "Desa la carpeta"
+
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Una taula de realitat virtual per a Unciv, el remake de codi obert de Civilization V."
+
+msgid "Bridge protocol"
+msgstr "Protocol pont"
+
+msgid "Mods"
+msgstr "Mods"
+
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Els vostres propis quadres, fons i taules"
+
+msgid "Put their folders here; they show up in Look."
+msgstr "Posa les seves carpetes aquí; apareixen a Look."
+
+msgid "Settings file"
+msgstr "Fitxer de configuració"
+
+msgid "Licence and credits"
+msgstr "Llicència i crèdits"
+
+msgid "Desktop"
+msgstr "Escriptori"
+
+msgid "Off"
+msgstr "Desactivat"
+
+msgid "On"
+msgstr "Activat"
+
+msgid "End turn"
+msgstr "Acaba el torn"
+
+msgid "< Prev"
+msgstr "< Anterior"
+
+msgid "Idle unit"
+msgstr "Unitat inactiva"
+
+msgid "Next >"
+msgstr "Següent >"
+
+msgid "Research"
+msgstr "Investiga"
+
+msgid "Recenter table"
+msgstr "Taula recent centrada"
+
+msgid "No unit selected"
+msgstr "No s'ha seleccionat cap unitat"
+
+msgid "Point at a unit or city to select it."
+msgstr "Assenyala una unitat o ciutat per seleccionar-la."
+
+msgid "Fortified"
+msgstr "Fortificat"
+
+msgid "Sleeping"
+msgstr "Dormir"
+
+msgid "Automated"
+msgstr "Automatitzat"
+
+msgid "On its way"
+msgstr "En el seu camí"
+
+msgid "Embarked"
+msgstr "embarcades"
+
+msgid "Strength"
+msgstr "Força"
+
+msgid "RangedStrength"
+msgstr "Força a distància"
+
+msgid "Range"
+msgstr "Abast"
+
+msgid "Movement"
+msgstr "Moviment"
+
+msgid "Rename"
+msgstr "Canvia el nom"
+
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Saltar-se aquest torn (Saltar de nou per donar-li ordres)."
+
+msgid "Health"
+msgstr "Salut"
+
+msgid "XP"
+msgstr "PExp"
+
+msgid "Promote!  Choose a promotion"
+msgstr "Promociona!  Tria una promoció"
+
+msgid "Promote"
+msgstr "Ascendeix"
+
+msgid "Building %s"
+msgstr "Edifici %s"
+
+msgid "%d turns left"
+msgstr "Queden %d torns"
+
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d objectius enemics a l'abast (anells vermells): feu clic a un per apuntar"
+
+msgid "Actions"
+msgstr "Accions"
+
+msgid "Pillage"
+msgstr "Saqueja"
+
+msgid "Sure? Click again"
+msgstr "Segur? Feu clic de nou"
+
+msgid "click the red button again"
+msgstr "torneu a fer clic al botó vermell"
+
+msgid "Build here"
+msgstr "Construeix aquí"
+
+msgid "Stop"
+msgstr "Atureu-vos"
+
+msgid "%d turns"
+msgstr "%d torns"
+
+msgid "Population %d"
+msgstr "Població %d"
+
+msgid "Defense %d"
+msgstr "Defensa %d"
+
+msgid "Health %d/%d"
+msgstr "Salut %d/%d"
+
+msgid "%d idle citizens"
+msgstr "%d ciutadans ociosos"
+
+msgid "Puppet"
+msgstr "Converteix-la en titella"
+
+msgid "Starving! %d turns"
+msgstr "Fam! %d torns"
+
+msgid "Grows in %d turns"
+msgstr "Creix en %d torns"
+
+msgid "Food -> production"
+msgstr "Alimentació -> producció"
+
+msgid "Not growing"
+msgstr "No creixent"
+
+msgid "Border in %d turns"
+msgstr "Frontera en %d torns"
+
+msgid "Borders stopped"
+msgstr "Les fronteres es van aturar"
+
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Vista de la ciutat: rajoles, ciutadans, cua, compra"
+
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Aquesta ciutat està sent arrasada: s'encongeix cada volta fins que desapareix. Deixeu d'arrasar-lo a la vista de la ciutat."
+
+msgid "Producing"
+msgstr "Produir"
+
+msgid "Producing nothing - pick something below"
+msgstr "No produir res: escolliu alguna cosa a continuació"
+
+msgid "Buildings"
+msgstr "Edificis"
+
+msgid "Wonders"
+msgstr "Meravelles"
+
+msgid "Other"
+msgstr "Altres"
+
+msgid "Gold"
+msgstr "Or"
+
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Compra ara per %d or (tens %d)"
+
+msgid "Promote %s"
+msgstr "Promociona %s"
+
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Tria una promoció.%s"
+
+msgid "Has: %s"
+msgstr "Té: %s"
+
+msgid "No promotion available right now."
+msgstr "No hi ha cap promoció disponible ara mateix."
+
+msgid "Tutorial"
+msgstr "Tutorial"
+
+msgid "%d of %d"
+msgstr "%d de %d"
+
+msgid "%d more messages after this one"
+msgstr "%d més missatges després d'aquest"
+
+msgid "%s gives:"
+msgstr "%s dóna:"
+
+msgid "They"
+msgstr "Ells"
+
+msgid "You give:"
+msgstr "Tu dónes:"
+
+msgid "%d votes  %s"
+msgstr "%d vota %s"
+
+msgid "voted for %s"
+msgstr "va votar per %s"
+
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Pots desactivar els tutorials a Configuració > Joc. També els trobaràs tots a la Civilopèdia."
+
+msgid " (%d turns)"
+msgstr " (%d torns)"
+
+msgid "Choose a free great person"
+msgstr "Trieu un gran personatge de franc"
+
+msgid "You have %d free great people to pick."
+msgstr "Tens %d gratis grans persones per triar."
+
+msgid "Vote for world leader"
+msgstr "Vota pel líder mundial"
+
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Trieu qui s’hauria de proclamar líder mundial i guanyar per victòria diplomàtica."
+
+msgid "Vote for %s"
+msgstr "Vota per %s"
+
+msgid "Abstain"
+msgstr "Abstenir-se"
+
+msgid "Nothing being researched - pick a tech!"
+msgstr "No s'està investigant res: tria una tecnologia!"
+
+msgid "Researching %s"
+msgstr "Investigant %s"
+
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Teniu tecnologies gratuïtes %d per triar: trieu-ne una de destacada."
+
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Ciència %+d per torn. Escollir una tecnologia posterior posa a la cua els seus requisits previs."
+
+msgid "%s turns"
+msgstr "%s torns"
+
+msgid "Pick up where you left off, or start a new game."
+msgstr "Reprèn on ho vas deixar o comença un joc nou."
+
+msgid "Resume"
+msgstr "Continua"
+
+msgid "Continue"
+msgstr "Continua"
+
+msgid "Quick start"
+msgstr "Inici ràpid"
+
+msgid "New game..."
+msgstr "Joc nou..."
+
+msgid "Load game..."
+msgstr "Carrega el joc..."
+
+msgid "Civilopedia"
+msgstr "Civilopèdia"
+
+msgid "Quit"
+msgstr "Surt"
+
+msgid "New game"
+msgstr "Joc nou"
+
+msgid "You"
+msgstr "Vós"
+
+msgid "World"
+msgstr "Món"
+
+msgid "Rules"
+msgstr "Normes"
+
+msgid "Random"
+msgstr "Aleatori"
+
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s - %s %s mapa, %s, %d AI, %d ciutats-estat"
+
+msgid "%s, led by %s"
+msgstr "%s, liderat per %s"
+
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Aleatori: descobriràs qui ets quan comenci el joc."
+
+msgid "Your civilization"
+msgstr "La teva civilització"
+
+msgid "Map size"
+msgstr "Mida del mapa"
+
+msgid "Map type"
+msgstr "Tipus de mapa"
+
+msgid "Shape"
+msgstr "Forma"
+
+msgid "Resources"
+msgstr "Recursos"
+
+msgid "Options"
+msgstr "Opcions"
+
+msgid "No ancient ruins"
+msgstr "Sense ruïnes antigues"
+
+msgid "No natural wonders"
+msgstr "Sense meravelles naturals"
+
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Els mapes més grans llisquen per sota de la taula: manteniu premut un agafador i arrossegueu, o utilitzeu la visió general a l'extrem."
+
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Gods & Kings afegeix religió, espionatge, més civilitzacions i més unitats i edificis."
+
+msgid "Difficulty"
+msgstr "Dificultat"
+
+msgid "Game speed"
+msgstr "Velocitat del joc"
+
+msgid "Starting era"
+msgstr "Era d'inici"
+
+msgid "AI players"
+msgstr "Jugadors d'IA"
+
+msgid "City-states"
+msgstr "Ciutats-estat"
+
+msgid "Victory types (none picked = all)"
+msgstr "Tipus de victòria (cap escollit = tots)"
+
+msgid "No barbarians"
+msgstr "Sense bàrbars"
+
+msgid "Raging barbarians"
+msgstr "Bàrbars furiosos"
+
+msgid "One-city challenge"
+msgstr "Repte d'una ciutat"
+
+msgid "No city razing"
+msgstr "Sense arrasar la ciutat"
+
+msgid "Nuclear weapons"
+msgstr "Armes nuclears"
+
+msgid "Espionage"
+msgstr "Espionatge"
+
+msgid "< Back"
+msgstr "< Enrere"
+
+msgid "Start game"
+msgstr "Comença el joc"
+
+msgid "Load game"
+msgstr "Carrega una partida"
+
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Desa a la carpeta Unciv VR, primer el més recent."
+
+msgid "Backgrounds"
+msgstr "Fons"
+
+msgid "Mountains"
+msgstr "Muntanyes"
+
+msgid "Scenery"
+msgstr "Paisatge"
+
+msgid "Technologies"
+msgstr "Tecnologies"
+
+msgid "Policies"
+msgstr "Polítiques"
+
+msgid "Diplomacy"
+msgstr "Diplomàcia"
+
+msgid "Religion"
+msgstr "Religió"
+
+msgid "Victory"
+msgstr "Victòria"
+
+msgid "Declare war"
+msgstr "Declara la guerra"
+
+msgid "Score"
+msgstr "Puntuació"
+
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Encara no hi ha història: els gràfics s'omplen a mesura que passen els torns."
+
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "===== manteniu premut el disparador aquí i arrossegueu per moure aquesta pantalla ====="
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Play"
+msgstr "Reprodueix"
+
+msgid "Loading the technology tree..."
+msgstr "S'està carregant l'arbre tecnològic..."
+
+msgid "Pick something to research!"
+msgstr "Tria alguna cosa per investigar!"
+
+msgid "Science %+d per turn"
+msgstr "Ciència: %+d per torn"
+
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "Feu clic a una tecnologia per veure què fa i què us permet crear. Les petites icones sota cada tecnologia són les que desbloqueja."
+
+msgid "needs science"
+msgstr "necessita ciència"
+
+msgid "researching now, "
+msgstr "investigant ara, "
+
+msgid "%s   (%s, %d science)"
+msgstr "%s (%s, %d ciència)"
+
+msgid "Loading policies..."
+msgstr "S'estan carregant les polítiques..."
+
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Cultura %d / %d  (%+d per torn)%s"
+
+msgid "You can adopt a policy!"
+msgstr "Pots adoptar una política!"
+
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "Feu clic a un símbol per veure aquesta política. Obriu una sucursal (el seu gran símbol) abans d'adoptar-hi les polítiques."
+
+msgid "ready to adopt"
+msgstr "llest per adoptar"
+
+msgid "needs more culture"
+msgstr "necessita més cultura"
+
+msgid "not available yet"
+msgstr "encara no disponible"
+
+msgid "(no special effects)"
+msgstr "(sense efectes especials)"
+
+msgid "Adopt"
+msgstr "Adopta"
+
+msgid "Your score: %d"
+msgstr "La teva puntuació: %d"
+
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Encara no has conegut ningú. Exploreu per trobar altres civilitzacions i ciutats-estat."
+
+msgid "Loading..."
+msgstr "Es carrega..."
+
+msgid "   (city-state)"
+msgstr "   (ciutat-estat)"
+
+msgid "Destroyed"
+msgstr "Destruït"
+
+msgid "AT WAR"
+msgstr "EN GUERRA"
+
+msgid "At peace"
+msgstr "En pau"
+
+msgid "  (treaty: %d more turns)"
+msgstr "  (tractat: %d més torns)"
+
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - influeix en %d%s"
+
+msgid "   allied with %s"
+msgstr "   aliat amb %s"
+
+msgid "Feels %s about you%s"
+msgstr "Se sent %s sobre tu%s"
+
+msgid "Score %d    Cities %d"
+msgstr "Puntuació %d Ciutats %d"
+
+msgid "Diplomacy..."
+msgstr "Diplomàcia..."
+
+msgid "Trade"
+msgstr "Comerç"
+
+msgid "Offer peace"
+msgstr "Ofereix pau"
+
+msgid "Click again to declare war on %s"
+msgstr "Feu clic de nou per declarar la guerra a %s"
+
+msgid "< All civilizations"
+msgstr "< Totes les civilitzacions"
+
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (no hi ha converses de pau per a %d més torns)"
+
+msgid "Type: %s    Personality: %s"
+msgstr "Tipus: %s Personalitat: %s"
+
+msgid "Our relationship: %s (influence %d)"
+msgstr "La nostra relació: %s (influència %d)"
+
+msgid "Ally: %s with %d influence"
+msgstr "Aliat: %s amb influència %d"
+
+msgid "Protected by: "
+msgstr "Protegit per: "
+
+msgid "Relationship changes in another %d turns"
+msgstr "Les relacions canvien d'aquí a %d torns"
+
+msgid "Resources: "
+msgstr "Recursos: "
+
+msgid "When Friends:"
+msgstr "A les civilitzacions amigues:"
+
+msgid "When Allies:"
+msgstr "A la civilització aliada:"
+
+msgid "You have a declaration of friendship."
+msgstr "Tens una declaració d'amistat."
+
+msgid "You have denounced them."
+msgstr "Els has denunciat."
+
+msgid "Go to on map"
+msgstr "Veure al mapa"
+
+msgid "Gift %d gold (+%d influence)"
+msgstr "Regal %d or (+influència %d)"
+
+msgid "Build %s on %s (200 gold)"
+msgstr "Construeix %s a %s (200 d'or)"
+
+msgid "Revoke protection"
+msgstr "Revoca la protecció"
+
+msgid "Click again: revoke protection?"
+msgstr "Torna a fer clic: vols revocar la protecció?"
+
+msgid "Pledge to protect"
+msgstr "Promet protecció"
+
+msgid "Click again: declare protection?"
+msgstr "Feu clic de nou: voleu declarar la protecció?"
+
+msgid "Take %d gold (-15 influence)"
+msgstr "Preneu %d or (-15 influència)"
+
+msgid "Take worker (-50 influence)"
+msgstr "Prengui el treballador (influència -50)"
+
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Matrimoni diplomàtic (%d or)"
+
+msgid "Click again: they join your empire"
+msgstr "Fes clic de nou: s'uneixen al teu imperi"
+
+msgid "Negotiate peace"
+msgstr "Negociar la pau"
+
+msgid "Click again: make peace?"
+msgstr "Feu clic de nou: fer les paus?"
+
+msgid "Friendship offered - waiting for their answer"
+msgstr "Amistat ofert - esperant la seva resposta"
+
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Oferta declaració d'amistat (30 torns)"
+
+msgid "Denounce (30 turns)"
+msgstr "Denuncia (30 torns)"
+
+msgid "Click again: denounce %s?"
+msgstr "Feu clic de nou: denunciar %s?"
+
+msgid "Click again to declare war"
+msgstr "Feu clic de nou per declarar la guerra"
+
+msgid "Demands:"
+msgstr "Demandes:"
+
+msgid "  (asked)"
+msgstr "  (preguntat)"
+
+msgid "  (they agreed)"
+msgstr "  (van estar d'acord)"
+
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Voluntat d'homenatge (almenys 0 per prendre or, almenys 30 i una ciutat de mida 4 per a un treballador):"
+
+msgid "  (+%d influence)"
+msgstr "  (+%d influència)"
+
+msgid "  %d turns remaining"
+msgstr "  %d torns restants"
+
+msgid "Unforgivable"
+msgstr "Imperdonable"
+
+msgid "Enemy"
+msgstr "Enemic"
+
+msgid "Afraid"
+msgstr "Preocupat"
+
+msgid "Competitor"
+msgstr "Competidor"
+
+msgid "Favorable"
+msgstr "Favorable"
+
+msgid "Friend"
+msgstr "Amic"
+
+msgid "Ally"
+msgstr "Aliat"
+
+msgid "Pantheon"
+msgstr "Panteó"
+
+msgid "Founder"
+msgstr "Fundador"
+
+msgid "Follower"
+msgstr "Seguidor"
+
+msgid "Enhancer"
+msgstr "Magnificador"
+
+msgid "Any"
+msgstr "Qualsevol"
+
+msgid "Pick %d more beliefs%s"
+msgstr "Trieu %d més creences%s"
+
+msgid "so far: %s"
+msgstr "fins ara: %s"
+
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Ara trieu un símbol per a la vostra religió (a dalt)."
+
+msgid "Follow this pantheon"
+msgstr "Seguiu aquest panteó"
+
+msgid "Found %s"
+msgstr "S'ha trobat %s"
+
+msgid "Enhance %s"
+msgstr "Millora %s"
+
+msgid "Reform"
+msgstr "Reforma"
+
+msgid "Confirm"
+msgstr "Confirmeu"
+
+msgid "Religion is off in this game."
+msgstr "La religió està apagada en aquest joc."
+
+msgid "Choose a pantheon belief"
+msgstr "Trieu una creença del panteó"
+
+msgid "Found your religion"
+msgstr "Va trobar la teva religió"
+
+msgid "Enhance your religion"
+msgstr "Millora la teva religió"
+
+msgid "Reform your religion"
+msgstr "Reforma la teva religió"
+
+msgid "No religion yet"
+msgstr "Encara no hi ha religió"
+
+msgid "Your beliefs"
+msgstr "Les teves creences"
+
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "No hi ha res a triar ara mateix. Guanyeu-vos la fe per fundar un panteó; un Gran Profeta funda (i més tard millora) una religió en una de les vostres ciutats."
+
+msgid "Symbol:"
+msgstr "Símbol:"
+
+msgid "Name: %s"
+msgstr "Nom: %s"
+
+msgid "(pick a symbol)"
+msgstr "(tria un símbol)"
+
+msgid "Rename..."
+msgstr "Canvia el nom..."
+
+msgid "Choose any belief!"
+msgstr "Tria una creença qualsevol"
+
+msgid "Choose a %s belief!"
+msgstr "Trieu una creença %s!"
+
+msgid "  (another religion has it)"
+msgstr "  (una altra religió ho té)"
+
+msgid "  (you have it)"
+msgstr "  (ho tens)"
+
+msgid "  (not available)"
+msgstr "  (no disponible)"
+
+msgid "  (picked for another slot)"
+msgstr "  (escollit per a una altra ranura)"
+
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Girar %d %s velocitat %s%s"
+
+msgid "max %d turns"
+msgstr "max. %d torns"
+
+msgid "You have won a %s Victory!"
+msgstr "Has guanyat una victòria %s!"
+
+msgid "%s has won a %s Victory!"
+msgstr "%s ha guanyat una victòria %s!"
+
+msgid "You have been defeated."
+msgstr "Has estat derrotat."
+
+msgid "One more turn...!"
+msgstr "Un torn més!"
+
+msgid "Main menu (start a new game)"
+msgstr "Menú principal (iniciar un joc nou)"
+
+msgid "Our status"
+msgstr "El nostre estat"
+
+msgid "Global status"
+msgstr "Estat global"
+
+msgid "Rankings"
+msgstr "Rànquing"
+
+msgid "Charts"
+msgstr "Gràfics estadístics"
+
+msgid "Demographics"
+msgstr "Demografia"
+
+msgid "%s Victory"
+msgstr "%s Victòria"
+
+msgid "[done] "
+msgstr "[fet] "
+
+msgid "Rank"
+msgstr "Posició"
+
+msgid "Value"
+msgstr "Puntuació"
+
+msgid "Best"
+msgstr "El millor"
+
+msgid "Average / Worst"
+msgstr "Mitjana/Pitjor"
+
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Comerç amb %s El vostre or %d, el seu %d"
+
+msgid "You can offer"
+msgstr "Pots oferir"
+
+msgid "You give"
+msgstr "Tu dónes"
+
+msgid "You get"
+msgstr "Ho aconsegueixes"
+
+msgid "They can offer"
+msgstr "Poden oferir"
+
+msgid "Clear"
+msgstr "Esborra"
+
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "Feu clic als elements de les columnes exteriors per posar-los a la taula; Feu-hi clic de nou per treure'ls."
+
+msgid "%s would accept this."
+msgstr "%s acceptaria això."
+
+msgid "%s wants more for this%s."
+msgstr "%s vol més per a això%s."
+
+msgid "about %d gold's worth"
+msgstr "sobre el valor de l'or %d"
+
+msgid "Propose deal"
+msgstr "Proposar un tracte"
+
+msgid "  %d turns"
+msgstr "  %d torns"
+
+msgid "Gold_Per_Turn"
+msgstr "Or per torn"
+
+msgid "Not connected to the bridge"
+msgstr "No connectat amb el pont"
+
+msgid "Bridge disconnected"
+msgstr "Pont desconnectat"
+
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "El pont Unciv agrupat està incomplet. Torneu a instal·lar els fitxers del joc."
+
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "No es pot trobar el repo Unciv amb el pont a %s"
+
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "No s'ha trobat cap Java 17 o més recent (Unciv necessita JDK 21). Instal·leu-lo i configureu JAVA_HOME."
+
+msgid "Couldn't write %s"
+msgstr "No s'ha pogut escriure %s"
+
+msgid "Couldn't start Gradle"
+msgstr "No s'ha pogut iniciar Gradle"
+
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "No s'ha pogut iniciar el pont Unciv agrupat"
+
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "===== manteniu premut el disparador aquí i arrossegueu per moure ====="
+
+msgid "Exit city"
+msgstr "Tanca la ciutat"
+
+msgid "City"
+msgstr "Ciutat"
+
+msgid "BEING RAZED"
+msgstr "ESTANT ARRASAT"
+
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Ciutadans no assignats: %d/%d%s"
+
+msgid "click: let the city place them"
+msgstr "clic: deixa que la ciutat els col·loqui"
+
+msgid "(%d/%d food)"
+msgstr "(%d/%d menjar)"
+
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Morir de fam: perd un ciutadà a %d es converteix en %s"
+
+msgid "Food goes into production while this unit is built"
+msgstr "Els aliments entren en producció mentre es construeix aquesta unitat"
+
+msgid "New citizen in %d turns %s"
+msgstr "El nou ciutadà a %d es converteix en %s"
+
+msgid "Not growing %s"
+msgstr "No creix %s"
+
+msgid "(%d/%d culture)"
+msgstr "(cultura %d/%d)"
+
+msgid "Borders grow in %d turns %s"
+msgstr "Les fronteres creixen en %d es converteix en %s"
+
+msgid "Borders have stopped growing"
+msgstr "Les fronteres han deixat de créixer"
+
+msgid "In resistance for another %d turns"
+msgstr "En resistència durant %d torns més"
+
+msgid "We Love The King Day for another %d turns"
+msgstr "Dia d'estima al rei durant %d torns més"
+
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "%s exigent (ens encanta el dia del rei si ho aconsegueixes)"
+
+msgid "Annex city (stop it being a puppet)"
+msgstr "Ciutat annex (deixi de ser un titella)"
+
+msgid "Stop razing city"
+msgstr "Deixa d’arrasar la ciutat"
+
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "Feu clic de nou per RAZE %s (es crema un ciutadà un torn)"
+
+msgid "Raze city"
+msgstr "Arrasa la ciutat"
+
+msgid "Citizen management"
+msgstr "Gestió ciutadana"
+
+msgid "Reset citizens"
+msgstr "Reiniciar els ciutadans"
+
+msgid "Avoid growth"
+msgstr "Eviteu el creixement"
+
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Prioritat dels ciutadans (quines caselles treballa la ciutat):"
+
+msgid "Specialists"
+msgstr "Especialistes"
+
+msgid "Manual specialists (click for automatic)"
+msgstr "Especialistes manuals (feu clic per automàtic)"
+
+msgid "Automatic specialists (click for manual)"
+msgstr "Especialistes en automàtic (feu clic per al manual)"
+
+msgid "Specialist"
+msgstr "Especialista"
+
+msgid "Great people"
+msgstr "Gran gent"
+
+msgid "Majority religion: %s"
+msgstr "Religió majoritària: %s"
+
+msgid "Former holy city of %s"
+msgstr "Antiga ciutat santa de %s"
+
+msgid "Holy city of %s"
+msgstr "Ciutat santa de %s"
+
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d seguidors, pressió %+d"
+
+msgid "Specialist buildings"
+msgstr "Edificis especialitzats"
+
+msgid "  (free)"
+msgstr "  (gratuït)"
+
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "Feu clic a una fitxa de la taula: les fitxes treballades deixen de ser treballades, els ciutadans lliures passen a les sense treballar, "
+
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "i es poden comprar rajoles amb preu (cliqueu dues vegades)."
+
+msgid "Tile"
+msgstr "Casella"
+
+msgid "city centre"
+msgstr "centre de la ciutat"
+
+msgid "worked (locked)"
+msgstr "treballat (bloquejat)"
+
+msgid "not worked"
+msgstr "no funcionava"
+
+msgid "gives its yield without a citizen"
+msgstr "dóna el seu rendiment sense ciutadà"
+
+msgid "gives nothing"
+msgstr "no dóna res"
+
+msgid "blockaded by an enemy"
+msgstr "bloquejat per un enemic"
+
+msgid "worked by %s"
+msgstr "treballat per %s"
+
+msgid "another city"
+msgstr "una altra ciutat"
+
+msgid "too far to work"
+msgstr "massa lluny per treballar"
+
+msgid "can be bought"
+msgstr "es pot comprar"
+
+msgid "not yours"
+msgstr "no teu"
+
+msgid "Resource: %s"
+msgstr "Recurs: %s"
+
+msgid "Improvement: %s"
+msgstr "Millora: %s"
+
+msgid "Owned by %s"
+msgstr "Propietat de %s"
+
+msgid "Lock (keep a citizen here)"
+msgstr "Bloqueig (mantenir un ciutadà aquí)"
+
+msgid "Stop working"
+msgstr "Deixa de treballar"
+
+msgid "Unlock"
+msgstr "Desbloca"
+
+msgid "Work this tile"
+msgstr "Treballeu aquesta rajola"
+
+msgid "Work and lock"
+msgstr "Treballar i tancar"
+
+msgid "Click again: buy for %d gold"
+msgstr "Fes clic de nou: compra per %d or"
+
+msgid "Buy for %d gold (you have %d)"
+msgstr "Compra per %d or (tens %d)"
+
+msgid "Production"
+msgstr "Producció"
+
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Or %d   Fe %d   Producció %+d per torn"
+
+msgid "Being built"
+msgstr "S'està construint"
+
+msgid "Nothing being built - pick something below"
+msgstr "No s'està construint res: trieu alguna cosa a continuació"
+
+msgid "   %d turns"
+msgstr "   %d torns"
+
+msgid "Hide what can't be built yet"
+msgstr "Amaga el que encara no es pot construir"
+
+msgid "Show what can't be built yet (and why)"
+msgstr "Mostra què encara no es pot construir (i per què)"
+
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "Feu clic a alguna cosa per veure què fa i, a continuació, creeu-la ara, afegiu-la a la cua o compreu-la."
+
+msgid "   %d production"
+msgstr "   %d producció"
+
+msgid ", %d turns"
+msgstr ", %d torns"
+
+msgid "   (built)"
+msgstr "   (construït)"
+
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "El seu %s va en una fitxa que trieu a la taula després de Construir ara/Afegir a la cua/Comprar."
+
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "El seu %s va a la fitxa anellada escollida quan estava a la cua."
+
+msgid "Build now"
+msgstr "Construeix ara"
+
+msgid "Add to queue"
+msgstr "Afegeix a la cua"
+
+msgid "Click again: buy for %d %s"
+msgstr "Feu clic de nou: compra per %d %s"
+
+msgid "Buy for %d %s"
+msgstr "Compra per %d %s"
+
+msgid "you have %d"
+msgstr "tens %d"
+
+msgid "Buy: move the unit out of the city first"
+msgstr "Compra: primer mou la unitat fora de la ciutat"
+
+msgid "Click again: sell for %d gold"
+msgstr "Feu clic de nou: veneu per %d or"
+
+msgid "Sell for %d gold"
+msgstr "Ven per %d or"
+
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "===== Civilopedia: manteniu premut el disparador aquí i arrossegueu per moure ====="
+
+msgid "<  Back"
+msgstr "< Enrere"
+
+msgid "This entry couldn't be loaded."
+msgstr "Aquesta entrada no s'ha pogut carregar."
+
+msgid "Building"
+msgstr "Edifici"
+
+msgid "Wonder"
+msgstr "Meravella"
+
+msgid "Unit"
+msgstr "Unitat"
+
+msgid "Resource"
+msgstr "Recurs"
+
+msgid "Improvement"
+msgstr "Millora"
+
+msgid "Tile Improvements"
+msgstr "Millores de casella"
+
+msgid "Technology"
+msgstr "Tecnologia"
+
+msgid "Promotion"
+msgstr "Ascens"
+
+msgid "Promotions"
+msgstr "Ascensos"
+
+msgid "Policy"
+msgstr "Política"
+
+msgid "Belief"
+msgstr "creença"
+
+msgid "Religions and Beliefs"
+msgstr "Religions i creences"
+
+msgid "Nation"
+msgstr "Nació"
+
+msgid "Nations"
+msgstr "Nacions"
+
+msgid "Terrain"
+msgstr "Terreny"
+
+msgid "Terrains"
+msgstr "Terrenys"
+
+msgid "Unit types"
+msgstr "Tipus d’unitats"
+
+msgid "Unit Names"
+msgstr "Noms de les unitats"
+
+msgid "Victory Types"
+msgstr "Tipus de victòria"
+
+msgid "Thumbstick"
+msgstr "Palanca"
+
+msgid "Menu"
+msgstr "Menú"
+
+msgid "Trigger"
+msgstr "Gallet"
+
+msgid "Grip"
+msgstr "Agafada"
+
+msgid "Trackpad"
+msgstr "Panell tàctil"
+
+msgid "Button 1"
+msgstr "Botó 1"
+
+msgid "Button 2"
+msgstr "Botó 2"
+
+msgid "Cities"
+msgstr "Ciutats"
+
+msgid "None"
+msgstr "Cap"
+
+msgid "Unexplored (%d, %d)"
+msgstr "Sense explorar (%d, %d)"
+
+msgid " - %s territory"
+msgstr " - Territori %s"
+
+msgid " - city of %s"
+msgstr " - ciutat de %s"
+
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+msgid "Automate"
+msgstr "Automatitza"
+
+msgid "Sleep"
+msgstr "Dorm"
+
+msgid "Fortify"
+msgstr "Fortifica"
+
+msgid "Guard"
+msgstr "Guarda"
+
+msgid "Explore"
+msgstr "Explora"
+
+msgid "Upgrade"
+msgstr "Millora"
+
+msgid "Transform"
+msgstr "Transforma"
+
+msgid "Repair"
+msgstr "Repara"
+
+msgid "Skip"
+msgstr "Salta"
+
+msgid "%s   Turn %d  (%s)"
+msgstr "%s Gireu %d (%s)"
+
+msgid "%d BC"
+msgstr "%d BC"
+
+msgid "%d AD"
+msgstr "%d AD"
+
+msgid "Not researching anything - pick a tech!"
+msgstr "No investigueu res: trieu una tecnologia!"
+
+msgid "Point at a tile"
+msgstr "Assenyala una rajola"
+
+msgid "Unexplored"
+msgstr "Inexplorat"
+
+msgid "Send a unit to find out what's here."
+msgstr "Envia una unitat per saber què hi ha aquí."
+
+msgid "Natural wonder: %s"
+msgstr "Meravella natural: %s"
+
+msgid "Improvement: %s%s"
+msgstr "Millora: %s%s"
+
+msgid "River"
+msgstr "Riu"
+
+msgid "City of %s  (population %d)"
+msgstr "Ciutat de %s (població %d)"
+
+msgid "%s territory"
+msgstr "Territori %s"
+
+msgid "%d HP"
+msgstr "%d HP"
+
+msgid "%+d%% to unit defense"
+msgstr "%+d%% a la defensa de la unitat"
+
+msgid "Impassable"
+msgstr "Intransitable"
+
+msgid "Not currently in sight - last seen like this"
+msgstr "Actualment no a la vista, l'última vegada que s'ha vist així"
+
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Atac %s: tracta ~%d, pren ~%d"
+
+msgid "Science"
+msgstr "Ciència"
+
+msgid "Happiness"
+msgstr "Felicitat"
+
+msgid "Malcontent"
+msgstr "Malcontent"
+
+msgid "Culture"
+msgstr "Cultura"
+
+msgid "Faith"
+msgstr "Fe"
+
+msgid "Population"
+msgstr "Població"
+
+msgid "Food"
+msgstr "Menjar"
+
+msgid "Shift"
+msgstr "Majúscules"
+
+msgid "Space"
+msgstr "Espai"
+
+msgid "< Del"
+msgstr "< Supr."
+
+msgid "Recenter"
+msgstr "Centra"
+
+msgid "Move a unit!"
+msgstr "Moveu una unitat"
+
+msgid "hold to move onto a tile"
+msgstr "manteniu premut per passar a una rajola"
+
+msgid "Connecting..."
+msgstr "S'està connectant..."
+
+msgid "Lost connection to the bridge - retrying..."
+msgstr "S'ha perdut la connexió amb el pont; s'està tornant a provar..."
+
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Buscant el pont a 127.0.0.1:%d..."
+
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "No s'ha pogut iniciar el pont: %s\nInicieu-lo a mà amb: gradlew :bridge:run"
+
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "S'està iniciant el pont Unciv... (es reconstrueix si el seu codi canvia; pot trigar un minut)"
+
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "El pont es va aturar abans que estigués a punt. Des de %s:\n%s"
+
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "El motor Unciv no es troba en aquesta aplicació (falta el connector UncivBridge a l'exportació)."
+
+msgid "The Unciv engine couldn't start: %s"
+msgstr "El motor Unciv no s'ha pogut iniciar: %s"
+
+msgid "Unciv's engine stopped:\n%s"
+msgstr "El motor de l'Unciv s'ha aturat: \n%s"
+
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "S'està iniciant el motor d'Unciv: %s... (%d s)"
+
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "Un pont Unciv més antic (protocol v%d) encara s'estava executant, reiniciant-lo amb el codi actual..."
+
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "No s'ha pogut aturar el pont vell, continuar amb ell. Algunes coses poden no funcionar."
+
+msgid "Reconnected to the bridge."
+msgstr "Reconnectat al pont."
+
+msgid "Bridge error: %s"
+msgstr "Error del pont: %s"
+
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Avís: el pont parla el protocol v%d però aquest client espera v%d: actualitzeu tots dos repositoris junts. Algunes coses poden no funcionar."
+
+msgid "Connected to Unciv %s"
+msgstr "Connectat a Unciv %s"
+
+msgid "Couldn't load the save: %s"
+msgstr "No s'ha pogut carregar el desat: %s"
+
+msgid "Your move."
+msgstr "El teu moviment."
+
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Començant un joc nou... (els mapes més grans triguen una mica més)"
+
+msgid "Starting a new game..."
+msgstr "Començant un joc nou..."
+
+msgid "Couldn't start a game: %s"
+msgstr "No s'ha pogut iniciar un joc: %s"
+
+msgid "saved "
+msgstr "guardat "
+
+msgid "%s, turn %d"
+msgstr "%s, torn %d"
+
+msgid "Main menu: point at the card over the table."
+msgstr "Menú principal: assenyaleu la targeta sobre la taula."
+
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s en un mapa %s %s, %s, %d AI, %d ciutats-estat"
+
+msgid "A random civilization"
+msgstr "Una civilització aleatòria"
+
+msgid "Loading %s..."
+msgstr "S'està carregant %s..."
+
+msgid "Couldn't load %s: %s"
+msgstr "No s'ha pogut carregar %s: %s"
+
+msgid "Couldn't read those rules: %s"
+msgstr "No s'han pogut llegir aquestes regles: %s"
+
+msgid "getState failed: %s"
+msgstr "getState ha fallat: %s"
+
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "La visió general, el tauler d'informació, la pantalla gran i els panells tornen als seus llocs habituals."
+
+msgid "Name your religion"
+msgstr "Anomena la teva religió"
+
+msgid "Your religion"
+msgstr "La teva religió"
+
+msgid "Researching %s."
+msgstr "Investigant %s."
+
+msgid "Adopted %s."
+msgstr "%s adoptat."
+
+msgid "You declared war on %s!"
+msgstr "Vas declarar la guerra a %s!"
+
+msgid "Unit movements"
+msgstr "Moviments de la unitat"
+
+msgid "Tile yields"
+msgstr "Rendiment de les caselles"
+
+msgid "Worked tiles"
+msgstr "Caselles treballades"
+
+msgid "Resources and improvements"
+msgstr "Recursos i millores"
+
+msgid "Improvement pictures"
+msgstr "Imatges de millora"
+
+msgid "Unit icons"
+msgstr "Icones de la unitat"
+
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Manteniu %s sobre una rajola per moure'n una unitat."
+
+msgid "the trigger"
+msgstr "el disparador"
+
+msgid "the mouse button"
+msgstr "el botó del ratolí"
+
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Ataca %s\nOferta ~%d, pren ~%d\nFes clic de nou per atacar"
+
+msgid "a unit"
+msgstr "una unitat"
+
+msgid "Can't get there"
+msgstr "No puc arribar-hi"
+
+msgid "No room on this tile\n%s %s already there"
+msgstr "No hi ha espai en aquesta rajola\n%s %s"
+
+msgid "\nSwap places on the card"
+msgstr "\nCanviar llocs a la targeta"
+
+msgid "Move here"
+msgstr "Mou-te aquí"
+
+msgid "Move here: %d turns"
+msgstr "Mou aquí: %d torns"
+
+msgid "\nsharing the tile with %s"
+msgstr "\ncompartint la fitxa amb %s"
+
+msgid "\nclick again to go"
+msgstr "\nFeu clic de nou per anar-hi"
+
+msgid "%s is on its way - it keeps going next turn."
+msgstr "%s està en marxa; segueix el següent torn."
+
+msgid "No attack happened."
+msgstr "No es va produir cap atac."
+
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "%s va atacar %s: va causar danys a %d, va prendre %d."
+
+msgid "  City captured!"
+msgstr "  Ciutat capturada!"
+
+msgid "  %s destroyed!"
+msgstr "  %s destruït!"
+
+msgid "  Your %s was lost."
+msgstr "  El vostre %s s'ha perdut."
+
+msgid "Improvement order cancelled."
+msgstr "S'ha cancel·lat l'ordre de millora."
+
+msgid "%s: building %s (%d turns)."
+msgstr "%s: edifici %s (%d girs)."
+
+msgid "Rename %s"
+msgstr "Canvia el nom de %s"
+
+msgid "%s is now called %s."
+msgstr "%s ara s'anomena %s."
+
+msgid "Name your %s (empty: no name)"
+msgstr "Poseu un nom al vostre %s (buit: sense nom)"
+
+msgid "Renamed to %s."
+msgstr "S'ha canviat el nom a %s."
+
+msgid "Name removed."
+msgstr "S'ha eliminat el nom."
+
+msgid "%s: on the way."
+msgstr "%s: de camí."
+
+msgid "%s: coup orders given."
+msgstr "%s: ordres de cop donades."
+
+msgid "See your stats breakdown"
+msgstr "Consulteu el desglossament de les vostres estadístiques"
+
+msgid "Selected %s."
+msgstr "%s seleccionat."
+
+msgid "the unit"
+msgstr "la unitat"
+
+msgid "Upgraded to %s."
+msgstr "S'ha actualitzat a %s."
+
+msgid "Enter city screen"
+msgstr "Entra a la pantalla de la ciutat"
+
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Vista de la ciutat: %s. Feu clic a les fitxes per treballar-les; Sortida de la ciutat (o B/Esc) torna al mapa."
+
+msgid "Back to the map."
+msgstr "Tornar al mapa."
+
+msgid "There's nowhere in %s to put the %s."
+msgstr "No hi ha cap lloc a %s per posar el %s."
+
+msgid "the city"
+msgstr "la ciutat"
+
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Trieu la fitxa per al %s (anells vermells) o Esc/B per cancel·lar."
+
+msgid "Cancelled."
+msgstr "Cancel·lat."
+
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Trieu una de les fitxes anellades (Esc / B cancel·la)."
+
+msgid "%s: the improvement goes there."
+msgstr "%s: la millora va allà."
+
+msgid "Bought the tile for %d gold."
+msgstr "Va comprar la rajola per a %d or."
+
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Compra per %d or\nFes clic de nou per comprar"
+
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Costa %d or\n (no hi ha prou or)"
+
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Ciutadans reassignats (panys netejats)."
+
+msgid "Annexed."
+msgstr "Annexat."
+
+msgid "%s will build %s next."
+msgstr "%s crearà %s a continuació."
+
+msgid "%s added to the queue."
+msgstr "%s afegit a la cua."
+
+msgid "Bought %s."
+msgstr "Va comprar %s."
+
+msgid "Sold the %s."
+msgstr "Va vendre el %s."
+
+msgid "%s added to %s's queue."
+msgstr "%s s'ha afegit a la cua de %s."
+
+msgid "Bought %s in %s."
+msgstr "Va comprar %s a %s."
+
+msgid "Experience"
+msgstr "Experiència"
+
+msgid "%s is now %s."
+msgstr "%s és ara %s."
+
+msgid "Pick something to research."
+msgstr "Trieu alguna cosa per investigar."
+
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Podeu adoptar una política nova: consulteu la pestanya Polítiques a la pantalla gran."
+
+msgid "%s is heading here"
+msgstr "%s es dirigeix aquí"
+
+msgid "The unit"
+msgstr "La unitat"
+
+msgid "Are you sure?"
+msgstr "N'estàs segur?"
+
+msgid "Click again to confirm."
+msgstr "Feu clic de nou per confirmar."
+
+msgid "%s: click a %stile"
+msgstr "%s: feu clic a una fitxa %s"
+
+msgid "highlighted "
+msgstr "destacat "
+
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s: feu clic a la fitxa del mapa (o Cancel·la a la targeta)."
+
+msgid "Move here: click a tile"
+msgstr "Mou-te aquí: fes clic a una fitxa"
+
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Mou %s: feu clic a una fitxa del mapa (o Cancel·la a la targeta)."
+
+msgid "No enemies in range of %s."
+msgstr "No hi ha enemics a l'abast de %s."
+
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombardeig des de %s: feu clic a un enemic amb anells vermells (feu clic a la ciutat per cancel·lar)."
+
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Trieu una de les fitxes destacades (o Cancel·la)."
+
+msgid "%s bombarded %s: %d damage%s."
+msgstr "%s bombardejada %s: %d danys %s."
+
+msgid "Destroyed!"
+msgstr "Destruït!"
+
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Acabar el torn? Premeu Finalitzar el gir de nou per confirmar."
+
+msgid "Ending turn - the AI players are moving..."
+msgstr "Torn final: els jugadors d'IA es mouen..."
+
+msgid "Turn %d"
+msgstr "Torn %d"
+
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "JOCUL FINAL - %s guanya (%s victòria)"
+
+msgid "A %s has been born!"
+msgstr "Ha nascut un %s!"
+
+msgid "You voted for %s."
+msgstr "Has votat per %s."
+
+msgid "You abstained."
+msgstr "T'has abstingut."
+
+msgid "ATTACK"
+msgstr "ATAC"
+
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s - Gira %d (%s) Or %d (%+d) Ciència %+d Felicitat %d"
+
+msgid "Researching: %s"
+msgstr "Investigació: %s"
+
+msgid "%s - turn %d"
+msgstr "%s - torn %d"
+
+msgid "Game"
+msgstr "Joc"
+
+msgid "Save game as"
+msgstr "Desa la partida com a"
+
+msgid "Saved as \"%s\"."
+msgstr "Desat com a \"%s\"."
+
+msgid "Couldn't save: %s"
+msgstr "No s'ha pogut desar: %s"
+
+msgid "Open the options table"
+msgstr "Obriu la taula d'opcions"
+
+msgid "The tutorials will show again from the start."
+msgstr "Els tutorials es tornaran a mostrar des del principi."
+
+msgid "Couldn't reset the tutorials: %s"
+msgstr "No s'han pogut restablir els tutorials: %s"
+
+msgid "The panels are back where they started."
+msgstr "Els panells tornen on van començar."
+
+msgid "The table is back in the middle of the background."
+msgstr "La taula torna al mig del fons."
+
+msgid "Civilopedia: %s"
+msgstr "Civilopèdia: %s"
+
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "No s'ha pogut obrir la Civilopedia: %s"
+
+msgid "Opened %s in your browser."
+msgstr "S'ha obert %s al navegador."
+
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Tasca del tutorial amagada: la següent es mostrarà quan aparegui."
+
+msgid "Move the table"
+msgstr "Mou la taula"
+
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Moure la taula: assenyaleu un punt del paisatge i %s per posar-lo allà. %s la gira. %s quan hagis acabat."
+
+msgid "pull the trigger"
+msgstr "premeu el gallet"
+
+msgid "The right stick"
+msgstr "El pal dret"
+
+msgid "Press A or B"
+msgstr "Premeu A o B"
+
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "La taula es queda aquí. Configuració > Aspecte > Torna al centre la retorna al lloc inicial."
+
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Això no és al paisatge: apunta a terra en algun lloc."
+
+msgid "put the table here"
+msgstr "posa la taula aquí"
+
+msgid "turn the scenery"
+msgstr "girar el paisatge"
+
+msgid "done moving the table"
+msgstr "acabat de moure la taula"
+
+msgid "point, click (hold: aim)"
+msgstr "apuntar, fer clic (mantenir premut: apuntar)"
+
+msgid "Found city"
+msgstr "Funda una ciutat"
+
+msgid "Cancel typing"
+msgstr "Cancel·la l'escriptura"
+
+msgid "Leave the city"
+msgstr "Deixa la ciutat"
+
+msgid "table height"
+msgstr "alçada de la taula"
+
+msgid "slide the map"
+msgstr "llisca el mapa"
+
+msgid "turn / size the table"
+msgstr "girar / mida la taula"
+
+msgid "Next unit"
+msgstr "Següent unitat"
+
+msgid "Previous unit"
+msgstr "Unitat anterior"
+
+msgid "zoom the map"
+msgstr "ampliar el mapa"
+
+msgid "table height, click: recenter"
+msgstr "alçada de la taula, clic: recentreu"
+
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "Alguna cosa no ha acabat, segueix. (Si continua passant, el registre diu per què.)"
+
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "ATACA %s (%s, %d/%d salut)"
+
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  previst: acordeu %d, preneu %d"
+
+msgid "Luxury"
+msgstr "De luxe"
+
+msgid "Strategic"
+msgstr "Estratègic"
+
+msgid "Unit icons over the unit models"
+msgstr "Icones d'unitats sobre els models d'unitats"
+
+msgid "Overview: point and click to go there"
+msgstr "Visió general: apunta i fes clic per anar-hi"
+
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (fes clic per girar %s)"
+
+msgid "Overview"
+msgstr "Vista general"
+
+msgid "Stats"
+msgstr "Estadístiques"
+
+msgid "Trades"
+msgstr "Comerç"
+
+msgid "Politics"
+msgstr "Política"
+
+msgid "Notifications"
+msgstr "Notificacions"
+
+msgid "Spy"
+msgstr "Espia"
+
+msgid "War"
+msgstr "Guerra"
+
+msgid "DefensivePact"
+msgstr "Pacte defensiu"
+
+msgid "Neutral"
+msgstr "Neutral"
+
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "===== Visió general de l'Imperi: manteniu premut el disparador aquí i arrossegueu per moure ====="
+
+msgid "You have no spies yet - they come with new eras."
+msgstr "Encara no teniu espies: vénen amb noves eres."
+
+msgid "Spies (pick one, then where it goes)"
+msgstr "Espies (trieu-ne un i després on va)"
+
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s (classificació %d) - %s - %s%s"
+
+msgid "Call off the coup"
+msgstr "Convocar el cop"
+
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "Feu clic de nou: feu un cop d'estat (oportunitat %d%%)"
+
+msgid "Stage a coup (%d%% chance)"
+msgstr "Donar un cop d'estat (oportunitat %d%%)"
+
+msgid "Where to"
+msgstr "Cap a on"
+
+msgid "Spy hideout (bring %s home)"
+msgstr "Amagatall d'espia (porta %s a casa)"
+
+msgid "   spies: "
+msgstr "   espies: "
+
+msgid "Click again (%s)"
+msgstr "Feu clic de nou (%s)"
+
+msgid "You have no cities yet."
+msgstr "Encara no tens ciutats."
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Defence"
+msgstr "Defensa"
+
+msgid "Open the city view"
+msgstr "Obre la vista de la ciutat"
+
+msgid "Resistance"
+msgstr "Resistència"
+
+msgid "%d t"
+msgstr "%d t"
+
+msgid "Demanding %s"
+msgstr "%s exigent"
+
+msgid " (holy)"
+msgstr " (sant)"
+
+msgid "Total %d"
+msgstr "%d total"
+
+msgid "Convert gold to science: %d%%"
+msgstr "Converteix or a ciència: %d%%"
+
+msgid "Great person points"
+msgstr "Punts de gran personatge"
+
+msgid "Points"
+msgstr "Punts"
+
+msgid "Per turn"
+msgstr "Per torn"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Pending trades"
+msgstr "Acords comercials pendents"
+
+msgid "Current trades"
+msgstr "Acords comercials actuals"
+
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "No hi ha transaccions. Fes-ne un des de la pestanya Diplomàcia de la pantalla gran."
+
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Subministrament de la unitat: %d de %d utilitzat (base %d, ciutats %d, població %d)"
+
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Dèficit %d: %d%% producció a cada ciutat. Augmenta el teu subministrament o dissol les unitats."
+
+msgid "Doing"
+msgstr "Acció"
+
+msgid "Closest city"
+msgstr "Ciutat més propera"
+
+msgid "Click again: %d gold"
+msgstr "Feu clic de nou: %d or"
+
+msgid "%s %dg"
+msgstr "%s %dg"
+
+msgid "Show global politics"
+msgstr "Mostra la política global"
+
+msgid "Show diagram"
+msgstr "Mostra el diagrama"
+
+msgid "Hide city-states"
+msgstr "Amaga les ciutats-estat"
+
+msgid "Include city-states"
+msgstr "Inclou les ciutats-estat"
+
+msgid "   %s civilizations in the game"
+msgstr "   civilitzacions %s al joc"
+
+msgid "Score %d"
+msgstr "Puntuació %d"
+
+msgid "Defeated"
+msgstr "Derrotades"
+
+msgid "At war with %s"
+msgstr "En guerra amb %s"
+
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Pacte defensiu amb %s (girs %d)"
+
+msgid "Friends with %s (%d turns)"
+msgstr "Amics amb %s (%d torns)"
+
+msgid "Denounced %s (%d turns)"
+msgstr "%s denunciat (girs %d)"
+
+msgid "Allied with %s"
+msgstr "Aliat amb %s"
+
+msgid "Relations"
+msgstr "Relacions"
+
+msgid "Defensive pact"
+msgstr "Pacte defensiu"
+
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Encara no tens recursos de luxe ni estratègics."
+
+msgid "Unimproved"
+msgstr "Sense millorar"
+
+msgid "Trade offer"
+msgstr "Oferta comercial"
+
+msgid "Stockpile"
+msgstr "Estoc"
+
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Sense millorar: fitxes a la teva terra (o a les ciutats-estat aliades) amb aquest recurs però sense cap millora per utilitzar-lo.  "
+
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: ciutats que ho celebren/demanen per We Love The King Day."
+
+msgid "Religions to be founded: %s"
+msgstr "Religions a fundar: %s"
+
+msgid "Minimal faith for the next %s: %d"
+msgstr "Mínima fe per al proper %s: %d"
+
+msgid "Great Prophet"
+msgstr "Gran profeta"
+
+msgid "Religious status: %s"
+msgstr "Estat religiós: %s"
+
+msgid "No religions or pantheons have been founded yet."
+msgstr "Encara no s'han fundat religions ni panteons."
+
+msgid "%s name:"
+msgstr "Nom %s:"
+
+msgid "Founding civ:"
+msgstr "civ fundador:"
+
+msgid "Holy city:"
+msgstr "Ciutat santa:"
+
+msgid "Cities following this religion:"
+msgstr "Ciutats seguidores de la religió:"
+
+msgid "Followers of this religion:"
+msgstr "Seguidors de la religió:"
+
+msgid "Status"
+msgstr "Estat"
+
+msgid "Location"
+msgstr "Ubicació"
+
+msgid "Unknown"
+msgstr "Desconegut"
+
+msgid "Owned"
+msgstr "Propietat vostra"
+
+msgid "Known"
+msgstr "s’ha trobat."
+
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s Gireu %d %s"
+
+msgid "Current turn  |"
+msgstr "Torn  |"
+
+msgid "General"
+msgstr "General"
+
+msgid "No notifications yet."
+msgstr "Encara no hi ha notificacions."
+
+msgid "Tech"
+msgstr "Tecnologia"
+
+msgid "Panel"
+msgstr "Panell"
+
+msgid "Nothing to show."
+msgstr "Res a mostrar."
+
+msgid "Select a unit"
+msgstr "Seleccioneu una unitat"
+
+msgid "Left-click it"
+msgstr "Feu-hi clic amb el botó esquerre"
+
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Punt + disparador dret: la seva targeta apareix per sobre"
+
+msgid "Move / attack"
+msgstr "Moure/atacar"
+
+msgid "Click a tile to aim, again to go"
+msgstr "Feu clic a una fitxa per apuntar, de nou per anar-hi"
+
+msgid "The same with the laser"
+msgstr "El mateix amb el làser"
+
+msgid "Open a city"
+msgstr "Obrir una ciutat"
+
+msgid "Click it"
+msgstr "Feu-hi clic"
+
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Punt + disparador dret: la seva carta flota per sobre de la ciutat"
+
+msgid "Scroll a card"
+msgstr "Desplaça una targeta"
+
+msgid "Mouse wheel"
+msgstr "Roda del ratolí"
+
+msgid "Point at it + right stick"
+msgstr "Assenyala-hi + stick dret"
+
+msgid "Move the view"
+msgstr "Mou la vista"
+
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Òrbites d'arrossegament a la dreta, zooms de rodes, panoràmiques WASD / arrossegament mitjà"
+
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Grip + stick: esquerra / dreta gira la taula, amunt / avall l'escala"
+
+msgid "Table height"
+msgstr "Alçada de la taula"
+
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "O enganxeu cap amunt / cap avall (el correcte quan no apunteu cap targeta)"
+
+msgid "Zoom the map"
+msgstr "Amplia el mapa"
+
+msgid "+ / - or Ctrl + wheel"
+msgstr "+/- o Ctrl + roda"
+
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Mantingueu premut un gallet + el pal d'aquesta mà cap amunt / cap avall"
+
+msgid "Slide the map"
+msgstr "Feu lliscar el mapa"
+
+msgid "WASD, or click the overview"
+msgstr "WASD o feu clic a la visió general"
+
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Mantingueu un agafador i arrossegueu; o apunta a la visió general + disparador"
+
+msgid "Move a board"
+msgstr "Mou un tauler"
+
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Mantingueu premut el disparador a la seva banda superior (o al tauler d'informació) i moveu-vos"
+
+msgid "A, or the End turn button on the table"
+msgstr "A, o el botó Finalitzar el gir a la taula"
+
+msgid "Found a city"
+msgstr "Va trobar una ciutat"
+
+msgid "Next / previous unit"
+msgstr "Unitat següent/anterior"
+
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Maj+Tab"
+
+msgid "The Idle unit button on the table"
+msgstr "El botó de la unitat inactiva a la taula"
+
+msgid "Tech tree, policies, diplomacy"
+msgstr "Arbre tecnològic, polítiques, diplomàcia"
+
+msgid "The wrist card, or the buttons on the boards"
+msgstr "La targeta de canell, o els botons dels taulers"
+
+msgid "Empire overview"
+msgstr "Visió general de l'Imperi"
+
+msgid "Always up, off to your right"
+msgstr "Sempre amunt, a la teva dreta"
+
+msgid "The Settings button on the table"
+msgstr "El botó Configuració a la taula"
+
+msgid "The Civilopedia button on the table"
+msgstr "El botó de Civilopedia a la taula"
+
+msgid "Close / deselect"
+msgstr "Tancar/desseleccionar"
+
+msgid "B closes the keyboard and the city view"
+msgstr "B tanca el teclat i la vista de la ciutat"
+
+msgid "Recenter the table"
+msgstr "Recentreu la taula"
+
+msgid "Left stick click, or the Recenter button"
+msgstr "Feu clic al botó esquerre o al botó Recentrar"
+
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "===== Configuració: manteniu premut el disparador aquí i arrossegueu per moure ====="
+
+msgid "Tables"
+msgstr "Taules"
+
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Mou la taula a qualsevol lloc del paisatge del fons, pràctic en grans com un mapa convertit. "
+
+msgid "%d%% translated"
+msgstr "%d%% traduït"
+
+msgid "Notification log keeps"
+msgstr "Es manté el registre de notificacions"
+
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Quantes voltes de missatges conserva la pestanya Notificacions de la visió general."
+
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Tutorials d'Unciv: un missatge quan apareix alguna cosa nova i una targeta de tasques amb el següent que cal provar."
+
+msgid "Reset"
+msgstr "Restableix"
+
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Efectes de so propis d'Unciv. Es llegeixen des de la carpeta Unciv al costat d'aquesta quan s'executa el joc; poseu el vostre a ~/.unciv-vr/Sounds amb els mateixos noms per substituir-los."
+
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "S'han trobat sons %d. El so d'atac de cada unitat prové del conjunt de regles, com el d'Unciv."
+
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "No s'han trobat sons. Viuen al android/assets/sounds d'Unciv, al costat d'aquesta carpeta."
+
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Taulers amb una llista, construïts a partir del que sap el joc. En VR estan al voltant de la taula "
+
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(prem el disparador de la tira al llarg de la part superior per moure'n un); a l'escriptori s'asseuen al costat esquerre."
+
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Un panell és una carpeta amb un panel.json - vegeu panels/README.md. Posa el teu a %s."
+
+msgid "Put them back"
+msgstr "Posa'ls de nou"
+
+msgid "(by %s)"
+msgstr "(per %s)"
+
+msgid "Every turn"
+msgstr "Cada torn"
+
+msgid "Every %d turns"
+msgstr "Cada %d torns"
+
+msgid "not connected"
+msgstr "no connectat"
+
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (aquest client espera v%s)"
+
+msgid "Tilesets"
+msgstr "Conjunts de caselles"
+
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Unciv VR està sota la llicència pública de Mozilla 2.0, com Unciv. Les icones són pròpies d'Unciv, de molts autors "
+
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "sota llicències CC BY / CC BY-SA / CC0 (vegeu CREDITS.md i docs/Credits.md d'Unciv). La rajola, unitat, fons "
+
+msgid "and table models are Unciv VR's own."
+msgstr "i els models de taula són propis d'Unciv VR."
+
+msgid "%s speed"
+msgstr "%s velocitat"
+
+msgid "%s map"
+msgstr "Mapa %s"
+
+msgid "%s, turn %s"
+msgstr "%s, torn %s"
+
+msgid "by "
+msgstr "per "
+
+msgid "  -  from %s"
+msgstr "  - de %s"
+
+msgid "Move unit"
+msgstr "Moure la unitat"
+
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Assenyala una de les teves unitats i premeu el gallet, després apunteu una fitxa i estireu dues vegades: una per apuntar, una altra per marxar."
+
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "Feu clic a una de les vostres unitats i, a continuació, feu clic a una fitxa dues vegades: una per apuntar, una altra per anar."
+
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Seleccioneu el colon i premeu Ciutat trobada a la seva targeta (o B)."
+
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Seleccioneu el colon i premeu Ciutat trobada a la seva targeta (o F)."
+
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Assenyala una de les teves ciutats i premeu el disparador i, a continuació, premeu Vista de la ciutat a la seva targeta."
+
+msgid "Click one of your cities, then press City view on its card."
+msgstr "Feu clic a una de les vostres ciutats i, a continuació, premeu Vista ciutat a la seva targeta."
+
+msgid "Pick technology"
+msgstr "Trieu tecnologia"
+
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Obriu l'arbre tecnològic de la vostra targeta de canell i trieu alguna cosa per investigar."
+
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Obriu l'arbre tecnològic (T) i trieu alguna cosa per investigar."
+
+msgid "Pick construction"
+msgstr "Tria una construcció"
+
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Obre una de les teves ciutats i tria alguna cosa per construir a partir de la seva targeta."
+
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "Fes clic a una de les teves ciutats i tria alguna cosa per construir-la a partir de la seva targeta."
+
+msgid "Pass a turn"
+msgstr "Passar un torn"
+
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Doneu les seves ordres a les vostres unitats i, a continuació, premeu Finalitzar el torn a la taula (o A)."
+
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Doneu les seves ordres a les vostres unitats i, a continuació, premeu Finalitzar el torn (o Espai)."
+
+msgid "Reassign worked tiles"
+msgstr "Reassignar les fitxes treballades"
+
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Des de la vista d'una ciutat, assenyaleu una de les seves fitxes i premeu el gallet per treballar-la o per deixar de funcionar."
+
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "A la vista d'una ciutat, feu clic a una de les seves fitxes per treballar-la o per deixar de funcionar."
+
+msgid "Press Settings on the table."
+msgstr "Premeu Configuració a la taula."
+
+msgid "Press Settings on the table (or O)."
+msgstr "Premeu Configuració a la taula (o O)."
+
+msgid "Construct an improvement"
+msgstr "Construir una millora"
+
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Construeix un treballador, mou-lo a una rajola de planes o prats, prem Construeix millora a la seva carta i tria la granja. Deixa-ho allà fins que s'acabi la granja."
+
+msgid "Move an air unit"
+msgstr "Mou una unitat d'aire"
+
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Seleccioneu una unitat aèria i traslladeu-la a una altra de les vostres ciutats a l'abast."
+
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Gireu a la visió general de l'imperi a la vostra dreta i obriu la seva pestanya Estadístiques."
+
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Obriu la visió general de l'imperi (E) i la seva pestanya Estadístiques."
+
+msgid "Tutorial task"
+msgstr "Tasca tutorial"
+
+msgid "Hide"
+msgstr "Amaga"
+
+msgid "Defence %d"
+msgstr "Defensa %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% a la defensa de la unitat"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (saquejat)"
+
+msgid ", worked by %s"
+msgstr ", treballat per %s"
+
+msgid "  (click the red button again)"
+msgstr "  (torneu a fer clic al botó vermell)"
+
+msgid "  -  %d of %d"
+msgstr "  - %d de %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s torns)"
+
+msgid "     Science %+d per turn"
+msgstr "     Ciència: %+d per torn"
+
+msgid "  (city-state)"
+msgstr "  (ciutat-estat)"
+
+msgid "   max %d turns"
+msgstr "   max. %d torns"
+
+msgid " (about %d gold's worth)"
+msgstr " (sobre el valor de l'or %d)"
+
+msgid " (you have %d)"
+msgstr " (tens %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (fins ara: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (obsolet)"
+
+msgid " (obsolete)"
+msgstr " (obsolet)"
+
+msgid "abstained"
+msgstr "es va abstenir"
+
+msgid "researched"
+msgstr "investigat"
+
+msgid "adopted"
+msgstr "adoptat"
+
+msgid "gold"
+msgstr "or"
+
+msgid "faith"
+msgstr "fe"
+
+msgid "  - complete!"
+msgstr "  -complet!"
+
+msgid "complete"
+msgstr "completa"
+
+msgid "worked"
+msgstr "treballada"
+
+msgid "on"
+msgstr "activat"
+
+msgid "off"
+msgstr "apagat"
+
+msgid "click"
+msgstr "feu clic"
+
+msgid "improvement"
+msgstr "millora"
+
+msgid "done"
+msgstr "fet"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Objectius enemics a l'abast (anells vermells): %d. Feu clic a un per apuntar."
+
+msgid "Idle citizens: %d"
+msgstr "Ciutadans ociosos: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bombardeig: enemics a l'abast: %d (força %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Més missatges després d'aquest: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Grans personatges gratuïts per triar: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Tecnologies gratuïtes per triar: %d. Trieu-ne un destacat."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Creences encara per triar: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Unciv proporciona missatges, noms i descripcions del joc. Alguns idiomes també tradueixen la interfície Unciv VR. Les traduccions que falten es mantenen en anglès."
+
+msgid "Units ({count})"
+msgstr "Unitats ({count})"
+
+msgid "Cities ({count})"
+msgstr "Ciutats ({count})"
+
+msgid "Military"
+msgstr "Exèrcit"
+
+msgid "Military ({count})"
+msgstr "Exèrcit ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Rànquing ({count})"
+
+msgid "Waiting for orders"
+msgstr "Espera ordres"
+
+msgid "  -  promotion ready"
+msgstr "  - Promoció llesta"
+
+msgid "  (capital)"
+msgstr "  (majúscula)"
+
+msgid "  (puppet)"
+msgstr "  (titella)"
+
+msgid "  (razing)"
+msgstr "  (arrasar)"
+
+msgid "Nothing to build"
+msgstr "Res a construir"
+
+msgid "turn"
+msgstr "torn"
+
+msgid "turns"
+msgstr "torns"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader} - {era} Era"
+
+msgid "{score} pts"
+msgstr "{score} pts"
+
+msgid "No units yet."
+msgstr "Encara no hi ha unitats."
+
+msgid "No cities yet."
+msgstr "Encara no hi ha ciutats."
+
+msgid "No military units yet."
+msgstr "Encara no hi ha unitats militars."
+
+msgid "No civilizations met yet."
+msgstr "Encara no s'han trobat civilitzacions."
+
+msgid "No wonders to show yet."
+msgstr "Encara no hi ha cap meravella per mostrar."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Cada unitat que tens, les que encara esperen comandes primer, amb el que cadascú està fent. Feu clic a un per seleccionar-lo."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Cada ciutat que tens, primer la capital, amb què està construint cadascuna i com de gran és. Feu clic a un per obrir la seva targeta."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Cada unitat militar que tens, amb la seva acció, moviments i salut. Feu clic a un per seleccionar-lo."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Rànquings de totes les civilitzacions conegudes per puntuació total."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Vista general de les meravelles d'Unciv, per època: quines es construeixen, s'estan construint o encara estan per construir. Feu clic a un construït per mirar-lo."
+
+msgid "In the Hall of the Mountain King"
+msgstr "A la Sala del Rei Muntanya"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "La sala del tron subterrani del Rei Troll a les muntanyes de Dovre, il·luminada per brasers de foc i venes de magma brillants"
+
+msgid "Mountains and clouds"
+msgstr "Muntanyes i núvols"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Un prat envoltat de cims de baix nivell, amb arbres i núvols a la deriva"
+
+msgid "Floating in space"
+msgstr "Flotant a l'espai"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "La taula sura entre les estrelles, al costat d'un planeta anellat"
+
+msgid "Studio"
+msgstr "Estudi"
+
+msgid "A plain, dark room"
+msgstr "Una habitació senzilla i fosca"
+
+msgid "Webb Deep Field"
+msgstr "Camp profund de Webb"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "La taula flota a l'espai profund, envoltada pel primer camp profund del telescopi espacial James Webb"
+
+msgid "Ornate oak"
+msgstr "Roure ornamentat"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Roure amb cordes de noguera i grèvol, una vora de corda tallada i un pedestal als peus de desplaçament"
+
+msgid "Plain wood"
+msgstr "Fusta plana"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Una llosa rodona de fusta fosca sobre una columna afilada"
+
+msgid "Low poly"
+msgstr "Baixa poli"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Terreny low-poly facetat, un color pla per cara"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "La interfície està traduïda; el contingut del joc es mostra en anglès."
+
+msgid "Turns: %s"
+msgstr "Torns: %s"
+
+msgid "Latin keyboard"
+msgstr "Teclat llatí"
+
+msgid "Arabic keyboard"
+msgstr "Teclat àrab"
+
+msgid "Hebrew keyboard"
+msgstr "Teclat hebreu"
+
+msgid "OK"
+msgstr "D’acord"
+
+msgid "Default"
+msgstr "Per defecte"
+
+msgid "Manual"
+msgstr "Manual"
+
