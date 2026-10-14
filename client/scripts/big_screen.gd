@@ -32,8 +32,8 @@ const TABS := [["tech", "Technologies"], ["policies", "Policies"], ["diplomacy",
 
 # Tech tree layout (pixels)
 const COLUMN_WIDTH := 272.0
-const ROW_HEIGHT := 66.0
-const NODE_SIZE := Vector2(246, 60)
+const ROW_HEIGHT := 92.0
+const NODE_SIZE := Vector2(246, 86)
 const TREE_TOP := 36.0
 
 const TEXT := Color(0.92, 0.94, 0.97)
@@ -423,8 +423,15 @@ func _tech_node(tech: Dictionary) -> Button:
 	title.layout_direction = Control.LAYOUT_DIRECTION_LTR
 	var queue_index := int(tech.get("queueIndex", -1))
 	title.text = ("%d. " % (queue_index + 1) if queue_index > 0 else "") + Lang.t(tech_name)
+	button.tooltip_text = title.text
 	title.position = Vector2(60, 3)
-	title.size = Vector2(NODE_SIZE.x - 64, 22)
+	# Reserve two lines for translated names, above the unlocks and turn count.
+	# Keep the tree geometry LTR, but shape the label using its own text direction.
+	title.text_direction = Control.TEXT_DIRECTION_AUTO
+	title.size = Vector2(NODE_SIZE.x - 68, 48)
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	title.max_lines_visible = 2
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	title.clip_text = true
 	title.add_theme_font_size_override("font_size", 16)
 	title.add_theme_color_override("font_color", TEXT)
@@ -434,7 +441,7 @@ func _tech_node(tech: Dictionary) -> Button:
 		var turns := Label.new()
 		turns.layout_direction = Control.LAYOUT_DIRECTION_LTR
 		turns.text = Lang.format("%s turns", tech["turns"])   # (no number while you have no science yet)
-		turns.position = Vector2(NODE_SIZE.x - 96, 36)
+		turns.position = Vector2(NODE_SIZE.x - 96, 62)
 		turns.size = Vector2(92, 20)
 		turns.clip_text = true
 		turns.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -451,7 +458,7 @@ func _tech_node(tech: Dictionary) -> Button:
 		var texture := _unlock_icon(unlock)
 		if texture == null:
 			continue
-		button.add_child(_icon_disc(texture, 24.0, _unlock_back(unlock), Vector2(x, 29)))
+		button.add_child(_icon_disc(texture, 24.0, _unlock_back(unlock), Vector2(x, 55)))
 		x += 26.0
 	return button
 

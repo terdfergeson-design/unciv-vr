@@ -9,10 +9,10 @@ These are AI-assisted drafts for native-speaker review, not reviewed upstream tr
 They use Unciv's normal UTF-8 `English key = translation` format. Edit these files directly.
 The frontend `.po` files remain separate and take precedence for matching client labels.
 
-## Coverage — 2026-10-13
+## Coverage — 2026-10-14
 
-Arabic has 1,710 filled entries out of 6,544 scaffold entries; Hebrew has 1,700 out of 6,542
-(including 10 language settings). The picker shows Arabic 26% and Hebrew 25%, rounded down using Unciv's convention of excluding
+Arabic has 1,958 filled entries out of 6,544 scaffold entries; Hebrew has 1,700 out of 6,542
+(including 10 language settings). The picker shows Arabic 29% and Hebrew 25%, rounded down using Unciv's convention of excluding
 `ConditionalsOrder` from the denominator. This is whole-catalog coverage, not the percentage
 of text seen in a typical VR game. The scaffold uses this checkout's German catalog plus
 any additional manual-template keys; no German values were copied.
@@ -26,8 +26,14 @@ Included in both languages:
 - Filters, city qualifiers, spies' actions, countable expressions and leader titles.
 - Major civilization and leader names, plus overlapping frontend vocabulary.
 
-Still pending: most city and great-person names, civilization dialogue and ability names,
-quotations, engine notifications and UI sentences, diplomatic modifiers, events and tutorials.
+Arabic additionally has 248 new draft entries covering construction requirements and queues,
+diplomacy and war announcements, city-state relations and tribute, trade agreements, unit comparisons,
+and general error messages. This fills the previously blank normal entries from General through
+Unit differences. Existing translations and language settings are preserved. Named placeholders and
+literal line breaks are retained. This batch has not had native-speaker or runtime review.
+
+Still pending: most city and great-person names, civilization-specific dialogue and ability names,
+quotations, many engine notifications and UI sentences, diplomatic modifiers, events and tutorials.
 Blank values are marked `# Requires translation!`; Unciv falls back to English. Do not fill
 these with copies of the English key merely to increase completion. Partial sentences can
 still mix languages where their component words have not been translated.
@@ -65,4 +71,12 @@ Before proposing an upstream contribution:
 
 Nothing has been submitted upstream. A limited Arabic desktop gameplay review covered unit actions,
 city production, research and policies; some mixed-English descriptions and clipped labels remain.
-Native-speaker review and Quest review of these content drafts are still pending.
+On 2026-10-14, the user reported that their Arabic-speaking friend found the wording in the shared
+screenshots good, but noted clipped text. This feedback applies to the text visible in those screenshots,
+not the entire catalog or the new 248-entry batch. The saved review already identifies narrow
+units-needing-orders and city rename controls; layout follow-up remains open.
+The user's marked technology screenshot also showed a long Arabic technology name clipped at the
+card edge. Technology cards now reserve two lines for names, with the unlock icons and turn count
+below them and increased tree row spacing. Exceptionally long names use an ellipsis and a full-name
+tooltip. This layout change has not yet had a runtime or visual check.
+Full-catalog native-speaker review and Quest review remain pending.
