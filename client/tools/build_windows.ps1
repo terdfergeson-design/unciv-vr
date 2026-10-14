@@ -9,7 +9,12 @@ $client = Join-Path $repo "client"
 $unciv = Join-Path $repo "unciv"
 $buildRoot = Join-Path $repo "build\windows"
 $package = Join-Path $buildRoot "UncivVR"
-$zip = Join-Path $buildRoot "UncivVR-Windows-x86_64.zip"
+# One version for both builds: the Quest preset's version/name in client\export_presets.cfg
+$versionLine = Select-String -LiteralPath (Join-Path $client "export_presets.cfg") -Pattern '^version/name="(.+)"' | Select-Object -First 1
+if (-not $versionLine) { throw "Can't read version/name from client\export_presets.cfg" }
+$version = $versionLine.Matches[0].Groups[1].Value
+$zip = Join-Path $buildRoot "UncivVR-v$version-windows.zip"
+Write-Host "Unciv VR $version for Windows"
 
 if (-not $GodotPath) {
 	$GodotPath = Join-Path $env:USERPROFILE "Documents\Godot_v4.7.2-stable_win64.exe"
@@ -36,6 +41,8 @@ New-Item -ItemType Directory -Force -Path $buildRoot | Out-Null
 # This script owns only this generated package directory and archive.
 if (Test-Path -LiteralPath $package) { Remove-Item -LiteralPath $package -Recurse -Force }
 if (Test-Path -LiteralPath $zip) { Remove-Item -LiteralPath $zip -Force }
+$oldZip = Join-Path $buildRoot "UncivVR-Windows-x86_64.zip"   # the name used before versioned zips
+if (Test-Path -LiteralPath $oldZip) { Remove-Item -LiteralPath $oldZip -Force }
 New-Item -ItemType Directory -Force -Path $package | Out-Null
 
 function Invoke-Godot([string]$Arguments, [string]$Description) {
@@ -53,7 +60,7 @@ try {
 $bridgeJar = Join-Path $unciv "bridge\build\libs\UncivBridge.jar"
 if (-not (Test-Path -LiteralPath $bridgeJar -PathType Leaf)) { throw "Gradle did not produce $bridgeJar" }
 
-$packArgs = '--headless --path "' + $client + '" -s tools/pack_android_data.gd'
+$packArgs = '--headless --xr-mode off --path "' + $client + '" -s tools/pack_android_data.gd'
 Invoke-Godot $packArgs "Packing Unciv and built-in game data..."
 if (-not (Test-Path -LiteralPath (Join-Path $client "android_data.pack") -PathType Leaf)) {
 	throw "Godot did not create client\android_data.pack."
@@ -63,7 +70,7 @@ $importArgs = '--headless --xr-mode off --path "' + $client + '" --import'
 Invoke-Godot $importArgs "Importing packed game data into the Godot project..."
 
 $exe = Join-Path $package "UncivVR.exe"
-$godotArgs = @('--headless', '--path', '"' + $client + '"', '--export-release', '"Windows Desktop"', '"' + $exe + '"') -join ' '
+$godotArgs = @('--headless', '--xr-mode', 'off', '--path', '"' + $client + '"', '--export-release', '"Windows Desktop"', '"' + $exe + '"') -join ' '
 Invoke-Godot $godotArgs "Exporting the Godot Windows build..."
 if (-not (Test-Path -LiteralPath (Join-Path $package "UncivVR.exe") -PathType Leaf)) { throw "Godot did not create the Windows executable." }
 $packSize = (Get-Item -LiteralPath (Join-Path $client "android_data.pack")).Length
@@ -96,14 +103,14 @@ if (-not (Test-Path -LiteralPath (Join-Path $runtime "bin\java.exe") -PathType L
 
 Copy-Item -LiteralPath (Join-Path $repo "LICENSE") -Destination $package
 Copy-Item -LiteralPath (Join-Path $repo "CREDITS.md") -Destination $package
-@'
-Unciv VR for Windows x86_64
+@"
+Unciv VR $version for Windows x86_64
 
 Run UncivVR.exe. The portable package includes the Unciv game engine and a trimmed Java runtime; Java and Godot do not need to be installed. Game data is unpacked to the user's Godot data folder on first launch.
 Saves and settings are stored in your user profile under .unciv-vr.
 
 For license and attribution information, see LICENSE and CREDITS.md.
-'@ | Set-Content -LiteralPath (Join-Path $package "README.txt") -Encoding UTF8
+"@ | Set-Content -LiteralPath (Join-Path $package "README.txt") -Encoding UTF8
 
 Write-Host "Creating the portable ZIP..."
 Compress-Archive -Path (Join-Path $package "*") -DestinationPath $zip -CompressionLevel Optimal

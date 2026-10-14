@@ -1155,6 +1155,45 @@ func reset_board_poses() -> void:
 	_set_status("The overview, info board, big screen and panels are back in their usual spots.")
 
 
+## A board that was moved somewhere you can't see from where you stand - behind you, or far off (a drag that went
+## wrong, or the table turned or moved since) - goes back to its usual spot when it opens, or failing that floats in
+## front of you. Otherwise opening it would seem to do nothing, and pressing its button again would close it.
+func _bring_board_into_view(id: String) -> void:
+	var node := _board_node(id)
+	if not _xr_mode or node == null or _xr_camera == null or _board_in_view(node):
+		return
+	if (settings.get(id + "_pose", []) as Array).size() == 4:
+		settings[id + "_pose"] = []
+		_save_settings()
+		_apply_board_poses()
+		if _board_in_view(node):
+			print("Board %s was out of sight - moved back to its usual spot" % id)
+			return
+	# Not even its usual spot is in front of you (you're on the far side of the table): float it ahead of you for now
+	var head := _xr_camera.global_position
+	var ahead := -_xr_camera.global_basis.z
+	ahead.y = 0.0
+	ahead = ahead.normalized() if ahead.length() > 0.01 else Vector3.FORWARD
+	node.global_position = head + ahead * 0.9 + Vector3(0, -0.1, 0)
+	var to_viewer := table.to_local(head) - node.position
+	node.rotation_degrees = Vector3(_board_tilt(id), rad_to_deg(atan2(to_viewer.x, to_viewer.z)), 0)
+	print("Board %s was out of sight - floated in front of you" % id)
+
+
+## True when [param node] is in the half of the room you're facing (left to right, ignoring how far you look up or
+## down) and within reach of your eyes.
+func _board_in_view(node: Node3D) -> bool:
+	var to_board := node.global_position - _xr_camera.global_position
+	var ahead := -_xr_camera.global_basis.z
+	to_board.y = 0.0
+	ahead.y = 0.0
+	if to_board.length() < 0.05:
+		return true
+	if to_board.length() > 4.0:
+		return false
+	return ahead.length() < 0.01 or ahead.normalized().dot(to_board.normalized()) > 0.0
+
+
 ## The big wide screen with the tech tree, policies and diplomacy: above the overview in VR; on the desktop
 ## a window in the middle that T / P / G open and Esc closes.
 func _setup_big_screen() -> void:
@@ -4372,6 +4411,7 @@ func open_settings() -> void:
 		_close_popup()   # nothing floats in front of the board (the main menu card comes back when it closes)
 	close_civilopedia()   # they share a spot over the table
 	_set_settings_visible(true)
+	_bring_board_into_view("settings")
 	_tutorial_request("tutorialTaskDone", {"task": "Open the options table"})
 	_refresh_settings()
 
@@ -4850,6 +4890,7 @@ func open_civilopedia(target := "") -> void:
 		civilopedia_board.category = ""
 		_pedia_ruleset = wanted
 	_set_civilopedia_visible(true)
+	_bring_board_into_view("pedia")
 	if target != "":
 		await civilopedia_board.open_link(target)
 	elif civilopedia_board.link == "":
