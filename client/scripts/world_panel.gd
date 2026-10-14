@@ -42,6 +42,11 @@ void fragment() {
 }
 """
 static var _shader: Shader
+## A board is redrawn at least this often anyway, for the few changes no signal tells about (a fading colour).
+const REFRESH_SECONDS := 1.0
+
+var _dirty := true
+var _since_drawn := 0.0
 
 
 ## Puts [param card] on a panel [param size_metres] big, rendered at [param size_pixels].
@@ -53,10 +58,13 @@ func setup(card: Control, size_pixels: Vector2i, size_metres: Vector2) -> void:
 	viewport = SubViewport.new()
 	viewport.size = pixels
 	viewport.transparent_bg = true
-	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	# Drawn again only when something on it changes (see _watch), not every frame: on the Quest, 16 boards redrawn
+	# every frame cost about 7 ms of the 13.9 ms a frame has, which dropped the frame rate and blurred the text.
+	viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 	add_child(viewport)
 	viewport.add_child(card)
 	card.position = Vector2.ZERO
+	_watch(viewport)
 
 	quad = MeshInstance3D.new()
 	var mesh := QuadMesh.new()
@@ -73,6 +81,52 @@ func setup(card: Control, size_pixels: Vector2i, size_metres: Vector2) -> void:
 	quad.material_override = material
 	quad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(quad)
+
+
+## Asks for the board to be drawn again on the next frame.
+func mark_dirty() -> void:
+	_dirty = true
+
+
+## Something that changes how a node looks makes it redraw itself (the draw signal), or moves, resizes or shows and
+## hides it: each of those, anywhere on the card, marks the board for drawing. Nodes added later are watched too.
+func _watch(node: Node) -> void:
+	if not node.child_entered_tree.is_connected(_on_child_entered):
+		node.child_entered_tree.connect(_on_child_entered)
+		node.child_exiting_tree.connect(_on_child_exiting)
+		if node is CanvasItem:
+			(node as CanvasItem).draw.connect(mark_dirty)
+			(node as CanvasItem).visibility_changed.connect(mark_dirty)
+		if node is Control:
+			(node as Control).item_rect_changed.connect(mark_dirty)
+	for child in node.get_children():
+		_watch(child)
+
+
+func _on_child_entered(child: Node) -> void:
+	_watch(child)
+	_dirty = true
+
+
+func _on_child_exiting(_child: Node) -> void:
+	_dirty = true
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED:
+		_dirty = true
+
+
+func _process(delta: float) -> void:
+	if viewport == null:
+		return
+	_since_drawn += delta
+	if not is_visible_in_tree():
+		return   # stays marked, and is drawn as soon as it's shown
+	if _dirty or _since_drawn >= REFRESH_SECONDS:
+		_dirty = false
+		_since_drawn = 0.0
+		viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
 
 
 ## Where a ray hits the panel: [global point, panel pixel], or null when it misses or the panel is hidden.

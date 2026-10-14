@@ -50,3 +50,4 @@ openxr/enabled=true
 openxr/extensions/render_model=true
 shaders/enabled=true
 openxr/extensions/meta/render_model=true
+openxr/extensions/meta/dynamic_resolution=false

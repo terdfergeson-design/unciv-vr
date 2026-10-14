@@ -14,6 +14,7 @@ extends Node3D
 ##   --load=C:/path/to/save  --port=8765  --no-launch (never start a bridge)
 ##   --smoke-test (scripted run that exits; for testing)  --screenshot=file.png
 ##   --language=German (temporary language override, not saved)
+##   --perf-probe (switches parts of the scene off in turn and times each: see perf_probe.gd)
 ##   --autoplay (a whole game played by Unciv's AI through the client, then a report: see autoplay.gd)
 ##
 ## Desktop: left-click select / move / attack (red rings) / open a city; the card on the right,
@@ -293,6 +294,9 @@ const CLICKS_ITSELF := ["action", "improvement", "produce", "queue", "buy", "res
 
 func _ready() -> void:
 	options = _parse_args()
+	var perf_probe: GDScript = load("res://scripts/perf_probe.gd")
+	if perf_probe.requested(options):   # a measuring aid for the headset: see perf_probe.gd
+		add_child(perf_probe.new(self))
 	if options.has("autoplay"):
 		launcher.extra_args = " --debug"   # the AI plays your turns through a debug command
 	# The Quest app: Unciv's images, sounds and rules and our built-in folders come packed; unpack them first
