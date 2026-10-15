@@ -38,10 +38,11 @@ const WorldPanel := preload("res://scripts/world_panel.gd")
 const Backgrounds := preload("res://scripts/backgrounds.gd")
 const TableModel := preload("res://scripts/table_model.gd")
 const Sounds := preload("res://scripts/sounds.gd")
+const Music := preload("res://scripts/music.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 25   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 26   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -127,6 +128,8 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	"autoAssignSpecialistsInNewCities": true, "notificationsLogMaxTurns": 5, "turnsBetweenAutosaves": 1,
 	# How loud Unciv's sounds are, 0 to 100 (Settings > Sound)
 	"soundVolume": 70, "ambienceVolume": 50,
+	# Unciv's music (scripts/music.gd): how loud, 0 to 100, and the seconds of silence between tracks
+	"musicVolume": 50, "pauseBetweenTracks": 10,
 	# Panels (panels/ and ~/.unciv-vr/Panels): folder -> shown (missing: the panel's own "shown"), and where
 	# each has been dragged to in VR, relative to the table: folder -> [x, y, z, yaw degrees]
 	"panels": {}, "panel_poses": {}, "desktop_window_positions": {}, # desktop: window id -> Vector2
@@ -195,6 +198,8 @@ var _table_buttons: Array[Dictionary] = []   # {id, node, material, color}
 var _hovered_button := ""
 var table_model: TableModel   # the table's top, column and feet (tables/<Name>)
 var sounds: Sounds            # Unciv's sound effects, read from its folder (scripts/sounds.gd)
+var music: Music              # Unciv's music, chosen the way Unciv chooses it (scripts/music.gd)
+var _music_note := ""         # Settings > Sound: how the last Download music went
 var _launched_bridge := false
 var _initialized := false
 var _state_revision := -1          # getState revision we last merged; -1 = ask for everything
@@ -314,6 +319,14 @@ func _ready() -> void:
 	sounds.name = "Sounds"
 	sounds.set_volumes(float(settings.get("soundVolume", 70)) / 100.0, float(settings.get("ambienceVolume", 50)) / 100.0)
 	add_child(sounds)
+	music = Music.new()
+	music.name = "Music"
+	add_child(music)
+	music.volume = float(settings.get("musicVolume", 50)) / 100.0
+	music.pause_between = float(settings.get("pauseBetweenTracks", 10))
+	music.changed.connect(func(_info: Dictionary) -> void: _refresh_settings_if_on("sound"))
+	# Unciv starts the menu music as it starts up
+	music.choose("", [Music.MENU, Music.AMBIENT], Music.SUFFIX_MUST_MATCH)
 	backgrounds = Backgrounds.new()
 	backgrounds.name = "Backgrounds"
 	add_child(backgrounds)
@@ -827,6 +840,8 @@ func _on_lobby_choice(kind: String, value: String) -> void:
 			var parts := value.split("|", true, 1)
 			var changed_rules: bool = parts[0] == "ruleset" and str(_setup.get("ruleset", "")) != parts[1]
 			_setup[parts[0]] = parts[1]
+			if parts[0] == "civ" and parts[1] != "Random":   # Unciv's nation picker plays the nation's theme
+				music.choose(parts[1], Music.THEME_OR_PEACE, Music.FLAGS_SELECT_NATION)
 			if changed_rules:
 				await _load_setup_options()
 			_show_lobby_card("setup")
@@ -1438,6 +1453,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 			await show_big_screen(value)
 		"civ_open":
 			big_screen.civ_detail = value
+			_music_for_civ(value)
 			big_screen.diplo_armed = ""
 			big_screen.set_diplomacy(big_screen._diplomacy)
 		"civ_close":
@@ -1557,6 +1573,7 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 				_set_status(reply.error)
 				return
 			_set_status(Lang.format("You declared war on %s!", value))
+			music.choose(value, Music.WAR, Music.FLAGS_SPECIFIC)
 			big_screen.set_diplomacy(reply.result)
 			await refresh()
 		"trade_open":
@@ -3258,6 +3275,7 @@ func end_turn() -> void:
 			if e.get("type") == "move":
 				hex_map.note_unit_at(int(e.get("unit", -1)), Vector2i(int(e["to"][0]), int(e["to"][1])))
 	await refresh()
+	_music_for_turn(result)
 	if result.get("gameOver", false) or result.get("defeated", false):
 		await show_big_screen("victory")
 		return
@@ -3376,6 +3394,7 @@ func _maybe_show_alert() -> void:
 		return
 	_alert_shown_key = str(alert["key"])
 	sounds.play(Sounds.NOTIFICATION)
+	_music_for_alert(alert)
 	if alert.has("x"):
 		_look_at_tile(Vector2i(int(alert["x"]), int(alert["y"])))
 	_show_center_card(func(menu: ActionMenu) -> void: menu.show_alert(alert, alerts.size() - 1), "alert",
@@ -4048,6 +4067,26 @@ func _run_smoke_test() -> void:
 	await get_tree().create_timer(0.2).timeout
 	sounds.ambience("")
 	print("SMOKE: played a click, a whoosh on the table and the ancient city ambience")
+	# Music: Unciv's way of choosing a track, tried on made-up names; then what's really there
+	var fake := ["m/Thatched Villagers - Ambient.mp3", "m/Babylon - War.ogg", "m/Babylon - Peace.ogg",
+		"m/Writing - Researched.mp3", "m/Pack/Greece - Theme.mp3"]
+	var music_checks := {
+		"ambient": Music.pick(fake, "", Music.AMBIENT, Music.FLAGS_DEFAULT).ends_with("Ambient.mp3"),
+		"specific": Music.pick(fake, "Babylon", Music.WAR, Music.FLAGS_SPECIFIC).ends_with("Babylon - War.ogg"),
+		"none for Rome": Music.pick(fake, "Rome", Music.WAR, Music.FLAGS_SPECIFIC) == "",
+		"nation, any mood": Music.pick(fake, "Greece", Music.PEACE, Music.FLAGS_SELECT_NATION).ends_with("Greece - Theme.mp3"),
+		"next turn needs the civ": Music.pick(fake, "Rome", Music.PEACE, Music.FLAGS_NEXT_TURN) == "",
+		"history avoided": Music.pick(fake, "Babylon", "", Music.FLAGS_SELECT_NATION, ["m/Babylon - War.ogg"]).ends_with("Peace.ogg"),
+		"tech": Music.pick(fake, "Writing", Music.RESEARCHED, Music.FLAGS_SPECIFIC) != "",
+		"pack name": Music.describe("/x/Music/Pack/Greece - Theme.mp3")["pack"] == "Pack",
+	}
+	var music_failed: Array = music_checks.keys().filter(func(k: String) -> bool: return not music_checks[k])
+	print("SMOKE: music choosing: %d of %d checks pass%s; %d tracks in %s, Unciv's own %s, now: %s" % [
+		music_checks.size() - music_failed.size(), music_checks.size(),
+		(", failed " + str(music_failed)) if not music_failed.is_empty() else "", Music.all_tracks().size(), Music.user_dir(),
+		"there" if Music.default_track() != "" else "not downloaded", music.now_playing()])
+	_music_for_alert({"type": "TechResearched", "tech": "Writing"})
+	print("SMOKE: music for a tech alert: %s" % music.last_choice())
 	# Panels: the template language, the read-only guard, then the built-in Units panel and a click on it
 	var checks := {
 		"fallback": Panels.fill("{a|b|'none'}", {"b": 2.0}) == "2",
@@ -4334,6 +4373,8 @@ func _apply_language() -> void:
 const INT_SETTINGS := ["notificationsLogMaxTurns", "turnsBetweenAutosaves"]
 ## Ours: how loud, 0 to 100 (nothing to do with the bridge)
 const VOLUME_SETTINGS := ["soundVolume", "ambienceVolume"]
+## Ours too: the music (scripts/music.gd)
+const MUSIC_SETTINGS := ["musicVolume", "pauseBetweenTracks"]
 ## Unciv options the game engine itself reads (sent with setSettings)
 const BRIDGE_SETTINGS := ["showTutorials", "checkForDueUnits", "autoUnitCycle", "alternateUnitCycleOrder", "autoAssignCityProduction",
 	"autoBuildingRoads", "automatedWorkersReplaceImprovements", "stopAutomatedWorkersRemoveVegetation",
@@ -4360,6 +4401,14 @@ func change_setting(key: String, value: String) -> void:
 		_save_settings()
 		sounds.set_volumes(float(settings.get("soundVolume", 70)) / 100.0, float(settings.get("ambienceVolume", 50)) / 100.0)
 		sounds.play(Sounds.SLIDER)   # so you hear what you picked, like Unciv's volume sliders
+		_refresh_settings()
+		return
+	if key in MUSIC_SETTINGS:
+		settings[key] = int(value)
+		_save_settings()
+		music.pause_between = float(settings.get("pauseBetweenTracks", 10))
+		if key == "musicVolume":
+			music.set_volume(float(value) / 100.0)
 		_refresh_settings()
 		return
 	if key in INT_SETTINGS:
@@ -4464,6 +4513,84 @@ func close_settings() -> void:
 
 
 ## Shows the current settings (and what's running) on the settings board, if it's up.
+# region music: Unciv's, chosen where Unciv chooses it (scripts/music.gd) ----------------------
+
+## Settings > Sound's Download music: the bridge fetches Unciv's own track (Thatched Villagers) into
+## ~/.unciv-vr/Music, as Unciv's button does, and it starts playing.
+func download_music() -> void:
+	_music_note = "Downloading..."
+	_refresh_settings()
+	var reply := await bridge.request("downloadMusic")
+	if not reply.ok:
+		_music_note = str(reply.error)
+		_set_status(str(reply.error))
+		_refresh_settings()
+		return
+	_music_note = ""
+	_set_status("Music downloaded.")
+	if float(settings.get("musicVolume", 50)) <= 0.0:   # downloading means wanting to hear it
+		settings["musicVolume"] = 50
+		_save_settings()
+		music.volume = 0.5
+	music.choose("", Music.AMBIENT, Music.PLAY_DEFAULT_FILE)   # and on to the next, unlike Unciv's PlaySingle
+	_refresh_settings()
+
+
+## Unciv's diplomacy screen: picking a civ plays its war or peace music, if there is some for that civ.
+func _music_for_civ(civ_name: String) -> void:
+	var at_war := false
+	for civ: Dictionary in big_screen._diplomacy.get("civs", []):
+		if str(civ.get("name", "")) == civ_name:
+			at_war = bool(civ.get("atWar", false))
+	music.choose(civ_name, Music.WAR if at_war else Music.PEACE, Music.FLAGS_SELECT_NATION)
+
+
+## Unciv's music at the start of a turn (GameInfo.nextTurn): every tenth turn, your civ's war or peace music
+## if there is some. And the victory screen's: a win or a defeat.
+func _music_for_turn(result: Dictionary) -> void:
+	var civ_name := str(state.get("playerCiv", ""))
+	if result.get("gameOver", false) and result.has("winner"):
+		var victory := str(result.get("victoryType", ""))
+		if str(result["winner"]) == civ_name:
+			if not music.choose(victory, Music.VICTORY, Music.FLAGS_SPECIFIC):
+				music.choose(civ_name, [Music.VICTORY, Music.THEME], Music.SUFFIX_MUST_MATCH)
+		elif not music.choose(victory, Music.DEFEAT, Music.FLAGS_SPECIFIC):
+			music.choose(civ_name, Music.DEFEAT, Music.SUFFIX_MUST_MATCH)
+		return
+	if result.get("defeated", false):
+		music.choose(civ_name, Music.DEFEAT, Music.SUFFIX_MUST_MATCH)
+		return
+	if int(result.get("turn", 0)) % 10 == 0:
+		var at_war := bool((state.get("player", {}) as Dictionary).get("atWar", false))
+		music.choose(civ_name, Music.WAR if at_war else Music.PEACE, Music.FLAGS_NEXT_TURN)
+
+
+## The music Unciv's popups choose (AlertPopup): a civ's theme when you meet it, its war music when it declares
+## war, a golden age, a wonder's or a tech's own track...
+func _music_for_alert(alert: Dictionary) -> void:
+	var civ_name := str(alert.get("civ", ""))
+	match str(alert.get("type", "")):
+		"FirstContact":
+			music.choose(civ_name, Music.THEME_OR_PEACE, Music.FLAGS_SPECIFIC)
+		"WarDeclaration":
+			music.choose(civ_name, Music.WAR, Music.FLAGS_SPECIFIC)
+		"Defeated":
+			music.choose(civ_name, Music.DEFEAT, Music.SUFFIX_MUST_MATCH)
+		"GoldenAge":
+			music.choose(str(state.get("playerCiv", "")), Music.GOLDEN, Music.FLAGS_SPECIFIC)
+		"StartIntro":
+			music.choose(str(alert.get("nation", civ_name)), Music.THEME_OR_PEACE, Music.FLAGS_SPECIFIC)
+		"TechResearched":
+			music.choose(str(alert.get("tech", alert.get("title", ""))), Music.RESEARCHED, Music.FLAGS_SPECIFIC)
+		"WonderBuilt":
+			music.choose(str(alert.get("wonder", "")), Music.WONDER, Music.FLAGS_SPECIFIC)
+
+
+func _refresh_settings_if_on(page_id: String) -> void:
+	if settings_board != null and settings_board.page == page_id:
+		_refresh_settings()
+
+
 func _refresh_settings() -> void:
 	if settings_board == null or not settings_shown():
 		return
@@ -4476,7 +4603,9 @@ func _refresh_settings() -> void:
 	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
 		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game, "languages": _languages,
 		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list(),
-		"table_moved": (settings.get("background_spots", {}) as Dictionary).has(backgrounds.current)})
+		"table_moved": (settings.get("background_spots", {}) as Dictionary).has(backgrounds.current),
+		"music": music.now_playing(), "music_tracks": Music.all_tracks().size(), "music_default": Music.default_track() != "",
+		"music_folder": Music.user_dir(), "music_note": _music_note})
 
 
 func _on_settings_chosen(kind: String, value: String) -> void:
@@ -4498,6 +4627,20 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 			_task_hidden = ""
 			if not _in_lobby and not state.is_empty():
 				await refresh()
+		"music_next":
+			if not music.next_track():
+				_set_status("No music found.")
+			_refresh_settings()
+		"music_pause":
+			if music.now_playing()["state"] == "paused":
+				music.resume()
+			elif music.is_playing():
+				music.pause()
+			elif not music.choose("", Music.AMBIENT, Music.FLAGS_NONE):
+				_set_status("No music found.")
+			_refresh_settings()
+		"music_download":
+			await download_music()
 		"reset_panels":
 			settings["panel_poses"] = {}
 			_save_settings()

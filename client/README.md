@@ -30,7 +30,7 @@ The Settings button on the table (O on the desktop) opens the settings board, la
 **Look** (background, table, tiles and units as drop-down lists with what each one is, plus Unciv's visual hints - the
 map overlays), **Gameplay** (Unciv's turn and unit-cycling options, how long the notification log is kept, how
 other players' turns are shown), **Automation** (Unciv's automation options, and when automated units move),
-**Sound** (how loud the effects and the city ambience are), **Panels** (which panels are up, built-in and your own;
+**Sound** (how loud the effects, the city ambience and the music are; the music's pause between tracks, what's playing, Next, and Download music), **Panels** (which panels are up, built-in and your own;
 see below), **Controls** (desktop and VR), **Game and saves**
 (save, main menu, how often to autosave) and **About**
 (versions, this game's rules, and the folders for your own tilesets, backgrounds and tables). In VR it floats
@@ -156,6 +156,21 @@ Like the icons, the sounds aren't copied into this repository: they're read when
 checkout next to it (`unciv/android/assets/sounds`). To replace one, drop a file with the same name
 (`click.mp3`, `whoosh.mp3`, `cityAncient.ogg`...) into `~/.unciv-vr/Sounds` (Windows:
 `C:\Users\<you>\.unciv-vr\Sounds`) - `.mp3`, `.ogg` and `.wav` all work, and yours wins.
+
+### Music
+**Unciv's music**, chosen the way Unciv chooses it (`scripts/music.gd`, after Unciv's `MusicController`). Unciv
+itself ships no music: its Options > Sound has a **Download music** button that fetches one track, "Thatched
+Villagers", and so does Settings > Sound here (the bridge downloads it, `downloadMusic`). Add your own `.mp3`,
+`.ogg` or `.wav` files to `~/.unciv-vr/Music`; a sub-folder there is a music pack, like a mod's `music` folder.
+
+Tracks are picked by name, Unciv's way: `<context> - <mood>`, the context a nation, civ, tech, wonder or
+victory type and the mood one of Ambient, Menu, Peace, War, Theme, Golden, Wonder, Researched, Victory or Defeat.
+Between times an Ambient track plays, then a pause (Settings > Sound), then another. The menu music starts as
+the game does; the new-game setup plays a nation's theme when you pick it; meeting a civ plays its theme, a
+declaration of war (theirs or yours) its war music, the diplomacy screen the civ you open; a golden age, a wonder
+or a tech plays its own track if there is one (`Babylon - Golden.mp3`, `Writing - Researched.ogg`...); every
+tenth turn your civ's war or peace music, if any; and the victory screen a win or a defeat. Nothing is changed
+when no file matches - the music already on carries on. Leader voices (Unciv's `voices` folders) aren't played yet.
 
 Unciv's popups (first contact, declarations of friendship, demands, trade requests, a city you've conquered,
 wonders, golden ages, great people, victory and defeat...) come up as a card in the middle of the window, or

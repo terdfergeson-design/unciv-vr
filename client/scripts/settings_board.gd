@@ -311,6 +311,41 @@ func _sound_page() -> void:
 	var found: int = (Sounds.available() as Array).size()
 	_header("", Lang.format("%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's.", found) if found > 0
 		else "No sounds found. They live in Unciv's android/assets/sounds, next to this folder.")
+	_music_section()
+
+
+## Unciv's music (scripts/music.gd): Unciv ships none, but downloads one track and plays players' and mods' own.
+func _music_section() -> void:
+	var folder := str(info.get("music_folder", "~/.unciv-vr/Music"))
+	_header("Music", Lang.format("Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them.", folder))
+	_choice("musicVolume", "Music volume", "", _volume_options())
+	_choice("pauseBetweenTracks", "Pause between tracks", "Silence before the next track starts.", _pause_options())
+	var now: Dictionary = info.get("music", {})
+	var tracks := int(info.get("music_tracks", 0))
+	var state := str(now.get("state", "idle"))
+	var playing := str(now.get("track", ""))
+	if str(now.get("pack", "")) != "":
+		playing = str(now["pack"]) + ": " + playing
+	var shown := Lang.t("Paused") + " - " + playing if state == "paused" else playing
+	if playing == "":
+		shown = Lang.t("Nothing") if tracks > 0 else Lang.t("No music yet")
+	var caption := "Resume" if state == "paused" else ("Pause" if playing != "" else "Play")
+	_action_row(Lang.t("Currently playing") + ": " + shown, Lang.format("%d tracks found.", tracks) if tracks > 0 else "",
+		caption, func() -> void: chosen.emit("music_pause", ""))
+	if tracks > 1:
+		_action_row("Next track", "", "Next", func() -> void: chosen.emit("music_next", ""))
+	var note := str(info.get("music_note", ""))
+	if not bool(info.get("music_default", false)) or note != "":
+		_action_row("Download music", note if note != "" else "Unciv's own track, Thatched Villagers, from Unciv's server.",
+			"Download", func() -> void: chosen.emit("music_download", ""))
+
+
+## Unciv's pause-between-tracks slider: 0 to 2 minutes.
+func _pause_options() -> Array:
+	var options: Array = []
+	for seconds: int in [0, 5, 10, 20, 30, 60, 120]:
+		options.append([str(seconds), "None" if seconds == 0 else Lang.format("%d seconds", seconds), "", ""])
+	return options
 
 
 ## Panels: the built-in ones and any in ~/.unciv-vr/Panels, each with an On / Off (panels.gd, panels/README.md).
