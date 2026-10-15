@@ -336,7 +336,7 @@ func _music_section() -> void:
 		_action_row("Next track", "", "Next", func() -> void: chosen.emit("music_next", ""))
 	var note := str(info.get("music_note", ""))
 	if not bool(info.get("music_default", false)) or note != "":
-		_action_row("Download music", note if note != "" else "Unciv's own track, Thatched Villagers, from Unciv's server.",
+		_action_row("Download music", note if note != "" else "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com.",
 			"Download", func() -> void: chosen.emit("music_download", ""))
 
 
@@ -445,6 +445,11 @@ func _about_page() -> void:
 	_paragraph(Lang.t("Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors ") +
 		Lang.t("under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background ") +
 		Lang.t("and table models are Unciv VR's own."))
+	var music := _label("Music: \"Thatched Villagers\" by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0 (creativecommons.org/licenses/by/4.0)", 16, DIM)
+	music.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED   # an attribution: kept exactly as written
+	music.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_body.add_child(music)
+	_paragraph("Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game.")
 
 
 ## "Aztecs, turn 4 - Civ V - Gods & Kings, Prince, Standard speed, Small map"

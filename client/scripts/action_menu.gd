@@ -841,7 +841,43 @@ func show_lobby(info: Dictionary) -> void:
 		_list.add_child(_make_button("Load game...", func() -> void: chosen.emit("lobby_load", ""), Color(0.22, 0.25, 0.32)))
 	_list.add_child(_make_button("Settings", func() -> void: chosen.emit("settings_card", ""), Color(0.25, 0.25, 0.3)))
 	_list.add_child(_make_button("Civilopedia", func() -> void: chosen.emit("civilopedia_card", ""), Color(0.22, 0.32, 0.28)))
+	_list.add_child(_make_button("Credits", func() -> void: chosen.emit("lobby_credits", ""), Color(0.22, 0.25, 0.32)))
 	_list.add_child(_make_button("Quit", func() -> void: chosen.emit("quit", ""), Color(0.35, 0.18, 0.18)))
+	_end()
+
+
+## Who made what: [heading, attribution]. The attributions are names, titles and licences, so they stay as written;
+## the headings are translated. The full lists are in CREDITS.md and Unciv's Credits.md, which come with every build.
+const CREDITS := [
+	["Unciv", "Yair Morgenstern and the Unciv contributors - github.com/yairm210/Unciv - Mozilla Public License 2.0"],
+	["Unciv VR", "Mozilla Public License 2.0 - github.com/terdfergeson-design/unciv-vr"],
+	["Icons", "Unciv's icons, by many authors, mostly from the Noun Project - CC BY 3.0 / 4.0, CC BY-SA 3.0 / 4.0, CC0 or public domain. Resized, tinted and set on badges by Unciv VR."],
+	["Sound effects", "Unciv's sound effects, from freesound.org and soundbible.com - CC0, CC BY 3.0 or CC BY 4.0"],
+	["Music", "\"Thatched Villagers\" by Kevin MacLeod (incompetech.com) - licensed under Creative Commons: By Attribution 4.0 (creativecommons.org/licenses/by/4.0)"],
+	["Translations", "Unciv's translators (Mozilla Public License 2.0); Unciv VR's own wording in other languages is drafts awaiting review"],
+	["Sky", "Webb Deep Field: NASA, ESA, CSA, STScI - CC BY 4.0"],
+	["Fonts", "Noto Sans, Noto Sans Arabic, Noto Sans Hebrew and Noto Sans CJK, by the Noto Project Authors - SIL Open Font License 1.1"],
+	["Engine", "Godot Engine (MIT); Godot OpenXR Vendors plugin by the Godot XR contributors (MIT)"],
+]
+
+
+## The main menu's Credits card.
+func show_credits() -> void:
+	if not _begin():
+		return
+	_title.text = "Credits"
+	_info.text = "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+	for credit: Array in CREDITS:
+		_add_header(credit[0])
+		var line := Label.new()
+		line.text = credit[1]
+		line.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED   # attributions stay exactly as written
+		line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		line.add_theme_font_size_override("font_size", 14)
+		line.add_theme_color_override("font_color", Color(0.75, 0.78, 0.85))
+		_list.add_child(line)
+	_add_note("Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game.")
+	_list.add_child(_make_button("Back", func() -> void: chosen.emit("lobby", ""), Color(0.22, 0.25, 0.32)))
 	_end()
 
 

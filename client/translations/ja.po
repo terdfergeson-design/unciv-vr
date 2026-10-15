@@ -3161,10 +3161,6 @@ msgid "Next"
 msgstr "次へ"
 
 #: scripts/settings_board.gd
-msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
-msgstr "Uncivの曲「Thatched Villagers」をUncivのサーバーから取得します。"
-
-#: scripts/settings_board.gd
 msgid "%d seconds"
 msgstr "%d秒"
 
@@ -3207,3 +3203,43 @@ msgstr "ダウンロード"
 #: scripts/main.gd
 msgid "Downloading..."
 msgstr "ダウンロード中..."
+
+#: scripts/action_menu.gd
+msgid "Credits"
+msgstr "クレジット"
+
+#: scripts/action_menu.gd
+msgid "Back"
+msgstr "戻る"
+
+#: scripts/action_menu.gd
+msgid "Icons"
+msgstr "アイコン"
+
+#: scripts/action_menu.gd
+msgid "Translations"
+msgstr "翻訳"
+
+#: scripts/action_menu.gd
+msgid "Sky"
+msgstr "空"
+
+#: scripts/action_menu.gd
+msgid "Fonts"
+msgstr "フォント"
+
+#: scripts/action_menu.gd
+msgid "Engine"
+msgstr "エンジン"
+
+#: scripts/action_menu.gd
+msgid "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+msgstr "Unciv VRは、Civilization Vのオープンソース・リメイクであるUncivのVRフロントエンドです。"
+
+#: scripts/action_menu.gd
+msgid "Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game."
+msgstr "すべての作者・作品名・ライセンスは、ゲームに同梱のCREDITS.mdとUncivのCredits.mdに記載されています。"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
+msgstr "Uncivの曲「Thatched Villagers」（Kevin MacLeod作）をincompetech.comから取得します。"

@@ -3161,10 +3161,6 @@ msgid "Next"
 msgstr "Sonraki"
 
 #: scripts/settings_board.gd
-msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
-msgstr "Unciv'in kendi parçası, Thatched Villagers, Unciv'in sunucusundan."
-
-#: scripts/settings_board.gd
 msgid "%d seconds"
 msgstr "%d saniye"
 
@@ -3207,3 +3203,43 @@ msgstr "İndir"
 #: scripts/main.gd
 msgid "Downloading..."
 msgstr "İndiriliyor..."
+
+#: scripts/action_menu.gd
+msgid "Credits"
+msgstr "Emeği geçenler"
+
+#: scripts/action_menu.gd
+msgid "Back"
+msgstr "Geri"
+
+#: scripts/action_menu.gd
+msgid "Icons"
+msgstr "Simgeler"
+
+#: scripts/action_menu.gd
+msgid "Translations"
+msgstr "Çeviriler"
+
+#: scripts/action_menu.gd
+msgid "Sky"
+msgstr "Gökyüzü"
+
+#: scripts/action_menu.gd
+msgid "Fonts"
+msgstr "Yazı tipleri"
+
+#: scripts/action_menu.gd
+msgid "Engine"
+msgstr "Motor"
+
+#: scripts/action_menu.gd
+msgid "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+msgstr "Unciv VR, Civilization V'in açık kaynaklı yeniden yapımı Unciv için bir VR arayüzüdür."
+
+#: scripts/action_menu.gd
+msgid "Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game."
+msgstr "Tüm yazarlar, eserler ve lisanslar oyunla birlikte gelen CREDITS.md ve Unciv'in Credits.md dosyalarında listelenir."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
+msgstr "Unciv'in kendi parçası, Kevin MacLeod'un Thatched Villagers'ı, incompetech.com'dan."

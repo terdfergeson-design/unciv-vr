@@ -94,6 +94,15 @@ $moduleLines = & $jdeps --multi-release 21 --ignore-missing-deps --print-module-
 if ($LASTEXITCODE -ne 0) { throw "jdeps could not analyze the bridge JAR." }
 $modules = ($moduleLines | Where-Object { $_ -match '^[A-Za-z0-9_.]+(,[A-Za-z0-9_.]+)*$' } | Select-Object -Last 1)
 if (-not $modules) { throw "jdeps returned no Java module list for the bridge." }
+# jdeps can't see modules that are only loaded as services. The bridge downloads Unciv's music over https, and
+# TLS needs the elliptic-curve ciphers (jdk.crypto.ec, its own module up to JDK 21) and the system's CA store
+# (jdk.crypto.mscapi on Windows); without them the download fails only in the packaged build. Extra charsets
+# are cheap insurance for translated text.
+foreach ($extra in @("jdk.crypto.ec", "jdk.crypto.mscapi", "jdk.charsets")) {
+	if ((Test-Path -LiteralPath (Join-Path $JdkHome "jmods\$extra.jmod")) -and (($modules -split ",") -notcontains $extra)) {
+		$modules = "$modules,$extra"
+	}
+}
 
 Write-Host "Creating a trimmed Java runtime ($modules)..."
 $runtime = Join-Path $package "runtime"

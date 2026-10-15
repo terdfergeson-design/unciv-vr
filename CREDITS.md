@@ -58,8 +58,18 @@ CC BY 4.0. Authors and licences are listed in the "Sound credits" section of Unc
 **Changes we make:** none to the files. The client chooses which sound to play where Unciv would, sets how
 loud it is, and in VR plays it from the spot on the table it belongs to.
 
-Unciv's music ("Thatched Villagers" by Kevin MacLeod, CC BY 4.0) is not part of Unciv's repository - Unciv
-downloads it separately - and the client doesn't play music.
+## Music
+
+**"Thatched Villagers" by Kevin MacLeod ([incompetech.com](https://incompetech.com))**
+Licensed under Creative Commons: By Attribution 4.0 License
+[creativecommons.org/licenses/by/4.0](https://creativecommons.org/licenses/by/4.0/)
+
+This is the track Unciv offers to download (its Options > Sound > Download music); Unciv credits it the same way in
+its docs/Credits.md. It isn't in this repository or in any build: Settings > Sound > Download fetches it from the
+author's site into the player's own music folder (`~/.unciv-vr/Music`). **Changes we make:** none to the file. The
+client plays it when Unciv would - between other tracks, at a volume the player chooses.
+
+Any other music a player puts in that folder is their own; the client only plays it.
 
 ## Unciv's translations
 

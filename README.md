@@ -58,7 +58,7 @@ With Godot 4.7.2 Windows export templates and JDK 21 installed, run this from th
 
     powershell -ExecutionPolicy Bypass -File client\tools\build_windows.ps1
 
-It creates `build\windows\UncivVR-Windows-x86_64.zip`, containing the Windows client, Unciv bridge and assets,
+It creates `build\UncivVR-v<version>-windows.zip` (the version comes from the export preset), containing the Windows client, Unciv bridge and assets,
 and a trimmed Java runtime. The player does not need Godot or Java installed. The first build may download Gradle
 and its dependencies.
 
@@ -73,7 +73,7 @@ That makes `build\UncivVR-Quest.apk`, signed with Godot's debug key. Install it 
 headset's Library under Unknown sources.
 
 For a build to share, sign it with your own key: `client\tools\build_quest.bat release` makes
-`build\UncivVR-v0.1.0-alpha-quest.apk` (the version comes from the export preset) and prints the certificate it was
+`build\UncivVR-v0.2.0-beta-quest.apk` (the version comes from the export preset) and prints the certificate it was
 signed with. More in [client/README.md](client/README.md#the-standalone-quest-app).
 
 ## Where things are

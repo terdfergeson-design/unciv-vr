@@ -3162,10 +3162,6 @@ msgid "Next"
 msgstr "다음"
 
 #: scripts/settings_board.gd
-msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
-msgstr "Unciv 자체 곡 Thatched Villagers, Unciv 서버에서 받습니다."
-
-#: scripts/settings_board.gd
 msgid "%d seconds"
 msgstr "%d초"
 
@@ -3208,3 +3204,43 @@ msgstr "다운로드"
 #: scripts/main.gd
 msgid "Downloading..."
 msgstr "다운로드 중..."
+
+#: scripts/action_menu.gd
+msgid "Credits"
+msgstr "제작진"
+
+#: scripts/action_menu.gd
+msgid "Back"
+msgstr "뒤로"
+
+#: scripts/action_menu.gd
+msgid "Icons"
+msgstr "아이콘"
+
+#: scripts/action_menu.gd
+msgid "Translations"
+msgstr "번역"
+
+#: scripts/action_menu.gd
+msgid "Sky"
+msgstr "하늘"
+
+#: scripts/action_menu.gd
+msgid "Fonts"
+msgstr "글꼴"
+
+#: scripts/action_menu.gd
+msgid "Engine"
+msgstr "엔진"
+
+#: scripts/action_menu.gd
+msgid "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+msgstr "Unciv VR은 문명 V의 오픈 소스 리메이크인 Unciv의 VR 프런트엔드입니다."
+
+#: scripts/action_menu.gd
+msgid "Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game."
+msgstr "모든 저작자, 제목, 라이선스는 게임과 함께 제공되는 CREDITS.md와 Unciv의 Credits.md에 나와 있습니다."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
+msgstr "Unciv 자체 곡, Kevin MacLeod의 Thatched Villagers, incompetech.com에서 받습니다."

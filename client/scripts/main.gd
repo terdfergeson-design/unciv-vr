@@ -816,6 +816,8 @@ func _show_lobby_card(kind: String) -> void:
 			menu.show_setup(_setup, _setup_options, _setup_tab)
 		"saves":
 			menu.show_saves(_saves)
+		"credits":
+			menu.show_credits()
 	if _xr_mode:
 		_popup_kind = "lobby"
 		_update_popup_panel()
@@ -850,6 +852,8 @@ func _on_lobby_choice(kind: String, value: String) -> void:
 			_show_lobby_card("setup")
 		"lobby_load":
 			_show_lobby_card("saves")
+		"lobby_credits":
+			_show_lobby_card("credits")
 		"setup_tab":
 			_setup_tab = value
 			_show_lobby_card("setup")
@@ -4074,6 +4078,11 @@ func _run_smoke_test() -> void:
 	# Main menu round trip: open it, set up a new game, start it, then go back and resume
 	await press_table_button("main_menu")   # the table's Main menu button
 	print("SMOKE: lobby open=%s, info=%s" % [_in_lobby, _lobby_info])
+	await _on_menu_chosen("lobby_credits", "")
+	var credits_menu: ActionMenu = popup_menu if _xr_mode else action_menu
+	print("SMOKE: credits card: '%s', %d headings, music credited %s" % [credits_menu._title.text, ActionMenu.CREDITS.size(),
+		ActionMenu.CREDITS.any(func(c: Array) -> bool: return str(c[1]).contains("Kevin MacLeod"))])
+	await _on_menu_chosen("lobby", "")
 	await _on_menu_chosen("lobby_new", "")
 	await _on_menu_chosen("setup_set", "mapSize|Small")
 	await _on_menu_chosen("setup_step", "aiPlayers|1")

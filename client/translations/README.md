@@ -2,7 +2,7 @@
 
 The client uses Godot gettext catalogs. All thirty catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
-options, controller hints, tutorials and status messages. Each has 1,059 messages, ready for wording review.
+options, controller hints, tutorials and status messages. Each has 1,068 messages, ready for wording review.
 
 | Language | Catalog | Picker label |
 | --- | --- | --- |

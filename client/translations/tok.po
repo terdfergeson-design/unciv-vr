@@ -3162,10 +3162,6 @@ msgid "Next"
 msgstr "sin"
 
 #: scripts/settings_board.gd
-msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
-msgstr "kalama musi pi musi Unciv, Thatched Villagers, tan ilo sona pi musi Unciv."
-
-#: scripts/settings_board.gd
 msgid "%d seconds"
 msgstr "tenpo lili %d"
 
@@ -3208,3 +3204,43 @@ msgstr "kama jo tan linja"
 #: scripts/main.gd
 msgid "Downloading..."
 msgstr "kama jo..."
+
+#: scripts/action_menu.gd
+msgid "Credits"
+msgstr "jan pali"
+
+#: scripts/action_menu.gd
+msgid "Back"
+msgstr "o tawa monsi"
+
+#: scripts/action_menu.gd
+msgid "Icons"
+msgstr "sitelen lili"
+
+#: scripts/action_menu.gd
+msgid "Translations"
+msgstr "ante toki"
+
+#: scripts/action_menu.gd
+msgid "Sky"
+msgstr "sewi"
+
+#: scripts/action_menu.gd
+msgid "Fonts"
+msgstr "sitelen nimi"
+
+#: scripts/action_menu.gd
+msgid "Engine"
+msgstr "ilo musi"
+
+#: scripts/action_menu.gd
+msgid "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+msgstr "Unciv VR li nasin VR tawa musi Unciv. musi Unciv li musi Civilization V sin pi open ale."
+
+#: scripts/action_menu.gd
+msgid "Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game."
+msgstr "jan pali ale en nimi pali ale en lipu lawa ale li lon lipu CREDITS.md en lipu Credits.md pi musi Unciv. lipu ni li kama poka musi."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
+msgstr "kalama musi pi musi Unciv, Thatched Villagers tan jan Kevin MacLeod, tan incompetech.com."

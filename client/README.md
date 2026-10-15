@@ -160,7 +160,9 @@ checkout next to it (`unciv/android/assets/sounds`). To replace one, drop a file
 ### Music
 **Unciv's music**, chosen the way Unciv chooses it (`scripts/music.gd`, after Unciv's `MusicController`). Unciv
 itself ships no music: its Options > Sound has a **Download music** button that fetches one track, "Thatched
-Villagers", and so does Settings > Sound here (the bridge downloads it, `downloadMusic`). Add your own `.mp3`,
+Villagers" by Kevin MacLeod (CC BY 4.0), and so does Settings > Sound here (the bridge downloads it, `downloadMusic`,
+from the author's site incompetech.com; Unciv gets it from its own Dropbox). The main menu's Credits card and
+Settings > About credit it. Add your own `.mp3`,
 `.ogg` or `.wav` files to `~/.unciv-vr/Music`; a sub-folder there is a music pack, like a mod's `music` folder.
 
 Tracks are picked by name, Unciv's way: `<context> - <mood>`, the context a nation, civ, tech, wonder or
@@ -279,7 +281,7 @@ with your own key:
 
     client\tools\build_quest.bat release
 
-It makes `build\UncivVR-v<version>-quest.apk` (`UncivVR-v0.1.0-alpha-quest.apk` today) and prints the certificate it
+It makes `build\UncivVR-v<version>-quest.apk` (`UncivVR-v0.2.0-beta-quest.apk` today) and prints the certificate it
 ended up signed with. The version is `version/name` in `export_presets.cfg`, so there's one place to bump it; raise
 `version/code` too, or a headset won't take the new build as an update to the old one. `release install` installs it.
 

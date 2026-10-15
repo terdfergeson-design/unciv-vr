@@ -3162,10 +3162,6 @@ msgid "Next"
 msgstr "Tiếp"
 
 #: scripts/settings_board.gd
-msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
-msgstr "Bản nhạc riêng của Unciv, Thatched Villagers, từ máy chủ của Unciv."
-
-#: scripts/settings_board.gd
 msgid "%d seconds"
 msgstr "%d giây"
 
@@ -3208,3 +3204,43 @@ msgstr "Tải xuống"
 #: scripts/main.gd
 msgid "Downloading..."
 msgstr "Đang tải..."
+
+#: scripts/action_menu.gd
+msgid "Credits"
+msgstr "Ghi công"
+
+#: scripts/action_menu.gd
+msgid "Back"
+msgstr "Trở về"
+
+#: scripts/action_menu.gd
+msgid "Icons"
+msgstr "Biểu tượng"
+
+#: scripts/action_menu.gd
+msgid "Translations"
+msgstr "Bản dịch"
+
+#: scripts/action_menu.gd
+msgid "Sky"
+msgstr "Bầu trời"
+
+#: scripts/action_menu.gd
+msgid "Fonts"
+msgstr "Phông chữ"
+
+#: scripts/action_menu.gd
+msgid "Engine"
+msgstr "Bộ máy"
+
+#: scripts/action_menu.gd
+msgid "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+msgstr "Unciv VR là giao diện thực tế ảo cho Unciv, bản làm lại mã nguồn mở của Civilization V."
+
+#: scripts/action_menu.gd
+msgid "Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game."
+msgstr "Mọi tác giả, tác phẩm và giấy phép đều được liệt kê trong CREDITS.md và Credits.md của Unciv, đi kèm trò chơi."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
+msgstr "Bản nhạc riêng của Unciv, Thatched Villagers của Kevin MacLeod, từ incompetech.com."
