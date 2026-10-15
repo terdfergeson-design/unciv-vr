@@ -42,6 +42,7 @@ const ACCENT_KEYS := {
 	"Toki_Pona": "",
 	"Maltese": "ċġħżàèìòù",
 	"Korean": "",
+	"Filipino": "ñ",   # Filipino's alphabet adds ñ (and ng, typed as two letters) to the Latin keys
 }
 const ARABIC_ROWS := ["1234567890", "ضصثقفغعهخحجد", "شسيبلاتنمكط", "ئءؤرىةوزظ", "أإآذَُِّْ؟،.-"]
 const HEBREW_ROWS := ["1234567890", "קראטוןםפ", "שדגכעיחלךף", "זסבהנמצתץ", "'\"-.,?!"]

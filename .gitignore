@@ -12,3 +12,6 @@ build/
 
 # Windows temp copies of DLLs in use
 ~*.TMP
+
+# Release notes are drafted locally and pasted into the GitHub release, not kept in the repo
+release-notes/

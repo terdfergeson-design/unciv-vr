@@ -1,0 +1,4170 @@
+msgid ""
+msgstr ""
+"Language: fil\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: scripts/big_screen.gd
+msgid "Map replay"
+msgstr "Replay ng mapa"
+
+#: scripts/big_screen.gd
+msgid "The map is zoomed out to show its full extent. Ownership and city locations update as the turns play."
+msgstr "Naka-zoom out ang mapa para makita ang kabuuan nito. Nag-a-update ang mga may-ari at lokasyon ng mga lungsod habang tumatakbo ang mga tira."
+
+#: scripts/big_screen.gd
+msgid "Start replay"
+msgstr "Simulan ang replay"
+
+#: scripts/big_screen.gd
+msgid "Return to game"
+msgstr "Bumalik sa laro"
+
+#: scripts/big_screen.gd
+msgid "Turn %d of %d"
+msgstr "Tira %d ng %d"
+
+#: scripts/main.gd
+msgid "Close replay"
+msgstr "Isara ang replay"
+
+#: scripts/main.gd
+msgid "Turn %d / %d"
+msgstr "Tira %d / %d"
+
+#: scripts/settings_board.gd
+msgid "Saved on this PC between sessions"
+msgstr "Nakatabi sa PC na ito sa pagitan ng mga session"
+
+#: scripts/settings_board.gd
+msgid "Move the table..."
+msgstr "Ilipat ang mesa..."
+
+#: scripts/settings_board.gd
+msgid "Back to the middle"
+msgstr "Ibalik sa gitna"
+
+#: scripts/settings_board.gd
+msgid "Your controllers"
+msgstr "Ang iyong mga controller"
+
+#: scripts/settings_board.gd
+msgid "Show button labels"
+msgstr "Ipakita ang mga label ng button"
+
+#: scripts/settings_board.gd
+msgid "Floating labels beside each controller saying what its buttons do right now."
+msgstr "Mga lumulutang na label sa tabi ng bawat controller na nagsasabi kung ano ang ginagawa ng mga button nito ngayon."
+
+#: scripts/settings_board.gd
+msgid "The right trigger clicks when you let go of it, so holding it to zoom doesn't click anything."
+msgstr "Nagki-click ang kanang trigger kapag binitawan mo ito, kaya hindi ito nagki-click habang hawak mo ito para mag-zoom."
+
+#: scripts/settings_board.gd
+msgid "Look"
+msgstr "Itsura"
+
+#: scripts/settings_board.gd
+msgid "Gameplay"
+msgstr "Gameplay"
+
+#: scripts/settings_board.gd
+msgid "Automation"
+msgstr "Automasyon"
+
+#: scripts/settings_board.gd
+msgid "Sound"
+msgstr "Tunog"
+
+#: scripts/settings_board.gd
+msgid "Panels"
+msgstr "Mga panel"
+
+#: scripts/settings_board.gd
+msgid "Controls"
+msgstr "Mga kontrol"
+
+#: scripts/settings_board.gd
+msgid "Game and saves"
+msgstr "Laro at mga save"
+
+#: scripts/settings_board.gd
+msgid "About"
+msgstr "Patungkol"
+
+#: scripts/settings_board.gd
+msgid "Settings"
+msgstr "Mga Setting"
+
+#: scripts/settings_board.gd
+msgid "Close"
+msgstr "Isara"
+
+#: scripts/settings_board.gd
+msgid "Around the table"
+msgstr "Sa paligid ng mesa"
+
+#: scripts/settings_board.gd
+msgid "Backgrounds and tables are folders anyone can add: see backgrounds/README.md and tables/README.md."
+msgstr "Ang mga background at mesa ay mga folder na maaaring idagdag ng kahit sino: tingnan ang backgrounds/README.md at tables/README.md."
+
+#: scripts/settings_board.gd
+msgid "Background"
+msgstr "Background"
+
+#: scripts/settings_board.gd
+msgid "The world around the table: sky, light and scenery."
+msgstr "Ang mundo sa paligid ng mesa: langit, liwanag at tanawin."
+
+#: scripts/settings_board.gd
+msgid "Table"
+msgstr "Mesa"
+
+#: scripts/settings_board.gd
+msgid "What the map lies on. In VR its column stretches to the height you set."
+msgstr "Kung saan nakapatong ang mapa. Sa VR, umaabot ang poste nito sa taas na itinakda mo."
+
+#: scripts/settings_board.gd
+msgid "Where the table stands"
+msgstr "Kung saan nakatayo ang mesa"
+
+#: scripts/settings_board.gd
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. Remembered for this background."
+msgstr "Ilipat ang mesa kahit saan sa tanawin ng background - kapaki-pakinabang sa malalaki tulad ng na-convert na mapa. Tinatandaan para sa background na ito."
+
+#: scripts/settings_board.gd
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Ilipat ang mesa kahit saan sa tanawin ng background - kapaki-pakinabang sa malalaki tulad ng na-convert na mapa. Nailipat na ito rito; ibinabalik ito ng Ibalik sa gitna sa kung saan ito sinisimulan ng background."
+
+#: scripts/settings_board.gd
+msgid "Remembered for this background."
+msgstr "Tinatandaan para sa background na ito."
+
+#: scripts/settings_board.gd
+msgid "It's been moved here; Back to the middle puts it where the background starts it."
+msgstr "Nailipat na ito rito; ibinabalik ito ng Ibalik sa gitna sa kung saan ito sinisimulan ng background."
+
+#: scripts/settings_board.gd
+msgid "The map"
+msgstr "Ang mapa"
+
+#: scripts/settings_board.gd
+msgid "Tiles"
+msgstr "Mga tiles"
+
+#: scripts/settings_board.gd
+msgid "How terrain, wonders, resources and improvements look. Tilesets work like Unciv's: see tilesets/README.md."
+msgstr "Ang itsura ng lupain, mga kamanghaan, pagkukunan at pagbubuti. Gumagana ang mga tileset tulad ng sa Unciv: tingnan ang tilesets/README.md."
+
+#: scripts/settings_board.gd
+msgid "Plain coloured hexes"
+msgstr "Simpleng may-kulay na hexagon"
+
+#: scripts/settings_board.gd
+msgid "Flat hexes in Unciv's terrain colours, no models."
+msgstr "Patag na hexagon sa mga kulay ng lupain ng Unciv, walang modelo."
+
+#: scripts/settings_board.gd
+msgid "Units"
+msgstr "Mga Yunit"
+
+#: scripts/settings_board.gd
+msgid "Same as the tiles"
+msgstr "Kapareho ng mga tile"
+
+#: scripts/settings_board.gd
+msgid "The unit models that come with the tileset above (the tiles' fallback set fills any gaps)."
+msgstr "Ang mga modelo ng yunit na kasama ng tileset sa itaas (pinupunan ng fallback na set ng mga tile ang anumang kulang)."
+
+#: scripts/settings_board.gd
+msgid "No models"
+msgstr "Walang modelo"
+
+#: scripts/settings_board.gd
+msgid "Round tokens with Unciv's unit icons."
+msgstr "Mga bilog na token na may mga icon ng yunit ng Unciv."
+
+#: scripts/settings_board.gd
+msgid "How units look (Unciv's Unitset): any tileset with unit models (pieces/Units) can supply them."
+msgstr "Itsura ng mga yunit (Unitset ng Unciv): maaaring magbigay nito ang anumang tileset na may mga modelo ng yunit (pieces/Units)."
+
+#: scripts/settings_board.gd
+msgid "Visual hints"
+msgstr "Mga biswal na pahiwatig"
+
+#: scripts/settings_board.gd
+msgid "Unciv's map overlays; the round buttons beside the overview turn them on and off too."
+msgstr "Mga overlay ng mapa ng Unciv; binubuksan at isinasara rin ang mga ito ng mga bilog na button sa tabi ng buod."
+
+#: scripts/settings_board.gd
+msgid "Show unit movement arrows"
+msgstr "Ipakita ang mga arrow ng paggalaw ng unit"
+
+#: scripts/settings_board.gd
+msgid "Where units have just moved and who attacked whom."
+msgstr "Kung saan kagagalaw lang ng mga yunit at kung sino ang umatake kanino."
+
+#: scripts/settings_board.gd
+msgid "Show tile yields"
+msgstr "Ipakita ang binibigay ng tile"
+
+#: scripts/settings_board.gd
+msgid "Food, production, gold... on every tile."
+msgstr "Pagkain, produksyon, ginto... sa bawat tile."
+
+#: scripts/settings_board.gd
+msgid "Show worked tiles"
+msgstr "Ipakita ang mga natrabahong tiles"
+
+#: scripts/settings_board.gd
+msgid "Which tiles your cities' citizens work."
+msgstr "Aling mga tile ang tinatrabaho ng mga mamamayan ng iyong mga lungsod."
+
+#: scripts/settings_board.gd
+msgid "Show resources and improvements"
+msgstr "Ipakita ang mga pinagkukunan at ang mga pagbubuti"
+
+#: scripts/settings_board.gd
+msgid "Resource and improvement symbols on the tiles."
+msgstr "Mga simbolo ng pagkukunan at pagbubuti sa mga tile."
+
+#: scripts/settings_board.gd
+msgid "Show improvement pictures"
+msgstr "Ipakita ang mga larawan ng pagbubuti"
+
+#: scripts/settings_board.gd
+msgid "Farms, mines, roads and the like as models."
+msgstr "Mga sakahan, minahan, daanan at iba pa bilang mga modelo."
+
+#: scripts/settings_board.gd
+msgid "Show unit icons"
+msgstr "Ipakita ang mga icon ng yunit"
+
+#: scripts/settings_board.gd
+msgid "The small Unciv icon above each unit model."
+msgstr "Ang maliit na icon ng Unciv sa itaas ng bawat modelo ng yunit."
+
+#: scripts/settings_board.gd
+msgid "Language"
+msgstr "Wika"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own translations, by Unciv's translators: the game's messages, names and descriptions. Our own menus are still in English."
+msgstr "Mga sariling salin ng Unciv, ng mga tagasalin ng Unciv: ang mga mensahe, pangalan at paglalarawan ng laro. Nasa Ingles pa ang sarili naming mga menu."
+
+#: scripts/settings_board.gd
+msgid "Text Unciv has no translation for stays in English."
+msgstr "Nananatili sa Ingles ang tekstong walang salin sa Unciv."
+
+#: scripts/settings_board.gd
+msgid "Turns"
+msgstr "Mga tira"
+
+#: scripts/settings_board.gd
+msgid "Check for idle units"
+msgstr "Suriin ang mga walang ginagawa"
+
+#: scripts/settings_board.gd
+msgid "End turn first takes you to every unit that still has no orders."
+msgstr "Dinadala ka muna ng Tapusin ang tira sa bawat yunit na wala pang utos."
+
+#: scripts/settings_board.gd
+msgid "Auto unit cycle"
+msgstr "Awtomatikong pag-ikot ng yunit"
+
+#: scripts/settings_board.gd
+msgid "After you give a unit its orders, the next unit waiting for orders is selected."
+msgstr "Pagkatapos mong bigyan ng utos ang isang yunit, pipiliin ang susunod na yunit na naghihintay ng utos."
+
+#: scripts/settings_board.gd
+msgid "Cycle idle units by distance"
+msgstr "Iikot ang mga idle na yunit ayon sa layo"
+
+#: scripts/settings_board.gd
+msgid "Next / previous unit go to the nearest unit rather than in a fixed order."
+msgstr "Pumupunta ang susunod / nakaraang yunit sa pinakamalapit na yunit sa halip na sa nakapirming pagkakasunod."
+
+#: scripts/settings_board.gd
+msgid "Ask for confirmation when ending the turn"
+msgstr "Humingi ng kumpirmasyon bago tapusin ang tira"
+
+#: scripts/settings_board.gd
+msgid "End turn needs a second press."
+msgstr "Kailangang pindutin nang dalawang beses ang Tapusin ang tira."
+
+#: scripts/settings_board.gd
+msgid "Order trade offers by amount"
+msgstr "Magbigay ng alok ayon sa dami"
+
+#: scripts/settings_board.gd
+msgid "On the trade table, the biggest offers come first."
+msgstr "Sa mesa ng kalakalan, nauuna ang pinakamalalaking alok."
+
+#: scripts/settings_board.gd
+msgid "Show suggested city locations"
+msgstr "Ipakita ang mga mungkahing lokasyon ng lungsod"
+
+#: scripts/settings_board.gd
+msgid "With a settler selected, Unciv's three best spots nearby for a new city are marked on the map."
+msgstr "Kapag may napiling naninirahan, minamarkahan sa mapa ang tatlong pinakamagandang puwesto ng Unciv sa malapit para sa bagong lungsod."
+
+#: scripts/settings_board.gd
+msgid "Tutorials"
+msgstr "Mga Gabay"
+
+#: scripts/settings_board.gd
+msgid "Show tutorials"
+msgstr "Ipakita ang mga gabay"
+
+#: scripts/settings_board.gd
+msgid "The tutorial messages and the task card. Every tutorial is in the Civilopedia too."
+msgstr "Ang mga mensahe ng tutoryal at ang task card. Nasa Sibilopedya rin ang bawat tutoryal."
+
+#: scripts/settings_board.gd
+msgid "Reset tutorials"
+msgstr "Bumalik mula sa simula ng mga gabay"
+
+#: scripts/settings_board.gd
+msgid "Show every tutorial and task again, as if you were new."
+msgstr "Ipakita muli ang bawat tutoryal at gawain, na parang bago ka pa lang."
+
+#: scripts/settings_board.gd
+msgid "Other players"
+msgstr "Ibang mga manlalaro"
+
+#: scripts/settings_board.gd
+msgid "Other players' turns"
+msgstr "Mga tira ng ibang manlalaro"
+
+#: scripts/settings_board.gd
+msgid "What you see of the other players' turns after you end yours."
+msgstr "Ang nakikita mo sa mga tira ng ibang manlalaro pagkatapos mong tapusin ang iyo."
+
+#: scripts/settings_board.gd
+msgid "Show the moves and battles I can see"
+msgstr "Ipakita ang mga galaw at labanang nakikita ko"
+
+#: scripts/settings_board.gd
+msgid "Played back in order; the view glides to fights."
+msgstr "Pinapalabas nang sunud-sunod; dumudulas ang tanaw papunta sa mga labanan."
+
+#: scripts/settings_board.gd
+msgid "Show them, fast"
+msgstr "Ipakita, mabilis"
+
+#: scripts/settings_board.gd
+msgid "The same, at two and a half times the speed."
+msgstr "Pareho, pero dalawa't kalahating beses na mas mabilis."
+
+#: scripts/settings_board.gd
+msgid "Don't show them"
+msgstr "Huwag ipakita"
+
+#: scripts/settings_board.gd
+msgid "The map just updates."
+msgstr "Nag-a-update lang ang mapa."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own options for automated units and cities."
+msgstr "Mga sariling opsyon ng Unciv para sa mga awtomatikong yunit at lungsod."
+
+#: scripts/settings_board.gd
+msgid "Automated and exploring units move"
+msgstr "Gumagalaw ang mga awtomatiko at nag-e-explore na yunit"
+
+#: scripts/settings_board.gd
+msgid "When units on automation, exploring or on multi-turn moves take their steps."
+msgstr "Kailan humahakbang ang mga yunit na naka-awtomatiko, nag-e-explore o nasa paglalakbay na ilang tira."
+
+#: scripts/settings_board.gd
+msgid "When I end my turn"
+msgstr "Kapag tinapos ko ang aking tira"
+
+#: scripts/settings_board.gd
+msgid "Explorers, automated workers and units on long moves go as you end the turn."
+msgstr "Gumagalaw ang mga explorer, awtomatikong manggagawa at yunit sa mahahabang paglalakbay habang tinatapos mo ang tira."
+
+#: scripts/settings_board.gd
+msgid "At the start of my turn"
+msgstr "Sa simula ng aking tira"
+
+#: scripts/settings_board.gd
+msgid "They go as your turn starts (Unciv's \"Automated units move on turn start\")."
+msgstr "Gumagalaw sila sa pagsisimula ng iyong tira (\"Automated units move on turn start\" ng Unciv)."
+
+#: scripts/settings_board.gd
+msgid "Auto-assign city production"
+msgstr "Kusang italaga ang produksyon sa lungsod"
+
+#: scripts/settings_board.gd
+msgid "A city that finishes building something picks what to build next itself."
+msgstr "Ang lungsod na nakatapos magtayo ng isang bagay ay pumipili mismo ng susunod na itatayo."
+
+#: scripts/settings_board.gd
+msgid "Auto-build roads"
+msgstr "Kusang gawin ang mga daan"
+
+#: scripts/settings_board.gd
+msgid "Automated workers build roads between your cities."
+msgstr "Nagtatayo ang mga awtomatikong manggagawa ng mga daanan sa pagitan ng iyong mga lungsod."
+
+#: scripts/settings_board.gd
+msgid "Automated workers replace improvements"
+msgstr "Kusang gagawin ng mga manggagawa ang mga pagbubuti"
+
+#: scripts/settings_board.gd
+msgid "Automated workers may swap an improvement for a better one."
+msgstr "Maaaring palitan ng mga awtomatikong manggagawa ang isang pagbubuti ng mas mahusay."
+
+#: scripts/settings_board.gd
+msgid "Stop automated workers from removing vegetation"
+msgstr "Pigilan ang mga awtomatikong manggagawa sa pag-alis ng halaman"
+
+#: scripts/settings_board.gd
+msgid "Automated workers leave forests, jungles and marshes alone."
+msgstr "Hindi ginagalaw ng mga awtomatikong manggagawa ang mga kagubatan, gubat at latian."
+
+#: scripts/settings_board.gd
+msgid "Automated units can upgrade"
+msgstr "Automated units ay kusang makakapag-upgrade"
+
+#: scripts/settings_board.gd
+msgid "Automated military units upgrade themselves when you can afford it."
+msgstr "Ina-upgrade ng mga awtomatikong yunit militar ang sarili nila kapag kaya mo ang gastos."
+
+#: scripts/settings_board.gd
+msgid "Automated units choose promotions"
+msgstr "Automated units ay makakapili ng mga promosyon"
+
+#: scripts/settings_board.gd
+msgid "Automated units pick their own promotions."
+msgstr "Pumipili ng sariling promosyon ang mga awtomatikong yunit."
+
+#: scripts/settings_board.gd
+msgid "Cities auto-bombard at end of turn"
+msgstr "Ang mga lungsod ay kusang magpapasabog sa dulo ng tira."
+
+#: scripts/settings_board.gd
+msgid "Cities that can still fire shoot at enemies in range when you end the turn."
+msgstr "Binabaril ng mga lungsod na makakapagpaputok pa ang mga kaaway na abot nila kapag tinapos mo ang tira."
+
+#: scripts/settings_board.gd
+msgid "Auto-assign specialists in new cities"
+msgstr "Awtomatikong italaga ang mga espesyalista sa mga bagong lungsod"
+
+#: scripts/settings_board.gd
+msgid "New cities put their citizens into specialist slots themselves."
+msgstr "Inilalagay mismo ng mga bagong lungsod ang kanilang mga mamamayan sa mga puwesto ng espesyalista."
+
+#: scripts/settings_board.gd
+msgid "Sound effects"
+msgstr "Mga sound effect"
+
+#: scripts/settings_board.gd
+msgid "Buttons, moves, battles and the rest. In VR they come from where they happen on the table."
+msgstr "Mga button, galaw, labanan at iba pa. Sa VR, nanggagaling sila kung saan sila nangyayari sa mesa."
+
+#: scripts/settings_board.gd
+msgid "City ambience"
+msgstr "Ingay ng lungsod"
+
+#: scripts/settings_board.gd
+msgid "The city noise that loops while you are in a city - Unciv has one for every era."
+msgstr "Ang ingay ng lungsod na paulit-ulit habang nasa isang lungsod ka - may isa ang Unciv para sa bawat panahon."
+
+#: scripts/settings_board.gd
+msgid "Your own and mods'"
+msgstr "Sarili mo at ng mga mod"
+
+#: scripts/settings_board.gd
+msgid "None yet."
+msgstr "Wala pa."
+
+#: scripts/settings_board.gd
+msgid "Put the panels back"
+msgstr "Ibalik ang mga panel"
+
+#: scripts/settings_board.gd
+msgid "Every panel goes back to where its panel.json puts it."
+msgstr "Bumabalik ang bawat panel sa kung saan ito inilalagay ng panel.json nito."
+
+#: scripts/settings_board.gd
+msgid "In VR you see the controllers you're holding, as your headset's runtime draws them (SteamVR does; others get a plain stand-in)."
+msgstr "Sa VR, nakikita mo ang mga controller na hawak mo, ayon sa pagguhit ng runtime ng iyong headset (ginagawa ito ng SteamVR; simpleng pamalit ang iba)."
+
+#: scripts/settings_board.gd
+msgid "Boards"
+msgstr "Mga board"
+
+#: scripts/settings_board.gd
+msgid "Put the boards back"
+msgstr "Ibalik ang mga board"
+
+#: scripts/settings_board.gd
+msgid "The overview, info board, big screen, city boards, empire overview and this board go back where they started."
+msgstr "Bumabalik sa kanilang simula ang buod, info board, malaking screen, mga board ng lungsod, buod ng imperyo at ang board na ito."
+
+#: scripts/settings_board.gd
+msgid "This game"
+msgstr "Ang larong ito"
+
+#: scripts/settings_board.gd
+msgid "Save game"
+msgstr "Itabi ang laro"
+
+#: scripts/settings_board.gd
+msgid "Saves it under a name you type, in the bridge's save folder."
+msgstr "Itinatabi ito sa pangalang ita-type mo, sa save folder ng bridge."
+
+#: scripts/settings_board.gd
+msgid "Save..."
+msgstr "I-save..."
+
+#: scripts/settings_board.gd
+msgid "Main menu"
+msgstr "Pangunahing menu"
+
+#: scripts/settings_board.gd
+msgid "Back to the main menu; the game keeps running and Resume brings you back."
+msgstr "Bumalik sa pangunahing menu; tuloy ang laro at ibinabalik ka ng Ituloy."
+
+#: scripts/settings_board.gd
+msgid "Saves"
+msgstr "Mga save"
+
+#: scripts/settings_board.gd
+msgid "Autosave"
+msgstr "Autosave"
+
+#: scripts/settings_board.gd
+msgid "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it)."
+msgstr "Gaano kadalas sine-save ng laro ang sarili nito bilang \"Autosave\" (nilo-load ito ng Ipagpatuloy sa pangunahing menu)."
+
+#: scripts/settings_board.gd
+msgid "Save folder"
+msgstr "Save folder"
+
+#: scripts/settings_board.gd
+msgid "A virtual-reality table for Unciv, the open-source remake of Civilization V."
+msgstr "Isang mesa sa virtual reality para sa Unciv, ang open-source na remake ng Civilization V."
+
+#: scripts/settings_board.gd
+msgid "Bridge protocol"
+msgstr "Protocol ng bridge"
+
+#: scripts/settings_board.gd
+msgid "Mods"
+msgstr "Mods"
+
+#: scripts/settings_board.gd
+msgid "Your own tilesets, backgrounds and tables"
+msgstr "Sarili mong mga tileset, background at mesa"
+
+#: scripts/settings_board.gd
+msgid "Put their folders here; they show up in Look."
+msgstr "Ilagay rito ang kanilang mga folder; lalabas sila sa Itsura."
+
+#: scripts/settings_board.gd
+msgid "Settings file"
+msgstr "File ng mga setting"
+
+#: scripts/settings_board.gd
+msgid "Licence and credits"
+msgstr "Lisensya at mga kredito"
+
+#: scripts/settings_board.gd
+msgid "Desktop"
+msgstr "Desktop"
+
+#: scripts/settings_board.gd
+msgid "Off"
+msgstr "Patay"
+
+#: scripts/settings_board.gd
+msgid "On"
+msgstr "Bukas"
+
+#: action_menu:48,main:91,main:3270,main:3277,main:5121,settings_board:96
+msgid "End turn"
+msgstr "Tapusin ang tira"
+
+#: action_menu:103
+msgid "< Prev"
+msgstr "< Nauna"
+
+#: action_menu:104,main:90,settings_board:99
+msgid "Idle unit"
+msgstr "Idle na yunit"
+
+#: action_menu:105
+msgid "Next >"
+msgstr "Susunod >"
+
+#: action_menu:109,action_menu:757,big_screen:567
+msgid "Research"
+msgstr "Pananaliksik"
+
+#: action_menu:115
+msgid "Recenter table"
+msgstr "I-recenter ang mesa"
+
+#: action_menu:133
+msgid "No unit selected"
+msgstr "Walang napiling yunit"
+
+#: action_menu:134
+msgid "Point at a unit or city to select it."
+msgstr "Ituro ang isang yunit o lungsod para piliin ito."
+
+#: action_menu:150
+msgid "Fortified"
+msgstr "Nakakuta"
+
+#: action_menu:150
+msgid "Sleeping"
+msgstr "Natutulog"
+
+#: action_menu:150
+msgid "Automated"
+msgstr "Awtomatiko"
+
+#: action_menu:151
+msgid "On its way"
+msgstr "Papunta na"
+
+#: action_menu:151,tileset:163,tileset:190
+msgid "Embarked"
+msgstr "Sakay ng barko"
+
+#: action_menu:169,overview_board:521
+msgid "Strength"
+msgstr "Lakas"
+
+#: action_menu:171,action_menu:415,overview_board:521
+msgid "RangedStrength"
+msgstr "Lakas ng pana"
+
+#: action_menu:172
+msgid "Range"
+msgstr "Saklaw"
+
+#: action_menu:173,overview_board:522
+msgid "Movement"
+msgstr "Paggalaw"
+
+#: action_menu:176,city_boards:91,overview_board:543
+msgid "Rename"
+msgstr "Ipangalan"
+
+#: action_menu:185,action_menu:295,keyboard:92,main:5127
+msgid "Cancel"
+msgstr "Kanselahin"
+
+#: action_menu:188
+msgid "Skipping this turn (Skip again to give it orders)."
+msgstr "Lalaktawan ngayong tira (Laktawan ulit para bigyan ito ng utos)."
+
+#: action_menu:193,overview_board:523
+msgid "Health"
+msgstr "Kalusugan"
+
+#: action_menu:197,overview_board:523
+msgid "XP"
+msgstr "XP"
+
+#: action_menu:199
+msgid "Promote!  Choose a promotion"
+msgstr "I-promote!  Pumili ng promosyon"
+
+#: action_menu:200,action_menu:237,icons:58,icons:58,overview_board:566
+msgid "Promote"
+msgstr "Magpaunlad"
+
+#: action_menu:225
+msgid "Building %s"
+msgstr "Itinatayo ang %s"
+
+#: action_menu:225
+msgid "%d turns left"
+msgstr "%d tira ang natitira"
+
+#: action_menu:229
+msgid "%d enemy targets in reach (red rings): click one to aim"
+msgstr "%d target ng kaaway na abot (pulang singsing): i-click ang isa para tumutok"
+
+#: action_menu:239
+msgid "Actions"
+msgstr "Mga aksyon"
+
+#: action_menu:254,icons:59,icons:59
+msgid "Pillage"
+msgstr "Dambungin"
+
+#: action_menu:261
+msgid "Sure? Click again"
+msgstr "Sigurado ka? I-click ulit"
+
+#: action_menu:283
+msgid "click the red button again"
+msgstr "i-click ulit ang pulang button"
+
+#: action_menu:291
+msgid "Build here"
+msgstr "Itayo rito"
+
+#: action_menu:296,icons:56,icons:58
+msgid "Stop"
+msgstr "Itigil"
+
+#: action_menu:297,action_menu:428,action_menu:453,settings_board:286
+msgid "%d turns"
+msgstr "%d tira"
+
+#: action_menu:358
+msgid "Population %d"
+msgstr "Populasyon %d"
+
+#: action_menu:360,city_boards:202
+msgid "Defense %d"
+msgstr "Depensa %d"
+
+#: action_menu:361,city_boards:201
+msgid "Health %d/%d"
+msgstr "Kalusugan %d/%d"
+
+#: action_menu:363
+msgid "%d idle citizens"
+msgstr "%d idle na mamamayan"
+
+#: action_menu:365,city_boards:204,overview_board:311
+msgid "Puppet"
+msgstr "Papet"
+
+#: action_menu:387
+msgid "Starving! %d turns"
+msgstr "Nagugutom! %d tira"
+
+#: action_menu:390
+msgid "Grows in %d turns"
+msgstr "Lalaki sa loob ng %d tira"
+
+#: action_menu:392
+msgid "Food -> production"
+msgstr "Pagkain -> produksyon"
+
+#: action_menu:394
+msgid "Not growing"
+msgstr "Hindi lumalaki"
+
+#: action_menu:402
+msgid "Border in %d turns"
+msgstr "Hangganan sa loob ng %d tira"
+
+#: action_menu:402
+msgid "Borders stopped"
+msgstr "Huminto ang paglawak ng hangganan"
+
+#: action_menu:407
+msgid "City view  -  tiles, citizens, queue, buying"
+msgstr "Tanaw ng lungsod  -  mga tile, mamamayan, pila, pagbili"
+
+#: action_menu:419
+msgid "This city is being razed - it shrinks each turn until it's gone. Stop razing it in the city view."
+msgstr "Winawasak ang lungsod na ito - lumiliit ito bawat tira hanggang mawala. Ihinto ang pagwasak sa tanaw ng lungsod."
+
+#: action_menu:423
+msgid "Producing"
+msgstr "Ginagawa"
+
+#: action_menu:423
+msgid "Producing nothing - pick something below"
+msgstr "Walang ginagawa - pumili ng isa sa ibaba"
+
+#: action_menu:445,city_boards:412,city_boards:552,civilopedia_board:528
+msgid "Buildings"
+msgstr "Mga Gusali"
+
+#: action_menu:445,city_boards:412,city_boards:552,civilopedia_board:528,overview_board:25,overview_board:25,overview_board:823
+msgid "Wonders"
+msgstr "Mga Kamanghaan"
+
+#: action_menu:445,city_boards:552
+msgid "Other"
+msgstr "Maliban"
+
+#: action_menu:457,big_screen:1630,info_panel:197,main:3607,main:3955,overview_board:22,panel_board:30
+msgid "Gold"
+msgstr "Ginto"
+
+#: action_menu:462
+msgid "Buy now for %d gold (you have %d)"
+msgstr "Bilhin ngayon sa halagang %d ginto (mayroon kang %d)"
+
+#: action_menu:601
+msgid "Promote %s"
+msgstr "I-promote ang %s"
+
+#: action_menu:603
+msgid "XP %d/%d. Pick one promotion.%s"
+msgstr "XP %d/%d. Pumili ng isang promosyon.%s"
+
+#: action_menu:604
+msgid "Has: %s"
+msgstr "Mayroon: %s"
+
+#: action_menu:609
+msgid "No promotion available right now."
+msgstr "Walang promosyong available ngayon."
+
+#: action_menu:633,action_menu:634,action_menu:697,main:4054
+msgid "Tutorial"
+msgstr "Tutoryal"
+
+#: action_menu:634
+msgid "%d of %d"
+msgstr "%d ng %d"
+
+#: action_menu:638
+msgid "%d more messages after this one"
+msgstr "%d pang mensahe pagkatapos nito"
+
+#: action_menu:665
+msgid "%s gives:"
+msgstr "Ibinibigay ng %s:"
+
+#: action_menu:665
+msgid "They"
+msgstr "Sila"
+
+#: action_menu:668
+msgid "You give:"
+msgstr "Ibinibigay mo:"
+
+#: action_menu:676
+msgid "%d votes  %s"
+msgstr "%d boto  %s"
+
+#: action_menu:677
+msgid "voted for %s"
+msgstr "bumoto para kay %s"
+
+#: action_menu:698
+msgid "Tutorials can be turned off in Settings > Gameplay. They're all in the Civilopedia too."
+msgstr "Maaaring patayin ang mga tutoryal sa Mga Setting > Gameplay. Nasa Sibilopedya rin ang lahat ng ito."
+
+#: action_menu:707
+msgid " (%d turns)"
+msgstr " (%d tira)"
+
+#: action_menu:715
+msgid "Choose a free great person"
+msgstr "Pumili ng isang dakilang tao"
+
+#: action_menu:716
+msgid "You have %d free great people to pick."
+msgstr "Mayroon kang %d libreng dakilang tao na pipiliin."
+
+#: action_menu:736
+msgid "Vote for world leader"
+msgstr "Bumoto para sa pinuno ng mundo"
+
+#: action_menu:737
+msgid "Choose who should become the world leader and win a Diplomatic Victory!"
+msgstr "Piliin kung sino ang dapat maging pinuno ng mundo at manalo ng Diplomatikong Tagumpay!"
+
+#: action_menu:740
+msgid "Vote for %s"
+msgstr "Bumoto para kay %s"
+
+#: action_menu:746
+msgid "Abstain"
+msgstr "Umiwaas"
+
+#: action_menu:760
+msgid "Nothing being researched - pick a tech!"
+msgstr "Walang sinasaliksik - pumili ng tech!"
+
+#: action_menu:762,big_screen:324,info_panel:105
+msgid "Researching %s"
+msgstr "Sinasaliksik ang %s"
+
+#: action_menu:764
+msgid "You have %d free technologies to pick - choose a highlighted one."
+msgstr "Mayroon kang %d libreng teknolohiya na pipiliin - pumili ng isang naka-highlight."
+
+#: action_menu:765
+msgid "Science %+d per turn. Picking a later tech queues its prerequisites."
+msgstr "Siyensya %+d bawat tira. Ang pagpili ng mas huling tech ay ipinapila ang mga kinakailangan nito."
+
+#: action_menu:783,big_screen:414,big_screen:529
+msgid "%s turns"
+msgstr "%s tira"
+
+#: action_menu:812
+msgid "Pick up where you left off, or start a new game."
+msgstr "Ituloy kung saan ka huminto, o magsimula ng bagong laro."
+
+#: action_menu:814
+msgid "Resume"
+msgstr "Ituloy"
+
+#: action_menu:818,main:442
+msgid "Continue"
+msgstr "Ipagpatuloy"
+
+#: action_menu:820
+msgid "Quick start"
+msgstr "Mabilisang simula"
+
+#: action_menu:822
+msgid "New game..."
+msgstr "Bagong laro..."
+
+#: action_menu:824
+msgid "Load game..."
+msgstr "I-load ang laro..."
+
+#: action_menu:826,civilopedia_board:92,civilopedia_board:216,main:94,main:4750,settings_board:103
+msgid "Civilopedia"
+msgstr "Sibilopedya"
+
+#: action_menu:827
+msgid "Quit"
+msgstr "Umalis"
+
+#: action_menu:835
+msgid "New game"
+msgstr "Bagong laro"
+
+#: action_menu:838,overview_board:475
+msgid "You"
+msgstr "Ikaw"
+
+#: action_menu:838
+msgid "World"
+msgstr "Mundo"
+
+#: action_menu:838,action_menu:885
+msgid "Rules"
+msgstr "Mga patakaran ng laro"
+
+#: action_menu:846,action_menu:863,action_menu:863,action_menu:864,main:534,main:763,main:763,main:861,main:862
+msgid "Random"
+msgstr "Random"
+
+#: action_menu:847
+msgid "%s  -  %s %s map, %s, %d AI, %d city-states"
+msgstr "%s  -  %s %s na mapa, %s, %d AI, %d lungsod-estado"
+
+#: action_menu:858
+msgid "%s, led by %s"
+msgstr "%s, pinamumunuan ni %s"
+
+#: action_menu:861
+msgid "Random: you'll find out who you are when the game starts."
+msgstr "Random: malalaman mo kung sino ka pagsimula ng laro."
+
+#: action_menu:862
+msgid "Your civilization"
+msgstr "Ang iyong sibilisasyon"
+
+#: action_menu:876
+msgid "Map size"
+msgstr "Laki ng mapa"
+
+#: action_menu:877
+msgid "Map type"
+msgstr "Uri ng mapa"
+
+#: action_menu:878
+msgid "Shape"
+msgstr "Hugis"
+
+#: action_menu:879,civilopedia_board:532,overview_board:24
+msgid "Resources"
+msgstr "Mga Pagkukunan"
+
+#: action_menu:880,action_menu:898,settings_board:40
+msgid "Options"
+msgstr "Opsyons"
+
+#: action_menu:881
+msgid "No ancient ruins"
+msgstr "Walang sinaunang guho"
+
+#: action_menu:882
+msgid "No natural wonders"
+msgstr "Walang likas na kamanghaan"
+
+#: action_menu:883
+msgid "Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge."
+msgstr "Dumudulas sa ilalim ng mesa ang mas malalaking mapa: hawakan ang grip at i-drag, o gamitin ang buod sa dulong gilid."
+
+#: action_menu:886
+msgid "Gods & Kings adds religion, espionage, more civilizations and more units and buildings."
+msgstr "Nagdaragdag ang Gods & Kings ng relihiyon, paniniktik, mas maraming sibilisasyon at mas maraming yunit at gusali."
+
+#: action_menu:887
+msgid "Difficulty"
+msgstr "Kahirapan"
+
+#: action_menu:888
+msgid "Game speed"
+msgstr "Bilis ng laro"
+
+#: action_menu:889
+msgid "Starting era"
+msgstr "Panimulang panahon"
+
+#: action_menu:890
+msgid "AI players"
+msgstr "Mga AI na manlalaro"
+
+#: action_menu:891
+msgid "City-states"
+msgstr "Mga lungsod-estado"
+
+#: action_menu:892
+msgid "Victory types (none picked = all)"
+msgstr "Mga uri ng tagumpay (walang pinili = lahat)"
+
+#: action_menu:899
+msgid "No barbarians"
+msgstr "Walang barbaro"
+
+#: action_menu:900
+msgid "Raging barbarians"
+msgstr "Nagngangalit na mga barbaro"
+
+#: action_menu:901
+msgid "One-city challenge"
+msgstr "Hamon ng iisang lungsod"
+
+#: action_menu:902
+msgid "No city razing"
+msgstr "Bawal wasakin ang lungsod"
+
+#: action_menu:903
+msgid "Nuclear weapons"
+msgstr "Mga sandatang nukleyar"
+
+#: action_menu:904,overview_board:26
+msgid "Espionage"
+msgstr "Paniniktik"
+
+#: action_menu:908,action_menu:923,big_screen:1539
+msgid "< Back"
+msgstr "< Balik"
+
+#: action_menu:909
+msgid "Start game"
+msgstr "Simulan ang laro"
+
+#: action_menu:921
+msgid "Load game"
+msgstr "I-load ang laro"
+
+#: action_menu:922
+msgid "Saves in your Unciv VR folder, newest first."
+msgstr "Mga save sa iyong Unciv VR folder, pinakabago muna."
+
+#: backgrounds:12,main:311,settings_board:244,settings_board:405
+msgid "Backgrounds"
+msgstr "Mga background"
+
+#: backgrounds:14,main:120
+msgid "Mountains"
+msgstr "Mga bundok"
+
+#: backgrounds:48
+msgid "Scenery"
+msgstr "Tanawin"
+
+#: big_screen:29,civilopedia_board:536
+msgid "Technologies"
+msgstr "Mga teknolohiya"
+
+#: big_screen:29,civilopedia_board:541
+msgid "Policies"
+msgstr "Mga Patakaran"
+
+#: big_screen:29,overview_board:911
+msgid "Diplomacy"
+msgstr "Diplomasya"
+
+#: big_screen:29,city_boards:399,civilopedia_board:546,overview_board:24,overview_board:291,overview_board:770,overview_board:779,overview_board:782,overview_board:913
+msgid "Religion"
+msgstr "Relihiyon"
+
+#: big_screen:29,civilopedia_board:565
+msgid "Victory"
+msgstr "Tagumpay"
+
+#: big_screen:48,big_screen:870,big_screen:1018
+msgid "Declare war"
+msgstr "Magpahayag ng Digmaan"
+
+#: big_screen:78,overview_board:411,overview_board:411,settings_board:45
+msgid "Score"
+msgstr "Puntos"
+
+#: big_screen:114
+msgid "No history yet - the charts fill in as turns go by."
+msgstr "Wala pang kasaysayan - napupuno ang mga tsart habang lumilipas ang mga tira."
+
+#: big_screen:181
+msgid "=====   hold the trigger here and drag to move this screen   ====="
+msgstr "=====   hawakan ang trigger dito at i-drag para ilipat ang screen na ito   ====="
+
+#: big_screen:280,big_screen:1444,main:1243
+msgid "Pause"
+msgstr "Hinto"
+
+#: big_screen:280,big_screen:1444,main:1209,main:1243
+msgid "Play"
+msgstr "I-play"
+
+#: big_screen:321
+msgid "Loading the technology tree..."
+msgstr "Nilo-load ang puno ng teknolohiya..."
+
+#: big_screen:324
+msgid "Pick something to research!"
+msgstr "Pumili ng sasaliksikin!"
+
+#: big_screen:325
+msgid "Science %+d per turn"
+msgstr "Siyensya %+d bawat tira"
+
+#: big_screen:512
+msgid "Click a tech to see what it does and what it lets you build. The little icons under each tech are what it unlocks."
+msgstr "I-click ang isang tech para makita kung ano ang ginagawa nito at kung ano ang maitatayo mo dahil dito. Ang maliliit na icon sa ilalim ng bawat tech ang binubuksan nito."
+
+#: big_screen:529
+msgid "needs science"
+msgstr "kailangan ng siyensya"
+
+#: big_screen:531
+msgid "researching now, "
+msgstr "sinasaliksik ngayon, "
+
+#: big_screen:532
+msgid "%s   (%s, %d science)"
+msgstr "%s   (%s, %d siyensya)"
+
+#: big_screen:599
+msgid "Loading policies..."
+msgstr "Nilo-load ang mga patakaran..."
+
+#: big_screen:603
+msgid "Culture %d / %d  (%+d per turn)%s"
+msgstr "Kultura %d / %d  (%+d bawat tira)%s"
+
+#: big_screen:604
+msgid "You can adopt a policy!"
+msgstr "Maaari kang magpatibay ng patakaran!"
+
+#: big_screen:724
+msgid "Click a symbol to see that policy. Open a branch (its big symbol) before adopting the policies in it."
+msgstr "I-click ang isang simbolo para makita ang patakarang iyon. Buksan muna ang isang sangay (ang malaking simbolo nito) bago patibayin ang mga patakaran dito."
+
+#: big_screen:740
+msgid "ready to adopt"
+msgstr "handa nang patibayin"
+
+#: big_screen:741
+msgid "needs more culture"
+msgstr "kailangan ng mas maraming kultura"
+
+#: big_screen:741
+msgid "not available yet"
+msgstr "hindi pa available"
+
+#: big_screen:751
+msgid "(no special effects)"
+msgstr "(walang espesyal na epekto)"
+
+#: big_screen:758
+msgid "Adopt"
+msgstr "Ipagtibay"
+
+#: big_screen:792
+msgid "Your score: %d"
+msgstr "Ang iyong puntos: %d"
+
+#: big_screen:796
+msgid "You haven't met anyone yet. Explore to find other civilizations and city-states."
+msgstr "Wala ka pang nakikilala. Mag-explore para makahanap ng ibang sibilisasyon at lungsod-estado."
+
+#: big_screen:796,big_screen:1133,big_screen:1284,overview_board:186
+msgid "Loading..."
+msgstr "Naglo-load..."
+
+#: big_screen:835
+msgid "   (city-state)"
+msgstr "   (lungsod-estado)"
+
+#: big_screen:844
+msgid "Destroyed"
+msgstr "Nawasak"
+
+#: big_screen:847,big_screen:913
+msgid "AT WAR"
+msgstr "NASA DIGMAAN"
+
+#: big_screen:849
+msgid "At peace"
+msgstr "Payapa"
+
+#: big_screen:849
+msgid "  (treaty: %d more turns)"
+msgstr "  (kasunduan: %d tira pa)"
+
+#: big_screen:852
+msgid "%s, %s - influence %d%s"
+msgstr "%s, %s - impluwensya %d%s"
+
+#: big_screen:853
+msgid "   allied with %s"
+msgstr "   kaalyado ng %s"
+
+#: big_screen:855,big_screen:937
+msgid "Feels %s about you%s"
+msgstr "%s ang tingin sa iyo%s"
+
+#: big_screen:857,big_screen:947
+msgid "Score %d    Cities %d"
+msgstr "Puntos %d    Mga lungsod %d"
+
+#: big_screen:859
+msgid "Diplomacy..."
+msgstr "Diplomasya..."
+
+#: big_screen:862,big_screen:1000
+msgid "Trade"
+msgstr "Kalakalan"
+
+#: big_screen:864
+msgid "Offer peace"
+msgstr "Mag-alok ng kapayapaan"
+
+#: big_screen:867
+msgid "Click again to declare war on %s"
+msgstr "I-click ulit para magdeklara ng digmaan sa %s"
+
+#: big_screen:908
+msgid "< All civilizations"
+msgstr "< Lahat ng sibilisasyon"
+
+#: big_screen:913
+msgid "  (no peace talks for %d more turns)"
+msgstr "  (walang usapang pangkapayapaan sa loob ng %d tira pa)"
+
+#: big_screen:915
+msgid "Type: %s    Personality: %s"
+msgstr "Uri: %s    Personalidad: %s"
+
+#: big_screen:916
+msgid "Our relationship: %s (influence %d)"
+msgstr "Ang ating ugnayan: %s (impluwensya %d)"
+
+#: big_screen:920
+msgid "Ally: %s with %d influence"
+msgstr "Kaalyado: %s na may %d impluwensya"
+
+#: big_screen:922
+msgid "Protected by: "
+msgstr "Pinoprotektahan ng: "
+
+#: big_screen:924
+msgid "Relationship changes in another %d turns"
+msgstr "Magbabago ang ugnayan sa loob ng %d tira pa"
+
+#: big_screen:926
+msgid "Resources: "
+msgstr "Mga pagkukunan: "
+
+#: big_screen:927
+msgid "When Friends:"
+msgstr "Kapag Kaibigan"
+
+#: big_screen:927
+msgid "When Allies:"
+msgstr "Kapag Kakampi"
+
+#: big_screen:939
+msgid "You have a declaration of friendship."
+msgstr "Mayroon kayong deklarasyon ng pagkakaibigan."
+
+#: big_screen:941
+msgid "You have denounced them."
+msgstr "Tinuligsa mo sila."
+
+#: big_screen:976
+msgid "Go to on map"
+msgstr "Pumunta sa mapa"
+
+#: big_screen:981
+msgid "Gift %d gold (+%d influence)"
+msgstr "Magregalo ng %d ginto (+%d impluwensya)"
+
+#: big_screen:984
+msgid "Build %s on %s (200 gold)"
+msgstr "Itayo ang %s sa %s (200 ginto)"
+
+#: big_screen:987
+msgid "Revoke protection"
+msgstr "Bawiin ang proteksyon"
+
+#: big_screen:987
+msgid "Click again: revoke protection?"
+msgstr "I-click ulit: bawiin ang proteksyon?"
+
+#: big_screen:989
+msgid "Pledge to protect"
+msgstr "Mangako ng proteksyon"
+
+#: big_screen:989
+msgid "Click again: declare protection?"
+msgstr "I-click ulit: magdeklara ng proteksyon?"
+
+#: big_screen:991
+msgid "Take %d gold (-15 influence)"
+msgstr "Kumuha ng %d ginto (-15 impluwensya)"
+
+#: big_screen:992
+msgid "Take worker (-50 influence)"
+msgstr "Kumuha ng manggagawa (-50 impluwensya)"
+
+#: big_screen:994
+msgid "Diplomatic marriage (%d gold)"
+msgstr "Diplomatikong kasal (%d ginto)"
+
+#: big_screen:995
+msgid "Click again: they join your empire"
+msgstr "I-click ulit: sasali sila sa iyong imperyo"
+
+#: big_screen:997,big_screen:1009
+msgid "Negotiate peace"
+msgstr "Makipag-usap para sa kapayapaan"
+
+#: big_screen:997
+msgid "Click again: make peace?"
+msgstr "I-click ulit: makipagkasundo sa kapayapaan?"
+
+#: big_screen:1004
+msgid "Friendship offered - waiting for their answer"
+msgstr "Inalok ang pagkakaibigan - hinihintay ang kanilang sagot"
+
+#: big_screen:1004
+msgid "Offer declaration of friendship (30 turns)"
+msgstr "Mag-alok ng deklarasyon ng pagkakaibigan (30 tira)"
+
+#: big_screen:1007
+msgid "Denounce (30 turns)"
+msgstr "Tuligsain (30 tira)"
+
+#: big_screen:1007
+msgid "Click again: denounce %s?"
+msgstr "I-click ulit: tuligsain ang %s?"
+
+#: big_screen:1014
+msgid "Click again to declare war"
+msgstr "I-click ulit para magdeklara ng digmaan"
+
+#: big_screen:1022
+msgid "Demands:"
+msgstr "Mga hiling:"
+
+#: big_screen:1030
+msgid "  (asked)"
+msgstr "  (hiniling)"
+
+#: big_screen:1031
+msgid "  (they agreed)"
+msgstr "  (pumayag sila)"
+
+#: big_screen:1040
+msgid "Tribute willingness (at least 0 to take gold, at least 30 and a size 4 city for a worker):"
+msgstr "Pagkukusang magbigay ng tributo (kahit 0 para kumuha ng ginto, kahit 30 at lungsod na may laking 4 para sa manggagawa):"
+
+#: big_screen:1044
+msgid "  (+%d influence)"
+msgstr "  (+%d impluwensya)"
+
+#: big_screen:1047
+msgid "  %d turns remaining"
+msgstr "  %d tira ang natitira"
+
+#: big_screen:1057,overview_board:44,overview_board:692
+msgid "Unforgivable"
+msgstr "Hindi kita mapapatawad"
+
+#: big_screen:1057,overview_board:45,overview_board:692
+msgid "Enemy"
+msgstr "Kalaban"
+
+#: big_screen:1059,overview_board:45,overview_board:692
+msgid "Afraid"
+msgstr "Natatakot"
+
+#: big_screen:1059,overview_board:45,overview_board:692
+msgid "Competitor"
+msgstr "Kakumpitensiya"
+
+#: big_screen:1061,overview_board:46,overview_board:692
+msgid "Favorable"
+msgstr "Maaaring paboran"
+
+#: big_screen:1061,overview_board:46,overview_board:692
+msgid "Friend"
+msgstr "Kaibigan"
+
+#: big_screen:1061,overview_board:47,overview_board:77,overview_board:692
+msgid "Ally"
+msgstr "Kakampi"
+
+#: big_screen:1082,overview_board:782
+msgid "Pantheon"
+msgstr "Panteon"
+
+#: big_screen:1082
+msgid "Founder"
+msgstr "Tagapagtatag"
+
+#: big_screen:1082
+msgid "Follower"
+msgstr "Tagasunod"
+
+#: big_screen:1083
+msgid "Enhancer"
+msgstr "Pampaganda"
+
+#: big_screen:1083,big_screen:1211,big_screen:1236
+msgid "Any"
+msgstr "Kahit ano"
+
+#: big_screen:1108
+msgid "Pick %d more beliefs%s"
+msgstr "Pumili ng %d pang paniniwala%s"
+
+#: big_screen:1108
+msgid "so far: %s"
+msgstr "sa ngayon: %s"
+
+#: big_screen:1111
+msgid "Now pick a symbol for your religion (above)."
+msgstr "Ngayon, pumili ng simbolo para sa iyong relihiyon (sa itaas)."
+
+#: big_screen:1118
+msgid "Follow this pantheon"
+msgstr "Sundin ang panteon na ito"
+
+#: big_screen:1118
+msgid "Found %s"
+msgstr "Itatag ang %s"
+
+#: big_screen:1119
+msgid "Enhance %s"
+msgstr "Pagyamanin ang %s"
+
+#: big_screen:1119
+msgid "Reform"
+msgstr "Repormahin"
+
+#: big_screen:1119
+msgid "Confirm"
+msgstr "Kumpirmahin"
+
+#: big_screen:1136
+msgid "Religion is off in this game."
+msgstr "Patay ang relihiyon sa larong ito."
+
+#: big_screen:1138
+msgid "Choose a pantheon belief"
+msgstr "Pumili ng paniniwala ng panteon"
+
+#: big_screen:1138
+msgid "Found your religion"
+msgstr "Itatag ang iyong relihiyon"
+
+#: big_screen:1138
+msgid "Enhance your religion"
+msgstr "Pagyamanin ang iyong relihiyon"
+
+#: big_screen:1139
+msgid "Reform your religion"
+msgstr "Repormahin ang iyong relihiyon"
+
+#: big_screen:1139
+msgid "No religion yet"
+msgstr "Wala pang relihiyon"
+
+#: big_screen:1147
+msgid "Your beliefs"
+msgstr "Ang iyong mga paniniwala"
+
+#: big_screen:1158
+msgid "Nothing to choose right now. Earn faith to found a pantheon; a Great Prophet founds (and later enhances) a religion in one of your cities."
+msgstr "Walang pipiliin ngayon. Mag-ipon ng pananalig para magtatag ng panteon; nagtatatag (at kalaunan ay nagpapayaman) ng relihiyon ang isang Dakilang Propeta sa isa sa iyong mga lungsod."
+
+#: big_screen:1170
+msgid "Symbol:"
+msgstr "Simbolo:"
+
+#: big_screen:1188
+msgid "Name: %s"
+msgstr "Pangalan: %s"
+
+#: big_screen:1188
+msgid "(pick a symbol)"
+msgstr "(pumili ng simbolo)"
+
+#: big_screen:1192
+msgid "Rename..."
+msgstr "Palitan ang pangalan..."
+
+#: big_screen:1211
+msgid "Choose any belief!"
+msgstr "Pumili ng kahit ano na paniniwala!"
+
+#: big_screen:1211
+msgid "Choose a %s belief!"
+msgstr "Pumili ng paniniwalang %s!"
+
+#: big_screen:1244
+msgid "  (another religion has it)"
+msgstr "  (nasa ibang relihiyon na)"
+
+#: big_screen:1245
+msgid "  (you have it)"
+msgstr "  (nasa iyo na)"
+
+#: big_screen:1246
+msgid "  (not available)"
+msgstr "  (hindi available)"
+
+#: big_screen:1248
+msgid "  (picked for another slot)"
+msgstr "  (napili para sa ibang puwesto)"
+
+#: big_screen:1286
+msgid "Turn %d   %s speed   %s%s"
+msgstr "Tira %d   bilis na %s   %s%s"
+
+#: big_screen:1287
+msgid "max %d turns"
+msgstr "hanggang %d tira"
+
+#: big_screen:1294
+msgid "You have won a %s Victory!"
+msgstr "Nanalo ka ng %s na Tagumpay!"
+
+#: big_screen:1294
+msgid "%s has won a %s Victory!"
+msgstr "Nanalo ang %s ng %s na Tagumpay!"
+
+#: big_screen:1296
+msgid "You have been defeated."
+msgstr "Natalo ka."
+
+#: big_screen:1309,main:1463
+msgid "One more turn...!"
+msgstr "Isa pang pagkakataon...!"
+
+#: big_screen:1312
+msgid "Main menu (start a new game)"
+msgstr "Pangunahing menu (magsimula ng bagong laro)"
+
+#: big_screen:1320
+msgid "Our status"
+msgstr "Ang ating katayuan"
+
+#: big_screen:1320
+msgid "Global status"
+msgstr "Pandaigdigang katayuan"
+
+#: big_screen:1322
+msgid "Rankings"
+msgstr "Mga Ranggo"
+
+#: big_screen:1324
+msgid "Charts"
+msgstr "Mga tsart"
+
+#: big_screen:1326
+msgid "Demographics"
+msgstr "Mga Demograpiko"
+
+#: big_screen:1346,big_screen:1362
+msgid "%s Victory"
+msgstr "%s na Tagumpay"
+
+#: big_screen:1350
+msgid "[done] "
+msgstr "[tapos] "
+
+#: big_screen:1424
+msgid "Rank"
+msgstr "Ranggo"
+
+#: big_screen:1424
+msgid "Value"
+msgstr "Halaga"
+
+#: big_screen:1424
+msgid "Best"
+msgstr "Pinakamagaling"
+
+#: big_screen:1424
+msgid "Average / Worst"
+msgstr "Karaniwan / Pinakamasama"
+
+#: big_screen:1525
+msgid "Trading with %s     Your gold %d, theirs %d"
+msgstr "Nakikipagkalakalan sa %s     Ginto mo %d, sa kanila %d"
+
+#: big_screen:1531
+msgid "You can offer"
+msgstr "Maaari mong ialok"
+
+#: big_screen:1532
+msgid "You give"
+msgstr "Ibibigay mo"
+
+#: big_screen:1533
+msgid "You get"
+msgstr "Makukuha mo"
+
+#: big_screen:1534
+msgid "They can offer"
+msgstr "Maaari nilang ialok"
+
+#: big_screen:1539,keyboard:88
+msgid "Clear"
+msgstr "Linisin"
+
+#: big_screen:1551
+msgid "Click items on the outside columns to put them on the table; click them again to take them off."
+msgstr "I-click ang mga item sa mga panlabas na hanay para ilagay ang mga ito sa mesa; i-click ulit para alisin."
+
+#: big_screen:1554
+msgid "%s would accept this."
+msgstr "Tatanggapin ito ng %s."
+
+#: big_screen:1558
+msgid "%s wants more for this%s."
+msgstr "Gusto ng %s ng higit pa para dito%s."
+
+#: big_screen:1558
+msgid "about %d gold's worth"
+msgstr "katumbas ng mga %d ginto"
+
+#: big_screen:1561
+msgid "Propose deal"
+msgstr "Imungkahi ang kasunduan"
+
+#: big_screen:1602,overview_board:225,overview_board:319
+msgid "  %d turns"
+msgstr "  %d tira"
+
+#: big_screen:1630
+msgid "Gold_Per_Turn"
+msgstr "Ginto bawat tira"
+
+#: bridge_client:64
+msgid "Not connected to the bridge"
+msgstr "Hindi nakakonekta sa bridge"
+
+#: bridge_client:79
+msgid "Bridge disconnected"
+msgstr "Naputol ang koneksyon sa bridge"
+
+#: bridge_launcher:41
+msgid "The bundled Unciv bridge is incomplete. Reinstall the game files."
+msgstr "Kulang ang kasamang Unciv bridge. I-install muli ang mga file ng laro."
+
+#: bridge_launcher:46,bridge_launcher:72
+msgid "Can't find the Unciv repo with the bridge at %s"
+msgstr "Hindi mahanap ang Unciv repo na may bridge sa %s"
+
+#: bridge_launcher:53
+msgid "No Java 17 or newer found (Unciv needs JDK 21). Install it and set JAVA_HOME."
+msgstr "Walang nahanap na Java 17 o mas bago (kailangan ng Unciv ang JDK 21). I-install ito at itakda ang JAVA_HOME."
+
+#: bridge_launcher:65,bridge_launcher:93
+msgid "Couldn't write %s"
+msgstr "Hindi maisulat ang %s"
+
+#: bridge_launcher:78
+msgid "Couldn't start Gradle"
+msgstr "Hindi masimulan ang Gradle"
+
+#: bridge_launcher:99
+msgid "Couldn't start the bundled Unciv bridge"
+msgstr "Hindi masimulan ang kasamang Unciv bridge"
+
+#: city_boards:73
+msgid "=====   hold the trigger here and drag to move   ====="
+msgstr "=====   hawakan ang trigger dito at i-drag para ilipat   ====="
+
+#: city_boards:99,main:95
+msgid "Exit city"
+msgstr "Lumabas sa lungsod"
+
+#: city_boards:175,overview_board:903
+msgid "City"
+msgstr "Lungsod"
+
+#: city_boards:206
+msgid "BEING RAZED"
+msgstr "WINAWASAK"
+
+#: city_boards:232
+msgid "Unassigned citizens: %d/%d%s"
+msgstr "Mga mamamayang walang trabaho: %d/%d%s"
+
+#: city_boards:232
+msgid "click: let the city place them"
+msgstr "i-click: hayaan ang lungsod na ilagay sila"
+
+#: city_boards:236
+msgid "(%d/%d food)"
+msgstr "(%d/%d pagkain)"
+
+#: city_boards:239
+msgid "Starving: loses a citizen in %d turns %s"
+msgstr "Nagugutom: mawawalan ng isang mamamayan sa loob ng %d tira %s"
+
+#: city_boards:241
+msgid "Food goes into production while this unit is built"
+msgstr "Napupunta sa produksyon ang pagkain habang itinatayo ang yunit na ito"
+
+#: city_boards:243
+msgid "New citizen in %d turns %s"
+msgstr "Bagong mamamayan sa loob ng %d tira %s"
+
+#: city_boards:245
+msgid "Not growing %s"
+msgstr "Hindi lumalaki %s"
+
+#: city_boards:248
+msgid "(%d/%d culture)"
+msgstr "(%d/%d kultura)"
+
+#: city_boards:250
+msgid "Borders grow in %d turns %s"
+msgstr "Lalawak ang hangganan sa loob ng %d tira %s"
+
+#: city_boards:252
+msgid "Borders have stopped growing"
+msgstr "Huminto na ang paglawak ng hangganan"
+
+#: city_boards:254
+msgid "In resistance for another %d turns"
+msgstr "Lumalaban pa sa loob ng %d tira"
+
+#: city_boards:256
+msgid "We Love The King Day for another %d turns"
+msgstr "Araw ng Pagmamahal sa Hari sa loob pa ng %d tira"
+
+#: city_boards:258
+msgid "Demanding %s (We Love The King Day if you get it)"
+msgstr "Humihingi ng %s (Araw ng Pagmamahal sa Hari kapag nakuha mo ito)"
+
+#: city_boards:268
+msgid "Annex city (stop it being a puppet)"
+msgstr "Isanib ang lungsod (hindi na ito papet)"
+
+#: city_boards:270
+msgid "Stop razing city"
+msgstr "Itigil ang pagwasak sa lungsod"
+
+#: city_boards:273
+msgid "Click again to RAZE %s (it burns down a citizen a turn)"
+msgstr "I-click ulit para WASAKIN ang %s (isang mamamayan ang nasusunog bawat tira)"
+
+#: city_boards:276
+msgid "Raze city"
+msgstr "Wasakin ang lungsod"
+
+#: city_boards:294
+msgid "Citizen management"
+msgstr "Pamamahala ng mamamayan"
+
+#: city_boards:297
+msgid "Reset citizens"
+msgstr "I-reset ang mga mamamayan"
+
+#: city_boards:302
+msgid "Avoid growth"
+msgstr "Iwasan ang paglaki"
+
+#: city_boards:308
+msgid "Citizen focus (which tiles the city prefers to work):"
+msgstr "Pokus ng mamamayan (aling mga tile ang mas gustong trabahuhin ng lungsod):"
+
+#: city_boards:341
+msgid "Specialists"
+msgstr "Espesyalista"
+
+#: city_boards:343
+msgid "Manual specialists (click for automatic)"
+msgstr "Manwal na espesyalista (i-click para sa awtomatiko)"
+
+#: city_boards:343
+msgid "Automatic specialists (click for manual)"
+msgstr "Awtomatikong espesyalista (i-click para sa manwal)"
+
+#: city_boards:362,city_boards:426,overview_board:391
+msgid "Specialist"
+msgstr "Espesyalista"
+
+#: city_boards:379
+msgid "Great people"
+msgstr "Mga dakilang tao"
+
+#: city_boards:401
+msgid "Majority religion: %s"
+msgstr "Pangunahing relihiyon: %s"
+
+#: city_boards:403
+msgid "Former holy city of %s"
+msgstr "Dating banal na lungsod ng %s"
+
+#: city_boards:403
+msgid "Holy city of %s"
+msgstr "Banal na lungsod ng %s"
+
+#: city_boards:405
+msgid "%s: %d followers, pressure %+d"
+msgstr "%s: %d tagasunod, presyon %+d"
+
+#: city_boards:412
+msgid "Specialist buildings"
+msgstr "Mga gusali ng espesyalista"
+
+#: city_boards:422
+msgid "  (free)"
+msgstr "  (libre)"
+
+#: city_boards:443
+msgid "Click a tile on the table: worked tiles stop being worked, free citizens go to unworked ones, "
+msgstr "I-click ang isang tile sa mesa: humihinto sa pagtatrabaho ang mga tinatrabahong tile, napupunta ang mga libreng mamamayan sa mga hindi tinatrabaho, "
+
+#: city_boards:444
+msgid "and tiles with a price can be bought (click twice)."
+msgstr "at mabibili ang mga tile na may presyo (i-click nang dalawang beses)."
+
+#: city_boards:451
+msgid "Tile"
+msgstr "Tile"
+
+#: city_boards:453
+msgid "city centre"
+msgstr "sentro ng lungsod"
+
+#: city_boards:453
+msgid "worked (locked)"
+msgstr "tinatrabaho (naka-lock)"
+
+#: city_boards:453
+msgid "not worked"
+msgstr "hindi tinatrabaho"
+
+#: city_boards:454
+msgid "gives its yield without a citizen"
+msgstr "nagbibigay ng ani nang walang mamamayan"
+
+#: city_boards:454
+msgid "gives nothing"
+msgstr "walang ibinibigay"
+
+#: city_boards:454
+msgid "blockaded by an enemy"
+msgstr "hinarangan ng kaaway"
+
+#: city_boards:455,info_panel:162
+msgid "worked by %s"
+msgstr "tinatrabaho ng %s"
+
+#: city_boards:455
+msgid "another city"
+msgstr "ibang lungsod"
+
+#: city_boards:455
+msgid "too far to work"
+msgstr "masyadong malayo para trabahuhin"
+
+#: city_boards:456
+msgid "can be bought"
+msgstr "mabibili"
+
+#: city_boards:456
+msgid "not yours"
+msgstr "hindi sa iyo"
+
+#: city_boards:467,info_panel:145
+msgid "Resource: %s"
+msgstr "Pagkukunan: %s"
+
+#: city_boards:469
+msgid "Improvement: %s"
+msgstr "Pagbubuti: %s"
+
+#: city_boards:471
+msgid "Owned by %s"
+msgstr "Pag-aari ng %s"
+
+#: city_boards:480
+msgid "Lock (keep a citizen here)"
+msgstr "I-lock (panatilihin ang isang mamamayan dito)"
+
+#: city_boards:481,city_boards:484
+msgid "Stop working"
+msgstr "Itigil ang pagtatrabaho"
+
+#: city_boards:483
+msgid "Unlock"
+msgstr "Ibukas"
+
+#: city_boards:486
+msgid "Work this tile"
+msgstr "Trabahuhin ang tile na ito"
+
+#: city_boards:487
+msgid "Work and lock"
+msgstr "Trabahuhin at i-lock"
+
+#: city_boards:491
+msgid "Click again: buy for %d gold"
+msgstr "I-click ulit: bilhin sa halagang %d ginto"
+
+#: city_boards:493
+msgid "Buy for %d gold (you have %d)"
+msgstr "Bilhin sa halagang %d ginto (mayroon kang %d)"
+
+#: city_boards:517,info_panel:198
+msgid "Production"
+msgstr "Produksyon"
+
+#: city_boards:518
+msgid "Gold %d   Faith %d   Production %+d a turn"
+msgstr "Ginto %d   Pananalig %d   Produksyon %+d bawat tira"
+
+#: city_boards:522
+msgid "Being built"
+msgstr "Itinatayo"
+
+#: city_boards:522
+msgid "Nothing being built - pick something below"
+msgstr "Walang itinatayo - pumili ng isa sa ibaba"
+
+#: city_boards:534,city_boards:566
+msgid "   %d turns"
+msgstr "   %d tira"
+
+#: city_boards:578
+msgid "Hide what can't be built yet"
+msgstr "Itago ang hindi pa maitatayo"
+
+#: city_boards:578
+msgid "Show what can't be built yet (and why)"
+msgstr "Ipakita ang hindi pa maitatayo (at kung bakit)"
+
+#: city_boards:586
+msgid "Click something to see what it does, then build it now, add it to the queue, or buy it."
+msgstr "I-click ang isang bagay para makita kung ano ang ginagawa nito, pagkatapos ay itayo ito ngayon, idagdag sa pila, o bilhin."
+
+#: city_boards:603
+msgid "   %d production"
+msgstr "   %d produksyon"
+
+#: city_boards:605
+msgid ", %d turns"
+msgstr ", %d tira"
+
+#: city_boards:607
+msgid "   (built)"
+msgstr "   (naitayo na)"
+
+#: city_boards:624
+msgid "Its %s goes on a tile you pick on the table after Build now / Add to queue / Buy."
+msgstr "Ang %s nito ay ilalagay sa tile na pipiliin mo sa mesa pagkatapos ng Itayo ngayon / Idagdag sa pila / Bilhin."
+
+#: city_boards:626
+msgid "Its %s goes on the ringed tile picked when it was queued."
+msgstr "Ang %s nito ay ilalagay sa may-singsing na tile na pinili nang ipinila ito."
+
+#: city_boards:634
+msgid "Build now"
+msgstr "Itayo ngayon"
+
+#: city_boards:639
+msgid "Add to queue"
+msgstr "Ilagay sa pila"
+
+#: city_boards:649
+msgid "Click again: buy for %d %s"
+msgstr "I-click ulit: bilhin sa halagang %d %s"
+
+#: city_boards:651
+msgid "Buy for %d %s"
+msgstr "Bilhin sa halagang %d %s"
+
+#: city_boards:651
+msgid "you have %d"
+msgstr "mayroon kang %d"
+
+#: city_boards:655
+msgid "Buy: move the unit out of the city first"
+msgstr "Bilhin: ilabas muna ang yunit sa lungsod"
+
+#: city_boards:661
+msgid "Click again: sell for %d gold"
+msgstr "I-click ulit: ibenta sa halagang %d ginto"
+
+#: city_boards:663
+msgid "Sell for %d gold"
+msgstr "Ibenta sa halagang %d ginto"
+
+#: civilopedia_board:74
+msgid "=====   Civilopedia  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Sibilopedya  -  hawakan ang trigger dito at i-drag para ilipat   ====="
+
+#: civilopedia_board:83
+msgid "<  Back"
+msgstr "<  Balik"
+
+#: civilopedia_board:295
+msgid "This entry couldn't be loaded."
+msgstr "Hindi ma-load ang entry na ito."
+
+#: civilopedia_board:528,overview_board:283
+msgid "Building"
+msgstr "Gusali"
+
+#: civilopedia_board:528
+msgid "Wonder"
+msgstr "Kamanghaan"
+
+#: civilopedia_board:530,main:2992
+msgid "Unit"
+msgstr "Yunit"
+
+#: civilopedia_board:532,overview_board:715
+msgid "Resource"
+msgstr "Pagkukunan"
+
+#: civilopedia_board:534
+msgid "Improvement"
+msgstr "Pagbubuti"
+
+#: civilopedia_board:534
+msgid "Tile Improvements"
+msgstr "Mga Pagbubuti sa Tile"
+
+#: civilopedia_board:536
+msgid "Technology"
+msgstr "Teknolohiya"
+
+#: civilopedia_board:538
+msgid "Promotion"
+msgstr "Promosyon"
+
+#: civilopedia_board:538,overview_board:523
+msgid "Promotions"
+msgstr "Mga promosyon"
+
+#: civilopedia_board:541,overview_board:909
+msgid "Policy"
+msgstr "Patakaran"
+
+#: civilopedia_board:544
+msgid "Belief"
+msgstr "Paniniwala"
+
+#: civilopedia_board:544
+msgid "Religions and Beliefs"
+msgstr "Mga Relihiyon at Paniniwala"
+
+#: civilopedia_board:547
+msgid "Nation"
+msgstr "Nasyon"
+
+#: civilopedia_board:547
+msgid "Nations"
+msgstr "Mga nasyon"
+
+#: civilopedia_board:556,hex_map:118,overview_board:823
+msgid "Terrain"
+msgstr "Kalupaan"
+
+#: civilopedia_board:556,settings_board:39
+msgid "Terrains"
+msgstr "Mga kalupaan"
+
+#: civilopedia_board:558
+msgid "Unit types"
+msgstr "Mga Uri ng Yunit"
+
+#: civilopedia_board:562
+msgid "Unit Names"
+msgstr "Mga pangalan ng yunit"
+
+#: civilopedia_board:565
+msgid "Victory Types"
+msgstr "Mga Uri ng Tagumpay"
+
+#: controller_visuals:194
+msgid "Thumbstick"
+msgstr "Thumbstick"
+
+#: controller_visuals:194
+msgid "Menu"
+msgstr "Menu"
+
+#: controller_visuals:195
+msgid "Trigger"
+msgstr "Trigger"
+
+#: controller_visuals:195
+msgid "Grip"
+msgstr "Grip"
+
+#: controller_visuals:202
+msgid "Trackpad"
+msgstr "Trackpad"
+
+#: controller_visuals:207
+msgid "Button 1"
+msgstr "Button 1"
+
+#: controller_visuals:208
+msgid "Button 2"
+msgstr "Button 2"
+
+#: hex_map:159,hex_map:1160,main:4023,main:4024,main:4026,main:4028,main:4030,overview_board:22,overview_board:22,overview_board:244
+msgid "Cities"
+msgstr "Mga Lungsod"
+
+#: hex_map:300,info_panel:150,info_panel:150,map_overlays:302,map_overlays:303,map_overlays:308,map_overlays:308,map_overlays:310,map_overlays:310,map_overlays:310,overview_board:757
+msgid "None"
+msgstr "Wala"
+
+#: hex_map:1357
+msgid "Unexplored (%d, %d)"
+msgstr "Hindi pa nagagalugad (%d, %d)"
+
+#: hex_map:1369
+msgid " - %s territory"
+msgstr " - teritoryo ng %s"
+
+#: hex_map:1371
+msgid " - city of %s"
+msgstr " - lungsod ng %s"
+
+#: hex_map:1373
+msgid "\n  %s (%s, %d HP)"
+msgstr "\n  %s (%s, %d HP)"
+
+#: icons:55,icons:55
+msgid "Automate"
+msgstr "I-awtomeyt"
+
+#: icons:56,icons:56,icons:57
+msgid "Sleep"
+msgstr "Matulog"
+
+#: icons:57,icons:57
+msgid "Fortify"
+msgstr "Kutaan"
+
+#: icons:57,icons:57
+msgid "Guard"
+msgstr "Guwardiya"
+
+#: icons:58,icons:58,main:3888
+msgid "Explore"
+msgstr "Galugarin"
+
+#: icons:58,icons:58,overview_board:523
+msgid "Upgrade"
+msgstr "Mag-upgrade"
+
+#: icons:58,icons:58
+msgid "Transform"
+msgstr "Baguhin"
+
+#: icons:60,icons:60
+msgid "Repair"
+msgstr "Ayusin"
+
+#: icons:64,icons:64,main:3227,main:5121
+msgid "Skip"
+msgstr "Sunod"
+
+#: info_panel:79
+msgid "%s   Turn %d  (%s)"
+msgstr "%s   Tira %d  (%s)"
+
+#: info_panel:79,main:4080,overview_board:852
+msgid "%d BC"
+msgstr "%d BC"
+
+#: info_panel:79,main:4080,overview_board:852
+msgid "%d AD"
+msgstr "%d AD"
+
+#: info_panel:105
+msgid "Not researching anything - pick a tech!"
+msgstr "Walang sinasaliksik - pumili ng tech!"
+
+#: info_panel:118
+msgid "Point at a tile"
+msgstr "Ituro ang isang tile"
+
+#: info_panel:123
+msgid "Unexplored"
+msgstr "Hindi pa nagagalugad"
+
+#: info_panel:125
+msgid "Send a unit to find out what's here."
+msgstr "Magpadala ng yunit para malaman kung ano ang narito."
+
+#: info_panel:143
+msgid "Natural wonder: %s"
+msgstr "Likas na kamanghaan: %s"
+
+#: info_panel:148
+msgid "Improvement: %s%s"
+msgstr "Pagbubuti: %s%s"
+
+#: info_panel:153
+msgid "River"
+msgstr "Ilog"
+
+#: info_panel:156
+msgid "City of %s  (population %d)"
+msgstr "Lungsod ng %s  (populasyon %d)"
+
+#: info_panel:160
+msgid "%s territory"
+msgstr "Teritoryo ng %s"
+
+#: info_panel:167
+msgid "%d HP"
+msgstr "%d HP"
+
+#: info_panel:172
+msgid "%+d%% to unit defense"
+msgstr "%+d%% sa depensa ng yunit"
+
+#: info_panel:174
+msgid "Impassable"
+msgstr "Di-madaanan"
+
+#: info_panel:176
+msgid "Not currently in sight - last seen like this"
+msgstr "Hindi nakikita ngayon - ganito ang huling nakita"
+
+#: info_panel:178
+msgid "Attack %s: deal ~%d, take ~%d"
+msgstr "Atakihin ang %s: magdudulot ng ~%d, tatanggap ng ~%d"
+
+#: info_panel:197,main:3608,panel_board:30
+msgid "Science"
+msgstr "Siyensya"
+
+#: info_panel:197,info_panel:206,overview_board:24,overview_board:373,overview_board:373
+msgid "Happiness"
+msgstr "Kaligayahan"
+
+#: info_panel:197
+msgid "Malcontent"
+msgstr "Hindi kuntento"
+
+#: info_panel:197,main:3609,panel_board:30
+msgid "Culture"
+msgstr "Kultura"
+
+#: info_panel:198,main:2682,main:3610,overview_board:24,panel_board:30
+msgid "Faith"
+msgstr "Pananalig"
+
+#: info_panel:198,map_overlays:233,overview_board:283
+msgid "Population"
+msgstr "Populasyon"
+
+#: info_panel:198
+msgid "Food"
+msgstr "Pagkain"
+
+#: keyboard:82
+msgid "Shift"
+msgstr "Shift"
+
+#: keyboard:86,settings_board:96
+msgid "Space"
+msgstr "Space"
+
+#: keyboard:87
+msgid "< Del"
+msgstr "< Del"
+
+#: main:92
+msgid "Recenter"
+msgstr "I-recenter"
+
+#: main:165
+msgid "Move a unit!"
+msgstr "Igalaw ang isang yunit!"
+
+#: main:184
+msgid "hold to move onto a tile"
+msgstr "hawakan para lumipat sa isang tile"
+
+#: main:212
+msgid "Connecting..."
+msgstr "Kumokonekta..."
+
+#: main:384
+msgid "Lost connection to the bridge - retrying..."
+msgstr "Naputol ang koneksyon sa bridge - sinusubukang muli..."
+
+#: main:386
+msgid "Looking for the bridge on 127.0.0.1:%d..."
+msgstr "Hinahanap ang bridge sa 127.0.0.1:%d..."
+
+#: main:399
+msgid "Couldn't start the bridge: %s\nStart it by hand with:  gradlew :bridge:run"
+msgstr "Hindi masimulan ang bridge: %s\nSimulan ito nang mano-mano gamit ang:  gradlew :bridge:run"
+
+#: main:402
+msgid "Starting the Unciv bridge... (rebuilds if its code changed - can take a minute)"
+msgstr "Sinisimulan ang Unciv bridge... (muling binubuo kung nagbago ang code nito - maaaring tumagal ng isang minuto)"
+
+#: main:409
+msgid "The bridge stopped before it was ready. From %s:\n%s"
+msgstr "Huminto ang bridge bago ito naging handa. Mula sa %s:\n%s"
+
+#: main:419
+msgid "The Unciv engine isn't in this app (the UncivBridge plugin is missing from the export)."
+msgstr "Wala sa app na ito ang Unciv engine (nawawala sa export ang UncivBridge plugin)."
+
+#: main:424
+msgid "The Unciv engine couldn't start: %s"
+msgstr "Hindi masimulan ang Unciv engine: %s"
+
+#: main:433
+msgid "Unciv's engine stopped:\n%s"
+msgstr "Huminto ang engine ng Unciv:\n%s"
+
+#: main:435
+msgid "Starting Unciv's engine: %s... (%d s)"
+msgstr "Sinisimulan ang engine ng Unciv: %s... (%d s)"
+
+#: main:441
+msgid "An older Unciv bridge (protocol v%d) was still running - restarting it with the current code..."
+msgstr "May tumatakbo pang lumang Unciv bridge (protocol v%d) - nire-restart ito gamit ang kasalukuyang code..."
+
+#: main:452
+msgid "Couldn't stop the old bridge - carrying on with it. Some things may not work."
+msgstr "Hindi mapahinto ang lumang bridge - itutuloy gamit ito. Maaaring hindi gumana ang ilang bagay."
+
+#: main:492
+msgid "Reconnected to the bridge."
+msgstr "Muling nakakonekta sa bridge."
+
+#: main:501
+msgid "Bridge error: %s"
+msgstr "Error sa bridge: %s"
+
+#: main:512
+msgid "Warning: the bridge speaks protocol v%d but this client expects v%d - update both repos together. Some things may not work."
+msgstr "Babala: protocol v%d ang gamit ng bridge pero v%d ang inaasahan ng client na ito - i-update nang sabay ang dalawang repo. Maaaring hindi gumana ang ilang bagay."
+
+#: main:514
+msgid "Connected to Unciv %s"
+msgstr "Nakakonekta sa Unciv %s"
+
+#: main:526
+msgid "Couldn't load the save: %s"
+msgstr "Hindi ma-load ang save: %s"
+
+#: main:681
+msgid "Your move."
+msgstr "Ikaw na."
+
+#: main:691
+msgid "Starting a new game... (bigger maps take a little longer)"
+msgstr "Nagsisimula ng bagong laro... (medyo mas matagal ang mas malalaking mapa)"
+
+#: main:692
+msgid "Starting a new game..."
+msgstr "Nagsisimula ng bagong laro..."
+
+#: main:695
+msgid "Couldn't start a game: %s"
+msgstr "Hindi makapagsimula ng laro: %s"
+
+#: main:742
+msgid "saved "
+msgstr "na-save "
+
+#: main:747
+msgid "%s, turn %d"
+msgstr "%s, tira %d"
+
+#: main:755
+msgid "Main menu: point at the card over the table."
+msgstr "Pangunahing menu: ituro ang card sa itaas ng mesa."
+
+#: main:762
+msgid "%s on a %s %s map, %s, %d AI, %d city-states"
+msgstr "%s sa isang %s %s na mapa, %s, %d AI, %d lungsod-estado"
+
+#: main:763
+msgid "A random civilization"
+msgstr "Isang random na sibilisasyon"
+
+#: main:798
+msgid "Loading %s..."
+msgstr "Nilo-load ang %s..."
+
+#: main:801
+msgid "Couldn't load %s: %s"
+msgstr "Hindi ma-load ang %s: %s"
+
+#: main:857
+msgid "Couldn't read those rules: %s"
+msgstr "Hindi mabasa ang mga patakarang iyon: %s"
+
+#: main:902
+msgid "getState failed: %s"
+msgstr "Pumalya ang getState: %s"
+
+#: main:1145
+msgid "The overview, info board, big screen and panels are back in their usual spots."
+msgstr "Bumalik na sa karaniwang puwesto ang buod, info board, malaking screen at mga panel."
+
+#: main:1424
+msgid "Name your religion"
+msgstr "Pangalanan ang iyong relihiyon"
+
+#: main:1436
+msgid "Your religion"
+msgstr "Ang iyong relihiyon"
+
+#: main:1482,main:2863
+msgid "Researching %s."
+msgstr "Sinasaliksik ang %s."
+
+#: main:1496
+msgid "Adopted %s."
+msgstr "Pinagtibay ang %s."
+
+#: main:1510
+msgid "You declared war on %s!"
+msgstr "Nagdeklara ka ng digmaan sa %s!"
+
+#: main:1653,minimap:16
+msgid "Unit movements"
+msgstr "Galaw ng mga yunit"
+
+#: main:1653,minimap:17
+msgid "Tile yields"
+msgstr "Mga Ani ng Tile"
+
+#: main:1653,minimap:18
+msgid "Worked tiles"
+msgstr "Mga tinatrabahong tile"
+
+#: main:1654,minimap:19
+msgid "Resources and improvements"
+msgstr "Mga pagkukunan at pagbubuti"
+
+#: main:1654,minimap:20
+msgid "Improvement pictures"
+msgstr "Mga larawan ng pagbubuti"
+
+#: main:1654
+msgid "Unit icons"
+msgstr "Mga icon ng yunit"
+
+#: main:1800
+msgid "Hold %s on a tile to move a unit onto it."
+msgstr "Hawakan ang %s sa isang tile para ilipat doon ang isang yunit."
+
+#: main:1800
+msgid "the trigger"
+msgstr "trigger"
+
+#: main:1800
+msgid "the mouse button"
+msgstr "button ng mouse"
+
+#: main:1831
+msgid "Attack %s\ndeal ~%d, take ~%d\nclick again to attack"
+msgstr "Atakihin ang %s\nmagdudulot ng ~%d, tatanggap ng ~%d\ni-click ulit para umatake"
+
+#: main:1843
+msgid "a unit"
+msgstr "isang yunit"
+
+#: main:1848
+msgid "Can't get there"
+msgstr "Hindi makakarating doon"
+
+#: main:1850
+msgid "No room on this tile\n%s %s already there"
+msgstr "Walang puwang sa tile na ito\nNaroon na ang %s %s"
+
+#: main:1853
+msgid "\nSwap places on the card"
+msgstr "\nMagpalit ng puwesto sa card"
+
+#: main:1860,main:2941,overview_board:261
+msgid "Move here"
+msgstr "Lumipat dito"
+
+#: main:1860
+msgid "Move here: %d turns"
+msgstr "Lumipat dito: %d tira"
+
+#: main:1862
+msgid "\nsharing the tile with %s"
+msgstr "\nkasalo sa tile si %s"
+
+#: main:1864
+msgid "\nclick again to go"
+msgstr "\ni-click ulit para pumunta"
+
+#: main:1884
+msgid "%s is on its way - it keeps going next turn."
+msgstr "Papunta na ang %s - tutuloy ito sa susunod na tira."
+
+#: main:1910
+msgid "No attack happened."
+msgstr "Walang naganap na atake."
+
+#: main:1912
+msgid "%s attacked %s: dealt %d damage, took %d."
+msgstr "Inatake ng %s ang %s: nagdulot ng %d pinsala, tumanggap ng %d."
+
+#: main:1915
+msgid "  City captured!"
+msgstr "  Nasakop ang lungsod!"
+
+#: main:1917
+msgid "  %s destroyed!"
+msgstr "  Nawasak ang %s!"
+
+#: main:1919
+msgid "  Your %s was lost."
+msgstr "  Nawala ang iyong %s."
+
+#: main:1938
+msgid "Improvement order cancelled."
+msgstr "Kinansela ang utos ng pagbubuti."
+
+#: main:1940
+msgid "%s: building %s (%d turns)."
+msgstr "%s: itinatayo ang %s (%d tira)."
+
+#: main:2206
+msgid "Rename %s"
+msgstr "Palitan ang pangalan ng %s"
+
+#: main:2209
+msgid "%s is now called %s."
+msgstr "%s na ngayon ang pangalan ng %s."
+
+#: main:2219
+msgid "Name your %s (empty: no name)"
+msgstr "Pangalanan ang iyong %s (walang laman: walang pangalan)"
+
+#: main:2224
+msgid "Renamed to %s."
+msgstr "Pinalitan ang pangalan sa %s."
+
+#: main:2224
+msgid "Name removed."
+msgstr "Inalis ang pangalan."
+
+#: main:2300
+msgid "%s: on the way."
+msgstr "%s: papunta na."
+
+#: main:2300
+msgid "%s: coup orders given."
+msgstr "%s: naibigay na ang utos ng kudeta."
+
+#: main:2308,tutorial_task_card:41
+msgid "See your stats breakdown"
+msgstr "Tingnan ang detalye ng iyong mga stat"
+
+#: main:2328
+msgid "Selected %s."
+msgstr "Napili ang %s."
+
+#: main:2328,main:3076
+msgid "the unit"
+msgstr "ang yunit"
+
+#: main:2342
+msgid "Upgraded to %s."
+msgstr "Na-upgrade sa %s."
+
+#: main:2433,tutorial_task_card:27
+msgid "Enter city screen"
+msgstr "Pumasok sa screen ng lungsod"
+
+#: main:2448
+msgid "City view: %s. Click tiles to work them; Exit city (or B / Esc) goes back to the map."
+msgstr "Tanaw ng lungsod: %s. I-click ang mga tile para trabahuhin ang mga ito; ibinabalik ka sa mapa ng Lumabas sa lungsod (o B / Esc)."
+
+#: main:2494
+msgid "Back to the map."
+msgstr "Balik sa mapa."
+
+#: main:2514
+msgid "There's nowhere in %s to put the %s."
+msgstr "Walang mapaglalagyan sa %s para sa %s."
+
+#: main:2514,main:3087
+msgid "the city"
+msgstr "ang lungsod"
+
+#: main:2518
+msgid "Pick the tile for the %s (red rings), or Esc / B to cancel."
+msgstr "Piliin ang tile para sa %s (pulang singsing), o Esc / B para kanselahin."
+
+#: main:2526,main:3114
+msgid "Cancelled."
+msgstr "Kinansela."
+
+#: main:2534
+msgid "Pick one of the ringed tiles (Esc / B cancels)."
+msgstr "Pumili ng isa sa mga tile na may singsing (kinakansela ng Esc / B)."
+
+#: main:2541
+msgid "%s: the improvement goes there."
+msgstr "%s: doon ilalagay ang pagbubuti."
+
+#: main:2560
+msgid "Bought the tile for %d gold."
+msgstr "Nabili ang tile sa halagang %d ginto."
+
+#: main:2566
+msgid "Buy for %d gold\nclick again to buy"
+msgstr "Bilhin sa halagang %d ginto\ni-click ulit para bilhin"
+
+#: main:2566
+msgid "Costs %d gold\n(not enough gold)"
+msgstr "Nagkakahalaga ng %d ginto\n(kulang ang ginto)"
+
+#: main:2630
+msgid "Citizens reassigned (locks cleared)."
+msgstr "Muling itinalaga ang mga mamamayan (inalis ang mga lock)."
+
+#: main:2651
+msgid "Annexed."
+msgstr "Naisanib."
+
+#: main:2663,main:2766
+msgid "%s will build %s next."
+msgstr "Susunod na itatayo ng %s ang %s."
+
+#: main:2668
+msgid "%s added to the queue."
+msgstr "Idinagdag sa pila ang %s."
+
+#: main:2681
+msgid "Bought %s."
+msgstr "Nabili ang %s."
+
+#: main:2686
+msgid "Sold the %s."
+msgstr "Naibenta ang %s."
+
+#: main:2767
+msgid "%s added to %s's queue."
+msgstr "Idinagdag ang %s sa pila ng %s."
+
+#: main:2769
+msgid "Bought %s in %s."
+msgstr "Nabili ang %s sa %s."
+
+#: main:2825
+msgid "Experience"
+msgstr "Karanasan"
+
+#: main:2846
+msgid "%s is now %s."
+msgstr "%s na ngayon ang %s."
+
+#: main:2876
+msgid "Pick something to research."
+msgstr "Pumili ng sasaliksikin."
+
+#: main:2886
+msgid "You can adopt a new policy - see the Policies tab on the big screen."
+msgstr "Maaari kang magpatibay ng bagong patakaran - tingnan ang tab na Mga Patakaran sa malaking screen."
+
+#: main:2967
+msgid "%s is heading here"
+msgstr "Papunta rito ang %s"
+
+#: main:2967
+msgid "The unit"
+msgstr "Ang yunit"
+
+#: main:2990
+msgid "Are you sure?"
+msgstr "Sigurado ka ba?"
+
+#: main:3029
+msgid "Click again to confirm."
+msgstr "I-click ulit para kumpirmahin."
+
+#: main:3060
+msgid "%s: click a %stile"
+msgstr "%s: i-click ang isang %stile"
+
+#: main:3060
+msgid "highlighted "
+msgstr "naka-highlight na "
+
+#: main:3061
+msgid "%s - click the tile on the map (or Cancel on the card)."
+msgstr "%s - i-click ang tile sa mapa (o Kanselahin sa card)."
+
+#: main:3075
+msgid "Move here: click a tile"
+msgstr "Lumipat dito: i-click ang isang tile"
+
+#: main:3076
+msgid "Move %s - click a tile on the map (or Cancel on the card)."
+msgstr "Ilipat ang %s - i-click ang isang tile sa mapa (o Kanselahin sa card)."
+
+#: main:3087
+msgid "No enemies in range of %s."
+msgstr "Walang kaaway na abot ng %s."
+
+#: main:3094
+msgid "Bombard from %s: click a red-ringed enemy (click the city to cancel)."
+msgstr "Bombahin mula sa %s: i-click ang kaaway na may pulang singsing (i-click ang lungsod para kanselahin)."
+
+#: main:3125
+msgid "Pick one of the highlighted tiles (or Cancel)."
+msgstr "Pumili ng isa sa mga naka-highlight na tile (o Kanselahin)."
+
+#: main:3155
+msgid "%s bombarded %s: %d damage%s."
+msgstr "Binomba ng %s ang %s: %d pinsala%s."
+
+#: main:3156
+msgid "Destroyed!"
+msgstr "Nawasak!"
+
+#: main:3179
+msgid "End the turn? Press End turn again to confirm."
+msgstr "Tapusin ang tira? Pindutin ulit ang Tapusin ang tira para kumpirmahin."
+
+#: main:3186
+msgid "Ending turn - the AI players are moving..."
+msgstr "Tinatapos ang tira - gumagalaw ang mga AI na manlalaro..."
+
+#: main:3196,overview_board:184
+msgid "Turn %d"
+msgstr "Tira %d"
+
+#: main:3198
+msgid "GAME OVER - %s wins (%s victory)"
+msgstr "TAPOS ANG LARO - nanalo ang %s (%s na tagumpay)"
+
+#: main:3443
+msgid "A %s has been born!"
+msgstr "Isinilang ang isang %s!"
+
+#: main:3470
+msgid "You voted for %s."
+msgstr "Bumoto ka para kay %s."
+
+#: main:3470
+msgid "You abstained."
+msgstr "Hindi ka bumoto."
+
+#: main:4072
+msgid "ATTACK"
+msgstr "ATAKE"
+
+#: main:4081
+msgid "%s  -  Turn %d (%s)   Gold %d (%+d)   Science %+d   Happiness %d"
+msgstr "%s  -  Tira %d (%s)   Ginto %d (%+d)   Siyensya %+d   Kaligayahan %d"
+
+#: main:4085
+msgid "Researching: %s"
+msgstr "Sinasaliksik: %s"
+
+#: main:4315
+msgid "%s - turn %d"
+msgstr "%s - tira %d"
+
+#: main:4315
+msgid "Game"
+msgstr "Laro"
+
+#: main:4316
+msgid "Save game as"
+msgstr "I-save ang laro bilang"
+
+#: main:4319
+msgid "Saved as \"%s\"."
+msgstr "Na-save bilang \"%s\"."
+
+#: main:4319
+msgid "Couldn't save: %s"
+msgstr "Hindi ma-save: %s"
+
+#: main:4327,tutorial_task_card:37
+msgid "Open the options table"
+msgstr "Buksan ang mesa ng mga opsyon"
+
+#: main:4409
+msgid "The tutorials will show again from the start."
+msgstr "Ipapakita muli ang mga tutoryal mula sa simula."
+
+#: main:4409
+msgid "Couldn't reset the tutorials: %s"
+msgstr "Hindi ma-reset ang mga tutoryal: %s"
+
+#: main:4417
+msgid "The panels are back where they started."
+msgstr "Bumalik na sa simula ang mga panel."
+
+#: main:4429
+msgid "The table is back in the middle of the background."
+msgstr "Nasa gitna na ulit ng background ang mesa."
+
+#: main:4744
+msgid "Civilopedia: %s"
+msgstr "Sibilopedya: %s"
+
+#: main:4797
+msgid "Couldn't open the Civilopedia: %s"
+msgstr "Hindi mabuksan ang Sibilopedya: %s"
+
+#: main:4828
+msgid "Opened %s in your browser."
+msgstr "Binuksan ang %s sa iyong browser."
+
+#: main:4891
+msgid "Tutorial task hidden - the next one will show when it comes up."
+msgstr "Itinago ang task ng tutoryal - lalabas ang susunod kapag dumating na ito."
+
+#: main:4920
+msgid "Move the table"
+msgstr "Ilipat ang mesa"
+
+#: main:4950
+msgid "Moving the table: point at a spot in the scenery and %s to put it there. %s turns it. %s when you're done."
+msgstr "Paglilipat ng mesa: ituro ang isang lugar sa tanawin at %s para ilagay ito roon. %s ang nagpapaikot dito. %s kapag tapos ka na."
+
+#: main:4951
+msgid "pull the trigger"
+msgstr "hilahin ang trigger"
+
+#: main:4951
+msgid "The right stick"
+msgstr "Ang kanang stick"
+
+#: main:4951
+msgid "Press A or B"
+msgstr "Pindutin ang A o B"
+
+#: main:4960
+msgid "The table stays here - Settings > Look > Back to the middle puts it back."
+msgstr "Mananatili rito ang mesa - ibinabalik ito ng Mga Setting > Itsura > Ibalik sa gitna."
+
+#: main:4969
+msgid "That's not on the scenery - point at the ground somewhere."
+msgstr "Wala iyan sa tanawin - ituro ang lupa kahit saan."
+
+#: main:5110
+msgid "put the table here"
+msgstr "ilagay ang mesa rito"
+
+#: main:5111
+msgid "turn the scenery"
+msgstr "paikutin ang tanawin"
+
+#: main:5114
+msgid "done moving the table"
+msgstr "tapos nang ilipat ang mesa"
+
+#: main:5118
+msgid "point, click (hold: aim)"
+msgstr "ituro, i-click (hawakan: tumutok)"
+
+#: main:5123,tutorial_task_card:26
+msgid "Found city"
+msgstr "Magtatag ng lungsod"
+
+#: main:5125
+msgid "Cancel typing"
+msgstr "Kanselahin ang pag-type"
+
+#: main:5129
+msgid "Leave the city"
+msgstr "Umalis sa lungsod"
+
+#: main:5131
+msgid "table height"
+msgstr "taas ng mesa"
+
+#: main:5132,main:5142
+msgid "slide the map"
+msgstr "idulas ang mapa"
+
+#: main:5133,main:5143
+msgid "turn / size the table"
+msgstr "paikutin / baguhin ang laki ng mesa"
+
+#: main:5137
+msgid "Next unit"
+msgstr "Sunod na yunit"
+
+#: main:5139
+msgid "Previous unit"
+msgstr "Nakaraang yunit"
+
+#: main:5140
+msgid "zoom the map"
+msgstr "i-zoom ang mapa"
+
+#: main:5141
+msgid "table height, click: recenter"
+msgstr "taas ng mesa, i-click: i-recenter"
+
+#: main:5430
+msgid "Something didn't finish - carry on. (If it keeps happening, the log says why.)"
+msgstr "May hindi natapos - ituloy lang. (Kung paulit-ulit itong nangyayari, sinasabi ng log kung bakit.)"
+
+#: main:5458
+msgid "ATTACK %s (%s, %d/%d HP)"
+msgstr "ATAKIHIN ang %s (%s, %d/%d HP)"
+
+#: main:5461
+msgid "\n  expected: deal %d, take %d"
+msgstr "\n  inaasahan: magdudulot ng %d, tatanggap ng %d"
+
+#: map_overlays:241,overview_board:725,overview_board:726
+msgid "Luxury"
+msgstr "Luho"
+
+#: map_overlays:243,overview_board:725,overview_board:726
+msgid "Strategic"
+msgstr "Estratehiko"
+
+#: minimap:21
+msgid "Unit icons over the unit models"
+msgstr "Mga icon ng yunit sa itaas ng mga modelo ng yunit"
+
+#: minimap:85,minimap:180
+msgid "Overview: point and click to go there"
+msgstr "Buod: ituro at i-click para pumunta roon"
+
+#: minimap:173
+msgid "%s: %s (click to turn %s)"
+msgstr "%s: %s (i-click para gawing %s)"
+
+#: minimap:182,overview_board:915
+msgid "Overview"
+msgstr "Buod"
+
+#: overview_board:22
+msgid "Stats"
+msgstr "Mga Estatistiko"
+
+#: overview_board:22
+msgid "Trades"
+msgstr "Mga Palitan"
+
+#: overview_board:23,overview_board:23
+msgid "Politics"
+msgstr "Pulitika"
+
+#: overview_board:25,overview_board:25
+msgid "Notifications"
+msgstr "Mga Abiso"
+
+#: overview_board:26
+msgid "Spy"
+msgstr "Espiya"
+
+#: overview_board:44,overview_board:77,overview_board:692
+msgid "War"
+msgstr "Giyera"
+
+#: overview_board:44,overview_board:77,overview_board:692,overview_board:699
+msgid "DefensivePact"
+msgstr "Kasunduang pandepensa"
+
+#: overview_board:46,overview_board:692
+msgid "Neutral"
+msgstr "Hindi kaano-ano"
+
+#: overview_board:97
+msgid "=====   Empire overview  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Buod ng imperyo  -  hawakan ang trigger dito at i-drag para ilipat   ====="
+
+#: overview_board:210
+msgid "You have no spies yet - they come with new eras."
+msgstr "Wala ka pang espiya - dumarating sila sa mga bagong panahon."
+
+#: overview_board:221
+msgid "Spies (pick one, then where it goes)"
+msgstr "Mga espiya (pumili ng isa, pagkatapos ay kung saan ito pupunta)"
+
+#: overview_board:224
+msgid "%s  (rank %d)  -  %s  -  %s%s"
+msgstr "%s  (ranggo %d)  -  %s  -  %s%s"
+
+#: overview_board:233
+msgid "Call off the coup"
+msgstr "Iurong ang kudeta"
+
+#: overview_board:234
+msgid "Click again: stage a coup (%d%% chance)"
+msgstr "I-click ulit: magsagawa ng kudeta (%d%% tsansa)"
+
+#: overview_board:234
+msgid "Stage a coup (%d%% chance)"
+msgstr "Magsagawa ng kudeta (%d%% tsansa)"
+
+#: overview_board:244
+msgid "Where to"
+msgstr "Saan pupunta"
+
+#: overview_board:246
+msgid "Spy hideout (bring %s home)"
+msgstr "Taguan ng espiya (pauwiin si %s)"
+
+#: overview_board:252
+msgid "   spies: "
+msgstr "   mga espiya: "
+
+#: overview_board:261
+msgid "Click again (%s)"
+msgstr "I-click ulit (%s)"
+
+#: overview_board:278
+msgid "You have no cities yet."
+msgstr "Wala ka pang lungsod."
+
+#: overview_board:282,overview_board:520,overview_board:810
+msgid "Name"
+msgstr "Pangalan"
+
+#: overview_board:289
+msgid "Defence"
+msgstr "Depensa"
+
+#: overview_board:308
+msgid "Open the city view"
+msgstr "Buksan ang tanaw ng lungsod"
+
+#: overview_board:310
+msgid "Resistance"
+msgstr "Paglaban"
+
+#: overview_board:326
+msgid "%d t"
+msgstr "%d t"
+
+#: overview_board:329
+msgid "Demanding %s"
+msgstr "Humihingi ng %s"
+
+#: overview_board:344
+msgid " (holy)"
+msgstr " (banal)"
+
+#: overview_board:351
+msgid "Total %d"
+msgstr "Kabuuan %d"
+
+#: overview_board:381
+msgid "Convert gold to science: %d%%"
+msgstr "Gawing siyensya ang ginto: %d%%"
+
+#: overview_board:391
+msgid "Great person points"
+msgstr "Puntos para sa Dakilang Tao"
+
+#: overview_board:396
+msgid "Points"
+msgstr "Puntos"
+
+#: overview_board:397
+msgid "Per turn"
+msgstr "Bawat tira"
+
+#: overview_board:426,overview_board:718
+msgid "Total"
+msgstr "Kabuuan"
+
+#: overview_board:466
+msgid "Pending trades"
+msgstr "Mga Nakabinbing Palitan"
+
+#: overview_board:466
+msgid "Current trades"
+msgstr "Mga Kasalukuyang Palitan"
+
+#: overview_board:479
+msgid "No trades going on. Make one from the Diplomacy tab of the big screen."
+msgstr "Walang nagaganap na kalakalan. Gumawa ng isa mula sa tab na Diplomasya ng malaking screen."
+
+#: overview_board:514
+msgid "Unit supply: %d of %d used  (base %d, cities %d, population %d)"
+msgstr "Suplay ng yunit: %d sa %d ang gamit  (base %d, lungsod %d, populasyon %d)"
+
+#: overview_board:517
+msgid "Deficit %d: %d%% production in every city. Increase your supply or disband units."
+msgstr "Kakulangan %d: %d%% produksyon sa bawat lungsod. Dagdagan ang suplay o buwagin ang ilang yunit."
+
+#: overview_board:520
+msgid "Doing"
+msgstr "Ginagawa"
+
+#: overview_board:522
+msgid "Closest city"
+msgstr "Pinakamalapit na Lungsod"
+
+#: overview_board:573
+msgid "Click again: %d gold"
+msgstr "I-click ulit: %d ginto"
+
+#: overview_board:573
+msgid "%s %dg"
+msgstr "%s %dg"
+
+#: overview_board:597
+msgid "Show global politics"
+msgstr "Ipakita ang pandaigdigang pulitika"
+
+#: overview_board:597
+msgid "Show diagram"
+msgstr "Ipakita ang dayagram"
+
+#: overview_board:601
+msgid "Hide city-states"
+msgstr "Itago ang mga lungsod-estado"
+
+#: overview_board:601
+msgid "Include city-states"
+msgstr "Isama ang mga lungsod-estado"
+
+#: overview_board:605
+msgid "   %s civilizations in the game"
+msgstr "   %s sibilisasyon sa laro"
+
+#: overview_board:620
+msgid "Score %d"
+msgstr "Puntos %d"
+
+#: overview_board:641
+msgid "Defeated"
+msgstr "Natalo"
+
+#: overview_board:643
+msgid "At war with %s"
+msgstr "Nakikidigma sa %s"
+
+#: overview_board:645
+msgid "Defensive pact with %s (%d turns)"
+msgstr "Kasunduang pandepensa sa %s (%d tira)"
+
+#: overview_board:647
+msgid "Friends with %s (%d turns)"
+msgstr "Kaibigan ng %s (%d tira)"
+
+#: overview_board:649
+msgid "Denounced %s (%d turns)"
+msgstr "Tinuligsa ang %s (%d tira)"
+
+#: overview_board:651
+msgid "Allied with %s"
+msgstr "Kaalyado ng %s"
+
+#: overview_board:691
+msgid "Relations"
+msgstr "Mga Relasyon"
+
+#: overview_board:699
+msgid "Defensive pact"
+msgstr "Kasunduang pandepensa"
+
+#: overview_board:710
+msgid "You don't have any luxury or strategic resources yet."
+msgstr "Wala ka pang luho o estratehikong pagkukunan."
+
+#: overview_board:714,overview_board:714
+msgid "Unimproved"
+msgstr "Hindi pinagbuti"
+
+#: overview_board:714
+msgid "Trade offer"
+msgstr "Alok na Palitan"
+
+#: overview_board:714,overview_board:714
+msgid "Stockpile"
+msgstr "Imbak"
+
+#: overview_board:741
+msgid "Unimproved: tiles in your (or allied city-states') land with this resource but no improvement to use it.  "
+msgstr "Hindi napabuti: mga tile sa iyong lupain (o sa kaalyadong lungsod-estado) na may ganitong pagkukunan pero walang pagbubuting gumagamit nito.  "
+
+#: overview_board:742
+msgid "WLTK+/-: cities celebrating / demanding it for We Love The King Day."
+msgstr "WLTK+/-: mga lungsod na nagdiriwang / humihingi nito para sa Araw ng Pagmamahal sa Hari."
+
+#: overview_board:752
+msgid "Religions to be founded: %s"
+msgstr "Mga relihiyong maitatatag pa: %s"
+
+#: overview_board:756
+msgid "Minimal faith for the next %s: %d"
+msgstr "Pinakamababang pananalig para sa susunod na %s: %d"
+
+#: overview_board:756
+msgid "Great Prophet"
+msgstr "Dakilang Propeta"
+
+#: overview_board:757
+msgid "Religious status: %s"
+msgstr "Katayuan sa relihiyon: %s"
+
+#: overview_board:762
+msgid "No religions or pantheons have been founded yet."
+msgstr "Wala pang naitatatag na relihiyon o panteon."
+
+#: overview_board:782
+msgid "%s name:"
+msgstr "Pangalan ng %s:"
+
+#: overview_board:783
+msgid "Founding civ:"
+msgstr "Nagtatag na sibilisasyon:"
+
+#: overview_board:785
+msgid "Holy city:"
+msgstr "Banal na lungsod:"
+
+#: overview_board:786
+msgid "Cities following this religion:"
+msgstr "Mga lungsod na sumusunod sa relihiyon:"
+
+#: overview_board:787
+msgid "Followers of this religion:"
+msgstr "Mga tagasunod ng relihiyon:"
+
+#: overview_board:810
+msgid "Status"
+msgstr "Katayuan"
+
+#: overview_board:810,overview_board:905
+msgid "Location"
+msgstr "Lokasyon"
+
+#: overview_board:820
+msgid "Unknown"
+msgstr "Hindi kilala"
+
+#: overview_board:827
+msgid "Owned"
+msgstr "Pinagmamay-ari"
+
+#: overview_board:827
+msgid "Known"
+msgstr "Kilala"
+
+#: overview_board:851
+msgid "%s%s   Turn %d   %s"
+msgstr "%s%s   Tira %d   %s"
+
+#: overview_board:851
+msgid "Current turn  |"
+msgstr "Kasalukuyang tira  |"
+
+#: overview_board:864,overview_board:865,overview_board:866
+msgid "General"
+msgstr "Pangkalahatan"
+
+#: overview_board:870
+msgid "No notifications yet."
+msgstr "Wala pang abiso."
+
+#: overview_board:907
+msgid "Tech"
+msgstr "Teknolohiya"
+
+#: panel_board:67
+msgid "Panel"
+msgstr "Panel"
+
+#: panel_board:133
+msgid "Nothing to show."
+msgstr "Walang maipapakita."
+
+#: settings_board:87
+msgid "Select a unit"
+msgstr "Pumili ng yunit"
+
+#: settings_board:87
+msgid "Left-click it"
+msgstr "I-left-click ito"
+
+#: settings_board:87
+msgid "Point + right trigger: its card pops up above it"
+msgstr "Ituro + kanang trigger: lalabas ang card nito sa itaas nito"
+
+#: settings_board:88
+msgid "Move / attack"
+msgstr "Igalaw / umatake"
+
+#: settings_board:88
+msgid "Click a tile to aim, again to go"
+msgstr "I-click ang isang tile para tumutok, ulitin para pumunta"
+
+#: settings_board:88
+msgid "The same with the laser"
+msgstr "Pareho, gamit ang laser"
+
+#: settings_board:89
+msgid "Open a city"
+msgstr "Magbukas ng lungsod"
+
+#: settings_board:89
+msgid "Click it"
+msgstr "I-click ito"
+
+#: settings_board:89
+msgid "Point + right trigger: its card floats above the city"
+msgstr "Ituro + kanang trigger: lulutang ang card nito sa itaas ng lungsod"
+
+#: settings_board:90
+msgid "Scroll a card"
+msgstr "Mag-scroll ng card"
+
+#: settings_board:90
+msgid "Mouse wheel"
+msgstr "Mouse wheel"
+
+#: settings_board:90
+msgid "Point at it + right stick"
+msgstr "Ituro ito + kanang stick"
+
+#: settings_board:91
+msgid "Move the view"
+msgstr "Igalaw ang tanaw"
+
+#: settings_board:91
+msgid "Right-drag orbits, wheel zooms, WASD / middle-drag pans"
+msgstr "Right-drag para umikot, wheel para mag-zoom, WASD / middle-drag para mag-pan"
+
+#: settings_board:91
+msgid "Grip + stick: left / right turns the table, up / down scales it"
+msgstr "Grip + stick: kaliwa / kanan para paikutin ang mesa, taas / baba para baguhin ang laki"
+
+#: settings_board:92
+msgid "Table height"
+msgstr "Taas ng mesa"
+
+#: settings_board:92
+msgid "Either stick up / down (the right one when not pointing at a card)"
+msgstr "Alinmang stick pataas / pababa (ang kanan kapag hindi nakaturo sa card)"
+
+#: settings_board:93
+msgid "Zoom the map"
+msgstr "I-zoom ang mapa"
+
+#: settings_board:93
+msgid "+ / - or Ctrl + wheel"
+msgstr "+ / - o Ctrl + wheel"
+
+#: settings_board:93
+msgid "Hold a trigger + that hand's stick up / down"
+msgstr "Hawakan ang isang trigger + ang stick ng kamay na iyon pataas / pababa"
+
+#: settings_board:94
+msgid "Slide the map"
+msgstr "Idulas ang mapa"
+
+#: settings_board:94
+msgid "WASD, or click the overview"
+msgstr "WASD, o i-click ang buod"
+
+#: settings_board:94
+msgid "Hold a grip and drag; or point at the overview + trigger"
+msgstr "Hawakan ang grip at i-drag; o ituro ang buod + trigger"
+
+#: settings_board:95
+msgid "Move a board"
+msgstr "Ilipat ang isang board"
+
+#: settings_board:95
+msgid "Hold the trigger on its top strip (or on the info board) and move"
+msgstr "Hawakan ang trigger sa itaas na strip nito (o sa info board) at igalaw"
+
+#: settings_board:96
+msgid "A, or the End turn button on the table"
+msgstr "A, o ang button na Tapusin ang tira sa mesa"
+
+#: settings_board:97
+msgid "Found a city"
+msgstr "Magtatag ng lungsod"
+
+#: settings_board:98
+msgid "Next / previous unit"
+msgstr "Susunod / nakaraang yunit"
+
+#: settings_board:98
+msgid "Tab / Shift+Tab"
+msgstr "Tab / Shift+Tab"
+
+#: settings_board:99
+msgid "The Idle unit button on the table"
+msgstr "Ang button na Idle na yunit sa mesa"
+
+#: settings_board:100
+msgid "Tech tree, policies, diplomacy"
+msgstr "Puno ng teknolohiya, mga patakaran, diplomasya"
+
+#: settings_board:100
+msgid "The wrist card, or the buttons on the boards"
+msgstr "Ang card sa pulso, o ang mga button sa mga board"
+
+#: settings_board:101
+msgid "Empire overview"
+msgstr "Buod ng imperyo"
+
+#: settings_board:101
+msgid "Always up, off to your right"
+msgstr "Laging nakataas, sa bandang kanan mo"
+
+#: settings_board:102
+msgid "The Settings button on the table"
+msgstr "Ang button na Mga Setting sa mesa"
+
+#: settings_board:103
+msgid "The Civilopedia button on the table"
+msgstr "Ang button na Sibilopedya sa mesa"
+
+#: settings_board:104
+msgid "Close / deselect"
+msgstr "Isara / alisin ang pagpili"
+
+#: settings_board:104
+msgid "B closes the keyboard and the city view"
+msgstr "Isinasara ng B ang keyboard at ang tanaw ng lungsod"
+
+#: settings_board:105
+msgid "Recenter the table"
+msgstr "I-recenter ang mesa"
+
+#: settings_board:105
+msgid "Left stick click, or the Recenter button"
+msgstr "I-click ang kaliwang stick, o ang button na I-recenter"
+
+#: settings_board:136
+msgid "=====   Settings  -  hold the trigger here and drag to move   ====="
+msgstr "=====   Mga Setting  -  hawakan ang trigger dito at i-drag para ilipat   ====="
+
+#: settings_board:245,settings_board:405,table_model:17
+msgid "Tables"
+msgstr "Mga mesa"
+
+#: settings_board:247
+msgid "Move the table anywhere in the background's scenery - handy in big ones like a converted map. "
+msgstr "Ilipat ang mesa kahit saan sa tanawin ng background - kapaki-pakinabang sa malalaki tulad ng na-convert na mapa. "
+
+#: settings_board:277
+msgid "%d%% translated"
+msgstr "%d%% naisalin"
+
+#: settings_board:287
+msgid "Notification log keeps"
+msgstr "Itinatago ng log ng abiso"
+
+#: settings_board:287
+msgid "How many turns of messages the overview's Notifications tab keeps."
+msgstr "Ilang tira ng mensahe ang itinatago ng tab na Mga Abiso ng buod."
+
+#: settings_board:288
+msgid "Unciv's tutorials: a message when something new comes up, and a task card with the next thing to try."
+msgstr "Mga tutoryal ng Unciv: isang mensahe kapag may bagong lumitaw, at task card na may susunod na susubukan."
+
+#: settings_board:291
+msgid "Reset"
+msgstr "Magsimula muli"
+
+#: settings_board:306
+msgid "Unciv's own sound effects. They are read from the Unciv folder next to this one when the game runs; put your own in ~/.unciv-vr/Sounds under the same names to replace them."
+msgstr "Mga sariling sound effect ng Unciv. Binabasa ang mga ito mula sa folder ng Unciv sa tabi nito kapag tumatakbo ang laro; ilagay ang sarili mo sa ~/.unciv-vr/Sounds na may parehong mga pangalan para palitan ang mga ito."
+
+#: settings_board:310
+msgid "%d sounds found. Every unit's attack sound comes from the ruleset, like Unciv's."
+msgstr "%d tunog ang nahanap. Galing sa ruleset ang tunog ng atake ng bawat yunit, gaya sa Unciv."
+
+#: settings_board:311
+msgid "No sounds found. They live in Unciv's android/assets/sounds, next to this folder."
+msgstr "Walang nahanap na tunog. Nasa android/assets/sounds ng Unciv ang mga ito, sa tabi ng folder na ito."
+
+#: settings_board:319
+msgid "Boards with a list on them, built from what the game knows. In VR they stand around the table "
+msgstr "Mga board na may listahan, binuo mula sa alam ng laro. Sa VR, nakatayo sila sa paligid ng mesa "
+
+#: settings_board:320
+msgid "(hold the trigger on the strip along the top to move one); on the desktop they sit down the left side."
+msgstr "(hawakan ang trigger sa strip sa itaas para ilipat ang isa); sa desktop, nasa kaliwang gilid sila."
+
+#: settings_board:324
+msgid "A panel is a folder with a panel.json - see panels/README.md. Put yours in %s."
+msgstr "Ang panel ay isang folder na may panel.json - tingnan ang panels/README.md. Ilagay ang sa iyo sa %s."
+
+#: settings_board:333,settings_board:377
+msgid "Put them back"
+msgstr "Ibalik ang mga ito"
+
+#: settings_board:340
+msgid "(by %s)"
+msgstr "(ni %s)"
+
+#: settings_board:389
+msgid "Every turn"
+msgstr "Bawat tira"
+
+#: settings_board:389
+msgid "Every %d turns"
+msgstr "Bawat %d tira"
+
+#: settings_board:396
+msgid "not connected"
+msgstr "hindi nakakonekta"
+
+#: settings_board:397
+msgid "v%s (this client expects v%s)"
+msgstr "v%s (inaasahan ng client na ito ang v%s)"
+
+#: settings_board:405
+msgid "Tilesets"
+msgstr "Mga tileset"
+
+#: settings_board:409
+msgid "Unciv VR is under the Mozilla Public License 2.0, like Unciv. The icons are Unciv's own, by many authors "
+msgstr "Ang Unciv VR ay nasa ilalim ng Mozilla Public License 2.0, gaya ng Unciv. Sariling mga icon ng Unciv ang mga icon, ng maraming may-akda "
+
+#: settings_board:410
+msgid "under CC BY / CC BY-SA / CC0 licences (see CREDITS.md and Unciv's docs/Credits.md). The tile, unit, background "
+msgstr "sa ilalim ng mga lisensyang CC BY / CC BY-SA / CC0 (tingnan ang CREDITS.md at docs/Credits.md ng Unciv). Sariling gawa ng Unciv VR ang mga modelo ng tile, yunit, background "
+
+#: settings_board:411
+msgid "and table models are Unciv VR's own."
+msgstr "at mesa."
+
+#: settings_board:421
+msgid "%s speed"
+msgstr "bilis na %s"
+
+#: settings_board:423
+msgid "%s map"
+msgstr "%s na mapa"
+
+#: settings_board:424
+msgid "%s, turn %s"
+msgstr "%s, tira %s"
+
+#: settings_board:462
+msgid "by "
+msgstr "ni "
+
+#: settings_board:462
+msgid "  -  from %s"
+msgstr "  -  mula sa %s"
+
+#: tutorial_task_card:24
+msgid "Move unit"
+msgstr "Galawin ang yunit"
+
+#: tutorial_task_card:24
+msgid "Point at one of your units and pull the trigger, then point at a tile and pull twice: once to aim, once to go."
+msgstr "Ituro ang isa sa iyong mga yunit at hilahin ang trigger, pagkatapos ay ituro ang isang tile at hilahin nang dalawang beses: isa para tumutok, isa para pumunta."
+
+#: tutorial_task_card:25
+msgid "Click one of your units, then click a tile twice: once to aim, once to go."
+msgstr "I-click ang isa sa iyong mga yunit, pagkatapos ay i-click ang isang tile nang dalawang beses: isa para tumutok, isa para pumunta."
+
+#: tutorial_task_card:26
+msgid "Select the Settler and press Found city on its card (or B)."
+msgstr "Piliin ang Naninirahan at pindutin ang Magtatag ng lungsod sa card nito (o B)."
+
+#: tutorial_task_card:26
+msgid "Select the Settler and press Found city on its card (or F)."
+msgstr "Piliin ang Naninirahan at pindutin ang Magtatag ng lungsod sa card nito (o F)."
+
+#: tutorial_task_card:27
+msgid "Point at one of your cities and pull the trigger, then press City view on its card."
+msgstr "Ituro ang isa sa iyong mga lungsod at hilahin ang trigger, pagkatapos ay pindutin ang Tanaw ng lungsod sa card nito."
+
+#: tutorial_task_card:28
+msgid "Click one of your cities, then press City view on its card."
+msgstr "I-click ang isa sa iyong mga lungsod, pagkatapos ay pindutin ang Tanaw ng lungsod sa card nito."
+
+#: tutorial_task_card:29
+msgid "Pick technology"
+msgstr "Pumili ng teknolohiya"
+
+#: tutorial_task_card:29
+msgid "Open the tech tree from your wrist card and pick something to research."
+msgstr "Buksan ang puno ng teknolohiya mula sa card sa iyong pulso at pumili ng sasaliksikin."
+
+#: tutorial_task_card:30
+msgid "Open the tech tree (T) and pick something to research."
+msgstr "Buksan ang puno ng teknolohiya (T) at pumili ng sasaliksikin."
+
+#: tutorial_task_card:31
+msgid "Pick construction"
+msgstr "Pumili ng konstruksyon"
+
+#: tutorial_task_card:31
+msgid "Open one of your cities and pick something for it to build from its card."
+msgstr "Buksan ang isa sa iyong mga lungsod at pumili ng itatayo nito mula sa card nito."
+
+#: tutorial_task_card:32
+msgid "Click one of your cities and pick something for it to build from its card."
+msgstr "I-click ang isa sa iyong mga lungsod at pumili ng itatayo nito mula sa card nito."
+
+#: tutorial_task_card:33
+msgid "Pass a turn"
+msgstr "Lumipas ng isang tira"
+
+#: tutorial_task_card:33
+msgid "Give your units their orders, then press End turn on the table (or A)."
+msgstr "Bigyan ng utos ang iyong mga yunit, pagkatapos ay pindutin ang Tapusin ang tira sa mesa (o A)."
+
+#: tutorial_task_card:34
+msgid "Give your units their orders, then press End turn (or Space)."
+msgstr "Bigyan ng utos ang iyong mga yunit, pagkatapos ay pindutin ang Tapusin ang tira (o Space)."
+
+#: tutorial_task_card:35
+msgid "Reassign worked tiles"
+msgstr "Italaga muli ang mga tinatrabahong tile"
+
+#: tutorial_task_card:35
+msgid "In a city's view, point at one of its tiles and pull the trigger to work it, or to stop working it."
+msgstr "Sa tanaw ng lungsod, ituro ang isa sa mga tile nito at hilahin ang trigger para trabahuhin ito, o para itigil ang pagtatrabaho rito."
+
+#: tutorial_task_card:36
+msgid "In a city's view, click one of its tiles to work it, or to stop working it."
+msgstr "Sa tanaw ng lungsod, i-click ang isa sa mga tile nito para trabahuhin ito, o para itigil ang pagtatrabaho rito."
+
+#: tutorial_task_card:37
+msgid "Press Settings on the table."
+msgstr "Pindutin ang Mga Setting sa mesa."
+
+#: tutorial_task_card:37
+msgid "Press Settings on the table (or O)."
+msgstr "Pindutin ang Mga Setting sa mesa (o O)."
+
+#: tutorial_task_card:38
+msgid "Construct an improvement"
+msgstr "Magtayo ng pagbubuti"
+
+#: tutorial_task_card:38,tutorial_task_card:39
+msgid "Build a Worker, move it to a Plains or Grassland tile, press Construct improvement on its card and choose the Farm. Leave it there until the farm is finished."
+msgstr "Bumuo ng Manggagawa, ilipat ito sa tile na Kapatagan o Damuhan, pindutin ang Magtayo ng pagbubuti sa card nito at piliin ang Sakahan. Iwan ito roon hanggang matapos ang sakahan."
+
+#: tutorial_task_card:40
+msgid "Move an air unit"
+msgstr "Magpalipad ng yunit panghimpapawid"
+
+#: tutorial_task_card:40,tutorial_task_card:40
+msgid "Select an air unit and move it to another of your cities in range."
+msgstr "Pumili ng yunit panghimpapawid at ilipat ito sa isa pa sa iyong mga lungsod na abot nito."
+
+#: tutorial_task_card:41
+msgid "Turn to the empire overview off to your right and open its Stats tab."
+msgstr "Humarap sa buod ng imperyo sa bandang kanan mo at buksan ang tab na Stats nito."
+
+#: tutorial_task_card:42
+msgid "Open the empire overview (E) and its Stats tab."
+msgstr "Buksan ang buod ng imperyo (E) at ang tab na Stats nito."
+
+#: tutorial_task_card:81
+msgid "Tutorial task"
+msgstr "Task ng tutoryal"
+
+#: tutorial_task_card:87
+msgid "Hide"
+msgstr "Itago"
+
+msgid "Defence %d"
+msgstr "Depensa %d"
+
+msgid "%+d%% to unit defence"
+msgstr "%+d%% sa depensa ng yunit"
+
+msgid "  (%d HP)"
+msgstr "  (%d HP)"
+
+msgid " (pillaged)"
+msgstr " (sinira)"
+
+msgid ", worked by %s"
+msgstr ", tinatrabaho ng %s"
+
+msgid "  (click the red button again)"
+msgstr "  (i-click ulit ang pulang button)"
+
+msgid "  -  %d of %d"
+msgstr "  -  %d ng %d"
+
+msgid "  (%s turns)"
+msgstr "  (%s tira)"
+
+msgid "     Science %+d per turn"
+msgstr "     Siyensya %+d bawat tira"
+
+msgid "  (city-state)"
+msgstr "  (lungsod-estado)"
+
+msgid "   max %d turns"
+msgstr "   hanggang %d tira"
+
+msgid " (about %d gold's worth)"
+msgstr " (katumbas ng mga %d ginto)"
+
+msgid " (you have %d)"
+msgstr " (mayroon kang %d)"
+
+msgid "  (so far: %s)"
+msgstr "  (sa ngayon: %s)"
+
+msgid "  (obsolete)"
+msgstr "  (luma na)"
+
+msgid " (obsolete)"
+msgstr " (luma na)"
+
+msgid "abstained"
+msgstr "hindi bumoto"
+
+msgid "researched"
+msgstr "nasaliksik"
+
+msgid "adopted"
+msgstr "pinagtibay"
+
+msgid "gold"
+msgstr "ginto"
+
+msgid "faith"
+msgstr "pananalig"
+
+msgid "  - complete!"
+msgstr "  - tapos na!"
+
+msgid "complete"
+msgstr "tapos na"
+
+msgid "worked"
+msgstr "tinatrabaho"
+
+msgid "on"
+msgstr "bukas"
+
+msgid "off"
+msgstr "patay"
+
+msgid "click"
+msgstr "i-click"
+
+msgid "improvement"
+msgstr "pagbubuti"
+
+msgid "done"
+msgstr "tapos"
+
+msgid "Enemy targets in reach (red rings): %d. Click one to aim."
+msgstr "Mga target ng kaaway na abot (pulang singsing): %d. I-click ang isa para tumutok."
+
+msgid "Idle citizens: %d"
+msgstr "Mga idle na mamamayan: %d"
+
+msgid "Bombard – enemies in range: %d (strength %d)"
+msgstr "Bomba – mga kaaway na abot: %d (lakas %d)"
+
+msgid "More messages after this one: %d"
+msgstr "Mga mensahe pa pagkatapos nito: %d"
+
+msgid "Free great people to choose: %d."
+msgstr "Mga libreng dakilang tao na mapipili: %d."
+
+msgid "Free technologies to choose: %d. Pick a highlighted one."
+msgstr "Mga libreng teknolohiya na mapipili: %d. Pumili ng isang naka-highlight."
+
+msgid "Beliefs still to choose: %d%s"
+msgstr "Mga paniniwalang pipiliin pa: %d%s"
+
+msgid "Unciv supplies the game's messages, names and descriptions. Some languages also translate the Unciv VR interface. Missing translations stay in English."
+msgstr "Ang Unciv ang nagbibigay ng mga mensahe, pangalan at paglalarawan ng laro. Isinasalin din ng ilang wika ang interface ng Unciv VR. Nananatili sa Ingles ang mga kulang na salin."
+
+msgid "Units ({count})"
+msgstr "Mga Yunit ({count})"
+
+msgid "Cities ({count})"
+msgstr "Mga Lungsod ({count})"
+
+msgid "Military"
+msgstr "Militar"
+
+msgid "Military ({count})"
+msgstr "Militar ({count})"
+
+msgid "Rankings ({count})"
+msgstr "Ranggo ({count})"
+
+msgid "Waiting for orders"
+msgstr "Naghihintay ng utos"
+
+msgid "  -  promotion ready"
+msgstr "  -  handa na ang promosyon"
+
+msgid "  (capital)"
+msgstr "  (kabisera)"
+
+msgid "  (puppet)"
+msgstr "  (papet)"
+
+msgid "  (razing)"
+msgstr "  (winawasak)"
+
+msgid "Nothing to build"
+msgstr "Walang maitatayo"
+
+msgid "turn"
+msgstr "tira"
+
+msgid "turns"
+msgstr "mga tira"
+
+msgid "{leader}  -  {era} Era"
+msgstr "{leader}  -  Panahong {era}"
+
+msgid "{score} pts"
+msgstr "{score} puntos"
+
+msgid "No units yet."
+msgstr "Wala pang yunit."
+
+msgid "No cities yet."
+msgstr "Wala pang lungsod."
+
+msgid "No military units yet."
+msgstr "Wala pang yunit militar."
+
+msgid "No civilizations met yet."
+msgstr "Wala pang nakikilalang sibilisasyon."
+
+msgid "No wonders to show yet."
+msgstr "Wala pang kamanghaang maipapakita."
+
+msgid "Every unit you have, the ones still waiting for orders first, with what each is doing. Click one to select it."
+msgstr "Lahat ng iyong yunit, inuuna ang mga naghihintay pa ng utos, kasama kung ano ang ginagawa ng bawat isa. I-click ang isa para piliin ito."
+
+msgid "Every city you have, the capital first, with what each is building and how big it is. Click one to open its card."
+msgstr "Lahat ng iyong lungsod, inuuna ang kabisera, kasama kung ano ang itinatayo ng bawat isa at gaano ito kalaki. I-click ang isa para buksan ang card nito."
+
+msgid "Every military unit you have, with its action, moves and health. Click one to select it."
+msgstr "Lahat ng iyong yunit militar, kasama ang aksyon, galaw at kalusugan nito. I-click ang isa para piliin ito."
+
+msgid "Rankings of all known civilizations by total score points."
+msgstr "Ranggo ng lahat ng kilalang sibilisasyon ayon sa kabuuang puntos."
+
+msgid "Unciv's wonders overview, by era: which are built, being built or still to build. Click a built one to look at it."
+msgstr "Buod ng mga kamanghaan ng Unciv, ayon sa panahon: alin ang naitayo na, itinatayo, o itatayo pa. I-click ang isang naitayo na para tingnan ito."
+
+msgid "In the Hall of the Mountain King"
+msgstr "Sa Bulwagan ng Hari ng Bundok"
+
+msgid "The subterranean throne hall of the Troll King deep within the Dovre mountains, lit by fire braziers and glowing magma veins"
+msgstr "Ang bulwagan ng trono sa ilalim ng lupa ng Haring Troll, sa kailaliman ng mga bundok ng Dovre, na tinatanglawan ng mga baga ng apoy at kumikinang na ugat ng magma"
+
+msgid "Mountains and clouds"
+msgstr "Mga bundok at ulap"
+
+msgid "A meadow ringed by low-poly peaks, with trees and drifting clouds"
+msgstr "Isang parang na napapalibutan ng mga low-poly na tuktok, may mga puno at lumulutang na ulap"
+
+msgid "Floating in space"
+msgstr "Lumulutang sa kalawakan"
+
+msgid "The table floats among the stars, by a ringed planet"
+msgstr "Lumulutang ang mesa sa gitna ng mga bituin, sa tabi ng planetang may singsing"
+
+msgid "Studio"
+msgstr "Studio"
+
+msgid "A plain, dark room"
+msgstr "Isang payak at madilim na silid"
+
+msgid "Webb Deep Field"
+msgstr "Webb Deep Field"
+
+msgid "The table floats in deep space, surrounded by the James Webb Space Telescope's First Deep Field"
+msgstr "Lumulutang ang mesa sa malalim na kalawakan, napapalibutan ng First Deep Field ng James Webb Space Telescope"
+
+msgid "Ornate oak"
+msgstr "Magarbong oak"
+
+msgid "Oak with walnut and holly stringing, a carved rope edge, and a pedestal on scroll feet"
+msgstr "Oak na may palamuting walnut at holly, inukit na gilid na parang lubid, at patungan sa mga paang hugis-scroll"
+
+msgid "Plain wood"
+msgstr "Simpleng kahoy"
+
+msgid "A round dark wooden slab on a tapering column"
+msgstr "Isang bilog na madilim na tabla ng kahoy sa paliit na poste"
+
+msgid "Low poly"
+msgstr "Low poly"
+
+msgid "Faceted low-poly terrain, one flat colour per face"
+msgstr "Lupaing low-poly na may mga facet, isang patag na kulay bawat facet"
+
+msgid "%s: %s"
+msgstr "%s: %s"
+
+msgid "%s: %d"
+msgstr "%s: %d"
+
+msgid "%s %d"
+msgstr "%s %d"
+
+msgid "%s %d/%d"
+msgstr "%s %d/%d"
+
+msgid "%s (+%d)"
+msgstr "%s (+%d)"
+
+msgid "%s - %s"
+msgstr "%s - %s"
+
+msgid "%s  -  %s%s"
+msgstr "%s  -  %s%s"
+
+msgid "%d. %s%s"
+msgstr "%d. %s%s"
+
+msgid "%s  (%s)"
+msgstr "%s  (%s)"
+
+msgid "%s   (%s)"
+msgstr "%s   (%s)"
+
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+msgid "%s:  %s"
+msgstr "%s:  %s"
+
+msgid "%s:"
+msgstr "%s:"
+
+msgid "%s%s"
+msgstr "%s%s"
+
+msgid "%s%s%s"
+msgstr "%s%s%s"
+
+msgid "%s%s  (%d)"
+msgstr "%s%s  (%d)"
+
+msgid "%s (%s)%s"
+msgstr "%s (%s)%s"
+
+msgid "%d (%s)"
+msgstr "%d (%s)"
+
+msgid "%d / %d (%s)"
+msgstr "%d / %d (%s)"
+
+msgid "%s %s%d"
+msgstr "%s %s%d"
+
+msgid "  %s  %d"
+msgstr "  %s  %d"
+
+msgid "   %s: %d"
+msgstr "   %s: %d"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Interface translated; game content falls back to English."
+msgstr "Naisalin ang interface; Ingles ang nilalaman ng laro."
+
+msgid "Turns: %s"
+msgstr "Mga tira: %s"
+
+msgid "Latin keyboard"
+msgstr "Latin na keyboard"
+
+msgid "Arabic keyboard"
+msgstr "Arabic na keyboard"
+
+msgid "Hebrew keyboard"
+msgstr "Hebrew na keyboard"
+
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Default"
+msgstr "Default"
+
+msgid "Manual"
+msgstr "Manual"
+
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Kumilos - i-click ang isang tile"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Pagkatapos ay i-click ang tile na pupuntahan."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "I-click ang isang tile sa mapa (o Kanselahin)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Ang musika ng Unciv. Walang kasamang musika ang Unciv: kinukuha ng I-download ang sarili nitong kanta, gaya ng button ng Unciv. Ilagay ang sarili mong mga file na mp3, ogg o wav sa %s - na may pangalang gaya ng sa Unciv, \"<bansa, teknolohiya o kamanghaan> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), at tutugtog ang mga ito kapag tutugtugin sila ng Unciv."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Katahimikan bago magsimula ang susunod na kanta."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Naka-pause"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Wala pang musika"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Kasalukuyang tumutugtog"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d kanta ang nahanap."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Susunod na kanta"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Susunod"
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d segundo"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Na-download ang musika."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Walang nahanap na musika."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Kumilos"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Musika"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Lakas ng musika"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Hinto sa pagitan ng soundtrack"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Wala"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "I-download ang musika"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "I-download"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Nagdodownload..."
+
+#: scripts/action_menu.gd
+msgid "Credits"
+msgstr "Mga Kredito"
+
+#: scripts/action_menu.gd
+msgid "Back"
+msgstr "Balik"
+
+#: scripts/action_menu.gd
+msgid "Icons"
+msgstr "Mga icon"
+
+#: scripts/action_menu.gd
+msgid "Translations"
+msgstr "Mga salin"
+
+#: scripts/action_menu.gd
+msgid "Sky"
+msgstr "Langit"
+
+#: scripts/action_menu.gd
+msgid "Fonts"
+msgstr "Mga font"
+
+#: scripts/action_menu.gd
+msgid "Engine"
+msgstr "Engine"
+
+#: scripts/action_menu.gd
+msgid "Unciv VR is a VR frontend for Unciv, the open-source Civilization V remake."
+msgstr "Ang Unciv VR ay isang VR frontend para sa Unciv, ang open-source na remake ng Civilization V."
+
+#: scripts/action_menu.gd
+msgid "Every author, title and licence is listed in CREDITS.md and Unciv's Credits.md, which come with the game."
+msgstr "Nakalista ang bawat may-akda, pamagat at lisensya sa CREDITS.md at sa Credits.md ng Unciv, na kasama ng laro."
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
+msgstr "Sariling kanta ng Unciv, ang Thatched Villagers ni Kevin MacLeod, mula sa incompetech.com."

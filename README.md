@@ -98,8 +98,8 @@ and popups, notifications, descriptions, the Civilopedia and tutorials, quests, 
 buildings, techs, nations and cities - plus those of our buttons that use Unciv's own words.
 German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese, Swedish, European Portuguese, Dutch,
 Polish, Turkish, Indonesian, Japanese, Russian, Ukrainian, Czech, Hungarian, Romanian, Croatian, Catalan,
-Galician, Norwegian, Esperanto, Simplified Chinese, Traditional Chinese, Vietnamese, Toki Pona, Maltese
-and Korean have draft translations covering the frontend menus, city and
+Galician, Norwegian, Esperanto, Simplified Chinese, Traditional Chinese, Vietnamese, Toki Pona, Maltese,
+Korean and Filipino have draft translations covering the frontend menus, city and
 empire boards, diplomacy, religion, map replay, controller hints, built-in lists and tutorial instructions.
 Select **Arabic / العربية** or **Hebrew / עברית** for a right-to-left interface. Both now include draft Unciv
 game-content catalogs: built-in object names, promotions and shared effect descriptions. Unfinished entries still
@@ -108,7 +108,7 @@ Latin, Cyrillic, Arabic, Hebrew, Japanese, Chinese and Korean on Windows and Que
 The VR keyboard includes accents for each supported Latin-script language, Arabic/Hebrew and Russian/Ukrainian layouts, and Japanese
 hiragana/katakana input with a Latin switch (no kanji conversion). These passes are ready
 for wording and headset layout review.
-Korean adds Hangul composition, Vietnamese adds vowel and tone keys, and Maltese adds ċġħż.
+Korean adds Hangul composition, Vietnamese adds vowel and tone keys, Maltese adds ċġħż, and Filipino adds ñ.
 Chinese name entry currently uses Latin keys; Pinyin/Zhuyin character conversion is not implemented.
 The latest catalogs reuse Unciv terms and contain translation drafts with terminology edits;
 they have not yet had native-speaker or in-game visual review. Details and content coverage are in

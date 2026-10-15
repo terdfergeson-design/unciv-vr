@@ -46,6 +46,7 @@ const FRONTEND_LANGUAGES := {
 	"Toki_Pona": {"tag": "tok", "label": "toki pona"},
 	"Maltese": {"tag": "mt", "label": "Malti"},
 	"Korean": {"tag": "ko", "label": "한국어"},
+	"Filipino": {"tag": "fil", "label": "Filipino"},
 }
 
 

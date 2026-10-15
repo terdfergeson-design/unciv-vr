@@ -1,6 +1,6 @@
 # Frontend translations
 
-The client uses Godot gettext catalogs. All thirty catalogs cover frontend menus, settings, city management,
+The client uses Godot gettext catalogs. All thirty-one catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
 options, controller hints, tutorials and status messages. Each has 1,068 messages, ready for wording review.
 
@@ -35,6 +35,7 @@ options, controller hints, tutorials and status messages. Each has 1,068 message
 | Vietnamese | `vi.po` | Tiếng Việt |
 | Toki Pona | `tok.po` | toki pona |
 | Maltese | `mt.po` | Malti |
+| Filipino | `fil.po` | Filipino |
 | Korean | `ko.po` | 한국어 |
 
 The first fourteen catalogs reuse matching translations from this checkout's Unciv catalogs;
@@ -201,3 +202,12 @@ the units-needing-orders button and unit rename label clip, and engine/frontend 
 This is a limited visual check, not native-speaker approval or Quest verification.
 Repeat with `--language=Arabic --load=<save-path> --translation-check --translation-gameplay-check`.
 The four screenshots and a review guide are packaged in `build/UncivVR-Arabic-review-2026-10-13.zip`.
+
+### Filipino
+
+`fil.po` (Godot locale `fil`, Unciv's `Filipino`) has all 1,068 frontend messages. 180 of them reuse Unciv's own
+Filipino wording where the English matches exactly; the other 888 are an AI-assisted draft that follows Unciv's terms
+(tira for turn, yunit, lungsod, Sibilopedya). Common technical words stay in English the way Filipino speakers use
+them (tile, save, trigger, grip). Unciv's own Filipino game content is 83% complete in this checkout. The VR keyboard
+adds ñ to the Latin keys. Not yet reviewed by a native speaker, or checked on the Quest.
+

@@ -11,11 +11,15 @@ The frontend `.po` files remain separate and take precedence for matching client
 
 ## Coverage — 2026-10-14
 
-Arabic has 5,051 filled entries out of 6,544 scaffold entries; Hebrew has 1,700 out of 6,542
-(including 10 language settings). The picker shows Arabic 77% and Hebrew 25%, rounded down using Unciv's convention of excluding
+Arabic has 5,051 filled entries out of 6,544 scaffold entries; Hebrew has 3,595 out of 6,542
+(including 10 language settings). The picker shows Arabic 77% and Hebrew 54%, rounded down using Unciv's convention of excluding
 `ConditionalsOrder` from the denominator. This is whole-catalog coverage, not the percentage
 of text seen in a typical VR game. The scaffold uses this checkout's German catalog plus
 any additional manual-template keys; no German values were copied.
+
+Hebrew's count rose from 1,700 (25%) to 3,595 with a further batch on 2026-10-14 (the "more Hebrew translations"
+commit in the Unciv submodule). The list below describes the first pass; which areas the second batch filled has
+not been itemized here, so the Hebrew gaps named further down may be smaller than described.
 
 Included in both languages:
 
