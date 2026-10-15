@@ -222,7 +222,7 @@ func _build_symbols(shown: Dictionary) -> void:
 		var tile: Dictionary = _map.tiles[key]
 		if not tile.get("explored", false):
 			continue
-		var top: float = _map.tile_height(tile) + 0.03
+		var top: float = _map.tile_height(tile) + 0.045   # above the roads (0.02)
 		if flags["resources"] and tile.has("resource"):
 			var texture := Icons.badge("resource", str(tile["resource"]), _resource_color(str(tile["resource"])), Color.WHITE, 0.62)
 			_group(groups, texture, Transform3D(Basis().scaled(Vector3(0.5, 1, 0.5)), _map.tile_position(key, top) + Vector3(-0.4, 0, 0.38)))
@@ -270,15 +270,37 @@ func _add_decals(parent: Node3D, texture: Texture2D, transforms: Array) -> void:
 	parent.add_child(node)
 
 
-func _material(texture: Texture2D) -> StandardMaterial3D:
+## The pictures lying on the tiles (resources, improvements, worked tiles): drawn a hair in front of whatever
+## is under them, so a road crossing the same spot never shows through (they used to flicker where they met).
+const DECAL_SHADER := """
+shader_type spatial;
+render_mode unshaded;
+uniform sampler2D picture : source_color, filter_linear_mipmap;
+uniform float nudge = 0.003;   // metres towards the eye: more than a road's lift, less than anything standing on the tile
+void vertex() {
+	vec4 seen = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	seen.xyz += normalize(-seen.xyz) * nudge;
+	POSITION = PROJECTION_MATRIX * seen;
+}
+void fragment() {
+	vec4 colour = texture(picture, UV);
+	ALBEDO = colour.rgb;
+	ALPHA = colour.a;
+	ALPHA_SCISSOR_THRESHOLD = 0.4;
+}
+"""
+static var _decal_shader: Shader
+
+
+func _material(texture: Texture2D) -> ShaderMaterial:
 	if _materials.has(texture):
 		return _materials[texture]
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.albedo_texture = texture
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-	material.alpha_scissor_threshold = 0.4
-	material.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	if _decal_shader == null:
+		_decal_shader = Shader.new()
+		_decal_shader.code = DECAL_SHADER
+	var material := ShaderMaterial.new()
+	material.shader = _decal_shader
+	material.set_shader_parameter("picture", texture)
 	_materials[texture] = material
 	return material
 
@@ -313,7 +335,7 @@ func _build_improvement_models(shown: Dictionary) -> void:
 				road_lines.append([centre, _map.tile_position(neighbour, _map.tile_height(other)), colour])
 	if not road_lines.is_empty():
 		var roads := MeshInstance3D.new()
-		roads.mesh = _ribbons(road_lines, 0.12, 0.03, false)
+		roads.mesh = _ribbons(road_lines, 0.12, 0.02, false)   # under the tile pictures (0.045), which also draw in front
 		roads.material_override = _arrows.material_override
 		_models.add_child(roads)
 

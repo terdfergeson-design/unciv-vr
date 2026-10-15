@@ -88,15 +88,20 @@ const SETTINGS_PATH := "user://settings.cfg"
 ## Buttons on the table rim: [id, label, colour, angle]. Angle 0 is the edge nearest the player, negative
 ## is to the left. They sit on the left and right sides, just outside the map, where they're easy to see
 ## and point at - so everything can be done with the right controller alone (or the mouse).
+## They're arcade buttons: a dark housing with a chrome ring and a glossy domed cap that sinks when pressed.
 const TABLE_BUTTONS := [
-	["next_idle", "Idle unit", Color(0.3, 0.36, 0.48), -80.0],
-	["end_turn", "End turn", Color(0.75, 0.45, 0.12), 65.0],
-	["recenter", "Recenter", Color(0.35, 0.35, 0.38), 90.0],
-	["settings", "Settings", Color(0.35, 0.35, 0.38), 110.0],
-	["civilopedia", "Civilopedia", Color(0.3, 0.42, 0.36), -100.0],
-	["exit_city", "Exit city", Color(0.8, 0.12, 0.1), 65.0],   # only in the city view, where End turn usually is
+	["next_idle", "Idle unit", Color(0.14, 0.4, 0.88), -80.0],
+	["end_turn", "End turn", Color(0.98, 0.55, 0.06), 65.0],
+	["recenter", "Recenter", Color(0.86, 0.86, 0.88), 90.0],
+	["settings", "Settings", Color(0.1, 0.1, 0.11), 110.0],
+	["civilopedia", "Civilopedia", Color(0.12, 0.62, 0.3), -100.0],
+	["main_menu", "Main menu", Color(0.55, 0.24, 0.78), -120.0],
+	["exit_city", "Exit city", Color(0.9, 0.1, 0.07), 65.0],   # only in the city view, where End turn usually is
 ]
 const TABLE_BUTTON_RADIUS := 0.785     # distance from the table centre (map half-size is 0.7, table top 0.84)
+const TABLE_BUTTON_CAP := 0.04          # cap radius in table units; End turn and Exit city are bigger
+const TABLE_BUTTON_CAP_BIG := 0.052
+const TABLE_BUTTON_TRAVEL := 0.01       # how far a cap sinks when pressed
 const AIM_MOVE_COLOR := Color(0.35, 1.0, 0.55)
 const AIM_ATTACK_COLOR := Color(1.0, 0.35, 0.25)
 const AIM_BLOCKED_COLOR := Color(0.6, 0.6, 0.6)
@@ -586,6 +591,16 @@ func _on_bridge_connected() -> void:
 			else:
 				await scenarios.call(bits[0])
 	match options.get("show", ""):   # dev aid for screenshots: --show=city or --show=research
+		"close-up", "close-up-roads":   # zoomed right in on your first city (roads, resource and improvement pictures)
+			if not state.get("cities", []).is_empty():
+				var first: Dictionary = state["cities"][0]
+				var centre := Vector2i(int(first["x"]), int(first["y"]))
+				if options["show"] == "close-up-roads":   # pretend roads all round it (drawn only, the game is untouched)
+					for key: Vector2i in hex_map.tiles:
+						if absi(key.x - centre.x) <= 2 and absi(key.y - centre.y) <= 2 and absi((key.x - centre.x) - (key.y - centre.y)) <= 2:
+							(hex_map.tiles[key] as Dictionary)["road"] = "Road"
+				_look_at_tile(centre)
+				_zoom_view(0.01)
 		"civilopedia":
 			await open_civilopedia(str(options.get("pedia", "")))
 		"overview-cities", "overview-stats", "overview-trades", "overview-units", "overview-politics", "overview-diagram", "overview-resources", "overview-religion", "overview-wonders", "overview-notifications":
@@ -673,6 +688,9 @@ func _on_bridge_connected() -> void:
 		if options.has("fake-look") and _xr_camera != null:   # dev aid: turn the fake head after recentering
 			_xr_camera.rotation_degrees.y += float(options["fake-look"])
 			await get_tree().create_timer(0.3).timeout
+		if options.has("press"):   # dev aid: catch a table button half-way down (--press=end_turn)
+			_animate_table_button(str(options["press"]))
+			await get_tree().create_timer(0.05).timeout
 		get_viewport().get_texture().get_image().save_png(options["screenshot"])
 		print("Saved screenshot to %s" % options["screenshot"])
 		get_tree().quit()
@@ -4054,7 +4072,7 @@ func _run_smoke_test() -> void:
 		big_screen.close_trade()
 	await _on_big_screen_chosen("big_tab", "tech")
 	# Main menu round trip: open it, set up a new game, start it, then go back and resume
-	await _on_menu_chosen("main_menu", "")
+	await press_table_button("main_menu")   # the table's Main menu button
 	print("SMOKE: lobby open=%s, info=%s" % [_in_lobby, _lobby_info])
 	await _on_menu_chosen("lobby_new", "")
 	await _on_menu_chosen("setup_set", "mapSize|Small")
@@ -4890,39 +4908,109 @@ func _panel_list() -> Array:
 	return out
 
 
-## A row of round buttons along the near rim of the table, each with a floating label.
+## Arcade buttons around the rim of the table, each with a floating label: a dark housing, a chrome ring and a
+## glossy domed cap in the button's colour, which lights up when pointed at and sinks when pressed.
 func _setup_table_buttons() -> void:
-	var count := TABLE_BUTTONS.size()
-	for i in count:
-		var spec: Array = TABLE_BUTTONS[i]
+	var housing_material := StandardMaterial3D.new()
+	housing_material.albedo_color = Color(0.07, 0.07, 0.08)
+	housing_material.roughness = 0.55
+	var chrome := StandardMaterial3D.new()
+	chrome.albedo_color = Color(0.82, 0.83, 0.86)
+	chrome.metallic = 1.0
+	chrome.roughness = 0.22
+	for spec: Array in TABLE_BUTTONS:
 		var big: bool = spec[0] in ["end_turn", "exit_city"]
-		var node := MeshInstance3D.new()
+		var r: float = TABLE_BUTTON_CAP_BIG if big else TABLE_BUTTON_CAP
+		var node := Node3D.new()
 		node.name = "Button_" + spec[0]
-		var mesh := CylinderMesh.new()
-		mesh.top_radius = 0.042 if big else 0.032
-		mesh.bottom_radius = mesh.top_radius + 0.005
-		mesh.height = 0.02
-		mesh.radial_segments = 24
-		node.mesh = mesh
-		var material := StandardMaterial3D.new()
-		material.albedo_color = spec[2]
-		material.emission_enabled = true
-		material.emission = Color(0, 0, 0)
-		node.material_override = material
 		var angle := deg_to_rad(float(spec[3]))   # +Z is towards the player
-		node.position = Vector3(sin(angle) * TABLE_BUTTON_RADIUS, 0.01, cos(angle) * TABLE_BUTTON_RADIUS)
+		node.position = Vector3(sin(angle) * TABLE_BUTTON_RADIUS, 0.0, cos(angle) * TABLE_BUTTON_RADIUS)
 		node.visible = false   # shown once a game is on the table (never over the main menu)
 		table.add_child(node)
+		# The housing the cap sits in, and the chrome ring round the hole
+		var housing := MeshInstance3D.new()
+		var housing_mesh := CylinderMesh.new()
+		housing_mesh.top_radius = r + 0.011
+		housing_mesh.bottom_radius = r + 0.016
+		housing_mesh.height = 0.014
+		housing_mesh.radial_segments = 40
+		housing.mesh = housing_mesh
+		housing.material_override = housing_material
+		housing.position.y = 0.007
+		node.add_child(housing)
+		var ring := MeshInstance3D.new()
+		var ring_mesh := TorusMesh.new()
+		ring_mesh.inner_radius = r + 0.001
+		ring_mesh.outer_radius = r + 0.009
+		ring_mesh.rings = 40
+		ring_mesh.ring_segments = 10
+		ring.mesh = ring_mesh
+		ring.material_override = chrome
+		ring.position.y = 0.014
+		ring.scale = Vector3(1, 0.55, 1)
+		node.add_child(ring)
+		# The cap: a short skirt and a dome of glossy plastic. It moves as one when pressed.
+		var material := StandardMaterial3D.new()
+		material.albedo_color = spec[2]
+		material.roughness = 0.18
+		material.clearcoat_enabled = true
+		material.clearcoat_roughness = 0.1
+		material.emission_enabled = true
+		material.emission = (spec[2] as Color) * 0.12   # a little lit from inside, like an arcade button
+		var cap := Node3D.new()
+		cap.name = "Cap"
+		cap.position.y = 0.014
+		node.add_child(cap)
+		var skirt := MeshInstance3D.new()
+		var skirt_mesh := CylinderMesh.new()
+		skirt_mesh.top_radius = r
+		skirt_mesh.bottom_radius = r
+		skirt_mesh.height = 0.012
+		skirt_mesh.radial_segments = 40
+		skirt.mesh = skirt_mesh
+		skirt.material_override = material
+		skirt.position.y = 0.002
+		cap.add_child(skirt)
+		var dome := MeshInstance3D.new()
+		var dome_mesh := SphereMesh.new()
+		dome_mesh.radius = r
+		dome_mesh.height = r * 0.9   # a low dome; its lower half is hidden in the skirt and housing
+		dome_mesh.radial_segments = 40
+		dome_mesh.rings = 16
+		dome.mesh = dome_mesh
+		dome.material_override = material
+		dome.position.y = 0.008
+		cap.add_child(dome)
 		var label := Label3D.new()
 		label.text = spec[1]
 		label.font_size = 44 if big else 36
 		label.pixel_size = 0.0006
 		label.outline_size = 10
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-		label.position = Vector3(0, 0.035, 0)
+		label.position = Vector3(0, 0.022 + r * 0.45 + 0.025, 0)
 		node.add_child(label)
-		_table_buttons.append({"id": spec[0], "node": node, "material": material, "radius": mesh.bottom_radius,
-			"label": label, "color": spec[2]})
+		_table_buttons.append({"id": spec[0], "node": node, "material": material, "radius": r + 0.016,
+			"label": label, "color": spec[2], "cap": cap})
+
+
+## The cap sinks into its housing and springs back up - the press, for whichever way it was pressed.
+func _animate_table_button(id: String) -> void:
+	for button: Dictionary in _table_buttons:
+		if button["id"] != id:
+			continue
+		var cap: Node3D = button["cap"]
+		var material: StandardMaterial3D = button["material"]
+		var tween := create_tween()
+		tween.tween_property(cap, "position:y", 0.014 - TABLE_BUTTON_TRAVEL, 0.05).set_ease(Tween.EASE_OUT)
+		tween.parallel().tween_property(material, "emission", material.albedo_color * 0.8, 0.05)
+		tween.tween_property(cap, "position:y", 0.014, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.parallel().tween_property(material, "emission", _button_glow(button), 0.25)
+
+
+## How lit a cap is when nothing's pressing it: brighter while pointed at.
+func _button_glow(button: Dictionary) -> Color:
+	var material: StandardMaterial3D = button["material"]
+	return material.albedo_color * (0.45 if button["id"] == _hovered_button else 0.12)
 
 
 ## The id of the table button a ray points at, or "".
@@ -4931,7 +5019,7 @@ func _table_button_at(origin: Vector3, direction: Vector3) -> String:
 	var best_along := INF
 	var dir := direction.normalized()
 	for button: Dictionary in _table_buttons:
-		var node: MeshInstance3D = button["node"]
+		var node: Node3D = button["node"]
 		if not node.is_visible_in_tree():
 			continue
 		var center := node.global_position
@@ -4951,7 +5039,7 @@ func _highlight_table_button(id: String) -> void:
 	_hovered_button = id
 	for button: Dictionary in _table_buttons:
 		var material: StandardMaterial3D = button["material"]
-		material.emission = Color(0.4, 0.5, 0.75) if button["id"] == id else Color(0, 0, 0)
+		material.emission = _button_glow(button)
 
 
 func _table_button_position(id: String) -> Vector3:
@@ -4963,6 +5051,7 @@ func _table_button_position(id: String) -> Vector3:
 
 func press_table_button(id: String) -> void:
 	sounds.play(Sounds.CLICK)
+	_animate_table_button(id)
 	match id:
 		"prev_unit":
 			await cycle_unit(-1)
@@ -4978,6 +5067,10 @@ func press_table_button(id: String) -> void:
 			await exit_city_view()
 		"recenter":
 			recenter_table()
+		"main_menu":
+			if settings_shown():
+				_set_settings_visible(false)
+			await open_lobby()
 		"settings":
 			if settings_shown():
 				close_settings()
