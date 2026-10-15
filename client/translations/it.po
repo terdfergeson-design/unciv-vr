@@ -2939,8 +2939,8 @@ msgstr "turno"
 msgid "turns"
 msgstr "turni"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - Epoca {era}"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} punti"
@@ -3255,3 +3255,4 @@ msgstr "Rimetti"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Rimetti nella finestra principale"
+

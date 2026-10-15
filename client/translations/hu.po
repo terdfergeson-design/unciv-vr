@@ -2940,8 +2940,8 @@ msgstr "kör"
 msgid "turns"
 msgstr "körök"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Era"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} pont"
@@ -3256,3 +3256,4 @@ msgstr "Vissza"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Vissza a főablakba"
+

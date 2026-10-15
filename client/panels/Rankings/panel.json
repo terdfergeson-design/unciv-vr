@@ -19,7 +19,7 @@
 	"row": {
 		"icon": "nation:{name}",
 		"text": "{name}",
-		"detail": "{leader}  -  {era} Era",
+		"detail": "{leader}  -  {era}",
 		"right": "{score} pts"
 	},
 	"empty": "No civilizations met yet."

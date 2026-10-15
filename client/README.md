@@ -82,7 +82,29 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Zoom the map (all the way out = whole map) | +/- or Ctrl + wheel | hold a trigger + that hand's stick up / down |
 | Map overlays (Unciv's five: unit movements, tile yields, worked tiles, resources and improvements, improvement pictures) | click the round buttons beside the overview | point at one + right trigger |
 | Slide the map (when zoomed in) | WASD, or click the overview | hold a grip and drag the map; or point at the overview at the far edge and pull the trigger |
-| Shortcuts | Space end turn, F found city, Tab / Shift+Tab next / previous unit, N idle unit, T tech tree, P policies, G diplomacy, O settings, F1 Civilopedia, Esc close the Civilopedia / the big screen / deselect, R refresh | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
+| Shortcuts | the keys below | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
+
+### Desktop keyboard shortcuts
+The tech tree screen (tech tree, policies, diplomacy, religion, victory) is up when a game starts; T, P and G switch
+its tabs, and pressing the key of the tab that's showing (or Esc) puts it away. Settings > Controls lists the same.
+
+| Key | Does |
+|---|---|
+| Space / Enter | End turn (or go to what still needs deciding first) |
+| F | Found a city (with a settler selected) |
+| Tab / Shift+Tab | Next / previous unit |
+| N | Next idle unit |
+| T | Tech tree (open, or close if it's already showing) |
+| P | Policies |
+| G | Diplomacy |
+| E | Empire overview |
+| O | Settings |
+| F1 | Civilopedia |
+| Esc | Close the Civilopedia, Settings, the empire overview or the tech tree; cancel picking a tile; leave the city view; deselect |
+| + / - (or Page Up / Page Down, or Ctrl + wheel) | Zoom the map in / out |
+| W A S D | Slide the map |
+| R | Refresh from the game |
+| Q / E | Turn the scenery while moving the table (Settings > Look > Move the table...) |
 
 The right trigger clicks when you let go of it (so holding it to zoom, or to aim at a tile, doesn't also click).
 ### Turns, popups and decisions
@@ -152,8 +174,8 @@ time; a board whose monitor has gone (a laptop off its dock) just stays in the g
 unit card, the info board and the tutorial task card stay with the map. `scripts/desktop_popouts.gd`;
 `--popout=wide,overview` (with `--screenshot`) saves each popped-out window's picture too.
 Running from the Godot editor, the game has to be in its own window for this: Godot 4.4+ can embed the running game in
-its Game tab, which keeps every window inside it. Untick "Embed Game on Next Play" in the Game tab's ⋮ menu (the game
-says so in its status line if you try with it on). Exported builds always run in their own window.
+its Game tab, which keeps every window inside it. Set Editor Settings > Run > Window Placement > Game Embed
+Mode to Disabled (with the game embedded, the ↗ buttons don't appear). Exported builds always run in their own window.
 
 ### Sound
 The game plays **Unciv's own sound effects**, and plays them where Unciv does: a click on buttons, a whoosh
@@ -296,7 +318,7 @@ with your own key:
 
     client\tools\build_quest.bat release
 
-It makes `build\UncivVR-v<version>-quest.apk` (`UncivVR-v0.2.0-beta-quest.apk` today) and prints the certificate it
+It makes `build\UncivVR-v<version>-quest.apk` (`UncivVR-v0.2.1-beta-quest.apk` today) and prints the certificate it
 ended up signed with. The version is `version/name` in `export_presets.cfg`, so there's one place to bump it; raise
 `version/code` too, or a headset won't take the new build as an update to the old one. `release install` installs it.
 

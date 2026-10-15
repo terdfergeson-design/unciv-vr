@@ -139,6 +139,8 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "
 	# Panels (panels/ and ~/.unciv-vr/Panels): folder -> shown (missing: the panel's own "shown"), and where
 	# each has been dragged to in VR, relative to the table: folder -> [x, y, z, yaw degrees]
 	"panels": {}, "panel_poses": {}, "desktop_window_positions": {}, # desktop: window id -> Vector2
+	# desktop: boards popped out into windows of their own, id -> {x, y, w, h, screen} (scripts/desktop_popouts.gd)
+	"desktop_popouts": {},
 	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
 	# Where you've dragged the overview and the info board, relative to the table: [x, y, z, yaw degrees]
 	"minimap_pose": [], "info_pose": [], "wide_pose": [], "city_info_pose": [], "city_prod_pose": [], "overview_pose": [], "settings_pose": [],
@@ -717,6 +719,8 @@ func _on_bridge_connected() -> void:
 		get_tree().quit()
 
 
+
+
 ## Puts whatever game the bridge is running on the table and starts play.
 func _enter_game() -> void:
 	_in_lobby = false
@@ -730,7 +734,7 @@ func _enter_game() -> void:
 	hex_map.visible = true
 	_set_table_buttons_visible(true)
 	_set_info_visible(true)
-	_set_big_visible(_xr_mode)   # VR: always up; desktop: opened with T / P / G
+	_set_big_visible(true)   # up when a game starts (VR: always; desktop: T / P / G switch tabs, Esc or T again hides it)
 	_set_overview_visible(_xr_mode)   # VR: off to your right; desktop: E opens it
 	await _send_bridge_settings()
 	var rules := await bridge.request("getRuleset")
@@ -1208,6 +1212,18 @@ func reset_board_poses() -> void:
 	settings["pedia_pose"] = []
 	settings["task_pose"] = []
 	settings["panel_poses"] = {}
+	if not _xr_mode:   # the desktop: every board back in the game window, where it starts
+		if popouts != null:
+			for id: String in _desktop_windows.keys():
+				popouts.pop_back(id)
+		settings["desktop_window_positions"] = {}
+		settings["desktop_popouts"] = {}
+		_save_settings()
+		get_viewport().size_changed.emit()   # every board's own placement runs on this
+		_place_desktop_panels()
+		_place_desktop_menu()
+		_set_status("The overview, info board, big screen and panels are back in their usual spots.")
+		return
 	_save_settings()
 	_apply_board_poses()
 	_set_status("The overview, info board, big screen and panels are back in their usual spots.")
@@ -1372,6 +1388,18 @@ func show_big_screen(tab: String) -> void:
 	if tab == "policies":
 		_tutorial_request("showTutorial", {"name": "CultureAndPolicies"})   # Unciv's policy screen shows this
 	await _refresh_big_screen()
+
+
+## The card's "Research" button: the tech tree screen back in front of you, however it went away - closed (Esc, T),
+## popped out into its own window (brought to the front), or moved out of sight in VR (brought back into view).
+func bring_back_tech_tree() -> void:
+	if _in_lobby or big_screen == null:
+		return
+	if not _big_screen_shown() or big_screen.tab != "tech":
+		await show_big_screen("tech")
+	if popouts != null and popouts.window_of("wide") != null:
+		popouts.window_of("wide").grab_focus()
+	_bring_board_into_view("wide")
 
 
 ## Reloads the data on the big screen's current tab (after anything that may have changed it).
@@ -2893,7 +2921,7 @@ func open_research() -> void:
 	if _in_lobby:
 		return
 	if big_screen != null:
-		await show_big_screen("tech")   # the tech tree on the big screen
+		await bring_back_tech_tree()   # the tech tree on the big screen, back in front even if closed, popped out or moved away
 		return
 	var reply := await bridge.request("getTechs")
 	if not reply.ok:
@@ -4202,6 +4230,24 @@ func _run_smoke_test() -> void:
 			native, out_window.size if out_window != null else Vector2i.ZERO, covers_map, hides_with_board, shows_again, remembered,
 			big_screen.get_parent() is CanvasLayer, not (settings.get("desktop_popouts", {}) as Dictionary).has("wide")])
 		_set_big_visible(false)
+		# Desktop "Put the boards back": every saved spot forgotten, popped-out boards home (the player's own are kept)
+		var kept_spots: Dictionary = (settings.get("desktop_window_positions", {}) as Dictionary).duplicate(true)
+		var kept_out: Dictionary = (settings.get("desktop_popouts", {}) as Dictionary).duplicate(true)
+		popouts.pop_out("settings")
+		await get_tree().process_frame
+		reset_board_poses()
+		await get_tree().process_frame
+		var all_home: bool = popouts._out.is_empty() and (settings.get("desktop_window_positions", {}) as Dictionary).is_empty()
+		var on_screen := true
+		var view := get_viewport().get_visible_rect()
+		for id: String in _desktop_windows:
+			var c: Control = _desktop_windows[id]["control"]
+			if c.is_visible_in_tree() and not view.encloses(c.get_global_rect().grow(-1.0)) and c.get_global_rect().size.x <= view.size.x and c.get_global_rect().size.y <= view.size.y:
+				on_screen = false
+		print("SMOKE: put the boards back (desktop): all home %s, every board on screen %s" % [all_home, on_screen])
+		settings["desktop_window_positions"] = kept_spots
+		settings["desktop_popouts"] = kept_out
+		_save_settings()
 	print("SMOKE: music for a tech alert: %s" % music.last_choice())
 	# Panels: the template language, the read-only guard, then the built-in Units panel and a click on it
 	var checks := {
@@ -5601,6 +5647,25 @@ func _register_desktop_window(id: String, control: Control, layer: CanvasLayer, 
 		popouts.registered(id, control, layer)
 
 
+## Desktop boards stay wholly inside the game window: positions saved in a bigger window (the editor's, a
+## maximised one), a board that grew (the main menu card is taller than the unit card) or a smaller window would
+## otherwise leave them mostly off-screen - a tech tree you can't reach makes the game unplayable. A board bigger
+## than the window keeps its top-left corner in view.
+func _keep_desktop_windows_on_screen() -> void:
+	var viewport_size := get_viewport().get_visible_rect().size
+	for id: String in _desktop_windows:
+		if popouts != null and popouts.is_out(id):
+			continue
+		var control: Control = _desktop_windows[id]["control"]
+		if not is_instance_valid(control) or control == _desktop_drag or not control.is_visible_in_tree():
+			continue
+		var rect := control.get_global_rect()
+		var fitted := Vector2(clampf(rect.position.x, 0.0, maxf(0.0, viewport_size.x - rect.size.x)),
+			clampf(rect.position.y, 0.0, maxf(0.0, viewport_size.y - rect.size.y)))
+		if not fitted.is_equal_approx(rect.position):
+			control.position += fitted - rect.position
+
+
 ## A board came back from its own window: size and place it in the game window again.
 func _refit_desktop_board(_id: String) -> void:
 	get_viewport().size_changed.emit()   # every board's fit-to-the-window placement runs on this
@@ -5678,7 +5743,7 @@ func _input(event: InputEvent) -> void:
 		var window_size := _desktop_drag.get_global_rect().size
 		_desktop_drag.position = Vector2(
 			clampf(wanted.x, 0.0, maxf(0.0, viewport_size.x - window_size.x)),
-			clampf(wanted.y, 0.0, maxf(0.0, viewport_size.y - minf(48.0, window_size.y)))
+			clampf(wanted.y, 0.0, maxf(0.0, viewport_size.y - window_size.y))
 		)
 		get_viewport().set_input_as_handled()
 
@@ -5824,6 +5889,7 @@ func _process(delta: float) -> void:
 	if _xr_mode:
 		_process_xr(delta)
 		return
+	_keep_desktop_windows_on_screen()
 	# Holding the mouse button still on a tile aims at it (a click there selects whoever stands on it instead)
 	if _press_key != null:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):

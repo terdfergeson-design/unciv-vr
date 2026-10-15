@@ -3863,7 +3863,7 @@ msgstr "tira"
 msgid "turns"
 msgstr "mga tira"
 
-msgid "{leader}  -  {era} Era"
+msgid "{leader}  -  {era}"
 msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
@@ -4180,3 +4180,4 @@ msgstr "Ibalik"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Ibalik sa pangunahing window"
+

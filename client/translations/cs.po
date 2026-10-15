@@ -2940,8 +2940,8 @@ msgstr "tah"
 msgid "turns"
 msgstr "tahy"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} – {era} éra"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} bodů"
@@ -3256,3 +3256,4 @@ msgstr "Vrátit"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Vrátit do hlavního okna"
+

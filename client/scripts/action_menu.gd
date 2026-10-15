@@ -12,7 +12,7 @@ extends PanelContainer
 ##   research card: "research" (tech name)
 ##   promotion card: "promote" (promotion name); unit card: "promotion_card" opens it, "rename_unit" names it
 ##   footer "settings_card" opens the settings board (settings_board.gd)
-##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "end_turn", "recenter", "close"
+##   footer:        "prev_unit", "next_unit", "next_idle", "research_card", "tech_tree", "end_turn", "recenter", "close"
 ##   lobby card:    "lobby_resume", "lobby_continue" (save name), "lobby_quick", "lobby_new", "lobby_load", "settings_card", "civilopedia_card", "quit"
 ##   setup card:    "setup_tab" (you/world/rules), "setup_set" ("key|value"), "setup_toggle" (key),
 ##                  "setup_step" ("key|+1"), "setup_start", "lobby" (back to the lobby card)
@@ -116,6 +116,7 @@ func _ready() -> void:
 	turn_row.add_theme_constant_override("separation", 6)
 	_footer.add_child(turn_row)
 	turn_row.add_child(_make_button("Research", func() -> void: chosen.emit("research_card", ""), Color(0.2, 0.3, 0.5)))
+	# Brings back the tech tree screen (tech tree, policies, diplomacy...) however it was put away
 	turn_row.add_child(_make_button("Settings", func() -> void: chosen.emit("settings_card", ""), Color(0.25, 0.25, 0.3)))
 	_end_turn_button = _make_button(end_turn_text, func() -> void: chosen.emit("end_turn", ""), Color(0.55, 0.35, 0.1))
 	_footer.add_child(_end_turn_button)

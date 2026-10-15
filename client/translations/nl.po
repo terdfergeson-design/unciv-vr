@@ -2939,8 +2939,8 @@ msgstr "beurt"
 msgid "turns"
 msgstr "beurten"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - tijdperk {era}"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} ptn"
@@ -3255,3 +3255,4 @@ msgstr "Terugzetten"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Terugzetten in het hoofdvenster"
+

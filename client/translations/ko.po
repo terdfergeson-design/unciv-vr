@@ -2940,8 +2940,8 @@ msgstr "턴"
 msgid "turns"
 msgstr "턴"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} 시대"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} 포인트"
@@ -3256,3 +3256,4 @@ msgstr "되돌리기"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "주 창으로 되돌리기"
+

@@ -2940,8 +2940,8 @@ msgstr "potez"
 msgid "turns"
 msgstr "potezi"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Era"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} bodova"
@@ -3256,3 +3256,4 @@ msgstr "Vrati"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Vrati u glavni prozor"
+

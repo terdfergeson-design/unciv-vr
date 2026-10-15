@@ -2936,8 +2936,8 @@ msgstr "תור"
 msgid "turns"
 msgstr "תורות"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} — תקופת {era}"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} נקודות"
@@ -3253,3 +3253,4 @@ msgstr "החזרה"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "החזרה לחלון הראשי"
+

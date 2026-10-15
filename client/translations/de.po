@@ -3863,8 +3863,8 @@ msgstr "Runde"
 msgid "turns"
 msgstr "Runden"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader}  –  Zeitalter: {era}"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} Pkt."
@@ -4180,3 +4180,4 @@ msgstr "Zurück"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Zurück ins Hauptfenster"
+

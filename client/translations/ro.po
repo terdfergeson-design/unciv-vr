@@ -2940,8 +2940,8 @@ msgstr "tură"
 msgid "turns"
 msgstr "ture"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Era"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} pct"
@@ -3256,3 +3256,4 @@ msgstr "Pune la loc"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Pune la loc în fereastra principală"
+

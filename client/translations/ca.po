@@ -2940,8 +2940,8 @@ msgstr "torn"
 msgid "turns"
 msgstr "torns"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Era"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} pts"
@@ -3256,3 +3256,4 @@ msgstr "Torna a posar"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Torna-ho a la finestra principal"
+

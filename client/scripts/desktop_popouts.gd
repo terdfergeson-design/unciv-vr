@@ -25,7 +25,6 @@ const TITLES := {
 const Lang := preload("res://scripts/lang.gd")
 const SETTING := "desktop_popouts"
 const BUTTON_SIZE := Vector2(30, 24)
-const NO_WINDOWS_HINT := "Boards can't get windows of their own while the game runs inside the Godot editor. In its Game tab, open the ⋮ menu and untick \"Embed Game on Next Play\", then run it again."
 
 var main: Node
 var _out: Dictionary = {}          # id -> {window, control, layer, last_rect: Rect2i, shown: bool}
@@ -47,7 +46,9 @@ func _ready() -> void:
 
 ## Whether this desktop can open more native windows at all (not in single-window mode, not on the headset).
 static func supported() -> bool:
-	return DisplayServer.has_feature(DisplayServer.FEATURE_SUBWINDOWS) and not OS.has_feature("android")
+	# Inside the Godot editor's Game tab ("Embed Game") every window stays inside it: no pop-outs there
+	return DisplayServer.has_feature(DisplayServer.FEATURE_SUBWINDOWS) and not OS.has_feature("android") \
+		and not Engine.is_embedded_in_editor()
 
 
 static func poppable(id: String) -> bool:
@@ -152,11 +153,6 @@ func _pop_out_now(id: String, control: Control, layer: CanvasLayer, rect: Rect2i
 	window.focus_exited.connect(_mark_dirty)
 	_out[id] = {"window": window, "control": control, "layer": layer, "back": back, "last_rect": rect, "shown": false}
 	_sync_one(id)
-	if window.is_embedded():
-		# No real OS window to be had - the game is running inside the Godot editor's Game tab, which keeps every
-		# window inside it. Put the board straight back and say how to get real windows.
-		pop_back(id)
-		main._set_status(NO_WINDOWS_HINT)
 
 
 ## Back into the game window, where it was before (main.gd's saved spot for it).
@@ -189,10 +185,12 @@ func _process(_delta: float) -> void:
 		var layer: CanvasLayer = entry.get("layer")
 		var up: bool = not _out.has(id) and is_instance_valid(control) and is_instance_valid(layer) \
 			and layer.visible and control.is_visible_in_tree()
-		button.visible = up
 		if up:
 			var rect := control.get_global_rect()
 			button.position = Vector2(rect.end.x - BUTTON_SIZE.x - 6.0, rect.position.y + 4.0)
+			# Only where its own board is the one on top there - not floating over a board that covers it
+			up = str(main._desktop_window_at(button.position + BUTTON_SIZE / 2.0).get("id", "")) == id
+		button.visible = up
 	if _dirty_since >= 0.0 and Time.get_ticks_msec() / 1000.0 - _dirty_since > 1.0:
 		_dirty_since = -1.0
 		_save()

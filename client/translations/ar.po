@@ -2936,8 +2936,8 @@ msgstr "دور"
 msgid "turns"
 msgstr "أدوار"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} — عصر {era}"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} نقطة"
@@ -3253,3 +3253,4 @@ msgstr "إرجاع"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "أعده إلى النافذة الرئيسية"
+

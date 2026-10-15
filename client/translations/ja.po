@@ -2939,8 +2939,8 @@ msgstr "ターン"
 msgid "turns"
 msgstr "ターン"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} — {era}"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score}点"
@@ -3255,3 +3255,4 @@ msgstr "元に戻す"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "メインウィンドウに戻す"
+

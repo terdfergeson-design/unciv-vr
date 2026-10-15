@@ -3863,7 +3863,7 @@ msgstr "giliran"
 msgid "turns"
 msgstr "giliran"
 
-msgid "{leader}  -  {era} Era"
+msgid "{leader}  -  {era}"
 msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
@@ -4180,3 +4180,4 @@ msgstr "Letak semula"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Letak semula dalam tetingkap utama"
+

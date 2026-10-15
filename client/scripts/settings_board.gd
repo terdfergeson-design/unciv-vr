@@ -407,7 +407,7 @@ func _controls_page() -> void:
 			cell.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			cell.custom_minimum_size = Vector2(350, 0)
 			grid.add_child(cell)
-	if bool(info.get("in_vr", false)):
+	if true:   # VR and the desktop (where it also brings popped-out boards home)
 		_header("Boards", "")
 		_action_row("Put the boards back", "The overview, info board, big screen, city boards, empire overview and this board go back where they started.",
 			"Put them back", func() -> void: chosen.emit("reset_boards", ""))

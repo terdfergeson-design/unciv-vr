@@ -2940,8 +2940,8 @@ msgstr "quenda"
 msgid "turns"
 msgstr "quendas"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Era"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} puntos"
@@ -3256,3 +3256,4 @@ msgstr "Devolver"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Devolver á xanela principal"
+

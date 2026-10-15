@@ -2940,8 +2940,8 @@ msgstr "dawra"
 msgid "turns"
 msgstr "dawriet"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Era"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} punti"
@@ -3256,3 +3256,4 @@ msgstr "Erġa' poġġi"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Erġa' poġġi fit-tieqa ewlenija"
+

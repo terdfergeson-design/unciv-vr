@@ -44,6 +44,30 @@ Original icons from Unciv have been tinted and scaled.  Shared under various CC 
 - **VR controls** with the right controller alone: point and pull the trigger. You see the controllers you're
   actually holding (Quest Touch, Index, Vive...), with optional labels saying what each button does right now.
 
+## Desktop keyboard shortcuts
+Without a headset the game plays with mouse and keyboard. The tech tree screen is up when a game starts.
+
+| Key | Does |
+|---|---|
+| Space / Enter | End turn (or go to what still needs deciding first) |
+| F | Found a city (with a settler selected) |
+| Tab / Shift+Tab | Next / previous unit |
+| N | Next idle unit |
+| T | Tech tree (open, or close if it's already showing) |
+| P | Policies |
+| G | Diplomacy |
+| E | Empire overview |
+| O | Settings |
+| F1 | Civilopedia |
+| Esc | Close the Civilopedia, Settings, the empire overview or the tech tree; cancel picking a tile; leave the city view; deselect |
+| + / - (or Page Up / Page Down, or Ctrl + wheel) | Zoom the map in / out |
+| W A S D | Slide the map |
+| R | Refresh from the game |
+| Q / E | Turn the scenery while moving the table (Settings > Look > Move the table...) |
+
+Mouse: left-click selects and aims (click again to go), right-drag turns the view, the wheel zooms the view. Every
+board's top strip drags it; the ↗ on it pops it out into a window of its own (for a second monitor).
+
 ## Getting it running on the PC
 One-time setup:
 - **JDK 21** (for example Eclipse Temurin 21, with "Set JAVA_HOME" ticked).
@@ -60,7 +84,7 @@ With Godot 4.7.2 Windows export templates and JDK 21 installed, run this from th
 
     powershell -ExecutionPolicy Bypass -File client\tools\build_windows.ps1
 
-It creates `build\UncivVR-v<version>-windows.zip` (the version comes from the export preset), containing the Windows client, Unciv bridge and assets,
+It creates `build\windows\UncivVR-v<version>-windows.zip` (the version comes from the export preset), containing the Windows client, Unciv bridge and assets,
 and a trimmed Java runtime. The player does not need Godot or Java installed. The first build may download Gradle
 and its dependencies.
 
@@ -75,7 +99,7 @@ That makes `build\UncivVR-Quest.apk`, signed with Godot's debug key. Install it 
 headset's Library under Unknown sources.
 
 For a build to share, sign it with your own key: `client\tools\build_quest.bat release` makes
-`build\UncivVR-v0.2.0-beta-quest.apk` (the version comes from the export preset) and prints the certificate it was
+`build\UncivVR-v0.2.1-beta-quest.apk` (the version comes from the export preset) and prints the certificate it was
 signed with. More in [client/README.md](client/README.md#the-standalone-quest-app).
 
 ## Where things are

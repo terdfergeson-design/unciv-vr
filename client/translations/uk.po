@@ -2940,8 +2940,8 @@ msgstr "хід"
 msgid "turns"
 msgstr "ходи"
 
-msgid "{leader}  -  {era} Era"
-msgstr "{leader} - {era} Ера"
+msgid "{leader}  -  {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} оч"
@@ -3256,3 +3256,4 @@ msgstr "Повернути"
 #: scripts/desktop_popouts.gd
 msgid "Put back in the main window"
 msgstr "Повернути в головне вікно"
+
