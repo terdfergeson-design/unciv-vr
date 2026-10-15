@@ -3138,7 +3138,7 @@ func _start_move_pick() -> void:
 	_pick = {"kind": "move", "targets": reachable, "any": true}
 	hex_map.clear_aim()
 	hex_map.set_selection(_selected_key(), reachable, [])
-	_set_pick_text("Move here: click a tile")
+	_set_pick_text("Move - click a tile", true)   # the card's Move button turns amber and says so
 	_set_status(Lang.format("Move %s - click a tile on the map (or Cancel on the card).", selected_unit.get("name", "the unit")))
 
 
@@ -3160,10 +3160,12 @@ func _start_bombard_pick() -> void:
 	_set_status(Lang.format("Bombard from %s: click a red-ringed enemy (click the city to cancel).", selected_city["name"]))
 
 
-func _set_pick_text(text: String) -> void:
+func _set_pick_text(text: String, moving := false) -> void:
 	action_menu.picking_text = text
+	action_menu.picking_move = moving and text != ""
 	if popup_menu != null:
 		popup_menu.picking_text = text
+		popup_menu.picking_move = moving and text != ""
 	_reshow_unit_cards()
 
 
@@ -3552,8 +3554,10 @@ func _select_unit(unit_id: int, focus := true) -> void:
 		if focus and not _pick.is_empty():
 			_pick = {}
 			action_menu.picking_text = ""
+			action_menu.picking_move = false
 			if popup_menu != null:
 				popup_menu.picking_text = ""
+				popup_menu.picking_move = false
 	selected_unit = _with_move_action(reply.result)
 	var reachable: Array[Vector2i] = []
 	for t: Dictionary in selected_unit.get("reachable", []):
@@ -3874,6 +3878,28 @@ func _run_smoke_test() -> void:
 			break
 	if no_room != "":
 		print(no_room)
+	# The card's big Move button: blue, then amber with a Cancel while it waits for a tile, then a move
+	var walker: Array = []
+	for u: Dictionary in state.get("units", []):
+		await _select_unit(int(u["id"]))
+		if not (selected_unit.get("reachable", []) as Array).is_empty():
+			walker = [u]
+			break
+	if walker.is_empty():
+		print("SMOKE: Move button: no unit with moves left to try it on")
+	else:
+		var move_buttons := func() -> Array: return action_menu.find_children("*", "Button", true, false).map(
+			func(b: Node) -> String: return (b as Button).text).filter(func(t: String) -> bool: return t.begins_with("Move") or t == "Cancel")
+		var before_texts: Array = move_buttons.call()
+		action_menu.press_text("Move")
+		await get_tree().process_frame
+		var waiting_texts: Array = move_buttons.call()
+		var going_to: Vector2i = _pick.get("targets", [] as Array[Vector2i])[0] if not (_pick.get("targets", []) as Array).is_empty() else _selected_key()
+		var walker_id := int(walker[0]["id"])
+		await click_tile(going_to)
+		var walked: Array = state.get("units", []).filter(func(m: Dictionary) -> bool: return int(m["id"]) == walker_id)
+		print("SMOKE: Move button: %s, pressed -> %s, clicked %s -> unit at %s, card %s" % [before_texts, waiting_texts, going_to,
+			Vector2i(int(walked[0]["x"]), int(walked[0]["y"])) if not walked.is_empty() else "-", move_buttons.call()])
 	# Workers: start the first improvement offered
 	for u: Dictionary in state.get("units", []):
 		if u["name"] != "Worker":

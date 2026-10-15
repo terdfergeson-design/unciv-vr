@@ -3117,3 +3117,94 @@ msgstr "Implicit"
 msgid "Manual"
 msgstr "Manual"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Mută - fă clic pe o pătrățică"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Apoi fă clic pe pătrățica de destinație."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Fă clic pe o pătrățică de pe hartă (sau Anulează)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Muzica din Unciv. Unciv vine fără muzică: Descarcă aduce piesa proprie, ca butonul din Unciv. Pune propriile fișiere mp3, ogg sau wav în %s - denumite ca în Unciv, \"<națiune, tehnologie sau minune> - <stare>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), și vor cânta când le-ar cânta Unciv."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Liniște înainte să înceapă piesa următoare."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Pe pauză"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Încă nu există muzică"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Se redă acum"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d piese găsite."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Piesa următoare"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Următoarea"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Piesa proprie a Unciv, Thatched Villagers, de pe serverul Unciv."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d secunde"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Muzica a fost descărcată."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Nu s-a găsit muzică."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Mută"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Muzică"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Volumul muzicii"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Întrerupe între melodii"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Nimic"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Descarcă muzică"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Descarcă"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Se descarcă..."

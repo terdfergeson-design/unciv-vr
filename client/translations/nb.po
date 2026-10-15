@@ -3117,3 +3117,94 @@ msgstr "Standard"
 msgid "Manual"
 msgstr "Manuell"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Flytt - klikk på en rute"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Klikk deretter på ruten du vil til."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Klikk på en rute på kartet (eller Avbryt)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Uncivs musikk. Unciv kommer uten musikk: Last ned henter sitt eget spor, som Uncivs knapp. Legg dine egne mp3-, ogg- eller wav-filer i %s - navngitt som Uncivs, \"<nasjon, teknologi eller underverk> - <stemning>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), så spilles de når Unciv ville spilt dem."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Stillhet før neste spor starter."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Satt på pause"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Ingen musikk ennå"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Spilles nå"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d spor funnet."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Neste spor"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Neste"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Uncivs eget spor, Thatched Villagers, fra Uncivs server."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d sekunder"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Musikken er lastet ned."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Fant ingen musikk."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Flytt"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Musikk"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Musikkvolum"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Avbrot mellom låtar"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Ingenting"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Lasta ned musikk"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Lasta ned"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Lastar ned..."

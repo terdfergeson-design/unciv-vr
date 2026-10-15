@@ -3117,3 +3117,94 @@ msgstr "기본값"
 msgid "Manual"
 msgstr "수동"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "이동 - 타일을 클릭하세요"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "그다음 갈 타일을 클릭하세요."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "지도에서 타일을 클릭하세요 (또는 취소)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Unciv의 음악. Unciv에는 음악이 들어 있지 않습니다. '다운로드'는 Unciv의 버튼처럼 Unciv 자체 곡을 받아옵니다. 직접 가진 mp3, ogg, wav 파일을 %s에 넣으세요 - Unciv처럼 \"<국가, 기술 또는 불가사의> - <분위기>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu) 형식으로 이름을 붙이면 Unciv가 재생할 때 재생됩니다."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "다음 곡이 시작되기 전의 정적."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "일시정지됨"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "아직 음악이 없습니다"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "재생 중"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "곡 %d개를 찾았습니다."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "다음 곡"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "다음"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Unciv 자체 곡 Thatched Villagers, Unciv 서버에서 받습니다."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d초"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "음악을 다운로드했습니다."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "음악을 찾지 못했습니다."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "이동"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "음악"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "음악 음량"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "음악 간격"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "대기"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "음악 다운로드"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "다운로드"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "다운로드 중..."

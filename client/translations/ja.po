@@ -3116,3 +3116,94 @@ msgstr "デフォルト"
 msgid "Manual"
 msgstr "手動"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "移動 - タイルをクリック"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "続けて移動先のタイルをクリックします。"
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "マップのタイルをクリック（またはキャンセル）。"
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Uncivの音楽。Uncivには音楽が付属していません。「ダウンロード」でUnciv独自の曲を取得します（Uncivのボタンと同じ）。自分のmp3・ogg・wavファイルを%sに置いてください。Uncivと同じく「<国家・技術・遺産> - <ムード>」(Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu)という名前にすると、Uncivが流す場面で流れます。"
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "次の曲が始まるまでの無音時間。"
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "一時停止中"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "まだ音楽がありません"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "再生中"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d曲見つかりました。"
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "次の曲"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "次へ"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Uncivの曲「Thatched Villagers」をUncivのサーバーから取得します。"
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d秒"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "音楽をダウンロードしました。"
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "音楽が見つかりません。"
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "移動"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "音楽"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "音楽の音量"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "曲と曲の合間"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "なにもしない"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "音楽をダウンロード"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "ダウンロード"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "ダウンロード中..."

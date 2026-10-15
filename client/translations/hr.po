@@ -3117,3 +3117,94 @@ msgstr "Zadano"
 msgid "Manual"
 msgstr "Ručno"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Pokreni - klikni polje"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Zatim klikni odredišno polje."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Klikni polje na karti (ili Odustani)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Glazba iz Unciva. Unciv dolazi bez glazbe: Preuzmi dohvaća njegovu vlastitu skladbu, kao Uncivov gumb. Stavi svoje mp3, ogg ili wav datoteke u %s - nazvane kao u Uncivu, \"<nacija, tehnologija ili čudo> - <raspoloženje>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), i svirat će kad bi ih Unciv svirao."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Tišina prije početka sljedeće skladbe."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Pauzirano"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Još nema glazbe"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Trenutno svira"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "Pronađeno skladbi: %d."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Sljedeća skladba"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Sljedeće"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Uncivova vlastita skladba, Thatched Villagers, s Uncivova poslužitelja."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d s"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Glazba je preuzeta."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Nije pronađena glazba."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Pokreni"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Glazba"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Glasnoća glazbe"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Pauza između glazbenih zapisa"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Ništa"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Preuzimanje glazbe"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Preuzmi"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Preuzimanje..."

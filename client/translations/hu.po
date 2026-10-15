@@ -3117,3 +3117,94 @@ msgstr "Alapérték"
 msgid "Manual"
 msgstr "Kézi"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Mozgatás - kattints egy mezőre"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Utána kattints a célmezőre."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Kattints egy mezőre a térképen (vagy Mégse)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Az Unciv zenéje. Az Unciv zene nélkül érkezik: a Letöltés lekéri a saját számát, ahogy az Unciv gombja. Tedd a saját mp3, ogg vagy wav fájljaidat ide: %s - az Uncivhez hasonlóan elnevezve, \"<nemzet, technológia vagy csoda> - <hangulat>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), és akkor szólnak, amikor az Unciv lejátszaná őket."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Csend a következő szám előtt."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Szüneteltetve"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Még nincs zene"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Most szól"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d szám található."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Következő szám"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Tovább"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Az Unciv saját száma, a Thatched Villagers, az Unciv szerveréről."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d másodperc"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Zene letöltve."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Nem található zene."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Mozgatás"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Zene"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Zene hangereje"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Zeneszámok közötti szünet"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Semmi"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Zene letöltése"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Letöltés"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Letöltés…"

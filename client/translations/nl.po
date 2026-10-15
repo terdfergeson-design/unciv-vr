@@ -3116,3 +3116,94 @@ msgstr "Standaard"
 msgid "Manual"
 msgstr "Manueel"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Verplaats - klik op een vak"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Klik daarna op het vak om heen te gaan."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Klik op een vak op de kaart (of Annuleren)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "De muziek van Unciv. Unciv heeft zelf geen muziek: Downloaden haalt het eigen nummer op, net als de knop van Unciv. Zet je eigen mp3-, ogg- of wav-bestanden in %s - genoemd zoals bij Unciv, \"<natie, technologie of wonder> - <sfeer>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), dan spelen ze wanneer Unciv ze zou spelen."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Stilte voordat het volgende nummer begint."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Gepauzeerd"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Nog geen muziek"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Speelt nu"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d nummers gevonden."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Volgend nummer"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Volgende"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Uncivs eigen nummer, Thatched Villagers, van de server van Unciv."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d seconden"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Muziek gedownload."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Geen muziek gevonden."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Verplaats"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Muziek"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Muziekvolume"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Pauze tussen nummers"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Niks"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Download muziek"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Download"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Downloaden..."

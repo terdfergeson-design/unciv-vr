@@ -3113,3 +3113,95 @@ msgstr "افتراضي"
 
 msgid "Manual"
 msgstr "يدوي"
+
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "تحرك - انقر على مربع"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "ثم انقر على المربع الذي تريد الذهاب إليه."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "انقر على مربع في الخريطة (أو إلغاء)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "موسيقى Unciv. لا تأتي Unciv بأي موسيقى: زر التنزيل يجلب مقطوعتها الخاصة، كما يفعل زر Unciv. ضع ملفات mp3 أو ogg أو wav الخاصة بك في %s - بأسماء مثل أسماء Unciv، \"<الأمة أو التقنية أو الأعجوبة> - <المزاج>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu)، وستُعزف عندما كانت Unciv ستعزفها."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "صمت قبل بدء المقطوعة التالية."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "متوقف مؤقتًا"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "لا توجد موسيقى بعد"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "قيد التشغيل الآن"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "تم العثور على %d مقطوعات."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "المقطوعة التالية"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "التالي"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "مقطوعة Unciv الخاصة، Thatched Villagers، من خادم Unciv."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d ثانية"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "تم تنزيل الموسيقى."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "لم يتم العثور على موسيقى."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "تحرك"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "موسيقى"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "مستوى صوت الموسيقى"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "وقفة بين المسارات"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "لا شيء"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "تحميل الموسيقى"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "تحميل"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "جارٍ التنزيل..."

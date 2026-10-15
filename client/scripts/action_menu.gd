@@ -33,6 +33,11 @@ const WIDTH := 380
 const Icons := preload("res://scripts/icons.gd")
 const LIST_HEIGHT := 360
 
+## main.gd's own unit action for moving (Main.MOVE_ACTION), shown as the big Move button
+const MOVE_ACTION := "MoveHere"
+const MOVE_COLOR := Color(0.16, 0.42, 0.66)
+const MOVE_WAITING_COLOR := Color(0.62, 0.42, 0.08)
+
 var show_recenter := false   # VR only
 var in_vr := false
 var compact := false         # no unit/turn footer (the floating city card); set before adding to the tree
@@ -45,6 +50,8 @@ var _restore_scroll := 0
 var armed_action := ""
 ## While main.gd waits for a tile to be picked for a unit action (swap with, road to...): what to say on the card
 var picking_text := ""
+## True while that pick is for the Move button: the button itself then says so, with its own Cancel
+var picking_move := false
 var _armed_unit := -1
 ## What the footer's End turn button says (what still has to be decided first, like Unciv's next-turn button)
 var end_turn_text := "End turn":
@@ -182,8 +189,9 @@ func show_unit(unit: Dictionary) -> void:
 	rename.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	top.add_child(rename)
 	_list.add_child(top)
+	_add_move_button(unit)
 
-	if picking_text != "":
+	if picking_text != "" and not picking_move:
 		var pick := _make_row(picking_text, Color(0.22, 0.34, 0.5), [["Cancel", func() -> void: chosen.emit("pick_cancel", ""), Color(0.4, 0.22, 0.2)]])
 		_list.add_child(pick)
 	if not unit.get("due", true):
@@ -236,7 +244,8 @@ func show_unit(unit: Dictionary) -> void:
 
 	# Actions as icon buttons, two to a row (like Unciv's action bar)
 	var actions := (unit.get("actions", []) as Array).filter(func(a: Dictionary) -> bool:
-		return a.get("enabled", false) and a["type"] != "Promote")   # promotions use the card above instead
+		# promotions use the card above instead; moving has its own big button
+		return a.get("enabled", false) and a["type"] != "Promote" and a["type"] != MOVE_ACTION)
 	if not actions.is_empty():
 		_add_header("Actions")
 		var grid := GridContainer.new()
@@ -1036,6 +1045,46 @@ func _make_row(text: String, color: Color, extras: Array, on_press := Callable()
 		small.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		row.add_child(small)
 	return row
+
+
+## The big Move button under the portrait (main.gd's "MoveHere": press it, then click a tile - any tile the unit
+## can legally go to, even one your own units are on). While it waits for that tile it turns amber, with a Cancel.
+func _add_move_button(unit: Dictionary) -> void:
+	var entry: Dictionary = {}
+	for action: Dictionary in unit.get("actions", []):
+		if str(action.get("type", "")) == MOVE_ACTION:
+			entry = action
+	if entry.is_empty() or not (entry.get("enabled", false) or picking_move):
+		return
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var waiting := picking_move and picking_text != ""
+	var move := _make_button("Move - click a tile" if waiting else "Move",
+		func() -> void: chosen.emit("pick_cancel" if waiting else "action", "" if waiting else MOVE_ACTION),
+		MOVE_WAITING_COLOR if waiting else MOVE_COLOR)
+	move.icon = Icons.action(MOVE_ACTION)
+	move.add_theme_constant_override("icon_max_width", 26)
+	move.add_theme_font_size_override("font_size", 20)
+	move.custom_minimum_size = Vector2(0, 46)
+	move.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	move.tooltip_text = "Then click the tile to go to." if not waiting else "Click a tile on the map (or Cancel)."
+	row.add_child(move)
+	if waiting:
+		var cancel := _make_button("Cancel", func() -> void: chosen.emit("pick_cancel", ""), Color(0.4, 0.22, 0.2))
+		cancel.custom_minimum_size = Vector2(100, 46)
+		cancel.size_flags_horizontal = Control.SIZE_SHRINK_END
+		cancel.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		row.add_child(cancel)
+	_list.add_child(row)
+
+
+## Presses the button whose text is exactly [param text] (tests). Returns whether there was one.
+func press_text(text: String) -> bool:
+	for node in find_children("*", "Button", true, false):
+		if (node as Button).is_visible_in_tree() and (node as Button).text == text:
+			(node as Button).pressed.emit()
+			return true
+	return false
 
 
 func _make_button(text: String, on_press: Callable, color := Color(0.2, 0.22, 0.28)) -> Button:

@@ -3117,3 +3117,94 @@ msgstr "Defaŭlta"
 msgid "Manual"
 msgstr "Mana"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Movi - alklaku kahelon"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Poste alklaku la celan kahelon."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Alklaku kahelon sur la mapo (aŭ Nuligi)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "La muziko de Unciv. Unciv venas sen muziko: Elŝuti alportas ĝian propran muzikaĵon, kiel la butono de Unciv. Metu viajn proprajn mp3-, ogg- aŭ wav-dosierojn en %s - nomitajn kiel tiuj de Unciv, \"<nacio, teknologio aŭ mirindaĵo> - <humoro>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), kaj ili sonos kiam Unciv ludus ilin."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Silento antaŭ ol la sekva muzikaĵo komenciĝas."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Paŭzigita"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Ankoraŭ neniu muziko"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Nun ludata"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d muzikaĵoj trovitaj."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Sekva muzikaĵo"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Sekva"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "La propra muzikaĵo de Unciv, Thatched Villagers, el la servilo de Unciv."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d sekundoj"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Muziko elŝutita."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Neniu muziko trovita."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Movi"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Muziko"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Laŭteco de muziko"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Paŭzo inter muzikpecoj"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Nenio"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Elŝuti muzikon"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Elŝuti"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Elŝutante..."

@@ -3117,3 +3117,94 @@ msgstr "Mặc định"
 msgid "Manual"
 msgstr "Thủ công"
 
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Di chuyển - bấm vào một ô"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Sau đó bấm vào ô cần đến."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Bấm vào một ô trên bản đồ (hoặc Hủy)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "Nhạc của Unciv. Unciv không kèm nhạc: Tải xuống sẽ lấy bản nhạc riêng của nó, giống nút của Unciv. Hãy đặt các tệp mp3, ogg hoặc wav của bạn vào %s - đặt tên giống Unciv, \"<dân tộc, công nghệ hoặc kỳ quan> - <tâm trạng>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), chúng sẽ phát khi Unciv phát."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Khoảng lặng trước khi bản tiếp theo bắt đầu."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "Đã tạm dừng"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Chưa có nhạc"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "Đang phát"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "Tìm thấy %d bản nhạc."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Bản tiếp theo"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Tiếp"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Bản nhạc riêng của Unciv, Thatched Villagers, từ máy chủ của Unciv."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d giây"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Đã tải nhạc xuống."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Không tìm thấy nhạc."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Di chuyển"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Âm nhạc"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Âm lượng nhạc nền"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Tạm dừng giữa các bản nhạc"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Không gì cả"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Tải nhạc"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Tải xuống"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Đang tải..."

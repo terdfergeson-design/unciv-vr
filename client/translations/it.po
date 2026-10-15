@@ -3115,3 +3115,95 @@ msgstr "Default"
 
 msgid "Manual"
 msgstr "Manuale"
+
+#: scripts/action_menu.gd
+msgid "Move - click a tile"
+msgstr "Sposta - fai clic su una casella"
+
+#: scripts/action_menu.gd
+msgid "Then click the tile to go to."
+msgstr "Poi fai clic sulla casella di destinazione."
+
+#: scripts/action_menu.gd
+msgid "Click a tile on the map (or Cancel)."
+msgstr "Fai clic su una casella della mappa (o Annulla)."
+
+#: scripts/settings_board.gd
+msgid "Unciv's music. Unciv comes without any: Download fetches its own track, as Unciv's button does. Put your own mp3, ogg or wav files in %s - named like Unciv's, \"<nation, tech or wonder> - <mood>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), they play when Unciv would play them."
+msgstr "La musica di Unciv. Unciv non include musica: Scarica prende il suo brano, come il pulsante di Unciv. Metti i tuoi file mp3, ogg o wav in %s - con nomi come quelli di Unciv, \"<nazione, tecnologia o meraviglia> - <atmosfera>\" (Ambient, Peace, War, Theme, Golden, Wonder, Researched, Victory, Defeat, Menu), e verranno suonati quando li suonerebbe Unciv."
+
+#: scripts/settings_board.gd
+msgid "Silence before the next track starts."
+msgstr "Silenzio prima che inizi il brano successivo."
+
+#: scripts/settings_board.gd
+msgid "Paused"
+msgstr "In pausa"
+
+#: scripts/settings_board.gd
+msgid "No music yet"
+msgstr "Ancora nessuna musica"
+
+#: scripts/settings_board.gd
+msgid "Currently playing"
+msgstr "In riproduzione"
+
+#: scripts/settings_board.gd
+msgid "%d tracks found."
+msgstr "%d brani trovati."
+
+#: scripts/settings_board.gd
+msgid "Next track"
+msgstr "Brano successivo"
+
+#: scripts/settings_board.gd
+msgid "Next"
+msgstr "Avanti"
+
+#: scripts/settings_board.gd
+msgid "Unciv's own track, Thatched Villagers, from Unciv's server."
+msgstr "Il brano di Unciv, Thatched Villagers, dal server di Unciv."
+
+#: scripts/settings_board.gd
+msgid "%d seconds"
+msgstr "%d secondi"
+
+#: scripts/main.gd
+msgid "Music downloaded."
+msgstr "Musica scaricata."
+
+#: scripts/main.gd
+msgid "No music found."
+msgstr "Nessuna musica trovata."
+
+#: scripts/action_menu.gd
+msgid "Move"
+msgstr "Sposta"
+
+#: scripts/settings_board.gd
+msgid "Music"
+msgstr "Musica"
+
+#: scripts/settings_board.gd
+msgid "Music volume"
+msgstr "Volume musica"
+
+#: scripts/settings_board.gd
+msgid "Pause between tracks"
+msgstr "Pausa tra tracce musicali"
+
+#: scripts/settings_board.gd
+msgid "Nothing"
+msgstr "Niente"
+
+#: scripts/settings_board.gd
+msgid "Download music"
+msgstr "Scarica musica"
+
+#: scripts/settings_board.gd
+msgid "Download"
+msgstr "Scarica"
+
+#: scripts/main.gd
+msgid "Downloading..."
+msgstr "Download in corso..."
