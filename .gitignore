@@ -9,3 +9,6 @@ build/
 # to be signed with the same key (client/.godot, where Godot keeps the editor's copy, is ignored already)
 *.keystore
 *.jks
+
+# Windows temp copies of DLLs in use
+~*.TMP
