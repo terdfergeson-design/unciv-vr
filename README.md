@@ -17,9 +17,11 @@ On the PC the bridge is a separate Java process that the client starts by itself
 the app (`unciv/bridge-android`). Either way the client talks to it the same way.
 
 ## Screenshots
-<img width="200" alt="03_vr_tactical_laser_targeting" src="https://github.com/user-attachments/assets/79162357-94f9-4738-a2e6-84e8c4792b76" /><img width="200" alt="07_vr_horseback_research" src="https://github.com/user-attachments/assets/8d59badc-ab55-4d09-8550-ef7a710a511b" />
-<img width="200" alt="08_vr_social_policies_adopt" src="https://github.com/user-attachments/assets/7ae197ce-3260-4244-b1a3-5dbacd37a8d8" /><img width="200" alt="19_vr_damascus_three_cities" src="https://github.com/user-attachments/assets/2a376d43-b9a5-4e83-a086-c4c4ff220c2f" />
-<img width="200" alt="13_vr_forest_reconnaissance" src="https://github.com/user-attachments/assets/a4b7d191-71c3-414b-8838-42adff9743b6" />
+<img width="200" src="https://github.com/user-attachments/assets/f0c01178-aaca-4f82-b709-6755ecd59a29" /><img width="200" src="https://github.com/user-attachments/assets/86976333-5c5f-4f12-a498-b5600db9204a" /><img width="200" src="https://github.com/user-attachments/assets/5baba668-1703-4b25-bd30-75cd505ebc2f" /><img width="200" src="https://github.com/user-attachments/assets/49bc03ff-be78-48f1-804d-6ffa547efc11" /><img width="200" src="https://github.com/user-attachments/assets/a6664441-0ec3-4fda-bdb0-f61b52aefa47" />
+
+
+
+
 
 Original icons from Unciv have been tinted and scaled.  Shared under various CC licenses.
 [View Credits](https://github.com/terdfergeson-design/Unciv/blob/vr-bridge/docs/Credits.md)
