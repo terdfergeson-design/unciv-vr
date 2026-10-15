@@ -74,7 +74,8 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Empire overview (Unciv's stats and info screen) | E opens / closes it | always up, off to your right - turn your head to read it |
 | City view | "City view" on the city's card; Esc or "Exit city" leaves | same; B or "Exit city" leaves |
 | Rename a city / unit, name a save | "Rename" in the city view's header, on the unit card or in the overview's Units tab; type on the keyboard (or the on-screen one), Enter / Esc | the on-screen keyboard pops up on your left wrist (or floats in front of you if the left controller isn't tracked): point + right trigger on the keys, OK; B or Cancel closes it |
-| Table buttons: Idle unit, Civilopedia (left side); End turn, Recenter, Settings (right side); in the city view only a red Exit city (and the Civilopedia) | click | point + right trigger |
+| Table buttons: Idle unit, Civilopedia, Main menu (left side); End turn, Recenter, Settings (right side); in the city view only a red Exit city (and the Civilopedia) | click | point + right trigger |
+| Put a board on another monitor (tech tree and policies, empire overview, city boards, Settings, Civilopedia, panels) | the ↗ on the board's top strip; close its window (or "Put back") to return it | – |
 | Scroll a card | mouse wheel | point at it + right stick |
 | Table height | – | either stick up / down (the right one only when not pointing at a card) |
 | Rotate / scale table | right-drag orbit, wheel zoom, WASD / middle-drag pan | hold either grip + that stick: left / right rotates, up / down scales |
@@ -139,6 +140,20 @@ cities with what each is building; click one to open its card. A **Wonders** pan
 shows Unciv's wonders overview. In VR they stand beside the table and move like the other boards (hold the
 trigger on the strip along the top); on the desktop they sit down the left side. Settings > Panels turns each one
 on or off. How to make your own is in [panels/README.md](panels/README.md); they go in `~/.unciv-vr/Panels`.
+
+### Boards on another monitor (desktop)
+On the desktop every board can leave the game window: the **↗** at the right end of its top strip pops it out into a
+window of its own, which you can put on a second monitor (it opens on one the game isn't on, if there is one) and
+size as you like - the board scales with the window and keeps its shape. It still opens and closes with the game
+(T / P / G, E, the city view...), and the game's keys keep working while it has the keyboard. Closing its window, or
+its **Put back** button, returns it to the game window. Which boards are out, and where, is remembered for the next
+time; a board whose monitor has gone (a laptop off its dock) just stays in the game window. The tech tree / policies
+/ diplomacy screen, the empire overview, both city boards, Settings, the Civilopedia and the panels can pop out; the
+unit card, the info board and the tutorial task card stay with the map. `scripts/desktop_popouts.gd`;
+`--popout=wide,overview` (with `--screenshot`) saves each popped-out window's picture too.
+Running from the Godot editor, the game has to be in its own window for this: Godot 4.4+ can embed the running game in
+its Game tab, which keeps every window inside it. Untick "Embed Game on Next Play" in the Game tab's ⋮ menu (the game
+says so in its status line if you try with it on). Exported builds always run in their own window.
 
 ### Sound
 The game plays **Unciv's own sound effects**, and plays them where Unciv does: a click on buttons, a whoosh

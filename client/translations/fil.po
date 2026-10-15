@@ -4168,3 +4168,15 @@ msgstr "Nakalista ang bawat may-akda, pamagat at lisensya sa CREDITS.md at sa Cr
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Sariling kanta ng Unciv, ang Thatched Villagers ni Kevin MacLeod, mula sa incompetech.com."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "Ilabas sa sariling window"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "Ibalik"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "Ibalik sa pangunahing window"

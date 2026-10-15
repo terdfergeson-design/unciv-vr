@@ -3244,3 +3244,15 @@ msgstr "jan pali ale en nimi pali ale en lipu lawa ale li lon lipu CREDITS.md en
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "kalama musi pi musi Unciv, Thatched Villagers tan jan Kevin MacLeod, tan incompetech.com."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "o open lon lipu sitelen ante"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "o pana sin"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "o pana sin lon lipu sitelen lawa"

@@ -3243,3 +3243,15 @@ msgstr "すべての作者・作品名・ライセンスは、ゲームに同梱
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Uncivの曲「Thatched Villagers」（Kevin MacLeod作）をincompetech.comから取得します。"
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "別のウィンドウで開く"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "元に戻す"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "メインウィンドウに戻す"

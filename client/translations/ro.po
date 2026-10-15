@@ -3244,3 +3244,15 @@ msgstr "Toți autorii, titlurile și licențele sunt enumerate în CREDITS.md ș
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Piesa proprie a Unciv, Thatched Villagers de Kevin MacLeod, de pe incompetech.com."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "Deschide într-o fereastră separată"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "Pune la loc"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "Pune la loc în fereastra principală"

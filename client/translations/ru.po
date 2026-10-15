@@ -3244,3 +3244,15 @@ msgstr "Все авторы, названия и лицензии перечис
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Собственная композиция Unciv, Thatched Villagers Кевина Маклауда, с incompetech.com."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "Открыть в отдельном окне"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "Вернуть"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "Вернуть в главное окно"

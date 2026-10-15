@@ -3244,3 +3244,15 @@ msgstr "Mọi tác giả, tác phẩm và giấy phép đều được liệt k�
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Bản nhạc riêng của Unciv, Thatched Villagers của Kevin MacLeod, từ incompetech.com."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "Mở trong cửa sổ riêng"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "Đặt lại"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "Đặt lại vào cửa sổ chính"

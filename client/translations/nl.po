@@ -3243,3 +3243,15 @@ msgstr "Alle makers, titels en licenties staan in CREDITS.md en Uncivs Credits.m
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Uncivs eigen nummer, Thatched Villagers van Kevin MacLeod, van incompetech.com."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "Losmaken in een eigen venster"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "Terugzetten"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "Terugzetten in het hoofdvenster"

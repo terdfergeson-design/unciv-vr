@@ -39,6 +39,7 @@ const Backgrounds := preload("res://scripts/backgrounds.gd")
 const TableModel := preload("res://scripts/table_model.gd")
 const Sounds := preload("res://scripts/sounds.gd")
 const Music := preload("res://scripts/music.gd")
+const DesktopPopouts := preload("res://scripts/desktop_popouts.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
@@ -231,6 +232,7 @@ var _pitch := deg_to_rad(55.0)
 var _distance := 1.7
 var _focus := Vector3.ZERO
 var _desktop_windows: Dictionary = {}  # id -> {control, layer, header_height}
+var popouts: DesktopPopouts            # desktop: boards popped out into windows of their own (scripts/desktop_popouts.gd)
 var _desktop_drag: Control
 var _desktop_drag_offset := Vector2.ZERO
 var _desktop_focus_serial := 0
@@ -351,6 +353,10 @@ func _ready() -> void:
 	hex_map.motion.sounds = sounds   # battles and moves are heard from where they happen on the table
 
 	_xr_mode = _try_start_xr()
+	if not _xr_mode and DesktopPopouts.supported():
+		popouts = DesktopPopouts.new(self)
+		popouts.name = "DesktopPopouts"
+		add_child(popouts)
 	if _xr_mode:
 		_setup_xr_rig()
 		table.position = VR_TABLE_POSITION
@@ -688,6 +694,21 @@ func _on_bridge_connected() -> void:
 		if options.has("fake-look") and _xr_camera != null:   # dev aid: turn the fake head after recentering
 			_xr_camera.rotation_degrees.y += float(options["fake-look"])
 			await get_tree().create_timer(0.3).timeout
+		if options.has("popout") and popouts != null:   # dev aid: --popout=wide,overview pops those boards out first
+			for id: String in str(options["popout"]).split(","):
+				popouts.pop_out(id)
+			await get_tree().create_timer(0.8).timeout
+			for id: String in str(options["popout"]).split(","):
+				var out_window := popouts.window_of(id)
+				if out_window != null:   # dev aid: what the window ended up as
+					var screens: Array = []
+					for sc in DisplayServer.get_screen_count():
+						screens.append("%d:%s usable %s scale %.2f dpi %d" % [sc, DisplayServer.screen_get_size(sc), DisplayServer.screen_get_usable_rect(sc), DisplayServer.screen_get_scale(sc), DisplayServer.screen_get_dpi(sc)])
+					print("POPOUT %s: window %s at %s, content %s, board %s scale %s, game window on screen %d; screens %s" % [id, out_window.size,
+						out_window.position, out_window.content_scale_size, (out_window.get_child(0) as Control).size, (out_window.get_child(0) as Control).scale,
+						get_window().current_screen, screens])
+				if out_window != null and out_window.visible:
+					out_window.get_texture().get_image().save_png(str(options["screenshot"]).get_basename() + "-" + id.replace(":", "_") + ".png")
 		if options.has("press"):   # dev aid: catch a table button half-way down (--press=end_turn)
 			_animate_table_button(str(options["press"]))
 			await get_tree().create_timer(0.05).timeout
@@ -4139,6 +4160,48 @@ func _run_smoke_test() -> void:
 		(", failed " + str(music_failed)) if not music_failed.is_empty() else "", Music.all_tracks().size(), Music.user_dir(),
 		"there" if Music.default_track() != "" else "not downloaded", music.now_playing()])
 	_music_for_alert({"type": "TechResearched", "tech": "Writing"})
+	# Pop-out boards (desktop): the tech tree into a window of its own, following the game, then back
+	if popouts != null:
+		await show_big_screen("tech")
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var arrow := popouts.button_of("wide")
+		var arrow_shown := arrow != null and arrow.visible
+		if arrow_shown:   # pressed the way a player would: a mouse click on it, through the game's own input
+			var at := arrow.position + arrow.size / 2.0
+			for down: bool in [true, false]:
+				var click := InputEventMouseButton.new()
+				click.button_index = MOUSE_BUTTON_LEFT
+				click.pressed = down
+				click.position = at
+				click.global_position = at
+				get_viewport().push_input(click)
+				await get_tree().process_frame
+		await get_tree().process_frame
+		print("SMOKE: pop-out button shown %s, a click on it popped the board out %s" % [arrow_shown, popouts.is_out("wide")])
+		if not popouts.is_out("wide"):
+			popouts.pop_out("wide")   # carry on with the rest of the checks
+		await get_tree().process_frame
+		var out_window := popouts.window_of("wide")
+		var native := out_window != null and big_screen.get_parent() == out_window
+
+		var covers_map := false
+		for probe: Vector2 in [Vector2(get_viewport().get_visible_rect().size.x / 2.0, 120), Vector2(get_viewport().get_visible_rect().size.x / 2.0, 300)]:
+			if str(_desktop_window_at(probe).get("id", "")) == "wide":
+				covers_map = true
+		_set_big_visible(false)
+		await get_tree().process_frame
+		var hides_with_board := out_window != null and not out_window.visible
+		await show_big_screen("policies")
+		await get_tree().process_frame
+		var shows_again := out_window != null and out_window.visible
+		var remembered: bool = (settings.get("desktop_popouts", {}) as Dictionary).has("wide")
+		popouts.pop_back("wide")
+		await get_tree().process_frame
+		print("SMOKE: pop-out: own window %s (%s), still covers the map %s, hides with the board %s, shows again %s, remembered %s; back in the game window %s, forgotten %s" % [
+			native, out_window.size if out_window != null else Vector2i.ZERO, covers_map, hides_with_board, shows_again, remembered,
+			big_screen.get_parent() is CanvasLayer, not (settings.get("desktop_popouts", {}) as Dictionary).has("wide")])
+		_set_big_visible(false)
 	print("SMOKE: music for a tech alert: %s" % music.last_choice())
 	# Panels: the template language, the read-only guard, then the built-in Units panel and a click on it
 	var checks := {
@@ -4791,7 +4854,7 @@ func _place_desktop_panels() -> void:
 	for panel: Dictionary in _panel_list():   # built-in ones first, then yours
 		var folder := str(panel["folder"])
 		var board: PanelBoard = _panel_boards[folder]
-		if not board.visible:
+		if not board.visible or (popouts != null and popouts.is_out("panel:" + folder)):
 			continue
 		board.fit_height(clampf(bottom - 44.0, 200.0, board.size_pixels.y))
 		_desktop_place_window("panel:" + folder, board, Vector2(x, 44.0))
@@ -5534,6 +5597,14 @@ func _register_desktop_window(id: String, control: Control, layer: CanvasLayer, 
 	var saved: Dictionary = settings.get("desktop_window_positions", {})
 	if saved.has(id) and saved[id] is Vector2:
 		control.position = saved[id]
+	if popouts != null:
+		popouts.registered(id, control, layer)
+
+
+## A board came back from its own window: size and place it in the game window again.
+func _refit_desktop_board(_id: String) -> void:
+	get_viewport().size_changed.emit()   # every board's fit-to-the-window placement runs on this
+	_place_desktop_panels()
 
 
 func _desktop_place_window(id: String, control: Control, fallback: Vector2) -> void:
@@ -5546,6 +5617,8 @@ func _desktop_window_at(point: Vector2) -> Dictionary:
 	var best_layer := -1000
 	var best_z := -1000
 	for id: String in _desktop_windows:
+		if popouts != null and popouts.is_out(id):
+			continue   # in a window of its own: it doesn't cover the map
 		var entry: Dictionary = _desktop_windows[id]
 		var control: Control = entry["control"]
 		if not is_instance_valid(control) or not control.is_visible_in_tree():
@@ -5578,6 +5651,8 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 		var button := event as InputEventMouseButton
 		if button.pressed:
+			if popouts != null and popouts.button_at(button.position):
+				return   # the ↗ pop-out button on a board's top strip: a click, not the start of a drag
 			var entry := _desktop_window_at(button.position)
 			if entry.is_empty():
 				return

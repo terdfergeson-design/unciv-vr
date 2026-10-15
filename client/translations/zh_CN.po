@@ -3244,3 +3244,15 @@ msgstr "所有作者、作品名和许可证都列在随游戏附带的 CREDITS.
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Unciv 自己的曲目，Kevin MacLeod 的 Thatched Villagers，来自 incompetech.com。"
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "在单独窗口中打开"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "放回"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "放回主窗口"

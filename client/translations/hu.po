@@ -3244,3 +3244,15 @@ msgstr "Minden szerző, cím és licenc szerepel a játékkal együtt érkező C
 #: scripts/settings_board.gd
 msgid "Unciv's own track, Thatched Villagers by Kevin MacLeod, from incompetech.com."
 msgstr "Az Unciv saját száma, Kevin MacLeod Thatched Villagers című darabja, az incompetech.com oldalról."
+
+#: scripts/desktop_popouts.gd
+msgid "Pop out into its own window"
+msgstr "Megnyitás külön ablakban"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back"
+msgstr "Vissza"
+
+#: scripts/desktop_popouts.gd
+msgid "Put back in the main window"
+msgstr "Vissza a főablakba"

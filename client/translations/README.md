@@ -2,7 +2,7 @@
 
 The client uses Godot gettext catalogs. All thirty-two catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
-options, controller hints, tutorials and status messages. Each has 1,068 messages, ready for wording review.
+options, controller hints, tutorials and status messages. Each has 1,071 messages, ready for wording review.
 
 | Language | Catalog | Picker label |
 | --- | --- | --- |
@@ -206,7 +206,7 @@ The four screenshots and a review guide are packaged in `build/UncivVR-Arabic-re
 
 ### Filipino
 
-`fil.po` (Godot locale `fil`, Unciv's `Filipino`) has all 1,068 frontend messages. 180 of them reuse Unciv's own
+`fil.po` (Godot locale `fil`, Unciv's `Filipino`) has all 1,071 frontend messages. 180 of them reuse Unciv's own
 Filipino wording where the English matches exactly; the other 888 are an AI-assisted draft that follows Unciv's terms
 (tira for turn, yunit, lungsod, Sibilopedya). Common technical words stay in English the way Filipino speakers use
 them (tile, save, trigger, grip). Unciv's own Filipino game content is 83% complete in this checkout. The VR keyboard
@@ -214,7 +214,7 @@ adds ñ to the Latin keys. Not yet reviewed by a native speaker, or checked on t
 
 ### Malay
 
-`ms.po` (Godot locale `ms`, Unciv's `Malay`) has all 1,068 frontend messages. 140 reuse Unciv's own Malay wording
+`ms.po` (Godot locale `ms`, Unciv's `Malay`) has all 1,071 frontend messages. 140 reuse Unciv's own Malay wording
 where the English matches exactly; the other 928 are an AI-assisted draft in Malaysian Malay, written with the
 Indonesian catalog as a guide but in Malay vocabulary and spelling (giliran, bandar, jubin, tetapan, muat turun).
 Unciv has no Malay word for "Move", so the Move button says "Gerak". Unciv's "Overview" (Gambar Keseluruhan) is
