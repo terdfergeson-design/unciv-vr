@@ -99,7 +99,7 @@ buildings, techs, nations and cities - plus those of our buttons that use Unciv'
 German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese, Swedish, European Portuguese, Dutch,
 Polish, Turkish, Indonesian, Japanese, Russian, Ukrainian, Czech, Hungarian, Romanian, Croatian, Catalan,
 Galician, Norwegian, Esperanto, Simplified Chinese, Traditional Chinese, Vietnamese, Toki Pona, Maltese,
-Korean and Filipino have draft translations covering the frontend menus, city and
+Korean, Filipino and Malay have draft translations covering the frontend menus, city and
 empire boards, diplomacy, religion, map replay, controller hints, built-in lists and tutorial instructions.
 Select **Arabic / العربية** or **Hebrew / עברית** for a right-to-left interface. Both now include draft Unciv
 game-content catalogs: built-in object names, promotions and shared effect descriptions. Unfinished entries still

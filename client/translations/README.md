@@ -1,6 +1,6 @@
 # Frontend translations
 
-The client uses Godot gettext catalogs. All thirty-one catalogs cover frontend menus, settings, city management,
+The client uses Godot gettext catalogs. All thirty-two catalogs cover frontend menus, settings, city management,
 research, policies, diplomacy, trade, religion, victory and replay, empire overview, built-in panels and appearance
 options, controller hints, tutorials and status messages. Each has 1,068 messages, ready for wording review.
 
@@ -36,6 +36,7 @@ options, controller hints, tutorials and status messages. Each has 1,068 message
 | Toki Pona | `tok.po` | toki pona |
 | Maltese | `mt.po` | Malti |
 | Filipino | `fil.po` | Filipino |
+| Malay | `ms.po` | Bahasa Melayu |
 | Korean | `ko.po` | 한국어 |
 
 The first fourteen catalogs reuse matching translations from this checkout's Unciv catalogs;
@@ -210,4 +211,14 @@ Filipino wording where the English matches exactly; the other 888 are an AI-assi
 (tira for turn, yunit, lungsod, Sibilopedya). Common technical words stay in English the way Filipino speakers use
 them (tile, save, trigger, grip). Unciv's own Filipino game content is 83% complete in this checkout. The VR keyboard
 adds ñ to the Latin keys. Not yet reviewed by a native speaker, or checked on the Quest.
+
+### Malay
+
+`ms.po` (Godot locale `ms`, Unciv's `Malay`) has all 1,068 frontend messages. 140 reuse Unciv's own Malay wording
+where the English matches exactly; the other 928 are an AI-assisted draft in Malaysian Malay, written with the
+Indonesian catalog as a guide but in Malay vocabulary and spelling (giliran, bandar, jubin, tetapan, muat turun).
+Unciv has no Malay word for "Move", so the Move button says "Gerak". Unciv's "Overview" (Gambar Keseluruhan) is
+written "Gambaran Keseluruhan" here to match the rest of the catalog. Unciv's own Malay game content is 55% complete
+in this checkout, so about half of the game's text still falls back to English. Not yet reviewed by a native
+speaker, or checked on the Quest.
 

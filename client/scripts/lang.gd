@@ -47,6 +47,7 @@ const FRONTEND_LANGUAGES := {
 	"Maltese": {"tag": "mt", "label": "Malti"},
 	"Korean": {"tag": "ko", "label": "한국어"},
 	"Filipino": {"tag": "fil", "label": "Filipino"},
+	"Malay": {"tag": "ms", "label": "Bahasa Melayu"},
 }
 
 

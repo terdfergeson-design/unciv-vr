@@ -3864,7 +3864,7 @@ msgid "turns"
 msgstr "mga tira"
 
 msgid "{leader}  -  {era} Era"
-msgstr "{leader}  -  Panahong {era}"
+msgstr "{leader}  -  {era}"
 
 msgid "{score} pts"
 msgstr "{score} puntos"

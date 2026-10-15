@@ -45,7 +45,7 @@ buildings, techs, nations, cities and the rest - and those of our buttons that u
 "Found city") - show in it too. German, Arabic, Hebrew, Spanish, French, Italian, Brazilian Portuguese, Swedish,
 European Portuguese, Dutch, Polish, Turkish, Indonesian, Japanese, Russian, Ukrainian, Czech, Hungarian,
 Romanian, Croatian, Catalan, Galician, Norwegian, Esperanto, Simplified Chinese, Traditional Chinese,
-Vietnamese, Toki Pona, Maltese, Korean and Filipino have draft translations of the frontend menus, boards, built-in lists,
+Vietnamese, Toki Pona, Maltese, Korean, Filipino and Malay have draft translations of the frontend menus, boards, built-in lists,
 controller hints, tutorial instructions and map replay. Select **Arabic / العربية** or **Hebrew / עברית** for RTL.
 Arabic and Hebrew also have draft game-content catalogs for built-in names, promotions and shared effects.
 Unfinished entries remain English; see [coverage and review notes](translations/CONTENT.md).
