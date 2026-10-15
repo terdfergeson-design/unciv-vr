@@ -218,9 +218,8 @@ func _ready() -> void:
 	_header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_header.add_theme_font_size_override("font_size", 20)
-	_header.clip_text = true   # a long header must never make the screen wider than its board
-	_header.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	bar.add_child(_header)
+	_header.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(_header)
 
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -566,7 +565,7 @@ func _build_tech_details() -> void:
 		if int(tech.get("queueIndex", -1)) == 0:
 			status = Lang.t("researching now, ") + Lang.t(status)
 	title.text = Lang.format("%s   (%s, %d science)", [selected_tech, status, int(tech.get("cost", 0))])
-	title.clip_text = true
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.add_theme_font_size_override("font_size", 21)
 	title.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45))
 	text.add_child(title)
@@ -624,7 +623,7 @@ func _scroll_to_x(x: float) -> void:
 # Like Unciv's policy screen: each branch is a box of policy symbols laid out on its grid, with lines to
 # what they require; the selected policy's name and effects (and the Adopt button) are along the bottom.
 
-const BRANCH_BOX := Vector2(306, 226)
+const BRANCH_BOX := Vector2(306, 256)
 const POLICY_ICON := 54.0
 
 func _build_policies() -> Control:
@@ -678,16 +677,25 @@ func _branch_box(branch: Dictionary) -> Control:
 	title.layout_direction = Control.LAYOUT_DIRECTION_LTR
 	title.text = Lang.t(str(branch["name"])) + (Lang.t("  - complete!") if complete else "")
 	title.position = Vector2(64, 8)
+	title.size = Vector2(BRANCH_BOX.x - 74, 50)
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	title.max_lines_visible = 2
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	title.tooltip_text = title.text
 	title.add_theme_font_size_override("font_size", 20)
 	title.add_theme_color_override("font_color", Color(0.95, 0.82, 0.45) if complete else TEXT)
 	canvas.place(title, Vector2(64, 8))
 	var era := Label.new()
 	era.layout_direction = Control.LAYOUT_DIRECTION_LTR
 	era.text = str(branch.get("era", ""))
-	era.position = Vector2(64, 32)
+	era.position = Vector2(64, 60)
+	era.size.x = BRANCH_BOX.x - 74
+	era.clip_text = true
+	era.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	era.tooltip_text = Lang.t(era.text)
 	era.add_theme_font_size_override("font_size", 14)
 	era.add_theme_color_override("font_color", DIM)
-	canvas.place(era, Vector2(64, 32))
+	canvas.place(era, Vector2(64, 60))
 
 	# Unciv's grid: columns 1-5 (symbols sit on half steps), rows 1-3
 	var step_x := (BRANCH_BOX.x - 24.0 - POLICY_ICON) / 4.0
@@ -695,7 +703,7 @@ func _branch_box(branch: Dictionary) -> Control:
 	for policy: Dictionary in branch.get("policies", []):
 		if policy.get("isComplete", false):
 			continue
-		var at := Vector2(12.0 + (int(policy.get("column", 1)) - 1) * step_x, 62.0 + (int(policy.get("row", 1)) - 1) * 54.0)
+		var at := Vector2(12.0 + (int(policy.get("column", 1)) - 1) * step_x, 92.0 + (int(policy.get("row", 1)) - 1) * 54.0)
 		centres[policy["name"]] = at + Vector2(POLICY_ICON / 2.0, POLICY_ICON / 2.0)
 		var symbol := _policy_symbol(policy, "policy", POLICY_ICON)
 		symbol.position = at

@@ -507,7 +507,9 @@ func _row(title: String, description: String, control: Control) -> VBoxContainer
 	text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	text.add_theme_constant_override("separation", 0)
 	line.add_child(text)
-	text.add_child(_label(title, 19, TEXT))
+	var heading := _label(title, 19, TEXT)
+	heading.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.add_child(heading)
 	if description != "":
 		var label := _label(description, 15, DIM)
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -575,6 +577,7 @@ func _choice(key: String, title: String, description: String, options: Array) ->
 		_open_choice = "" if _open_choice == key else key
 		_rebuild(true), SELECTED if open else Color(0.18, 0.26, 0.38), 19)
 	button.clip_text = true
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	var extra := ""
 	if not current_option.is_empty() and (str(current_option[2]) != "" or str(current_option[3]) != ""):
 		extra = "\n" + Lang.t(str(current_option[2])) + (("  -  " if str(current_option[2]) != "" else "") + str(current_option[3]) if str(current_option[3]) != "" else "")
@@ -597,6 +600,7 @@ func _choice(key: String, title: String, description: String, options: Array) ->
 			chosen.emit("setting", key + "|" + value), SELECTED if chosen_now else BUTTON, 17)
 		pick.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		pick.clip_text = true
+		pick.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		pick.custom_minimum_size = Vector2(0, 42)
 		list.add_child(pick)
 

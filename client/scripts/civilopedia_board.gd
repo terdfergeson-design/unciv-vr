@@ -266,7 +266,7 @@ func _show_list(data: Dictionary) -> void:
 		button.icon = link_icon(entry_link)
 		button.add_theme_constant_override("icon_max_width", 36)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.clip_text = true
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		button.custom_minimum_size = Vector2(0, 50)
 		_list.add_child(button)
 		_entry_buttons[entry_link] = button

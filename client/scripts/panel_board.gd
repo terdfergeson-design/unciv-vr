@@ -197,14 +197,12 @@ func _make_row(row: Dictionary, highlighted: bool) -> Control:
 	words.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	line.add_child(words)
 	var text := _label(Panels.display(str(look.get("text", "{name}")), row), 17, TEXT)
-	text.clip_text = true
-	text.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	words.add_child(text)
 	var detail := Panels.display(str(look.get("detail", "")), row)
 	if detail != "":
 		var under := _label(detail, 13, DIM)
-		under.clip_text = true
-		under.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		under.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		words.add_child(under)
 	var bar := _bar(look.get("bar"), row)
 	if bar != null:
@@ -223,6 +221,8 @@ func _make_row(row: Dictionary, highlighted: bool) -> Control:
 		line.offset_right = -8
 		line.offset_top = 3
 		line.offset_bottom = -3
+		line.minimum_size_changed.connect(func() -> void:
+			holder.custom_minimum_size.y = maxf(50, line.get_combined_minimum_size().y + 6))
 	return holder
 
 

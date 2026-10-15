@@ -119,7 +119,7 @@ func _ready() -> void:
 		button.add_theme_constant_override("icon_max_width", 24)
 		# All the tabs share the board's width (wider than that, the whole board would spill off its edge)
 		button.custom_minimum_size = Vector2(0, 46)
-		button.clip_text = true
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		bar.add_child(button)
 		_tab_buttons[id] = button
@@ -128,7 +128,7 @@ func _ready() -> void:
 	_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_header.add_theme_font_size_override("font_size", 16)
 	_header.add_theme_color_override("font_color", DIM)
-	_header.clip_text = true
+	_header.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(_header)
 
 	_scroll = ScrollContainer.new()
@@ -438,7 +438,7 @@ func _value_line(text: String, value: int, colour: Color) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	var label := _label(text, 16, colour)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	label.clip_text = true
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	row.add_child(label)
 	row.add_child(_label(("%+d" % value) if value < 0 else str(value), 16, BAD if value < 0 else colour))
 	return row
@@ -542,13 +542,14 @@ func _build_units() -> void:
 		var cells: Array = []
 		var name_button := _icon_button(Icons.get_icon("unit", str(u.get("baseUnit", u["name"]))), str(u["name"]),
 			func() -> void: chosen.emit("ov_unit", id), Color(0.25, 0.3, 0.42) if u.get("idle", false) else BUTTON)
-		name_button.clip_text = true
+		name_button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		name_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		var name_cell := HBoxContainer.new()
 		name_cell.add_theme_constant_override("separation", 3)
 		name_cell.add_child(name_button)
 		var rename := _button("Rename", func() -> void: chosen.emit("ov_rename", id), Color(0.24, 0.26, 0.34), 13)
 		rename.custom_minimum_size = Vector2(62, 0)
+		rename.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		name_cell.add_child(rename)
 		cells.append(name_cell)
 		cells.append(_label(_plain(str(u.get("action", ""))), 15, TEXT))
@@ -898,9 +899,11 @@ func _notification_row(n: Dictionary) -> Button:
 		inner.add_child(_icon(Icons.from_path(path), 28))
 	var label := _label(_plain(str(n.get("text", "")).replace("[", "").replace("]", "").replace("{", "").replace("}", "")), 16, TEXT)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	label.clip_text = true
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inner.add_child(label)
 	button.add_child(inner)
+	inner.minimum_size_changed.connect(func() -> void:
+		button.custom_minimum_size.y = maxf(42, inner.get_combined_minimum_size().y + 8))
 	if not actions.is_empty():
 		var action: Dictionary = actions[0]
 		button.pressed.connect(func() -> void: _do_action(action))
@@ -961,7 +964,7 @@ func _header_row(cols: Array, sortable := true) -> Control:
 		button.icon = col[3]
 		button.add_theme_constant_override("icon_max_width", 24)
 		button.custom_minimum_size = Vector2(col[2], 38)
-		button.clip_text = true
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		button.disabled = not sortable
 		row.add_child(button)
@@ -988,9 +991,9 @@ func _row(cols: Array, cells: Array, index: int, background := Color(-1, 0, 0)) 
 		var content: Control = cells[i] if i < cells.size() else Control.new()
 		content.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		if content is Button:
-			(content as Button).clip_text = true   # fits its column
+			(content as Button).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		elif content is Label:
-			(content as Label).clip_text = true   # (a long text would otherwise widen its column, and the table past the board)
+			(content as Label).autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		cell.add_child(content)
 		row.add_child(cell)
 	return holder

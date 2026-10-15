@@ -111,7 +111,7 @@ func _ready() -> void:
 	turn_row.add_child(_make_button("Research", func() -> void: chosen.emit("research_card", ""), Color(0.2, 0.3, 0.5)))
 	turn_row.add_child(_make_button("Settings", func() -> void: chosen.emit("settings_card", ""), Color(0.25, 0.25, 0.3)))
 	_end_turn_button = _make_button(end_turn_text, func() -> void: chosen.emit("end_turn", ""), Color(0.55, 0.35, 0.1))
-	turn_row.add_child(_end_turn_button)
+	_footer.add_child(_end_turn_button)
 	_recenter_row = HBoxContainer.new()
 	_footer.add_child(_recenter_row)
 	_recenter_row.add_child(_make_button("Recenter table", func() -> void: chosen.emit("recenter", ""), Color(0.25, 0.25, 0.25)))
@@ -583,13 +583,17 @@ func _icon_row(texture: Texture2D, text: String, right: String, colour: Color, o
 	inner.add_child(column)
 	var label := Label.new()
 	label.text = text
-	label.clip_text = true
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override("font_size", 17)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	column.add_child(label)
+	inner.minimum_size_changed.connect(func() -> void:
+		button.custom_minimum_size.y = maxf(icon_side + 8, inner.get_combined_minimum_size().y + 6))
 	if right != "":
 		var turns := Label.new()
 		turns.text = right
+		turns.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		turns.custom_minimum_size.x = 96
 		turns.add_theme_font_size_override("font_size", 14)
 		turns.add_theme_color_override("font_color", Color(0.72, 0.76, 0.84))
 		turns.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1041,7 +1045,7 @@ func _make_button(text: String, on_press: Callable, color := Color(0.2, 0.22, 0.
 	button.add_theme_font_size_override("font_size", 17)
 	button.custom_minimum_size = Vector2(0, 36)
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	button.clip_text = true
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	button.focus_mode = Control.FOCUS_NONE
 	for state in ["normal", "hover", "pressed", "focus"]:
 		var style := StyleBoxFlat.new()

@@ -82,13 +82,13 @@ func _ready() -> void:
 
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 8)
-	box.add_child(head)
 	_title = Label.new()
 	_title.add_theme_font_size_override("font_size", 28)
 	_title.add_theme_color_override("font_color", HEADER)
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_title.clip_text = true
-	head.add_child(_title)
+	_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	box.add_child(_title)
+	box.add_child(head)
 	if mode == "info":
 		_rename_button = _button("Rename", func() -> void: chosen.emit("city_rename", ""), BUTTON, 18)
 		_rename_button.custom_minimum_size = Vector2(142, 44)
@@ -320,7 +320,11 @@ func _build_citizens(can_change: bool, focus: String) -> void:
 		var inner := HBoxContainer.new()
 		inner.add_theme_constant_override("separation", 2)
 		inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		inner.position = Vector2(8, 5)
+		inner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		inner.offset_left = 8
+		inner.offset_right = -8
+		inner.offset_top = 5
+		inner.offset_bottom = -5
 		var label_text: String = option.get("label", "")
 		if label_text != "":
 			var label := _plain_label(label_text, 17, TEXT)
@@ -328,8 +332,10 @@ func _build_citizens(can_change: bool, focus: String) -> void:
 		for stat: String in option.get("stats", []):
 			inner.add_child(_icon_rect(Icons.get_icon("stat", stat.capitalize()), 30))
 		button.add_child(inner)
-		var width: float = 16.0 + (len(label_text) * 9.5 if label_text != "" else 0.0) + 32.0 * option.get("stats", []).size()
-		button.custom_minimum_size.x = width
+		# Use the shaped, translated text instead of an English character-count estimate.
+		inner.minimum_size_changed.connect(func() -> void:
+			button.custom_minimum_size = inner.get_combined_minimum_size() + Vector2(16, 10))
+		button.custom_minimum_size = inner.get_combined_minimum_size() + Vector2(16, 10)
 		button.disabled = not can_change
 		button.pressed.connect(func() -> void: chosen.emit("city_focus", name))
 		flow.add_child(button)
@@ -474,8 +480,9 @@ func _build_tile_footer() -> void:
 	if not extras.is_empty():
 		_footer_line(Lang.join("   ", extras), DIM)
 	var key := "%d,%d" % [selected_tile.x, selected_tile.y]
-	var buttons := HBoxContainer.new()
-	buttons.add_theme_constant_override("separation", 6)
+	var buttons := HFlowContainer.new()
+	buttons.add_theme_constant_override("h_separation", 6)
+	buttons.add_theme_constant_override("v_separation", 6)
 	var can_change: bool = city.get("canChange", true)
 	match state:
 		"worked":
@@ -501,7 +508,7 @@ func _build_tile_footer() -> void:
 	# In a wrapping row a button is only as wide as its minimum size, which clipped text would make zero
 	for button: Button in buttons.get_children():
 		button.clip_text = false
-		button.custom_minimum_size = Vector2(0, 44)
+		button.custom_minimum_size = Vector2(minf(SIZE.x - 40, button.get_theme_font("font").get_string_size(Lang.t(button.text), HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x + 24), 44)
 	if buttons.get_child_count() > 0:
 		_footer.add_child(buttons)
 
@@ -533,7 +540,9 @@ func _build_production() -> void:
 		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		column.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var turns := int(entry.get("turns", -1))
-		column.add_child(_plain_label(Lang.format("%d. %s%s", [index + 1, name, (Lang.format("   %d turns", turns)) if turns >= 0 else ""]), 18 if index == 0 else 17, TEXT))
+		var queue_title := _plain_label(Lang.format("%d. %s%s", [index + 1, name, (Lang.format("   %d turns", turns)) if turns >= 0 else ""]), 18 if index == 0 else 17, TEXT)
+		queue_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		column.add_child(queue_title)
 		if index == 0 and entry.has("cost"):
 			var cost := maxi(1, int(entry["cost"]))
 			column.add_child(_progress_bar(float(entry.get("progress", 0)) / cost, STAT_COLORS["production"],
@@ -570,7 +579,7 @@ func _build_production() -> void:
 				text += "   (" + _plain(str(option["why"][0])) + ")"
 			var label := _plain_label(text, 17, TEXT if available else DIM)
 			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			label.clip_text = true
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			inner.add_child(label)
 			for buy: Dictionary in option.get("buy", []):
 				if buy.get("allowed", false):
@@ -668,7 +677,7 @@ func _build_construction_footer() -> void:
 	# In a wrapping row a button is only as wide as its minimum size, which clipped text would make zero
 	for button: Button in buttons.get_children():
 		button.clip_text = false
-		button.custom_minimum_size = Vector2(0, 44)
+		button.custom_minimum_size = Vector2(minf(SIZE.x - 40, button.get_theme_font("font").get_string_size(Lang.t(button.text), HORIZONTAL_ALIGNMENT_LEFT, -1, button.get_theme_font_size("font_size")).x + 24), 44)
 	if buttons.get_child_count() > 0:
 		_footer.add_child(buttons)
 
@@ -812,6 +821,8 @@ func _row_button(on_press: Callable, colour: Color) -> Button:
 	inner.offset_bottom = -3
 	inner.mouse_filter = Control.MOUSE_FILTER_PASS
 	button.add_child(inner)
+	inner.minimum_size_changed.connect(func() -> void:
+		button.custom_minimum_size.y = maxf(46, inner.get_combined_minimum_size().y + 6))
 	button.pressed.connect(on_press)
 	return button
 
@@ -847,7 +858,7 @@ func _button(text: String, on_press: Callable, color: Color, font_size := 17) ->
 	button.add_theme_font_size_override("font_size", font_size)
 	button.add_theme_color_override("font_color", TEXT)
 	button.add_theme_color_override("font_disabled_color", Color(0.5, 0.52, 0.56))
-	button.clip_text = true
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_restyle(button, color)
 	button.pressed.connect(on_press)
 	return button
