@@ -128,7 +128,8 @@ func _pop_out_now(id: String, control: Control, layer: CanvasLayer, rect: Rect2i
 	window.min_size = Vector2i(240, 160)
 	# The board keeps its design size and shape however big the window is made (and whatever the monitor's scaling)
 	window.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
-	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
+	# A board that can grow (the tech tree screen) takes the extra room instead of keeping its shape
+	window.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND if control.has_method("set_board_size") else Window.CONTENT_SCALE_ASPECT_KEEP
 	window.content_scale_size = Vector2i(_design_size(control))
 	window.size = rect.size
 	window.position = rect.position
@@ -206,9 +207,20 @@ func _sync_one(id: String) -> void:
 		return
 	control.scale = Vector2.ONE       # main.gd's fit-to-the-game-window sizing doesn't apply out here
 	control.position = Vector2.ZERO
-	var design := Vector2(window.content_scale_size)
-	if control.size != design:
-		control.size = design
+	if control.has_method("set_board_size"):
+		# Bigger than its design size: drawn 1:1 with more room (no scrollbars once it all fits); smaller: the
+		# design size scaled down to fit, with any spare room in the other direction added to the board
+		var design := _design_size(control)
+		var win := Vector2(window.size)
+		var content := design if win.x < design.x or win.y < design.y else win
+		if Vector2(window.content_scale_size) != content:
+			window.content_scale_size = Vector2i(content)
+		control.call("set_board_size", window.get_visible_rect().size)
+		control.set("resizable", false)   # the window's own edges resize it out here
+	else:
+		var design := Vector2(window.content_scale_size)
+		if control.size != design:
+			control.size = design
 	var wanted: bool = is_instance_valid(layer) and layer.visible and control.visible
 	if wanted != window.visible:
 		window.visible = wanted

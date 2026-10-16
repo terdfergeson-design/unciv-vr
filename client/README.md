@@ -88,7 +88,9 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 ### Desktop keyboard shortcuts
 The tech tree screen (tech tree, policies, diplomacy, religion, victory) starts put away. T, P and G open it at that
 tab (so does the Research button on the info card), and its Hide button, Esc or the key of the tab that's showing put
-it away again. Settings > Controls lists the same.
+it away again. Drag the ◢ handle in its bottom-right corner to make it bigger (remembered; Put the boards back resets it), or
+pop it out (↗) and resize its window: either way it gets more room rather than bigger text, so the tree needs less
+scrolling, and none once it all fits. Settings > Controls lists the same.
 
 | Key | Does |
 |---|---|

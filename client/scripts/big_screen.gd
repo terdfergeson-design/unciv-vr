@@ -27,6 +27,16 @@ const Lang := preload("res://scripts/lang.gd")
 const Icons := preload("res://scripts/icons.gd")
 
 const SIZE := Vector2(1600, 700)
+## Desktop: the screen can be made bigger (a corner handle in the game window, or its own window's edges when
+## popped out). It gets more room rather than bigger text: the tech tree shows more of itself, lists more rows.
+var board_size := SIZE
+var resizable := false:
+	set(value):
+		resizable = value
+		if _resize_grip != null:
+			_resize_grip.visible = value
+var _resize_grip: Label
+var _resize_rebuild_pending := false
 const GRAB_HEIGHT := 34.0
 const TABS := [["tech", "Technologies"], ["policies", "Policies"], ["diplomacy", "Diplomacy"], ["religion", "Religion"], ["victory", "Victory"]]
 
@@ -242,7 +252,38 @@ func _ready() -> void:
 	box.add_child(_scroll)
 	_footer = VBoxContainer.new()
 	box.add_child(_footer)
+	_resize_grip = Label.new()
+	_resize_grip.text = "◢"
+	_resize_grip.tooltip_text = "Drag to make the screen bigger or smaller"
+	_resize_grip.add_theme_font_size_override("font_size", 22)
+	_resize_grip.add_theme_color_override("font_color", DIM)
+	_resize_grip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_resize_grip.visible = resizable
+	add_child(_resize_grip)
+	_place_resize_grip()
+	resized.connect(_place_resize_grip)
 	show_tab(tab)
+
+
+func _place_resize_grip() -> void:
+	if _resize_grip != null:
+		_resize_grip.position = size - Vector2(24, 30)
+
+
+## Desktop: the screen's size, never below SIZE (smaller windows shrink the whole screen instead). The tech tree just
+## shows more of itself; the tabs laid out to the screen's width are rebuilt once the size settles.
+func set_board_size(wanted: Vector2) -> void:
+	var new_size := Vector2(maxf(wanted.x, SIZE.x), maxf(wanted.y, SIZE.y)).round()
+	if new_size.is_equal_approx(board_size) and size.is_equal_approx(new_size):
+		return
+	board_size = new_size
+	custom_minimum_size = new_size
+	size = new_size
+	if tab != "tech" and not _resize_rebuild_pending and is_inside_tree():
+		_resize_rebuild_pending = true
+		get_tree().create_timer(0.25).timeout.connect(func() -> void:
+			_resize_rebuild_pending = false
+			_rebuild())
 
 
 ## True when [param pixel] (in this screen's own pixels) is on the move handle along the top.
@@ -338,6 +379,10 @@ func _rebuild() -> void:
 		if tab == "religion":
 			_build_religion_footer()
 	await get_tree().process_frame
+	# A taller page (a long civ list, a footer while it was full) can leave the screen stretched below its size,
+	# and a Control doesn't shrink back by itself: back to the size it should be (its handle with it)
+	if size.x > board_size.x + 0.5 or size.y > board_size.y + 0.5:
+		size = board_size
 	_scroll.scroll_horizontal = int(keep.x)
 	_scroll.scroll_vertical = int(keep.y)
 
@@ -850,7 +895,7 @@ func _build_diplomacy() -> Control:
 	var flow := HFlowContainer.new()
 	flow.add_theme_constant_override("h_separation", 12)
 	flow.add_theme_constant_override("v_separation", 12)
-	flow.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	flow.custom_minimum_size = Vector2(board_size.x - 40, 0)
 	var civs: Array = _diplomacy.get("civs", [])
 	_header.text = Lang.format("Your score: %d", int(_diplomacy.get("yourScore", 0)))
 	_header.add_theme_color_override("font_color", TEXT)
@@ -941,7 +986,7 @@ func _build_civ_page(civ: Dictionary) -> Control:
 	var outer := Color.html(str(civ.get("outerColor", "ffffffff")))
 	var page := HBoxContainer.new()
 	page.add_theme_constant_override("separation", 16)
-	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	page.custom_minimum_size = Vector2(board_size.x - 40, 0)
 	_header.text = Lang.format("%s%s", [civ_name, "  (city-state)" if civ.get("isCityState", false) else "  -  " + str(civ.get("leader", ""))])
 	_header.add_theme_color_override("font_color", outer.lightened(0.3))
 
@@ -1189,7 +1234,7 @@ func _build_religion_footer() -> void:
 func _build_religion() -> Control:
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 8)
-	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	page.custom_minimum_size = Vector2(board_size.x - 40, 0)
 	var mode := str(_religion.get("mode", "")) if _religion.get("mode") != null else ""
 	_header.add_theme_color_override("font_color", TEXT)
 	if _religion.is_empty():
@@ -1341,7 +1386,7 @@ func _build_victory() -> Control:
 	_map_replay_play_button = null
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 8)
-	page.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	page.custom_minimum_size = Vector2(board_size.x - 40, 0)
 	_header.add_theme_color_override("font_color", TEXT)
 	if _victory.is_empty():
 		_header.text = "Loading..."
@@ -1584,7 +1629,7 @@ func trade_items(side: Array) -> Array:
 func _build_trade() -> Control:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	box.custom_minimum_size = Vector2(SIZE.x - 40, 0)
+	box.custom_minimum_size = Vector2(board_size.x - 40, 0)
 	_header.text = Lang.format("Trading with %s     Your gold %d, theirs %d", [trade_civ, int(_trade_options.get("yourGold", 0)), int(_trade_options.get("theirGold", 0))])
 	_header.add_theme_color_override("font_color", TEXT)
 

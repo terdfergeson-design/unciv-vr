@@ -146,6 +146,7 @@ var settings := {"background": "Mountains", "table": "OrnateOak", "tableTilt": 0
 	# Panels (panels/ and ~/.unciv-vr/Panels): folder -> shown (missing: the panel's own "shown"), and where
 	# each has been dragged to in VR, relative to the table: folder -> [x, y, z, yaw degrees]
 	"panels": {}, "panel_poses": {}, "desktop_window_positions": {}, # desktop: window id -> Vector2
+	"desktop_window_sizes": {},   # desktop: boards made bigger in the game window, id -> Vector2 (the tech tree screen)
 	# desktop: boards popped out into windows of their own, id -> {x, y, w, h, screen} (scripts/desktop_popouts.gd)
 	"desktop_popouts": {},
 	# What the world looks like: folders in backgrounds/, tables/, tilesets/ (or ~/.unciv-vr/...)
@@ -243,6 +244,8 @@ var _focus := Vector3.ZERO
 var _desktop_windows: Dictionary = {}  # id -> {control, layer, header_height}
 var popouts: DesktopPopouts            # desktop: boards popped out into windows of their own (scripts/desktop_popouts.gd)
 var _desktop_drag: Control
+var _desktop_resize: Control      # a board being resized by its corner handle
+var _desktop_resize_id := ""
 var _desktop_drag_offset := Vector2.ZERO
 var _desktop_focus_serial := 0
 
@@ -1265,6 +1268,7 @@ func reset_board_poses() -> void:
 				popouts.pop_back(id)
 		settings["desktop_window_positions"] = {}
 		settings["desktop_popouts"] = {}
+		settings["desktop_window_sizes"] = {}
 		_save_settings()
 		get_viewport().size_changed.emit()   # every board's own placement runs on this
 		_place_desktop_panels()
@@ -1336,6 +1340,8 @@ func _setup_big_screen() -> void:
 			var window := get_viewport().get_visible_rect().size
 			var fit := minf(1.0, (window.x - 40.0) / BigScreen.SIZE.x)
 			big_screen.scale = Vector2(fit, fit)
+			big_screen.resizable = true
+			big_screen.set_board_size(_desktop_board_size("wide", BigScreen.SIZE, fit))
 			_desktop_place_window("wide", big_screen, Vector2((window.x - BigScreen.SIZE.x * fit) / 2.0, 70))
 		get_viewport().size_changed.connect(place)
 		place.call()
@@ -4509,6 +4515,50 @@ func _run_smoke_test() -> void:
 		(", failed " + str(music_failed)) if not music_failed.is_empty() else "", Music.all_tracks().size(), Music.user_dir(),
 		"there" if Music.default_track() != "" else "not downloaded", music.now_playing()])
 	_music_for_alert({"type": "TechResearched", "tech": "Writing"})
+	# Desktop: the tech tree screen made bigger by its corner handle - more of the tree shows, then no scrollbars
+	if not _xr_mode and big_screen.resizable:
+		await show_big_screen("tech")
+		await get_tree().process_frame
+		var kept_sizes: Dictionary = (settings.get("desktop_window_sizes", {}) as Dictionary).duplicate(true)
+		var bars_before: Array = [big_screen._scroll.get_h_scroll_bar().visible, big_screen._scroll.get_v_scroll_bar().visible]
+		print("SMOKE: tech screen sizes: size %s, min %s, scroll %s/%s, footer %s, header %s" % [big_screen.size, big_screen.get_combined_minimum_size(),
+			big_screen._scroll.size, big_screen._scroll.get_combined_minimum_size(), big_screen._footer.get_combined_minimum_size(), big_screen._header.get_combined_minimum_size()])
+		var rect := big_screen.get_global_rect()
+		var target := rect.end + Vector2(150, 120)
+		for e: Array in [[true, rect.end - Vector2(6, 6)], [false, target]]:
+			if e[0]:
+				var press := InputEventMouseButton.new()
+				press.button_index = MOUSE_BUTTON_LEFT
+				press.pressed = true
+				press.position = e[1]
+				press.global_position = e[1]
+				get_viewport().push_input(press)
+			else:
+				var move := InputEventMouseMotion.new()
+				move.position = e[1]
+				move.global_position = e[1]
+				get_viewport().push_input(move)
+			await get_tree().process_frame
+		var release := InputEventMouseButton.new()
+		release.button_index = MOUSE_BUTTON_LEFT
+		release.pressed = false
+		release.position = target
+		release.global_position = target
+		get_viewport().push_input(release)
+		await get_tree().process_frame
+		var dragged: Vector2 = big_screen.board_size
+		var saved_size: Variant = (settings.get("desktop_window_sizes", {}) as Dictionary).get("wide")
+		# Big enough for the whole tree: no scrollbars
+		var tree_size: Vector2 = big_screen._scroll.get_child(0).get_combined_minimum_size() if big_screen._scroll.get_child_count() > 0 else Vector2.ZERO
+		big_screen.set_board_size(tree_size + Vector2(80, big_screen.size.y - big_screen._scroll.size.y + 40))
+		await get_tree().process_frame
+		await get_tree().process_frame
+		var bars_after: Array = [big_screen._scroll.get_h_scroll_bar().visible, big_screen._scroll.get_v_scroll_bar().visible]
+		print("SMOKE: tech tree screen resize: dragged the corner %s -> %s (saved %s); tree %s, scrollbars (h, v) %s -> %s at %s" % [
+			rect.size / big_screen.scale.x, dragged, saved_size, tree_size, bars_before, bars_after, big_screen.board_size])
+		big_screen.set_board_size(BigScreen.SIZE)
+		settings["desktop_window_sizes"] = kept_sizes
+		_save_settings()
 	# Pop-out boards (desktop): the tech tree into a window of its own, following the game, then back
 	if popouts != null:
 		await show_big_screen("tech")
@@ -4533,6 +4583,14 @@ func _run_smoke_test() -> void:
 		await get_tree().process_frame
 		var out_window := popouts.window_of("wide")
 		var native := out_window != null and big_screen.get_parent() == out_window
+		if out_window != null:   # its window made bigger: 1:1 with more room; smaller: the whole screen scaled down
+			var grown: Array = []
+			for window_size: Vector2i in [Vector2i(2600, 1300), Vector2i(800, 500)]:
+				out_window.size = window_size
+				await get_tree().process_frame
+				await get_tree().process_frame
+				grown.append("window %s -> screen %s, drawn at %s, handle %s" % [out_window.size, big_screen.board_size, out_window.content_scale_size, big_screen.resizable])
+			print("SMOKE: popped-out tech screen: %s" % " | ".join(grown))
 
 		var covers_map := false
 		for probe: Vector2 in [Vector2(get_viewport().get_visible_rect().size.x / 2.0, 120), Vector2(get_viewport().get_visible_rect().size.x / 2.0, 300)]:
@@ -4554,6 +4612,7 @@ func _run_smoke_test() -> void:
 		# Desktop "Put the boards back": every saved spot forgotten, popped-out boards home (the player's own are kept)
 		var kept_spots: Dictionary = (settings.get("desktop_window_positions", {}) as Dictionary).duplicate(true)
 		var kept_out: Dictionary = (settings.get("desktop_popouts", {}) as Dictionary).duplicate(true)
+		var kept_sizes: Dictionary = (settings.get("desktop_window_sizes", {}) as Dictionary).duplicate(true)
 		popouts.pop_out("settings")
 		await get_tree().process_frame
 		reset_board_poses()
@@ -4568,6 +4627,7 @@ func _run_smoke_test() -> void:
 		print("SMOKE: put the boards back (desktop): all home %s, every board on screen %s" % [all_home, on_screen])
 		settings["desktop_window_positions"] = kept_spots
 		settings["desktop_popouts"] = kept_out
+		settings["desktop_window_sizes"] = kept_sizes
 		_save_settings()
 	print("SMOKE: music for a tech alert: %s" % music.last_choice())
 	# Panels: the template language, the read-only guard, then the built-in Units panel and a click on it
@@ -6093,6 +6153,17 @@ func _refit_desktop_board(_id: String) -> void:
 	_place_desktop_panels()
 
 
+## A resizable desktop board's size in the game window: what it was dragged to (kept within the window), or its
+## design size.
+func _desktop_board_size(id: String, design: Vector2, fit: float) -> Vector2:
+	var saved: Variant = (settings.get("desktop_window_sizes", {}) as Dictionary).get(id)
+	if not saved is Vector2:
+		return design
+	var window := get_viewport().get_visible_rect().size
+	var most := (window - Vector2(20, 20)) / maxf(fit, 0.01)
+	return Vector2(clampf((saved as Vector2).x, design.x, maxf(design.x, most.x)), clampf((saved as Vector2).y, design.y, maxf(design.y, most.y)))
+
+
 func _desktop_place_window(id: String, control: Control, fallback: Vector2) -> void:
 	var saved: Dictionary = settings.get("desktop_window_positions", {})
 	control.position = saved.get(id, fallback)
@@ -6144,10 +6215,23 @@ func _input(event: InputEvent) -> void:
 				return
 			_focus_desktop_window(entry)
 			var rect: Rect2 = entry["rect"]
-			if button.position.y <= rect.position.y + float(entry["header_height"]):
+			var grow_control: Control = entry["control"]
+			if grow_control.has_method("set_board_size") and bool(grow_control.get("resizable")) \
+					and button.position.distance_to(rect.end) < 34.0:
+				_desktop_resize = grow_control   # the ◢ handle in its bottom-right corner
+				_desktop_resize_id = str(entry["id"])
+				get_viewport().set_input_as_handled()
+			elif button.position.y <= rect.position.y + float(entry["header_height"]):
 				_desktop_drag = entry["control"]
 				_desktop_drag_offset = button.position - rect.position
 				get_viewport().set_input_as_handled()
+		elif is_instance_valid(_desktop_resize):
+			var sizes: Dictionary = settings.get("desktop_window_sizes", {})
+			sizes[_desktop_resize_id] = _desktop_resize.get("board_size")
+			settings["desktop_window_sizes"] = sizes
+			_save_settings()
+			_desktop_resize = null
+			get_viewport().set_input_as_handled()
 		elif is_instance_valid(_desktop_drag):
 			var positions: Dictionary = settings.get("desktop_window_positions", {})
 			for id: String in _desktop_windows:
@@ -6158,6 +6242,13 @@ func _input(event: InputEvent) -> void:
 			_save_settings()
 			_desktop_drag = null
 			get_viewport().set_input_as_handled()
+	elif event is InputEventMouseMotion and is_instance_valid(_desktop_resize):
+		# The corner follows the mouse, within the game window; never smaller than the board's design size
+		var viewport_size := get_viewport().get_visible_rect().size
+		var corner := (event as InputEventMouseMotion).position.clamp(Vector2.ZERO, viewport_size)
+		var board_scale := maxf(_desktop_resize.scale.x, 0.01)
+		_desktop_resize.call("set_board_size", (corner - _desktop_resize.get_global_rect().position) / board_scale)
+		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseMotion and is_instance_valid(_desktop_drag):
 		var wanted := (event as InputEventMouseMotion).position - _desktop_drag_offset
 		var viewport_size := get_viewport().get_visible_rect().size
