@@ -1886,7 +1886,22 @@ func _bring_into_view(key: Vector2i) -> void:
 
 
 ## Smoothly slides the map window so [param target] (world coords) is under the table centre.
+## The city view keeps the map on its city: no sliding, zooming or gliding away until you leave it.
+func _view_locked() -> bool:
+	if not _city_view:
+		return false
+	if not _view_lock_noted:
+		_view_lock_noted = true
+		_set_status("The map stays on the city while you're in it - Exit city to look around.")
+	return true
+
+var _view_lock_noted := false
+var _saved_focus := Vector3.ZERO   # desktop: where the camera looked before the city view   # the status line said why the map won't move, once per city visit
+
+
 func _glide_view_to(target: Vector2) -> void:
+	if _view_locked():
+		return
 	if _view_tween != null and _view_tween.is_valid():
 		_view_tween.kill()
 	_view_tween = create_tween()
@@ -1897,7 +1912,7 @@ func _glide_view_to(target: Vector2) -> void:
 
 ## Zooms the map on the table: factor < 1 shows fewer, bigger hexes; > 1 more of the map, up to all of it.
 func _zoom_view(factor: float) -> void:
-	if hex_map.tiles.is_empty():
+	if hex_map.tiles.is_empty() or _view_locked():
 		return
 	var current := hex_map.full_extent if hex_map.shows_whole_map() else hex_map.view_radius
 	var radius := clampf(current * factor, VIEW_RADIUS_MIN, hex_map.full_extent)
@@ -2203,6 +2218,14 @@ func _on_menu_chosen(kind: String, value: String) -> void:
 func _smoke_city_view(city_name: String) -> void:
 	await enter_city_view(city_name)
 	var data := city_view_data
+	# The map stays on the city: sliding, zooming and gliding to another tile all do nothing
+	var view_before := [hex_map.view_center, hex_map.view_radius]
+	_zoom_view(0.5)
+	_zoom_view(3.0)
+	_glide_view_to(hex_map.view_center + Vector2(6, 3))
+	await get_tree().create_timer(0.45).timeout
+	print("SMOKE: city view keeps the map on the city: %s (centre %s, radius %.1f)" % [
+		hex_map.view_center == view_before[0] and is_equal_approx(hex_map.view_radius, view_before[1]), hex_map.view_center, hex_map.view_radius])
 	print("SMOKE: city view %s: shown=%s, ambience %s, minimap hidden=%s, %d tiles (%s), focus %s, free %d, stats %s" % [city_name, _city_view,
 		data.get("ambience", "-"),
 		not minimap.visible, data.get("tiles", []).size(),
@@ -2612,9 +2635,11 @@ func enter_city_view(city_name: String) -> void:
 		return
 	if not _city_view:
 		_saved_view = [hex_map.view_center, hex_map.view_radius]
+		_saved_focus = _focus
 		_big_was_shown = _big_screen_shown()
 		_overview_was_shown = _overview_shown()
 	_city_view = true
+	_view_lock_noted = false
 	_deselect()
 	_close_popup()
 	selected_city = {}
@@ -2647,6 +2672,10 @@ func _show_city_view(data: Dictionary, recentre := false) -> void:
 		var radius := float(int(data.get("viewRange", 3)) + 1) * 1.75 + 0.6
 		hex_map.set_view(hex_map._world_of(key), minf(radius, hex_map.full_extent))
 		_fit_table()
+		if not _xr_mode and _camera != null:   # the desktop camera looks at the city too (it can't be panned away)
+			_focus = hex_map.to_global(hex_map.tile_local_center(key)) - table.global_position
+			_focus.y = 0.0
+			_update_camera()
 	hex_map.show_city(data)
 	hex_map.set_selection(key, [], [])
 	var player: Dictionary = state.get("player", {})
@@ -2677,6 +2706,9 @@ func exit_city_view() -> void:
 	if _saved_view.size() == 2:
 		hex_map.set_view(_saved_view[0], _saved_view[1])
 		_fit_table()
+	if not _xr_mode and _camera != null:
+		_focus = _saved_focus
+		_update_camera()
 	await refresh()   # worked tiles, bought tiles and production show on the map again
 	_update_minimap()
 	_set_status("Back to the map.")
@@ -6153,7 +6185,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_pitch += motion.relative.y * 0.005
 			_update_camera()
 		elif motion.button_mask & MOUSE_BUTTON_MASK_MIDDLE:
-			_pan(Vector2(-motion.relative.x, -motion.relative.y) * 0.0015 * _distance)
+			if not _view_locked():
+				_pan(Vector2(-motion.relative.x, -motion.relative.y) * 0.0015 * _distance)
 		_update_hover(_pick_mouse(motion.position))
 		if _camera != null and minimap != null:
 			minimap.show_hover(minimap.ray_hit(_camera.project_ray_origin(motion.position), _camera.project_ray_normal(motion.position)))
@@ -6196,13 +6229,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				if key != null:
 					_begin_tile_press(key)   # clicked when you let go, or aimed at if you hold it
 			MOUSE_BUTTON_WHEEL_UP:
-				if button.ctrl_pressed:
-					_zoom_view(0.9)   # Ctrl + wheel zooms the map itself
+				if button.ctrl_pressed or _view_locked():
+					_zoom_view(0.9)   # Ctrl + wheel zooms the map itself (not in the city view)
 				else:
 					_distance *= 0.9
 					_update_camera()
 			MOUSE_BUTTON_WHEEL_DOWN:
-				if button.ctrl_pressed:
+				if button.ctrl_pressed or _view_locked():
 					_zoom_view(1.1)
 				else:
 					_distance *= 1.1
@@ -6294,7 +6327,7 @@ func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_S): pan.y += 1
 	if Input.is_key_pressed(KEY_A): pan.x -= 1
 	if Input.is_key_pressed(KEY_D): pan.x += 1
-	if pan != Vector2.ZERO:
+	if pan != Vector2.ZERO and not _view_locked():
 		if hex_map.is_windowed():
 			# Slide the map under the table instead of moving the camera
 			var right := Vector3(cos(_yaw), 0, -sin(_yaw))
@@ -6631,7 +6664,7 @@ func _process_xr(delta: float) -> void:
 
 	# Big maps: hold a grip and move that hand to drag the map across the table
 	for hand: XRController3D in [_left_hand, _right_hand]:
-		if hand.get_float("grip") > 0.6 and hex_map.is_windowed():
+		if hand.get_float("grip") > 0.6 and hex_map.is_windowed() and not _city_view:
 			if _grab_last.has(hand):
 				hex_map.pan_view(-_global_to_map_delta(hand.global_position - _grab_last[hand]))
 			_grab_last[hand] = hand.global_position
