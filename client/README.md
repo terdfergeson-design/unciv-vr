@@ -78,15 +78,17 @@ pull the trigger. The left controller and the wrist card are optional shortcuts.
 | Put a board on another monitor (tech tree and policies, empire overview, city boards, Settings, Civilopedia, panels) | the ↗ on the board's top strip; close its window (or "Put back") to return it | – |
 | Scroll a card | mouse wheel | point at it + right stick |
 | Table height | – | either stick up / down (the right one only when not pointing at a card) |
-| Rotate / scale table | right-drag orbit, wheel zoom, WASD / middle-drag pan | hold either grip + that stick: left / right rotates, up / down scales |
+| Rotate / scale table | right-drag orbit, wheel zoom, WASD / middle-drag pan | hold either grip + that stick: left / right rotates; up / down scales (right hand) |
+| Tilt the table | - | hold the left grip + left stick up / down (far side up, hinged at the centre, up to 45°), or Settings > Look > Table tilt |
 | Zoom the map (all the way out = whole map) | +/- or Ctrl + wheel | hold a trigger + that hand's stick up / down |
 | Map overlays (Unciv's five: unit movements, tile yields, worked tiles, resources and improvements, improvement pictures) | click the round buttons beside the overview | point at one + right trigger |
 | Slide the map (when zoomed in) | WASD, or click the overview | hold a grip and drag the map; or point at the overview at the far edge and pull the trigger |
 | Shortcuts | the keys below | A end turn, B found city; X / Y next / previous unit, left stick click recenter; wrist card |
 
 ### Desktop keyboard shortcuts
-The tech tree screen (tech tree, policies, diplomacy, religion, victory) is up when a game starts; T, P and G switch
-its tabs, and pressing the key of the tab that's showing (or Esc) puts it away. Settings > Controls lists the same.
+The tech tree screen (tech tree, policies, diplomacy, religion, victory) starts put away. T, P and G open it at that
+tab (so does the Research button on the info card), and its Hide button, Esc or the key of the tab that's showing put
+it away again. Settings > Controls lists the same.
 
 | Key | Does |
 |---|---|

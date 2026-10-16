@@ -92,6 +92,7 @@ const SETTINGS_PATH := "user://settings.cfg"
 ## They're arcade buttons: a dark housing with a chrome ring and a glossy domed cap that sinks when pressed.
 const TABLE_BUTTONS := [
 	["next_idle", "Idle unit", Color(0.14, 0.4, 0.88), -80.0],
+	["research", "Research", Color(0.1, 0.68, 0.78), -58.0],   # mirrors End turn on the left; says what's being researched
 	["end_turn", "End turn", Color(0.98, 0.55, 0.06), 65.0],
 	["recenter", "Recenter", Color(0.86, 0.86, 0.88), 90.0],
 	["settings", "Settings", Color(0.1, 0.1, 0.11), 110.0],
@@ -111,6 +112,12 @@ const LAUNCH_GRACE_SECONDS := 1.5
 var bridge: BridgeClient
 var hex_map: HexMap
 var table: Node3D
+## Between the table and its top: the tabletop, the map and the buttons on the rim tilt with it (VR, hinged at
+## the table's centre); the boards, overview and pedestal stay level with the table.
+var _tilt: Node3D
+const TABLE_TILT_MAX := 45.0   # degrees
+var _tilt_degrees := 0.0
+var _tilt_dirty := false       # tilted with the left grip + stick: saved when the stick lets go
 
 var state: Dictionary = {}
 var selected_unit: Dictionary = {}   # getUnit result, or empty
@@ -125,7 +132,7 @@ var _trigger_scrollbar: ScrollBar = null   # VR: the scrollbar the held trigger 
 const DECISION_CARDS := ["alert", "alert_tile", "great_person", "vote"]   # VR popups that wait for an answer
 var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
-var settings := {"background": "Mountains", "table": "OrnateOak", "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
+var settings := {"background": "Mountains", "table": "OrnateOak", "tableTilt": 0, "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
 	# Unciv's Options > Gameplay / Automation / Advanced (see SettingsBoard.GAMEPLAY and AUTOMATION)
 	"language": "English", "checkForDueUnits": true, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
 	"orderTradeOffersByAmount": true, "autoAssignCityProduction": false, "autoBuildingRoads": true,
@@ -286,6 +293,7 @@ var _pointed_pixel := Vector2.ZERO
 var _right_grip_down := false
 var _table_height_set := false   # after the first recenter, recentering keeps the height you chose
 var _xr_camera: XRCamera3D
+var _xr_origin: XROrigin3D
 var _playback_active := false   # other players' moves and battles are being played back (End turn skips them)
 var _skip_playback := false
 var _map_replay_active := false
@@ -343,6 +351,9 @@ func _ready() -> void:
 	table = Node3D.new()
 	table.name = "Table"
 	add_child(table)
+	_tilt = Node3D.new()
+	_tilt.name = "Tilt"
+	table.add_child(_tilt)
 	hex_map = HexMap.new()
 	hex_map.name = "HexMap"
 	if options.has("tileset"):   # dev aid for screenshots (--tileset=LowPoly or classic); not saved
@@ -351,7 +362,7 @@ func _ready() -> void:
 	if options.has("unitset"):   # dev aid (--unitset=none, tileset or a tileset folder); not saved
 		settings["unitset"] = options["unitset"]
 	hex_map.set_unitset(str(settings["unitset"]))
-	table.add_child(hex_map)
+	_tilt.add_child(hex_map)
 	hex_map.motion.sounds = sounds   # battles and moves are heard from where they happen on the table
 
 	_xr_mode = _try_start_xr()
@@ -361,6 +372,7 @@ func _ready() -> void:
 		add_child(popouts)
 	if _xr_mode:
 		_setup_xr_rig()
+		_recenter_when_tracking.call_deferred()
 		table.position = VR_TABLE_POSITION
 	else:
 		_setup_desktop_camera()
@@ -376,8 +388,9 @@ func _ready() -> void:
 	table_model = TableModel.new()
 	table_model.name = "TableModel"
 	add_child(table_model)
-	table_model.apply(str(settings["table"]), table)
+	table_model.apply(str(settings["table"]), _tilt)   # the top tilts; the column and base stay upright
 	_update_pedestal()
+	_apply_table_tilt()
 	minimap = Minimap.new()
 	minimap.name = "Minimap"
 	table.add_child(minimap)
@@ -693,6 +706,9 @@ func _on_bridge_connected() -> void:
 				await get_tree().create_timer(0.5).timeout
 	if options.has("screenshot"):
 		await get_tree().create_timer(1.0).timeout   # let the table recenter and cards lay out
+		if options.has("tilt"):   # dev aid: --tilt=30 tips the table that far for the shot (not saved)
+			_set_table_tilt(float(options["tilt"]))
+			await get_tree().process_frame
 		if options.has("fake-look") and _xr_camera != null:   # dev aid: turn the fake head after recentering
 			_xr_camera.rotation_degrees.y += float(options["fake-look"])
 			await get_tree().create_timer(0.3).timeout
@@ -734,7 +750,7 @@ func _enter_game() -> void:
 	hex_map.visible = true
 	_set_table_buttons_visible(true)
 	_set_info_visible(true)
-	_set_big_visible(true)   # up when a game starts (VR: always; desktop: T / P / G switch tabs, Esc or T again hides it)
+	_set_big_visible(_xr_mode)   # VR: always up; desktop: put away until T / P / G or the Research button open it
 	_set_overview_visible(_xr_mode)   # VR: off to your right; desktop: E opens it
 	await _send_bridge_settings()
 	var rules := await bridge.request("getRuleset")
@@ -1273,6 +1289,7 @@ func _board_in_view(node: Node3D) -> bool:
 func _setup_big_screen() -> void:
 	big_screen = BigScreen.new()
 	big_screen.chosen.connect(_on_big_screen_chosen)
+	big_screen.can_hide = not _xr_mode
 	if _xr_mode:
 		var panel := WorldPanel.new()
 		panel.name = "BigScreen"
@@ -1516,6 +1533,8 @@ func _on_big_screen_chosen(kind: String, value: String) -> void:
 	if kind not in CLICKS_ITSELF:
 		sounds.play(Sounds.CLICK)
 	match kind:
+		"big_hide":   # the desktop's Hide button
+			_set_big_visible(false)
 		"big_tab":
 			big_screen.war_armed = ""
 			big_screen.diplo_armed = ""
@@ -3006,12 +3025,14 @@ func set_research(tech: String) -> void:
 		action_menu.show_research(reply.result)
 
 
-## Opens the research card when nothing is being researched (start of game, tech just finished).
+## Opens the research card when nothing is being researched (start of game, tech just finished). On the desktop
+## it only says so: the tech tree stays put away until T or the Research button (or End turn) brings it up.
 func _prompt_research_if_needed() -> void:
 	var p: Dictionary = state.get("player", {})
 	if p.get("canResearch", false) and (p.get("currentTech") == null or int(p.get("freeTechs", 0)) > 0):
 		_set_status("Pick something to research.")
-		await open_research()
+		if _xr_mode:
+			await open_research()
 
 
 ## Puts the Policies tab up when you have the culture for a new policy (unless research needs picking first).
@@ -3040,22 +3061,59 @@ func cycle_unit(dir: int) -> void:
 	await _select_unit(int(units[index]["id"]))
 
 
-## VR: puts the table in front of where you're looking now, at a comfortable height below your eyes.
+## VR: puts the table in front of where you're looking now, at a comfortable height below your eyes. It's you
+## that moves (the XR origin turns and slides), not the table: the table stays on its spot in the scenery, and
+## whatever way you happen to be facing in your room becomes the table's front.
 func recenter_table() -> void:
-	if not _xr_mode or _xr_camera == null:
+	if not _xr_mode or _xr_camera == null or _xr_origin == null:
 		return
 	var head := _xr_camera.global_transform
 	var forward := -head.basis.z
 	forward.y = 0
 	if forward.length() < 0.01:
+		forward = -head.basis.y   # looking straight down: the top of the head points the way you face
+		forward.y = 0
+	if forward.length() < 0.01:
 		forward = Vector3.FORWARD
 	forward = forward.normalized()
-	var height := head.origin.y - 0.45 if not _table_height_set else table.global_position.y
-	_table_height_set = true
-	table.global_position = Vector3(head.origin.x, 0, head.origin.z) + forward * 0.75
-	table.global_position.y = clampf(height, TABLE_HEIGHT_RANGE.x, TABLE_HEIGHT_RANGE.y)
-	table.rotation = Vector3(0, atan2(-forward.x, -forward.z), 0)
+	var table_away := -table.global_transform.basis.z   # from the player's side of the table to its far side
+	table_away.y = 0
+	table_away = table_away.normalized() if table_away.length() > 0.01 else Vector3.FORWARD
+	# Turn the rig about the head so you face the way the table faces, then slide it to the player's seat
+	var pivot := Vector3(head.origin.x, 0.0, head.origin.z)
+	var turn := Transform3D(Basis(Vector3.UP, forward.signed_angle_to(table_away, Vector3.UP)), Vector3.ZERO)
+	var rig := Transform3D(Basis(), pivot) * turn * Transform3D(Basis(), -pivot) * _xr_origin.global_transform
+	var seat := table.global_position - table_away * 0.75
+	rig.origin += Vector3(seat.x - pivot.x, 0.0, seat.z - pivot.z)
+	_xr_origin.global_transform = rig
+	if not _table_height_set:   # the first time, the table comes to a comfortable height; after that it keeps yours
+		_table_height_set = true
+		table.global_position.y = clampf(_xr_camera.global_position.y - 0.45, TABLE_HEIGHT_RANGE.x, TABLE_HEIGHT_RANGE.y)
 	_place_vr_hud()
+
+
+## VR start-up: the room's own "forward" (the guardian's, the play area's) is often not where you sit or look, so
+## once the headset is really tracking, the table is brought in front of you. Also whenever the headset's own
+## recenter (holding the Oculus / system button) resets the view.
+func _recenter_when_tracking() -> void:
+	var interface := XRServer.find_interface("OpenXR")
+	if interface != null and interface.has_signal("pose_recentered"):
+		interface.connect("pose_recentered", func() -> void:
+			await get_tree().process_frame
+			await get_tree().process_frame   # the head pose after the runtime's reset
+			recenter_table())
+	var started := Time.get_ticks_msec()
+	var tracked_frames := 0
+	while tracked_frames < 10 and Time.get_ticks_msec() - started < 10000:
+		await get_tree().process_frame
+		var tracker := XRServer.get_tracker("head") as XRPositionalTracker
+		var pose: XRPose = tracker.get_pose("default") if tracker != null else null
+		if options.has("fake-xr") or (pose != null and pose.has_tracking_data):
+			tracked_frames += 1
+		else:
+			tracked_frames = 0
+	recenter_table()
+	print("Recentered the table in front of you (tracking after %.1f s)" % ((Time.get_ticks_msec() - started) / 1000.0))
 
 
 ## The floating status text sits above the far edge of the table, facing the player.
@@ -3415,6 +3473,21 @@ func _update_turn_button() -> void:
 			label.font_size = 32
 			material.albedo_color = Color(0.25, 0.45, 0.8)
 	action_menu.end_turn_text = "End turn" if blockers.is_empty() else ActionMenu._plain(str(blockers[0]["text"]))
+	_update_research_button()
+
+
+## The Research button on the table says what's being researched (or asks for a pick when nothing is).
+func _update_research_button() -> void:
+	var player: Dictionary = state.get("player", {})
+	var tech: Variant = player.get("currentTech")
+	for button: Dictionary in _table_buttons:
+		if button["id"] != "research":
+			continue
+		var label: Label3D = button["label"]
+		if tech == null or str(tech) == "":
+			label.text = Lang.t("Pick a tech") if player.get("canResearch", false) else Lang.t("Research")
+		else:
+			label.text = Lang.t("Research") + "\n" + Lang.t(str(tech))
 
 
 ## Opens whatever the blocker asks for (End turn pressed while something is undecided).
@@ -3763,6 +3836,70 @@ func _own_units_at(key: Vector2i) -> Array:
 		return int(u["x"]) == key.x and int(u["y"]) == key.y)
 
 
+## VR: the table tilted 30 degrees through the setting - the laser still finds the tiles and the rim buttons,
+## the tabletop and buttons tilt while the boards stay level, the left grip + stick tilts it further; then flat again.
+func _smoke_table_tilt() -> void:
+	var saved: Variant = settings.get("tableTilt", 0)
+	await change_setting("tableTilt", "30")
+	var up := table.global_transform.basis.y.normalized()
+	var towards_you := table.global_transform.basis.z.normalized()
+	var hits := 0
+	var tried := 0
+	for key: Vector2i in hex_map._shown:
+		if tried >= 25:
+			break
+		tried += 1
+		var spot := hex_map.to_global(hex_map.tile_local_center(key))
+		var eye := spot + up * 0.6 + towards_you * 0.5
+		if hex_map.pick(eye, spot - eye) == key:
+			hits += 1
+	var button_hit := ""
+	for button: Dictionary in _table_buttons:
+		var node: Node3D = button["node"]
+		var was_visible := node.visible
+		node.visible = true
+		var eye := node.global_position + up * 0.5 + towards_you * 0.3
+		button_hit = _table_button_at(eye, node.global_position - eye)
+		node.visible = was_visible
+		if button_hit != str(button["id"]):
+			button_hit = "missed %s (got '%s')" % [button["id"], button_hit]
+			break
+	var top_tilted := table_model._top == null or absf(table_model._top.global_transform.basis.y.normalized().angle_to(up) - deg_to_rad(30.0)) < 0.01
+	var map_tilted := absf(hex_map.global_transform.basis.y.normalized().angle_to(up) - deg_to_rad(30.0)) < 0.01
+	var minimap_level := minimap.get_parent() == table
+	print("SMOKE: table tilt 30: setting %s, map tilted %s, top tilted %s, overview stays level %s, laser found %d of %d tiles, rim buttons %s" % [
+		settings["tableTilt"], map_tilted, top_tilted, minimap_level, hits, tried, button_hit if button_hit.begins_with("missed") else "all hit"])
+	# The left grip + stick: a second of the stick pushed up tilts it further, and it's saved on letting go
+	for i in 30:
+		_stick_moves_table(Vector2(0, 1), true, 1.0 / 30.0, true)
+	var after_gesture := _tilt_degrees
+	_stick_moves_table(Vector2(0, 1), true, 10.0, true)
+	print("SMOKE: table tilt by stick: 30 -> %.1f, clamped at %.1f (max %.0f)" % [after_gesture, _tilt_degrees, TABLE_TILT_MAX])
+	_tilt_dirty = false
+	_update_button_labels()
+	await change_setting("tableTilt", str(saved))
+	print("SMOKE: table tilt back: %.1f" % _tilt_degrees)
+
+
+## VR: the rig turned so the table is behind you and off to the side (a room whose "forward" isn't yours) -
+## Recenter puts it 0.75 m in front of where you're looking, and the table hasn't moved in the scenery.
+func _smoke_recenter() -> void:
+	var table_before := table.global_position
+	var rig_before := _xr_origin.global_transform
+	for case: Array in [[180.0, Vector3(1.5, 0, 0.8)], [90.0, Vector3(-2.0, 0, 0)], [-35.0, Vector3(0, 0, 3.0)]]:
+		_xr_origin.global_transform = Transform3D(Basis(Vector3.UP, deg_to_rad(float(case[0]))), case[1])
+		recenter_table()
+		var head := _xr_camera.global_transform
+		var forward := -head.basis.z
+		forward.y = 0
+		var to_table := table.global_position - head.origin
+		to_table.y = 0
+		print("SMOKE: recenter from %s deg, %s off: table %.2f m away, %.0f deg off straight ahead, table moved %.3f m" % [
+			case[0], case[1], to_table.length(), rad_to_deg(forward.normalized().angle_to(to_table.normalized())),
+			Vector2(table.global_position.x - table_before.x, table.global_position.z - table_before.z).length()])
+	_xr_origin.global_transform = rig_before
+
+
 func _run_smoke_test() -> void:
 	if hex_map.is_windowed():
 		var start := hex_map.view_center
@@ -3858,6 +3995,18 @@ func _run_smoke_test() -> void:
 		await get_tree().create_timer(0.6).timeout
 		print("SMOKE: info panel: %s | %s" % [info_panel._tile_title.text, info_panel._civ_header.text])
 	print("SMOKE: state turn=%s tiles=%d units=%d" % [state.get("turn"), state.get("tiles", []).size(), state.get("units", []).size()])
+	print("SMOKE: big screen up at the start: %s (VR %s)" % [_big_screen_shown(), _xr_mode])
+	if _xr_mode:
+		await _smoke_table_tilt()
+		await _smoke_recenter()
+	# The Research button on the table: says what's being researched, and brings the tech tree up
+	for button: Dictionary in _table_buttons:
+		if button["id"] == "research":
+			var label_before := (button["label"] as Label3D).text.replace("\n", " | ")
+			_set_big_visible(false)
+			await press_table_button("research")
+			print("SMOKE: research button: shown %s, label '%s', tech tree up %s on tab %s" % [(button["node"] as Node3D).visible,
+				label_before, _big_screen_shown(), big_screen.tab if big_screen != null else "-"])
 	var t_refresh := Time.get_ticks_usec()
 	await refresh()
 	print("SMOKE: delta refresh took %.0f ms (fps %d)" % [(Time.get_ticks_usec() - t_refresh) / 1000.0, Engine.get_frames_per_second()])
@@ -4101,6 +4250,12 @@ func _run_smoke_test() -> void:
 	if not researchable.is_empty():
 		await _on_big_screen_chosen("research", researchable[-1]["name"])
 	print("SMOKE: big screen tech: %d techs, current %s, shown=%s" % [big_screen._techs.get("techs", []).size(), big_screen._techs.get("current"), _big_screen_shown()])
+	if big_screen.can_hide:   # the desktop's Hide button puts it away; T brings it back
+		big_screen._hide_button.pressed.emit()
+		await get_tree().process_frame
+		var hidden := not _big_screen_shown()
+		await show_big_screen("tech")
+		print("SMOKE: big screen Hide button: hidden %s, T-style show again %s" % [hidden, _big_screen_shown()])
 	await _on_big_screen_chosen("big_tab", "policies")
 	var branches: Array = big_screen._policies.get("branches", [])
 	print("SMOKE: big screen policies: %d branches, culture %s/%s" % [branches.size(), big_screen._policies.get("culture"), big_screen._policies.get("cultureNeeded")])
@@ -4532,7 +4687,7 @@ func _apply_language() -> void:
 
 
 ## Unciv options with a number (sent with setSettings too)
-const INT_SETTINGS := ["notificationsLogMaxTurns", "turnsBetweenAutosaves"]
+const INT_SETTINGS := ["notificationsLogMaxTurns", "turnsBetweenAutosaves", "tableTilt"]
 ## Ours: how loud, 0 to 100 (nothing to do with the bridge)
 const VOLUME_SETTINGS := ["soundVolume", "ambienceVolume"]
 ## Ours too: the music (scripts/music.gd)
@@ -4583,8 +4738,10 @@ func change_setting(key: String, value: String) -> void:
 			backgrounds.apply(value)
 			_apply_background_spot()
 		"table":
-			table_model.apply(value, table)
+			table_model.apply(value, _tilt)
 			_update_pedestal()
+		"tableTilt":
+			_apply_table_tilt()
 		"unitset":
 			hex_map.set_unitset(value)
 		"tileset":
@@ -5044,7 +5201,7 @@ func _setup_table_buttons() -> void:
 		var angle := deg_to_rad(float(spec[3]))   # +Z is towards the player
 		node.position = Vector3(sin(angle) * TABLE_BUTTON_RADIUS, 0.0, cos(angle) * TABLE_BUTTON_RADIUS)
 		node.visible = false   # shown once a game is on the table (never over the main menu)
-		table.add_child(node)
+		_tilt.add_child(node)   # on the tabletop's rim, so they tilt with it
 		# The housing the cap sits in, and the chrome ring round the hole
 		var housing := MeshInstance3D.new()
 		var housing_mesh := CylinderMesh.new()
@@ -5497,6 +5654,7 @@ func _try_start_xr() -> bool:
 func _setup_xr_rig() -> void:
 	var origin := XROrigin3D.new()
 	add_child(origin)
+	_xr_origin = origin
 	var cam := XRCamera3D.new()
 	origin.add_child(cam)
 	_xr_camera = cam
@@ -5609,7 +5767,7 @@ func _update_button_labels() -> void:
 				rows.append([names["trigger"] + " + " + stick.to_lower(), "zoom the map"])
 			rows.append([stick, "table height, click: recenter"])
 			rows.append([names["grip"], "slide the map"])
-			rows.append([names["grip"] + " + " + stick.to_lower(), "turn / size the table"])
+			rows.append([names["grip"] + " + " + stick.to_lower(), "turn / tilt the table"])
 		visuals.set_rows(rows)
 
 
@@ -6224,11 +6382,17 @@ func _process_xr(delta: float) -> void:
 			var menu: ActionMenu = popup_menu if _pointed_panel == _popup_panel else action_menu
 			menu.scroll_by(-right_stick.y * delta * 600.0)
 	else:
-		_stick_moves_table(right_stick, _right_grip_down, delta)
+		_stick_moves_table(right_stick, _right_grip_down, delta, false)
 
-	# Left stick works like the right one: height, or with the grip held, rotate (x) / scale (y)
+	# Left stick works like the right one: height, or with the grip held, rotate (x) / tilt (y - the right one scales)
 	if not left_trigger:
-		_stick_moves_table(left_stick, _left_hand.get_float("grip") > 0.6, delta)
+		_stick_moves_table(left_stick, _left_hand.get_float("grip") > 0.6, delta, true)
+	if _tilt_dirty and (absf(left_stick.y) <= 0.2 or _left_hand.get_float("grip") <= 0.6):
+		_tilt_dirty = false
+		settings["tableTilt"] = roundi(_tilt_degrees)
+		_save_settings()
+		if settings_shown():
+			_refresh_settings()
 
 	# Big maps: hold a grip and move that hand to drag the map across the table
 	for hand: XRController3D in [_left_hand, _right_hand]:
@@ -6240,14 +6404,29 @@ func _process_xr(delta: float) -> void:
 			_grab_last.erase(hand)
 
 
-## Shared stick handling for both hands. Grip held: x rotates and y scales the table.
-## Otherwise y raises / lowers the table.
-func _stick_moves_table(stick: Vector2, grip_held: bool, delta: float) -> void:
+## Tilts the tabletop (and the map on it) about its centre, far side up - VR only; the desktop camera tilts instead.
+func _set_table_tilt(degrees: float) -> void:
+	_tilt_degrees = clampf(degrees, 0.0, TABLE_TILT_MAX) if _xr_mode else 0.0
+	if _tilt != null:
+		_tilt.rotation.x = deg_to_rad(_tilt_degrees)
+
+
+## Settings > Look > Table tilt (or the saved value at start-up).
+func _apply_table_tilt() -> void:
+	_set_table_tilt(float(settings.get("tableTilt", 0)))
+
+
+## Shared stick handling for both hands. Grip held: x rotates the table, y scales it (right hand) or tilts it
+## (left hand: up raises the far side). Otherwise y raises / lowers the table.
+func _stick_moves_table(stick: Vector2, grip_held: bool, delta: float, is_left: bool) -> void:
 	if grip_held:
 		if absf(stick.x) > 0.2:
 			table.rotate_y(-stick.x * delta * 1.2)
 			_place_vr_hud()
-		if absf(stick.y) > 0.2:
+		if is_left and absf(stick.y) > 0.2:
+			_set_table_tilt(_tilt_degrees + stick.y * delta * 30.0)
+			_tilt_dirty = true
+		elif absf(stick.y) > 0.2:
 			var new_scale := clampf(table.scale.x * (1.0 + stick.y * delta), 0.3, 6.0)
 			table.scale = Vector3(new_scale, new_scale, new_scale)
 	elif absf(stick.y) > 0.3:

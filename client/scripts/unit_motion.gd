@@ -227,7 +227,7 @@ func _projectile(kind: String, from: Vector3, to: Vector3, _last := false) -> vo
 		var ahead := from.lerp(to, minf(f + 0.02, 1.0)) + Vector3(0, arc * 4.0 * minf(f + 0.02, 1.0) * (1.0 - minf(f + 0.02, 1.0)), 0)
 		node.position = p
 		if ahead.distance_to(p) > 0.0001:
-			node.look_at(global_transform * ahead, Vector3.UP, true)
+			node.look_at(global_transform * ahead, global_transform.basis.y.normalized(), true)   # the map's up (it can be tilted)
 		, 0.0, 1.0, duration)
 	await t.finished
 	node.queue_free()

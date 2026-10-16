@@ -83,6 +83,13 @@ var _techs: Dictionary = {}
 var _policies: Dictionary = {}
 var _diplomacy: Dictionary = {}
 var _tab_buttons: Dictionary = {}
+## The desktop sets this: a Hide button at the end of the tabs puts the screen away (in VR it stays up)
+var can_hide := false:
+	set(value):
+		can_hide = value
+		if _hide_button != null:
+			_hide_button.visible = value
+var _hide_button: Button
 var _header: Label
 var _scroll: ScrollContainer
 var _body: Control
@@ -214,6 +221,14 @@ func _ready() -> void:
 		button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		bar.add_child(button)
 		_tab_buttons[id] = button
+	var gap := Control.new()
+	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bar.add_child(gap)
+	_hide_button = _button("Hide", func() -> void: chosen.emit("big_hide", ""), Color(0.3, 0.22, 0.24), 22)
+	_hide_button.custom_minimum_size = Vector2(140, 46)
+	_hide_button.tooltip_text = "Put this screen away (T, P, G or the Research button bring it back)"
+	_hide_button.visible = can_hide
+	bar.add_child(_hide_button)
 	_header = Label.new()
 	_header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT

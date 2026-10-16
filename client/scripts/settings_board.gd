@@ -90,7 +90,8 @@ const CONTROLS := [
 	["Move / attack", "Click a tile to aim, again to go", "The same with the laser"],
 	["Open a city", "Click it", "Point + right trigger: its card floats above the city"],
 	["Scroll a card", "Mouse wheel", "Point at it + right stick"],
-	["Move the view", "Right-drag orbits, wheel zooms, WASD / middle-drag pans", "Grip + stick: left / right turns the table, up / down scales it"],
+	["Move the view", "Right-drag orbits, wheel zooms, WASD / middle-drag pans", "Grip + stick: left / right turns the table, up / down scales it (right hand)"],
+	["Tilt the table", "-", "Left grip + left stick up / down (or Settings > Look > Table tilt)"],
 	["Table height", "-", "Either stick up / down (the right one when not pointing at a card)"],
 	["Zoom the map", "+ / - or Ctrl + wheel", "Hold a trigger + that hand's stick up / down"],
 	["Slide the map", "WASD, or click the overview", "Hold a grip and drag; or point at the overview + trigger"],
@@ -99,7 +100,7 @@ const CONTROLS := [
 	["Found a city", "F", "B"],
 	["Next / previous unit", "Tab / Shift+Tab", "X / Y"],
 	["Idle unit", "N", "The Idle unit button on the table"],
-	["Tech tree, policies, diplomacy", "T, P, G", "The wrist card, or the buttons on the boards"],
+	["Tech tree, policies, diplomacy", "T, P, G", "The Research button on the table, the wrist card, or the buttons on the boards"],
 	["Empire overview", "E", "Always up, off to your right"],
 	["Settings", "O", "The Settings button on the table"],
 	["Civilopedia", "F1", "The Civilopedia button on the table"],
@@ -254,6 +255,8 @@ func _look_page() -> void:
 	if moved:
 		spot_buttons.add_child(_button("Back to the middle", func() -> void: chosen.emit("reset_table_spot", ""), Color(0.3, 0.25, 0.25), 18))
 	spot_row.add_child(spot_buttons)
+	if bool(info.get("in_vr", false)):
+		_tilt_row()
 	_header("The map", "")
 	var tiles := _tileset_options()
 	tiles.append(["classic", "Plain coloured hexes", "Flat hexes in Unciv's terrain colours, no models.", ""])
@@ -268,6 +271,27 @@ func _look_page() -> void:
 	for overlay: Array in OVERLAYS:
 		var id: String = overlay[0]
 		_toggle_row(overlay[1], overlay[2], bool(overlays.get(id, false)), func() -> void: chosen.emit("overlay", id))
+
+
+## VR: how far the tabletop tilts towards you, hinged at its centre (the left grip + left stick does the same).
+func _tilt_row() -> void:
+	var degrees := clampi(int(settings.get("tableTilt", 0)), 0, 45)
+	var box := HBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	var slider := HSlider.new()
+	slider.min_value = 0
+	slider.max_value = 45
+	slider.step = 1
+	slider.value = degrees
+	slider.custom_minimum_size = Vector2(320, 40)
+	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	slider.value_changed.connect(func(value: float) -> void: chosen.emit("setting", "tableTilt|%d" % roundi(value)))
+	box.add_child(slider)
+	box.add_child(_label(Lang.t("Flat") if degrees == 0 else "%d°" % degrees, 19, TEXT))
+	if degrees != 0:
+		box.add_child(_button("Flat", func() -> void: chosen.emit("setting", "tableTilt|0"), Color(0.3, 0.25, 0.25), 18))
+	_row("Table tilt", "Tips the tabletop towards you, far side up, so the far side of the map is easier to see. "
+		+ "Hold the left grip and push the left stick up or down to do it by hand.", box)
 
 
 func _gameplay_page() -> void:

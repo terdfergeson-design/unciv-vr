@@ -45,7 +45,8 @@ Original icons from Unciv have been tinted and scaled.  Shared under various CC 
   actually holding (Quest Touch, Index, Vive...), with optional labels saying what each button does right now.
 
 ## Desktop keyboard shortcuts
-Without a headset the game plays with mouse and keyboard. The tech tree screen is up when a game starts.
+Without a headset the game plays with mouse and keyboard. The tech tree screen starts put away: T, P and G open it
+(or the Research button on the info card), and its Hide button, Esc or the same key again put it away.
 
 | Key | Does |
 |---|---|
