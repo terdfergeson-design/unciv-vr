@@ -210,11 +210,11 @@ func redraw(units: Array, cities: Array) -> void:
 	for city: Dictionary in cities:
 		var key := Vector2i(int(city["x"]), int(city["y"]))
 		if hex_map.tiles.has(key):
-			_fill_cell(image, hex_map._world_of(key), cell + 3, Color(1, 1, 1))
+			_fill_cell(image, hex_map.raw_world_of(key), cell + 3, Color(1, 1, 1))
 	for unit: Dictionary in units:
 		var key := Vector2i(int(unit["x"]), int(unit["y"]))
 		if hex_map.tiles.has(key):
-			_fill_cell(image, hex_map._world_of(key), maxi(2, cell - 1), Color(1.0, 0.85, 0.2))
+			_fill_cell(image, hex_map.raw_world_of(key), maxi(2, cell - 1), Color(1.0, 0.85, 0.2))
 	_texture.update(image)
 	update_window()
 	if _hovered_button == "":
@@ -227,7 +227,9 @@ func update_window() -> void:
 		_ring.visible = false
 		return
 	_ring.visible = true
-	var local := _world_to_local(hex_map.view_center)
+	var centre: Vector2 = hex_map.view_center
+	centre.x = hex_map.wrap_x(centre.x, _bounds_center.x)   # a wrapped map's view may have gone round any number of times
+	var local := _world_to_local(centre)
 	_ring.position = Vector3(local.x, local.y, 0.002)
 	var r: float = hex_map.view_radius / (2.0 * _bounds_half) * SIZE
 	_ring.scale = Vector3(r, r, 1)

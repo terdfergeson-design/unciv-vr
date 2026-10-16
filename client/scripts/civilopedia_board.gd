@@ -17,6 +17,7 @@ signal chosen(kind: String, value: String)
 
 const DataPaths := preload("res://scripts/data_paths.gd")
 const Icons := preload("res://scripts/icons.gd")
+const Lang := preload("res://scripts/lang.gd")
 
 const SIZE := Vector2(1600, 960)
 const GRAB_HEIGHT := 30.0
@@ -53,6 +54,11 @@ var _page_scroll: ScrollContainer
 var _page: VBoxContainer
 var _categories_box: HFlowContainer
 var _loading := 0
+## Civilopedia search (Unciv's search popup): the list shows what a search found until a category is picked
+var search_query := ""
+var _search_results: Array = []      # searchCivilopedia results
+var _searching := false
+var _search_button: Button
 
 
 func _ready() -> void:
@@ -93,6 +99,12 @@ func _ready() -> void:
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_title.clip_text = true
 	top.add_child(_title)
+	_search_button = _button("Search", func() -> void: chosen.emit("search", search_query), Color(0.2, 0.34, 0.3), 20)
+	_search_button.icon = Icons.get_icon("other", "Search")
+	_search_button.add_theme_constant_override("icon_max_width", 26)
+	_search_button.custom_minimum_size = Vector2(150, 46)
+	_search_button.tooltip_text = "Search every page (Ctrl+F)"
+	top.add_child(_search_button)
 	var close := _button("Close", func() -> void: chosen.emit("close", ""), Color(0.42, 0.2, 0.2), 20)
 	close.custom_minimum_size = Vector2(140, 46)
 	top.add_child(close)
@@ -165,7 +177,9 @@ func set_categories(data: Dictionary) -> void:
 	_category_buttons.clear()
 	for entry_list: Dictionary in categories:
 		var key := str(entry_list["key"])
-		var button := _button(str(entry_list["label"]), func() -> void: await open_category(key), BUTTON, 16)
+		var button := _button(str(entry_list["label"]), func() -> void:
+			_searching = false
+			await open_category(key), BUTTON, 16)
 		button.icon = Icons.from_path(str(entry_list.get("icon", "")))
 		button.add_theme_constant_override("icon_max_width", 26)
 		button.custom_minimum_size = Vector2(0, 40)
@@ -208,7 +222,9 @@ func open_link(target: String, remember := true) -> void:
 		history.append(link)
 		if history.size() > 60:
 			history.remove_at(0)
-	_show_list(data)
+	if not (_searching and _search_has(full)):
+		_searching = false
+		_show_list(data)
 	link = full
 	_last_entry[data["key"]] = full
 	_highlight_entry()
@@ -241,6 +257,76 @@ func _entry_label(data: Dictionary, name: String) -> String:
 		if str(entry["name"]) == name:
 			return str(entry.get("label", name))
 	return name
+
+
+func _search_has(target: String) -> bool:
+	for result: Dictionary in _search_results:
+		if str(result.get("link", "")) == target:
+			return true
+	return false
+
+
+## A searchCivilopedia result in the list on the left: what it found (name matches first), each with its category;
+## picking one opens it and leaves the results there, until a category is picked.
+func show_search_results(result: Dictionary) -> void:
+	search_query = str(result.get("query", ""))
+	_search_results = result.get("results", [])
+	_searching = true
+	category = ""
+	for key: String in _category_buttons:
+		_paint(_category_buttons[key], BUTTON)
+	for child in _list.get_children():
+		_list.remove_child(child)
+		child.queue_free()
+	_entry_buttons.clear()
+	var total := int(result.get("total", _search_results.size()))
+	var heading := _label(Lang.format("Search: \"%s\"", search_query), 18, HEADER)
+	heading.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_list.add_child(heading)
+	if _search_results.is_empty():
+		_list.add_child(_label(tr("Nothing found!"), 19, Color(0.96, 0.33, 0.2)))
+	else:
+		var count := Lang.format("%d found", total) if total <= _search_results.size() else Lang.format("%d found, the first %d shown", [total, _search_results.size()])
+		_list.add_child(_label(count, 15, DIM))
+	var in_text_heading := false
+	for found: Dictionary in _search_results:
+		if not bool(found.get("inName", false)) and not in_text_heading and _search_results.size() > 1:
+			in_text_heading = true
+			var text_heading := _label(tr("Mentioned in"), 16, HEADER)
+			text_heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			_list.add_child(text_heading)
+		var entry_link := str(found["link"])
+		var caption := "%s\n%s" % [str(found.get("label", found.get("name", ""))), str(found.get("categoryLabel", ""))]
+		var button := _button(caption, func() -> void: await open_link(entry_link), ENTRY_BUTTON, 18)
+		button.icon = link_icon(entry_link)
+		button.add_theme_constant_override("icon_max_width", 36)
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		button.custom_minimum_size = Vector2(0, 58)
+		_list.add_child(button)
+		_entry_buttons[entry_link] = button
+	_list_scroll.scroll_vertical = 0
+	_highlight_entry()
+	if not _search_results.is_empty() and not _search_has(link):
+		await open_link(str(_search_results[0]["link"]))
+
+
+## Ends a search: the list goes back to the category of the entry on show.
+func clear_search() -> void:
+	search_query = ""
+	_search_results = []
+	_searching = false
+	var current := link
+	category = ""
+	link = ""
+	if current != "":
+		await open_link(current, false)
+
+
+## The search text an error came back for (an invalid regular expression...): shown where the results go.
+func show_search_problem(query: String, problem: String) -> void:
+	show_search_results({"query": query, "results": [], "total": 0})
+	_list.add_child(_label(problem, 16, Color(0.96, 0.33, 0.2)))
 
 
 func _show_list(data: Dictionary) -> void:

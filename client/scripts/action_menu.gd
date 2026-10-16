@@ -934,6 +934,7 @@ func show_setup(setup: Dictionary, options: Dictionary, tab: String) -> void:
 			_add_header("Options")
 			_add_toggle("No ancient ruins", "noRuins", setup)
 			_add_toggle("No natural wonders", "noNaturalWonders", setup)
+			_add_toggle("World Wrap", "worldWrap", setup)   # Unciv's own wording, so its translations apply
 			_add_note("Bigger maps slide under the table: hold a grip and drag, or use the overview at the far edge.")
 		"rules":
 			_add_choices("Rules", "ruleset", options.get("rulesets", []), setup)
@@ -1002,6 +1003,9 @@ func _add_choices(title: String, key: String, values: Array, setup: Dictionary) 
 		button.size_flags_horizontal = Control.SIZE_FILL
 		button.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		button.clip_text = false
+		# No wrapping here: a wrapping button asks for no width at all, and a flow container gives it just that -
+		# a tall sliver with its text squeezed out of sight. Unwrapped, each is as wide as its words.
+		button.autowrap_mode = TextServer.AUTOWRAP_OFF
 		flow.add_child(button)
 	_list.add_child(flow)
 

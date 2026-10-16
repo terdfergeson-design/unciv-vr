@@ -114,7 +114,10 @@ signed with. More in [client/README.md](client/README.md#the-standalone-quest-ap
 | `unciv/bridge-android/` | The bridge as a Godot Android plugin, for the Quest app. |
 
 Your saves, settings and own content live in `~/.unciv-vr` (Windows: `C:\Users\<you>\.unciv-vr`) on the PC, and in
-the app's own storage on the Quest.
+the app's own storage on the Quest. To move saves between them, or keep them safe from uninstalling, the Quest app's
+Settings > Game and saves copies them out to (and back in from) `Documents/UncivVR/SaveFiles` in the headset's shared
+storage, which a PC sees over USB; "Back up saves there" does it after every turn. On the PC they go in
+`~/.unciv-vr/SaveFiles`.
 
 ## Languages
 **Now:** Settings > Gameplay > Language offers every language Unciv has a translation for (about 50, with how
@@ -148,7 +151,7 @@ they have not yet had native-speaker or in-game visual review. Details and conte
 - **Typing**: further keyboard layouts for naming cities, units and saves.
 
 ## Not there yet
-Unciv mods, world wrap and music; multiplayer is left out on purpose. On the Quest,
+Unciv mods and music; multiplayer is left out on purpose. On the Quest,
 text is a little softer than over Link, since the headset renders at a lower resolution on its own.
 
 ## Licence and credits

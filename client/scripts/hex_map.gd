@@ -87,6 +87,13 @@ var _built_radius := -1.0           # view_radius when the visuals were last reb
 var full_extent := 10.0             # half-size of the whole map, in map units
 var full_center := Vector2.ZERO
 var _shown: Dictionary = {}         # Vector2i -> true for tiles currently drawn
+## World wrap (Unciv's World Wrap: the map wraps east-west). The tile at key + WRAP_STEP * wrap_radius is the same
+## tile as key, and the map's copies lie wrap_width apart along wx. Every tile is drawn once, at whichever copy is
+## nearest the middle of the view (_wrap_ref), so sliding east or west never reaches an edge.
+var wrap_radius := 0                # 0: no wrap
+var wrap_width := 0.0
+var _wrap_ref := 0.0                # the wx the drawn copies are centred on (the view's middle at the last rebuild)
+const WRAP_STEP := Vector2i(1, -1)
 var _built_center := Vector2.ZERO   # view_center when the visuals were last rebuilt
 const EDGE_FADE := 2.0              # map units at the window's rim drawn darker
 
@@ -268,6 +275,13 @@ func build(state: Dictionary) -> void:
 
 	full_center = (min_corner + max_corner) / 2.0
 	full_extent = max((max_corner - min_corner).x, (max_corner - min_corner).y) / 2.0 + 1.0
+	var wrapped := bool(state.get("worldWrap", false)) and int(state.get("wrapRadius", 0)) > 0
+	if wrapped != (wrap_radius > 0):
+		view_center = full_center   # a different game: start from the middle
+	wrap_radius = int(state.get("wrapRadius", 0)) if wrapped else 0
+	wrap_width = float(state.get("wrapWidth", 3 * wrap_radius)) if wrapped else 0.0
+	if not wrapped:
+		_wrap_ref = full_center.x
 	_rebuild_view()
 
 
@@ -346,7 +360,12 @@ func set_view(center: Vector2, radius: float) -> void:
 	view_radius = radius
 	# Keep the window over the map: the closer it is to showing everything, the less it can slide
 	var margin := maxf(0.0, full_extent - radius) if radius > 0.0 else 0.0
+	var east_west := center.x   # a wrapped map slides east-west for ever
 	view_center = center.clamp(full_center - Vector2.ONE * margin, full_center + Vector2.ONE * margin)
+	if wraps():
+		view_center.x = east_west
+		if shows_whole_map():
+			view_center.y = full_center.y
 	map_extent = full_extent if shows_whole_map() else view_radius + 1.0
 	# Rebuilding the visuals is the slow part, so zooming only rebuilds every few percent and sliding
 	# every hex or so; in between, what's drawn just moves (main.gd rescales the table smoothly).
@@ -360,6 +379,43 @@ func set_view(center: Vector2, radius: float) -> void:
 func pan_view(delta_world: Vector2) -> void:
 	if not shows_whole_map():
 		set_view(view_center + delta_world, view_radius)
+	elif wraps():   # the whole of a wrapped map still turns east-west, like a globe
+		set_view(view_center + Vector2(delta_world.x, 0.0), view_radius)
+
+
+## True on a world-wrap map.
+func wraps() -> bool:
+	return wrap_radius > 0
+
+
+## [param key] or the same tile under its other name across the wrap seam; [param key] itself if neither exists.
+func wrap_key(key: Vector2i) -> Vector2i:
+	if wrap_radius <= 0 or tiles.has(key):
+		return key
+	for k: Vector2i in [key + WRAP_STEP * wrap_radius, key - WRAP_STEP * wrap_radius]:
+		if tiles.has(k):
+			return k
+	return key
+
+
+## The copy of [param wx] nearest [param near] along the wrap (just [param wx] on a map that doesn't wrap).
+func wrap_x(wx: float, near: float) -> float:
+	if wrap_width <= 0.0:
+		return wx
+	return wx + wrap_width * roundf((near - wx) / wrap_width)
+
+
+## Where a tile is in Unciv's own world coordinates (no wrap applied) - the overview map draws these.
+func raw_world_of(key: Vector2i) -> Vector2:
+	var tile: Dictionary = tiles.get(key, {})
+	return Vector2(tile.get("wx", 0.0), tile.get("wy", 0.0))
+
+
+## [param key]'s position like tile_position, but on wrapped maps the copy nearest [param near] (local x) - for
+## lines and moves between neighbours, which mustn't go the long way round the table at the seam.
+func tile_position_near(key: Vector2i, y: float, near: Vector3) -> Vector3:
+	var w := raw_world_of(key)
+	return Vector3(wrap_x(w.x, near.x), y, -w.y)
 
 
 ## True when only part of the map is on the table (it can slide).
@@ -373,6 +429,8 @@ func shows_whole_map() -> bool:
 
 func _place_content() -> void:
 	var c := full_center if shows_whole_map() else view_center
+	if wraps():
+		c.x = view_center.x
 	_center_offset = Vector3(-c.x, 0, c.y)
 	_content.position = _center_offset
 
@@ -380,6 +438,7 @@ func _place_content() -> void:
 func _rebuild_view() -> void:
 	_built_center = view_center
 	_built_radius = view_radius
+	_wrap_ref = view_center.x if wraps() else full_center.x
 	_place_content()
 	map_extent = full_extent if shows_whole_map() else view_radius + 1.0
 	_shown.clear()
@@ -433,9 +492,11 @@ func shown_explored_tiles() -> Array:
 	return out
 
 
+## Where a tile is drawn, in world coordinates: on a wrapped map, its copy nearest the middle of the view.
 func _world_of(key: Vector2i) -> Vector2:
-	var tile: Dictionary = tiles.get(key, {})
-	return Vector2(tile.get("wx", 0.0), tile.get("wy", 0.0))
+	var w := raw_world_of(key)
+	w.x = wrap_x(w.x, _wrap_ref)
+	return w
 
 
 ## How far into the darker rim of the window a tile is: 0 inside, up to 1 at the very edge.
@@ -612,7 +673,7 @@ func _build_borders() -> void:
 		var line_fraction := 0.92 if _replay_active else BORDER_LINE
 		var inner_fraction := 0.76 if _replay_active else BORDER_INNER
 		for neighbour: Vector2i in NEIGHBOURS:
-			var other: Dictionary = tiles.get(key + neighbour, {})
+			var other: Dictionary = tiles.get(wrap_key(key + neighbour), {})
 			if str(other.get("owner", "")) == territory:
 				continue   # same territory: no line between them
 			var edge := _edge_towards(key, key + neighbour)
@@ -673,7 +734,8 @@ func _edge_towards(key: Vector2i, other: Vector2i) -> int:
 		return _edge_for_offset[offset]
 	for k: Vector2i in tiles:
 		if tiles.has(k + offset):
-			var d := tile_position(k + offset, 0) - tile_position(k, 0)
+			var d3 := raw_world_of(k + offset) - raw_world_of(k)
+			var d := Vector3(d3.x, 0, -d3.y)
 			var edge := posmod(roundi((rad_to_deg(atan2(d.z, d.x)) - 30.0) / 60.0), 6)
 			_edge_for_offset[offset] = edge
 			return edge
@@ -790,7 +852,8 @@ func _unit_offset(unit: Dictionary) -> Vector3:
 ## (Unciv only says where a unit started and ended), ending exactly on [param to].
 func path_points(from: Vector2i, to: Vector2i, unit: Dictionary = {}) -> Array:
 	var a := _world_of(from)
-	var b := _world_of(to)
+	var b := raw_world_of(to)
+	b.x = wrap_x(b.x, a.x)   # across the seam the short way
 	var steps := maxi(1, roundi(a.distance_to(b) / SQRT3))
 	var points: Array = []
 	var last := from
@@ -802,7 +865,7 @@ func path_points(from: Vector2i, to: Vector2i, unit: Dictionary = {}) -> Array:
 		if i > 0 and key == last:
 			continue
 		last = key
-		points.append(tile_position(key, tile_height(tiles.get(key, {}))) + _unit_offset(unit))
+		points.append(tile_position_near(key, tile_height(tiles.get(key, {})), Vector3(p.x, 0, -p.y)) + _unit_offset(unit))
 	return points
 
 
@@ -811,9 +874,11 @@ func _nearest_tile(p: Vector2, near: Vector2i) -> Vector2i:
 	var best_d := INF
 	for dx in range(-3, 4):
 		for dy in range(-3, 4):
-			var k := near + Vector2i(dx, dy)
+			var k := wrap_key(near + Vector2i(dx, dy))
 			if tiles.has(k):
-				var d := _world_of(k).distance_to(p)
+				var w := raw_world_of(k)
+				w.x = wrap_x(w.x, p.x)
+				var d := w.distance_to(p)
 				if d < best_d:
 					best_d = d
 					best = k
@@ -844,7 +909,7 @@ func play_event(e: Dictionary) -> void:
 				motion.hear("whoosh", to_global(tile_position(to, tile_height(tiles.get(to, {})))), 0.7)
 				await motion.move(token, path.slice(1) if path.size() > 1 else path)
 		"attack":
-			var target_pos := tile_position(to, tile_height(tiles.get(to, {})))
+			var target_pos := tile_position_near(to, tile_height(tiles.get(to, {})), tile_position(from, 0.0))
 			var attacker: Node3D = null
 			if e.has("attacker"):
 				attacker = token_for(int(e["attacker"]))
@@ -1290,8 +1355,7 @@ func tile_at_global(point: Vector3) -> Variant:
 	var best: Variant = null
 	var best_distance := 1.0  # must be within one hex radius
 	for key: Vector2i in _shown:
-		var tile: Dictionary = tiles[key]
-		var d := p.distance_to(Vector2(tile["wx"], tile["wy"]))
+		var d := p.distance_to(_world_of(key))
 		if d < best_distance:
 			best_distance = d
 			best = key
@@ -1308,8 +1372,8 @@ func pick(ray_origin: Vector3, ray_direction: Vector3) -> Variant:
 
 
 func tile_position(key: Vector2i, y: float) -> Vector3:
-	var tile: Dictionary = tiles.get(key, {})
-	return Vector3(tile.get("wx", 0.0), y, -float(tile.get("wy", 0.0)))
+	var w := _world_of(key)
+	return Vector3(w.x, y, -w.y)
 
 
 func tile_height(tile: Dictionary) -> float:

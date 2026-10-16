@@ -87,3 +87,78 @@ static func unpack_android_data() -> String:
 	stamp_file.close()
 	print("Unpacked %d files of game data into %s in %d ms" % [count, root, Time.get_ticks_msec() - started])
 	return ""
+
+
+# region saves shared with a PC ---------------------------------------------------------------
+
+const STORAGE_PERMISSION := "android.permission.MANAGE_EXTERNAL_STORAGE"
+## Tests on the PC point the shared folder somewhere (--shared-saves=<folder>); "" uses the Quest's Documents.
+static var shared_dir_override := ""
+
+
+## The bridge's save folder: ~/.unciv-vr/SaveFiles (in the app's own storage on the Quest, which uninstalling clears).
+static func saves_dir() -> String:
+	return home_dir().path_join(".unciv-vr/SaveFiles")
+
+
+## Where the Quest app shares saves with a PC: Documents/UncivVR/SaveFiles in the headset's shared storage, which a
+## PC sees over USB (Quest > Internal shared storage > Documents) and which outlives the app. "" on the PC.
+static func shared_saves_dir() -> String:
+	if shared_dir_override != "":
+		return shared_dir_override
+	if is_android():
+		return OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS).path_join("UncivVR/SaveFiles")
+	return ""
+
+
+## Android: whether the app still needs "All files access" to read and write the shared folder (files a PC put
+## there belong to no app, so reading them needs it). Asking opens the headset's settings page for it.
+static func needs_storage_permission() -> bool:
+	return is_android() and shared_dir_override == "" and not OS.get_granted_permissions().has(STORAGE_PERMISSION)
+
+
+static func ask_storage_permission() -> void:
+	if is_android():
+		OS.request_permission(STORAGE_PERMISSION)
+
+
+## Copies every save in [param from_dir] into [param to_dir]. The same file already there is left alone; a different
+## one with the same name is replaced when [param overwrite], else the copy gets a free name ("Name (2)").
+## Returns {copied, same, renamed: [names], failed: [names], error}.
+static func copy_saves(from_dir: String, to_dir: String, overwrite: bool) -> Dictionary:
+	var result := {"copied": 0, "same": 0, "renamed": [], "failed": [], "error": ""}
+	if from_dir == "" or to_dir == "":
+		result["error"] = "no folder"
+		return result
+	if not DirAccess.dir_exists_absolute(from_dir):
+		return result   # nothing to copy yet
+	if DirAccess.make_dir_recursive_absolute(to_dir) != OK and not DirAccess.dir_exists_absolute(to_dir):
+		result["error"] = "Couldn't make %s" % to_dir
+		return result
+	for file_name: String in DirAccess.get_files_at(from_dir):
+		if file_name.begins_with(".") or file_name.ends_with(".tmp"):
+			continue
+		var data := FileAccess.get_file_as_bytes(from_dir.path_join(file_name))
+		if data.is_empty() and FileAccess.get_open_error() != OK:
+			(result["failed"] as Array).append(file_name)
+			continue
+		var target := to_dir.path_join(file_name)
+		if FileAccess.file_exists(target):
+			var there := FileAccess.get_file_as_bytes(target)
+			if there == data:
+				result["same"] = int(result["same"]) + 1
+				continue
+			if not overwrite:
+				var n := 2
+				while FileAccess.file_exists(to_dir.path_join("%s (%d)" % [file_name, n])):
+					n += 1
+				target = to_dir.path_join("%s (%d)" % [file_name, n])
+				(result["renamed"] as Array).append(target.get_file())
+		var out := FileAccess.open(target, FileAccess.WRITE)
+		if out == null:
+			(result["failed"] as Array).append(file_name)
+			continue
+		out.store_buffer(data)
+		out.close()
+		result["copied"] = int(result["copied"]) + 1
+	return result

@@ -43,7 +43,7 @@ const DesktopPopouts := preload("res://scripts/desktop_popouts.gd")
 const Panels := preload("res://scripts/panels.gd")
 const PanelBoard := preload("res://scripts/panel_board.gd")
 const BridgeLauncher := preload("res://scripts/bridge_launcher.gd")
-const BRIDGE_PROTOCOL := 26   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
+const BRIDGE_PROTOCOL := 28   # the bridge protocol version this client is written for (BridgeMain.PROTOCOL_VERSION)
 const Minimap := preload("res://scripts/minimap.gd")
 const InfoPanel := preload("res://scripts/info_panel.gd")
 const BigScreen := preload("res://scripts/big_screen.gd")
@@ -132,7 +132,7 @@ var _trigger_scrollbar: ScrollBar = null   # VR: the scrollbar the held trigger 
 const DECISION_CARDS := ["alert", "alert_tile", "great_person", "vote"]   # VR popups that wait for an answer
 var backgrounds: Backgrounds
 ## Player settings, saved in user://settings.cfg. auto_move: "end" (units move when you end your turn) or "start".
-var settings := {"background": "Mountains", "table": "OrnateOak", "tableTilt": 0, "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
+var settings := {"background": "Mountains", "table": "OrnateOak", "tableTilt": 0, "backupSaves": false, "auto_move": "end", "tileset": "LowPoly", "unitset": "tileset",
 	# Unciv's Options > Gameplay / Automation / Advanced (see SettingsBoard.GAMEPLAY and AUTOMATION)
 	"language": "English", "checkForDueUnits": true, "autoUnitCycle": true, "alternateUnitCycleOrder": false, "confirmNextTurn": false,
 	"orderTradeOffersByAmount": true, "autoAssignCityProduction": false, "autoBuildingRoads": true,
@@ -316,10 +316,12 @@ const CLICKS_ITSELF := ["action", "improvement", "produce", "queue", "buy", "res
 
 func _ready() -> void:
 	options = _parse_args()
+	if options.has("shared-saves"):   # dev aid: test the Quest's shared save folder on the PC (--shared-saves=<folder>)
+		DataPaths.shared_dir_override = str(options["shared-saves"])
 	var perf_probe: GDScript = load("res://scripts/perf_probe.gd")
 	if perf_probe.requested(options):   # a measuring aid for the headset: see perf_probe.gd
 		add_child(perf_probe.new(self))
-	if options.has("autoplay"):
+	if options.has("autoplay") or options.has("reveal"):
 		launcher.extra_args = " --debug"   # the AI plays your turns through a debug command
 	# The Quest app: Unciv's images, sounds and rules and our built-in folders come packed; unpack them first
 	var unpack_problem := DataPaths.unpack_android_data()
@@ -584,8 +586,16 @@ func _on_bridge_connected() -> void:
 			params["seed"] = 42
 		if options.has("seed"):
 			params["seed"] = int(options["seed"])
+		if options.has("wrap"):   # dev aid: --wrap starts a world-wrap map (--shape=rectangular / hexagonal)
+			params["worldWrap"] = true
+		if options.has("shape"):
+			params["mapShape"] = str(options["shape"])
 		if not await _start_new_game(params):
 			return
+		if options.has("reveal"):   # dev aid: the whole map explored (screenshots of the far side)
+			await bridge.request("debug", {"command": "reveal"})
+			_state_revision = -1
+			await refresh()
 	elif ping.result.gameRunning and not options.has("lobby"):
 		await _enter_game()
 	else:
@@ -706,6 +716,20 @@ func _on_bridge_connected() -> void:
 				await get_tree().create_timer(0.5).timeout
 	if options.has("screenshot"):
 		await get_tree().create_timer(1.0).timeout   # let the table recenter and cards lay out
+		if options.has("view-turn") and hex_map.wraps():   # dev aid: --view-turn=0.5 turns a wrapped map half way round
+			hex_map.set_view(hex_map.view_center + Vector2(hex_map.wrap_width * float(options["view-turn"]), 0), hex_map.view_radius)
+			hex_map._rebuild_view()
+			await get_tree().process_frame
+		if options.has("view-seam") and hex_map.wraps():   # dev aid: the window centred on the wrap seam (Unciv's map edge)
+			hex_map.set_view(Vector2(hex_map.full_center.x + hex_map.wrap_width / 2.0, hex_map.full_center.y), hex_map.view_radius)
+			hex_map._rebuild_view()
+			await get_tree().process_frame
+		if options.has("pedia-search"):   # dev aid: --pedia-search=text shows a Civilopedia search for the shot
+			await search_civilopedia(str(options["pedia-search"]))
+			await get_tree().create_timer(0.5).timeout
+		if options.has("whole-map"):   # dev aid: zoom all the way out for the shot
+			_zoom_view(100.0)
+			await get_tree().process_frame
 		if options.has("tilt"):   # dev aid: --tilt=30 tips the table that far for the shot (not saved)
 			_set_table_tilt(float(options["tilt"]))
 			await get_tree().process_frame
@@ -814,6 +838,13 @@ func open_lobby() -> void:
 		_setup = setup_reply.result.get("setup", {})
 	if _setup_options.is_empty():
 		var options_reply := await bridge.request("listOptions", {"ruleset": _setup.get("ruleset", "")} if _setup.has("ruleset") else {})
+		if not options_reply.ok and _setup.has("ruleset"):
+			# Rules this bridge can't load (a mod, another build's setup): the default rules, so the setup isn't empty
+			_set_status(Lang.format("Couldn't read those rules: %s", options_reply.error))
+			_setup.erase("ruleset")
+			_setup["civ"] = "Random"
+			_setup.erase("victoryTypes")
+			options_reply = await bridge.request("listOptions", {})
 		if options_reply.ok:
 			_setup_options = options_reply.result
 	var autosave := ""
@@ -1859,6 +1890,7 @@ func _glide_view_to(target: Vector2) -> void:
 	if _view_tween != null and _view_tween.is_valid():
 		_view_tween.kill()
 	_view_tween = create_tween()
+	target.x = hex_map.wrap_x(target.x, hex_map.view_center.x)   # a wrapped map glides the short way round
 	_view_tween.tween_method(func(c: Vector2) -> void: hex_map.set_view(c, hex_map.view_radius),
 		hex_map.view_center, target, 0.35).set_trans(Tween.TRANS_SINE)
 
@@ -3407,6 +3439,8 @@ func end_turn() -> void:
 				hex_map.note_unit_at(int(e.get("unit", -1)), Vector2i(int(e["to"][0]), int(e["to"][1])))
 	await refresh()
 	_music_for_turn(result)
+	if bool(settings.get("backupSaves", false)):
+		copy_saves_out(true)   # the autosave the turn just made, to the shared folder
 	if result.get("gameOver", false) or result.get("defeated", false):
 		await show_big_screen("victory")
 		return
@@ -3900,6 +3934,102 @@ func _smoke_recenter() -> void:
 	_xr_origin.global_transform = rig_before
 
 
+## World wrap: the seam's neighbours find each other, the map turns east-west with nothing missing or doubled,
+## the laser picks tiles on both sides of the seam, and a move across it goes the short way.
+func _smoke_world_wrap() -> void:
+	var r := hex_map.wrap_radius
+	var width := hex_map.wrap_width
+	var seam_pairs := 0
+	var bad_pairs := 0
+	var a_west := Vector2i.ZERO
+	var b_east := Vector2i.ZERO
+	for key: Vector2i in hex_map.tiles:
+		for offset: Vector2i in HexMap.NEIGHBOURS:
+			var raw := key + offset
+			if hex_map.tiles.has(raw):
+				continue
+			var other := hex_map.wrap_key(raw)
+			if not hex_map.tiles.has(other):
+				continue   # off the north / south edge
+			seam_pairs += 1
+			var d := hex_map.raw_world_of(other) - hex_map.raw_world_of(key)
+			d.x = hex_map.wrap_x(d.x, 0.0)
+			if absf(d.length() - HexMap.SQRT3) > 0.05:
+				bad_pairs += 1
+			elif seam_pairs == 1:
+				a_west = key
+				b_east = other
+	print("SMOKE: world wrap: radius %d, width %.1f, %d tiles, %d neighbour pairs across the seam, %d not one hex apart" % [
+		r, width, hex_map.tiles.size(), seam_pairs, bad_pairs])
+	var start_center := hex_map.view_center
+	var start_radius := hex_map.view_radius
+	var counts: Array = []
+	var picks_ok := 0
+	var picks := 0
+	for turn: float in [0.0, 0.25, 0.5, 0.75, 1.0, 2.5]:
+		hex_map.set_view(Vector2(start_center.x + width * turn, start_center.y), start_radius)
+		hex_map.set_view(Vector2(start_center.x + width * turn + 0.001, start_center.y), start_radius)   # past the rebuild step
+		hex_map._rebuild_view()
+		counts.append(hex_map._shown.size())
+		# drawn positions all within half a wrap of the view's middle, and the laser picks each probed tile
+		var tried := 0
+		for key: Vector2i in hex_map._shown:
+			if tried >= 12:
+				break
+			tried += 1
+			picks += 1
+			if hex_map.tile_at_global(hex_map.to_global(hex_map.tile_local_center(key))) == key:
+				picks_ok += 1
+	var path := hex_map.path_points(a_west, b_east)
+	var path_length := 0.0
+	for i in range(1, path.size()):
+		path_length += (path[i] as Vector3).distance_to(path[i - 1])
+	hex_map.set_view(start_center, start_radius)
+	print("SMOKE: world wrap: turned the view 0 / 1/4 / 1/2 / 3/4 / 1 / 2.5 times round: drawn %s, picks %d of %d; a move across the seam %s -> %s: %d points, %.2f long (one hex is %.2f)" % [
+		counts, picks_ok, picks, a_west, b_east, path.size(), path_length, HexMap.SQRT3])
+
+
+## The Quest's shared save folder (tested on the PC with --shared-saves=<folder>): a save copied out, a save from
+## "the PC" brought in, and one with the same name but different kept beside it. Cleans up after itself.
+func _smoke_shared_saves() -> void:
+	var shared := DataPaths.shared_saves_dir()
+	var saves := DataPaths.saves_dir()
+	var save_name := "Smoke shared save"
+	var saved := await bridge.request("saveGame", {"name": save_name})
+	copy_saves_out(false)
+	var out_ok := FileAccess.file_exists(shared.path_join(save_name))
+	var same_bytes := out_ok and FileAccess.get_file_as_bytes(shared.path_join(save_name)) == FileAccess.get_file_as_bytes(saves.path_join(save_name))
+	# "From the PC": a new save, and a different one under the name already here
+	var pc_copy := FileAccess.get_file_as_bytes(saves.path_join(save_name))
+	var f := FileAccess.open(shared.path_join("Smoke from the PC"), FileAccess.WRITE)
+	f.store_buffer(pc_copy)
+	f.close()
+	f = FileAccess.open(shared.path_join(save_name), FileAccess.WRITE)
+	f.store_buffer(pc_copy + PackedByteArray([32]))
+	f.close()
+	await copy_saves_in()
+	var brought := FileAccess.file_exists(saves.path_join("Smoke from the PC"))
+	var kept_beside := FileAccess.file_exists(saves.path_join(save_name + " (2)"))
+	var listed := await bridge.request("listSaves")
+	var names: Array = []
+	if listed.ok:
+		var entries: Variant = listed.result.get("saves", listed.result) if listed.result is Dictionary else listed.result
+		if entries is Array:
+			for e: Variant in entries:
+				names.append(str((e as Dictionary).get("name", "")) if e is Dictionary else str(e))
+	open_settings()
+	settings_board.page = "game"
+	_refresh_settings()
+	await get_tree().process_frame
+	var rows := settings_board.press("Copy out")
+	close_settings()
+	print("SMOKE: shared saves: saved %s, copied out %s (same bytes %s), brought in %s, different one kept as (2) %s, the bridge lists them %s, settings rows %s" % [
+		saved.ok, out_ok, same_bytes, brought, kept_beside, names.has("Smoke from the PC"), rows])
+	for path: String in [saves.path_join(save_name), saves.path_join(save_name + " (2)"), saves.path_join("Smoke from the PC"),
+			shared.path_join(save_name), shared.path_join(save_name + " (2)"), shared.path_join("Smoke from the PC")]:
+		DirAccess.remove_absolute(path)
+
+
 func _run_smoke_test() -> void:
 	if hex_map.is_windowed():
 		var start := hex_map.view_center
@@ -3996,6 +4126,10 @@ func _run_smoke_test() -> void:
 		print("SMOKE: info panel: %s | %s" % [info_panel._tile_title.text, info_panel._civ_header.text])
 	print("SMOKE: state turn=%s tiles=%d units=%d" % [state.get("turn"), state.get("tiles", []).size(), state.get("units", []).size()])
 	print("SMOKE: big screen up at the start: %s (VR %s)" % [_big_screen_shown(), _xr_mode])
+	if hex_map.wraps():
+		await _smoke_world_wrap()
+	if DataPaths.shared_saves_dir() != "":
+		await _smoke_shared_saves()
 	if _xr_mode:
 		await _smoke_table_tilt()
 		await _smoke_recenter()
@@ -4451,6 +4585,25 @@ func _run_smoke_test() -> void:
 		await civilopedia_board.follow(pedia_links[0])
 	print("SMOKE: civilopedia: shown %s, %d categories, followed %s -> %s, page '%s'" % [civilopedia_shown(),
 		civilopedia_board.categories.size(), pedia_links.slice(0, 1), civilopedia_board.link, civilopedia_board.page_text().left(40).replace("\n", " | ")])
+	# Search: words in any order, a regular expression, a bad one, nothing found, and clearing it again
+	var searches: Array = []
+	for query: String in ["great library", "ranged CITY", "^Gr.*land$", "a|(", "zzqxv"]:
+		await search_civilopedia(query)
+		var results: Array = civilopedia_board._search_results
+		searches.append("'%s' -> %d (%s), on %s" % [query, results.size(), results.slice(0, 2).map(func(r: Dictionary) -> String: return str(r["link"])), civilopedia_board.link])
+	var kept_list := civilopedia_board.entry_count()
+	await search_civilopedia("great library")
+	if civilopedia_board._search_results.size() > 1:   # another result opens with the results still listed
+		await civilopedia_board.open_link(str(civilopedia_board._search_results[1]["link"]))
+	var still_results := civilopedia_board._searching
+	await search_civilopedia("")
+	print("SMOKE: civilopedia search: %s; results kept while reading one %s; cleared -> %s (list %d -> %d)" % [
+		" | ".join(searches), still_results, civilopedia_board.link, kept_list, civilopedia_board.entry_count()])
+	var search_pressed := civilopedia_board.press("Search")
+	await get_tree().process_frame
+	print("SMOKE: civilopedia Search button opens the keyboard: %s (pressed %s)" % [keyboard_shown(), search_pressed])
+	if keyboard_shown():
+		_set_keyboard_visible(false)
 	await press_table_button("civilopedia")
 	print("SMOKE: civilopedia closed: %s" % (not civilopedia_shown()))
 	# Tutorials: the task card shows Unciv's current task (tutorials are on unless turned off in Settings)
@@ -4709,6 +4862,8 @@ func change_setting(key: String, value: String) -> void:
 			await refresh()   # e.g. "Check for idle units" changes what End turn waits for
 		elif value == "showButtonLabels":
 			_update_button_labels()
+		elif value == "backupSaves" and bool(settings["backupSaves"]):
+			copy_saves_out(false)   # the first copy now (and the headset's permission asked for, if needed)
 		elif value == "showSettlersSuggestedCityLocations" and not selected_unit.is_empty():
 			await _select_unit(int(selected_unit["id"]), false)   # the marks come or go at once
 		_refresh_settings()
@@ -4771,7 +4926,55 @@ func save_game() -> void:
 	open_keyboard("Save game as", default_name, func(text: String) -> void:
 		var save_name := text if text != "" else default_name
 		var reply := await bridge.request("saveGame", {"name": save_name})
-		_set_status(Lang.format("Saved as \"%s\".", save_name) if reply.ok else Lang.format("Couldn't save: %s", reply.error)))
+		_set_status(Lang.format("Saved as \"%s\".", save_name) if reply.ok else Lang.format("Couldn't save: %s", reply.error))
+		if reply.ok and bool(settings.get("backupSaves", false)):
+			copy_saves_out(true))
+
+
+## The Quest app: every save to the shared folder in the headset's Documents (DataPaths.shared_saves_dir), where a
+## PC can reach them and where they outlive the app. [param quiet]: only say something if it went wrong (the
+## automatic backup after each turn).
+func copy_saves_out(quiet: bool) -> void:
+	var shared := DataPaths.shared_saves_dir()
+	if shared == "":
+		return
+	if DataPaths.needs_storage_permission():
+		DataPaths.ask_storage_permission()
+		_set_status("Allow Unciv VR to use files (All files access) in the headset's settings, then try again.")
+		_refresh_settings_if_on("game")
+		return
+	var r := DataPaths.copy_saves(DataPaths.saves_dir(), shared, true)
+	var failed: Array = r["failed"]
+	if str(r["error"]) != "" or not failed.is_empty():
+		_set_status(Lang.format("Couldn't copy the saves to %s: %s", [shared, str(r["error"]) if str(r["error"]) != "" else Lang.join(", ", failed)]))
+	elif not quiet:
+		_set_status(Lang.format("%d saves copied to %s (%d already there).", [int(r["copied"]), shared, int(r["same"])]))
+
+
+## The Quest app: the saves in the shared folder (from the PC, or kept from before a reinstall) into the game.
+func copy_saves_in() -> void:
+	var shared := DataPaths.shared_saves_dir()
+	if shared == "":
+		return
+	if DataPaths.needs_storage_permission():
+		DataPaths.ask_storage_permission()
+		_set_status("Allow Unciv VR to use files (All files access) in the headset's settings, then try again.")
+		_refresh_settings_if_on("game")
+		return
+	if not DirAccess.dir_exists_absolute(shared):
+		_set_status(Lang.format("There's no %s yet - put saves there from the PC first.", shared))
+		return
+	var r := DataPaths.copy_saves(shared, DataPaths.saves_dir(), false)
+	var renamed: Array = r["renamed"]
+	var failed: Array = r["failed"]
+	var text := Lang.format("%d saves brought in (%d already here).", [int(r["copied"]), int(r["same"])])
+	if not renamed.is_empty():
+		text += " " + Lang.format("Kept beside saves of the same name: %s.", Lang.join(", ", renamed))
+	if not failed.is_empty():
+		text += " " + Lang.format("Couldn't read: %s.", Lang.join(", ", failed))
+	_set_status(text)
+	if _in_lobby:
+		await open_lobby()   # Load game lists them
 
 
 func open_settings() -> void:
@@ -4922,6 +5125,7 @@ func _refresh_settings() -> void:
 	settings_board.update(settings, {"in_vr": _xr_mode, "in_lobby": _in_lobby, "unciv_version": _uncivVersion,
 		"protocol": _bridge_protocol, "client_protocol": BRIDGE_PROTOCOL, "game": game, "languages": _languages,
 		"saves_folder": home.replace("\\", "/").path_join(".unciv-vr/SaveFiles"), "panels": _panel_list(),
+		"shared_saves": DataPaths.shared_saves_dir(), "needs_storage_permission": DataPaths.needs_storage_permission(),
 		"table_moved": (settings.get("background_spots", {}) as Dictionary).has(backgrounds.current),
 		"music": music.now_playing(), "music_tracks": Music.all_tracks().size(), "music_default": Music.default_track() != "",
 		"music_folder": Music.user_dir(), "music_note": _music_note})
@@ -4981,6 +5185,10 @@ func _on_settings_chosen(kind: String, value: String) -> void:
 		"save_game":
 			close_settings()
 			await save_game()
+		"saves_out":
+			copy_saves_out(false)
+		"saves_in":
+			await copy_saves_in()
 		"main_menu":
 			_set_settings_visible(false)
 			await open_lobby()
@@ -5452,6 +5660,29 @@ func _on_pedia_chosen(kind: String, value: String) -> void:
 		"external":
 			OS.shell_open(value)
 			_set_status(Lang.format("Opened %s in your browser.", value))
+		"search":
+			open_keyboard("Search the Civilopedia", value, func(text: String) -> void: await search_civilopedia(text))
+
+
+## Unciv's Civilopedia search: every page with all the words in it (or a regular expression); the results go in the
+## board's list. Empty text clears a search and goes back to the category.
+func search_civilopedia(text: String) -> void:
+	if civilopedia_board == null:
+		return
+	if not civilopedia_shown():
+		await open_civilopedia()
+	if text.strip_edges() == "":
+		await civilopedia_board.clear_search()
+		return
+	_set_status(Lang.format("Searching the Civilopedia for \"%s\"...", text))
+	var reply := await bridge.request("searchCivilopedia", {"text": text})
+	if not reply.ok:
+		civilopedia_board.show_search_problem(text, Lang.t(str(reply.error)))
+		_set_status(Lang.t(str(reply.error)))
+		return
+	var total := int(reply.result.get("total", 0))
+	_set_status(Lang.format("%d found", total) if total > 0 else Lang.t("Nothing found!"))
+	await civilopedia_board.show_search_results(reply.result)
 
 
 ## The tutorial task card: left of the overview in VR (grabbed by its top strip), bottom-middle on the desktop.
@@ -5986,7 +6217,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_SPACE, KEY_ENTER:
 				end_turn()
 			KEY_F:
-				found_city()
+				if (event as InputEventKey).ctrl_pressed:   # Ctrl+F: search the Civilopedia (opening it if need be)
+					open_keyboard("Search the Civilopedia", civilopedia_board.search_query if civilopedia_board != null else "",
+						func(text: String) -> void: await search_civilopedia(text))
+				else:
+					found_city()
 			KEY_N:
 				_select_next_unit(false)
 			KEY_TAB:

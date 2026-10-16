@@ -449,6 +449,20 @@ func _game_page() -> void:
 		autosave.append([str(n), "Every turn" if n == 1 else Lang.format("Every %d turns", n), "", ""])
 	_choice("turnsBetweenAutosaves", "Autosave", "How often the game saves itself as \"Autosave\" (Continue in the main menu loads it).", autosave)
 	_info_row("Save folder", str(info.get("saves_folder", "~/.unciv-vr/SaveFiles")))
+	var shared := str(info.get("shared_saves", ""))
+	if shared != "":
+		_header("Saves and a PC", Lang.t("The save folder above is the app's own: uninstalling the app clears it. ")
+			+ Lang.t("The shared folder is in the headset's Documents, which a PC sees over a USB cable (Quest > Internal shared storage > Documents > UncivVR > SaveFiles) and which outlives the app. ")
+			+ Lang.t("Saves work both ways: on the PC they go in ~/.unciv-vr/SaveFiles."))
+		_info_row("Shared folder", shared)
+		_action_row("Copy saves out", "Puts a copy of every save in the shared folder (replacing older copies there).", "Copy out",
+			func() -> void: chosen.emit("saves_out", ""))
+		_action_row("Bring saves in", "Copies the saves in the shared folder into the game, e.g. ones from the PC. A different save with the same name is kept as \"Name (2)\".",
+			"Bring in", func() -> void: chosen.emit("saves_in", ""))
+		_toggle_row("Back up saves there", "After every turn and every save, the saves are copied to the shared folder too - so they survive reinstalling the app.",
+			bool(settings.get("backupSaves", false)), func() -> void: chosen.emit("setting_toggle", "backupSaves"))
+		if bool(info.get("needs_storage_permission", false)):
+			_paragraph(Lang.t("The headset asks once to let Unciv VR use files (\"All files access\"): allow it there, then press the button again."))
 
 
 func _about_page() -> void:

@@ -323,7 +323,8 @@ func _build_improvement_models(shown: Dictionary) -> void:
 				_models.add_child(model)
 		var road := str(tile.get("road", "None"))
 		if road != "None" or tile.has("city"):
-			for neighbour: Vector2i in _neighbours(key):
+			for raw_neighbour: Vector2i in _neighbours(key):
+				var neighbour: Vector2i = _map.wrap_key(raw_neighbour)   # across a wrapped map's seam
 				if neighbour < key or not shown.has(neighbour):
 					continue   # each pair once
 				var other: Dictionary = _map.tiles.get(neighbour, {})
@@ -332,7 +333,7 @@ func _build_improvement_models(shown: Dictionary) -> void:
 				if road == "None" and str(other.get("road", "None")) == "None":
 					continue   # two cities next to each other, no road
 				var colour := Color(0.3, 0.3, 0.32) if road == "Railroad" or str(other.get("road")) == "Railroad" else Color(0.55, 0.4, 0.25)
-				road_lines.append([centre, _map.tile_position(neighbour, _map.tile_height(other)), colour])
+				road_lines.append([centre, _map.tile_position_near(neighbour, _map.tile_height(other), centre), colour])
 	if not road_lines.is_empty():
 		var roads := MeshInstance3D.new()
 		roads.mesh = _ribbons(road_lines, 0.12, 0.02, false)   # under the tile pictures (0.045), which also draw in front
@@ -478,7 +479,7 @@ func _build_arrows(shown: Dictionary) -> void:
 					"UnitDisembarked", "UnitEmbarked":
 						colour = Color(0.4, 0.9, 1.0)
 				var from: Vector3 = _map.tile_position(a, _map.tile_height(_map.tiles[a]) + 0.35)
-				var to: Vector3 = _map.tile_position(b, _map.tile_height(_map.tiles[b]) + 0.35)
+				var to: Vector3 = _map.tile_position_near(b, _map.tile_height(_map.tiles[b]) + 0.35, from)
 				segments.append([from, to, colour])
 	if not segments.is_empty():
 		_arrows.mesh = _ribbons(segments, 0.1, 0.0, true)

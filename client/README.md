@@ -302,7 +302,12 @@ The game also builds as an Android app that runs on its own on a Quest 2 / 3 / P
 inside the app (unciv/bridge-android turns it into a Godot Android plugin, `UncivBridge`), and Unciv's images, sounds
 and rules plus the built-in backgrounds, tables, tilesets and panels travel in the app as android_data.pack, which the
 first start unpacks into the app's storage (that first start takes a little longer). Saves and your own folders live
-in the app's own private storage too (they go when the app is uninstalled).
+in the app's own private storage too (they go when the app is uninstalled). Settings > Game and saves copies the saves
+out to `Documents/UncivVR/SaveFiles` in the headset's shared storage (a PC reaches it over USB: Quest > Internal
+shared storage > Documents) and back in, or after every turn with "Back up saves there"; a save brought in under a name
+that's taken by a different one is kept as "Name (2)". The app asks once for "All files access" (Android's
+MANAGE_EXTERNAL_STORAGE, needed to read files a PC put there). On the PC, `--shared-saves=<folder>` tests this with
+any folder.
 
 To build it (Windows): install Android Studio with its Command-line Tools, a JDK 17 or newer, and Godot 4.7.2's
 export templates; in Godot's Editor Settings > Export > Android set the SDK and a JDK 17. Then, from the repo root:
